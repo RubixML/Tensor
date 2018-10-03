@@ -1,0 +1,12 @@
+language: php
+
+php:
+    - '7.1'
+    - '7.2'
+
+install:
+    - composer install
+
+script:
+    - composer analyze
+    - composer test
