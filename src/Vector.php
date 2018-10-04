@@ -40,7 +40,7 @@ class Vector implements Tensor
      * @param  bool  $validate
      * @return self
      */
-    public static function build(array $a, bool $validate = true) : self
+    public static function build(array $a = [], bool $validate = true) : self
     {
         return new self($a, $validate);
     }
@@ -140,7 +140,39 @@ class Vector implements Tensor
         return new self($a, false);
     }
 
+    /**
+     * Return evenly spaced values within a given interval.
+     *
+     * @param  float  $start
+     * @param  float  $end
+     * @param  float  $interval
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public static function range(float $start, float $end, float $interval = 1.) : self
+    {
+        if ($interval <= 0.) {
+            throw new InvalidArgumentException('Interval must be greater than'
+                 . ' 0.');
+        }
 
+        return new self(range($start, $end, $interval), false);
+    }
+
+    /**
+     * Return evenly spaced numbers over a specified interval.
+     *
+     * @param  float  $start
+     * @param  float  $end
+     * @param  int  $n
+     * @return self
+     */
+    public static function linspace(float $start, float $end, int $n) : self
+    {
+        $interval = abs($end - $start) / ($n - 1);
+
+        return self::range($start, $end, $interval);
+    }
 
     /**
      * @param  (int|float)[]  $a
@@ -148,7 +180,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function __construct(array $a, bool $validate = true)
+    public function __construct(array $a = [], bool $validate = true)
     {
         if ($validate === true) {
             $a = array_values($a);
@@ -766,7 +798,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Negate the matrix i.e take the negative of each value elementwise.
+     * Negate the vector i.e take the negative of each value elementwise.
      *
      * @return self
      */

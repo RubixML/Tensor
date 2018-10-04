@@ -47,7 +47,7 @@ class Matrix implements Tensor
      * @param  bool  $validate
      * @return self
      */
-    public static function build(array $a, bool $validate = true) : self
+    public static function build(array $a = [], bool $validate = true) : self
     {
         return new self($a, $validate);
     }
@@ -230,7 +230,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function __construct(array $a, bool $validate = true)
+    public function __construct(array $a = [], bool $validate = true)
     {
         if ($validate === true) {
             $a = array_values($a);

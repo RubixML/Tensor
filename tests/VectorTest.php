@@ -45,6 +45,20 @@ class VectorTest extends TestCase
         $this->assertEquals([1, 1, 1, 1], Vector::ones(4)->asArray());
     }
 
+    public function test_build_range()
+    {
+        $outcome = [5., 7., 9., 11.];
+
+        $this->assertEquals($outcome, Vector::range(5., 12., 2.)->asArray());
+    }
+
+    public function test_build_linspace()
+    {
+        $outcome = [-5., -3.75, -2.5, -1.25, 0., 1.25, 2.5, 3.75, 5.];
+
+        $this->assertEquals($outcome, Vector::linspace(-5, 5, 9)->asArray());
+    }
+
     public function test_get_n()
     {
         $this->assertEquals(8, $this->a->n());
