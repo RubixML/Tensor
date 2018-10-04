@@ -43,13 +43,23 @@ class Matrix implements Tensor
     /**
      * Factory method to build a new matrix from an array.
      *
-     * @param  array  $a
-     * @param  bool  $validate
+     * @param  array[]  $a
      * @return self
      */
-    public static function build(array $a = [], bool $validate = true) : self
+    public static function build(array $a = []) : self
     {
-        return new self($a, $validate);
+        return new self($a, true);
+    }
+
+    /**
+     * Build a new matrix foregoing any validation for quicker instantiation.
+     *
+     * @param  array[]  $a
+     * @return self
+     */
+    public static function quick(array $a = []) : self
+    {
+        return new self($a, false);
     }
 
     /**
@@ -232,18 +242,25 @@ class Matrix implements Tensor
      */
     public function __construct(array $a = [], bool $validate = true)
     {
+        $m = count($a);
+
+        $n = is_array(current($a)) ? count(current($a)) : 1;
+        $n = $m === 0 ? 0 : $n;
+
         if ($validate === true) {
             $a = array_values($a);
 
-            $n = is_array($a[0]) ? count($a[0]) : 0;
-
             foreach ($a as &$row) {
+                if (is_array($row)) {
+                    $row = array_values($row);
+                } else {
+                    $row = [$row];
+                }
+
                 if (count($row) !== $n) {
                     throw new InvalidArgumentException('The number of columns'
                         . ' must be equal for all rows.');
                 }
-
-                $row = array_values($row);
 
                 foreach ($row as $value) {
                     if (!is_int($value) and !is_float($value)) {
@@ -256,8 +273,8 @@ class Matrix implements Tensor
         }
 
         $this->a = $a;
-        $this->m = count($a);
-        $this->n = isset($a[0]) ? count($a[0]) : 0;
+        $this->m = $m;
+        $this->n = $n;
     }
 
     /**

@@ -36,13 +36,23 @@ class Vector implements Tensor
     /**
      * Factory method to build a new vector from an array.
      *
-     * @param  array  $a
-     * @param  bool  $validate
+     * @param  (int|float)[]  $a
      * @return self
      */
-    public static function build(array $a = [], bool $validate = true) : self
+    public static function build(array $a = []) : self
     {
-        return new self($a, $validate);
+        return new self($a, true);
+    }
+
+    /**
+     * Build a vector foregoing any validation for quicker instantiation.
+     *
+     * @param  (int|float)[]  $a
+     * @return self
+     */
+    public static function quick(array $a = []) : self
+    {
+        return new self($a, false);
     }
 
     /**
