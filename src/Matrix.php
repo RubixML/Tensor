@@ -235,6 +235,66 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the elementwise maximum of two matrices.
+     *
+     * @param  \Rubix\Tensor\Matrix  $a
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @return self
+     */
+    public static function maximum(Matrix $a, Matrix $b) : self
+    {
+        if ($a->m() !== $b->m()) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $a->m() . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($a->n() !== $b->n()) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $a->n() . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($a as $i => $row) {
+            $c[] = array_map('max', $row, $b[$i]);
+        }
+
+        return new self($c, false);
+    }
+
+    /**
+     * Return the elementwise minimum of two matrices.
+     *
+     * @param  \Rubix\Tensor\Matrix  $a
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @return self
+     */
+    public static function minimum(Matrix $a, Matrix $b) : self
+    {
+        if ($a->m() !== $b->m()) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $a->m() . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($a->n() !== $b->n()) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $a->n() . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($a as $i => $row) {
+            $c[] = array_map('min', $row, $b[$i]);
+        }
+
+        return new self($c, false);
+    }
+
+    /**
      * @param  array[]  $a
      * @param  bool  $validate
      * @throws \InvalidArgumentException
@@ -617,6 +677,27 @@ class Matrix implements Tensor
     }
 
     /**
+     * Calculate the modulus of the matrix with another tensor.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function mod($b) : self
+    {
+        if ($b instanceof Matrix) {
+            return $this->modMatrix($b);
+        } else if ($b instanceof Vector) {
+            return $this->modVector($b);
+        } else if (is_int($b) or is_float($b)) {
+            return $this->modScalar($b);
+        }
+
+        throw new InvalidArgumentException('Cannot mod matrix with a'
+            . ' ' . gettype($b) . '.');
+    }
+
+    /**
      * Take the dot product of this matrix and another matrix.
      *
      * @param  \Rubix\Tensor\Matrix  $b
@@ -822,6 +903,41 @@ class Matrix implements Tensor
     }
 
     /**
+     * Calculate the modulus i.e remainder of division between this matri and
+     * another matrix.
+     *
+     * @param \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function modMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $this->m . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $this->n . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [[]];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+
+            foreach ($rowA as $j => $value) {
+                $c[$i][$j] = $value % $rowB[$j];
+            }
+        }
+
+        return new self($c, false);
+    }
+
+    /**
      * Take the dot product of this matrix and another matrix.
      *
      * @param  \Rubix\Tensor\Vector  $b
@@ -984,6 +1100,32 @@ class Matrix implements Tensor
     }
 
     /**
+     * Calculate the modulus of this matrix with a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function modVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector does not have the same'
+            . ' number of columns. ' . (string) $this->n . ' needed but found '
+            . (string) $b->n() . '.');
+        }
+
+        $c = [[]];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][$j] = $value % $b[$j];
+            }
+        }
+
+        return new self($c, false);
+    }
+
+    /**
      * Multiply this matrix by a scalar.
      *
      * @param  int|float  $scalar
@@ -1102,6 +1244,31 @@ class Matrix implements Tensor
         foreach ($this->a as $i => $row) {
             foreach ($row as $j => $value) {
                 $b[$i][$j] = $value ** $scalar;
+            }
+        }
+
+        return new self($b, false);
+    }
+
+    /**
+     * Calculate the modulus of this matrix with a scalar.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function modScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Exponent must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [[]];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $j => $value) {
+                $b[$i][$j] = $value % $scalar;
             }
         }
 

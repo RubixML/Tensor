@@ -140,6 +140,32 @@ class MatrixTest extends TestCase
         $this->assertCount(9, $d);
     }
 
+    public function test_maximum()
+    {
+        $outcome = [
+            [22, 6, 12],
+            [4, 11, 5],
+            [20, -1, 14],
+        ];
+
+        $d = Matrix::maximum($this->a, $this->c)->asArray();
+
+        $this->assertEquals($outcome, $d);
+    }
+
+    public function test_minumum()
+    {
+        $outcome = [
+            [4,-17, -12],
+            [1, 3, -2],
+            [-10, -6, -9],
+        ];
+
+        $d = Matrix::minimum($this->a, $this->c)->asArray();
+
+        $this->assertEquals($outcome, $d);
+    }
+
     public function test_shape()
     {
         $this->assertEquals([3, 3], $this->a->shape());

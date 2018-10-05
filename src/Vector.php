@@ -185,6 +185,42 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the elementwise maximum of two vectors.
+     *
+     * @param  \Rubix\Tensor\Vector  $a
+     * @param  \Rubix\Tensor\Vector  $b
+     * @return self
+     */
+    public static function maximum(Vector $a, Vector $b) : self
+    {
+        if ($a->n() !== $b->n()) {
+            throw new InvalidArgumentException('Vector dimensionality does not'
+                . ' match.' . (string) $a->n() . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        return new self(array_map('max', $a->asArray(), $b->asArray()), false);
+    }
+
+    /**
+     * Return the elementwise minimum of two vectors.
+     *
+     * @param  \Rubix\Tensor\Vector  $a
+     * @param  \Rubix\Tensor\Vector  $b
+     * @return self
+     */
+    public static function minimum(Vector $a, Vector $b) : self
+    {
+        if ($a->n() !== $b->n()) {
+            throw new InvalidArgumentException('Vector dimensionality does not'
+                . ' match.' . (string) $a->n() . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        return new self(array_map('min', $a->asArray(), $b->asArray()), false);
+    }
+
+    /**
      * @param  (int|float)[]  $a
      * @param  bool  $validate
      * @throws \InvalidArgumentException
@@ -496,6 +532,25 @@ class Vector implements Tensor
     }
 
     /**
+     * Calculate the modulus of this vector with another tensor elementwise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function mod($b) : self
+    {
+        if ($b instanceof Vector) {
+            return $this->modVector($b);
+        } else if (is_int($b) or is_float($b)) {
+            return $this->modScalar($b);
+        }
+
+        throw new InvalidArgumentException('Cannot mod vector with a'
+            . ' ' . gettype($b) . '.');
+    }
+
+    /**
      * Multiply this vector with another vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
@@ -609,7 +664,31 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $value) {
-            $c[$i] = $value - $b[$i];
+            $c[$i] = $value ** $b[$i];
+        }
+
+        return new self($c, false);
+    }
+
+    /**
+     * Calculate the modulus of this vector with another vector elementwise.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function modVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $value) {
+            $c[$i] = $value % $b[$i];
         }
 
         return new self($c, false);
@@ -725,6 +804,29 @@ class Vector implements Tensor
 
         foreach ($this->a as $value) {
             $b[] = $value ** $scalar;
+        }
+
+        return new self($b, false);
+    }
+
+    /**
+     * Calculate the modulus of this vector with a scalar.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function modScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $value) {
+            $b[] = $value % $scalar;
         }
 
         return new self($b, false);

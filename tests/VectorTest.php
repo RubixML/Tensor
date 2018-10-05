@@ -59,6 +59,20 @@ class VectorTest extends TestCase
         $this->assertEquals($outcome, Vector::linspace(-5, 5, 9)->asArray());
     }
 
+    public function test_maximum()
+    {
+        $outcome = [0.25, 25, 35, -0.5, -1.0, 89, 106, 45];
+
+        $this->assertEquals($outcome, Vector::maximum($this->a, $this->b)->asArray());
+    }
+
+    public function test_minimum()
+    {
+        $outcome = [-15, 0.1, 2.0, -36, -72, -3., 3.3, 2.];
+
+        $this->assertEquals($outcome, Vector::minimum($this->a, $this->b)->asArray());
+    }
+
     public function test_get_n()
     {
         $this->assertEquals(8, $this->a->n());
