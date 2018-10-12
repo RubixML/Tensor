@@ -17,6 +17,8 @@ use ArrayIterator;
  */
 class Matrix implements Tensor
 {
+    const EPSILON = 1e-8;
+
     /**
      * The 2-dimensional array that holds the values of the matrix.
      *
@@ -543,6 +545,24 @@ class Matrix implements Tensor
     }
 
     /**
+     * Compute the inverse of the matrix.
+     * 
+     * @return self
+     */
+    public function inverse() : self
+    {
+        $b = $this->augmentRight(self::identity($this->m))->rref();
+
+        $c = [];
+
+        for ($i = 0; $i < $this->n; $i++) {
+            $c[] = array_slice($b[$i], $this->n);
+        }
+
+        return new self($c, false);
+    }
+
+    /**
      * Return the elementwise reciprocal of the matrix.
      *
      * @return self
@@ -582,6 +602,102 @@ class Matrix implements Tensor
         }
 
         return new Vector($b, false);
+    }
+
+    /**
+     * Calculate the row echelon form of the matrix using Gaussian elimination.
+     * 
+     * @throws \RuntimeException
+     * @return self
+     */
+    public function ref() : self
+    {
+        $minDim = min($this->shape());
+
+        $b = $this->a;
+
+        for ($k = 0; $k < $minDim; $k++) {
+            $index = $k;
+
+            for ($i = $k; $i < $this->m; $i++) {
+                if (abs($b[$i][$k]) > abs($b[$index][$k])) {
+                    $index = $i;
+                }
+            } 
+
+            if ($b[$index][$k] == 0) {
+                throw new RuntimeException('Cannot compute row echelon form'
+                    . ' of a singular matrix.');
+            }
+
+            if ($k !== $index) {
+                $temp = $b[$k];
+
+                $b[$k] = $b[$index];
+                $b[$index] = $temp;
+            }
+
+            $diag = $b[$k][$k];
+
+            for ($i = $k + 1; $i < $this->m; $i++) {
+                $row = $b[$i];
+
+                $scale = $diag != 0 ? $row[$k] / $diag : 1;
+                
+                for ($j = $k + 1; $j < $this->n; $j++) {
+                    $row[$j] = $row[$j] - ($scale * $b[$k][$j]);
+                }
+                
+                $row[$k] = 0;
+
+                $b[$i] = $row;
+            }
+        }
+
+        return new self($b, false);
+    }
+
+    /**
+     * Return the reduced row echelon form of the matrix.
+     * 
+     * @return self
+     */
+    public function rref() : self
+    {
+        $b = $this->ref()->asArray();
+
+        $row = $col = 0;
+
+        while ($row < $this->m and $col < $this->n) {
+            if (abs($b[$row][$col]) <= self::EPSILON) {
+                $col++;
+
+                continue 1;
+            }
+
+            $divisor = $b[$row][$col];
+
+            if ($divisor != 1) {
+                for ($j = 0; $j < $this->n; $j++) {
+                    $b[$row][$j] /= $divisor;
+                }
+            }
+
+            for ($j = $row - 1; $j >= 0; $j--) {
+                $scale = $b[$j][$col];
+
+                if (abs($scale) > self::EPSILON) {
+                    for ($k = 0; $k < $this->n; $k++) {
+                        $b[$j][$k] += -$scale * $b[$row][$k];
+                    }
+                }
+            }
+
+            $row++;
+            $col++;
+        }
+
+        return new self($b, false);
     }
 
     /**

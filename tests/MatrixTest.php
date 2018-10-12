@@ -53,8 +53,6 @@ class MatrixTest extends TestCase
 
     public function test_build_identity()
     {
-        $d = Matrix::identity(4)->asArray();
-
         $outcome = [
             [1, 0, 0, 0],
             [0, 1, 0, 0],
@@ -62,19 +60,17 @@ class MatrixTest extends TestCase
             [0, 0, 0, 1],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, Matrix::identity(4)->asArray());
     }
 
     public function test_build_zeros()
     {
-        $d = Matrix::zeros(2, 4)->asArray();
-
         $outcome = [
             [0, 0, 0, 0],
             [0, 0, 0, 0],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, Matrix::zeros(2, 4)->asArray());
     }
 
     public function test_build_ones()
@@ -93,8 +89,6 @@ class MatrixTest extends TestCase
 
     public function test_build_diagonal()
     {
-        $d = Matrix::diagonal([0, 1, 4, 5])->asArray();
-
         $outcome = [
             [0, 0, 0, 0],
             [0, 1, 0, 0],
@@ -102,13 +96,11 @@ class MatrixTest extends TestCase
             [0, 0, 0, 5],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, Matrix::diagonal([0, 1, 4, 5])->asArray());
     }
 
     public function test_build_fill()
     {
-        $d = Matrix::fill(5, 4, 4)->asArray();
-
         $outcome = [
             [5, 5, 5, 5],
             [5, 5, 5, 5],
@@ -116,7 +108,7 @@ class MatrixTest extends TestCase
             [5, 5, 5, 5],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, Matrix::fill(5, 4, 4)->asArray());
     }
 
     public function test_build_random()
@@ -148,9 +140,7 @@ class MatrixTest extends TestCase
             [20, -1, 14],
         ];
 
-        $d = Matrix::maximum($this->a, $this->c)->asArray();
-
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, Matrix::maximum($this->a, $this->c)->asArray());
     }
 
     public function test_minumum()
@@ -161,9 +151,7 @@ class MatrixTest extends TestCase
             [-10, -6, -9],
         ];
 
-        $d = Matrix::minimum($this->a, $this->c)->asArray();
-
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, Matrix::minimum($this->a, $this->c)->asArray());
     }
 
     public function test_shape()
@@ -258,15 +246,24 @@ class MatrixTest extends TestCase
 
     public function test_transpose()
     {
-        $d = $this->a->transpose()->asArray();
-
         $outcome = [
             [22, 4, 20],
             [-17, 11, -6],
             [12, -2, -9],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, $this->a->transpose()->asArray());
+    }
+
+    public function test_inverse()
+    {
+        $outcome = [
+            [0.02093549603923048, 0.042436816295737464, 0.018483591097698978],
+            [0.0007544322897019996, 0.08261033572236892, -0.017351942663145988],
+            [0.04602036967182196, 0.03923047906450396, -0.05846850245190495],
+        ];
+
+        $this->assertEquals($outcome, $this->a->inverse()->asArray());
     }
 
     public function test_map()
@@ -305,6 +302,28 @@ class MatrixTest extends TestCase
         $outcome = [0, 1, 0];
 
         $this->assertEquals($outcome, $this->a->argmax()->asArray());
+    }
+
+    public function test_ref()
+    {
+        $outcome = [
+            [22, -17, 12],
+            [0, 14.09090909090909, -4.181818181818182],
+            [0, 0, -17.10322580645161],
+        ];
+
+        $this->assertEquals($outcome, $this->a->ref()->asArray());
+    }
+
+    public function test_rref()
+    {
+        $outcome = [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+        ];
+
+        $this->assertEquals($outcome, $this->a->rref()->asArray());
     }
 
     public function test_dot()
