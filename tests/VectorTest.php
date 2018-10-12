@@ -134,6 +134,16 @@ class VectorTest extends TestCase
         $this->assertEquals(110.3671875, $scalar);
     }
 
+    public function test_argmin()
+    {
+        $this->assertEquals(4, $this->a->argmin());
+    }
+
+    public function test_argmax()
+    {
+        $this->assertEquals(6, $this->a->argmax());
+    }
+
     public function test_dot()
     {
         $this->assertEquals(331.54999999999995, $this->a->dot($this->b));

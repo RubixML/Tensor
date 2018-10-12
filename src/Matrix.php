@@ -553,6 +553,38 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the index of the minimum element in every row of the matrix.
+     * 
+     * @return \Rubix\Tensor\Vector
+     */
+    public function argmin() : Vector
+    {
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $b[] = (int) array_search(min($row), $row);
+        }
+
+        return new Vector($b, false);
+    }
+
+    /**
+     * Return the index of the maximum element in every row of the matrix.
+     * 
+     * @return \Rubix\Tensor\Vector
+     */
+    public function argmax() : Vector
+    {
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $b[] = (int) array_search(max($row), $row);
+        }
+
+        return new Vector($b, false);
+    }
+
+    /**
      * Dot this matrix with another tensor elementwise.
      *
      * @param  mixed  $b

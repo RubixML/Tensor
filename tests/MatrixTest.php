@@ -293,6 +293,20 @@ class MatrixTest extends TestCase
         $this->assertEquals(17.5, $scalar);
     }
 
+    public function test_argmin()
+    {
+        $outcome = [1, 2, 2];
+
+        $this->assertEquals($outcome, $this->a->argmin()->asArray());
+    }
+
+    public function test_argmax()
+    {
+        $outcome = [0, 1, 0];
+
+        $this->assertEquals($outcome, $this->a->argmax()->asArray());
+    }
+
     public function test_dot()
     {
         $d = $this->a->dot($this->b)->asArray();

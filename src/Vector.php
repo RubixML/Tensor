@@ -360,6 +360,26 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the index of the minimum element in the vector.
+     * 
+     * @return int
+     */
+    public function argmin() : int
+    {
+        return (int) array_search(min($this->a), $this->a);
+    }
+
+    /**
+     * Return the index of the maximum element in the vector.
+     * 
+     * @return int
+     */
+    public function argmax() : int
+    {
+        return (int) array_search(max($this->a), $this->a);
+    }
+
+    /**
      * Compute the dot product of this vector and another vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
