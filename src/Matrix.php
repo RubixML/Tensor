@@ -645,7 +645,7 @@ class Matrix implements Tensor
                 $scale = $diag != 0 ? $row[$k] / $diag : 1;
                 
                 for ($j = $k + 1; $j < $this->n; $j++) {
-                    $row[$j] = $row[$j] - ($scale * $b[$k][$j]);
+                    $row[$j] -= $scale * $b[$k][$j];
                 }
                 
                 $row[$k] = 0;
@@ -669,7 +669,7 @@ class Matrix implements Tensor
         $row = $col = 0;
 
         while ($row < $this->m and $col < $this->n) {
-            if (abs($b[$row][$col]) <= self::EPSILON) {
+            if (abs($b[$row][$col]) == 0) {
                 $col++;
 
                 continue 1;
@@ -678,18 +678,16 @@ class Matrix implements Tensor
             $divisor = $b[$row][$col];
 
             if ($divisor != 1) {
-                for ($j = 0; $j < $this->n; $j++) {
-                    $b[$row][$j] /= $divisor;
+                for ($i = 0; $i < $this->n; $i++) {
+                    $b[$row][$i] /= $divisor;
                 }
             }
 
-            for ($j = $row - 1; $j >= 0; $j--) {
-                $scale = $b[$j][$col];
+            for ($i = $row - 1; $i >= 0; $i--) {
+                $scale = $b[$i][$col];
 
-                if (abs($scale) > self::EPSILON) {
-                    for ($k = 0; $k < $this->n; $k++) {
-                        $b[$j][$k] += -$scale * $b[$row][$k];
-                    }
+                for ($j = 0; $j < $this->n; $j++) {
+                    $b[$i][$j] += -$scale * $b[$row][$j];
                 }
             }
 
@@ -1100,21 +1098,7 @@ class Matrix implements Tensor
                 . ' ' . (string) $b->size() . '.');
         }
 
-        $c = [[]];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($b as $j => $column) {
-                $sigma = 0;
-
-                foreach ($row as $value) {
-                    $sigma += $value * $column;
-                }
-
-                $c[$i][$j] = $sigma;
-            }
-        }
-
-        return new self($c, false);
+        return $this->dotMatrix($b->asColumnMatrix());
     }
 
     /**

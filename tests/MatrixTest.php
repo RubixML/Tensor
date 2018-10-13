@@ -389,147 +389,136 @@ class MatrixTest extends TestCase
         $this->assertEquals($outcome, $d);
     }
 
+    public function test_dot_vector()
+    {
+        $outcome = [
+            [-138],
+            [120],
+            [-11],
+        ];
+
+        $this->assertEquals($outcome, $this->a->dotVector($this->d)->asArray());
+    }
+
     public function test_multiply_vector()
     {
-        $c = $this->a->multiplyVector($this->d)->asArray();
-
         $outcome = [
             [44, -170, -12],
             [8, 110, 2],
             [40, -60, 9],
         ];
 
-        $this->assertEquals($outcome, $c);
+        $this->assertEquals($outcome, $this->a->multiplyVector($this->d)->asArray());
     }
 
     public function test_divide_vector()
     {
-        $c = $this->a->divideVector($this->d)->asArray();
-
         $outcome = [
             [11, -1.7, -12],
             [2, 1.1, 2],
             [10, -0.6, 9],
         ];
 
-        $this->assertEquals($outcome, $c);
+        $this->assertEquals($outcome, $this->a->divideVector($this->d)->asArray());
     }
 
     public function test_add_vector()
     {
-        $c = $this->a->addVector($this->d)->asArray();
-
         $outcome = [
             [24, -7, 11],
             [6, 21, -3],
             [22, 4, -10],
         ];
 
-        $this->assertEquals($outcome, $c);
+        $this->assertEquals($outcome, $this->a->addVector($this->d)->asArray());
     }
 
     public function test_subtract_vector()
     {
-        $c = $this->a->subtractVector($this->d)->asArray();
-
         $outcome = [
             [20, -27, 13],
             [2, 1, -1],
             [18, -16, -8],
         ];
 
-        $this->assertEquals($outcome, $c);
+        $this->assertEquals($outcome, $this->a->subtractVector($this->d)->asArray());
     }
 
     public function test_reciprocal()
     {
-        $d = $this->a->reciprocal()->asArray();
-
         $outcome = [
             [0.045454545454545456, -0.058823529411764705, 0.08333333333333333],
             [0.25, 0.09090909090909091, -0.5],
             [0.05, -0.16666666666666666, -0.1111111111111111],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, $this->a->reciprocal()->asArray());
     }
 
     public function test_pow()
     {
-        $d = $this->a->pow($this->c)->asArray();
-
         $outcome = [
             [234256, 24137569, 1.1215665478461509E-13],
             [4, 1331, -32],
             [9.765625E-14, -0.16666666666666666, 22876792454961],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, $this->a->pow($this->c)->asArray());
     }
 
     public function test_scalar_multiply()
     {
-        $d = $this->a->multiplyScalar(2.5)->asArray();
-
         $outcome = [
             [55, -42.5, 30],
             [10., 27.5, -5.],
             [50, -15, -22.5],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, $this->a->multiplyScalar(2.5)->asArray());
     }
 
     public function test_scalar_divide()
     {
-        $d = $this->a->divideScalar(2.)->asArray();
-
         $outcome = [
             [11., -8.5, 6.],
             [2., 5.5, -1.],
             [10., -3., -4.5],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, $this->a->divideScalar(2.)->asArray());
     }
 
     public function test_scalar_add()
     {
-        $d = $this->a->addScalar(1)->asArray();
-
         $outcome = [
             [23, -16, 13],
             [5, 12, -1],
             [21, -5, -8],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, $this->a->addScalar(1)->asArray());
     }
 
     public function test_scalar_subtract()
     {
-        $d = $this->a->subtractScalar(10)->asArray();
-
         $outcome = [
             [12, -27, 2],
             [-6, 1, -12],
             [10, -16, -19],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, $this->a->subtractScalar(10)->asArray());
     }
 
     public function test_powScalar()
     {
-        $d = $this->a->pow(3)->asArray();
-
         $outcome = [
             [10648, -4913, 1728],
             [64, 1331, -8],
             [8000, -216, -729],
         ];
 
-        $this->assertEquals($outcome, $d);
+        $this->assertEquals($outcome, $this->a->pow(3)->asArray());
     }
 
     public function test_sum()
