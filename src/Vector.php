@@ -135,11 +135,10 @@ class Vector implements Tensor
     /**
      * Return a uniform random vector with mean 0 and unit variance.
      *
-     * @param  int  $m
      * @param  int  $n
      * @return self
      */
-    public static function uniform(int $m, int $n) : self
+    public static function uniform(int $n) : self
     {
         $a = [];
 
@@ -933,22 +932,6 @@ class Vector implements Tensor
     }
 
     /**
-     * Negate the vector i.e take the negative of each value elementwise.
-     *
-     * @return self
-     */
-    public function negate() : self
-    {
-        $b = [];
-
-        foreach ($this->a as $value) {
-            $b[] = -$value;
-        }
-
-        return self::quick($b);
-    }
-
-    /**
      * The sum of the vector.
      *
      * @return float
@@ -1139,6 +1122,22 @@ class Vector implements Tensor
             }
 
             $b[] = $value;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Negate the vector i.e take the negative of each value elementwise.
+     *
+     * @return self
+     */
+    public function negate() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $value) {
+            $b[] = -$value;
         }
 
         return self::quick($b);

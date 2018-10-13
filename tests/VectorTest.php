@@ -2,8 +2,9 @@
 
 namespace Rubix\Tensor\Tests;
 
-use Rubix\Tensor\Matrix;
+use Rubix\Tensor\Tensor;
 use Rubix\Tensor\Vector;
+use Rubix\Tensor\Matrix;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use IteratorAggregate;
@@ -20,16 +21,17 @@ class VectorTest extends TestCase
 
     public function setUp()
     {
-        $this->a = new Vector([-15, 25, 35, -36, -72, 89, 106, 45], true);
+        $this->a = Vector::build([-15, 25, 35, -36, -72, 89, 106, 45]);
 
-        $this->b = new Vector([0.25, 0.1, 2., -0.5, -1., -3.0, 3.3, 2.0], false);
+        $this->b = Vector::quick([0.25, 0.1, 2., -0.5, -1., -3.0, 3.3, 2.0]);
 
-        $this->c = new Vector([4., 6.5, 2.9, 20., 2.6, 11.9]);
+        $this->c = Vector::quick([4., 6.5, 2.9, 20., 2.6, 11.9]);
     }
 
-    public function test_build_structure()
+    public function test_build_vector()
     {
         $this->assertInstanceOf(Vector::class, $this->a);
+        $this->assertInstanceOf(Tensor::class, $this->a);
         $this->assertInstanceOf(Countable::class, $this->a);
         $this->assertInstanceOf(IteratorAggregate::class, $this->a);
         $this->assertInstanceOf(ArrayAccess::class, $this->a);
@@ -37,92 +39,175 @@ class VectorTest extends TestCase
 
     public function test_build_zeros()
     {
-        $this->assertEquals([0, 0, 0, 0], Vector::zeros(4)->asArray());
+        $z = Vector::zeros(4);
+
+        $y = [0, 0, 0, 0];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_build_ones()
     {
-        $this->assertEquals([1, 1, 1, 1], Vector::ones(4)->asArray());
+        $z = Vector::ones(4);
+
+        $y = [1, 1, 1, 1];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+    
+    public function test_build_fill()
+    {
+        $z = Vector::fill(16, 4);
+
+        $y = [16, 16, 16, 16];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_build_rand()
+    {
+        $z = Vector::rand(4);
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertCount(4, $z);
+    }
+
+    public function test_build_gaussian()
+    {
+        $z = Vector::gaussian(4);
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertCount(4, $z);
+    }
+
+    public function test_build_uniform()
+    {
+        $z = Vector::uniform(5);
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertCount(5, $z);
     }
 
     public function test_build_range()
     {
-        $outcome = [5., 7., 9., 11.];
+        $z = Vector::range(5., 12., 2.);
 
-        $this->assertEquals($outcome, Vector::range(5., 12., 2.)->asArray());
+        $y = [5., 7., 9., 11.];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_build_linspace()
     {
-        $outcome = [-5., -3.75, -2.5, -1.25, 0., 1.25, 2.5, 3.75, 5.];
+        $z = Vector::linspace(-5, 5, 9);
 
-        $this->assertEquals($outcome, Vector::linspace(-5, 5, 9)->asArray());
+        $y = [-5., -3.75, -2.5, -1.25, 0., 1.25, 2.5, 3.75, 5.];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertCount(9, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_maximum()
     {
-        $outcome = [0.25, 25, 35, -0.5, -1.0, 89, 106, 45];
+        $z = Vector::maximum($this->a, $this->b);
 
-        $this->assertEquals($outcome, Vector::maximum($this->a, $this->b)->asArray());
+        $y = [0.25, 25, 35, -0.5, -1.0, 89, 106, 45];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_minimum()
     {
-        $outcome = [-15, 0.1, 2.0, -36, -72, -3., 3.3, 2.];
+        $z = Vector::minimum($this->a, $this->b);
 
-        $this->assertEquals($outcome, Vector::minimum($this->a, $this->b)->asArray());
+        $y = [-15, 0.1, 2.0, -36, -72, -3., 3.3, 2.];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_shape()
+    {
+        $this->assertEquals([8], $this->a->shape());
+        $this->assertEquals([8], $this->b->shape());
+        $this->assertEquals([6], $this->c->shape());
+    }
+
+    public function test_size()
+    {
+        $this->assertEquals(8, $this->a->size());
+        $this->assertEquals(8, $this->b->size());
+        $this->assertEquals(6, $this->c->size());
     }
 
     public function test_get_n()
     {
         $this->assertEquals(8, $this->a->n());
+        $this->assertEquals(8, $this->b->n());
+        $this->assertEquals(6, $this->c->n());
     }
 
     public function test_as_array()
     {
-        $outcome = [-15, 25, 35, -36, -72, 89, 106, 45];
+        $z = $this->a->asArray();
 
-        $this->assertEquals($outcome, $this->a->asArray());
+        $y = [-15, 25, 35, -36, -72, 89, 106, 45];
+
+        $this->assertEquals($y, $z);
     }
 
     public function test_as_row_matrix()
     {
-        $outcome = [[-15, 25, 35, -36, -72, 89, 106, 45]];
+        $z = $this->a->asRowMatrix();
 
-        $this->assertEquals($outcome, $this->a->asRowMatrix()->asArray());
+        $y = [[-15, 25, 35, -36, -72, 89, 106, 45]];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_as_column_matrix()
     {
-        $outcome = [[-15], [25], [35], [-36], [-72], [89], [106], [45]];
+        $z = $this->a->asColumnMatrix();
 
-        $this->assertEquals($outcome, $this->a->asColumnMatrix()->asArray());
+        $y = [[-15], [25], [35], [-36], [-72], [89], [106], [45]];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_reshape()
     {
-        $d = $this->a->reshape(4, 2);
+        $z = $this->a->reshape(4, 2);
 
-        $outcome = [
+        $y = [
             [-15, 25],
             [35, -36],
             [-72, 89],
             [106, 45],
         ];
 
-        $this->assertEquals([4, 2], $d->shape());
-        $this->assertEquals($outcome, $d->asArray());
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals([4, 2], $z->shape());
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_map()
     {
-        $c = $this->a->map(function ($value) {
+        $z = $this->a->map(function ($value) {
             return $value > 0. ? 1 : 0;
         });
 
-        $outcome = [0, 1, 1, 0, 0, 1, 1, 1];
+        $y = [0, 1, 1, 0, 0, 1, 1, 1];
 
-        $this->assertEquals($outcome, $c->asArray());
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_reduce()
@@ -137,11 +222,15 @@ class VectorTest extends TestCase
     public function test_argmin()
     {
         $this->assertEquals(4, $this->a->argmin());
+        $this->assertEquals(5, $this->b->argmin());
+        $this->assertEquals(4, $this->c->argmin());
     }
 
     public function test_argmax()
     {
         $this->assertEquals(6, $this->a->argmax());
+        $this->assertEquals(6, $this->b->argmax());
+        $this->assertEquals(3, $this->c->argmax());
     }
 
     public function test_dot()
@@ -149,9 +238,16 @@ class VectorTest extends TestCase
         $this->assertEquals(331.54999999999995, $this->a->dot($this->b));
     }
 
+    public function test_inner()
+    {
+        $this->assertEquals(331.54999999999995, $this->a->inner($this->b));
+    }
+
     public function test_outer()
     {
-        $outcome = [
+        $z = $this->a->outer($this->b);
+
+        $y = [
             [-3.75, -1.5, -30., 7.5, 15., 45., -49.5, -30.],
             [6.25, 2.5, 50., -12.5, -25., -75., 82.5, 50.],
             [8.75, 3.5, 70., -17.5, -35., -105., 115.5, 70.],
@@ -162,7 +258,8 @@ class VectorTest extends TestCase
             [11.25, 4.5, 90., -22.5, -45., -135., 148.5, 90.],
         ];
 
-        $this->assertEquals($outcome, $this->a->outer($this->b)->asArray());
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_cross()
@@ -171,163 +268,353 @@ class VectorTest extends TestCase
 
         $b = new Vector([2., 0., 3.]);
 
-        $outcome = [-1.5, 9., 1.];
+        $z = $a->cross($b);
 
-        $this->assertEquals($outcome, $a->cross($b)->asArray());
+        $y = [-1.5, 9., 1.];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_multiply()
+    public function test_multiply_vector()
     {
-        $c = $this->a->multiply($this->b);
+        $z = $this->a->multiply($this->b);
 
-        $outcome = [-3.75, 2.5, 70., 18., 72., -267., 349.79999999999995, 90.];
+        $y = [-3.75, 2.5, 70., 18., 72., -267., 349.79999999999995, 90.];
 
-        $this->assertEquals($outcome, $c->asArray());
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_divide()
+    public function test_divide_vector()
     {
-        $c = $this->a->divide($this->b);
+        $z = $this->a->divide($this->b);
 
-        $outcome = [-60., 250., 17.5, 72., 72., -29.666666666666668, 32.121212121212125, 22.5];
+        $y = [-60., 250., 17.5, 72., 72., -29.666666666666668, 32.121212121212125, 22.5];
 
-        $this->assertEquals($outcome, $c->asArray());
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_add()
+    public function test_add_vector()
     {
-        $c = $this->a->add($this->b);
+        $z = $this->a->add($this->b);
 
-        $outcome = [-14.75, 25.1, 37., -36.5, -73., 86., 109.3, 47.];
+        $y = [-14.75, 25.1, 37., -36.5, -73., 86., 109.3, 47.];
 
-        $this->assertEquals($outcome, $c->asArray());
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_subtract()
+    public function test_subtract_vector()
     {
-        $c = $this->a->subtract($this->b);
+        $z = $this->a->subtract($this->b);
 
-        $outcome = [-15.25, 24.9, 33., -35.5, -71., 92., 102.7, 43.];
+        $y = [-15.25, 24.9, 33., -35.5, -71., 92., 102.7, 43.];
 
-        $this->assertEquals($outcome, $c->asArray());
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_scalar_multiply()
+    public function test_pow_vector()
     {
-        $outcome = [-30, 50, 70, -72, -144, 178, 212, 90];
+        $z = $this->b->pow($this->a);
 
-        $this->assertEquals($outcome, $this->a->multiplyScalar(2)->asArray());
+        $y = [
+            1073741824.0, 1.0000000000000014E-25, 34359738368.0, 68719476736.0,
+            1., -2.909321189362571E+42, 9.172286825801562E+54, 35184372088832.0,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_scalar_divide()
+    public function test_mod_vector()
     {
-        $outcome = [-7.5, 12.5, 17.5, -18, -36, 44.5, 53, 22.5];
+        $z = $this->b->mod($this->a);
 
-        $this->assertEquals($outcome, $this->a->divideScalar(2)->asArray());
+        $y = [0, 0, 2, 0, -1, -3, 3, 2];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_scalar_add()
+    public function test_multiply_scalar()
     {
-        $outcome = [-5, 35, 45, -26, -62, 99, 116, 55];
+        $z = $this->a->multiply(2);
+        
+        $y = [-30, 50, 70, -72, -144, 178, 212, 90];
 
-        $this->assertEquals($outcome, $this->a->addScalar(10)->asArray());
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_sum()
+    public function test_divide_scalar()
     {
-        $this->assertEquals(177., $this->a->sum());
+        $z = $this->a->divide(2);
+
+        $y = [-7.5, 12.5, 17.5, -18, -36, 44.5, 53, 22.5];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_product()
+    public function test_add_scalar()
     {
-        $this->assertEquals(-14442510600000.0, $this->a->product());
+        $z = $this->a->add(10);
+
+        $y = [-5, 35, 45, -26, -62, 99, 116, 55];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_subtract_scalar()
+    {
+        $z = $this->a->subtract(10);
+
+        $y = [-25, 15, 25, -46, -82, 79, 96, 35];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_pow_scalar()
+    {
+        $z = $this->a->pow(4);
+
+        $y = [
+            50625, 390625, 1500625, 1679616, 26873856, 62742241, 126247696, 4100625
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_mod_scalar()
+    {
+        $z = $this->a->mod(4);
+
+        $y = [-3, 1, 3,0, 0, 1, 2, 1];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    
     public function test_abs()
     {
-        $outcome = [15, 25, 35, 36, 72, 89, 106, 45];
+        $z = $this->a->abs();
 
-        $this->assertEquals($outcome, $this->a->abs()->asArray());
+        $y = [15, 25, 35, 36, 72, 89, 106, 45];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_square()
     {
-        $outcome = [225, 625, 1225, 1296, 5184, 7921, 11236, 2025];
+        $z = $this->a->square();
 
-        $this->assertEquals($outcome, $this->a->square()->asArray());
+        $y = [225, 625, 1225, 1296, 5184, 7921, 11236, 2025];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_pow()
     {
-        $outcome = [-3375, 15625, 42875, -46656, -373248, 704969, 1191016, 91125];
+        $z = $this->a->pow(3);
 
-        $this->assertEquals($outcome, $this->a->pow(3)->asArray());
+        $y = [-3375, 15625, 42875, -46656, -373248, 704969, 1191016, 91125];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_sqrt()
     {
-        $outcome = [
+        $z = $this->c->sqrt();
+
+        $y = [
             2., 2.5495097567963922, 1.70293863659264, 4.47213595499958,
             1.61245154965971, 3.449637662132068,
         ];
 
-        $this->assertEquals($outcome, $this->c->sqrt()->asArray());
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_exp()
     {
-        $outcome = [
+        $z = $this->a->exp();
+
+        $y = [
             3.059023205018258E-7, 72004899337.38588, 1586013452313430.8,
             2.3195228302435696E-16, 5.380186160021138E-32, 4.4896128191743455E+38,
             1.0844638552900231E+46, 3.4934271057485095E+19,
         ];
 
-        $this->assertEquals($outcome, $this->a->exp()->asArray());
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_log()
     {
-        $outcome = [
+        $z = $this->c->log();
+
+        $y = [
             1.3862943611198906, 1.8718021769015913, 1.0647107369924282,
             2.995732273553991, 0.9555114450274363, 2.4765384001174837,
         ];
 
-        $this->assertEquals($outcome, $this->c->log()->asArray());
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_clip()
+    public function test_sin()
     {
-        $outcome = [0., 25, 35, 0., 0., 89, 100., 45];
+        $z = $this->c->sin();
 
-        $this->assertEquals($outcome, $this->a->clip(0., 100)->asArray());
+        $y = [
+            -0.7568024953079282, 0.21511998808781552, 0.23924932921398243,
+            0.9129452507276277, 0.5155013718214642, -0.6181371122370333,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_negate()
+    public function test_cos()
     {
-        $outcome = [15, -25, -35, 36, 72, -89, -106, -45];
+        $z = $this->c->cos();
 
-        $this->assertEquals($outcome, $this->a->negate()->asArray());
+        $y = [
+            -0.6536436208636119, 0.9765876257280235, -0.9709581651495905,
+            0.40808206181339196, -0.8568887533689473, 0.7860702961410393,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_scalar_subtract()
+    public function test_sum()
     {
-        $outcome = [-25, 15, 25, -46, -82, 79, 96, 35];
+        $this->assertEquals(177., $this->a->sum());
+        $this->assertEquals(3.15, $this->b->sum());
+        $this->assertEquals(47.9, $this->c->sum());
+    }
 
-        $this->assertEquals($outcome, $this->a->subtractScalar(10)->asArray());
+    public function test_product()
+    {
+        $this->assertEquals(-14442510600000.0, $this->a->product());
+        $this->assertEquals(-0.49500000000000005, $this->b->product());
+        $this->assertEquals(46657.52, $this->c->product());
+    }
+
+    public function test_min()
+    {
+        $this->assertEquals(-72, $this->a->min());
+        $this->assertEquals(-3, $this->b->min());
+        $this->assertEquals(2.6, $this->c->min());
+    }
+
+    public function test_max()
+    {
+        $this->assertEquals(106, $this->a->max());
+        $this->assertEquals(3.3, $this->b->max());
+        $this->assertEquals(20., $this->c->max());
+    }
+
+    public function test_mean()
+    {
+        $this->assertEquals(22.125, $this->a->mean());
+        $this->assertEquals(0.39375, $this->b->mean());
+        $this->assertEquals(7.983333333333333, $this->c->mean());
+    }
+
+    public function test_median()
+    {
+        $this->assertEquals(30., $this->a->median());
+        $this->assertEquals(0.175, $this->b->median());
+        $this->assertEquals(5.25, $this->c->median());
+    }
+
+    public function test_variance()
+    {
+        $this->assertEquals(25820.875, $this->a->variance());
+        $this->assertEquals(27.972187499999997, $this->b->variance());
+        $this->assertEquals(232.62833333333327, $this->c->variance());
+    }
+
+    public function test_round()
+    {
+        $z = $this->c->round(2);
+
+        $y = [4.0, 6.5, 2.9, 20., 2.6, 11.9];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_floor()
+    {
+        $z = $this->c->floor();
+
+        $y = [4., 6., 2., 20., 2., 11.];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_ceil()
+    {
+        $z = $this->c->ceil(2);
+
+        $y = [4., 7., 3., 20., 3., 12.];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_l1_norm()
     {
         $this->assertEquals(423., $this->a->l1Norm());
+        $this->assertEquals(12.149999999999999, $this->b->l1Norm());
+        $this->assertEquals(47.9, $this->c->l1Norm());
     }
 
     public function test_l2_norm()
     {
         $this->assertEquals(172.4441938715247, $this->a->l2Norm());
+        $this->assertEquals(5.404858925078433, $this->b->l2Norm());
+        $this->assertEquals(24.799798386277256, $this->c->l2Norm());
     }
 
     public function test_max_norm()
     {
         $this->assertEquals(106., $this->a->maxNorm());
+        $this->assertEquals(3.3, $this->b->maxNorm());
+        $this->assertEquals(20., $this->c->maxNorm());
+    }
+
+    public function test_clip()
+    {
+        $z = $this->a->clip(0., 100);
+
+        $y = [0., 25, 35, 0., 0., 89, 100., 45];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_negate()
+    {
+        $z = $this->a->negate();
+
+        $y = [15, -25, -35, 36, 72, -89, -106, -45];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 }

@@ -23,25 +23,25 @@ class MatrixTest extends TestCase
 
     public function setUp()
     {
-        $this->a = new Matrix([
+        $this->a = Matrix::build([
             [22, -17, 12],
             [4, 11, -2],
             [20, -6, -9],
-        ], true);
+        ]);
 
-        $this->b = new Matrix([
+        $this->b = Matrix::quick([
             [13],
             [11],
             [9],
-        ], false);
+        ]);
 
-        $this->c = new Matrix([
+        $this->c = Matrix::quick([
             [4, 6, -12],
             [1, 3, 5],
             [-10, -1, 14],
-        ], false);
+        ]);
 
-        $this->d = new Vector([2, 10, -1]);
+        $this->d = Vector::quick([2, 10, -1]);
     }
 
     public function test_build_matrix()
@@ -126,9 +126,9 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_build_random()
+    public function test_build_rand()
     {
-        $z = Matrix::gaussian(4, 4);
+        $z = Matrix::rand(4, 4);
 
         $this->assertInstanceOf(Matrix::class, $z);
         $this->assertCount(16, $z);
