@@ -498,6 +498,19 @@ class VectorTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_tan()
+    {
+        $z = $this->c->tan();
+
+        $y = [
+            1.1578212823495777, 0.22027720034589682, -0.24640539397196634,
+            2.237160944224742, -0.6015966130897586, -0.7863636563696398,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_sum()
     {
         $this->assertEquals(177., $this->a->sum());

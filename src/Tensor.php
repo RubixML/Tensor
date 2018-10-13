@@ -27,6 +27,200 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function size() : int;
 
     /**
+     * Map a function over all of the elements in the tensor.
+     *
+     * @param  callable  $fn
+     * @return mixed
+     */
+    public function map(callable $fn);
+
+    /**
+     * Reduce the tensor down to a scalar.
+     *
+     * @param  callable  $fn
+     * @param  float  $initial
+     * @return float
+     */
+    public function reduce(callable $fn, float $initial = 0.) : float;
+
+    /**
+     * Multiply this tensor with another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function multiply($b);
+
+    /**
+     * Divide this tensor by another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function divide($b);
+
+    /**
+     * Add this tensor to another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function add($b);
+
+    /**
+     * Subtract this tensor from another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function subtract($b);
+
+    /**
+     * Raise this tensor to the power of another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function pow($b);
+
+    /**
+     * Calculate the modulus of this tensor and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function mod($b);
+
+    /**
+     * Take the absolute value of the tensor.
+     *
+     * @return mixed
+     */
+    public function abs();
+
+    /**
+     * Square the tensor.
+     *
+     * @return mixed
+     */
+    public function square();
+
+    /**
+     * Return the square root of the tensor.
+     *
+     * @return mixed
+     */
+    public function sqrt();
+
+    /**
+     * Return the exponential of the tensor.
+     *
+     * @return mixed
+     */
+    public function exp();
+
+    /**
+     * Return the logarithm of the tensor in a specified base.
+     *
+     * @param  float  $base
+     * @return mixed
+     */
+    public function log(float $base = M_E);
+
+    /**
+     * Return the sine of the tensor.
+     *
+     * @return mixed
+     */
+    public function sin();
+
+    /**
+     * Return the cosine of the tensor.
+     *
+     * @return mixed
+     */
+    public function cos();
+
+    /**
+     * Return the tangent of the tensor.
+     *
+     * @return mixed
+     */
+    public function tan();
+
+    /**
+     * Sum the tensor.
+     *
+     * @return mixed
+     */
+    public function sum();
+
+    /**
+     * Calculate the product of the tensor.
+     *
+     * @return mixed
+     */
+    public function product();
+
+    /**
+     * Return the minimum of the tensor.
+     *
+     * @return mixed
+     */
+    public function min();
+
+    /**
+     * Return the maximum of the tensor.
+     *
+     * @return mixed
+     */
+    public function max();
+
+    /**
+     * Round the elements in the tensor to a given decimal place.
+     *
+     * @param  int  $precision
+     * @return self
+     */
+    public function round(int $precision = 0);
+
+    /**
+     * Round the tensor down to the nearest integer.
+     *
+     * @return mixed
+     */
+    public function floor();
+
+    /**
+     * Round the tensor up to the nearest integer.
+     *
+     * @return mixed
+     */
+    public function ceil();
+
+    /**
+     * Clip the tensor to be between the given minimum and maximum.
+     *
+     * @param  float  $min
+     * @param  float  $max
+     * @return mixed
+     */
+    public function clip(float $min, float $max);
+
+    /**
+     * Negate the tensor i.e take the negative.
+     *
+     * @return mixed
+     */
+    public function negate();
+
+    /**
      * Return the elements of the tensor in an array.
      *
      * @return array

@@ -9,7 +9,7 @@ use ArrayIterator;
 /**
  * Matrix
  *
- * Two dimensional tensor with integer and/or floating point elements.
+ * A two dimensional (rank 2) tensor with integer and/or floating point elements.
  *
  * @category    Linear Algebra
  * @package     Rubix/Tensor
@@ -18,9 +18,9 @@ use ArrayIterator;
 class Matrix implements Tensor
 {
     /**
-     * The 2-dimensional array that holds the values of the matrix.
+     * The 2-dimensional sequential array that holds the values of the matrix.
      *
-     * @var array
+     * @var array[]
      */
     protected $a = [
         //
@@ -132,7 +132,7 @@ class Matrix implements Tensor
      * Build a diagonal matrix with the value of each element along the
      * diagonal and 0s everywhere else.
      *
-     * @param  array  $elements
+     * @param  (int|float)[]  $elements
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -145,11 +145,18 @@ class Matrix implements Tensor
                 . ' greater than 0 along both axis.');
         }
 
-        $a = [[]];
+        foreach ($elements as $element) {
+            if (!is_int($element) and !is_float($element)) {
+                throw new InvalidArgumentException('Diagonal element'
+                    . ' must be an integer or float.');
+            }
+        }
+
+        $a = [];
 
         for ($i = 0; $i < $n; $i++) {
             for ($j = 0; $j < $n; $j++) {
-                $a[$i][$j] = ($i === $j) ? $elements[$i] : 0;
+                $a[$i][] = ($i === $j) ? $elements[$i] : 0;
             }
         }
 
@@ -388,7 +395,7 @@ class Matrix implements Tensor
      * Return a row from the matrix.
      *
      * @param  int  $index
-     * @return array
+     * @return (int|float)[]
      */
     public function row(int $index) : array
     {
@@ -410,7 +417,7 @@ class Matrix implements Tensor
      * Return a column from the matrix.
      *
      * @param  int  $index
-     * @return array
+     * @return (int|float)[]
      */
     public function column(int $index) : array
     {
@@ -431,7 +438,7 @@ class Matrix implements Tensor
     /**
      * Return the elements of the matrix in a 2-d array.
      *
-     * @return array
+     * @return array[]
      */
     public function asArray() : array
     {
@@ -441,7 +448,7 @@ class Matrix implements Tensor
     /**
      * Return each row as a vector in an array.
      *
-     * @return array
+     * @return \Rubix\Tensor\Vector[]
      */
     public function asVectors() : array
     {
@@ -469,29 +476,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Trace the matrix along the diagonal i.e return the sum of all diagonal
-     * elements of a square matrix.
-     *
-     * @throws \InvalidArgumentException
-     * @return float
-     */
-    public function trace() : float
-    {
-        if ($this->m !== $this->n) {
-            throw new InvalidArgumentException('Cannot trace a non square'
-                . ' matrix.');
-        }
-
-        $sigma = 0.;
-
-        for ($i = 0; $i < $this->m; $i++) {
-            $sigma += $this->a[$i][$i];
-        }
-
-        return $sigma;
-    }
-
-        /**
      * Return the index of the minimum element in every row of the matrix.
      * 
      * @return \Rubix\Tensor\Vector
@@ -527,10 +511,9 @@ class Matrix implements Tensor
      * Run a function over all of the elements in the matrix.
      *
      * @param  callable  $fn
-     * @param  bool  $quick
      * @return self
      */
-    public function map(callable $fn, bool $quick = false) : self
+    public function map(callable $fn) : self
     {
         $b = [];
 
@@ -538,7 +521,7 @@ class Matrix implements Tensor
             $b[] = array_map($fn, $row);
         }
 
-        return new self($b, !$quick);
+        return new self($b, true);
     }
 
     /**
@@ -887,570 +870,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Take the dot product of this matrix and another matrix.
-     *
-     * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function dotMatrix(Matrix $b) : self
-    {
-        if ($b->m() !== $this->n) {
-            throw new InvalidArgumentException('Matrix dimensions do not'
-                . ' match. ' . (string) $this->n . ' rows needed but found'
-                . ' ' . (string) $b->m() . '.');
-        }
-
-        $bT = $b->transpose();
-
-        $c = [[]];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($bT as $column) {
-                $sigma = 0;
-
-                foreach ($row as $k => $value) {
-                    $sigma += $value * $column[$k];
-                }
-
-                $c[$i][] = $sigma;
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Return the elementwise product between this matrix and another matrix.
-     *
-     * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function multiplyMatrix(Matrix $b) : self
-    {
-        if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
-
-            foreach ($rowA as $j => $value) {
-                $c[$i][] = $value * $rowB[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Return the division of two elements, elementwise.
-     *
-     * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function divideMatrix(Matrix $b) : self
-    {
-        if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
-
-            foreach ($rowA as $j => $value) {
-                $c[$i][] = $value / $rowB[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Add this matrix together with another matrix.
-     *
-     * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function addMatrix(Matrix $b) : self
-    {
-        if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
-
-            foreach ($rowA as $j => $value) {
-                $c[$i][] = $value + $rowB[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Subtract this matrix from another matrix.
-     *
-     * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function subtractMatrix(Matrix $b) : self
-    {
-        if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
-
-            foreach ($rowA as $j => $value) {
-                $c[$i][] = $value - $rowB[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Raise this matrix to the power of the elementwise entry in another
-     * matrix.
-     *
-     * @param \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function powMatrix(Matrix $b) : self
-    {
-        if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
-
-            foreach ($rowA as $j => $value) {
-                $c[$i][] = $value ** $rowB[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Calculate the modulus i.e remainder of division between this matri and
-     * another matrix.
-     *
-     * @param \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function modMatrix(Matrix $b) : self
-    {
-        if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
-
-            foreach ($rowA as $j => $value) {
-                $c[$i][] = $value % $rowB[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Take the dot product of this matrix and another matrix.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function dotVector(Vector $b) : self
-    {
-        if ($b->size() !== $this->n) {
-            throw new InvalidArgumentException('Vector dimensions do not'
-                . ' match. ' . (string) $this->n . ' rows needed but found'
-                . ' ' . (string) $b->size() . '.');
-        }
-
-        return $this->dotMatrix($b->asColumnMatrix());
-    }
-
-    /**
-     * Multiply this matrix by a vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function multiplyVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $c[$i][] = $value * $b[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Divide this matrix by a vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function divideVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $c[$i][] = $value / $b[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Add this matrix by a vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function addVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $c[$i][] = $value + $b[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Subtract this matrix to the power of a vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function subtractVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $c[$i][] = $value - $b[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Raise this matrix to a vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function powVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $c[$i][] = $value ** $b[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Calculate the modulus of this matrix with a vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function modVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $c[$i][] = $value % $b[$j];
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Multiply this matrix by a scalar.
-     *
-     * @param  int|float  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function multiplyScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $value) {
-                $b[$i][] = $value * $scalar;
-            }
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Divide this matrix by a scalar.
-     *
-     * @param  int|float  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function divideScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $value) {
-                $b[$i][] = $value / $scalar;
-            }
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Add this matrix by a scalar.
-     *
-     * @param  int|float  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function addScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $value) {
-                $b[$i][] = $value + $scalar;
-            }
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Subtract this matrix by a scalar.
-     *
-     * @param  int|float  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function subtractScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $value) {
-                $b[$i][] = $value - $scalar;
-            }
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Raise the matrix to a given scalar power.
-     *
-     * @param  int|float  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function powScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Exponent must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $value) {
-                $b[$i][] = $value ** $scalar;
-            }
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Calculate the modulus of this matrix with a scalar.
-     *
-     * @param  int|float  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function modScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Exponent must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $value) {
-                $b[$i][] = $value % $scalar;
-            }
-        }
-
-        return self::quick($b);
-    }
-
-    /**
      * Return the absolute value of each element in the matrix.
      *
      * @return self
@@ -1560,6 +979,22 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the tangent of the matrix.
+     *
+     * @return self
+     */
+    public function tan() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $b[] = array_map('tan', $row);
+        }
+
+        return self::quick($b);
+    }
+
+    /**
      * Sum the rows of the matrix and return a vector.
      *
      * @return \Rubix\Tensor\Vector
@@ -1567,6 +1002,29 @@ class Matrix implements Tensor
     public function sum() : Vector
     {
         return Vector::quick(array_map('array_sum', $this->a));
+    }
+
+    /**
+     * Trace the matrix along the diagonal i.e return the sum of all diagonal
+     * elements of a square matrix.
+     *
+     * @throws \InvalidArgumentException
+     * @return float
+     */
+    public function trace() : float
+    {
+        if ($this->m !== $this->n) {
+            throw new InvalidArgumentException('Cannot trace a non square'
+                . ' matrix.');
+        }
+
+        $sigma = 0.;
+
+        for ($i = 0; $i < $this->m; $i++) {
+            $sigma += $this->a[$i][$i];
+        }
+
+        return $sigma;
     }
 
     /**
@@ -1609,7 +1067,7 @@ class Matrix implements Tensor
         $b = [];
 
         foreach ($this->a as $row) {
-            $b[] = array_sum($row) / $this->m;
+            $b[] = array_sum($row) / $this->n;
         }
 
         return Vector::quick($b);
@@ -1918,6 +1376,570 @@ class Matrix implements Tensor
         }
 
         return self::quick($c);
+    }
+
+    /**
+     * Take the dot product of this matrix and another matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function dotMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->n) {
+            throw new InvalidArgumentException('Matrix dimensions do not'
+                . ' match. ' . (string) $this->n . ' rows needed but found'
+                . ' ' . (string) $b->m() . '.');
+        }
+
+        $bT = $b->transpose();
+
+        $c = [[]];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($bT as $column) {
+                $sigma = 0;
+
+                foreach ($row as $k => $value) {
+                    $sigma += $value * $column[$k];
+                }
+
+                $c[$i][] = $sigma;
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the elementwise product between this matrix and another matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function multiplyMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $this->m . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $this->n . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+
+            foreach ($rowA as $j => $value) {
+                $c[$i][] = $value * $rowB[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the division of two elements, elementwise.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function divideMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $this->m . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $this->n . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+
+            foreach ($rowA as $j => $value) {
+                $c[$i][] = $value / $rowB[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Add this matrix together with another matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function addMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $this->m . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $this->n . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+
+            foreach ($rowA as $j => $value) {
+                $c[$i][] = $value + $rowB[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Subtract this matrix from another matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function subtractMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $this->m . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $this->n . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+
+            foreach ($rowA as $j => $value) {
+                $c[$i][] = $value - $rowB[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Raise this matrix to the power of the elementwise entry in another
+     * matrix.
+     *
+     * @param \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function powMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $this->m . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $this->n . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+
+            foreach ($rowA as $j => $value) {
+                $c[$i][] = $value ** $rowB[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Calculate the modulus i.e remainder of division between this matri and
+     * another matrix.
+     *
+     * @param \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function modMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $this->m . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $this->n . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+
+            foreach ($rowA as $j => $value) {
+                $c[$i][] = $value % $rowB[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Take the dot product of this matrix and another matrix.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function dotVector(Vector $b) : self
+    {
+        if ($b->size() !== $this->n) {
+            throw new InvalidArgumentException('Vector dimensions do not'
+                . ' match. ' . (string) $this->n . ' rows needed but found'
+                . ' ' . (string) $b->size() . '.');
+        }
+
+        return $this->dotMatrix($b->asColumnMatrix());
+    }
+
+    /**
+     * Multiply this matrix by a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function multiplyVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector does not have the same'
+            . ' number of columns. ' . (string) $this->n . ' needed but found '
+            . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $value * $b[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Divide this matrix by a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function divideVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector does not have the same'
+            . ' number of columns. ' . (string) $this->n . ' needed but found '
+            . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $value / $b[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Add this matrix by a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function addVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector does not have the same'
+            . ' number of columns. ' . (string) $this->n . ' needed but found '
+            . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $value + $b[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Subtract this matrix to the power of a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function subtractVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector does not have the same'
+            . ' number of columns. ' . (string) $this->n . ' needed but found '
+            . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $value - $b[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Raise this matrix to a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function powVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector does not have the same'
+            . ' number of columns. ' . (string) $this->n . ' needed but found '
+            . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $value ** $b[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Calculate the modulus of this matrix with a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function modVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector does not have the same'
+            . ' number of columns. ' . (string) $this->n . ' needed but found '
+            . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $value % $b[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Multiply this matrix by a scalar.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function multiplyScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $b[$i][] = $value * $scalar;
+            }
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Divide this matrix by a scalar.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function divideScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $b[$i][] = $value / $scalar;
+            }
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Add this matrix by a scalar.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function addScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $b[$i][] = $value + $scalar;
+            }
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Subtract this matrix by a scalar.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function subtractScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $b[$i][] = $value - $scalar;
+            }
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Raise the matrix to a given scalar power.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function powScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Exponent must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $b[$i][] = $value ** $scalar;
+            }
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Calculate the modulus of this matrix with a scalar.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function modScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Exponent must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $b[$i][] = $value % $scalar;
+            }
+        }
+
+        return self::quick($b);
     }
 
     /**

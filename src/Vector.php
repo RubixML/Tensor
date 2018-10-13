@@ -9,7 +9,7 @@ use ArrayIterator;
 /**
  * Vector
  *
- * One dimensional tensor with integer and/or floating point elements.
+ * A one dimensional (rank 1) tensor with integer and/or floating point elements.
  *
  * @category    Linear Algebra
  * @package     Rubix/Tensor
@@ -18,7 +18,7 @@ use ArrayIterator;
 class Vector implements Tensor
 {
     /**
-     * The 1-d array that holds the values of the vector.
+     * The 1-d sequential array that holds the values of the vector.
      *
      * @var array
      */
@@ -326,11 +326,11 @@ class Vector implements Tensor
 
         $index = 0;
 
-        $b = [[]];
+        $b = [];
 
         for ($i = 0; $i < $m; $i++) {
             for ($j = 0; $j < $n; $j++) {
-                $b[$i][$j] = $this->a[$index++];
+                $b[$i][] = $this->a[$index++];
             }
         }
 
@@ -361,12 +361,11 @@ class Vector implements Tensor
      * Map a function over the elements in the vector and return a new vector.
      *
      * @param  callable  $fn
-     * @param  bool  $quick
      * @return self
      */
-    public function map(callable $fn, bool $quick = false) : self
+    public function map(callable $fn) : self
     {
-        return new self(array_map($fn, $this->a), !$quick);
+        return new self(array_map($fn, $this->a), true);
     }
 
     /**
@@ -429,26 +428,20 @@ class Vector implements Tensor
     }
 
     /**
-     * Compute the dot product of this vector and another vector.
+     * Dot this vector with another tensor elementwise.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return float
      */
-    public function dot(Vector $b) : float
+    public function dot($b) : float
     {
-        if ($this->n !== $b->size()) {
-            throw new InvalidArgumentException('Vectors do not have the same'
-                . ' dimensionality.');
+        if ($b instanceof Vector) {
+            return $this->dotVector($b);
         }
 
-        $sigma = 0.;
-
-        foreach ($this->a as $i => $value) {
-            $sigma += $value * $b[$i];
-        }
-
-        return $sigma;
+        throw new InvalidArgumentException('Cannot dot vector with a'
+            . ' ' . gettype($b) . '.');
     }
 
     /**
@@ -620,288 +613,6 @@ class Vector implements Tensor
     }
 
     /**
-     * Multiply this vector with another vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function multiplyVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector dimensionality does not'
-                . ' match.' . (string) $this->n . ' needed but'
-                . ' found ' . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $value) {
-            $c[] = $value * $b[$i];
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Divide this vector by another vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function divideVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector dimensionality does not'
-                . ' match.' . (string) $this->n . ' needed but'
-                . ' found ' . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $value) {
-            $c[] = $value / $b[$i];
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Add this vector to another vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function addVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector dimensionality does not'
-                . ' match.' . (string) $this->n . ' needed but'
-                . ' found ' . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $value) {
-            $c[] = $value + $b[$i];
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Subtract this vector from another vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function subtractVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector dimensionality does not'
-                . ' match.' . (string) $this->n . ' needed but'
-                . ' found ' . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $value) {
-            $c[] = $value - $b[$i];
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Raise this vector to a power of another vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function powVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector dimensionality does not'
-                . ' match.' . (string) $this->n . ' needed but'
-                . ' found ' . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $value) {
-            $c[] = $value ** $b[$i];
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Calculate the modulus of this vector with another vector elementwise.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function modVector(Vector $b) : self
-    {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector dimensionality does not'
-                . ' match.' . (string) $this->n . ' needed but'
-                . ' found ' . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($this->a as $i => $value) {
-            $c[] = $value % $b[$i];
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Multiply this vector by a scalar.
-     *
-     * @param  mixed  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function multiplyScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $value) {
-            $b[] = $value * $scalar;
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Divide this vector by a scalar.
-     *
-     * @param  mixed  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function divideScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $value) {
-            $b[] = $value / $scalar;
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Add a scalar to this vector.
-     *
-     * @param  mixed  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function addScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Factor must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $value) {
-            $b[] = $value + $scalar;
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Subtract a scalar from this vector.
-     *
-     * @param  mixed  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function subtractScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $value) {
-            $b[] = $value - $scalar;
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Raise the vector to a the power of a scalar value.
-     *
-     * @param  int|float  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function powScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $value) {
-            $b[] = $value ** $scalar;
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Calculate the modulus of this vector with a scalar.
-     *
-     * @param  int|float  $scalar
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function modScalar($scalar) : self
-    {
-        if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
-        }
-
-        $b = [];
-
-        foreach ($this->a as $value) {
-            $b[] = $value % $scalar;
-        }
-
-        return self::quick($b);
-    }
-
-    /**
      * Take the absolute value of the vector.
      *
      * @return self
@@ -976,6 +687,16 @@ class Vector implements Tensor
     public function cos() : self
     {
         return self::quick(array_map('cos', $this->a));
+    }
+
+    /**
+     * Return the tangent of this vector.
+     *
+     * @return self
+     */
+    public function tan() : self
+    {
+        return self::quick(array_map('tan', $this->a));
     }
 
     /**
@@ -1149,6 +870,311 @@ class Vector implements Tensor
 
         foreach ($this->a as $value) {
             $b[] = -$value;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Compute the dot product of this vector and another vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return float
+     */
+    protected function dotVector(Vector $b) : float
+    {
+        if ($this->n !== $b->size()) {
+            throw new InvalidArgumentException('Vectors do not have the same'
+                . ' dimensionality.');
+        }
+
+        $sigma = 0.;
+
+        foreach ($this->a as $i => $value) {
+            $sigma += $value * $b[$i];
+        }
+
+        return $sigma;
+    }
+
+    /**
+     * Multiply this vector with another vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function multiplyVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $value) {
+            $c[] = $value * $b[$i];
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Divide this vector by another vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function divideVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $value) {
+            $c[] = $value / $b[$i];
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Add this vector to another vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function addVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $value) {
+            $c[] = $value + $b[$i];
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Subtract this vector from another vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function subtractVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $value) {
+            $c[] = $value - $b[$i];
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Raise this vector to a power of another vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function powVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $value) {
+            $c[] = $value ** $b[$i];
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Calculate the modulus of this vector with another vector elementwise.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function modVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Vector dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $value) {
+            $c[] = $value % $b[$i];
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Multiply this vector by a scalar.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function multiplyScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $value) {
+            $b[] = $value * $scalar;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Divide this vector by a scalar.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function divideScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $value) {
+            $b[] = $value / $scalar;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Add a scalar to this vector.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function addScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Factor must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $value) {
+            $b[] = $value + $scalar;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Subtract a scalar from this vector.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function subtractScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $value) {
+            $b[] = $value - $scalar;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Raise the vector to a the power of a scalar value.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function powScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $value) {
+            $b[] = $value ** $scalar;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Calculate the modulus of this vector with a scalar.
+     *
+     * @param  int|float  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function modScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer or'
+                . ' float ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $value) {
+            $b[] = $value % $scalar;
         }
 
         return self::quick($b);

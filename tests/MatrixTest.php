@@ -769,6 +769,20 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_tan()
+    {
+        $z = $this->b->tan();
+
+        $y = [
+            [0.4630211329364896],
+            [-225.95084645419513],
+            [-0.45231565944180985],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_sum()
     {
         $z = $this->a->sum();

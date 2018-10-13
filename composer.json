@@ -5,7 +5,7 @@
     "homepage": "https://github.com/RubixML/Tensor",
     "license": "MIT",
     "keywords": [
-        "math", "linear-algebra", "matrix", "vector", "tensor"
+        "math", "linear-algebra", "matrix", "vector", "tensor", "statistics"
     ],
     "authors": [
         {
