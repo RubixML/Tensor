@@ -338,6 +338,26 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the index of the minimum element in the vector.
+     * 
+     * @return int
+     */
+    public function argmin() : int
+    {
+        return (int) array_search(min($this->a), $this->a);
+    }
+
+    /**
+     * Return the index of the maximum element in the vector.
+     * 
+     * @return int
+     */
+    public function argmax() : int
+    {
+        return (int) array_search(max($this->a), $this->a);
+    }
+
+    /**
      * Map a function over the elements in the vector and return a new vector.
      *
      * @param  callable  $fn
@@ -362,23 +382,50 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the index of the minimum element in the vector.
-     * 
-     * @return int
+     * Calculate the L1 or Manhattan norm of the vector.
+     *
+     * @return float
      */
-    public function argmin() : int
+    public function l1Norm() : float
     {
-        return (int) array_search(min($this->a), $this->a);
+        return $this->abs()->sum();
     }
 
     /**
-     * Return the index of the maximum element in the vector.
-     * 
-     * @return int
+     * Calculate the L2 or Euclidean norm of the vector.
+     *
+     * @return float
      */
-    public function argmax() : int
+    public function l2Norm() : float
     {
-        return (int) array_search(max($this->a), $this->a);
+        return sqrt($this->square()->sum());
+    }
+
+    /**
+     * Calculate the p-norm of the vector.
+     *
+     * @param  float  $p
+     * @throws \InvalidArgumentException
+     * @return float
+     */
+    public function pNorm(float $p = 3.) : float
+    {
+        if ($p < 0.) {
+            throw new InvalidArgumentException('P must be greater'
+                . ' than 0.');
+        }
+
+        return $this->abs()->powScalar($p)->sum() ** (1. / $p);
+    }
+
+    /**
+     * Calculate the max norm of the vector.
+     *
+     * @return float
+     */
+    public function maxNorm() : float
+    {
+        return $this->abs()->max();
     }
 
     /**
@@ -978,7 +1025,7 @@ class Vector implements Tensor
      */
     public function mean() : float
     {
-        return array_sum($this->a) / $this->n;
+        return $this->sum() / $this->n;
     }
 
     /**
@@ -1058,42 +1105,6 @@ class Vector implements Tensor
     public function ceil() : self
     {
         return self::quick(array_map('ceil', $this->a));
-    }
-
-    /**
-     * Calculate the L1 or Manhattan norm of the vector.
-     *
-     * @return float
-     */
-    public function l1Norm() : float
-    {
-        return (float) array_sum(array_map('abs', $this->a));
-    }
-
-    /**
-     * Calculate the L2 or Euclidean norm of the vector.
-     *
-     * @return float
-     */
-    public function l2Norm() : float
-    {
-        $norm = 0.;
-
-        foreach ($this->a as $value) {
-            $norm += $value ** 2;
-        }
-
-        return sqrt($norm);
-    }
-
-    /**
-     * Calculate the max norm of the vector.
-     *
-     * @return float
-     */
-    public function maxNorm() : float
-    {
-        return (float) max(array_map('abs', $this->a));
     }
 
     /**

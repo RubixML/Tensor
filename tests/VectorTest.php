@@ -591,6 +591,13 @@ class VectorTest extends TestCase
         $this->assertEquals(24.799798386277256, $this->c->l2Norm());
     }
 
+    public function test_p_norm()
+    {
+        $this->assertEquals(135.15554088861361, $this->a->pNorm(3.));
+        $this->assertEquals(3.7063242195906976, $this->b->pNorm(5.));
+        $this->assertEquals(20.01112107057168, $this->c->pNorm(10.));
+    }
+
     public function test_max_norm()
     {
         $this->assertEquals(106., $this->a->maxNorm());

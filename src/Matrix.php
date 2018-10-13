@@ -491,6 +491,38 @@ class Matrix implements Tensor
         return $sigma;
     }
 
+        /**
+     * Return the index of the minimum element in every row of the matrix.
+     * 
+     * @return \Rubix\Tensor\Vector
+     */
+    public function argmin() : Vector
+    {
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $b[] = (int) array_search(min($row), $row);
+        }
+
+        return Vector::quick($b);
+    }
+
+    /**
+     * Return the index of the maximum element in every row of the matrix.
+     * 
+     * @return \Rubix\Tensor\Vector
+     */
+    public function argmax() : Vector
+    {
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $b[] = (int) array_search(max($row), $row);
+        }
+
+        return Vector::quick($b);
+    }
+
     /**
      * Run a function over all of the elements in the matrix.
      *
@@ -577,36 +609,44 @@ class Matrix implements Tensor
         return self::ones(...$this->shape())->divide($this);
     }
 
-    /**
-     * Return the index of the minimum element in every row of the matrix.
-     * 
-     * @return \Rubix\Tensor\Vector
+        /**
+     * Return the L1 norm of the matrix.
+     *
+     * @return float
      */
-    public function argmin() : Vector
+    public function l1Norm() : float
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = (int) array_search(min($row), $row);
-        }
-
-        return Vector::quick($b);
+        return $this->transpose()->abs()->sum()->max();
     }
 
     /**
-     * Return the index of the maximum element in every row of the matrix.
-     * 
-     * @return \Rubix\Tensor\Vector
+     * Return the L2 norm of the matrix.
+     *
+     * @return float
      */
-    public function argmax() : Vector
+    public function l2Norm() : float
     {
-        $b = [];
+        return sqrt($this->square()->sum()->sum());
+    }
 
-        foreach ($this->a as $row) {
-            $b[] = (int) array_search(max($row), $row);
-        }
+    /**
+     * Retrn the infinity norm of the matrix.
+     *
+     * @return float
+     */
+    public function infinityNorm() : float
+    {
+        return $this->abs()->sum()->max();
+    }
 
-        return Vector::quick($b);
+    /**
+     * Return the max norm of the matrix.
+     *
+     * @return float
+     */
+    public function maxNorm() : float
+    {
+        return $this->abs()->max()->max();
     }
 
     /**
@@ -1677,74 +1717,6 @@ class Matrix implements Tensor
         }
 
         return self::quick($b);
-    }
-
-    /**
-     * Return the L1 norm of the matrix.
-     *
-     * @return float
-     */
-    public function l1Norm() : float
-    {
-        $norm = 0.;
-
-        foreach ($this->transpose() as $column) {
-            $norm = max($norm, array_sum(array_map('abs', $column)));
-        }
-
-        return $norm;
-    }
-
-    /**
-     * Return the L2 norm of the matrix.
-     *
-     * @return float
-     */
-    public function l2Norm() : float
-    {
-        $norm = 0.;
-
-        foreach ($this->a as $row) {
-            foreach ($row as $value) {
-                $norm += $value ** 2;
-            }
-        }
-
-        return sqrt($norm);
-    }
-
-    /**
-     * Retrn the infinity norm of the matrix.
-     *
-     * @return float
-     */
-    public function infinityNorm() : float
-    {
-        $norm = 0.;
-
-        foreach ($this->a as $row) {
-            $norm = max($norm, array_sum(array_map('abs', $row)));
-        }
-
-        return $norm;
-    }
-
-    /**
-     * Return the max norm of the matrix.
-     *
-     * @return float
-     */
-    public function maxNorm() : float
-    {
-        $norm = 0.;
-
-        foreach ($this->a as $row) {
-            foreach ($row as $value) {
-                $norm = max($norm, abs($value));
-            }
-        }
-
-        return $norm;
     }
 
     /**
