@@ -63,7 +63,7 @@ class Vector implements Tensor
      */
     public static function zeros(int $n) : self
     {
-        return new self(array_fill(0, $n, 0), false);
+        return self::quick(array_fill(0, $n, 0));
     }
 
     /**
@@ -74,7 +74,7 @@ class Vector implements Tensor
      */
     public static function ones(int $n) : self
     {
-        return new self(array_fill(0, $n, 1), false);
+        return self::quick(array_fill(0, $n, 1));
     }
 
     /**
@@ -91,7 +91,7 @@ class Vector implements Tensor
                 . ' or float, ' . gettype($value) . ' found.');
         }
 
-        return new self(array_fill(0, $n, $value), false);
+        return self::quick(array_fill(0, $n, $value));
     }
 
     /**
@@ -108,7 +108,7 @@ class Vector implements Tensor
             $a[] = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
         }
 
-        return new self($a, false);
+        return self::quick($a);
     }
 
     /**
@@ -129,7 +129,7 @@ class Vector implements Tensor
             $a[] = sqrt(-2. * log($r1)) * cos(self::TWO_PI * $r2);
         }
 
-        return new self($a, false);
+        return self::quick($a);
     }
 
     /**
@@ -147,7 +147,7 @@ class Vector implements Tensor
             $a[] = rand(-PHP_INT_MAX, PHP_INT_MAX) / PHP_INT_MAX;
         }
 
-        return new self($a, false);
+        return self::quick($a);
     }
 
     /**
@@ -166,7 +166,7 @@ class Vector implements Tensor
                  . ' 0.');
         }
 
-        return new self(range($start, $end, $interval), false);
+        return self::quick(range($start, $end, $interval));
     }
 
     /**
@@ -199,7 +199,9 @@ class Vector implements Tensor
                 . ' found ' . (string) $b->n() . '.');
         }
 
-        return new self(array_map('max', $a->asArray(), $b->asArray()), false);
+        $c = array_map('max', $a->asArray(), $b->asArray());
+
+        return self::quick($c);
     }
 
     /**
@@ -217,7 +219,9 @@ class Vector implements Tensor
                 . ' found ' . (string) $b->n() . '.');
         }
 
-        return new self(array_map('min', $a->asArray(), $b->asArray()), false);
+        $c = array_map('min', $a->asArray(), $b->asArray());
+
+        return self::quick($c);
     }
 
     /**
@@ -253,7 +257,6 @@ class Vector implements Tensor
     {
         return [$this->n];
     }
-
 
     /**
      * Return the number of elements in the vector.
@@ -292,7 +295,7 @@ class Vector implements Tensor
      */
     public function asRowMatrix() : Matrix
     {
-        return new Matrix([$this->a], false);
+        return Matrix::quick([$this->a]);
     }
 
     /**
@@ -302,9 +305,9 @@ class Vector implements Tensor
      */
     public function asColumnMatrix() : Matrix
     {
-        return new Matrix(array_map(function ($value) {
+        return Matrix::quick(array_map(function ($value) {
             return [$value];
-        }, $this->a), false);
+        }, $this->a));
     }
 
     /**
@@ -332,19 +335,19 @@ class Vector implements Tensor
             }
         }
 
-        return new Matrix($b, false);
+        return Matrix::quick($b);
     }
 
     /**
      * Map a function over the elements in the vector and return a new vector.
      *
      * @param  callable  $fn
-     * @param  bool  $validate
+     * @param  bool  $quick
      * @return self
      */
-    public function map(callable $fn, bool $validate = false) : self
+    public function map(callable $fn, bool $quick = false) : self
     {
-        return new self(array_map($fn, $this->a), false);
+        return new self(array_map($fn, $this->a), !$quick);
     }
 
     /**
@@ -431,7 +434,7 @@ class Vector implements Tensor
             }
         }
 
-        return new Matrix($c);
+        return Matrix::quick($c);
     }
 
     /**
@@ -453,7 +456,7 @@ class Vector implements Tensor
         $c[] = ($this->a[2] * $b[0]) - ($this->a[0] * $b[2]);
         $c[] = ($this->a[0] * $b[1]) - ($this->a[1] * $b[0]);
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -591,7 +594,7 @@ class Vector implements Tensor
             $c[$i] = $value * $b[$i];
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -615,7 +618,7 @@ class Vector implements Tensor
             $c[$i] = $value / $b[$i];
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -639,7 +642,7 @@ class Vector implements Tensor
             $c[$i] = $value + $b[$i];
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -663,7 +666,7 @@ class Vector implements Tensor
             $c[$i] = $value - $b[$i];
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -687,7 +690,7 @@ class Vector implements Tensor
             $c[$i] = $value ** $b[$i];
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -711,7 +714,7 @@ class Vector implements Tensor
             $c[$i] = $value % $b[$i];
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -730,11 +733,11 @@ class Vector implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $value) {
-            $b[$i] = $value * $scalar;
+        foreach ($this->a as $value) {
+            $b[] = $value * $scalar;
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -753,11 +756,11 @@ class Vector implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $value) {
-            $b[$i] = $value / $scalar;
+        foreach ($this->a as $value) {
+            $b[] = $value / $scalar;
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -776,11 +779,11 @@ class Vector implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $value) {
-            $b[$i] = $value + $scalar;
+        foreach ($this->a as $value) {
+            $b[] = $value + $scalar;
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -799,11 +802,11 @@ class Vector implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $value) {
-            $b[$i] = $value - $scalar;
+        foreach ($this->a as $value) {
+            $b[] = $value - $scalar;
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -826,7 +829,7 @@ class Vector implements Tensor
             $b[] = $value ** $scalar;
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -849,7 +852,7 @@ class Vector implements Tensor
             $b[] = $value % $scalar;
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -859,7 +862,7 @@ class Vector implements Tensor
      */
     public function abs() : self
     {
-        return new self(array_map('abs', $this->a), false);
+        return self::quick(array_map('abs', $this->a));
     }
 
     /**
@@ -879,7 +882,7 @@ class Vector implements Tensor
      */
     public function sqrt() : self
     {
-        return new self(array_map('sqrt', $this->a), false);
+        return self::quick(array_map('sqrt', $this->a));
     }
 
     /**
@@ -889,7 +892,7 @@ class Vector implements Tensor
      */
     public function exp() : self
     {
-        return new self(array_map('exp', $this->a), false);
+        return self::quick(array_map('exp', $this->a));
     }
 
     /**
@@ -906,7 +909,7 @@ class Vector implements Tensor
             $b[] = log($value, $base);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -916,7 +919,7 @@ class Vector implements Tensor
      */
     public function sin() : self
     {
-        return new self(array_map('sin', $this->a), false);
+        return self::quick(array_map('sin', $this->a));
     }
 
     /**
@@ -926,7 +929,7 @@ class Vector implements Tensor
      */
     public function cos() : self
     {
-        return new self(array_map('cos', $this->a), false);
+        return self::quick(array_map('cos', $this->a));
     }
 
     /**
@@ -942,7 +945,7 @@ class Vector implements Tensor
             $b[] = -$value;
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1026,17 +1029,15 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the variance and the mean of the vector in a tuple.
+     * Return the variance of the vector.
      *
-     * @return array
+     * @return float
      */
-    public function variance() : array
+    public function variance() : float
     {
         $mean = $this->mean();
 
-        $variance = $this->subtractScalar($mean)->square()->sum();
-
-        return [$variance, $mean];
+        return $this->subtractScalar($mean)->square()->sum();
     }
 
     /**
@@ -1053,7 +1054,7 @@ class Vector implements Tensor
             $b[] = round($value, $precision);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1063,7 +1064,7 @@ class Vector implements Tensor
      */
     public function floor() : self
     {
-        return new self(array_map('floor', $this->a), false);
+        return self::quick(array_map('floor', $this->a));
     }
 
     /**
@@ -1073,7 +1074,7 @@ class Vector implements Tensor
      */
     public function ceil() : self
     {
-        return new self(array_map('ceil', $this->a), false);
+        return self::quick(array_map('ceil', $this->a));
     }
 
     /**
@@ -1140,7 +1141,7 @@ class Vector implements Tensor
             $b[] = $value;
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**

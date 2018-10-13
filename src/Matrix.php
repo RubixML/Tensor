@@ -84,7 +84,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($a, false);
+        return self::quick($a);
     }
 
     /**
@@ -102,7 +102,10 @@ class Matrix implements Tensor
                 . ' greater than 0 along both axis.');
         }
 
-        return new self(array_fill(0, $m, array_fill(0, $n, 0)), false);
+        $a = array_fill(0, $m, array_fill(0, $n, 0));
+
+        return self::quick($a);
+        
     }
 
     /**
@@ -120,7 +123,9 @@ class Matrix implements Tensor
                 . ' greater than 0 along both axis.');
         }
 
-        return new self(array_fill(0, $m, array_fill(0, $n, 1)), false);
+        $a = array_fill(0, $m, array_fill(0, $n, 1));
+    
+        return self::quick($a);
     }
 
     /**
@@ -148,7 +153,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($a, false);
+        return self::quick($a);
     }
 
     /**
@@ -167,7 +172,9 @@ class Matrix implements Tensor
                 . ' or float, ' . gettype($value) . ' found.');
         }
 
-        return new self(array_fill(0, $m, array_fill(0, $n, $value)), false);
+        $a = array_fill(0, $m, array_fill(0, $n, $value));
+
+        return self::quick($a);
     }
 
     /**
@@ -187,7 +194,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($a, false);
+        return self::quick($a);
     }
 
     /**
@@ -211,7 +218,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($a, false);
+        return self::quick($a);
     }
 
     /**
@@ -231,7 +238,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($a, false);
+        return self::quick($a);
     }
 
     /**
@@ -261,7 +268,7 @@ class Matrix implements Tensor
             $c[] = array_map('max', $row, $b[$i]);
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -291,7 +298,7 @@ class Matrix implements Tensor
             $c[] = array_map('min', $row, $b[$i]);
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -396,7 +403,7 @@ class Matrix implements Tensor
      */
     public function rowAsVector(int $index) : Vector
     {
-        return new Vector($this->row($index));
+        return Vector::quick($this->offsetGet($index));
     }
 
     /**
@@ -418,7 +425,7 @@ class Matrix implements Tensor
      */
     public function columnAsVector(int $index) : Vector
     {
-        return new Vector($this->column($index));
+        return Vector::quick($this->column($index));
     }
 
     /**
@@ -439,7 +446,7 @@ class Matrix implements Tensor
     public function asVectors() : array
     {
         return array_map(function ($row) {
-            return new Vector($row, false);
+            return Vector::quick($row);
         }, $this->a);
     }
 
@@ -452,13 +459,13 @@ class Matrix implements Tensor
     {
         $b = [];
 
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
+        foreach ($this->a as $row) {
+            foreach ($row as $value) {
                 $b[] = $value;
             }
         }
 
-        return new Vector($b, false);
+        return Vector::quick($b);
     }
 
     /**
@@ -488,10 +495,10 @@ class Matrix implements Tensor
      * Run a function over all of the elements in the matrix.
      *
      * @param  callable  $fn
-     * @param  bool  $validate
+     * @param  bool  $quick
      * @return self
      */
-    public function map(callable $fn, bool $validate = false) : self
+    public function map(callable $fn, bool $quick = false) : self
     {
         $b = [];
 
@@ -499,7 +506,7 @@ class Matrix implements Tensor
             $b[] = array_map($fn, $row);
         }
 
-        return new self($b, $validate);
+        return new self($b, !$quick);
     }
 
     /**
@@ -513,8 +520,8 @@ class Matrix implements Tensor
     {
         $carry = $initial;
 
-        foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
+        foreach ($this->a as $row) {
+            foreach ($row as $value) {
                 $carry = $fn($value, $carry);
             }
         }
@@ -539,7 +546,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -557,7 +564,7 @@ class Matrix implements Tensor
             $c[] = array_slice($b[$i], $this->n);
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -583,7 +590,7 @@ class Matrix implements Tensor
             $b[] = (int) array_search(min($row), $row);
         }
 
-        return new Vector($b, false);
+        return Vector::quick($b);
     }
 
     /**
@@ -599,7 +606,7 @@ class Matrix implements Tensor
             $b[] = (int) array_search(max($row), $row);
         }
 
-        return new Vector($b, false);
+        return Vector::quick($b);
     }
 
     /**
@@ -648,7 +655,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -689,11 +696,11 @@ class Matrix implements Tensor
             $col++;
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
-     * Dot this matrix with another tensor elementwise.
+     * Dot this matrix with another tensor.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -868,7 +875,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -902,7 +909,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -936,7 +943,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -970,7 +977,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1004,7 +1011,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1039,7 +1046,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1074,7 +1081,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1118,7 +1125,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1144,7 +1151,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1170,7 +1177,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1196,7 +1203,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1222,7 +1229,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1248,7 +1255,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
@@ -1265,15 +1272,15 @@ class Matrix implements Tensor
                 . ' float ' . gettype($scalar) . ' found.');
         }
 
-        $b = [[]];
+        $b = [];
 
         foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $b[$i][$j] = $value * $scalar;
+            foreach ($row as $value) {
+                $b[$i][] = $value * $scalar;
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1290,15 +1297,15 @@ class Matrix implements Tensor
                 . ' float ' . gettype($scalar) . ' found.');
         }
 
-        $b = [[]];
+        $b = [];
 
         foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $b[$i][$j] = $value / $scalar;
+            foreach ($row as $value) {
+                $b[$i][] = $value / $scalar;
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1315,15 +1322,15 @@ class Matrix implements Tensor
                 . ' float ' . gettype($scalar) . ' found.');
         }
 
-        $b = [[]];
+        $b = [];
 
         foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $b[$i][$j] = $value + $scalar;
+            foreach ($row as $value) {
+                $b[$i][] = $value + $scalar;
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1340,15 +1347,15 @@ class Matrix implements Tensor
                 . ' float ' . gettype($scalar) . ' found.');
         }
 
-        $b = [[]];
+        $b = [];
 
         foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $b[$i][$j] = $value - $scalar;
+            foreach ($row as $value) {
+                $b[$i][] = $value - $scalar;
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1365,15 +1372,15 @@ class Matrix implements Tensor
                 . ' float ' . gettype($scalar) . ' found.');
         }
 
-        $b = [[]];
+        $b = [];
 
         foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $b[$i][$j] = $value ** $scalar;
+            foreach ($row as $value) {
+                $b[$i][] = $value ** $scalar;
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1390,15 +1397,15 @@ class Matrix implements Tensor
                 . ' float ' . gettype($scalar) . ' found.');
         }
 
-        $b = [[]];
+        $b = [];
 
         foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $b[$i][$j] = $value % $scalar;
+            foreach ($row as $value) {
+                $b[$i][] = $value % $scalar;
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1414,7 +1421,7 @@ class Matrix implements Tensor
             $b[] = array_map('abs', $row);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1436,11 +1443,11 @@ class Matrix implements Tensor
     {
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
             $b[] = array_map('sqrt', $row);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1452,11 +1459,11 @@ class Matrix implements Tensor
     {
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
             $b[] = array_map('exp', $row);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1467,15 +1474,15 @@ class Matrix implements Tensor
      */
     public function log(float $base = M_E) : self
     {
-        $b = [[]];
+        $b = [];
 
         foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $b[$i][$j] = log($value, $base);
+            foreach ($row as $value) {
+                $b[$i][] = log($value, $base);
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1487,11 +1494,11 @@ class Matrix implements Tensor
     {
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
             $b[] = array_map('sin', $row);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1503,11 +1510,11 @@ class Matrix implements Tensor
     {
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
             $b[] = array_map('cos', $row);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1517,7 +1524,7 @@ class Matrix implements Tensor
      */
     public function sum() : Vector
     {
-        return new Vector(array_map('array_sum', $this->a), false);
+        return Vector::quick(array_map('array_sum', $this->a));
     }
 
     /**
@@ -1527,7 +1534,7 @@ class Matrix implements Tensor
      */
     public function product() : Vector
     {
-        return new Vector(array_map('array_product', $this->a), false);
+        return Vector::quick(array_map('array_product', $this->a));
     }
 
     /**
@@ -1537,7 +1544,7 @@ class Matrix implements Tensor
      */
     public function min() : Vector
     {
-        return new Vector(array_map('min', $this->a), false);
+        return Vector::quick(array_map('min', $this->a));
     }
 
     /**
@@ -1547,7 +1554,7 @@ class Matrix implements Tensor
      */
     public function max() : Vector
     {
-        return new Vector(array_map('max', $this->a), false);
+        return Vector::quick(array_map('max', $this->a));
     }
 
     /**
@@ -1563,7 +1570,7 @@ class Matrix implements Tensor
             $b[] = array_sum($row) / $this->m;
         }
 
-        return new Vector($b, false);
+        return Vector::quick($b);
     }
 
     /**
@@ -1589,7 +1596,7 @@ class Matrix implements Tensor
             $b[] = $median;
         }
 
-        return new Vector($b, false);
+        return Vector::quick($b);
     }
 
     /**
@@ -1629,15 +1636,15 @@ class Matrix implements Tensor
      */
     public function round(int $precision = 0) : self
     {
-        $b = [[]];
+        $b = [];
 
         foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $b[$i][$j] = round($value, $precision);
+            foreach ($row as $value) {
+                $b[$i][] = round($value, $precision);
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1653,7 +1660,7 @@ class Matrix implements Tensor
             $b[] = array_map('floor', $row);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1669,7 +1676,7 @@ class Matrix implements Tensor
             $b[] = array_map('ceil', $row);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1770,7 +1777,7 @@ class Matrix implements Tensor
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1780,15 +1787,15 @@ class Matrix implements Tensor
      */
     public function negate() : self
     {
-        $b = [[]];
+        $b = [];
 
         foreach ($this->a as $i => $row) {
-            foreach ($row as $j => $value) {
-                $b[$i][$j] = -$value;
+            foreach ($row as $value) {
+                $b[$i][] = -$value;
             }
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1803,7 +1810,9 @@ class Matrix implements Tensor
 
         unset($b[$index]);
 
-        return new self(array_values($b), false);
+        $b = array_values($b);
+
+        return self::quick($b);
     }
 
     /**
@@ -1816,13 +1825,13 @@ class Matrix implements Tensor
     {
         $b = $this->a;
 
-        foreach ($b as $i => &$row) {
+        foreach ($b as &$row) {
             unset($row[$index]);
 
             $row = array_values($row);
         }
 
-        return new self($b, false);
+        return self::quick($b);
     }
 
     /**
@@ -1839,7 +1848,9 @@ class Matrix implements Tensor
                 . ' number of columns.');
         }
 
-        return new self(array_merge($b->asArray(), $this->a), false);
+        $b = array_merge($b->asArray(), $this->a);
+
+        return self::quick($b);
     }
 
     /**
@@ -1856,7 +1867,9 @@ class Matrix implements Tensor
                 . ' number of columns.');
         }
 
-        return new self(array_merge($this->a, $b->asArray()), false);
+        $b = array_merge($this->a, $b->asArray());
+
+        return self::quick($b);
     }
 
     /**
@@ -1873,8 +1886,9 @@ class Matrix implements Tensor
                 . ' number of rows.');
         }
 
-        return new self(array_map('array_merge',
-            $b->asArray(), $this->a), false);
+        $b = array_map('array_merge', $b->asArray(), $this->a);
+
+        return self::quick($b);
     }
 
     /**
@@ -1891,8 +1905,9 @@ class Matrix implements Tensor
                 . ' number of rows.');
         }
 
-        return new self(array_map('array_merge',
-            $this->a, $b->asArray()), false);
+        $b = array_map('array_merge', $this->a, $b->asArray());
+        
+        return self::quick($b);
     }
 
     /**
@@ -1928,7 +1943,7 @@ class Matrix implements Tensor
             $c = array_merge($c, $b);
         }
 
-        return new self($c, false);
+        return self::quick($c);
     }
 
     /**
