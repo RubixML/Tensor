@@ -17,8 +17,6 @@ use ArrayIterator;
  */
 class Matrix implements Tensor
 {
-    const EPSILON = 1e-8;
-
     /**
      * The 2-dimensional array that holds the values of the matrix.
      *
@@ -640,17 +638,13 @@ class Matrix implements Tensor
             $diag = $b[$k][$k];
 
             for ($i = $k + 1; $i < $this->m; $i++) {
-                $row = $b[$i];
-
-                $scale = $diag != 0 ? $row[$k] / $diag : 1;
+                $scale = $diag != 0 ? $b[$i][$k] / $diag : 1;
                 
                 for ($j = $k + 1; $j < $this->n; $j++) {
-                    $row[$j] -= $scale * $b[$k][$j];
+                    $b[$i][$j] -= $scale * $b[$k][$j];
                 }
                 
-                $row[$k] = 0;
-
-                $b[$i] = $row;
+                $b[$i][$k] = 0;
             }
         }
 
@@ -1602,33 +1596,29 @@ class Matrix implements Tensor
      * Compute the row variance of the matrix and return it in a tuple along
      * with the mean.
      *
-     * @return array
+     * @return \Rubix\Tensor\Vector
      */
-    public function variance() : array
+    public function variance() : Vector
     {
         $mean = $this->mean();
 
-        $variance = $this->subtractVector($mean)->square()->sum();
-
-        return [$variance, $mean];
+        return $this->subtractVector($mean)->square()->sum();
     }
 
     /**
      * Compute the covariance of this matrix and return it in a tuple along with
      * the computed mean.
      *
-     * @return array
+     * @return self
      */
-    public function covariance() : array
+    public function covariance() : self
     {
         $mean = $this->transpose()->mean();
 
         $b = $this->subtractVector($mean);
 
-        $b = $b->dot($b->transpose())
+        return $b->dot($b->transpose())
             ->divideScalar($this->n);
-
-        return [$b, $mean];
     }
 
     /**

@@ -1,5 +1,5 @@
 # Rubix Tensor for PHP
-Tensor is a basic linear algebra subprograms implementation in [PHP](https://php.net).
+Tensor provides objects and functions for numerical computing on vectors and matrices in [PHP](https://php.net).
 
 ## Installation
 Install Tensor using composer:

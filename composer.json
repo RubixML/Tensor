@@ -1,16 +1,18 @@
 {
     "name": "rubix/tensor",
     "type": "library",
-    "description": "Tensor is a basic linear algebra subprograms implementation in PHP.",
+    "description": "Tensor provides objects and functions for numerical computing on vectors and matrices in PHP.",
     "homepage": "https://github.com/RubixML/Tensor",
     "license": "MIT",
     "keywords": [
-        "linear", "algebra", "php"
+        "math", "linear-algebra", "matrix", "vector", "tensor"
     ],
     "authors": [
         {
             "name": "Andrew DalPino",
-            "email": "me@andrewdalpino.com"
+            "email": "me@andrewdalpino.com",
+            "homepage": "https://andrewdalpino.com",
+            "role": "Engineer"
         }
     ],
     "require": {
