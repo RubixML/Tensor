@@ -442,13 +442,13 @@ class Vector implements Tensor
                 . ' dimensionality.');
         }
 
-        $product = 0.;
+        $sigma = 0.;
 
         foreach ($this->a as $i => $value) {
-            $product += $value * $b[$i];
+            $sigma += $value * $b[$i];
         }
 
-        return $product;
+        return $sigma;
     }
 
     /**
@@ -472,11 +472,11 @@ class Vector implements Tensor
     {
         $n = $b->n();
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $value) {
             for ($j = 0; $j < $n; $j++) {
-                $c[$i][$j] = $value * $b[$j];
+                $c[$i][] = $value * $b[$j];
             }
         }
 
@@ -637,7 +637,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $value) {
-            $c[$i] = $value * $b[$i];
+            $c[] = $value * $b[$i];
         }
 
         return self::quick($c);
@@ -661,7 +661,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $value) {
-            $c[$i] = $value / $b[$i];
+            $c[] = $value / $b[$i];
         }
 
         return self::quick($c);
@@ -685,7 +685,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $value) {
-            $c[$i] = $value + $b[$i];
+            $c[] = $value + $b[$i];
         }
 
         return self::quick($c);
@@ -709,7 +709,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $value) {
-            $c[$i] = $value - $b[$i];
+            $c[] = $value - $b[$i];
         }
 
         return self::quick($c);
@@ -733,7 +733,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $value) {
-            $c[$i] = $value ** $b[$i];
+            $c[] = $value ** $b[$i];
         }
 
         return self::quick($c);
@@ -757,7 +757,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $value) {
-            $c[$i] = $value % $b[$i];
+            $c[] = $value % $b[$i];
         }
 
         return self::quick($c);
@@ -1219,5 +1219,15 @@ class Vector implements Tensor
     public function getIterator()
     {
         return new ArrayIterator($this->a);
+    }
+
+    /**
+     * Convert the tensor into a string representation.
+     *
+     * @return string
+     */
+    public function __toString() : string
+    {
+        return '[ ' . implode(' ', $this->a) . ' ]';
     }
 }

@@ -32,4 +32,11 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * @return array
      */
     public function asArray() : array;
+
+    /**
+     * Convert the tensor into a string representation.
+     *
+     * @return string
+     */
+    public function __toString() : string;
 }

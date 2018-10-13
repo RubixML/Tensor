@@ -574,7 +574,7 @@ class Matrix implements Tensor
             $b = [];
 
             for ($i = 0; $i < $this->n; $i++) {
-                $b[$i] = array_column($this->a, $i);
+                $b[] = array_column($this->a, $i);
             }
         }
 
@@ -727,8 +727,10 @@ class Matrix implements Tensor
             for ($i = $row - 1; $i >= 0; $i--) {
                 $scale = $b[$i][$col];
 
-                for ($j = 0; $j < $this->n; $j++) {
-                    $b[$i][$j] += -$scale * $b[$row][$j];
+                if ($scale != 0) {
+                    for ($j = 0; $j < $this->n; $j++) {
+                        $b[$i][$j] += -$scale * $b[$row][$j];
+                    }
                 }
             }
 
@@ -904,14 +906,14 @@ class Matrix implements Tensor
         $c = [[]];
 
         foreach ($this->a as $i => $row) {
-            foreach ($bT as $j => $column) {
+            foreach ($bT as $column) {
                 $sigma = 0;
 
                 foreach ($row as $k => $value) {
                     $sigma += $value * $column[$k];
                 }
 
-                $c[$i][$j] = $sigma;
+                $c[$i][] = $sigma;
             }
         }
 
@@ -939,13 +941,13 @@ class Matrix implements Tensor
                 . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][$j] = $value * $rowB[$j];
+                $c[$i][] = $value * $rowB[$j];
             }
         }
 
@@ -973,13 +975,13 @@ class Matrix implements Tensor
                 . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][$j] = $value / $rowB[$j];
+                $c[$i][] = $value / $rowB[$j];
             }
         }
 
@@ -1007,13 +1009,13 @@ class Matrix implements Tensor
                 . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][$j] = $value + $rowB[$j];
+                $c[$i][] = $value + $rowB[$j];
             }
         }
 
@@ -1041,13 +1043,13 @@ class Matrix implements Tensor
                 . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][$j] = $value - $rowB[$j];
+                $c[$i][] = $value - $rowB[$j];
             }
         }
 
@@ -1076,13 +1078,13 @@ class Matrix implements Tensor
                 . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][$j] = $value ** $rowB[$j];
+                $c[$i][] = $value ** $rowB[$j];
             }
         }
 
@@ -1111,13 +1113,13 @@ class Matrix implements Tensor
                 . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][$j] = $value % $rowB[$j];
+                $c[$i][] = $value % $rowB[$j];
             }
         }
 
@@ -1157,11 +1159,11 @@ class Matrix implements Tensor
             . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $row) {
             foreach ($row as $j => $value) {
-                $c[$i][$j] = $value * $b[$j];
+                $c[$i][] = $value * $b[$j];
             }
         }
 
@@ -1183,11 +1185,11 @@ class Matrix implements Tensor
             . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $row) {
             foreach ($row as $j => $value) {
-                $c[$i][$j] = $value / $b[$j];
+                $c[$i][] = $value / $b[$j];
             }
         }
 
@@ -1209,11 +1211,11 @@ class Matrix implements Tensor
             . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $row) {
             foreach ($row as $j => $value) {
-                $c[$i][$j] = $value + $b[$j];
+                $c[$i][] = $value + $b[$j];
             }
         }
 
@@ -1235,11 +1237,11 @@ class Matrix implements Tensor
             . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $row) {
             foreach ($row as $j => $value) {
-                $c[$i][$j] = $value - $b[$j];
+                $c[$i][] = $value - $b[$j];
             }
         }
 
@@ -1261,11 +1263,11 @@ class Matrix implements Tensor
             . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $row) {
             foreach ($row as $j => $value) {
-                $c[$i][$j] = $value ** $b[$j];
+                $c[$i][] = $value ** $b[$j];
             }
         }
 
@@ -1287,11 +1289,11 @@ class Matrix implements Tensor
             . (string) $b->n() . '.');
         }
 
-        $c = [[]];
+        $c = [];
 
         foreach ($this->a as $i => $row) {
             foreach ($row as $j => $value) {
-                $c[$i][$j] = $value % $b[$j];
+                $c[$i][] = $value % $b[$j];
             }
         }
 
@@ -1983,5 +1985,19 @@ class Matrix implements Tensor
     public function getIterator()
     {
         return new ArrayIterator($this->a);
+    }
+
+    /**
+     * Convert the tensor into a string representation.
+     *
+     * @return string
+     */
+    public function __toString() : string
+    {
+        $vectors = $this->asVectors();
+        
+        return trim(array_reduce($vectors, function ($carry, $vector) {
+            return $carry . PHP_EOL . (string) $vector;
+        }, ''));
     }
 }
