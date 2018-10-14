@@ -1323,6 +1323,32 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the element-wise sign indication.
+     * 
+     * @return self
+     */
+    public function sign() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                if ($value > 0) {
+                    $sign = 1;
+                } else if ($value < 0) {
+                    $sign = -1;
+                } else {
+                    $sign = 0;
+                }
+
+                $b[$i][] = $sign;
+            }
+        }
+
+        return self::quick($b);
+    }
+
+    /**
      * Negate the matrix i.e take the negative of each value elementwise.
      *
      * @return self

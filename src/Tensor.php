@@ -234,6 +234,13 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function clip(float $min, float $max);
 
     /**
+     * Return the element-wise sign indication.
+     * 
+     * @return mixed
+     */
+    public function sign();
+
+    /**
      * Negate the tensor i.e take the negative.
      *
      * @return mixed

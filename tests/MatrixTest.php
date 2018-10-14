@@ -997,6 +997,20 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_sign()
+    {
+        $z = $this->a->sign();
+
+        $y = [
+            [1, -1, 1],
+            [1, 1, -1],
+            [1, -1, -1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_negate()
     {
         $z = $this->a->negate();
