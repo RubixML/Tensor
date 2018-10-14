@@ -350,6 +350,13 @@ class MatrixTest extends TestCase
         $this->assertEquals(-544., $this->c->det());
     }
 
+    public function test_rank()
+    {
+        $this->assertEquals(3, $this->a->rank());
+        $this->assertEquals(1, $this->b->rank());
+        $this->assertEquals(3, $this->c->rank());
+    }
+
     public function test_reciprocal()
     {
         $z = $this->a->reciprocal();

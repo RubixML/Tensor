@@ -646,6 +646,29 @@ class Matrix implements Tensor
     }
 
     /**
+     * Calculate the rank of the matrix i.e the number of pivots
+     * in its reduced row echelon form.
+     * 
+     * @return int
+     */
+    public function rank() : int
+    {
+        $pivots = 0;
+
+        foreach ($this->rref() as $row) {
+            foreach ($row as $value) {
+                if ($value != 0) {
+                    $pivots++;
+
+                    continue 2;
+                }
+            }
+        }
+
+        return $pivots;
+    }
+
+    /**
      * Return the elementwise reciprocal of the matrix.
      *
      * @return self
