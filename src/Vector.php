@@ -381,11 +381,17 @@ class Vector implements Tensor
      * Reduce the vector down to a scalar.
      *
      * @param  callable  $fn
-     * @param  float  $initial
-     * @return float
+     * @param  mixed  $initial
+     * @throws \InvalidArgumentException
+     * @return int|float
      */
-    public function reduce(callable $fn, float $initial = 0.) : float
+    public function reduce(callable $fn, $initial = 0)
     {
+        if (!is_int($initial) and !is_float($initial)) {
+            throw new InvalidArgumentException('Initial value must'
+                . ' be an integer or float.');
+        }
+
         return array_reduce($this->a, $fn, $initial);
     }
 

@@ -38,10 +38,10 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * Reduce the tensor down to a scalar.
      *
      * @param  callable  $fn
-     * @param  float  $initial
-     * @return float
+     * @param  mixed  $initial
+     * @return int|float
      */
-    public function reduce(callable $fn, float $initial = 0.) : float;
+    public function reduce(callable $fn, $initial = 0);
 
     /**
      * A universal function to multiply this tensor with another tensor

@@ -567,11 +567,17 @@ class Matrix implements Tensor
      * Reduce the matrix down to a scalar.
      *
      * @param  callable  $fn
-     * @param  float  $initial
-     * @return float
+     * @param  mixed  $initial
+     * @throws \InvalidArgumentException
+     * @return int|float
      */
-    public function reduce(callable $fn, float $initial = 0.) : float
+    public function reduce(callable $fn, $initial = 0)
     {
+        if (!is_int($initial) and !is_float($initial)) {
+            throw new InvalidArgumentException('Initial value must'
+                . ' be an integer or float.');
+        }
+
         $carry = $initial;
 
         foreach ($this->a as $row) {
@@ -610,12 +616,14 @@ class Matrix implements Tensor
      */
     public function inverse() : self
     {
-        $b = $this->augmentRight(self::identity($this->m))->rref();
+        $b = $this->augmentRight(self::identity($this->m));
+
+        $b = $b->rref()->asArray();
 
         $c = [];
 
-        for ($i = 0; $i < $this->n; $i++) {
-            $c[] = array_slice($b[$i], $this->n);
+        foreach ($b as $row) {
+            $c[] = array_slice($row, $this->n);
         }
 
         return self::quick($c);
@@ -931,7 +939,7 @@ class Matrix implements Tensor
             return $this->addScalar($b);
         }
 
-        throw new InvalidArgumentException('Cannot sdd matrix to a'
+        throw new InvalidArgumentException('Cannot add matrix to a'
             . ' ' . gettype($b) . '.');
     }
 
