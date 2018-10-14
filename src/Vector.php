@@ -20,7 +20,7 @@ class Vector implements Tensor
     /**
      * The 1-d sequential array that holds the values of the vector.
      *
-     * @var array
+     * @var (int|float)[]
      */
     protected $a = [
         //
@@ -36,7 +36,7 @@ class Vector implements Tensor
     /**
      * Factory method to build a new vector from an array.
      *
-     * @param  (int|float)[]  $a
+     * @param  array  $a
      * @return self
      */
     public static function build(array $a = []) : self
@@ -47,7 +47,7 @@ class Vector implements Tensor
     /**
      * Build a vector foregoing any validation for quicker instantiation.
      *
-     * @param  (int|float)[]  $a
+     * @param  array  $a
      * @return self
      */
     public static function quick(array $a = []) : self
@@ -231,7 +231,7 @@ class Vector implements Tensor
     }
 
     /**
-     * @param  (int|float)[]  $a
+     * @param  array  $a
      * @param  bool  $validate
      * @throws \InvalidArgumentException
      * @return void
@@ -515,7 +515,7 @@ class Vector implements Tensor
      * A universal function to multiply this vector with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param  Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -535,7 +535,7 @@ class Vector implements Tensor
      * A universal function to divide this vector by another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param  Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -555,7 +555,7 @@ class Vector implements Tensor
      * A universal function to add this vector with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param  Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -575,7 +575,7 @@ class Vector implements Tensor
      * A universal function to subtract this vector from another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param  Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -595,7 +595,7 @@ class Vector implements Tensor
      * A universal function to raise this vector to the power of another
      * tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param  Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -615,7 +615,7 @@ class Vector implements Tensor
      * A universal function to compute the modulus of this vector and
      * another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param  Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1041,7 +1041,7 @@ class Vector implements Tensor
     /**
      * Multiply this vector by a scalar.
      *
-     * @param  mixed  $scalar
+     * @param  int|float  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1064,7 +1064,7 @@ class Vector implements Tensor
     /**
      * Divide this vector by a scalar.
      *
-     * @param  mixed  $scalar
+     * @param  int|float  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1087,7 +1087,7 @@ class Vector implements Tensor
     /**
      * Add a scalar to this vector.
      *
-     * @param  mixed  $scalar
+     * @param  int|float  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1110,7 +1110,7 @@ class Vector implements Tensor
     /**
      * Subtract a scalar from this vector.
      *
-     * @param  mixed  $scalar
+     * @param  int|float  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */

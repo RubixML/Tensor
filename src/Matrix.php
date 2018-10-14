@@ -43,7 +43,7 @@ class Matrix implements Tensor
     /**
      * Factory method to build a new matrix from an array.
      *
-     * @param  array[]  $a
+     * @param  array  $a
      * @return self
      */
     public static function build(array $a = []) : self
@@ -54,7 +54,7 @@ class Matrix implements Tensor
     /**
      * Build a new matrix foregoing any validation for quicker instantiation.
      *
-     * @param  array[]  $a
+     * @param  array  $a
      * @return self
      */
     public static function quick(array $a = []) : self
@@ -156,7 +156,7 @@ class Matrix implements Tensor
      * Build a diagonal matrix with the value of each element along the
      * diagonal and 0s everywhere else.
      *
-     * @param  (int|float)[]  $elements
+     * @param  array  $elements
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -190,7 +190,7 @@ class Matrix implements Tensor
     /**
      * Fill a matrix with a given value at each element.
      *
-     * @param  int|float  $value
+     * @param  mixed  $value
      * @param  int  $m
      * @param  int  $n
      * @throws \InvalidArgumentException
@@ -348,7 +348,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * @param  array[]  $a
+     * @param  array  $a
      * @param  bool  $validate
      * @throws \InvalidArgumentException
      * @return void
@@ -819,7 +819,7 @@ class Matrix implements Tensor
      * A universal function to multiply this matrix with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param  Matrix|Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -841,7 +841,7 @@ class Matrix implements Tensor
      * A universal function to divide this matrix by another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param  Matrix|Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -863,7 +863,7 @@ class Matrix implements Tensor
      * A universal function to add this matrix with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param  Matrix|Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -885,7 +885,7 @@ class Matrix implements Tensor
      * A universal function to subtract this matrix from another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param  Matrix|Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -907,7 +907,7 @@ class Matrix implements Tensor
      * A universal function to raise this matrix to the power of another
      * tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param  Matrix|Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -929,7 +929,7 @@ class Matrix implements Tensor
      * A universal function to compute the modulus of this matrix and
      * another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param  Matrix|Vector|int|float  $b
      * @throws \InvalidArgumentException
      * @return self
      */
