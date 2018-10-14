@@ -122,11 +122,18 @@ class Vector implements Tensor
     {
         $a = [];
 
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; $i += 2) {
             $r1 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
             $r2 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
+            
+            $r = sqrt(-2. * log($r1));
 
-            $a[] = sqrt(-2. * log($r1)) * cos(self::TWO_PI * $r2);
+            $a[] = $r * sin($r2 * self::TWO_PI);
+            $a[] = $r * cos($r2 * self::TWO_PI);
+        }
+
+        if (count($a) > $n) {
+            $a = array_slice($a, 0, $n);
         }
 
         return self::quick($a);

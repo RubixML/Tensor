@@ -63,6 +63,30 @@ class Matrix implements Tensor
     }
 
     /**
+     * Build a matrix from an array of vectors.
+     * 
+     * @param  \Rubix\Tensor\Vector[]  $vectors
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public static function fromVectors(array $vectors) : self
+    {
+        $a = [];
+
+        foreach ($vectors as $vector) {
+            if (!$vector instanceof Vector) {
+                throw new InvalidArgumentException('Cannot build matrix'
+                    . ' with a non vector, ' . gettype($vector)
+                    . ' found.');
+            }
+
+            $a[] = $vector->asArray();
+        }
+
+        return self::quick($a);
+    }
+
+    /**
      * Return an identity matrix with the given dimensions.
      *
      * @param  int  $n
@@ -193,11 +217,11 @@ class Matrix implements Tensor
      */
     public static function rand(int $m, int $n) : self
     {
-        $a = [[]];
+        $a = [];
 
         for ($i = 0; $i < $m; $i++) {
             for ($j = 0; $j < $n; $j++) {
-                $a[$i][$j] = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
+                $a[$i][] = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
             }
         }
 
@@ -214,15 +238,30 @@ class Matrix implements Tensor
      */
     public static function gaussian(int $m, int $n) : self
     {
-        $a = [[]];
+        $a = $extras = []; 
 
         for ($i = 0; $i < $m; $i++) {
-            for ($j = 0; $j < $n; $j++) {
+            $row = [];
+            
+            if (!empty($extras)) {
+                $row[] = array_pop($extras);
+            }
+
+            for ($j = count($row); $j < $n; $j += 2) {
                 $r1 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
                 $r2 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
 
-                $a[$i][$j] = sqrt(-2. * log($r1)) * cos(self::TWO_PI * $r2);
+                $r = sqrt(-2. * log($r1));
+
+                $row[] = $r * sin($r2 * self::TWO_PI);
+                $row[] = $r * cos($r2 * self::TWO_PI);
             }
+
+            if (count($row) > $n) {
+                $extras[] = array_pop($row);
+            }
+
+            $a[] = $row;
         }
 
         return self::quick($a);
@@ -237,15 +276,45 @@ class Matrix implements Tensor
      */
     public static function uniform(int $m, int $n) : self
     {
-        $a = [[]];
+        $a = [];
 
         for ($i = 0; $i < $m; $i++) {
             for ($j = 0; $j < $n; $j++) {
-                $a[$i][$j] = rand(-PHP_INT_MAX, PHP_INT_MAX) / PHP_INT_MAX;
+                $a[$i][] = rand(-PHP_INT_MAX, PHP_INT_MAX) / PHP_INT_MAX;
             }
         }
 
         return self::quick($a);
+    }
+
+        /**
+     * Return the elementwise minimum of two matrices.
+     *
+     * @param  \Rubix\Tensor\Matrix  $a
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @return self
+     */
+    public static function minimum(Matrix $a, Matrix $b) : self
+    {
+        if ($a->m() !== $b->m()) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of rows. ' . (string) $a->m() . ' needed but found '
+                . (string) $b->m() . '.');
+        }
+
+        if ($a->n() !== $b->n()) {
+            throw new InvalidArgumentException('Matrices have different number'
+                . ' of columns. ' . (string) $a->n() . ' needed but found '
+                . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($a as $i => $row) {
+            $c[] = array_map('min', $row, $b[$i]);
+        }
+
+        return self::quick($c);
     }
 
     /**
@@ -273,36 +342,6 @@ class Matrix implements Tensor
 
         foreach ($a as $i => $row) {
             $c[] = array_map('max', $row, $b[$i]);
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Return the elementwise minimum of two matrices.
-     *
-     * @param  \Rubix\Tensor\Matrix  $a
-     * @param  \Rubix\Tensor\Matrix  $b
-     * @return self
-     */
-    public static function minimum(Matrix $a, Matrix $b) : self
-    {
-        if ($a->m() !== $b->m()) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $a->m() . ' needed but found '
-                . (string) $b->m() . '.');
-        }
-
-        if ($a->n() !== $b->n()) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $a->n() . ' needed but found '
-                . (string) $b->n() . '.');
-        }
-
-        $c = [];
-
-        foreach ($a as $i => $row) {
-            $c[] = array_map('min', $row, $b[$i]);
         }
 
         return self::quick($c);

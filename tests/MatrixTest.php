@@ -53,6 +53,24 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(ArrayAccess::class, $this->a);
     }
 
+    public function test_from_vectors()
+    {
+        $z = Matrix::fromVectors([
+            $this->d,
+            $this->d,
+            $this->d,
+        ]);
+
+        $outcome = [
+            [2, 10, -1],
+            [2, 10, -1],
+            [2, 10, -1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($outcome, $z->asArray());
+    }
+
     public function test_build_identity()
     {
         $z = Matrix::identity(4);
