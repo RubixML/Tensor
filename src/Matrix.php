@@ -622,6 +622,30 @@ class Matrix implements Tensor
     }
 
     /**
+     * Calculate the determinant of the matrix.
+     * 
+     * @throws \RuntimeException
+     * @return float
+     */
+    public function det() : float
+    {
+        if ($this->m !== $this->n) {
+            throw new RuntimeException('Determinant is not defined for a'
+                . ' non square matrix.');
+        }
+
+        list($b, $swaps) = $this->ref();
+
+        $dHat = 1.;
+
+        for ($i = 0; $i < $this->m; $i++) {
+            $dHat *= $b[$i][$i];
+        }
+
+        return (-1.) ** $swaps * $dHat;
+    }
+
+    /**
      * Return the elementwise reciprocal of the matrix.
      *
      * @return self
@@ -725,15 +749,18 @@ class Matrix implements Tensor
 
     /**
      * Calculate the row echelon form of the matrix using Gaussian elimination.
+     * Return the matrix in ref and the number of swaps in a tuple.
      * 
      * @throws \RuntimeException
-     * @return self
+     * @return array
      */
-    public function ref() : self
+    public function ref() : array
     {
         $minDim = min($this->shape());
 
         $b = $this->a;
+
+        $swaps = 0;
 
         for ($k = 0; $k < $minDim; $k++) {
             $index = $k;
@@ -754,6 +781,8 @@ class Matrix implements Tensor
 
                 $b[$k] = $b[$index];
                 $b[$index] = $temp;
+
+                $swaps++;
             }
 
             $diag = $b[$k][$k];
@@ -769,7 +798,7 @@ class Matrix implements Tensor
             }
         }
 
-        return self::quick($b);
+        return [self::quick($b), $swaps];
     }
 
     /**
@@ -779,7 +808,9 @@ class Matrix implements Tensor
      */
     public function rref() : self
     {
-        $b = $this->ref()->asArray();
+        list($b, $swaps) = $this->ref();
+
+        $b = $b->asArray();
 
         $row = $col = 0;
 

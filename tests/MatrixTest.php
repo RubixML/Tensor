@@ -344,6 +344,12 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_det()
+    {
+        $this->assertEquals(-5301.999999999999, $this->a->det());
+        $this->assertEquals(-544., $this->c->det());
+    }
+
     public function test_reciprocal()
     {
         $z = $this->a->reciprocal();
@@ -385,7 +391,7 @@ class MatrixTest extends TestCase
 
     public function test_ref()
     {
-        $z =  $this->a->ref();
+        list($z, $swaps) = $this->a->ref();
 
         $y = [
             [22, -17, 12],

@@ -185,7 +185,9 @@ class Vector implements Tensor
      */
     public static function linspace(float $start, float $end, int $n) : self
     {
-        $interval = abs($end - $start) / ($n - 1);
+        $range = abs($end - $start);
+
+        $interval = ($range / ($n - 1)) - (self::EPSILON * $range);
 
         return self::range($start, $end, $interval);
     }
