@@ -511,6 +511,32 @@ class VectorTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_degrees()
+    {
+        $z = $this->c->degrees();
+
+        $y = [
+            229.1831180523293, 372.42256683503507, 166.15776058793872,
+            1145.9155902616465, 148.96902673401405, 681.8197762056797,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_radians()
+    {
+        $z = $this->c->radians();
+
+        $y = [
+            0.06981317007977318, 0.11344640137963141, 0.05061454830783556,
+            0.3490658503988659, 0.04537856055185257, 0.2076941809873252,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_sum()
     {
         $this->assertEquals(177., $this->a->sum());

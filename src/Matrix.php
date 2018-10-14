@@ -1073,6 +1073,38 @@ class Matrix implements Tensor
     }
 
     /**
+     * Convert angles from radians to degrees.
+     *
+     * @return self
+     */
+    public function degrees() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $b[] = array_map('rad2deg', $row);
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Convert angles from degrees to radians.
+     *
+     * @return self
+     */
+    public function radians() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $b[] = array_map('deg2rad', $row);
+        }
+
+        return self::quick($b);
+    }
+
+    /**
      * Sum the rows of the matrix and return a vector.
      *
      * @return \Rubix\Tensor\Vector

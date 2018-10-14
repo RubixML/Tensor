@@ -719,6 +719,26 @@ class Vector implements Tensor
     }
 
     /**
+     * Convert angles from radians to degrees.
+     *
+     * @return self
+     */
+    public function degrees() : self
+    {
+        return self::quick(array_map('rad2deg', $this->a));
+    }
+
+    /**
+     * Convert angles from degrees to radians.
+     *
+     * @return self
+     */
+    public function radians() : self
+    {
+        return self::quick(array_map('deg2rad', $this->a));
+    }
+
+    /**
      * The sum of the vector.
      *
      * @return float

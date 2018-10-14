@@ -161,6 +161,20 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function tan();
 
     /**
+     * Convert angles from radians to degrees.
+     *
+     * @return mixed
+     */
+    public function degrees();
+
+    /**
+     * Convert angles from degrees to radians.
+     *
+     * @return mixed
+     */
+    public function radians();
+
+    /**
      * Sum the tensor.
      *
      * @return mixed

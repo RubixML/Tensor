@@ -801,6 +801,34 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_degrees()
+    {
+        $z = $this->b->degrees();
+
+        $y = [
+            [744.8451336700701],
+            [630.2535746439056],
+            [515.6620156177408],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_radians()
+    {
+        $z = $this->b->radians();
+
+        $y = [
+            [0.22689280275926282],
+            [0.19198621771937624],
+            [0.15707963267948966],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_sum()
     {
         $z = $this->a->sum();
