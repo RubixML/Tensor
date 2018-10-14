@@ -393,9 +393,9 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_dot_matrix()
+    public function test_matmul()
     {
-        $z = $this->a->dot($this->b);
+        $z = $this->a->matmul($this->b);
 
         $y = [
             [207], [155], [113],

@@ -44,7 +44,8 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function reduce(callable $fn, float $initial = 0.) : float;
 
     /**
-     * Multiply this tensor with another tensor element-wise.
+     * A universal function to multiply this tensor with another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -53,7 +54,8 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function multiply($b);
 
     /**
-     * Divide this tensor by another tensor element-wise.
+     * A universal function to divide this tensor by another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -62,7 +64,8 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function divide($b);
 
     /**
-     * Add this tensor to another tensor element-wise.
+     * A universal function to add this tensor with another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -71,7 +74,8 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function add($b);
 
     /**
-     * Subtract this tensor from another tensor element-wise.
+     * A universal function to subtract this tensor from another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -80,7 +84,8 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function subtract($b);
 
     /**
-     * Raise this tensor to the power of another tensor element-wise.
+     * A universal function to raise this tensor to the power of another
+     * tensor element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -89,7 +94,8 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function pow($b);
 
     /**
-     * Calculate the modulus of this tensor and another tensor element-wise.
+     * A universal function to compute the modulus of this tensor and
+     * another tensor element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException

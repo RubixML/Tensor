@@ -428,20 +428,26 @@ class Vector implements Tensor
     }
 
     /**
-     * Dot this vector with another tensor elementwise.
+     * Compute the dot product of this vector and another vector.
      *
-     * @param  mixed  $b
+     * @param  \Rubix\Tensor\Vector  $b
      * @throws \InvalidArgumentException
      * @return float
      */
-    public function dot($b) : float
+    public function dot(Vector $b) : float
     {
-        if ($b instanceof Vector) {
-            return $this->dotVector($b);
+        if ($this->n !== $b->size()) {
+            throw new InvalidArgumentException('Vectors do not have the same'
+                . ' dimensionality.');
         }
 
-        throw new InvalidArgumentException('Cannot dot vector with a'
-            . ' ' . gettype($b) . '.');
+        $sigma = 0.;
+
+        foreach ($this->a as $i => $value) {
+            $sigma += $value * $b[$i];
+        }
+
+        return $sigma;
     }
 
     /**
@@ -499,7 +505,8 @@ class Vector implements Tensor
     }
 
     /**
-     * Multiply this vector with another tensor elementwise.
+     * A universal function to multiply this vector with another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -518,7 +525,8 @@ class Vector implements Tensor
     }
 
     /**
-     * Divide this vector with another tensor elementwise.
+     * A universal function to divide this vector by another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -537,7 +545,8 @@ class Vector implements Tensor
     }
 
     /**
-     * Add this vector to another tensor elementwise.
+     * A universal function to add this vector with another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -556,7 +565,8 @@ class Vector implements Tensor
     }
 
     /**
-     * Add this vector to another tensor elementwise.
+     * A universal function to subtract this vector from another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -575,7 +585,8 @@ class Vector implements Tensor
     }
 
     /**
-     * Raise this vector to the power of another tensor elementwise.
+     * A universal function to raise this vector to the power of another
+     * tensor element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -594,7 +605,8 @@ class Vector implements Tensor
     }
 
     /**
-     * Calculate the modulus of this vector with another tensor elementwise.
+     * A universal function to compute the modulus of this vector and
+     * another tensor element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -613,7 +625,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Take the absolute value of the vector.
+     * Return the absolute value of the vector.
      *
      * @return self
      */
@@ -653,7 +665,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Exponentiate each element in the vector.
+     * Take the log to the given base of each element in the vector.
      *
      * @param  float  $base
      * @return self
@@ -873,29 +885,6 @@ class Vector implements Tensor
         }
 
         return self::quick($b);
-    }
-
-    /**
-     * Compute the dot product of this vector and another vector.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return float
-     */
-    protected function dotVector(Vector $b) : float
-    {
-        if ($this->n !== $b->size()) {
-            throw new InvalidArgumentException('Vectors do not have the same'
-                . ' dimensionality.');
-        }
-
-        $sigma = 0.;
-
-        foreach ($this->a as $i => $value) {
-            $sigma += $value * $b[$i];
-        }
-
-        return $sigma;
     }
 
     /**

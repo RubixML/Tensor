@@ -633,6 +633,58 @@ class Matrix implements Tensor
     }
 
     /**
+     * Multiply this matrix with another matrix (matrix-matrix product).
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function matmul(Matrix $b) : self
+    {
+        if ($b->m() !== $this->n) {
+            throw new InvalidArgumentException('Matrix dimensions do not'
+                . ' match. ' . (string) $this->n . ' rows needed but found'
+                . ' ' . (string) $b->m() . '.');
+        }
+
+        $bT = $b->transpose();
+
+        $c = [[]];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($bT as $column) {
+                $sigma = 0;
+
+                foreach ($row as $k => $value) {
+                    $sigma += $value * $column[$k];
+                }
+
+                $c[$i][] = $sigma;
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Compute the dot product of this matrix and a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function dot(Vector $b) : self
+    {
+        if ($b->size() !== $this->n) {
+            throw new InvalidArgumentException('Vector dimensions do not'
+                . ' match. ' . (string) $this->n . ' rows needed but found'
+                . ' ' . (string) $b->size() . '.');
+        }
+
+        return $this->matmul($b->asColumnMatrix());
+    }
+
+    /**
      * Calculate the row echelon form of the matrix using Gaussian elimination.
      * 
      * @throws \RuntimeException
@@ -725,26 +777,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * Dot this matrix with another tensor.
-     *
-     * @param  mixed  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public function dot($b) : self
-    {
-        if ($b instanceof Matrix) {
-            return $this->dotMatrix($b);
-        } else if ($b instanceof Vector) {
-            return $this->dotVector($b);
-        }
-
-        throw new InvalidArgumentException('Cannot dot matrix with a'
-            . gettype($b) . '.');
-    }
-
-    /**
-     * Multiply this matrix with another tensor elementwise.
+     * A universal function to multiply this matrix with another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -765,7 +799,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * Divide this matrix with another tensor elementwise.
+     * A universal function to divide this matrix by another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -786,7 +821,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * Add this matrix to another tensor elementwise.
+     * A universal function to add this matrix with another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -807,7 +843,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * Subtract this matrix from another tensor elementwise.
+     * A universal function to subtract this matrix from another tensor
+     * element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -828,7 +865,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * Subtract this matrix from another tensor elementwise.
+     * A universal function to raise this matrix to the power of another
+     * tensor element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -849,7 +887,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * Calculate the modulus of the matrix with another tensor.
+     * A universal function to compute the modulus of this matrix and
+     * another tensor element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -1124,7 +1163,7 @@ class Matrix implements Tensor
 
         $b = $this->subtractVector($mean);
 
-        return $b->dot($b->transpose())
+        return $b->matmul($b->transpose())
             ->divideScalar($this->n);
     }
 
@@ -1379,40 +1418,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Take the dot product of this matrix and another matrix.
-     *
-     * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    protected function dotMatrix(Matrix $b) : self
-    {
-        if ($b->m() !== $this->n) {
-            throw new InvalidArgumentException('Matrix dimensions do not'
-                . ' match. ' . (string) $this->n . ' rows needed but found'
-                . ' ' . (string) $b->m() . '.');
-        }
-
-        $bT = $b->transpose();
-
-        $c = [[]];
-
-        foreach ($this->a as $i => $row) {
-            foreach ($bT as $column) {
-                $sigma = 0;
-
-                foreach ($row as $k => $value) {
-                    $sigma += $value * $column[$k];
-                }
-
-                $c[$i][] = $sigma;
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
      * Return the elementwise product between this matrix and another matrix.
      *
      * @param  \Rubix\Tensor\Matrix  $b
@@ -1616,24 +1621,6 @@ class Matrix implements Tensor
         }
 
         return self::quick($c);
-    }
-
-    /**
-     * Take the dot product of this matrix and another matrix.
-     *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    protected function dotVector(Vector $b) : self
-    {
-        if ($b->size() !== $this->n) {
-            throw new InvalidArgumentException('Vector dimensions do not'
-                . ' match. ' . (string) $this->n . ' rows needed but found'
-                . ' ' . (string) $b->size() . '.');
-        }
-
-        return $this->dotMatrix($b->asColumnMatrix());
     }
 
     /**
