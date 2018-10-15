@@ -475,6 +475,28 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the diagonal elements of a square matrix as a vector.
+     * 
+     * @throws \RuntimeException
+     * @return \Rubix\Tensor\Vector
+     */
+    public function diagonalAsVector() : Vector
+    {
+        if ($this->m !== $this->n) {
+            throw new RuntimeException('Cannot trace diagonal of a'
+                . ' non square matrix.');
+        }
+
+        $b = [];
+
+        for ($i = 0; $i < $this->m; $i++) {
+            $b[] = $this->a[$i][$i];
+        }
+
+        return Vector::quick($b);
+    }
+
+    /**
      * Return the elements of the matrix in a 2-d array.
      *
      * @return array[]

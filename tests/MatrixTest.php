@@ -260,6 +260,17 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_diagonal_as_vector()
+    {
+        $z = $this->a->diagonalAsVector();
+
+        $y = [22, 11, -9];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertCount(3, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_as_array()
     {
         $z = $this->a->asArray();
