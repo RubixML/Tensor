@@ -63,30 +63,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Build a matrix from an array of vectors.
-     * 
-     * @param  \Rubix\Tensor\Vector[]  $vectors
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public static function fromVectors(array $vectors) : self
-    {
-        $a = [];
-
-        foreach ($vectors as $vector) {
-            if (!$vector instanceof Vector) {
-                throw new InvalidArgumentException('Cannot build matrix'
-                    . ' with a non vector, ' . gettype($vector)
-                    . ' found.');
-            }
-
-            $a[] = $vector->asArray();
-        }
-
-        return self::quick($a);
-    }
-
-    /**
      * Return an identity matrix with the given dimensions.
      *
      * @param  int  $n
@@ -345,6 +321,42 @@ class Matrix implements Tensor
         }
 
         return self::quick($c);
+    }
+
+    /**
+     * Build a matrix from an array of row vectors.
+     * 
+     * @param  \Rubix\Tensor\Vector[]  $vectors
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public static function fromVectors(array $vectors) : self
+    {
+        $a = [];
+
+        foreach ($vectors as $vector) {
+            if (!$vector instanceof Vector) {
+                throw new InvalidArgumentException('Cannot build matrix'
+                    . ' with a non vector, ' . gettype($vector)
+                    . ' found.');
+            }
+
+            $a[] = $vector->asArray();
+        }
+
+        return self::quick($a);
+    }
+
+    /**
+     * Build a matrix by joining an array of vectors by column.
+     * 
+     * @param  \Rubix\Tensor\Vector[]  $vectors
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public static function concatenate(array $vectors) : self
+    {
+        return self::fromVectors($vectors)->transpose();
     }
 
     /**
@@ -666,13 +678,9 @@ class Matrix implements Tensor
 
         list($b, $swaps) = $this->ref();
 
-        $dHat = 1.;
+        $pi = $b->diagonalAsVector()->product();
 
-        for ($i = 0; $i < $this->m; $i++) {
-            $dHat *= $b[$i][$i];
-        }
-
-        return (-1.) ** $swaps * $dHat;
+        return $pi * (-1.) ** $swaps;
     }
 
     /**
@@ -708,7 +716,24 @@ class Matrix implements Tensor
         return self::ones(...$this->shape())->divide($this);
     }
 
-        /**
+    /**
+     * Trace the matrix along the diagonal i.e return the sum of all diagonal
+     * elements of a square matrix.
+     *
+     * @throws \InvalidArgumentException
+     * @return float
+     */
+    public function trace() : float
+    {
+        if ($this->m !== $this->n) {
+            throw new InvalidArgumentException('Cannot trace a non square'
+                . ' matrix.');
+        }
+
+        return $this->diagonalAsVector()->sum();
+    }
+
+    /**
      * Return the L1 norm of the matrix.
      *
      * @return float
@@ -1199,29 +1224,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Trace the matrix along the diagonal i.e return the sum of all diagonal
-     * elements of a square matrix.
-     *
-     * @throws \InvalidArgumentException
-     * @return float
-     */
-    public function trace() : float
-    {
-        if ($this->m !== $this->n) {
-            throw new InvalidArgumentException('Cannot trace a non square'
-                . ' matrix.');
-        }
-
-        $sigma = 0.;
-
-        for ($i = 0; $i < $this->m; $i++) {
-            $sigma += $this->a[$i][$i];
-        }
-
-        return $sigma;
-    }
-
-    /**
      * Calculate the row product of the matrix.
      *
      * @return \Rubix\Tensor\Vector
@@ -1577,9 +1579,9 @@ class Matrix implements Tensor
                 . ' or column.');
         }
 
-        $n -= 1;
-
         $b = $this->a;
+
+        $n -= 1;
 
         if ($n > 0) {
             foreach ($this->a as $i => $row) {

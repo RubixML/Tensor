@@ -71,6 +71,24 @@ class MatrixTest extends TestCase
         $this->assertEquals($outcome, $z->asArray());
     }
 
+    public function test_concatenate()
+    {
+        $z = Matrix::concatenate([
+            $this->d,
+            $this->d,
+            $this->d,
+        ]);
+
+        $outcome = [
+            [2, 2, 2],
+            [10, 10, 10],
+            [-1, -1, -1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($outcome, $z->asArray());
+    }
+
     public function test_build_identity()
     {
         $z = Matrix::identity(4);
