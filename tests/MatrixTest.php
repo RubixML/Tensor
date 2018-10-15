@@ -453,6 +453,41 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_lu_decomposition()
+    {
+        list($l, $u, $p) = $this->a->lu();
+
+        $lHat = [
+            [1., 0, 0],
+            [0.18181818181818182, 1., 0],
+            [0.9090909090909091, 0.6709677419354838, 1.],
+        ];
+
+        $uHat = [
+            [22, -17, 12],
+            [0, 14.09090909090909, -4.181818181818182],
+            [0, 0, -17.10322580645161],
+        ];
+
+        $pHat = [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $l);
+        $this->assertInstanceOf(Matrix::class, $u);
+        $this->assertInstanceOf(Matrix::class, $p);
+
+        $this->assertCount(9, $l);
+        $this->assertCount(9, $u);
+        $this->assertCount(9, $p);
+
+        $this->assertEquals($lHat, $l->asArray());
+        $this->assertEquals($uHat, $u->asArray());
+        $this->assertEquals($pHat, $p->asArray());
+    }
+
     public function test_matmul()
     {
         $z = $this->a->matmul($this->b);

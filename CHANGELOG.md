@@ -1,4 +1,5 @@
 - Unreleased
+    - Implemented LU decomposition
     - Implemented concatenation of vectors to a matrix
     - Added vector projection
 

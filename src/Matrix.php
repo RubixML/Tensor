@@ -925,6 +925,78 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the LU decomposition of the matrix in a tuple where l is
+     * the lower triangular matrix, u is the upper triangular matrix,
+     * and p is the permutation matrix.
+     * 
+     * @throws \RuntimeException
+     * @return self[]
+     */
+    public function lu() : array
+    {
+        if ($this->m !== $this->n) {
+            throw new RuntimeException('Cannot decompose non square'
+                . ' matrix.');
+        }
+
+        $l = self::identity($this->n)->asArray();
+        $u = self::zeros($this->n, $this->n)->asArray();
+        $p = self::identity($this->n)->asArray();
+
+        for ($i = 0; $i < $this->n; $i++) {
+            $max = $this->a[$i][$i];
+
+            $row = $i;
+
+            for ($j = $i; $j < $this->n; $j++) {
+                if ($this->a[$j][$i] > $max) {
+                    $max = $this->a[$j][$i];
+                    
+                    $row = $j;
+                }
+            }
+            
+            if ($i !== $row) {
+                $temp = $p[$i];
+
+                $p[$i] = $p[$row];
+                $p[$row] = $temp;
+            }
+        }
+
+        $pa = self::quick($p)->matmul($this)->asArray();
+
+        for ($i = 0; $i < $this->n; $i++) {
+            for ($j = 0; $j <= $i; $j++) {
+                $sigma = 0;
+
+                for ($k = 0; $k < $j; $k++) {
+                    $sigma += $u[$k][$i] * $l[$j][$k];
+                }
+
+                $u[$j][$i] = $pa[$j][$i] - $sigma;
+            }
+
+            for ($j = $i; $j < $this->n; $j++) {
+                $sigma = 0;
+
+                for ($k = 0; $k < $i; $k++) {
+                    $sigma += $u[$k][$i] * $l[$j][$k];
+                }
+
+                $l[$j][$i] = ($pa[$j][$i] - $sigma)
+                    / ($u[$i][$i] ?: self::EPSILON);
+            }
+        }
+
+        $l = self::quick($l);
+        $u = self::quick($u);
+        $p = self::quick($p);
+
+        return [$l, $u, $p];
+    }
+
+    /**
      * A universal function to multiply this matrix with another tensor
      * element-wise.
      *
