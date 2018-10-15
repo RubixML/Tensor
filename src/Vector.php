@@ -520,6 +520,19 @@ class Vector implements Tensor
     }
 
     /**
+     * Project this vector on another vector.
+     * 
+     * @param  \Rubix\Tensor\Vector  $b
+     * @return self
+     */
+    public function project(Vector $b) : self
+    {
+        $bHat = $this->dot($b) / ($b->l2Norm() ** 2);
+
+        return $b->multiply($bHat);
+    }
+
+    /**
      * A universal function to multiply this vector with another tensor
      * element-wise.
      *

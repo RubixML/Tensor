@@ -279,6 +279,19 @@ class VectorTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_project()
+    {
+        $z = $this->a->project($this->b);
+
+        $y = [
+            2.8373983739837394, 1.1349593495934958, 22.699186991869915, -5.674796747967479,
+            -11.349593495934958, -34.048780487804876, 37.45365853658536, 22.699186991869915,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_multiply_vector()
     {
         $z = $this->a->multiply($this->b);
