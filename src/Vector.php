@@ -374,7 +374,7 @@ class Vector implements Tensor
      */
     public function map(callable $fn) : self
     {
-        return new self(array_map($fn, $this->a), true);
+        return self::build(array_map($fn, $this->a));
     }
 
     /**
@@ -396,50 +396,13 @@ class Vector implements Tensor
     }
 
     /**
-     * Calculate the L1 or Manhattan norm of the vector.
+     * Return the reciprocal of the vector.
      *
-     * @return float
+     * @return self
      */
-    public function l1Norm() : float
+    public function reciprocal() : self
     {
-        return $this->abs()->sum();
-    }
-
-    /**
-     * Calculate the L2 or Euclidean norm of the vector.
-     *
-     * @return float
-     */
-    public function l2Norm() : float
-    {
-        return sqrt($this->square()->sum());
-    }
-
-    /**
-     * Calculate the p-norm of the vector.
-     *
-     * @param  float  $p
-     * @throws \InvalidArgumentException
-     * @return float
-     */
-    public function pNorm(float $p = 3.) : float
-    {
-        if ($p < 0.) {
-            throw new InvalidArgumentException('P must be greater'
-                . ' than 0.');
-        }
-
-        return $this->abs()->powScalar($p)->sum() ** (1. / $p);
-    }
-
-    /**
-     * Calculate the max norm of the vector.
-     *
-     * @return float
-     */
-    public function maxNorm() : float
-    {
-        return $this->abs()->max();
+        return self::ones($this->n)->divide($this);
     }
 
     /**
@@ -530,6 +493,53 @@ class Vector implements Tensor
         $bHat = $this->dot($b) / ($b->l2Norm() ** 2);
 
         return $b->multiply($bHat);
+    }
+
+        /**
+     * Calculate the L1 or Manhattan norm of the vector.
+     *
+     * @return float
+     */
+    public function l1Norm() : float
+    {
+        return $this->abs()->sum();
+    }
+
+    /**
+     * Calculate the L2 or Euclidean norm of the vector.
+     *
+     * @return float
+     */
+    public function l2Norm() : float
+    {
+        return sqrt($this->square()->sum());
+    }
+
+    /**
+     * Calculate the p-norm of the vector.
+     *
+     * @param  float  $p
+     * @throws \InvalidArgumentException
+     * @return float
+     */
+    public function pNorm(float $p = 3.) : float
+    {
+        if ($p < 0.) {
+            throw new InvalidArgumentException('P must be greater'
+                . ' than 0.');
+        }
+
+        return $this->abs()->powScalar($p)->sum() ** (1. / $p);
+    }
+
+    /**
+     * Calculate the max norm of the vector.
+     *
+     * @return float
+     */
+    public function maxNorm() : float
+    {
+        return $this->abs()->max();
     }
 
     /**

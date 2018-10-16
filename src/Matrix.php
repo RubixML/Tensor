@@ -348,18 +348,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Build a matrix by joining an array of vectors by column.
-     * 
-     * @param  \Rubix\Tensor\Vector[]  $vectors
-     * @throws \InvalidArgumentException
-     * @return self
-     */
-    public static function concatenate(array $vectors) : self
-    {
-        return self::fromVectors($vectors)->transpose();
-    }
-
-    /**
      * @param  array  $a
      * @param  bool  $validate
      * @throws \InvalidArgumentException
@@ -594,7 +582,7 @@ class Matrix implements Tensor
             $b[] = array_map($fn, $row);
         }
 
-        return new self($b, true);
+        return self::build($b);
     }
 
     /**
@@ -624,7 +612,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * Transpose the matrix.
+     * Transpose the matrix i.e row become columns and columns
+     * become rows.
      *
      * @return self
      */
@@ -644,15 +633,15 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the inverse of the matrix.
+     * Compute the inverse form of the matrix.
      * 
      * @return self
      */
     public function inverse() : self
     {
-        $b = $this->augmentRight(self::identity($this->m));
-
-        $b = $b->rref()->asArray();
+        $b = self::identity($this->m)
+            ->augmentLeft($this)
+            ->rref();
 
         $c = [];
 
@@ -734,46 +723,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the L1 norm of the matrix.
-     *
-     * @return float
-     */
-    public function l1Norm() : float
-    {
-        return $this->transpose()->abs()->sum()->max();
-    }
-
-    /**
-     * Return the L2 norm of the matrix.
-     *
-     * @return float
-     */
-    public function l2Norm() : float
-    {
-        return sqrt($this->square()->sum()->sum());
-    }
-
-    /**
-     * Retrn the infinity norm of the matrix.
-     *
-     * @return float
-     */
-    public function infinityNorm() : float
-    {
-        return $this->abs()->sum()->max();
-    }
-
-    /**
-     * Return the max norm of the matrix.
-     *
-     * @return float
-     */
-    public function maxNorm() : float
-    {
-        return $this->abs()->max()->max();
-    }
-
-    /**
      * Multiply this matrix with another matrix (matrix-matrix product).
      *
      * @param  \Rubix\Tensor\Matrix  $b
@@ -826,8 +775,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * Calculate the row echelon form of the matrix using Gaussian elimination.
-     * Return the matrix in ref and the number of swaps in a tuple.
+     * Calculate the row echelon form (REF) of the matrix using Gaussian
+     * elimination. Return the matrix and the number of swaps in a tuple.
      * 
      * @throws \RuntimeException
      * @return array
@@ -876,11 +825,13 @@ class Matrix implements Tensor
             }
         }
 
-        return [self::quick($b), $swaps];
+        $b = self::quick($b);
+
+        return [$b, $swaps];
     }
 
     /**
-     * Return the reduced row echelon form of the matrix.
+     * Return the reduced row echelon (RREF) form of the matrix.
      * 
      * @return self
      */
@@ -935,13 +886,14 @@ class Matrix implements Tensor
     public function lu() : array
     {
         if ($this->m !== $this->n) {
-            throw new RuntimeException('Cannot decompose non square'
+            throw new RuntimeException('Cannot decompose a non square'
                 . ' matrix.');
         }
 
+        $pa = $this->a;
+
         $l = self::identity($this->n)->asArray();
         $u = self::zeros($this->n, $this->n)->asArray();
-        $p = self::identity($this->n)->asArray();
 
         for ($i = 0; $i < $this->n; $i++) {
             $max = $this->a[$i][$i];
@@ -957,14 +909,12 @@ class Matrix implements Tensor
             }
             
             if ($i !== $row) {
-                $temp = $p[$i];
+                $temp = $pa[$i];
 
-                $p[$i] = $p[$row];
-                $p[$row] = $temp;
+                $pa[$i] = $pa[$row];
+                $pa[$row] = $temp;
             }
         }
-
-        $pa = self::quick($p)->matmul($this)->asArray();
 
         for ($i = 0; $i < $this->n; $i++) {
             for ($j = 0; $j <= $i; $j++) {
@@ -991,9 +941,48 @@ class Matrix implements Tensor
 
         $l = self::quick($l);
         $u = self::quick($u);
-        $p = self::quick($p);
 
-        return [$l, $u, $p];
+        return [$l, $u];
+    }
+
+    /**
+     * Return the L1 norm of the matrix.
+     *
+     * @return float
+     */
+    public function l1Norm() : float
+    {
+        return $this->transpose()->abs()->sum()->max();
+    }
+
+    /**
+     * Return the L2 norm of the matrix.
+     *
+     * @return float
+     */
+    public function l2Norm() : float
+    {
+        return sqrt($this->square()->sum()->sum());
+    }
+
+    /**
+     * Retrn the infinity norm of the matrix.
+     *
+     * @return float
+     */
+    public function infinityNorm() : float
+    {
+        return $this->abs()->sum()->max();
+    }
+
+    /**
+     * Return the max norm of the matrix.
+     *
+     * @return float
+     */
+    public function maxNorm() : float
+    {
+        return $this->abs()->max()->max();
     }
 
     /**

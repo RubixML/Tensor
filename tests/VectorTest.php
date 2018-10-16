@@ -8,6 +8,7 @@ use Rubix\Tensor\Matrix;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use IteratorAggregate;
+use RuntimeException;
 use ArrayAccess;
 use Countable;
 
@@ -35,6 +36,13 @@ class VectorTest extends TestCase
         $this->assertInstanceOf(Countable::class, $this->a);
         $this->assertInstanceOf(IteratorAggregate::class, $this->a);
         $this->assertInstanceOf(ArrayAccess::class, $this->a);
+    }
+
+    public function test_build_bad_element()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::build([0, 0.1, 'bad']);
     }
 
     public function test_build_zeros()
@@ -220,6 +228,19 @@ class VectorTest extends TestCase
         });
 
         $this->assertEquals(110.3671875, $scalar);
+    }
+
+    public function test_reciprocal()
+    {
+        $z = $this->a->reciprocal();
+
+        $y = [
+            -0.06666666666666667, 0.04, 0.02857142857142857, -0.027777777777777776,
+            -0.013888888888888888, 0.011235955056179775, 0.009433962264150943, 0.022222222222222223,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_argmin()

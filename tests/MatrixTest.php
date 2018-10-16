@@ -8,6 +8,7 @@ use Rubix\Tensor\Matrix;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use IteratorAggregate;
+use RuntimeException;
 use ArrayAccess;
 use Countable;
 
@@ -53,6 +54,15 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(ArrayAccess::class, $this->a);
     }
 
+    public function test_build_bad_element()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::build([
+            [0, 0.1, 'bad'],
+        ]);
+    }
+
     public function test_from_vectors()
     {
         $z = Matrix::fromVectors([
@@ -65,24 +75,6 @@ class MatrixTest extends TestCase
             [2, 10, -1],
             [2, 10, -1],
             [2, 10, -1],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($outcome, $z->asArray());
-    }
-
-    public function test_concatenate()
-    {
-        $z = Matrix::concatenate([
-            $this->d,
-            $this->d,
-            $this->d,
-        ]);
-
-        $outcome = [
-            [2, 2, 2],
-            [10, 10, 10],
-            [-1, -1, -1],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
@@ -455,7 +447,7 @@ class MatrixTest extends TestCase
 
     public function test_lu_decomposition()
     {
-        list($l, $u, $p) = $this->a->lu();
+        list($l, $u) = $this->a->lu();
 
         $lHat = [
             [1., 0, 0],
@@ -469,23 +461,14 @@ class MatrixTest extends TestCase
             [0, 0, -17.10322580645161],
         ];
 
-        $pHat = [
-            [1, 0, 0],
-            [0, 1, 0],
-            [0, 0, 1],
-        ];
-
         $this->assertInstanceOf(Matrix::class, $l);
         $this->assertInstanceOf(Matrix::class, $u);
-        $this->assertInstanceOf(Matrix::class, $p);
 
         $this->assertCount(9, $l);
         $this->assertCount(9, $u);
-        $this->assertCount(9, $p);
 
         $this->assertEquals($lHat, $l->asArray());
         $this->assertEquals($uHat, $u->asArray());
-        $this->assertEquals($pHat, $p->asArray());
     }
 
     public function test_matmul()
