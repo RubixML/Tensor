@@ -1,7 +1,16 @@
 - Unreleased
     - Implemented LU decomposition
-    - Implemented concatenation of vectors to a matrix
     - Added vector projection
 
 - 1.0.0
-    - Initial release.
+    - Implemented Matrix inverse
+    - Implemeted Row Echelon and Reduced Row Echelon decomposition
+    - Added Matrix determinant
+    - Added Matrix rank
+    - Added Matrix/Vector products
+    - Implemented universal element-wise tensor operations
+    - Added statistical functions
+    - Added trigonometric functions
+    - Added exponential and logarithmic functions
+    - Added tensor factories
+

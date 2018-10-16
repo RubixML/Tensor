@@ -953,7 +953,7 @@ class MatrixTest extends TestCase
     {
         $z = $this->a->variance();
 
-        $y = [828.6666666666666, 60.66666666666667, 425.99999999999994];
+        $y = [276.22222222222223, 20.222222222222225, 141.99999999999997];
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($y, $z->asArray());
@@ -964,9 +964,9 @@ class MatrixTest extends TestCase
         $z = $this->a->covariance();
 
         $y = [
-            [116.51851851851852, -99.25925925925925, -17.259259259259263],
-            [-99.25925925925925, 119.62962962962963, -20.370370370370367],
-            [-17.259259259259263, -20.370370370370367, 37.62962962962963],
+            [276.22222222222223, -69.11111111111111, 114.77777777777776],
+            [-69.11111111111111, 20.222222222222225, -17.888888888888886],
+            [114.77777777777776, -17.888888888888886, 141.99999999999997],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
@@ -1189,5 +1189,14 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $z);
         $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_to_string()
+    {
+        $outcome = '[ 22 -17 12 ]' . "\r\n"
+                    . '[ 4 11 -2 ]' . "\r\n"
+                    . '[ 20 -6 -9 ]';
+
+        $this->assertEquals($outcome, (string) $this->a);
     }
 }

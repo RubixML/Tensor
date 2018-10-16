@@ -374,7 +374,9 @@ class Vector implements Tensor
      */
     public function map(callable $fn) : self
     {
-        return self::build(array_map($fn, $this->a));
+        $validate = is_object($fn) ? true : false;
+
+        return new self(array_map($fn, $this->a), $validate);
     }
 
     /**
@@ -396,23 +398,13 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the reciprocal of the vector.
-     *
-     * @return self
-     */
-    public function reciprocal() : self
-    {
-        return self::ones($this->n)->divide($this);
-    }
-
-    /**
      * Compute the dot product of this vector and another vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
      * @throws \InvalidArgumentException
-     * @return float
+     * @return int|float
      */
-    public function dot(Vector $b) : float
+    public function dot(Vector $b)
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vectors do not have the same'
@@ -429,18 +421,18 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the inner product of two vectors. Alias of dot().
+     * Return the inner product of two vectors.
      *
      * @param  \Rubix\Tensor\Vector  $b
-     * @return float
+     * @return int|float
      */
-    public function inner(Vector $b) : float
+    public function inner(Vector $b)
     {
         return $this->dot($b);
     }
 
     /**
-     * Calculate the outer product of this and another vector. Return as Matrix.
+     * Calculate the outer product of this and another vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
      * @return \Rubix\Tensor\Matrix
@@ -498,9 +490,9 @@ class Vector implements Tensor
         /**
      * Calculate the L1 or Manhattan norm of the vector.
      *
-     * @return float
+     * @return int|float
      */
-    public function l1Norm() : float
+    public function l1Norm()
     {
         return $this->abs()->sum();
     }
@@ -508,9 +500,9 @@ class Vector implements Tensor
     /**
      * Calculate the L2 or Euclidean norm of the vector.
      *
-     * @return float
+     * @return int|float
      */
-    public function l2Norm() : float
+    public function l2Norm()
     {
         return sqrt($this->square()->sum());
     }
@@ -520,9 +512,9 @@ class Vector implements Tensor
      *
      * @param  float  $p
      * @throws \InvalidArgumentException
-     * @return float
+     * @return int|float
      */
-    public function pNorm(float $p = 3.) : float
+    public function pNorm(float $p = 3.)
     {
         if ($p < 0.) {
             throw new InvalidArgumentException('P must be greater'
@@ -535,9 +527,9 @@ class Vector implements Tensor
     /**
      * Calculate the max norm of the vector.
      *
-     * @return float
+     * @return int|float
      */
-    public function maxNorm() : float
+    public function maxNorm()
     {
         return $this->abs()->max();
     }
@@ -663,13 +655,23 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the reciprocal of the vector.
+     *
+     * @return self
+     */
+    public function reciprocal() : self
+    {
+        return self::ones($this->n)->divide($this);
+    }
+
+    /**
      * Return the absolute value of the vector.
      *
      * @return self
      */
     public function abs() : self
     {
-        return self::quick(array_map('abs', $this->a));
+        return $this->map('abs');
     }
 
     /**
@@ -689,7 +691,7 @@ class Vector implements Tensor
      */
     public function sqrt() : self
     {
-        return self::quick(array_map('sqrt', $this->a));
+        return $this->map('sqrt');
     }
 
     /**
@@ -699,7 +701,7 @@ class Vector implements Tensor
      */
     public function exp() : self
     {
-        return self::quick(array_map('exp', $this->a));
+        return $this->map('exp');
     }
 
     /**
@@ -726,7 +728,7 @@ class Vector implements Tensor
      */
     public function sin() : self
     {
-        return self::quick(array_map('sin', $this->a));
+        return $this->map('sin');
     }
 
     /**
@@ -736,7 +738,7 @@ class Vector implements Tensor
      */
     public function cos() : self
     {
-        return self::quick(array_map('cos', $this->a));
+        return $this->map('cos');
     }
 
     /**
@@ -746,7 +748,7 @@ class Vector implements Tensor
      */
     public function tan() : self
     {
-        return self::quick(array_map('tan', $this->a));
+        return $this->map('tan');
     }
 
     /**
@@ -756,7 +758,7 @@ class Vector implements Tensor
      */
     public function degrees() : self
     {
-        return self::quick(array_map('rad2deg', $this->a));
+        return $this->map('rad2deg');
     }
 
     /**
@@ -766,47 +768,47 @@ class Vector implements Tensor
      */
     public function radians() : self
     {
-        return self::quick(array_map('deg2rad', $this->a));
+        return $this->map('deg2rad');
     }
 
     /**
      * The sum of the vector.
      *
-     * @return float
+     * @return int|float
      */
-    public function sum() : float
+    public function sum()
     {
-        return (float) array_sum($this->a);
+        return array_sum($this->a);
     }
 
     /**
      * Return the product of the vector.
      *
-     * @return float
+     * @return int|float
      */
-    public function product() : float
+    public function product()
     {
-        return (float) array_product($this->a);
+        return array_product($this->a);
     }
 
     /**
      * Return the minimum element in the vector.
      *
-     * @return float
+     * @return int|float
      */
-    public function min() : float
+    public function min()
     {
-        return (float) min($this->a);
+        return min($this->a);
     }
 
     /**
      * Return the maximum element in the vector.
      *
-     * @return float
+     * @return int|float
      */
-    public function max() : float
+    public function max()
     {
-        return (float) max($this->a);
+        return max($this->a);
     }
 
     /**
@@ -823,9 +825,9 @@ class Vector implements Tensor
      * Return the median of the vector.
      *
      * @throws \RuntimeException
-     * @return float
+     * @return int|float
      */
-    public function median() : float
+    public function median()
     {
         $n = $this->size();
 
@@ -852,9 +854,9 @@ class Vector implements Tensor
     /**
      * Return the variance of the vector.
      *
-     * @return float
+     * @return int|float
      */
-    public function variance() : float
+    public function variance()
     {
         $mean = $this->mean();
 
@@ -885,7 +887,7 @@ class Vector implements Tensor
      */
     public function floor() : self
     {
-        return self::quick(array_map('floor', $this->a));
+        return $this->map('floor');
     }
 
     /**
@@ -895,7 +897,7 @@ class Vector implements Tensor
      */
     public function ceil() : self
     {
-        return self::quick(array_map('ceil', $this->a));
+        return $this->map('ceil');
     }
 
     /**

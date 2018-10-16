@@ -513,13 +513,17 @@ class Matrix implements Tensor
      */
     public function asVectors() : array
     {
-        return array_map(function ($row) {
-            return Vector::quick($row);
-        }, $this->a);
+        $vectors = [];
+
+        foreach ($this->a as $row) {
+            $vectors[] = Vector::quick($row);
+        }
+
+        return $vectors;
     }
 
     /**
-     * Flatten the matrix into a vector.
+     * Flatten i.e unravel the matrix into a vector.
      *
      * @return \Rubix\Tensor\Vector
      */
@@ -576,13 +580,15 @@ class Matrix implements Tensor
      */
     public function map(callable $fn) : self
     {
+        $validate = is_object($fn) ? true : false;
+
         $b = [];
 
         foreach ($this->a as $row) {
             $b[] = array_map($fn, $row);
         }
 
-        return self::build($b);
+        return new self($b, $validate);
     }
 
     /**
@@ -656,9 +662,9 @@ class Matrix implements Tensor
      * Calculate the determinant of the matrix.
      * 
      * @throws \RuntimeException
-     * @return float
+     * @return int|float
      */
-    public function det() : float
+    public function det()
     {
         if ($this->m !== $this->n) {
             throw new RuntimeException('Determinant is not defined for a'
@@ -670,6 +676,23 @@ class Matrix implements Tensor
         $pi = $b->diagonalAsVector()->product();
 
         return $pi * (-1.) ** $swaps;
+    }
+
+    /**
+     * Return the trace of the matrix i.e the sum of all diagonal
+     * elements of a square matrix.
+     *
+     * @throws \InvalidArgumentException
+     * @return int|float
+     */
+    public function trace()
+    {
+        if ($this->m !== $this->n) {
+            throw new InvalidArgumentException('Trace is not defined for a'
+                . ' non square matrix.');
+        }
+
+        return $this->diagonalAsVector()->sum();
     }
 
     /**
@@ -693,33 +716,6 @@ class Matrix implements Tensor
         }
 
         return $pivots;
-    }
-
-    /**
-     * Return the elementwise reciprocal of the matrix.
-     *
-     * @return self
-     */
-    public function reciprocal() : self
-    {
-        return self::ones(...$this->shape())->divide($this);
-    }
-
-    /**
-     * Trace the matrix along the diagonal i.e return the sum of all diagonal
-     * elements of a square matrix.
-     *
-     * @throws \InvalidArgumentException
-     * @return float
-     */
-    public function trace() : float
-    {
-        if ($this->m !== $this->n) {
-            throw new InvalidArgumentException('Cannot trace a non square'
-                . ' matrix.');
-        }
-
-        return $this->diagonalAsVector()->sum();
     }
 
     /**
@@ -948,9 +944,9 @@ class Matrix implements Tensor
     /**
      * Return the L1 norm of the matrix.
      *
-     * @return float
+     * @return int|float
      */
-    public function l1Norm() : float
+    public function l1Norm()
     {
         return $this->transpose()->abs()->sum()->max();
     }
@@ -958,9 +954,9 @@ class Matrix implements Tensor
     /**
      * Return the L2 norm of the matrix.
      *
-     * @return float
+     * @return int|float
      */
-    public function l2Norm() : float
+    public function l2Norm()
     {
         return sqrt($this->square()->sum()->sum());
     }
@@ -968,9 +964,9 @@ class Matrix implements Tensor
     /**
      * Retrn the infinity norm of the matrix.
      *
-     * @return float
+     * @return int|float
      */
-    public function infinityNorm() : float
+    public function infinityNorm()
     {
         return $this->abs()->sum()->max();
     }
@@ -978,9 +974,9 @@ class Matrix implements Tensor
     /**
      * Return the max norm of the matrix.
      *
-     * @return float
+     * @return int|float
      */
-    public function maxNorm() : float
+    public function maxNorm()
     {
         return $this->abs()->max()->max();
     }
@@ -1118,19 +1114,23 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the elementwise reciprocal of the matrix.
+     *
+     * @return self
+     */
+    public function reciprocal() : self
+    {
+        return self::ones(...$this->shape())->divide($this);
+    }
+
+    /**
      * Return the absolute value of each element in the matrix.
      *
      * @return self
      */
     public function abs() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('abs', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('abs');
     }
 
     /**
@@ -1140,7 +1140,7 @@ class Matrix implements Tensor
      */
     public function square() : self
     {
-        return $this->powScalar(2);
+        return $this->pow(2);
     }
 
     /**
@@ -1150,13 +1150,7 @@ class Matrix implements Tensor
      */
     public function sqrt() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('sqrt', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('sqrt');
     }
 
     /**
@@ -1166,13 +1160,7 @@ class Matrix implements Tensor
      */
     public function exp() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('exp', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('exp');
     }
 
     /**
@@ -1201,13 +1189,7 @@ class Matrix implements Tensor
      */
     public function sin() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('sin', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('sin');
     }
 
     /**
@@ -1217,13 +1199,7 @@ class Matrix implements Tensor
      */
     public function cos() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('cos', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('cos');
     }
 
     /**
@@ -1233,13 +1209,7 @@ class Matrix implements Tensor
      */
     public function tan() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('tan', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('tan');
     }
 
     /**
@@ -1249,13 +1219,7 @@ class Matrix implements Tensor
      */
     public function degrees() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('rad2deg', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('rad2deg');
     }
 
     /**
@@ -1265,13 +1229,7 @@ class Matrix implements Tensor
      */
     public function radians() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('deg2rad', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('deg2rad');
     }
 
     /**
@@ -1321,13 +1279,7 @@ class Matrix implements Tensor
      */
     public function mean() : Vector
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_sum($row) / $this->n;
-        }
-
-        return Vector::quick($b);
+        return $this->sum()->divide($this->n);
     }
 
     /**
@@ -1364,9 +1316,12 @@ class Matrix implements Tensor
      */
     public function variance() : Vector
     {
-        $mean = $this->mean();
+        $mu = $this->mean();
 
-        return $this->subtractVector($mean)->square()->sum();
+        return $this->subtractVector($mu)
+            ->square()
+            ->sum()
+            ->divide($this->n);
     }
 
     /**
@@ -1377,12 +1332,12 @@ class Matrix implements Tensor
      */
     public function covariance() : self
     {
-        $mean = $this->transpose()->mean();
+        $mu = $this->mean();
 
-        $b = $this->subtractVector($mean);
+        $b = $this->subtractVector($mu);
 
         return $b->matmul($b->transpose())
-            ->divideScalar($this->n);
+            ->divide($this->n);
     }
 
     /**
@@ -1411,13 +1366,7 @@ class Matrix implements Tensor
      */
     public function floor() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('floor', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('floor');
     }
 
     /**
@@ -1427,13 +1376,7 @@ class Matrix implements Tensor
      */
     public function ceil() : self
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            $b[] = array_map('ceil', $row);
-        }
-
-        return self::quick($b);
+        return $this->map('ceil');;
     }
 
     /**
@@ -2247,10 +2190,8 @@ class Matrix implements Tensor
      */
     public function __toString() : string
     {
-        $vectors = $this->asVectors();
-        
-        return trim(array_reduce($vectors, function ($carry, $vector) {
-            return $carry . PHP_EOL . (string) $vector;
+        return trim(array_reduce($this->a, function ($carry, $row) {
+            return $carry . PHP_EOL . '[ ' . implode(' ', $row) . ' ]';
         }, ''));
     }
 }
