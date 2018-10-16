@@ -540,9 +540,9 @@ class Vector implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function multiply($b) : self
+    public function multiply($b)
     {
         switch(true) {            
             case $b instanceof Vector:
@@ -551,6 +551,10 @@ class Vector implements Tensor
 
             case is_int($b) or is_float($b):
                 $c = $this->multiplyScalar($b);
+                break;
+
+            case $b instanceof Matrix:
+                $c = $this->multiplyMatrix($b);
                 break;
 
             default:
@@ -567,9 +571,9 @@ class Vector implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function divide($b) : self
+    public function divide($b)
     {
         switch(true) {            
             case $b instanceof Vector:
@@ -578,6 +582,10 @@ class Vector implements Tensor
 
             case is_int($b) or is_float($b):
                 $c = $this->divideScalar($b);
+                break;
+
+            case $b instanceof Matrix:
+                $c = $this->divideMatrix($b);
                 break;
 
             default:
@@ -594,9 +602,9 @@ class Vector implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function add($b) : self
+    public function add($b)
     {
         switch(true) {            
             case $b instanceof Vector:
@@ -605,6 +613,10 @@ class Vector implements Tensor
 
             case is_int($b) or is_float($b):
                 $c = $this->addScalar($b);
+                break;
+
+            case $b instanceof Matrix:
+                $c = $this->addMatrix($b);
                 break;
 
             default:
@@ -621,9 +633,9 @@ class Vector implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function subtract($b) : self
+    public function subtract($b)
     {
         switch(true) {            
             case $b instanceof Vector:
@@ -632,6 +644,10 @@ class Vector implements Tensor
 
             case is_int($b) or is_float($b):
                 $c = $this->subtractScalar($b);
+                break;
+
+            case $b instanceof Matrix:
+                $c = $this->subtractMatrix($b);
                 break;
 
             default:
@@ -648,9 +664,9 @@ class Vector implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function pow($b) : self
+    public function pow($b)
     {
         switch(true) {            
             case $b instanceof Vector:
@@ -659,6 +675,10 @@ class Vector implements Tensor
 
             case is_int($b) or is_float($b):
                 $c = $this->powScalar($b);
+                break;
+
+            case $b instanceof Matrix:
+                $c = $this->powMatrix($b);
                 break;
 
             default:
@@ -675,9 +695,9 @@ class Vector implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function mod($b) : self
+    public function mod($b)
     {
         switch(true) {            
             case $b instanceof Vector:
@@ -686,6 +706,10 @@ class Vector implements Tensor
 
             case is_int($b) or is_float($b):
                 $c = $this->modScalar($b);
+                break;
+
+            case $b instanceof Matrix:
+                $c = $this->modMatrix($b);
                 break;
 
             default:
@@ -1015,6 +1039,162 @@ class Vector implements Tensor
     }
 
     /**
+     * Multiply this vector with a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function multiplyMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Matrix dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $this->a[$j] * $value;
+            }
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
+     * Divide this vector with a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function divideMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Matrix dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $this->a[$j] / $value;
+            }
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
+     * Add this vector to a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function addMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Matrix dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $this->a[$j] + $value;
+            }
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
+     * Subtract a matrix from this vector.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function subtractMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Matrix dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $this->a[$j] - $value;
+            }
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
+     * Raise this vector to the power of a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function powMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Matrix dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $this->a[$j] ** $value;
+            }
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
+     * Mod this vector with a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function modMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->n()) {
+            throw new InvalidArgumentException('Matrix dimensionality does not'
+                . ' match.' . (string) $this->n . ' needed but'
+                . ' found ' . (string) $b->n() . '.');
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            foreach ($row as $j => $value) {
+                $c[$i][] = $this->a[$j] % $value;
+            }
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
      * Multiply this vector with another vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
@@ -1087,7 +1267,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Subtract this vector from another vector.
+     * Subtract a vector from this vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
      * @throws \InvalidArgumentException

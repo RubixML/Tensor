@@ -987,9 +987,9 @@ class Matrix implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function multiply($b) : self
+    public function multiply($b)
     {
         switch(true) {
             case $b instanceof Matrix:
@@ -1018,9 +1018,9 @@ class Matrix implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function divide($b) : self
+    public function divide($b)
     {
         switch(true) {
             case $b instanceof Matrix:
@@ -1049,9 +1049,9 @@ class Matrix implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function add($b) : self
+    public function add($b)
     {
         switch(true) {
             case $b instanceof Matrix:
@@ -1080,9 +1080,9 @@ class Matrix implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function subtract($b) : self
+    public function subtract($b)
     {
         switch(true) {
             case $b instanceof Matrix:
@@ -1111,9 +1111,9 @@ class Matrix implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function pow($b) : self
+    public function pow($b)
     {
         switch(true) {
             case $b instanceof Matrix:
@@ -1142,9 +1142,9 @@ class Matrix implements Tensor
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return mixed
      */
-    public function mod($b) : self
+    public function mod($b)
     {
         switch(true) {
             case $b instanceof Matrix:
@@ -1761,7 +1761,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Subtract this matrix from another matrix.
+     * Subtract a matrix from this matrix.
      *
      * @param  \Rubix\Tensor\Matrix  $b
      * @throws \InvalidArgumentException
@@ -1943,7 +1943,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Subtract this matrix to the power of a vector.
+     * Subtract a vector from this matrix.
      *
      * @param  \Rubix\Tensor\Vector  $b
      * @throws \InvalidArgumentException
@@ -1969,7 +1969,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Raise this matrix to a vector.
+     * Raise this matrix to the power of a vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
      * @throws \InvalidArgumentException
@@ -2096,7 +2096,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Subtract this matrix by a scalar.
+     * Subtract a scalar from this matrix.
      *
      * @param  int|float  $scalar
      * @throws \InvalidArgumentException
