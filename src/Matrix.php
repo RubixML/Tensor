@@ -991,16 +991,25 @@ class Matrix implements Tensor
      */
     public function multiply($b) : self
     {
-        if ($b instanceof Matrix) {
-            return $this->multiplyMatrix($b);
-        } else if ($b instanceof Vector) {
-            return $this->multiplyVector($b);
-        } else if (is_int($b) or is_float($b)) {
-            return $this->multiplyScalar($b);
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->multiplyMatrix($b);
+                break;
+            
+            case $b instanceof Vector:
+                $c = $this->multiplyVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->multiplyScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot multiply matrix'
+                    . ' with a ' . gettype($b) . '.');
         }
 
-        throw new InvalidArgumentException('Cannot multiply matrix with a'
-            . ' ' . gettype($b) . '.');
+        return $c;
     }
 
     /**
@@ -1013,16 +1022,25 @@ class Matrix implements Tensor
      */
     public function divide($b) : self
     {
-        if ($b instanceof Matrix) {
-            return $this->divideMatrix($b);
-        } else if ($b instanceof Vector) {
-            return $this->divideVector($b);
-        } else if (is_int($b) or is_float($b)) {
-            return $this->divideScalar($b);
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->divideMatrix($b);
+                break;
+            
+            case $b instanceof Vector:
+                $c = $this->divideVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->divideScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot divide matrix'
+                    . ' with a ' . gettype($b) . '.');
         }
 
-        throw new InvalidArgumentException('Cannot divide matrix with a'
-            . ' ' . gettype($b) . '.');
+        return $c;
     }
 
     /**
@@ -1035,16 +1053,25 @@ class Matrix implements Tensor
      */
     public function add($b) : self
     {
-        if ($b instanceof Matrix) {
-            return $this->addMatrix($b);
-        } else if ($b instanceof Vector) {
-            return $this->addVector($b);
-        } else if (is_int($b) or is_float($b)) {
-            return $this->addScalar($b);
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->addMatrix($b);
+                break;
+            
+            case $b instanceof Vector:
+                $c = $this->addVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->addScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot add matrix'
+                    . ' to a ' . gettype($b) . '.');
         }
 
-        throw new InvalidArgumentException('Cannot add matrix to a'
-            . ' ' . gettype($b) . '.');
+        return $c;
     }
 
     /**
@@ -1057,16 +1084,25 @@ class Matrix implements Tensor
      */
     public function subtract($b) : self
     {
-        if ($b instanceof Matrix) {
-            return $this->subtractMatrix($b);
-        } else if ($b instanceof Vector) {
-            return $this->subtractVector($b);
-        } else if (is_int($b) or is_float($b)) {
-            return $this->subtractScalar($b);
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->subtractMatrix($b);
+                break;
+            
+            case $b instanceof Vector:
+                $c = $this->subtractVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->subtractScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot subtract matrix'
+                    . ' from a ' . gettype($b) . '.');
         }
 
-        throw new InvalidArgumentException('Cannot subtract matrix from a'
-            . ' ' . gettype($b) . '.');
+        return $c;
     }
 
     /**
@@ -1079,21 +1115,30 @@ class Matrix implements Tensor
      */
     public function pow($b) : self
     {
-        if ($b instanceof Matrix) {
-            return $this->powMatrix($b);
-        } else if ($b instanceof Vector) {
-            return $this->powVector($b);
-        } else if (is_int($b) or is_float($b)) {
-            return $this->powScalar($b);
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->powMatrix($b);
+                break;
+            
+            case $b instanceof Vector:
+                $c = $this->powVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->powScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot raise matrix'
+                    . ' to a power of a ' . gettype($b) . '.');
         }
 
-        throw new InvalidArgumentException('Cannot raise matrix to power of a'
-            . ' ' . gettype($b) . '.');
+        return $c;
     }
 
     /**
-     * A universal function to compute the modulus of this matrix and
-     * another tensor element-wise.
+     * A universal function to compute the integer modulus of this matrix
+     * and another tensor element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
@@ -1101,16 +1146,25 @@ class Matrix implements Tensor
      */
     public function mod($b) : self
     {
-        if ($b instanceof Matrix) {
-            return $this->modMatrix($b);
-        } else if ($b instanceof Vector) {
-            return $this->modVector($b);
-        } else if (is_int($b) or is_float($b)) {
-            return $this->modScalar($b);
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->modMatrix($b);
+                break;
+            
+            case $b instanceof Vector:
+                $c = $this->modVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->modScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot mod matrix'
+                    . ' with a ' . gettype($b) . '.');
         }
 
-        throw new InvalidArgumentException('Cannot mod matrix with a'
-            . ' ' . gettype($b) . '.');
+        return $c;
     }
 
     /**

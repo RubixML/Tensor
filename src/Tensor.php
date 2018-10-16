@@ -94,8 +94,8 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function pow($b);
 
     /**
-     * A universal function to compute the modulus of this tensor and
-     * another tensor element-wise.
+     * A universal function to compute the integer modulus of this tensor
+     * and another tensor element-wise.
      *
      * @param  mixed  $b
      * @throws \InvalidArgumentException
