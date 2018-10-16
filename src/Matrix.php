@@ -2,6 +2,7 @@
 
 namespace Rubix\Tensor;
 
+use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
 use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
