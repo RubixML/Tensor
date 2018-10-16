@@ -985,7 +985,7 @@ class Matrix implements Tensor
      * A universal function to multiply this matrix with another tensor
      * element-wise.
      *
-     * @param  Matrix|Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1007,7 +1007,7 @@ class Matrix implements Tensor
      * A universal function to divide this matrix by another tensor
      * element-wise.
      *
-     * @param  Matrix|Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1029,7 +1029,7 @@ class Matrix implements Tensor
      * A universal function to add this matrix with another tensor
      * element-wise.
      *
-     * @param  Matrix|Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1051,7 +1051,7 @@ class Matrix implements Tensor
      * A universal function to subtract this matrix from another tensor
      * element-wise.
      *
-     * @param  Matrix|Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1073,7 +1073,7 @@ class Matrix implements Tensor
      * A universal function to raise this matrix to the power of another
      * tensor element-wise.
      *
-     * @param  Matrix|Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1095,7 +1095,7 @@ class Matrix implements Tensor
      * A universal function to compute the modulus of this matrix and
      * another tensor element-wise.
      *
-     * @param  Matrix|Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */

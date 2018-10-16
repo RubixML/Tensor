@@ -618,9 +618,9 @@ class VectorTest extends TestCase
 
     public function test_variance()
     {
-        $this->assertEquals(25820.875, $this->a->variance());
-        $this->assertEquals(27.972187499999997, $this->b->variance());
-        $this->assertEquals(232.62833333333327, $this->c->variance());
+        $this->assertEquals(3227.609375, $this->a->variance());
+        $this->assertEquals(3.4965234374999996, $this->b->variance());
+        $this->assertEquals(38.77138888888888, $this->c->variance());
     }
 
     public function test_round()

@@ -538,7 +538,7 @@ class Vector implements Tensor
      * A universal function to multiply this vector with another tensor
      * element-wise.
      *
-     * @param  Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -558,7 +558,7 @@ class Vector implements Tensor
      * A universal function to divide this vector by another tensor
      * element-wise.
      *
-     * @param  Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -578,7 +578,7 @@ class Vector implements Tensor
      * A universal function to add this vector with another tensor
      * element-wise.
      *
-     * @param  Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -598,7 +598,7 @@ class Vector implements Tensor
      * A universal function to subtract this vector from another tensor
      * element-wise.
      *
-     * @param  Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -618,7 +618,7 @@ class Vector implements Tensor
      * A universal function to raise this vector to the power of another
      * tensor element-wise.
      *
-     * @param  Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -638,7 +638,7 @@ class Vector implements Tensor
      * A universal function to compute the modulus of this vector and
      * another tensor element-wise.
      *
-     * @param  Vector|int|float  $b
+     * @param  mixed  $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -814,9 +814,9 @@ class Vector implements Tensor
     /**
      * Return the mean of the vector.
      *
-     * @return float
+     * @return int|float
      */
-    public function mean() : float
+    public function mean()
     {
         return $this->sum() / $this->n;
     }
@@ -832,8 +832,8 @@ class Vector implements Tensor
         $n = $this->size();
 
         if ($n < 1) {
-            throw new RuntimeException('Median is only defined for vectors with'
-                . ' 1 or more elements.');
+            throw new RuntimeException('Median is not defined for vectors with'
+                . ' less than 1 element.');
         }
 
         $mid = intdiv($n, 2);
@@ -858,9 +858,10 @@ class Vector implements Tensor
      */
     public function variance()
     {
-        $mean = $this->mean();
+        $mu = $this->mean();
 
-        return $this->subtractScalar($mean)->square()->sum();
+        return $this->subtract($mu)->square()->sum()
+            / $this->n;
     }
 
     /**
