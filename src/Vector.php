@@ -60,10 +60,16 @@ class Vector implements Tensor
      * Build a vector of zeros with n elements.
      *
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public static function zeros(int $n) : self
     {
+        if ($n < 1) {
+            throw new InvalidArgumentException("The number of elements"
+                . " must be greater than 0, $n given.");
+        }
+
         return self::quick(array_fill(0, $n, 0));
     }
 
@@ -71,10 +77,16 @@ class Vector implements Tensor
      * Build a vector of ones with n elements.
      *
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public static function ones(int $n) : self
     {
+        if ($n < 1) {
+            throw new InvalidArgumentException("The number of elements"
+                . " must be greater than 0, $n given.");
+        }
+
         return self::quick(array_fill(0, $n, 1));
     }
 
@@ -88,8 +100,13 @@ class Vector implements Tensor
     public static function fill($value, int $n) : self
     {
         if (!is_int($value) and !is_float($value)) {
-            throw new InvalidArgumentException("Fill value expects an integer"
-                . " or float, {gettype($value)} found.");
+            throw new InvalidArgumentException("Fill value expects an"
+                . " integer or float, " . gettype($value) . " found.");
+        }
+
+        if ($n < 1) {
+            throw new InvalidArgumentException("The number of elements"
+                . " must be greater than 0, $n given.");
         }
 
         return self::quick(array_fill(0, $n, $value));
@@ -99,10 +116,16 @@ class Vector implements Tensor
      * Return a random uniform vector with values between 0 and 1.
      *
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public static function rand(int $n) : self
     {
+        if ($n < 1) {
+            throw new InvalidArgumentException("The number of elements"
+                . " must be greater than 0, $n given.");
+        }
+
         $a = [];
 
         for ($i = 0; $i < $n; $i++) {
@@ -117,10 +140,16 @@ class Vector implements Tensor
      * -1 and 1.
      *
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public static function gaussian(int $n) : self
     {
+        if ($n < 1) {
+            throw new InvalidArgumentException("The number of elements"
+                . " must be greater than 0, $n given.");
+        }
+
         $a = [];
 
         for ($i = 0; $i < $n; $i += 2) {
@@ -144,10 +173,16 @@ class Vector implements Tensor
      * Return a uniform random vector with mean 0 and unit variance.
      *
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public static function uniform(int $n) : self
     {
+        if ($n < 1) {
+            throw new InvalidArgumentException("The number of elements"
+                . " must be greater than 0, $n given.");
+        }
+
         $a = [];
 
         for ($i = 0; $i < $n; $i++) {
@@ -169,7 +204,7 @@ class Vector implements Tensor
     public static function range(float $start, float $end, float $interval = 1.) : self
     {
         if ($interval <= 0.) {
-            throw new InvalidArgumentException("Interval must be strictly greater"
+            throw new InvalidArgumentException("Interval must be greater"
                  . " than 0, $interval given.");
         }
 
@@ -182,10 +217,16 @@ class Vector implements Tensor
      * @param  float  $start
      * @param  float  $end
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public static function linspace(float $start, float $end, int $n) : self
     {
+        if ($n < 1) {
+            throw new InvalidArgumentException("The number of elements"
+                . " must be greater than 0, $n given.");
+        }
+
         $range = abs($end - $start);
 
         $interval = ($range / ($n - 1)) - (self::EPSILON * $range);
@@ -204,8 +245,8 @@ class Vector implements Tensor
     public static function maximum(Vector $a, Vector $b) : self
     {
         if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatchException("Vector B has {$b->n()}"
-                . " elements but A needs {$a->n()}.");
+            throw new DimensionalityMismatchException("Vector A requires"
+                . " {$a->n()} elements but Vector B has{$b->n()}.");
         }
 
         $c = array_map('max', $a->asArray(), $b->asArray());
@@ -224,8 +265,8 @@ class Vector implements Tensor
     public static function minimum(Vector $a, Vector $b) : self
     {
         if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatchException("Vector B has {$b->n()}"
-                . " elements but A needs {$a->n()}.");
+            throw new DimensionalityMismatchException("Vector A requires"
+                . " {$a->n()} elements but Vector B has {$b->n()}.");
         }
 
         $c = array_map('min', $a->asArray(), $b->asArray());
@@ -247,7 +288,8 @@ class Vector implements Tensor
             foreach ($a as $value) {
                 if (!is_int($value) and !is_float($value)) {
                     throw new InvalidArgumentException("Element must be"
-                        . " an int or float, {gettype($value)} found.");
+                        . " an integer or float, " . gettype($value)
+                        . " found.");
                 }
             }
         }
@@ -333,9 +375,8 @@ class Vector implements Tensor
     public function reshape(int $m, int $n) : Matrix
     {
         if (($m * $n) !== $this->n) {
-            throw new DimensionalityMismatchException("The number of"
-                . " elements needed are ($m * $n) but vector has"
-                . " $this->n.");
+            throw new DimensionalityMismatchException("($m * $n) elements"
+                . " are needed but vector has $this->n.");
         }
 
         $k = 0;
@@ -372,7 +413,8 @@ class Vector implements Tensor
     }
 
     /**
-     * Map a function over the elements in the vector and return a new vector.
+     * Map a function over the elements in the vector and return a new
+     * vector.
      *
      * @param  callable  $fn
      * @return self
@@ -396,7 +438,8 @@ class Vector implements Tensor
     {
         if (!is_int($initial) and !is_float($initial)) {
             throw new InvalidArgumentException("Initial value must"
-                . " be an int or float, {gettype($initial} found.");
+                . " be an integer or float, " . gettype($initial)
+                . " found.");
         }
 
         return array_reduce($this->a, $fn, $initial);
@@ -565,7 +608,7 @@ class Vector implements Tensor
 
             default:
                 throw new InvalidArgumentException("Cannot multiply vector"
-                    . " with a {gettype($b)}.");
+                    . " with a " . gettype($b) . ".");
         }
 
         return $c;
@@ -596,7 +639,7 @@ class Vector implements Tensor
 
             default:
                 throw new InvalidArgumentException("Cannot divide vector"
-                    . " with a {gettype($b)}.");
+                    . " with a " . gettype($b) . ".");
         }
 
         return $c;
@@ -627,7 +670,7 @@ class Vector implements Tensor
 
             default:
                 throw new InvalidArgumentException("Cannot add vector"
-                    . " to a {gettype($b)}.");
+                    . " to a " . gettype($b) . ".");
         }
 
         return $c;
@@ -658,7 +701,7 @@ class Vector implements Tensor
 
             default:
                 throw new InvalidArgumentException("Cannot subtract a"
-                    . " {gettype($b)} from vector.");
+                    . gettype($b) . " from vector.");
         }
 
         return $c;
@@ -689,7 +732,7 @@ class Vector implements Tensor
 
             default:
                 throw new InvalidArgumentException("Cannot raise vector"
-                    . " to a power of a {gettype($b)}.");
+                    . " to a power of a " . gettype($b) . ".");
         }
 
         return $c;
@@ -720,14 +763,14 @@ class Vector implements Tensor
 
             default:
                 throw new InvalidArgumentException("Cannot mod vector"
-                    . " with a {gettype($b)}.");
+                    . " with a " . gettype($b) . ".");
         }
 
         return $c;
     }
 
     /**
-     * Return the reciprocal of the vector.
+     * Return the reciprocal of the vector element-wise.
      *
      * @return self
      */
@@ -903,7 +946,7 @@ class Vector implements Tensor
     {
         if ($this->n < 1) {
             throw new RuntimeException('Median is not defined for vectors'
-                . ' with less than 1 element');
+                . ' with less than 1 element.');
         }
 
         $mid = intdiv($this->n, 2);
@@ -930,8 +973,7 @@ class Vector implements Tensor
     {
         $mu = $this->mean();
 
-        return $this->subtract($mu)->square()->sum()
-            / $this->n;
+        return $this->subtract($mu)->square()->sum() / $this->n;
     }
 
     /**
@@ -1333,11 +1375,17 @@ class Vector implements Tensor
     /**
      * Multiply this vector by a scalar.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
      * @return self
      */
     protected function multiplyScalar($scalar) : self
     {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
+        }
+
         $b = [];
 
         foreach ($this->a as $value) {
@@ -1350,11 +1398,17 @@ class Vector implements Tensor
     /**
      * Divide this vector by a scalar.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
      * @return self
      */
     protected function divideScalar($scalar) : self
     {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
+        }
+
         $b = [];
 
         foreach ($this->a as $value) {
@@ -1367,11 +1421,17 @@ class Vector implements Tensor
     /**
      * Add a scalar to this vector.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
      * @return self
      */
     protected function addScalar($scalar) : self
     {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
+        }
+
         $b = [];
 
         foreach ($this->a as $value) {
@@ -1384,11 +1444,17 @@ class Vector implements Tensor
     /**
      * Subtract a scalar from this vector.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
      * @return self
      */
     protected function subtractScalar($scalar) : self
     {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
+        }
+
         $b = [];
 
         foreach ($this->a as $value) {
@@ -1401,11 +1467,17 @@ class Vector implements Tensor
     /**
      * Raise the vector to a the power of a scalar value.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
      * @return self
      */
     protected function powScalar($scalar) : self
     {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
+        }
+    
         $b = [];
 
         foreach ($this->a as $value) {
@@ -1418,11 +1490,17 @@ class Vector implements Tensor
     /**
      * Calculate the modulus of this vector with a scalar.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
      * @return self
      */
     protected function modScalar($scalar) : self
     {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
+        }
+
         $b = [];
 
         foreach ($this->a as $value) {

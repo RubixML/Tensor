@@ -74,7 +74,7 @@ class Matrix implements Tensor
     {
         if ($n < 1) {
             throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 along both axis.');
+                . ' greater than 0 on all axes.');
         }
 
         $a = [[]];
@@ -100,7 +100,7 @@ class Matrix implements Tensor
     {
         if ($m < 1 or $n < 1) {
             throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 along both axis.');
+                . ' greater than 0 on all axes.');
         }
 
         $a = array_fill(0, $m, array_fill(0, $n, 0));
@@ -121,7 +121,7 @@ class Matrix implements Tensor
     {
         if ($m < 1 or $n < 1) {
             throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 along both axis.');
+                . ' greater than 0 on all axes.');
         }
 
         $a = array_fill(0, $m, array_fill(0, $n, 1));
@@ -141,15 +141,16 @@ class Matrix implements Tensor
     {
         $n = count($elements);
 
-        if ($n === 0) {
+        if ($n < 1) {
             throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 along both axis.');
+                . ' greater than 0 on all axes.');
         }
 
         foreach ($elements as $element) {
             if (!is_int($element) and !is_float($element)) {
-                throw new InvalidArgumentException('Diagonal element'
-                    . ' must be an integer or float.');
+                throw new InvalidArgumentException("Diagonal element"
+                    . " must be an integer or float, "
+                    . gettype($element) . " found.");
             }
         }
 
@@ -176,8 +177,13 @@ class Matrix implements Tensor
     public static function fill($value, int $m, int $n) : self
     {
         if (!is_int($value) and !is_float($value)) {
-            throw new InvalidArgumentException('Fill value must be an integer'
-                . ' or float, ' . gettype($value) . ' found.');
+            throw new InvalidArgumentException("Fill value must be an"
+                . " integer or float, " . gettype($value) . " found.");
+        }
+
+        if ($m < 1 or $n < 1) {
+            throw new InvalidArgumentException('Dimensionality must be'
+                . ' greater than 0 on all axes.');
         }
 
         $a = array_fill(0, $m, array_fill(0, $n, $value));
@@ -190,10 +196,16 @@ class Matrix implements Tensor
      *
      * @param  int  $m
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public static function rand(int $m, int $n) : self
     {
+        if ($m < 1 or $n < 1) {
+            throw new InvalidArgumentException('Dimensionality must be'
+                . ' greater than 0 on all axes.');
+        }
+
         $a = [];
 
         for ($i = 0; $i < $m; $i++) {
@@ -206,15 +218,21 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return a standard normally distributed random matrix i.e values between
-     * -1 and 1.
+     * Return a standard normally distributed random matrix i.e values
+     * between -1 and 1.
      *
      * @param  int  $m
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public static function gaussian(int $m, int $n) : self
     {
+        if ($m < 1 or $n < 1) {
+            throw new InvalidArgumentException('Dimensionality must be'
+                . ' greater than 0 on all axes.');
+        }
+
         $a = $extras = []; 
 
         for ($i = 0; $i < $m; $i++) {
@@ -249,10 +267,16 @@ class Matrix implements Tensor
      *
      * @param  int  $m
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public static function uniform(int $m, int $n) : self
     {
+        if ($m < 1 or $n < 1) {
+            throw new InvalidArgumentException('Dimensionality must be'
+                . ' greater than 0 on all axes.');
+        }
+
         $a = [];
 
         for ($i = 0; $i < $m; $i++) {
@@ -269,20 +293,19 @@ class Matrix implements Tensor
      *
      * @param  \Rubix\Tensor\Matrix  $a
      * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     public static function minimum(Matrix $a, Matrix $b) : self
     {
         if ($a->m() !== $b->m()) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $a->m() . ' needed but found '
-                . (string) $b->m() . '.');
+            throw new DimensionalityMismatchException("Matrix A needs"
+                . " {$a->m()} rows but Matrix B has {$b->m()}.");
         }
 
         if ($a->n() !== $b->n()) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $a->n() . ' needed but found '
-                . (string) $b->n() . '.');
+            throw new DimensionalityMismatchException("Matrix A needs"
+                . " {$a->n()} columns but Matrix B has {$b->n()}.");
         }
 
         $c = [];
@@ -299,20 +322,19 @@ class Matrix implements Tensor
      *
      * @param  \Rubix\Tensor\Matrix  $a
      * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     public static function maximum(Matrix $a, Matrix $b) : self
     {
         if ($a->m() !== $b->m()) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $a->m() . ' needed but found '
-                . (string) $b->m() . '.');
+            throw new DimensionalityMismatchException("Matrix A needs"
+                . " {$a->m()} rows but Matrix B has {$b->m()}.");
         }
 
         if ($a->n() !== $b->n()) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $a->n() . ' needed but found '
-                . (string) $b->n() . '.');
+            throw new DimensionalityMismatchException("Matrix A needs"
+                . " {$a->n()} columns but Matrix B has {$b->n()}.");
         }
 
         $c = [];
@@ -337,9 +359,9 @@ class Matrix implements Tensor
 
         foreach ($vectors as $vector) {
             if (!$vector instanceof Vector) {
-                throw new InvalidArgumentException('Cannot build matrix'
-                    . ' with a non vector, ' . gettype($vector)
-                    . ' found.');
+                throw new InvalidArgumentException("Cannot build matrix"
+                    . " from a non vector, " . gettype($vector)
+                    . " found.");
             }
 
             $a[] = $vector->asArray();
@@ -372,15 +394,16 @@ class Matrix implements Tensor
                 }
 
                 if (count($row) !== $n) {
-                    throw new InvalidArgumentException('The number of columns'
-                        . ' must be equal for all rows.');
+                    throw new InvalidArgumentException("The number of columns"
+                        . " must be equal for all rows, $n needed but"
+                        . count($row) . " found.");
                 }
 
                 foreach ($row as $value) {
                     if (!is_int($value) and !is_float($value)) {
-                        throw new InvalidArgumentException('Matrix element must'
-                            . ' be an integer or float, '
-                            . gettype($value) . ' found.');
+                        throw new InvalidArgumentException("Matrix element must"
+                            . " be an integer or float, " . gettype($value)
+                            . " found.");
                     }
                 }
             }
@@ -603,8 +626,9 @@ class Matrix implements Tensor
     public function reduce(callable $fn, $initial = 0)
     {
         if (!is_int($initial) and !is_float($initial)) {
-            throw new InvalidArgumentException('Initial value must'
-                . ' be an integer or float.');
+            throw new InvalidArgumentException("Initial value must"
+                . " be an integer or float, " . gettype($initial)
+                . " found.");
         }
 
         $carry = $initial;
@@ -668,7 +692,7 @@ class Matrix implements Tensor
     public function det()
     {
         if ($this->m !== $this->n) {
-            throw new RuntimeException('Determinant is not defined for a'
+            throw new RuntimeException('Determinant is undefined for a'
                 . ' non square matrix.');
         }
 
@@ -689,7 +713,7 @@ class Matrix implements Tensor
     public function trace()
     {
         if ($this->m !== $this->n) {
-            throw new InvalidArgumentException('Trace is not defined for a'
+            throw new InvalidArgumentException('Trace is undefined for a'
                 . ' non square matrix.');
         }
 
@@ -723,15 +747,14 @@ class Matrix implements Tensor
      * Multiply this matrix with another matrix (matrix-matrix product).
      *
      * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     public function matmul(Matrix $b) : self
     {
-        if ($b->m() !== $this->n) {
-            throw new InvalidArgumentException('Matrix dimensions do not'
-                . ' match. ' . (string) $this->n . ' rows needed but found'
-                . ' ' . (string) $b->m() . '.');
+        if ($this->n !== $b->m()) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
         $bT = $b->transpose();
@@ -762,10 +785,9 @@ class Matrix implements Tensor
      */
     public function dot(Vector $b) : self
     {
-        if ($b->size() !== $this->n) {
-            throw new InvalidArgumentException('Vector dimensions do not'
-                . ' match. ' . (string) $this->n . ' rows needed but found'
-                . ' ' . (string) $b->size() . '.');
+        if ($this->n !== $b->n()) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n rows but Vector B has {$b->n()}.");
         }
 
         return $this->matmul($b->asColumnMatrix());
@@ -1006,8 +1028,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException('Cannot multiply matrix'
-                    . ' with a ' . gettype($b) . '.');
+                throw new InvalidArgumentException("Cannot multiply matrix"
+                    . " with a " . gettype($b) . ".");
         }
 
         return $c;
@@ -1037,8 +1059,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException('Cannot divide matrix'
-                    . ' with a ' . gettype($b) . '.');
+                throw new InvalidArgumentException("Cannot divide matrix"
+                    . " with a " . gettype($b) . ".");
         }
 
         return $c;
@@ -1068,8 +1090,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException('Cannot add matrix'
-                    . ' to a ' . gettype($b) . '.');
+                throw new InvalidArgumentException("Cannot add matrix"
+                    . " to a " . gettype($b) . ".");
         }
 
         return $c;
@@ -1099,8 +1121,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException('Cannot subtract matrix'
-                    . ' from a ' . gettype($b) . '.');
+                throw new InvalidArgumentException("Cannot subtract a "
+                    . gettype($b) . " from a matrix.");
         }
 
         return $c;
@@ -1130,8 +1152,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException('Cannot raise matrix'
-                    . ' to a power of a ' . gettype($b) . '.');
+                throw new InvalidArgumentException("Cannot raise matrix"
+                    . " to the power of a " . gettype($b) . ".");
         }
 
         return $c;
@@ -1161,15 +1183,15 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException('Cannot mod matrix'
-                    . ' with a ' . gettype($b) . '.');
+                throw new InvalidArgumentException("Cannot mod matrix"
+                    . " with a " . gettype($b) . ".");
         }
 
         return $c;
     }
 
     /**
-     * Return the elementwise reciprocal of the matrix.
+     * Return the element-wise reciprocal of the matrix.
      *
      * @return self
      */
@@ -1340,10 +1362,16 @@ class Matrix implements Tensor
     /**
      * Return the median vector of this matrix.
      *
+     * @throws \RuntimeException
      * @return \Rubix\Tensor\Vector
      */
     public function median() : Vector
     {
+        if ($this->n < 1) {
+            throw new RuntimeException('Median is not defined for matrices'
+                . ' with less than 1 column.');
+        }
+
         $b = [];
 
         foreach ($this->a as $row) {
@@ -1551,14 +1579,14 @@ class Matrix implements Tensor
      * Attach matrix b above this matrix.
      *
      * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     public function augmentAbove(Matrix $b) : self
     {
         if ($this->m > 0 and $b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices must have the same'
-                . ' number of columns.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
         $b = array_merge($b->asArray(), $this->a);
@@ -1570,14 +1598,14 @@ class Matrix implements Tensor
      * Attach matrix b below this matrix.
      *
      * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     public function augmentBelow(Matrix $b) : self
     {
         if ($this->m > 0 and $b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices must have the same'
-                . ' number of columns.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
         $b = array_merge($this->a, $b->asArray());
@@ -1589,14 +1617,14 @@ class Matrix implements Tensor
      * Attach matrix b to the left of this matrix.
      *
      * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     public function augmentLeft(Matrix $b) : self
     {
         if ($this->m > 0 and $b->m() !== $this->m()) {
-            throw new InvalidArgumentException('Matrices must have the same'
-                . ' number of rows.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m columns but Matrix B has {$b->m()}.");
         }
 
         $b = array_map('array_merge', $b->asArray(), $this->a);
@@ -1614,8 +1642,8 @@ class Matrix implements Tensor
     public function augmentRight(Matrix $b) : self
     {
         if ($this->m > 0 and $b->m() !== $this->m()) {
-            throw new InvalidArgumentException('Matrices must have the same'
-                . ' number of rows.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m columns but Matrix B has {$b->m()}.");
         }
 
         $b = array_map('array_merge', $this->a, $b->asArray());
@@ -1624,18 +1652,19 @@ class Matrix implements Tensor
     }
 
     /**
-     * Repeat the matrix m times along the vertival axis and n times along the
-     * horizontal axis.
+     * Repeat the matrix m times along the vertival axes and n times along the
+     * horizontal axes.
      *
      * @param  int  $m
      * @param  int  $n
+     * @throws \InvalidArgumentException
      * @return self
      */
     public function repeat(int $m = 1, int $n = 1) : self
     {
         if ($m < 1 or $n < 1) {
-            throw new InvalidArgumentException('Cannot repeat less than 1 row'
-                . ' or column.');
+            throw new InvalidArgumentException('Cannot repeat less than 1'
+                . ' row or column.');
         }
 
         $b = $this->a;
@@ -1660,24 +1689,22 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the elementwise product between this matrix and another matrix.
+     * Return the element-wise product between this matrix and another matrix.
      *
      * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function multiplyMatrix(Matrix $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
         }
 
         if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
         $c = [];
@@ -1694,24 +1721,22 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the division of two elements, elementwise.
+     * Return the division of two elements, element-wise.
      *
      * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function divideMatrix(Matrix $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
         }
 
         if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
         $c = [];
@@ -1731,21 +1756,19 @@ class Matrix implements Tensor
      * Add this matrix together with another matrix.
      *
      * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function addMatrix(Matrix $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
         }
 
         if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
         $c = [];
@@ -1762,24 +1785,22 @@ class Matrix implements Tensor
     }
 
     /**
-     * Subtract a matrix from this matrix.
+     * Subtract a matrix from this matrix element-wise.
      *
      * @param  \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function subtractMatrix(Matrix $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
         }
 
         if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
         $c = [];
@@ -1799,22 +1820,20 @@ class Matrix implements Tensor
      * Raise this matrix to the power of the elementwise entry in another
      * matrix.
      *
-     * @param \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function powMatrix(Matrix $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
         }
 
         if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
         $c = [];
@@ -1834,22 +1853,20 @@ class Matrix implements Tensor
      * Calculate the modulus i.e remainder of division between this matri and
      * another matrix.
      *
-     * @param \Rubix\Tensor\Matrix  $b
-     * @throws \InvalidArgumentException
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function modMatrix(Matrix $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of rows. ' . (string) $this->m . ' needed but found '
-                . (string) $b->m() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
         }
 
         if ($b->n() !== $this->n) {
-            throw new InvalidArgumentException('Matrices have different number'
-                . ' of columns. ' . (string) $this->n . ' needed but found '
-                . (string) $b->n() . '.');
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
         $c = [];
@@ -1869,15 +1886,14 @@ class Matrix implements Tensor
      * Multiply this matrix by a vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function multiplyVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -1895,15 +1911,14 @@ class Matrix implements Tensor
      * Divide this matrix by a vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function divideVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -1921,15 +1936,14 @@ class Matrix implements Tensor
      * Add this matrix by a vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function addVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -1947,15 +1961,14 @@ class Matrix implements Tensor
      * Subtract a vector from this matrix.
      *
      * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function subtractVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -1973,15 +1986,14 @@ class Matrix implements Tensor
      * Raise this matrix to the power of a vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function powVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -1999,15 +2011,14 @@ class Matrix implements Tensor
      * Calculate the modulus of this matrix with a vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
-     * @throws \InvalidArgumentException
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     protected function modVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
-            throw new InvalidArgumentException('Vector does not have the same'
-            . ' number of columns. ' . (string) $this->n . ' needed but found '
-            . (string) $b->n() . '.');
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -2024,15 +2035,15 @@ class Matrix implements Tensor
     /**
      * Multiply this matrix by a scalar.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function multiplyScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
         }
 
         $b = [];
@@ -2049,15 +2060,15 @@ class Matrix implements Tensor
     /**
      * Divide this matrix by a scalar.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function divideScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
         }
 
         $b = [];
@@ -2074,15 +2085,15 @@ class Matrix implements Tensor
     /**
      * Add this matrix by a scalar.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function addScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
         }
 
         $b = [];
@@ -2099,15 +2110,15 @@ class Matrix implements Tensor
     /**
      * Subtract a scalar from this matrix.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function subtractScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Scalar must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
         }
 
         $b = [];
@@ -2124,15 +2135,15 @@ class Matrix implements Tensor
     /**
      * Raise the matrix to a given scalar power.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function powScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Exponent must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
         }
 
         $b = [];
@@ -2149,15 +2160,15 @@ class Matrix implements Tensor
     /**
      * Calculate the modulus of this matrix with a scalar.
      *
-     * @param  int|float  $scalar
+     * @param  mixed  $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function modScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException('Exponent must be an integer or'
-                . ' float ' . gettype($scalar) . ' found.');
+            throw new InvalidArgumentException("Scalar must be an integer"
+                . " or float, " . gettype($scalar) . " found.");
         }
 
         $b = [];
@@ -2221,8 +2232,8 @@ class Matrix implements Tensor
     public function offsetGet($index) : array
     {
         if (!isset($this->a[$index])) {
-            throw new InvalidArgumentException('Element not found at index '
-                . (string) $index . '.');
+            throw new InvalidArgumentException("Element not found at"
+                . " offset $index.");
         }
 
         return $this->a[$index];
