@@ -1,6 +1,7 @@
 - Unreleased
     - Implemented Eigenvalue decomposition
     - Integration with 3rd party JAMA libray
+    - Fixed variance covariance calculation
 
 - 1.0.0
     - Implemented LU decomposition

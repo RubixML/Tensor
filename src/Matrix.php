@@ -1429,9 +1429,10 @@ class Matrix implements Tensor
      */
     public function variance() : Vector
     {
-        $mu = $this->mean();
+        $mu = $this->transpose()->mean();
 
         return $this->subtract($mu)
+            ->transpose()
             ->square()
             ->sum()
             ->divide($this->n);
@@ -1445,9 +1446,9 @@ class Matrix implements Tensor
      */
     public function covariance() : self
     {
-        $mu = $this->mean();
+        $mu = $this->transpose()->mean();
 
-        $b = $this->subtract($mu);
+        $b = $this->subtract($mu)->transpose();
 
         return $b->matmul($b->transpose())
             ->divide($this->n);
