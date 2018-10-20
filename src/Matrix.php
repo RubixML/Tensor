@@ -2,6 +2,7 @@
 
 namespace Rubix\Tensor;
 
+use JAMA\Matrix as JAMA;
 use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
 use InvalidArgumentException;
 use RuntimeException;
@@ -962,6 +963,35 @@ class Matrix implements Tensor
         $u = self::quick($u);
 
         return [$l, $u];
+    }
+
+    /**
+     * Compute the eigenvalues and normalized eigenvectors of the matrix
+     * and return them in a tuple.
+     * 
+     * @throws \RuntimeException
+     * @return array
+     */
+    public function eig() : array
+    {
+        if ($this->m !== $this->n) {
+            throw new RuntimeException('Cannot decompose a non square'
+                . ' matrix.');
+        }
+
+        $b = new JAMA($this->a);
+
+        $t = $b->eig();
+
+        $values = $t->getRealEigenvalues();
+
+        $v = self::quick($t->getV()->getArray());
+
+        $norm = $v->transpose()->square()->sum()->sqrt();
+    
+        $vHat = $v->divide($norm);
+
+        return [$values, $vHat];
     }
 
     /**

@@ -25,7 +25,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Rubix\\Tensor\\": "src/"
+            "Rubix\\Tensor\\": "src/",
+            "JAMA\\": "lib/JAMA"
         }
     },
     "autoload-dev": {

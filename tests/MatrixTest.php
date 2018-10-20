@@ -471,6 +471,24 @@ class MatrixTest extends TestCase
         $this->assertEquals($uHat, $u->asArray());
     }
 
+    public function test_eig()
+    {
+        list($eigvalues, $eigvectors) = $this->a->eig();
+
+        $values = [25.108706520450326, -15.096331148319537, 13.9876246278692];
+
+        $vectors = [
+            [-0.8622719261400653, 0.258486948208864, 0.6684472200177014],
+            [-0.17721179605718715, -0.11314537870318087, 0.6126879076802699],
+            [-0.4744292410137552, -0.9593657388523845, 0.42165369894378935],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $eigvectors);
+
+        $this->assertEquals($values, $eigvalues);
+        $this->assertEquals($vectors, $eigvectors->asArray());
+    }
+
     public function test_matmul()
     {
         $z = $this->a->matmul($this->b);
