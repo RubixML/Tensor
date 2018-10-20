@@ -2,11 +2,9 @@
     - Implemented Eigenvalue decomposition
     - Integration with 3rd party JAMA libray
 
-- 1.0.1
+- 1.0.0
     - Implemented LU decomposition
     - Added vector projection
-
-- 1.0.0
     - Implemented Matrix inverse
     - Implemented Row Echelon and Reduced Row Echelon decomposition
     - Added Matrix determinant

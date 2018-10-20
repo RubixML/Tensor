@@ -1431,7 +1431,7 @@ class Matrix implements Tensor
     {
         $mu = $this->mean();
 
-        return $this->subtractVector($mu)
+        return $this->subtract($mu)
             ->square()
             ->sum()
             ->divide($this->n);
@@ -1447,7 +1447,7 @@ class Matrix implements Tensor
     {
         $mu = $this->mean();
 
-        $b = $this->subtractVector($mu);
+        $b = $this->subtract($mu);
 
         return $b->matmul($b->transpose())
             ->divide($this->n);
@@ -1923,7 +1923,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new DimensionalityMismatchException("Matrix A requires"
-                . " $this->m columns but Vector B has {$b->n()}.");
+                . " $this->n columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -1948,7 +1948,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new DimensionalityMismatchException("Matrix A requires"
-                . " $this->m columns but Vector B has {$b->n()}.");
+                . " $this->n columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -1973,7 +1973,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new DimensionalityMismatchException("Matrix A requires"
-                . " $this->m columns but Vector B has {$b->n()}.");
+                . " $this->n columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -1998,7 +1998,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new DimensionalityMismatchException("Matrix A requires"
-                . " $this->m columns but Vector B has {$b->n()}.");
+                . " $this->n columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -2023,7 +2023,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new DimensionalityMismatchException("Matrix A requires"
-                . " $this->m columns but Vector B has {$b->n()}.");
+                . " $this->n columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
@@ -2048,7 +2048,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new DimensionalityMismatchException("Matrix A requires"
-                . " $this->m columns but Vector B has {$b->n()}.");
+                . " $this->n columns but Vector B has {$b->n()}.");
         }
 
         $c = [];
