@@ -5,6 +5,7 @@ namespace Rubix\Tensor\Tests;
 use Rubix\Tensor\Tensor;
 use Rubix\Tensor\Vector;
 use Rubix\Tensor\Matrix;
+use Rubix\Tensor\ColumnVector;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use IteratorAggregate;
@@ -153,9 +154,9 @@ class VectorTest extends TestCase
 
     public function test_shape()
     {
-        $this->assertEquals([8], $this->a->shape());
-        $this->assertEquals([8], $this->b->shape());
-        $this->assertEquals([6], $this->c->shape());
+        $this->assertEquals([1, 8], $this->a->shape());
+        $this->assertEquals([1, 8], $this->b->shape());
+        $this->assertEquals([1, 6], $this->c->shape());
     }
 
     public function test_size()
@@ -163,6 +164,13 @@ class VectorTest extends TestCase
         $this->assertEquals(8, $this->a->size());
         $this->assertEquals(8, $this->b->size());
         $this->assertEquals(6, $this->c->size());
+    }
+
+    public function test_get_m()
+    {
+        $this->assertEquals(1, $this->a->m());
+        $this->assertEquals(1, $this->b->m());
+        $this->assertEquals(1, $this->c->m());
     }
 
     public function test_get_n()
@@ -215,6 +223,16 @@ class VectorTest extends TestCase
         $this->assertInstanceOf(Matrix::class, $z);
         $this->assertEquals([4, 2], $z->shape());
         $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_transpose()
+    {
+        $z = $this->a->transpose();
+
+        $outcome = [-15, 25, 35, -36, -72, 89, 106, 45];
+
+        $this->assertInstanceOf(ColumnVector::class, $z);
+        $this->assertEquals($outcome, $z->asArray());
     }
 
     public function test_map()

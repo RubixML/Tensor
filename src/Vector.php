@@ -38,22 +38,22 @@ class Vector implements Tensor
      * Factory method to build a new vector from an array.
      *
      * @param  array  $a
-     * @return self
+     * @return mixed
      */
-    public static function build(array $a = []) : self
+    public static function build(array $a = [])
     {
-        return new self($a, true);
+        return new static($a, true);
     }
 
     /**
      * Build a vector foregoing any validation for quicker instantiation.
      *
      * @param  array  $a
-     * @return self
+     * @return mixed
      */
-    public static function quick(array $a = []) : self
+    public static function quick(array $a = [])
     {
-        return new self($a, false);
+        return new static($a, false);
     }
 
     /**
@@ -305,7 +305,7 @@ class Vector implements Tensor
      */
     public function shape() : array
     {
-        return [$this->n];
+        return [1, $this->n];
     }
 
     /**
@@ -316,6 +316,16 @@ class Vector implements Tensor
     public function size() : int
     {
         return $this->n;
+    }
+
+    /**
+     * Return the number of rows in the vector.
+     *
+     * @return int
+     */
+    public function m() : int
+    {
+        return 1;
     }
 
     /**
@@ -393,6 +403,16 @@ class Vector implements Tensor
     }
 
     /**
+     * Transpose the vector i.e. rotate it.
+     * 
+     * @return mixed
+     */
+    public function transpose()
+    {
+        return ColumnVector::quick($this->a);
+    }
+
+    /**
      * Return the index of the minimum element in the vector.
      * 
      * @return int
@@ -454,9 +474,9 @@ class Vector implements Tensor
      */
     public function dot(Vector $b)
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException("Vector A"
-                . " requires $this->n elements but B has {$b->n()}.");
+                . " requires $this->n elements but B has {$b->size()}.");
         }
 
         $sigma = 0.;

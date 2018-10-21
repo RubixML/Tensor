@@ -492,11 +492,11 @@ class Matrix implements Tensor
      * Return a column as a vector from the matrix.
      *
      * @param  int  $index
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function columnAsVector(int $index) : Vector
+    public function columnAsVector(int $index) : ColumnVector
     {
-        return Vector::quick($this->column($index));
+        return ColumnVector::quick($this->column($index));
     }
 
     /**
@@ -548,6 +548,22 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return each column as a column vector in an array.
+     *
+     * @return \Rubix\Tensor\ColumnVector[]
+     */
+    public function asColumnVectors() : array
+    {
+        $vectors = [];
+
+        foreach ($this->transpose() as $column) {
+            $vectors[] = ColumnVector::quick($column);
+        }
+
+        return $vectors;
+    }
+
+    /**
      * Flatten i.e unravel the matrix into a vector.
      *
      * @return \Rubix\Tensor\Vector
@@ -568,9 +584,9 @@ class Matrix implements Tensor
     /**
      * Return the index of the minimum element in every row of the matrix.
      * 
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function argmin() : Vector
+    public function argmin() : ColumnVector
     {
         $b = [];
 
@@ -578,15 +594,15 @@ class Matrix implements Tensor
             $b[] = (int) array_search(min($row), $row);
         }
 
-        return Vector::quick($b);
+        return ColumnVector::quick($b);
     }
 
     /**
      * Return the index of the maximum element in every row of the matrix.
      * 
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function argmax() : Vector
+    public function argmax() : ColumnVector
     {
         $b = [];
 
@@ -594,7 +610,7 @@ class Matrix implements Tensor
             $b[] = (int) array_search(max($row), $row);
         }
 
-        return Vector::quick($b);
+        return ColumnVector::quick($b);
     }
 
     /**
@@ -985,7 +1001,7 @@ class Matrix implements Tensor
 
         $values = $t->getRealEigenvalues();
 
-        $v = self::quick($t->getV()->getArray());
+        $v = self::quick($t->getV()->getArray())->transpose();
 
         $norm = $v->transpose()->square()->sum()->sqrt();
     
@@ -1048,6 +1064,10 @@ class Matrix implements Tensor
             case $b instanceof Matrix:
                 $c = $this->multiplyMatrix($b);
                 break;
+
+            case $b instanceof ColumnVector:
+                $c = $this->multiplyColumnVector($b);
+                break;
             
             case $b instanceof Vector:
                 $c = $this->multiplyVector($b);
@@ -1078,6 +1098,10 @@ class Matrix implements Tensor
         switch(true) {
             case $b instanceof Matrix:
                 $c = $this->divideMatrix($b);
+                break;
+
+            case $b instanceof ColumnVector:
+                $c = $this->divideColumnVector($b);
                 break;
             
             case $b instanceof Vector:
@@ -1110,6 +1134,10 @@ class Matrix implements Tensor
             case $b instanceof Matrix:
                 $c = $this->addMatrix($b);
                 break;
+
+            case $b instanceof ColumnVector:
+                $c = $this->addColumnVector($b);
+                break;
             
             case $b instanceof Vector:
                 $c = $this->addVector($b);
@@ -1141,7 +1169,11 @@ class Matrix implements Tensor
             case $b instanceof Matrix:
                 $c = $this->subtractMatrix($b);
                 break;
-            
+
+            case $b instanceof ColumnVector:
+                $c = $this->subtractColumnVector($b);
+                break;
+                
             case $b instanceof Vector:
                 $c = $this->subtractVector($b);
                 break;
@@ -1171,6 +1203,10 @@ class Matrix implements Tensor
         switch(true) {
             case $b instanceof Matrix:
                 $c = $this->powMatrix($b);
+                break;
+
+            case $b instanceof ColumnVector:
+                $c = $this->powColumnVector($b);
                 break;
             
             case $b instanceof Vector:
@@ -1202,6 +1238,10 @@ class Matrix implements Tensor
         switch(true) {
             case $b instanceof Matrix:
                 $c = $this->modMatrix($b);
+                break;
+            
+            case $b instanceof ColumnVector:
+                $c = $this->modColumnVector($b);
                 break;
             
             case $b instanceof Vector:
@@ -1342,49 +1382,49 @@ class Matrix implements Tensor
     /**
      * Sum the rows of the matrix and return a vector.
      *
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function sum() : Vector
+    public function sum() : ColumnVector
     {
-        return Vector::quick(array_map('array_sum', $this->a));
+        return ColumnVector::quick(array_map('array_sum', $this->a));
     }
 
     /**
      * Calculate the row product of the matrix.
      *
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function product() : Vector
+    public function product() : ColumnVector
     {
-        return Vector::quick(array_map('array_product', $this->a));
+        return ColumnVector::quick(array_map('array_product', $this->a));
     }
 
     /**
      * Return the minimum of each row in the matrix.
      *
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function min() : Vector
+    public function min() : ColumnVector
     {
-        return Vector::quick(array_map('min', $this->a));
+        return ColumnVector::quick(array_map('min', $this->a));
     }
 
     /**
      * Return the maximum of each row in the matrix.
      *
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function max() : Vector
+    public function max() : ColumnVector
     {
-        return Vector::quick(array_map('max', $this->a));
+        return ColumnVector::quick(array_map('max', $this->a));
     }
 
     /**
      * Compute the means of each row and return them in a vector.
      *
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function mean() : Vector
+    public function mean() : ColumnVector
     {
         return $this->sum()->divide($this->n);
     }
@@ -1393,9 +1433,9 @@ class Matrix implements Tensor
      * Return the median vector of this matrix.
      *
      * @throws \RuntimeException
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function median() : Vector
+    public function median() : ColumnVector
     {
         if ($this->n < 1) {
             throw new RuntimeException('Median is not defined for matrices'
@@ -1418,24 +1458,21 @@ class Matrix implements Tensor
             $b[] = $median;
         }
 
-        return Vector::quick($b);
+        return ColumnVector::quick($b);
     }
 
     /**
      * Compute the row variance of the matrix and return it in a tuple along
      * with the mean.
      *
-     * @return \Rubix\Tensor\Vector
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function variance() : Vector
+    public function variance() : ColumnVector
     {
-        $mu = $this->transpose()->mean();
-
-        return $this->subtract($mu)
-            ->transpose()
+        return $this->subtract($this->mean())
             ->square()
             ->sum()
-            ->divide($this->n);
+            ->divide($this->m);
     }
 
     /**
@@ -1446,12 +1483,10 @@ class Matrix implements Tensor
      */
     public function covariance() : self
     {
-        $mu = $this->transpose()->mean();
-
-        $b = $this->subtract($mu)->transpose();
+        $b = $this->subtract($this->mean());
 
         return $b->matmul($b->transpose())
-            ->divide($this->n);
+            ->divide($this->m);
     }
 
     /**
@@ -2057,6 +2092,156 @@ class Matrix implements Tensor
         foreach ($this->a as $i => $row) {
             foreach ($row as $j => $value) {
                 $c[$i][] = $value % $b[$j];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Multiply this matrix with a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function multiplyColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $c[$i][] = $value * $b[$i];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Divide this matrix with a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function divideColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $c[$i][] = $value / $b[$i];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Add this matrix to a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function addColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $c[$i][] = $value + $b[$i];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Subtract a column vector from this matrix.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function subtractColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $c[$i][] = $value - $b[$i];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Raise this matrix to the power of a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function powColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $c[$i][] = $value ** $b[$i];
+            }
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Mod this matrix with a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function modColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            foreach ($row as $value) {
+                $c[$i][] = $value % $b[$i];
             }
         }
 

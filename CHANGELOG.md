@@ -1,4 +1,5 @@
 - Unreleased
+    - Added Column Vector
     - Implemented Eigenvalue decomposition
     - Integration with 3rd party JAMA libray
     - Fixed variance covariance calculation

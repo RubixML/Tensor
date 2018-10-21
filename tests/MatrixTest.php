@@ -5,6 +5,7 @@ namespace Rubix\Tensor\Tests;
 use Rubix\Tensor\Tensor;
 use Rubix\Tensor\Vector;
 use Rubix\Tensor\Matrix;
+use Rubix\Tensor\ColumnVector;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use IteratorAggregate;
@@ -21,6 +22,8 @@ class MatrixTest extends TestCase
     protected $c;
 
     protected $d;
+
+    protected $e;
 
     public function setUp()
     {
@@ -43,6 +46,8 @@ class MatrixTest extends TestCase
         ]);
 
         $this->d = Vector::quick([2, 10, -1]);
+
+        $this->e = ColumnVector::quick([2.5, -1, 4.8]);
     }
 
     public function test_build_matrix()
@@ -307,6 +312,19 @@ class MatrixTest extends TestCase
         $this->assertEquals([20, -6, -9], $vectors[2]->asArray());
     }
 
+    public function test_as_column_vectors()
+    {
+        $vectors = $this->a->asColumnVectors();
+
+        $this->assertInstanceOf(ColumnVector::class, $vectors[0]);
+        $this->assertInstanceOf(ColumnVector::class, $vectors[1]);
+        $this->assertInstanceOf(ColumnVector::class, $vectors[2]);
+
+        $this->assertEquals([22, 4, 20], $vectors[0]->asArray());
+        $this->assertEquals([-17, 11, -6], $vectors[1]->asArray());
+        $this->assertEquals([12, -2, -9], $vectors[2]->asArray());
+    }
+
     public function test_argmin()
     {
         $z = $this->a->argmin();
@@ -478,9 +496,9 @@ class MatrixTest extends TestCase
         $values = [25.108706520450326, -15.096331148319537, 13.9876246278692];
 
         $vectors = [
-            [-0.8622719261400653, 0.258486948208864, 0.6684472200177014],
-            [-0.17721179605718715, -0.11314537870318087, 0.6126879076802699],
-            [-0.4744292410137552, -0.9593657388523845, 0.42165369894378935],
+            [-0.5029346679560592, -0.1309992382037118, -0.33107976181279675],
+            [0.15580805853732102, -0.08643645234319261, -0.6918777439682378],
+            [0.8501650243704214, 0.987607178637524, 0.641631809310763],
         ];
 
         $this->assertInstanceOf(Matrix::class, $eigvectors);
@@ -677,6 +695,76 @@ class MatrixTest extends TestCase
             [0, -7, 0],
             [0, 1, 0],
             [0, -6, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_multiply_column_vector()
+    {
+        $z = $this->a->multiply($this->e);
+
+        $y = [
+            [55.0, -42.5, 30.],
+            [-4, -11, 2],
+            [96., -28.799999999999997, -43.199999999999996],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_divide_column_vector()
+    {
+        $z = $this->a->divide($this->e);
+
+        $y = [
+            [8.8, -6.8, 4.8],
+            [-4, -11, 2],
+            [4.166666666666667, -1.25, -1.875],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_add_column_vector()
+    {
+        $z = $this->a->add($this->e);
+
+        $y = [
+            [24.5, -14.5, 14.5],
+            [3, 10, -3],
+            [24.8, -1.2000000000000002, -4.2],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_subtract_column_vector()
+    {
+        $z = $this->a->subtract($this->e);
+
+        $y = [
+            [19.5, -19.5, 9.5],
+            [5, 12, -1],
+            [15.2, -10.8, -13.8],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_mod_column_vector()
+    {
+        $z = $this->a->mod($this->e);
+
+        $y = [
+            [0, -1, 0],
+            [0, 0, 0],
+            [0, -2, -1],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
@@ -913,7 +1001,7 @@ class MatrixTest extends TestCase
 
         $y = [17, 13, 5];
 
-        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertInstanceOf(ColumnVector::class, $z);
         $this->assertEquals($y, $z->asArray());
     }
 
@@ -923,7 +1011,7 @@ class MatrixTest extends TestCase
 
         $y = [-4488., -88., 1080.];
 
-        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertInstanceOf(ColumnVector::class, $z);
         $this->assertEquals($y, $z->asArray());
     }
 
@@ -933,7 +1021,7 @@ class MatrixTest extends TestCase
 
         $y = [-17, -2, -9];
 
-        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertInstanceOf(ColumnVector::class, $z);
         $this->assertEquals($y, $z->asArray());
     }
 
@@ -943,7 +1031,7 @@ class MatrixTest extends TestCase
 
         $y = [22, 11, 20];
 
-        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertInstanceOf(ColumnVector::class, $z);
         $this->assertEquals($y, $z->asArray());
     }
 
@@ -953,7 +1041,7 @@ class MatrixTest extends TestCase
 
         $y = [5.666666666666667, 4.333333333333333, 1.6666666666666667];
 
-        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertInstanceOf(ColumnVector::class, $z);
         $this->assertEquals($y, $z->asArray());
     }
 
@@ -963,7 +1051,7 @@ class MatrixTest extends TestCase
 
         $y = [12, 4, -6];
 
-        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertInstanceOf(ColumnVector::class, $z);
         $this->assertEquals($y, $z->asArray());
     }
 
@@ -971,9 +1059,9 @@ class MatrixTest extends TestCase
     {
         $z = $this->a->variance();
 
-        $y = [64.88888888888889, 132.66666666666666, 76.22222222222223];
+        $y = [273.55555555555554, 28.222222222222225, 169.55555555555554];
 
-        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertInstanceOf(ColumnVector::class, $z);
         $this->assertEquals($y, $z->asArray());
     }
 
@@ -982,9 +1070,9 @@ class MatrixTest extends TestCase
         $z = $this->a->covariance();
 
         $y = [
-            [64.88888888888889, -88.66666666666664, 20.22222222222222],
-            [-88.66666666666664, 132.66666666666666, -56.0],
-            [20.22222222222222, -56.0, 76.22222222222223],
+            [273.55555555555554, -65.55555555555556, 135.2222222222222],
+            [-65.55555555555556, 28.222222222222225, 3.4444444444444406],
+            [135.2222222222222, 3.4444444444444406, 169.55555555555554],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
