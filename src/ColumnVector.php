@@ -63,9 +63,13 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $this->a[$i] * $value;
+                $temp[] = $this->a[$i] * $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -88,9 +92,13 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $this->a[$i] / $value;
+                $temp[] = $this->a[$i] / $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -113,9 +121,13 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $this->a[$i] + $value;
+                $temp[] = $this->a[$i] + $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -139,9 +151,13 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $this->a[$i] - $value;
+                $temp[] = $this->a[$i] - $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -165,11 +181,14 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
-            foreach ($row as $value) {
-                $c[$i][] = $this->a[$i] ** $value;
-            }
-        }
+            $temp = [];
 
+            foreach ($row as $value) {
+                $temp[] = $this->a[$i] ** $value;
+            }
+
+            $c[] = $temp;
+        }
         return Matrix::quick($c);
     }
  
@@ -190,9 +209,13 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $this->a[$i] % $value;
+                $temp[] = $this->a[$i] % $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);

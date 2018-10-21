@@ -6,6 +6,7 @@ use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
 use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
+use Exception;
 
 /**
  * Vector
@@ -443,7 +444,7 @@ class Vector implements Tensor
     {
         $validate = is_object($fn) ? true : false;
 
-        return new self(array_map($fn, $this->a), $validate);
+        return new static(array_map($fn, $this->a), $validate);
     }
 
     /**
@@ -529,7 +530,7 @@ class Vector implements Tensor
      */
     public function cross(Vector $b) : self
     {
-        if ($this->n !== 3 or $b->n() !== 3) {
+        if ($this->n !== 3 or $b->size() !== 3) {
             throw new DimensionalityMismatchException('Cross product is'
                 . ' only defined for vectors of 3 dimensions.');
         }
@@ -556,7 +557,7 @@ class Vector implements Tensor
         return $b->multiply($bHat);
     }
 
-        /**
+    /**
      * Calculate the L1 or Manhattan norm of the vector.
      *
      * @return int|float
@@ -949,10 +950,16 @@ class Vector implements Tensor
     /**
      * Return the mean of the vector.
      *
+     * @throws \RuntimeException
      * @return int|float
      */
     public function mean()
     {
+        if ($this->n === 0) {
+            throw new RuntimeException('Mean is not defined for vectors'
+            . ' with less than 1 element.');
+        }
+
         return $this->sum() / $this->n;
     }
 
@@ -991,19 +998,32 @@ class Vector implements Tensor
      */
     public function variance()
     {
-        $mu = $this->mean();
+        if ($this->n === 0) {
+            throw new RuntimeException('Variance is not defined for vectors'
+            . ' with less than 1 element.');
+        }
 
-        return $this->subtract($mu)->square()->sum() / $this->n;
+        $ssd = $this->subtract($this->mean())
+            ->square()
+            ->sum();
+
+        return $ssd / $this->n;
     }
 
     /**
      * Round the elements in the matrix to a given decimal place.
      *
      * @param  int  $precision
+     * @throws  \InvalidArgumentException
      * @return self
      */
     public function round(int $precision = 0) : self
     {
+        if ($precision < 0) {
+            throw new InvalidArgumentException("Decimal precision cannot"
+                . " be less than 0, $precision given.");
+        }
+
         $b = [];
 
         foreach ($this->a as $value) {
@@ -1039,10 +1059,16 @@ class Vector implements Tensor
      *
      * @param  float  $min
      * @param  float  $max
+     * @throws \InvalidArgumentException
      * @return self
      */
     public function clip(float $min, float $max) : self
     {
+        if ($min > $max) {
+            throw new InvalidArgumentException('Minimum cannot be'
+                . ' greater than maximum.');
+        }
+
         $b = [];
 
         foreach ($this->a as $value) {
@@ -1075,14 +1101,12 @@ class Vector implements Tensor
 
         foreach ($this->a as $value) {
             if ($value > 0) {
-                $sign = 1;
+                $b[] = 1;
             } else if ($value < 0) {
-                $sign = -1;
+                $b[] = -1;
             } else {
-                $sign = 0;
+                $b[] = 0;
             }
-
-            $b[] = $sign;
         }
 
         return self::quick($b);
@@ -1120,10 +1144,14 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $row) {
+        foreach ($b as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $this->a[$j] * $value;
+                $temp[] = $this->a[$j] * $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -1145,10 +1173,14 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $row) {
+        foreach ($b as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $this->a[$j] / $value;
+                $temp[] = $this->a[$j] / $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -1170,10 +1202,14 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $row) {
+        foreach ($b as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $this->a[$j] + $value;
+                $temp[] = $this->a[$j] + $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -1195,10 +1231,14 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $row) {
+        foreach ($b as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $this->a[$j] - $value;
+                $temp[] = $this->a[$j] - $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -1220,10 +1260,14 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $row) {
+        foreach ($b as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $this->a[$j] ** $value;
+                $temp[] = $this->a[$j] ** $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -1245,10 +1289,14 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $row) {
+        foreach ($b as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $this->a[$j] % $value;
+                $temp[] = $this->a[$j] % $value;
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -1265,7 +1313,7 @@ class Vector implements Tensor
     {
         if ($this->n !== $b->n()) {
             throw new DimensionalityMismatchException("Vector A requires"
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " $this->n elements but Vector B has {$b->size()}.");
         }
 
         $c = [];
@@ -1288,7 +1336,7 @@ class Vector implements Tensor
     {
         if ($this->n !== $b->n()) {
             throw new DimensionalityMismatchException("Vector A requires"
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " $this->n elements but Vector B has {$b->size()}.");
         }
 
         $c = [];
@@ -1311,7 +1359,7 @@ class Vector implements Tensor
     {
         if ($this->n !== $b->n()) {
             throw new DimensionalityMismatchException("Vector A requires"
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " $this->n elements but Vector B has {$b->size()}.");
         }
 
         $c = [];
@@ -1334,7 +1382,7 @@ class Vector implements Tensor
     {
         if ($this->n !== $b->n()) {
             throw new DimensionalityMismatchException("Vector A requires"
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " $this->n elements but Vector B has {$b->size()}.");
         }
 
         $c = [];
@@ -1357,7 +1405,7 @@ class Vector implements Tensor
     {
         if ($this->n !== $b->n()) {
             throw new DimensionalityMismatchException("Vector A requires"
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " $this->n elements but Vector B has {$b->size()}.");
         }
 
         $c = [];
@@ -1380,7 +1428,7 @@ class Vector implements Tensor
     {
         if ($this->n !== $b->n()) {
             throw new DimensionalityMismatchException("Vector A requires"
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " $this->n elements but Vector B has {$b->size()}.");
         }
 
         $c = [];
@@ -1402,8 +1450,8 @@ class Vector implements Tensor
     protected function multiplyScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         $b = [];
@@ -1425,8 +1473,8 @@ class Vector implements Tensor
     protected function divideScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         $b = [];
@@ -1448,8 +1496,8 @@ class Vector implements Tensor
     protected function addScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         $b = [];
@@ -1471,8 +1519,8 @@ class Vector implements Tensor
     protected function subtractScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         $b = [];
@@ -1494,8 +1542,8 @@ class Vector implements Tensor
     protected function powScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
     
         $b = [];
@@ -1517,8 +1565,8 @@ class Vector implements Tensor
     protected function modScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         $b = [];
@@ -1531,6 +1579,8 @@ class Vector implements Tensor
     }
 
     /**
+     * Count method to implement countable interface.
+     * 
      * @return int
      */
     public function count() : int
@@ -1595,6 +1645,30 @@ class Vector implements Tensor
     public function getIterator()
     {
         return new ArrayIterator($this->a);
+    }
+
+        /**
+     * Magic getters for tensor properties.
+     * 
+     * @param  string  $name
+     * @throws \Exception
+     * @return mixed
+     */
+    public function __get(string $name)
+    {
+        switch($name) {
+            case 'm':
+                return $this->m();
+
+            case 'n':
+                return $this->n();
+
+            case 'T':
+                return $this->transpose();
+            
+            default:
+                throw new Exception('Property does not exist.');
+        }
     }
 
     /**

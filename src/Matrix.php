@@ -2,11 +2,12 @@
 
 namespace Rubix\Tensor;
 
-use JAMA\Matrix as JAMA;
 use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
+use JAMA\Matrix as JAMA;
 use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
+use Exception;
 
 /**
  * Matrix
@@ -78,11 +79,11 @@ class Matrix implements Tensor
                 . ' greater than 0 on all axes.');
         }
 
-        $a = [[]];
+        $a = [];
 
         for ($i = 0; $i < $n; $i++) {
             for ($j = 0; $j < $n; $j++) {
-                $a[$i][$j] = $i === $j ? 1 : 0;
+                $a[$i][] = $i === $j ? 1 : 0;
             }
         }
 
@@ -706,7 +707,7 @@ class Matrix implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function det()
+    public function determinant()
     {
         if ($this->m !== $this->n) {
             throw new RuntimeException('Determinant is undefined for a'
@@ -802,9 +803,9 @@ class Matrix implements Tensor
      */
     public function dot(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException("Matrix A requires"
-                . " $this->n rows but Vector B has {$b->n()}.");
+                . " $this->n elements but Vector B has {$b->size()}.");
         }
 
         return $this->matmul($b->asColumnMatrix());
@@ -880,17 +881,19 @@ class Matrix implements Tensor
         $row = $col = 0;
 
         while ($row < $this->m and $col < $this->n) {
-            if (abs($b[$row][$col]) == 0) {
+            $t = $b[$row];
+
+            if (abs($t[$col]) == 0) {
                 $col++;
 
                 continue 1;
             }
 
-            $divisor = $b[$row][$col];
+            $divisor = $t[$col];
 
             if ($divisor != 1) {
                 for ($i = 0; $i < $this->n; $i++) {
-                    $b[$row][$i] /= $divisor;
+                    $t[$i] /= $divisor;
                 }
             }
 
@@ -899,10 +902,12 @@ class Matrix implements Tensor
 
                 if ($scale != 0) {
                     for ($j = 0; $j < $this->n; $j++) {
-                        $b[$i][$j] += -$scale * $b[$row][$j];
+                        $b[$i][$j] += -$scale * $t[$j];
                     }
                 }
             }
+
+            $b[$row] = $t;
 
             $row++;
             $col++;
@@ -982,32 +987,41 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the eigenvalues and normalized eigenvectors of the matrix
-     * and return them in a tuple.
+     * Compute the eigenvalues and eigenvectors of the matrix and return
+     * them in a tuple.
      * 
+     * @param  bool  $normalize
      * @throws \RuntimeException
      * @return array
      */
-    public function eig() : array
+    public function eig(bool $normalize = true) : array
     {
         if ($this->m !== $this->n) {
             throw new RuntimeException('Cannot decompose a non square'
                 . ' matrix.');
         }
 
-        $b = new JAMA($this->a);
+        $jama = new JAMA($this->a);
 
-        $t = $b->eig();
+        $decomp = $jama->eig();
 
-        $values = $t->getRealEigenvalues();
+        $eigenvalues = $decomp->getRealEigenvalues();
+        $eigenvectors = $decomp->getV()->getArray();
 
-        $v = self::quick($t->getV()->getArray())->transpose();
+        $eigenvectors = self::quick($eigenvectors)
+            ->transpose();
 
-        $norm = $v->transpose()->square()->sum()->sqrt();
-    
-        $vHat = $v->divide($norm);
+        if ($normalize === true) {
+            $norm = $eigenvectors->transpose()
+                ->square()
+                ->sum()
+                ->sqrt()
+                ->transpose();
+        
+            $eigenvectors = $eigenvectors->divide($norm);
+        }
 
-        return [$values, $vHat];
+        return [$eigenvalues, $eigenvectors];
     }
 
     /**
@@ -1321,9 +1335,13 @@ class Matrix implements Tensor
         $b = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $b[$i][] = log($value, $base);
+                $temp[] = log($value, $base);
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -1422,10 +1440,16 @@ class Matrix implements Tensor
     /**
      * Compute the means of each row and return them in a vector.
      *
+     * @throws \InvalidArgumentException
      * @return \Rubix\Tensor\ColumnVector
      */
     public function mean() : ColumnVector
     {
+        if ($this->n < 1) {
+            throw new RuntimeException('Median is not defined for matrices'
+                . ' with less than 1 column.');
+        }
+
         return $this->sum()->divide($this->n);
     }
 
@@ -1493,16 +1517,26 @@ class Matrix implements Tensor
      * Round the elements in the matrix to a given decimal place.
      *
      * @param  int  $precision
+     * @throws \InvalidArgumentException
      * @return self
      */
     public function round(int $precision = 0) : self
     {
+        if ($precision < 0) {
+            throw new InvalidArgumentException("Decimal precision cannot"
+                . " be less than 0, $precision given.");
+        }
+
         $b = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $b[$i][] = round($value, $precision);
+                $temp[] = round($value, $precision);
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -1534,28 +1568,38 @@ class Matrix implements Tensor
      *
      * @param  float  $min
      * @param  float  $max
+     * @throws \InvalidArgumentException
      * @return self
      */
     public function clip(float $min, float $max) : self
     {
+        if ($min > $max) {
+            throw new InvalidArgumentException('Minimum cannot be'
+                . ' greater than maximum.');
+        }
+
         $b = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
                 if ($value > $max) {
-                    $b[$i][] = $max;
+                    $temp[] = $max;
 
                     continue 1;
                 }
 
                 if ($value < $min) {
-                    $b[$i][] = $min;
+                    $temp[] = $min;
 
                     continue 1;
                 }
 
-                $b[$i][] = $value;
+                $temp[] = $value;
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -1571,17 +1615,19 @@ class Matrix implements Tensor
         $b = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
                 if ($value > 0) {
-                    $sign = 1;
+                    $temp[] = 1;
                 } else if ($value < 0) {
-                    $sign = -1;
+                    $temp[] = -1;
                 } else {
-                    $sign = 0;
+                    $temp[] = 0;
                 }
-
-                $b[$i][] = $sign;
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -1777,10 +1823,13 @@ class Matrix implements Tensor
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
+            $temp = [];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][] = $value * $rowB[$j];
+                $temp[] = $value * $rowB[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -1809,10 +1858,13 @@ class Matrix implements Tensor
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
+            $temp = [];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][] = $value / $rowB[$j];
+                $temp[] = $value / $rowB[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -1841,10 +1893,13 @@ class Matrix implements Tensor
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
+            $temp = [];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][] = $value + $rowB[$j];
+                $temp[] = $value + $rowB[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -1873,10 +1928,13 @@ class Matrix implements Tensor
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
+            $temp = [];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][] = $value - $rowB[$j];
+                $temp[] = $value - $rowB[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -1906,10 +1964,13 @@ class Matrix implements Tensor
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
+            $temp = [];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][] = $value ** $rowB[$j];
+                $temp[] = $value ** $rowB[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -1939,10 +2000,13 @@ class Matrix implements Tensor
 
         foreach ($this->a as $i => $rowA) {
             $rowB = $b[$i];
+            $temp = [];
 
             foreach ($rowA as $j => $value) {
-                $c[$i][] = $value % $rowB[$j];
+                $temp[] = $value % $rowB[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -1964,10 +2028,14 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $value * $b[$j];
+                $temp[] = $value * $b[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -1989,10 +2057,14 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $value / $b[$j];
+                $temp[] = $value / $b[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2014,10 +2086,14 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $value + $b[$j];
+                $temp[] = $value + $b[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2039,10 +2115,14 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $value - $b[$j];
+                $temp[] = $value - $b[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2064,10 +2144,14 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $value ** $b[$j];
+                $temp[] = $value ** $b[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2089,10 +2173,14 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $j => $value) {
-                $c[$i][] = $value % $b[$j];
+                $temp[] = $value % $b[$j];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2115,9 +2203,13 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $value * $b[$i];
+                $temp[] = $value * $b[$i];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2140,9 +2232,13 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $value / $b[$i];
+                $temp[] = $value / $b[$i];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2165,9 +2261,13 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $value + $b[$i];
+                $temp[] = $value + $b[$i];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2190,9 +2290,13 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $value - $b[$i];
+                $temp[] = $value - $b[$i];
             }
+
+            $c[]= $temp;
         }
 
         return self::quick($c);
@@ -2215,9 +2319,13 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $value ** $b[$i];
+                $temp[] = $value ** $b[$i];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2240,9 +2348,13 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $c[$i][] = $value % $b[$i];
+                $temp[] = $value % $b[$i];
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -2264,10 +2376,14 @@ class Matrix implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $b[$i][] = $value * $scalar;
+                $temp[] = $value * $scalar;
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -2289,10 +2405,14 @@ class Matrix implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $b[$i][] = $value / $scalar;
+                $temp[] = $value / $scalar;
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -2315,9 +2435,13 @@ class Matrix implements Tensor
         $b = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $b[$i][] = $value + $scalar;
+                $temp[] = $value + $scalar;
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -2340,9 +2464,13 @@ class Matrix implements Tensor
         $b = [];
 
         foreach ($this->a as $i => $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $b[$i][] = $value - $scalar;
+                $temp[] = $value - $scalar;
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -2364,10 +2492,14 @@ class Matrix implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $b[$i][] = $value ** $scalar;
+                $temp[] = $value ** $scalar;
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -2389,10 +2521,14 @@ class Matrix implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $b[$i][] = $value % $scalar;
+                $temp[] = $value % $scalar;
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -2463,6 +2599,30 @@ class Matrix implements Tensor
     public function getIterator()
     {
         return new ArrayIterator($this->a);
+    }
+
+    /**
+     * Magic getters for tensor properties.
+     * 
+     * @param  string  $name
+     * @throws \Exception
+     * @return mixed
+     */
+    public function __get(string $name)
+    {
+        switch($name) {
+            case 'm':
+                return $this->m;
+
+            case 'n':
+                return $this->n;
+
+            case 'T':
+                return $this->transpose();
+            
+            default:
+                throw new Exception('Property does not exist.');
+        }
     }
 
     /**

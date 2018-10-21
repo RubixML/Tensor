@@ -367,6 +367,11 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $z);
         $this->assertEquals($y, $z->asArray());
+
+        $z = $this->a->T;
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_inverse()
@@ -383,10 +388,10 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
-    public function test_det()
+    public function test_determinant()
     {
-        $this->assertEquals(-5301.999999999999, $this->a->det());
-        $this->assertEquals(-544., $this->c->det());
+        $this->assertEquals(-5301.999999999999, $this->a->determinant());
+        $this->assertEquals(-544., $this->c->determinant());
     }
 
     public function test_rank()

@@ -233,6 +233,11 @@ class VectorTest extends TestCase
 
         $this->assertInstanceOf(ColumnVector::class, $z);
         $this->assertEquals($outcome, $z->asArray());
+
+        $z = $this->a->T;
+
+        $this->assertInstanceOf(ColumnVector::class, $z);
+        $this->assertEquals($outcome, $z->asArray());
     }
 
     public function test_map()
