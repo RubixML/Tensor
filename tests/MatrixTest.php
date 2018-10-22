@@ -512,6 +512,32 @@ class MatrixTest extends TestCase
         $this->assertEquals($vectors, $eigvectors->asArray());
     }
 
+    public function test_svd()
+    {
+        list($singulars, $u, $v) = $this->a->svd();
+
+        $sValues = [34.66917512262572, 17.126305824689194, 8.929610580306823];
+
+        $uVectors = [
+            [0.7193682983958289, 0.12930042569714267, 0.6251406401256979],
+            [0.09105822743736006, -0.012783334355916264, -0.48346974440631996],
+            [0.6756033397647457, 0.0593768712442418, -0.6105950683744722],
+        ];
+
+        $vVectors = [
+            [-0.5314575148465132, 0.1589448691790385, 0.3235168618307953],
+            [0.6976649392999044, 0.6392186422366095, -0.45060781355445606],
+            [-0.48043370238236727, 0.7524201326246154, 0.8320393250771428],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $u);
+        $this->assertInstanceOf(Matrix::class, $v);
+
+        $this->assertEquals($sValues, $singulars);
+        $this->assertEquals($uVectors, $u->asArray());
+        $this->assertEquals($vVectors, $v->asArray());
+    }
+
     public function test_matmul()
     {
         $z = $this->a->matmul($this->b);
@@ -612,13 +638,9 @@ class MatrixTest extends TestCase
     {
         $z = $this->a->dot($this->d);
 
-        $y = [
-            [-138],
-            [120],
-            [-11],
-        ];
+        $y = [-138, 120, -11];
 
-        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertInstanceOf(ColumnVector::class, $z);
         $this->assertEquals($y, $z->asArray());
     }
 

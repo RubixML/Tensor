@@ -799,16 +799,16 @@ class Matrix implements Tensor
      *
      * @param  \Rubix\Tensor\Vector  $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return \Rubix\Tensor\ColumnVector
      */
-    public function dot(Vector $b) : self
+    public function dot(Vector $b) : ColumnVector
     {
         if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException("Matrix A requires"
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
 
-        return $this->matmul($b->asColumnMatrix());
+        return $this->matmul($b->asColumnMatrix())->columnAsVector(0);
     }
 
     /**
@@ -1022,6 +1022,32 @@ class Matrix implements Tensor
         }
 
         return [$eigenvalues, $eigenvectors];
+    }
+
+    /**
+     * Compute the singular value decompositon of the matrix.
+     * 
+     * @return array
+     */
+    public function svd() : array
+    {
+        if ($this->m !== $this->n) {
+            throw new RuntimeException('Cannot decompose a non square'
+                . ' matrix.');
+        }
+
+        $jama = new JAMA($this->a);
+
+        $decomp = $jama->svd();
+
+        $singulars = $decomp->getSingularValues();
+        $u = $decomp->getU()->getArray();
+        $v = $decomp->getV()->getArray();
+
+        $u = self::quick($u)->transpose();
+        $v = self::quick($v)->transpose();
+
+        return [$singulars, $u, $v];
     }
 
     /**

@@ -1251,7 +1251,7 @@ class Matrix {
   /**
   * svd
   * Singular value decomposition
-  * @return \JAMA\SingularValueDecomposision
+  * @return \JAMA\SingularValueDecomposition
   */
   public function svd() {
     return new SingularValueDecomposition($this);

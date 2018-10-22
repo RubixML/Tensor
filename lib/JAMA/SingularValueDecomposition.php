@@ -169,7 +169,7 @@ class SingularValueDecomposition  {
     $e[$p-1] = 0.0;
     // If required, generate U.
     if ($wantu) {
-      for ($j = $nct; $j < $nu; $j++) {
+      for ($j = $nct - 1; $j < $nu; $j++) {
         for ($i = 0; $i < $this->m; $i++)
           $this->U[$i][$j] = 0.0;
         $this->U[$j][$j] = 1.0;
@@ -178,8 +178,9 @@ class SingularValueDecomposition  {
         if ($this->s[$k] != 0.0) {
           for ($j = $k + 1; $j < $nu; $j++) {
             $t = 0;
-            for ($i = $k; $i < $this->m; $i++)
+            for ($i = $k; $i < $this->m; $i++) {
               $t += $this->U[$i][$k] * $this->U[$i][$j];
+            }
             $t = -$t / $this->U[$k][$k];
             for ($i = $k; $i < $this->m; $i++)
               $this->U[$i][$j] += $t * $this->U[$i][$k];
