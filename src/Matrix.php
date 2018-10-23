@@ -1025,32 +1025,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the singular value decompositon of the matrix.
-     * 
-     * @return array
-     */
-    public function svd() : array
-    {
-        if ($this->m !== $this->n) {
-            throw new RuntimeException('Cannot decompose a non square'
-                . ' matrix.');
-        }
-
-        $jama = new JAMA($this->a);
-
-        $decomp = $jama->svd();
-
-        $singulars = $decomp->getSingularValues();
-        $u = $decomp->getU()->getArray();
-        $v = $decomp->getV()->getArray();
-
-        $u = self::quick($u)->transpose();
-        $v = self::quick($v)->transpose();
-
-        return [$singulars, $u, $v];
-    }
-
-    /**
      * Return the L1 norm of the matrix.
      *
      * @return int|float

@@ -13,12 +13,13 @@
 *  r = sqrt(a^2 + b^2) without under/overflow.
 */
 function hypo($a, $b) {
-  if (abs($a) > abs($b)) {     
-    $r = $b/$a;
-    $r = abs($a)* sqrt(1+$r*$r);
+  $aHat = abs($a);
+  $bHat = abs($b);
+
+  if ($aHat > $bHat) {     
+    $r = $aHat * sqrt(1 + ($b / $a) ** 2);
   } else if ($b != 0) {
-    $r = $a/$b;
-    $r = abs($b)*sqrt(1+$r*$r);
+    $r = $bHat * sqrt(1 + ($a / $b) ** 2);
   } else 
     $r = 0.0;
   return $r;
