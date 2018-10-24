@@ -931,10 +931,9 @@ class Matrix implements Tensor
                 . ' matrix.');
         }
 
-        $pa = $this->a;
-
         $l = self::identity($this->n)->asArray();
         $u = self::zeros($this->n, $this->n)->asArray();
+        $p = self::identity($this->n)->asArray();
 
         for ($i = 0; $i < $this->n; $i++) {
             $max = $this->a[$i][$i];
@@ -950,12 +949,16 @@ class Matrix implements Tensor
             }
             
             if ($i !== $row) {
-                $temp = $pa[$i];
+                $temp = $p[$i];
 
-                $pa[$i] = $pa[$row];
-                $pa[$row] = $temp;
+                $p[$i] = $p[$row];
+                $p[$row] = $temp;
             }
         }
+
+        $p = self::quick($p);
+
+        $pa = $p->matmul($this);
 
         for ($i = 0; $i < $this->n; $i++) {
             for ($j = 0; $j <= $i; $j++) {
@@ -983,7 +986,7 @@ class Matrix implements Tensor
         $l = self::quick($l);
         $u = self::quick($u);
 
-        return [$l, $u];
+        return [$l, $u, $p];
     }
 
     /**
@@ -1022,6 +1025,51 @@ class Matrix implements Tensor
         }
 
         return [$eigenvalues, $eigenvectors];
+    }
+
+    /**
+     * Solve a linear system of equations given the matrix and a
+     * solution vector b. Returns the column vector x that satisfies
+     * the solution.
+     * 
+     * @param  \Rubix\Tensor\Vector  $b
+     * @return \Rubix\Tensor\ColumnVector
+     */
+    public function solve(Vector $b) : ColumnVector
+    {
+        $k = $this->m - 1;
+
+        list($l, $u, $p) = $this->lu();
+
+        $pb = $p->dot($b);
+
+        $y = [$pb[0] / ($l[0][0] ?: self::EPSILON)];
+
+        for ($i = 1; $i < $this->m; $i++) {
+            $sigma = 0;
+
+            for ($j = 0; $j <= $i - 1; $j++) {
+                $sigma += $l[$i][$j] * $y[$j];
+            }
+
+            $y[] = ($pb[$i] - $sigma) / $l[$i][$i];
+        }
+
+        $x = [];
+
+        $x = [$k => $y[$k] / ($l[$k][$k] ?: self::EPSILON)];
+
+        for ($i = $this->m - 2; $i >= 0; $i--) {
+            $sigma = 0;
+
+            for ($j = $i + 1; $j < $this->m; $j++) {
+                $sigma += $u[$i][$j] * $x[$j];
+            }
+
+            $x[$i] = ($y[$i] - $sigma) / $u[$i][$i];
+        }
+
+        return ColumnVector::quick(array_reverse($x));
     }
 
     /**
