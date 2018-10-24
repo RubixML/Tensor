@@ -47,6 +47,17 @@ class ColumnVector extends Vector
     }
 
     /**
+     * Compute the vector-matrix product of this vector and matrix a.
+     * 
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @return \Rubix\Tensor\Matrix
+     */
+    public function matmul(Matrix $b) : Matrix
+    {
+        return $this->asColumnMatrix()->matmul($b);
+    }
+
+    /**
      * Multiply this column vector with a matrix.
      *
      * @param  \Rubix\Tensor\Matrix  $b

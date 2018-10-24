@@ -490,6 +490,17 @@ class Vector implements Tensor
     }
 
     /**
+     * Compute the vector-matrix product of this vector and matrix a.
+     * 
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @return \Rubix\Tensor\Matrix
+     */
+    public function matmul(Matrix $b) : Matrix
+    {
+        return $this->asRowMatrix()->matmul($b);
+    }
+
+    /**
      * Return the inner product of two vectors.
      *
      * @param  \Rubix\Tensor\Vector  $b
