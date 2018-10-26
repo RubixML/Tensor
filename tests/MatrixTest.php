@@ -68,9 +68,9 @@ class MatrixTest extends TestCase
         ]);
     }
 
-    public function test_from_vectors()
+    public function test_stack()
     {
-        $z = Matrix::fromVectors([
+        $z = Matrix::stack([
             $this->d,
             $this->d,
             $this->d,

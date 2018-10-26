@@ -349,13 +349,13 @@ class Matrix implements Tensor
     }
 
     /**
-     * Build a matrix from an array of row vectors.
+     * Build a matrix by stacking an array of vectors.
      * 
      * @param  \Rubix\Tensor\Vector[]  $vectors
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function fromVectors(array $vectors) : self
+    public static function stack(array $vectors) : self
     {
         $a = [];
 
