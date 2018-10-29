@@ -1534,6 +1534,45 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the median vector of this matrix.
+     *
+     * @param  float  $p
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
+     * @return \Rubix\Tensor\ColumnVector
+     */
+    public function percentile(float $p) : ColumnVector
+    {
+        if ($p < 0. or $p > 100.) {
+            throw new InvalidArgumentException("P must be between 0 and 100,"
+                . " $p given.");
+        }
+
+        if ($this->n < 1) {
+            throw new RuntimeException('Median is not defined for matrices'
+                . ' with less than 1 column.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $row) {
+            sort($row);
+
+            $x = ($p / 100) * ($this->n - 1) + 1;
+
+            $xHat = (int) $x;
+    
+            $remainder = $x - $xHat;
+    
+            $t = $row[$xHat - 1];
+    
+            $b[] = $t + $remainder * ($row[$xHat] - $t);
+        }
+
+        return ColumnVector::quick($b);
+    }
+
+    /**
      * Compute the row variance of the matrix and return it in a tuple along
      * with the mean.
      *

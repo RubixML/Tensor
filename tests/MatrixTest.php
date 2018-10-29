@@ -1068,6 +1068,16 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_percentile()
+    {
+        $z =$this->a->percentile(40);
+
+        $y = [6.200000000000003, 2.8000000000000007, -6.6];
+
+        $this->assertInstanceOf(ColumnVector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_variance()
     {
         $z = $this->a->variance();

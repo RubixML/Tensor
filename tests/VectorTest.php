@@ -717,6 +717,13 @@ class VectorTest extends TestCase
         $this->assertEquals(5.25, $this->c->median());
     }
 
+    public function test_percentile()
+    {
+        $this->assertEquals(30., $this->a->percentile(50));
+        $this->assertEquals(-0.625, $this->b->percentile(25));
+        $this->assertEquals(10.55, $this->c->percentile(75));
+    }
+
     public function test_variance()
     {
         $this->assertEquals(3227.609375, $this->a->variance());

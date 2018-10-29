@@ -4,6 +4,7 @@
     - Added solve system of linear equations
     - Integration with 3rd party JAMA libray
     - Fixed variance covariance calculation
+    - Added percentile calculation for Vector and Matrix
 
 - 1.0.0
     - Implemented LU decomposition

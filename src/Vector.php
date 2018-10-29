@@ -1003,6 +1003,41 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the pth percentile of the vector.
+     * 
+     * @param  float  $p
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
+     * @return float
+     */
+    public function percentile(float $p) : float
+    {
+        if ($p < 0. or $p > 100.) {
+            throw new InvalidArgumentException("P must be between 0 and 100,"
+                . " $p given.");
+        }
+
+        if ($this->n < 1) {
+            throw new RuntimeException('Percentile is not defined for vectors'
+                . ' with less than 1 element.');
+        }
+
+        $a = $this->a;
+
+        sort($a);
+
+        $x = ($p / 100) * ($this->n - 1) + 1;
+
+        $xHat = (int) $x;
+
+        $remainder = $x - $xHat;
+
+        $t = $a[$xHat - 1];
+
+        return $t + $remainder * ($a[$xHat] - $t);
+    }
+
+    /**
      * Return the variance of the vector.
      *
      * @return int|float
