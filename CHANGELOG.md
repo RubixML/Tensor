@@ -1,4 +1,6 @@
 - Unreleased
+
+- 1.0.1
     - Added Column Vector
     - Implemented Eigenvalue decomposition
     - Added solve system of linear equations

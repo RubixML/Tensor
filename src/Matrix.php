@@ -361,9 +361,8 @@ class Matrix implements Tensor
 
         foreach ($vectors as $vector) {
             if (!$vector instanceof Vector) {
-                throw new InvalidArgumentException("Cannot build matrix"
-                    . " from a non vector, " . gettype($vector)
-                    . " found.");
+                throw new InvalidArgumentException("Cannot stack non"
+                    . " vectors, " . gettype($vector) . " found.");
             }
 
             $a[] = $vector->asArray();
@@ -571,13 +570,7 @@ class Matrix implements Tensor
      */
     public function flatten() : Vector
     {
-        $b = [];
-
-        foreach ($this->a as $row) {
-            foreach ($row as $value) {
-                $b[] = $value;
-            }
-        }
+        $b = array_reduce($this->a, 'array_merge', []);
 
         return Vector::quick($b);
     }
@@ -1616,7 +1609,7 @@ class Matrix implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
             $temp = [];
 
             foreach ($row as $value) {
@@ -1667,7 +1660,7 @@ class Matrix implements Tensor
 
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
             $temp = [];
 
             foreach ($row as $value) {
@@ -1701,7 +1694,7 @@ class Matrix implements Tensor
     {
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
             $temp = [];
 
             foreach ($row as $value) {
@@ -2290,10 +2283,12 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+            
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $value * $b[$i];
+            foreach ($row as $valueA) {
+                $temp[] = $valueA * $valueB;
             }
 
             $c[] = $temp;
@@ -2319,10 +2314,12 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+            
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $value / $b[$i];
+            foreach ($row as $valueA) {
+                $temp[] = $valueA / $valueB;
             }
 
             $c[] = $temp;
@@ -2348,10 +2345,12 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $value + $b[$i];
+            foreach ($row as $valueA) {
+                $temp[] = $valueA + $valueB;
             }
 
             $c[] = $temp;
@@ -2377,10 +2376,12 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $value - $b[$i];
+            foreach ($row as $valueA) {
+                $temp[] = $valueA - $valueB;
             }
 
             $c[]= $temp;
@@ -2406,10 +2407,12 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $value ** $b[$i];
+            foreach ($row as $valueA) {
+                $temp[] = $valueA ** $valueB;
             }
 
             $c[] = $temp;
@@ -2435,10 +2438,12 @@ class Matrix implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $value % $b[$i];
+            foreach ($row as $valueA) {
+                $temp[] = $valueA % $valueB;
             }
 
             $c[] = $temp;
@@ -2459,6 +2464,10 @@ class Matrix implements Tensor
         if (!is_int($scalar) and !is_float($scalar)) {
             throw new InvalidArgumentException("Scalar must be an integer"
                 . " or float, " . gettype($scalar) . " found.");
+        }
+
+        if ($scalar == 0) {
+            return self::zeros(...$this->shape());
         }
 
         $b = [];
@@ -2519,6 +2528,10 @@ class Matrix implements Tensor
                 . " or float, " . gettype($scalar) . " found.");
         }
 
+        if ($scalar == 0) {
+            return clone $this;
+        }
+
         $b = [];
 
         foreach ($this->a as $i => $row) {
@@ -2546,6 +2559,10 @@ class Matrix implements Tensor
         if (!is_int($scalar) and !is_float($scalar)) {
             throw new InvalidArgumentException("Scalar must be an integer"
                 . " or float, " . gettype($scalar) . " found.");
+        }
+
+        if ($scalar == 0) {
+            return clone $this;
         }
 
         $b = [];

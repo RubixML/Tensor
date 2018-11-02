@@ -74,10 +74,12 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $this->a[$i] * $value;
+            foreach ($row as $valueB) {
+                $temp[] = $valueA * $valueB;
             }
 
             $c[] = $temp;
@@ -103,10 +105,12 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $this->a[$i] / $value;
+            foreach ($row as $valueB) {
+                $temp[] = $valueA / $valueB;
             }
 
             $c[] = $temp;
@@ -132,10 +136,12 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $this->a[$i] + $value;
+            foreach ($row as $valueB) {
+                $temp[] = $valueA + $valueB;
             }
 
             $c[] = $temp;
@@ -162,10 +168,12 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $this->a[$i] - $value;
+            foreach ($row as $valueB) {
+                $temp[] = $valueA - $valueB;
             }
 
             $c[] = $temp;
@@ -192,10 +200,12 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $this->a[$i] ** $value;
+            foreach ($row as $valueB) {
+                $temp[] = $valueA ** $valueB;
             }
 
             $c[] = $temp;
@@ -220,10 +230,12 @@ class ColumnVector extends Vector
         $c = [];
 
         foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
             $temp = [];
 
-            foreach ($row as $value) {
-                $temp[] = $this->a[$i] % $value;
+            foreach ($row as $valueB) {
+                $temp[] = $valueA % $valueB;
             }
 
             $c[] = $temp;
