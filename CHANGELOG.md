@@ -1,4 +1,5 @@
 - Unreleased
+    - Added ref using row elimination method
 
 - 1.0.1
     - Added Column Vector

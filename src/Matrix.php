@@ -805,13 +805,30 @@ class Matrix implements Tensor
     }
 
     /**
+     * Calculate the row echelon form (REF) of the matrix. Return the matrix
+     * and the number of swaps in a tuple.
+     * 
+     * @return array
+     */
+    public function ref() : array
+    {
+        try {
+            $ref = $this->gaussianElimination();
+        } catch (RuntimeException $e) {
+            $ref = $this->rowReductionMethod();
+        }
+
+        return $ref;
+    }
+
+    /**
      * Calculate the row echelon form (REF) of the matrix using Gaussian
      * elimination. Return the matrix and the number of swaps in a tuple.
      * 
      * @throws \RuntimeException
      * @return array
      */
-    public function ref() : array
+    public function gaussianElimination() : array
     {
         $minDim = min($this->shape());
 
@@ -853,6 +870,72 @@ class Matrix implements Tensor
                 
                 $b[$i][$k] = 0;
             }
+        }
+
+        $b = self::quick($b);
+
+        return [$b, $swaps];
+    }
+
+    /**
+     * Calculate the row echelon form (REF) of the matrix using the row
+     * reduction method. Return the matrix and the number of swaps in a
+     * tuple.
+     * 
+     * @return array
+     */
+    public function rowReductionMethod(): array
+    {
+        $row = $col = $swaps = 0;
+
+        $b = $this->a;
+
+        while ($row < $this->m and $col < $this->n) {
+            $t = $b[$row];
+
+            if ($t[$col] == 0) {
+                for ($i = $row + 1; $i < $this->m; $i++) {
+                    if ($b[$i][$col] != 0) {
+                        $temp = $b[$i];
+
+                        $b[$i] = $t;
+                        $t = $temp;
+        
+                        $swaps++;
+
+                        break 1;
+                    }
+                }
+            }
+
+            if ($t[$col] == 0) {
+                $col++;
+
+                continue 1;
+            }
+
+            $divisor = $t[$col];
+
+            if ($divisor != 1) {
+                for ($i = 0; $i < $this->n; $i++) {
+                    $t[$i] /= $divisor;
+                }
+            }
+
+            for ($i = $row + 1; $i < $this->m; $i++) {
+                $scale = $b[$i][$col];
+
+                if ($scale != 0) {
+                    for ($j = 0; $j < $this->n; $j++) {
+                        $b[$i][$j] += -$scale * $t[$j];
+                    }
+                }
+            }
+
+            $b[$row] = $t;
+
+            $row++;
+            $col++;
         }
 
         $b = self::quick($b);

@@ -454,6 +454,34 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_gaussian_elimination()
+    {
+        list($z, $swaps) = $this->a->gaussianElimination();
+
+        $y = [
+            [22, -17, 12],
+            [0, 14.09090909090909, -4.181818181818182],
+            [0, 0, -17.10322580645161],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+    
+    public function test_row_reduction_method()
+    {
+        list($z, $swaps) = $this->a->rowReductionMethod();
+
+        $y = [
+            [1, -0.7727272727272727, 0.5454545454545454],
+            [0, 1., -0.29677419354838713],
+            [0., 0., 1.],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_rref()
     {
         $z = $this->a->rref();
