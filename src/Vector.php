@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
 use Exception;
+use Closure;
 
 /**
  * Vector
@@ -442,7 +443,7 @@ class Vector implements Tensor
      */
     public function map(callable $fn) : self
     {
-        $validate = is_object($fn) ? true : false;
+        $validate = $fn instanceof Closure;
 
         return new static(array_map($fn, $this->a), $validate);
     }
@@ -453,7 +454,7 @@ class Vector implements Tensor
      * @param  callable  $fn
      * @param  mixed  $initial
      * @throws \InvalidArgumentException
-     * @return int|float
+     * @return mixed
      */
     public function reduce(callable $fn, $initial = 0)
     {

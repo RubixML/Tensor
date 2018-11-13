@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
 use Exception;
+use Closure;
 
 /**
  * Matrix
@@ -615,7 +616,7 @@ class Matrix implements Tensor
      */
     public function map(callable $fn) : self
     {
-        $validate = is_object($fn) ? true : false;
+        $validate = $fn instanceof Closure;
 
         $b = [];
 
@@ -632,7 +633,7 @@ class Matrix implements Tensor
      * @param  callable  $fn
      * @param  mixed  $initial
      * @throws \InvalidArgumentException
-     * @return int|float
+     * @return mixed
      */
     public function reduce(callable $fn, $initial = 0)
     {
