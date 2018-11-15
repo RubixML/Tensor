@@ -2,8 +2,8 @@
 
 namespace Rubix\Tensor;
 
-use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
 use JAMA\Matrix as JAMA;
+use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
 use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
@@ -1217,8 +1217,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException("Cannot multiply matrix"
-                    . " with a " . gettype($b) . ".");
+                throw new InvalidArgumentException('Cannot multiply matrix'
+                    . ' with a ' . gettype($b) . '.');
         }
 
         return $c;
@@ -1252,8 +1252,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException("Cannot divide matrix"
-                    . " with a " . gettype($b) . ".");
+                throw new InvalidArgumentException('Cannot divide matrix'
+                    . ' with a ' . gettype($b) . '.');
         }
 
         return $c;
@@ -1287,8 +1287,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException("Cannot add matrix"
-                    . " to a " . gettype($b) . ".");
+                throw new InvalidArgumentException('Cannot add matrix'
+                    . ' to a ' . gettype($b) . '.');
         }
 
         return $c;
@@ -1322,8 +1322,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException("Cannot subtract a "
-                    . gettype($b) . " from a matrix.");
+                throw new InvalidArgumentException('Cannot subtract a '
+                    . gettype($b) . ' from a matrix.');
         }
 
         return $c;
@@ -1357,8 +1357,8 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException("Cannot raise matrix"
-                    . " to the power of a " . gettype($b) . ".");
+                throw new InvalidArgumentException('Cannot raise matrix'
+                    . ' to the power of a ' . gettype($b) . '.');
         }
 
         return $c;
@@ -1392,8 +1392,183 @@ class Matrix implements Tensor
                 break;
 
             default:
-                throw new InvalidArgumentException("Cannot mod matrix"
-                    . " with a " . gettype($b) . ".");
+                throw new InvalidArgumentException('Cannot mod matrix'
+                    . ' with a ' . gettype($b) . '.');
+        }
+
+        return $c;
+    }
+
+    /**
+     * A universal function to compute the equality comparison of
+     * this matrix and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function equal($b)
+    {
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->equalMatrix($b);
+                break;
+
+            case $b instanceof ColumnVector:
+                $c = $this->equalColumnVector($b);
+                break;
+
+            case $b instanceof Vector:
+                $c = $this->equalVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->equalScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot compare matrix'
+                    . ' to a ' . gettype($b) . '.');
+        }
+
+        return $c;
+    }
+
+    /**
+     * A universal function to compute the greater than comparison of
+     * this matrix and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function greater($b)
+    {
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->greaterMatrix($b);
+                break;
+
+            case $b instanceof ColumnVector:
+                $c = $this->greaterColumnVector($b);
+                break;
+
+            case $b instanceof Vector:
+                $c = $this->greaterVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->greaterScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot compare matrix'
+                    . ' to a ' . gettype($b) . '.');
+        }
+
+        return $c;
+    }
+
+    /**
+     * A universal function to compute the greater than or equal to
+     * comparison of this matrix and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function greaterEqual($b)
+    {
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->greaterEqualMatrix($b);
+                break;
+
+            case $b instanceof ColumnVector:
+                $c = $this->greaterEqualColumnVector($b);
+                break;
+
+            case $b instanceof Vector:
+                $c = $this->greaterEqualVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->greaterEqualScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot compare matrix'
+                    . ' to a ' . gettype($b) . '.');
+        }
+
+        return $c;
+    }
+
+    /**
+     * A universal function to compute the less than comparison of
+     * this matrix and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function less($b)
+    {
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->lessMatrix($b);
+                break;
+            
+            case $b instanceof ColumnVector:
+                $c = $this->lessColumnVector($b);
+                break;
+
+            case $b instanceof Vector:
+                $c = $this->lessVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->lessScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot compare matrix'
+                    . ' to a ' . gettype($b) . '.');
+        }
+
+        return $c;
+    }
+
+    /**
+     * A universal function to compute the less than or equal to
+     * comparison of this matrix and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function lessEqual($b)
+    {
+        switch(true) {
+            case $b instanceof Matrix:
+                $c = $this->lessEqualMatrix($b);
+                break;
+
+            case $b instanceof ColumnVector:
+                $c = $this->lessEqualColumnVector($b);
+                break;
+            
+            case $b instanceof Vector:
+                $c = $this->lessEqualVector($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->lessEqualScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot compare matrix'
+                    . ' to a ' . gettype($b) . '.');
         }
 
         return $c;
@@ -2177,6 +2352,186 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the element-wise equality comparison of this matrix and
+     * another matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function equalMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+            $temp = [];
+
+            foreach ($rowA as $j => $value) {
+                $temp[] = $value == $rowB[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise greater than comparison of this matrix
+     * and another matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function greaterMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+            $temp = [];
+
+            foreach ($rowA as $j => $value) {
+                $temp[] = $value > $rowB[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise greater than or equal to comparison of
+     * this matrix and another matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function greaterEqualMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+            $temp = [];
+
+            foreach ($rowA as $j => $value) {
+                $temp[] = $value >= $rowB[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise less than comparison of this matrix
+     * and another matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function lessMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+            $temp = [];
+
+            foreach ($rowA as $j => $value) {
+                $temp[] = $value < $rowB[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise less than or equal to comparison of
+     * this matrix and another matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function lessEqualMatrix(Matrix $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->m rows but Matrix B has {$b->m()}.");
+        }
+
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException("Matrix A requires"
+                . " $this->n columns but Matrix B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $rowA) {
+            $rowB = $b[$i];
+            $temp = [];
+
+            foreach ($rowA as $j => $value) {
+                $temp[] = $value <= $rowB[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
      * Multiply this matrix by a vector.
      *
      * @param  \Rubix\Tensor\Vector  $b
@@ -2186,7 +2541,7 @@ class Matrix implements Tensor
     protected function multiplyVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
@@ -2215,7 +2570,7 @@ class Matrix implements Tensor
     protected function divideVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
@@ -2244,7 +2599,7 @@ class Matrix implements Tensor
     protected function addVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
@@ -2273,7 +2628,7 @@ class Matrix implements Tensor
     protected function subtractVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
@@ -2302,7 +2657,7 @@ class Matrix implements Tensor
     protected function powVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
@@ -2331,7 +2686,7 @@ class Matrix implements Tensor
     protected function modVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
@@ -2351,6 +2706,156 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the element-wise equality comparison of this matrix and a
+     * vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    public function equalVector(Vector $b) : self
+    {
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->n columns but Vector B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $j => $value) {
+                $temp[] = $value == $b[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise greater than comparison of this matrix
+     * and a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    public function greaterVector(Vector $b) : self
+    {
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->n columns but Vector B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $j => $value) {
+                $temp[] = $value > $b[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise greater than or equal to comparison of
+     * this matrix and a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    public function greaterEqualVector(Vector $b) : self
+    {
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->n columns but Vector B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $j => $value) {
+                $temp[] = $value >= $b[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise less than comparison of this matrix
+     * and a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    public function lessVector(Vector $b) : self
+    {
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->n columns but Vector B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $j => $value) {
+                $temp[] = $value < $b[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise less than or equal to comparison of
+     * this matrix and a vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    public function lessEqualVector(Vector $b) : self
+    {
+        if ($b->n() !== $this->n) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->n columns but Vector B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $j => $value) {
+                $temp[] = $value <= $b[$j] ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
      * Multiply this matrix with a column vector.
      *
      * @param  \Rubix\Tensor\ColumnVector  $b
@@ -2360,7 +2865,7 @@ class Matrix implements Tensor
     protected function multiplyColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->m rows but Vector B has {$b->m()}.");
         }
 
@@ -2391,7 +2896,7 @@ class Matrix implements Tensor
     protected function divideColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->m row but Vector B has {$b->m()}.");
         }
 
@@ -2422,7 +2927,7 @@ class Matrix implements Tensor
     protected function addColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->m row but Vector B has {$b->m()}.");
         }
 
@@ -2453,7 +2958,7 @@ class Matrix implements Tensor
     protected function subtractColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->m row but Vector B has {$b->m()}.");
         }
 
@@ -2484,7 +2989,7 @@ class Matrix implements Tensor
     protected function powColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->m row but Vector B has {$b->m()}.");
         }
 
@@ -2515,7 +3020,7 @@ class Matrix implements Tensor
     protected function modColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->m row but Vector B has {$b->m()}.");
         }
 
@@ -2537,6 +3042,166 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the element-wise equality comparison of this matrix and
+     * a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function equalColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueA) {
+                $temp[] = $valueA == $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise greater than comparison of this matrix and
+     * a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function greaterColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueA) {
+                $temp[] = $valueA > $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise greater than or equal to comparison of
+     * this matrix and a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function greaterEqualColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueA) {
+                $temp[] = $valueA >= $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise less than comparison of this matrix and
+     * a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function lessColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueA) {
+                $temp[] = $valueA < $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
+     * Return the element-wise less than or equal to comparison of
+     * this matrix and a column vector.
+     *
+     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function lessEqualColumnVector(ColumnVector $b) : self
+    {
+        if ($b->m() !== $this->m) {
+            throw new DimensionalityMismatchException('Matrix A requires'
+                . " $this->m row but Vector B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $row) {
+            $valueB = $b[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueA) {
+                $temp[] = $valueA <= $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
      * Multiply this matrix by a scalar.
      *
      * @param  mixed  $scalar
@@ -2546,8 +3211,8 @@ class Matrix implements Tensor
     protected function multiplyScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         if ($scalar == 0) {
@@ -2579,8 +3244,8 @@ class Matrix implements Tensor
     protected function divideScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         $b = [];
@@ -2608,8 +3273,8 @@ class Matrix implements Tensor
     protected function addScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         if ($scalar == 0) {
@@ -2641,8 +3306,8 @@ class Matrix implements Tensor
     protected function subtractScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         if ($scalar == 0) {
@@ -2674,8 +3339,8 @@ class Matrix implements Tensor
     protected function powScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         $b = [];
@@ -2703,8 +3368,8 @@ class Matrix implements Tensor
     protected function modScalar($scalar) : self
     {
         if (!is_int($scalar) and !is_float($scalar)) {
-            throw new InvalidArgumentException("Scalar must be an integer"
-                . " or float, " . gettype($scalar) . " found.");
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
         }
 
         $b = [];
@@ -2714,6 +3379,156 @@ class Matrix implements Tensor
 
             foreach ($row as $value) {
                 $temp[] = $value % $scalar;
+            }
+
+            $b[] = $temp;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Return the element-wise equality comparison of this matrix and a
+     * scalar.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function equalScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $value) {
+                $temp[] = $value == $scalar ? 1 : 0;
+            }
+
+            $b[] = $temp;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Return the element-wise greater than comparison of this matrix and a
+     * scalar.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function greaterScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $value) {
+                $temp[] = $value > $scalar ? 1 : 0;
+            }
+
+            $b[] = $temp;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Return the element-wise greater than or equal to comparison of
+     * this matrix and a scalar.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function greaterEqualScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $value) {
+                $temp[] = $value >= $scalar ? 1 : 0;
+            }
+
+            $b[] = $temp;
+        }
+
+        return self::quick($b);
+    }
+
+        /**
+     * Return the element-wise less than comparison of this matrix and a
+     * scalar.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function lessScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $value) {
+                $temp[] = $value < $scalar ? 1 : 0;
+            }
+
+            $b[] = $temp;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Return the element-wise less than or equal to comparison of
+     * this matrix and a scalar.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function lessEqualScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $value) {
+                $temp[] = $value <= $scalar ? 1 : 0;
             }
 
             $b[] = $temp;

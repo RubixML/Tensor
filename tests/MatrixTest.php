@@ -648,6 +648,76 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_equal_matrix()
+    {
+        $z = $this->a->equal($this->c);
+
+        $y = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_matrix()
+    {
+        $z = $this->a->greater($this->c);
+
+        $y = [
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_equal_matrix()
+    {
+        $z = $this->a->greaterEqual($this->c);
+
+        $y = [
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_matrix()
+    {
+        $z = $this->a->less($this->c);
+
+        $y = [
+            [0, 1, 0],
+            [0, 0, 1],
+            [0, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_equal_matrix()
+    {
+        $z = $this->a->lessEqual($this->c);
+
+        $y = [
+            [0, 1, 0],
+            [0, 0, 1],
+            [0, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_dot_vector()
     {
         $z = $this->a->dot($this->d);
@@ -742,6 +812,76 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_equal_vector()
+    {
+        $z = $this->a->equal($this->d);
+
+        $y = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_vector()
+    {
+        $z = $this->a->greater($this->d);
+
+        $y = [
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_equal_vector()
+    {
+        $z = $this->a->greaterEqual($this->d);
+
+        $y = [
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_vector()
+    {
+        $z = $this->a->less($this->d);
+
+        $y = [
+            [0, 1, 0],
+            [0, 0, 1],
+            [0, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_equal_vector()
+    {
+        $z = $this->a->less($this->d);
+
+        $y = [
+            [0, 1, 0],
+            [0, 0, 1],
+            [0, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_multiply_column_vector()
     {
         $z = $this->a->multiply($this->e);
@@ -806,6 +946,76 @@ class MatrixTest extends TestCase
             [0, -1, 0],
             [0, 0, 0],
             [0, -2, -1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_equal_column_vector()
+    {
+        $z = $this->a->equal($this->e);
+
+        $y = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_column_vector()
+    {
+        $z = $this->a->greater($this->e);
+
+        $y = [
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_equal_column_vector()
+    {
+        $z = $this->a->greaterEqual($this->e);
+
+        $y = [
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_column_vector()
+    {
+        $z = $this->a->less($this->e);
+
+        $y = [
+            [0, 1, 0],
+            [0, 0, 1],
+            [0, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_equal_column_vector()
+    {
+        $z = $this->a->lessEqual($this->e);
+
+        $y = [
+            [0, 1, 0],
+            [0, 0, 1],
+            [0, 1, 1],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
@@ -890,6 +1100,76 @@ class MatrixTest extends TestCase
             [2, -7, 2],
             [4, 1, -2],
             [0, -6, -9],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_equal_scalar()
+    {
+        $z = $this->a->equal(4);
+
+        $y = [
+            [0, 0, 0],
+            [1, 0, 0],
+            [0, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_scalar()
+    {
+        $z = $this->a->greater(4);
+
+        $y = [
+            [1, 0, 1],
+            [0, 1, 0],
+            [1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_equal_scalar()
+    {
+        $z = $this->a->greaterEqual(4);
+
+        $y = [
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_scalar()
+    {
+        $z = $this->a->less(10);
+
+        $y = [
+            [0, 1, 0],
+            [1, 0, 1],
+            [0, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_equal_scalar()
+    {
+        $z = $this->a->lessEqual(10);
+
+        $y = [
+            [0, 1, 0],
+            [1, 0, 1],
+            [0, 1, 1],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
