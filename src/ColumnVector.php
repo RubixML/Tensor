@@ -243,4 +243,164 @@ class ColumnVector extends Vector
 
         return Matrix::quick($c);
     }
+
+    /**
+     * Return the element-wise equality comparison of this column vector
+     * and a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function equalMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->m()) {
+            throw new DimensionalityMismatchException("Vector A requires"
+                . " $this->n rows but Matrix B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueB) {
+                $temp[] = $valueA == $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
+     * Return the element-wise greater than comparison of this column
+     * vector and a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function greaterMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->m()) {
+            throw new DimensionalityMismatchException("Vector A requires"
+                . " $this->n rows but Matrix B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueB) {
+                $temp[] = $valueA > $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
+     * Return the element-wise greater than or equal to comparison of
+     * this column vector and a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function greaterEqualMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->m()) {
+            throw new DimensionalityMismatchException("Vector A requires"
+                . " $this->n rows but Matrix B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueB) {
+                $temp[] = $valueA >= $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
+     * Return the element-wise less than comparison of this column
+     * vector and a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function lessMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->m()) {
+            throw new DimensionalityMismatchException("Vector A requires"
+                . " $this->n rows but Matrix B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueB) {
+                $temp[] = $valueA < $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
+     * Return the element-wise less than or equal to comparison of
+     * this column vector and a matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function lessEqualMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->m()) {
+            throw new DimensionalityMismatchException("Vector A requires"
+                . " $this->n rows but Matrix B has {$b->m()}.");
+        }
+
+        $c = [];
+
+        foreach ($b as $i => $row) {
+            $valueA = $this->a[$i];
+
+            $temp = [];
+
+            foreach ($row as $valueB) {
+                $temp[] = $valueA <= $valueB ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return Matrix::quick($c);
+    }
 }

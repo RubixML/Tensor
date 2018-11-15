@@ -414,6 +414,76 @@ class VectorTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_equal_matrix()
+    {
+        $z = $this->c->equal($this->d);
+
+        $y = [
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_matrix()
+    {
+        $z = $this->c->greater($this->d);
+
+        $y = [
+            [0, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 0, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_equal_matrix()
+    {
+        $z = $this->c->greaterEqual($this->d);
+
+        $y = [
+            [0, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 0, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_matrix()
+    {
+        $z = $this->c->less($this->d);
+
+        $y = [
+            [1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_equal_matrix()
+    {
+        $z = $this->c->lessEqual($this->d);
+
+        $y = [
+            [1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_multiply_vector()
     {
         $z = $this->a->multiply($this->b);
@@ -472,6 +542,56 @@ class VectorTest extends TestCase
         $z = $this->b->mod($this->a);
 
         $y = [0, 0, 2, 0, -1, -3, 3, 2];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_equal_vector()
+    {
+        $z = $this->b->equal($this->a);
+
+        $y = [0, 0, 0, 0, 0, 0, 0, 0];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_vector()
+    {
+        $z = $this->b->greater($this->a);
+
+        $y = [1, 0, 0, 1, 1, 0, 0, 0];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_equal_vector()
+    {
+        $z = $this->b->greaterEqual($this->a);
+
+        $y = [1, 0, 0, 1, 1, 0, 0, 0];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_vector()
+    {
+        $z = $this->b->less($this->a);
+
+        $y = [0, 1, 1, 0, 0, 1, 1, 1];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_equal_vector()
+    {
+        $z = $this->b->lessEqual($this->a);
+
+        $y = [0, 1, 1, 0, 0, 1, 1, 1];
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($y, $z->asArray());
@@ -539,7 +659,56 @@ class VectorTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
-    
+    public function test_equal_scalar()
+    {
+        $z = $this->a->equal(25);
+
+        $y = [0, 1, 0, 0, 0, 0, 0, 0];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_scalar()
+    {
+        $z = $this->b->greater(1);
+
+        $y = [0, 0, 1, 0, 0, 0, 1, 1];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_greater_equal_scalar()
+    {
+        $z = $this->b->greaterEqual(1);
+
+        $y = [0, 0, 1, 0, 0, 0, 1, 1];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_scalar()
+    {
+        $z = $this->b->less(1);
+
+        $y = [1, 1, 0, 1, 1, 1, 0, 0];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_less_equal_scalar()
+    {
+        $z = $this->b->lessEqual(1);
+
+        $y = [1, 1, 0, 1, 1, 1, 0, 0];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_abs()
     {
         $z = $this->a->abs();

@@ -48,7 +48,6 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * element-wise.
      *
      * @param  mixed  $b
-     * @throws \InvalidArgumentException
      * @return mixed
      */
     public function multiply($b);
@@ -58,7 +57,6 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * element-wise.
      *
      * @param  mixed  $b
-     * @throws \InvalidArgumentException
      * @return mixed
      */
     public function divide($b);
@@ -68,7 +66,6 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * element-wise.
      *
      * @param  mixed  $b
-     * @throws \InvalidArgumentException
      * @return mixed
      */
     public function add($b);
@@ -78,7 +75,6 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * element-wise.
      *
      * @param  mixed  $b
-     * @throws \InvalidArgumentException
      * @return mixed
      */
     public function subtract($b);
@@ -88,7 +84,6 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * tensor element-wise.
      *
      * @param  mixed  $b
-     * @throws \InvalidArgumentException
      * @return mixed
      */
     public function pow($b);
@@ -98,10 +93,54 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * and another tensor element-wise.
      *
      * @param  mixed  $b
-     * @throws \InvalidArgumentException
      * @return mixed
      */
     public function mod($b);
+
+     /**
+     * A universal function to compute the equality comparison of a tensor
+     * and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @return mixed
+     */
+    public function equal($b);
+
+    /**
+     * A universal function to compute the greater than comparison of a
+     * tensor and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @return mixed
+     */
+    public function greater($b);
+
+    /**
+     * A universal function to compute the greater than or equal to
+     * comparison of a tensor and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @return mixed
+     */
+    public function greaterEqual($b);
+
+        /**
+     * A universal function to compute the less than comparison of a
+     * tensor and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @return mixed
+     */
+    public function less($b);
+
+    /**
+     * A universal function to compute the less than or equal to
+     * comparison of a tensor and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @return mixed
+     */
+    public function lessEqual($b);
 
     /**
      * Take the absolute value of the tensor.
