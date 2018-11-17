@@ -127,6 +127,20 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_not_equal_matrix()
+    {
+        $z = $this->a->notEqual($this->c);
+
+        $y = [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_greater_matrix()
     {
         $z = $this->a->greater($this->c);

@@ -662,6 +662,20 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_not_equal_matrix()
+    {
+        $z = $this->a->notEqual($this->c);
+
+        $y = [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_greater_matrix()
     {
         $z = $this->a->greater($this->c);
@@ -826,6 +840,20 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_not_equal_vector()
+    {
+        $z = $this->a->notEqual($this->d);
+
+        $y = [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_greater_vector()
     {
         $z = $this->a->greater($this->d);
@@ -960,6 +988,20 @@ class MatrixTest extends TestCase
             [0, 0, 0],
             [0, 0, 0],
             [0, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_not_equal_column_vector()
+    {
+        $z = $this->a->notEqual($this->e);
+
+        $y = [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 1],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
@@ -1114,6 +1156,20 @@ class MatrixTest extends TestCase
             [0, 0, 0],
             [1, 0, 0],
             [0, 0, 0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_not_equal_scalar()
+    {
+        $z = $this->a->notEqual(4);
+
+        $y = [
+            [1, 1, 1],
+            [0, 1, 1],
+            [1, 1, 1],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);

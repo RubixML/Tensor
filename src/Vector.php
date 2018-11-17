@@ -834,6 +834,37 @@ class Vector implements Tensor
     }
 
     /**
+     * A universal function to compute the not equal comparison of
+     * this vector and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function notEqual($b)
+    {
+        switch(true) {            
+            case $b instanceof Vector:
+                $c = $this->notEqualVector($b);
+                break;
+
+            case $b instanceof Matrix:
+                $c = $this->notEqualMatrix($b);
+                break;
+
+            case is_int($b) or is_float($b):
+                $c = $this->notEqualScalar($b);
+                break;
+
+            default:
+                throw new InvalidArgumentException('Cannot compare vector'
+                    . ' to a ' . gettype($b) . '.');
+        }
+
+        return $c;
+    }
+
+    /**
      * A universal function to compute the greater than comparison of
      * this vector and another tensor element-wise.
      *
@@ -1535,6 +1566,36 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the element-wise not equal comparison of this vector and a
+     * matrix.
+     *
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return \Rubix\Tensor\Matrix
+     */
+    protected function notEqualMatrix(Matrix $b) : Matrix
+    {
+        if ($this->n !== $b->n()) {
+            throw new DimensionalityMismatchException('Vector A requires'
+                . " $this->n columns but Matrix B has {$b->n()}.");
+        }
+
+        $c = [];
+
+        foreach ($b as $row) {
+            $temp = [];
+
+            foreach ($row as $j => $value) {
+                $temp[] = $this->a[$j] != $value ? 1 : 0;
+            }
+
+            $c[] = $temp;
+        }
+
+        return Matrix::quick($c);
+    }
+
+    /**
      * Return the element-wise greater than comparison of this vector
      * and a matrix.
      *
@@ -1817,6 +1878,30 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the element-wise not equal comparison of this vector and a
+     * another vector.
+     *
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
+     * @return self
+     */
+    protected function notEqualVector(Vector $b) : self
+    {
+        if ($this->n !== $b->n()) {
+            throw new DimensionalityMismatchException('Vector A requires'
+                . " $this->n elements but Vector B has {$b->size()}.");
+        }
+
+        $c = [];
+
+        foreach ($this->a as $i => $value) {
+            $c[] = $value != $b[$i] ? 1 : 0;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
      * Return the element-wise greater than comparison of this vector
      * and a another vector.
      *
@@ -2069,6 +2154,30 @@ class Vector implements Tensor
 
         foreach ($this->a as $value) {
             $b[] = $value == $scalar ? 1 : 0;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Return the element-wise not equal comparison of this vector and a
+     * scalar.
+     *
+     * @param  mixed  $scalar
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    protected function notEqualScalar($scalar) : self
+    {
+        if (!is_int($scalar) and !is_float($scalar)) {
+            throw new InvalidArgumentException('Scalar must be an integer'
+                . ' or float, ' . gettype($scalar) . ' found.');
+        }
+
+        $b = [];
+
+        foreach ($this->a as $value) {
+            $b[] = $value != $scalar ? 1 : 0;
         }
 
         return self::quick($b);
