@@ -333,7 +333,7 @@ class VectorTest extends TestCase
 
     public function test_convolve()
     {
-        $z = $this->a->convolve($this->c);
+        $z = $this->a->convolve($this->c, 1);
 
         $y = [-60.0, 2.5, 259.0, -144., 40.5, 370.1, 462.20000000000005, 9.999999999999886];
 
