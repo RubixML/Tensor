@@ -564,6 +564,32 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_convolve()
+    {
+        $input = Matrix::quick([
+            [3, 27, 66, 29, 42, 1],
+            [5, 9, 15, 42, 45, 16],
+            [91, 67, 49, 22, 66, 5],
+            [5, 1, 4, 9, 8, 6, 2],
+            [22, 16, 18, 19, 21, 25],
+            [6, 9, 69, 5, 2, 33, 35],
+        ]);
+
+        $z = $input->convolve($this->a);
+
+        $y = [
+            [254, 792, 1565, 811, 499, 195],
+            [540, 2311, 711, 2350, -766, 409],
+            [1356, 1083, 1304, 992, 478, -584],
+            [831, 164, -75, 1225, 21, -747],
+            [392, 1670, -566, 1114, 1036, -412],
+            [290, 429, 889, 69, 347, 20],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_multiply_matrix()
     {
         $z = $this->a->multiply($this->c);

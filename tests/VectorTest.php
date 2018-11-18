@@ -331,6 +331,16 @@ class VectorTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_convolve()
+    {
+        $z = $this->a->convolve($this->c);
+
+        $y = [-60.0, 2.5, 259.0, -144., 40.5, 370.1, 462.20000000000005, 9.999999999999886];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_project()
     {
         $z = $this->a->project($this->b);

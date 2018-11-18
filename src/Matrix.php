@@ -771,18 +771,22 @@ class Matrix implements Tensor
 
         $bT = $b->transpose();
 
-        $c = [[]];
+        $c = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($bT as $column) {
                 $sigma = 0;
 
-                foreach ($row as $k => $value) {
-                    $sigma += $value * $column[$k];
+                foreach ($row as $i => $value) {
+                    $sigma += $value * $column[$i];
                 }
 
-                $c[$i][] = $sigma;
+                $temp[] = $sigma;
             }
+
+            $c[] = $temp;
         }
 
         return self::quick($c);
@@ -798,11 +802,60 @@ class Matrix implements Tensor
     public function dot(Vector $b) : ColumnVector
     {
         if ($this->n !== $b->size()) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
 
         return $this->matmul($b->asColumnMatrix())->columnAsVector(0);
+    }
+
+    /**
+     * Convolve this matrix with another matrix.
+     * 
+     * @param  \Rubix\Tensor\Matrix  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function convolve(Matrix $b) : self
+    {
+        list($m, $n) = $b->shape();
+
+        if ($m > $this->m or $n > $this->n) {
+            throw new InvalidArgumentException('Matrix B cannot be'
+                . ' larger than Matrix A.');
+        }
+
+        $p = intdiv($m, 2);
+        $q = intdiv($n, 2);
+
+        $c = [];
+
+        for ($i = 0; $i < $this->m; $i++) {
+            $temp = [];
+
+            for ($j = 0; $j < $this->n; $j++) {
+                $sigma = 0;
+
+                foreach ($b as $k => $rowB) {
+                    foreach ($rowB as $l => $valueB) {
+                        $x = $i + ($p - (int) $k);
+                        $y = $j + ($q - (int) $l);
+
+                        if ($x < 0 or $x >= $this->n or $y < 0 or $y >= $this->m) {
+                            continue 1;
+                        }
+
+                        $sigma += $this->a[$x][$y] * $valueB;
+                    }
+                }
+
+                $temp[] = $sigma;
+            }
+
+            $c[] = $temp;
+        }
+
+        return self::quick($c);
     }
 
     /**

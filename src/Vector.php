@@ -557,6 +557,35 @@ class Vector implements Tensor
     }
 
     /**
+     * Convolve this vector with another vector.
+     * 
+     * @param  \Rubix\Tensor\Vector  $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function convolve(Vector $b) : self
+    {
+        if ($b->size() > $this->n) {
+            throw new InvalidArgumentException('Vector B cannot be'
+                . ' longer than Vector A.');
+        }
+
+        $c = [];
+
+        for ($i = 0; $i < $this->n; $i++) {
+            $sigma = 0;
+
+            foreach ($b as $j => $valueB) {
+                $sigma += ($this->a[$i - (int) $j] ?? 0) * $valueB;
+            }
+
+            $c[] = $sigma;
+        }
+
+        return self::quick($c);
+    }
+
+    /**
      * Project this vector on another vector.
      * 
      * @param  \Rubix\Tensor\Vector  $b
