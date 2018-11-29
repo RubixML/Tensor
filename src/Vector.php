@@ -560,19 +560,25 @@ class Vector implements Tensor
      * Convolve this vector with another vector.
      * 
      * @param  \Rubix\Tensor\Vector  $b
+     * @param  int  $stride
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function convolve(Vector $b) : self
+    public function convolve(Vector $b, int $stride = 1) : self
     {
         if ($b->size() > $this->n) {
             throw new InvalidArgumentException('Vector B cannot be'
                 . ' longer than Vector A.');
         }
 
+        if ($stride < 1) {
+            throw new InvalidArgumentException('Stride cannot be'
+                . " less than 1, $stride given.");
+        }
+
         $c = [];
 
-        for ($i = 0; $i < $this->n; $i++) {
+        for ($i = 0; $i < $this->n; $i += $stride) {
             $sigma = 0;
 
             foreach ($b as $j => $valueB) {

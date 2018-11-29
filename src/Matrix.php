@@ -813,10 +813,11 @@ class Matrix implements Tensor
      * Convolve this matrix with another matrix.
      * 
      * @param  \Rubix\Tensor\Matrix  $b
+     * @param  int  $stride
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function convolve(Matrix $b) : self
+    public function convolve(Matrix $b, int $stride = 1) : self
     {
         list($m, $n) = $b->shape();
 
@@ -825,21 +826,26 @@ class Matrix implements Tensor
                 . ' larger than Matrix A.');
         }
 
+        if ($stride < 1) {
+            throw new InvalidArgumentException('Stride cannot be'
+                . " less than 1, $stride given.");
+        }
+
         $p = intdiv($m, 2);
         $q = intdiv($n, 2);
 
         $c = [];
 
-        for ($i = 0; $i < $this->m; $i++) {
+        for ($i = 0; $i < $this->m; $i += $stride) {
             $temp = [];
 
-            for ($j = 0; $j < $this->n; $j++) {
+            for ($j = 0; $j < $this->n; $j += $stride) {
                 $sigma = 0;
 
                 foreach ($b as $k => $rowB) {
                     foreach ($rowB as $l => $valueB) {
-                        $x = $i + ($p - (int) $k);
-                        $y = $j + ($q - (int) $l);
+                        $x = $i + $p - (int) $k;
+                        $y = $j + $q - (int) $l;
 
                         if ($x < 0 or $x >= $this->n or $y < 0 or $y >= $this->m) {
                             continue 1;

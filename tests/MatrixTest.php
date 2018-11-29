@@ -575,7 +575,7 @@ class MatrixTest extends TestCase
             [6, 9, 69, 5, 2, 33, 35],
         ]);
 
-        $z = $input->convolve($this->a);
+        $z = $input->convolve($this->a, 1);
 
         $y = [
             [254, 792, 1565, 811, 499, 195],
