@@ -107,6 +107,16 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function equal($b);
 
     /**
+     * A universal function to compute the not equal comparison of
+     * this tensor and another tensor element-wise.
+     *
+     * @param  mixed  $b
+     * @throws \InvalidArgumentException
+     * @return mixed
+     */
+    public function notEqual($b);
+
+    /**
      * A universal function to compute the greater than comparison of a
      * tensor and another tensor element-wise.
      *

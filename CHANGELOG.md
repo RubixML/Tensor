@@ -1,4 +1,6 @@
 - Unreleased
+
+- 1.0.2
     - Added ref using row elimination method
     - Added universal comparison methods to tensor API
     - Added convolve operation to Vector and Matrix
