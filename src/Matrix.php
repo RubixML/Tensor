@@ -2039,6 +2039,64 @@ class Matrix implements Tensor
     }
 
     /**
+     * Clip the tensor to be lower bounded by a given minimum.
+     *
+     * @param  float  $min
+     * @return mixed
+     */
+    public function clipLower(float $min)
+    {
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $value) {
+                if ($value < $min) {
+                    $temp[] = $min;
+
+                    continue 1;
+                }
+
+                $temp[] = $value;
+            }
+
+            $b[] = $temp;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Clip the tensor to be upper bounded by a given maximum.
+     *
+     * @param  float  $max
+     * @return mixed
+     */
+    public function clipUpper(float $max)
+    {
+        $b = [];
+
+        foreach ($this->a as $row) {
+            $temp = [];
+
+            foreach ($row as $value) {
+                if ($value > $max) {
+                    $temp[] = $max;
+
+                    continue 1;
+                }
+
+                $temp[] = $value;
+            }
+
+            $b[] = $temp;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
      * Return the element-wise sign indication.
      * 
      * @return self

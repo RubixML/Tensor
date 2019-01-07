@@ -1576,6 +1576,34 @@ class MatrixTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_clip_lower()
+    {
+        $z = $this->a->clipLower(5.);
+
+        $y = [
+            [22, 5., 12],
+            [5., 11, 5.],
+            [20, 5., 5.],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_clip_upper()
+    {
+        $z = $this->a->clipUpper(16.);
+
+        $y = [
+            [16., -17., 12],
+            [4, 11, -2.],
+            [16, -6., -9.],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_sign()
     {
         $z = $this->a->sign();

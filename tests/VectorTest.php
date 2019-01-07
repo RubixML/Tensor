@@ -1012,6 +1012,26 @@ class VectorTest extends TestCase
         $this->assertEquals($y, $z->asArray());
     }
 
+    public function test_clip_lower()
+    {
+        $z = $this->a->clipLower(60.);
+
+        $y = [60., 60., 60., 60., 60., 89, 106., 60.];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
+    public function test_clip_upper()
+    {
+        $z = $this->a->clipUpper(50.);
+
+        $y = [-15., 25, 35, -36., -72., 50., 50., 45];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($y, $z->asArray());
+    }
+
     public function test_sign()
     {
         $z = $this->a->sign();

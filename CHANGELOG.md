@@ -1,4 +1,5 @@
 - Unreleased
+    - Added clip upper and lower bounds
 
 - 1.0.2
     - Added ref using row elimination method

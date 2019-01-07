@@ -1359,6 +1359,52 @@ class Vector implements Tensor
     }
 
     /**
+     * Clip the tensor to be lower bounded by a given minimum.
+     *
+     * @param  float  $min
+     * @return mixed
+     */
+    public function clipLower(float $min)
+    {
+        $b = [];
+
+        foreach ($this->a as $value) {
+            if ($value < $min) {
+                $b[] = $min;
+
+                continue 1;
+            }
+
+            $b[] = $value;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
+     * Clip the tensor to be upper bounded by a given maximum.
+     *
+     * @param  float  $max
+     * @return mixed
+     */
+    public function clipUpper(float $max)
+    {
+        $b = [];
+
+        foreach ($this->a as $value) {
+            if ($value > $max) {
+                $b[] = $max;
+
+                continue 1;
+            }
+
+            $b[] = $value;
+        }
+
+        return self::quick($b);
+    }
+
+    /**
      * Return the element-wise sign indication.
      * 
      * @return self
