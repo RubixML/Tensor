@@ -67,7 +67,7 @@ class ColumnVector extends Vector
     protected function multiplyMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -98,7 +98,7 @@ class ColumnVector extends Vector
     protected function divideMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -129,7 +129,7 @@ class ColumnVector extends Vector
     protected function addMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -161,7 +161,7 @@ class ColumnVector extends Vector
     protected function subtractMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -193,7 +193,7 @@ class ColumnVector extends Vector
     protected function powMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -223,7 +223,7 @@ class ColumnVector extends Vector
     protected function modMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -255,7 +255,7 @@ class ColumnVector extends Vector
     protected function equalMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -287,7 +287,7 @@ class ColumnVector extends Vector
     protected function notEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -319,7 +319,7 @@ class ColumnVector extends Vector
     protected function greaterMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -351,7 +351,7 @@ class ColumnVector extends Vector
     protected function greaterEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -383,7 +383,7 @@ class ColumnVector extends Vector
     protected function lessMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -415,7 +415,7 @@ class ColumnVector extends Vector
     protected function lessEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 

@@ -68,7 +68,7 @@ class Vector implements Tensor
     public static function zeros(int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException("The number of elements"
+            throw new InvalidArgumentException('The number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -85,7 +85,7 @@ class Vector implements Tensor
     public static function ones(int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException("The number of elements"
+            throw new InvalidArgumentException('The number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -102,12 +102,12 @@ class Vector implements Tensor
     public static function fill($value, int $n) : self
     {
         if (!is_int($value) and !is_float($value)) {
-            throw new InvalidArgumentException("Fill value expects an"
+            throw new InvalidArgumentException('Fill value expects an'
                 . " integer or float, " . gettype($value) . " found.");
         }
 
         if ($n < 1) {
-            throw new InvalidArgumentException("The number of elements"
+            throw new InvalidArgumentException('The number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -124,7 +124,7 @@ class Vector implements Tensor
     public static function rand(int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException("The number of elements"
+            throw new InvalidArgumentException('The number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -148,7 +148,7 @@ class Vector implements Tensor
     public static function gaussian(int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException("The number of elements"
+            throw new InvalidArgumentException('The number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -181,7 +181,7 @@ class Vector implements Tensor
     public static function uniform(int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException("The number of elements"
+            throw new InvalidArgumentException('The number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -206,7 +206,7 @@ class Vector implements Tensor
     public static function range(float $start, float $end, float $interval = 1.) : self
     {
         if ($interval <= 0.) {
-            throw new InvalidArgumentException("Interval must be greater"
+            throw new InvalidArgumentException('Interval must be greater'
                  . " than 0, $interval given.");
         }
 
@@ -225,7 +225,7 @@ class Vector implements Tensor
     public static function linspace(float $start, float $end, int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException("The number of elements"
+            throw new InvalidArgumentException('The number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -247,7 +247,7 @@ class Vector implements Tensor
     public static function maximum(Vector $a, Vector $b) : self
     {
         if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " {$a->n()} elements but Vector B has{$b->n()}.");
         }
 
@@ -267,7 +267,7 @@ class Vector implements Tensor
     public static function minimum(Vector $a, Vector $b) : self
     {
         if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatchException("Vector A requires"
+            throw new DimensionalityMismatchException('Vector A requires'
                 . " {$a->n()} elements but Vector B has {$b->n()}.");
         }
 
@@ -289,9 +289,9 @@ class Vector implements Tensor
 
             foreach ($a as $value) {
                 if (!is_int($value) and !is_float($value)) {
-                    throw new InvalidArgumentException("Element must be"
-                        . " an integer or float, " . gettype($value)
-                        . " found.");
+                    throw new InvalidArgumentException('Element must be'
+                        . ' an integer or float, ' . gettype($value)
+                        . ' found.');
                 }
             }
         }
@@ -396,9 +396,13 @@ class Vector implements Tensor
         $b = [];
 
         for ($i = 0; $i < $m; $i++) {
+            $temp = [];
+
             for ($j = 0; $j < $n; $j++) {
-                $b[$i][] = $this->a[$k++];
+                $temp[] = $this->a[$k++];
             }
+
+            $b[] = $temp;
         }
 
         return Matrix::quick($b);
@@ -459,9 +463,9 @@ class Vector implements Tensor
     public function reduce(callable $fn, $initial = 0)
     {
         if (!is_int($initial) and !is_float($initial)) {
-            throw new InvalidArgumentException("Initial value must"
-                . " be an integer or float, " . gettype($initial)
-                . " found.");
+            throw new InvalidArgumentException('Initial value must'
+                . ' be an integer or float, ' . gettype($initial)
+                . ' found.');
         }
 
         return array_reduce($this->a, $fn, $initial);
@@ -477,7 +481,7 @@ class Vector implements Tensor
     public function dot(Vector $b)
     {
         if ($this->n !== $b->size()) {
-            throw new DimensionalityMismatchException("Vector A"
+            throw new DimensionalityMismatchException('Vector A'
                 . " requires $this->n elements but B has {$b->size()}.");
         }
 
@@ -525,9 +529,13 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $i => $value) {
+            $temp = [];
+
             for ($j = 0; $j < $n; $j++) {
-                $c[$i][] = $value * $b[$j];
+                $temp[] = $value * $b[$j];
             }
+
+            $c[] = $temp;
         }
 
         return Matrix::quick($c);
@@ -634,7 +642,7 @@ class Vector implements Tensor
     public function pNorm(float $p = 3.)
     {
         if ($p <= 0.) {
-            throw new InvalidArgumentException("P must be greater"
+            throw new InvalidArgumentException('P must be greater'
                 . " than 0, $p given.");
         }
 
@@ -1235,7 +1243,7 @@ class Vector implements Tensor
     public function percentile(float $p) : float
     {
         if ($p < 0. or $p > 100.) {
-            throw new InvalidArgumentException("P must be between 0 and 100,"
+            throw new InvalidArgumentException('P must be between 0 and 100,'
                 . " $p given.");
         }
 
@@ -1288,7 +1296,7 @@ class Vector implements Tensor
     public function round(int $precision = 0) : self
     {
         if ($precision < 0) {
-            throw new InvalidArgumentException("Decimal precision cannot"
+            throw new InvalidArgumentException('Decimal precision cannot'
                 . " be less than 0, $precision given.");
         }
 
@@ -2412,7 +2420,7 @@ class Vector implements Tensor
     public function offsetGet($index)
     {
         if (!isset($this->a[$index])) {
-            throw new InvalidArgumentException("Element not found at the"
+            throw new InvalidArgumentException('Element not found at the'
                 . " given offset $index.");
         }
 

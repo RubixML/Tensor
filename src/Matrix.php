@@ -22,7 +22,7 @@ use Closure;
 class Matrix implements Tensor
 {
     /**
-     * The 2-dimensional sequential array that holds the values of the matrix.
+     * A 2-dimensional sequential array that holds the values of the matrix.
      *
      * @var array[]
      */
@@ -83,9 +83,13 @@ class Matrix implements Tensor
         $a = [];
 
         for ($i = 0; $i < $n; $i++) {
+            $temp = [];
+
             for ($j = 0; $j < $n; $j++) {
-                $a[$i][] = $i === $j ? 1 : 0;
+                $temp[] = $i === $j ? 1 : 0;
             }
+
+            $a[] = $temp;
         }
 
         return self::quick($a);
@@ -151,8 +155,8 @@ class Matrix implements Tensor
 
         foreach ($elements as $element) {
             if (!is_int($element) and !is_float($element)) {
-                throw new InvalidArgumentException("Diagonal element"
-                    . " must be an integer or float, "
+                throw new InvalidArgumentException('Diagonal element'
+                    . ' must be an integer or float, '
                     . gettype($element) . " found.");
             }
         }
@@ -160,9 +164,13 @@ class Matrix implements Tensor
         $a = [];
 
         for ($i = 0; $i < $n; $i++) {
+            $temp = [];
+
             for ($j = 0; $j < $n; $j++) {
-                $a[$i][] = ($i === $j) ? $elements[$i] : 0;
+                $temp[] = $i === $j ? $elements[$i] : 0;
             }
+
+            $a[] = $temp;
         }
 
         return self::quick($a);
@@ -180,8 +188,8 @@ class Matrix implements Tensor
     public static function fill($value, int $m, int $n) : self
     {
         if (!is_int($value) and !is_float($value)) {
-            throw new InvalidArgumentException("Fill value must be an"
-                . " integer or float, " . gettype($value) . " found.");
+            throw new InvalidArgumentException('Fill value must be an'
+                . ' integer or float, ' . gettype($value) . ' found.');
         }
 
         if ($m < 1 or $n < 1) {
@@ -212,9 +220,13 @@ class Matrix implements Tensor
         $a = [];
 
         for ($i = 0; $i < $m; $i++) {
+            $temp = [];
+
             for ($j = 0; $j < $n; $j++) {
-                $a[$i][] = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
+                $temp[] = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
             }
+
+            $a[] = $temp;
         }
 
         return self::quick($a);
@@ -283,9 +295,13 @@ class Matrix implements Tensor
         $a = [];
 
         for ($i = 0; $i < $m; $i++) {
+            $temp = [];
+
             for ($j = 0; $j < $n; $j++) {
-                $a[$i][] = rand(-PHP_INT_MAX, PHP_INT_MAX) / PHP_INT_MAX;
+                $temp[] = rand(-PHP_INT_MAX, PHP_INT_MAX) / PHP_INT_MAX;
             }
+
+            $a[] = $temp;
         }
 
         return self::quick($a);
@@ -396,16 +412,16 @@ class Matrix implements Tensor
                 }
 
                 if (count($row) !== $n) {
-                    throw new InvalidArgumentException("The number of columns"
-                        . " must be equal for all rows, $n needed but"
-                        . count($row) . " found.");
+                    throw new InvalidArgumentException('The number of columns'
+                        . ' must be equal for all rows, $n needed but '
+                        . count($row) . ' found.');
                 }
 
                 foreach ($row as $value) {
                     if (!is_int($value) and !is_float($value)) {
-                        throw new InvalidArgumentException("Matrix element must"
-                            . " be an integer or float, " . gettype($value)
-                            . " found.");
+                        throw new InvalidArgumentException('Matrix element must'
+                            . ' be an integer or float, ' . gettype($value)
+                            . ' found.');
                     }
                 }
             }
@@ -638,9 +654,9 @@ class Matrix implements Tensor
     public function reduce(callable $fn, $initial = 0)
     {
         if (!is_int($initial) and !is_float($initial)) {
-            throw new InvalidArgumentException("Initial value must"
-                . " be an integer or float, " . gettype($initial)
-                . " found.");
+            throw new InvalidArgumentException('Initial value must'
+                . ' be an integer or float, ' . gettype($initial)
+                . ' found.');
         }
 
         $carry = $initial;
@@ -676,7 +692,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the inverse form of the matrix.
+     * Compute the inverse of the matrix.
      * 
      * @return self
      */
@@ -765,7 +781,7 @@ class Matrix implements Tensor
     public function matmul(Matrix $b) : self
     {
         if ($this->n !== $b->m()) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
@@ -1890,7 +1906,7 @@ class Matrix implements Tensor
     public function percentile(float $p) : ColumnVector
     {
         if ($p < 0. or $p > 100.) {
-            throw new InvalidArgumentException("P must be between 0 and 100,"
+            throw new InvalidArgumentException('P must be between 0 and 100,'
                 . " $p given.");
         }
 
@@ -1956,7 +1972,7 @@ class Matrix implements Tensor
     public function round(int $precision = 0) : self
     {
         if ($precision < 0) {
-            throw new InvalidArgumentException("Decimal precision cannot"
+            throw new InvalidArgumentException('Decimal precision cannot'
                 . " be less than 0, $precision given.");
         }
 
@@ -2133,10 +2149,14 @@ class Matrix implements Tensor
     {
         $b = [];
 
-        foreach ($this->a as $i => $row) {
+        foreach ($this->a as $row) {
+            $temp = [];
+
             foreach ($row as $value) {
-                $b[$i][] = -$value;
+                $temp[] = -$value;
             }
+
+            $b[] = $temp;
         }
 
         return self::quick($b);
@@ -2188,7 +2208,7 @@ class Matrix implements Tensor
     public function augmentAbove(Matrix $b) : self
     {
         if ($this->m > 0 and $b->n() !== $this->n) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
@@ -2207,7 +2227,7 @@ class Matrix implements Tensor
     public function augmentBelow(Matrix $b) : self
     {
         if ($this->m > 0 and $b->n() !== $this->n) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->n columns but Matrix B has {$b->n()}.");
         }
 
@@ -2226,7 +2246,7 @@ class Matrix implements Tensor
     public function augmentLeft(Matrix $b) : self
     {
         if ($this->m > 0 and $b->m() !== $this->m()) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->m columns but Matrix B has {$b->m()}.");
         }
 
@@ -2245,7 +2265,7 @@ class Matrix implements Tensor
     public function augmentRight(Matrix $b) : self
     {
         if ($this->m > 0 and $b->m() !== $this->m()) {
-            throw new DimensionalityMismatchException("Matrix A requires"
+            throw new DimensionalityMismatchException('Matrix A requires'
                 . " $this->m columns but Matrix B has {$b->m()}.");
         }
 
@@ -3867,7 +3887,7 @@ class Matrix implements Tensor
     public function offsetGet($index) : array
     {
         if (!isset($this->a[$index])) {
-            throw new InvalidArgumentException("Element not found at"
+            throw new InvalidArgumentException('Element not found at'
                 . " offset $index.");
         }
 
