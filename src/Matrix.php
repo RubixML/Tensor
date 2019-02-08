@@ -69,7 +69,7 @@ class Matrix implements Tensor
     /**
      * Factory method to build a new matrix from an array.
      *
-     * @param  array  $a
+     * @param array $a
      * @return self
      */
     public static function build(array $a = []) : self
@@ -80,7 +80,7 @@ class Matrix implements Tensor
     /**
      * Build a new matrix foregoing any validation for quicker instantiation.
      *
-     * @param  array  $a
+     * @param array $a
      * @return self
      */
     public static function quick(array $a = []) : self
@@ -91,7 +91,7 @@ class Matrix implements Tensor
     /**
      * Return an identity matrix with the given dimensions.
      *
-     * @param  int  $n
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -120,8 +120,8 @@ class Matrix implements Tensor
     /**
      * Return a zero matrix with the given dimensions.
      *
-     * @param  int  $m
-     * @param  int  $n
+     * @param int $m
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -140,8 +140,8 @@ class Matrix implements Tensor
     /**
      * Return a one matrix with the given dimensions.
      *
-     * @param  int  $m
-     * @param  int  $n
+     * @param int $m
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -161,7 +161,7 @@ class Matrix implements Tensor
      * Build a diagonal matrix with the value of each element along the
      * diagonal and 0s everywhere else.
      *
-     * @param  array  $elements
+     * @param array $elements
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -178,7 +178,7 @@ class Matrix implements Tensor
             if (!is_int($element) and !is_float($element)) {
                 throw new InvalidArgumentException('Diagonal element'
                     . ' must be an integer or float, '
-                    . gettype($element) . " found.");
+                    . gettype($element) . ' found.');
             }
         }
 
@@ -200,9 +200,9 @@ class Matrix implements Tensor
     /**
      * Fill a matrix with a given value at each element.
      *
-     * @param  mixed  $value
-     * @param  int  $m
-     * @param  int  $n
+     * @param mixed $value
+     * @param int $m
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -226,8 +226,8 @@ class Matrix implements Tensor
     /**
      * Return a random uniform matrix with values between 0 and 1.
      *
-     * @param  int  $m
-     * @param  int  $n
+     * @param int $m
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -257,8 +257,8 @@ class Matrix implements Tensor
      * Return a standard normally distributed random matrix i.e values
      * between -1 and 1.
      *
-     * @param  int  $m
-     * @param  int  $n
+     * @param int $m
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -301,8 +301,8 @@ class Matrix implements Tensor
     /**
      * Return a uniform random matrix with mean 0 and unit variance.
      *
-     * @param  int  $m
-     * @param  int  $n
+     * @param int $m
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -331,20 +331,20 @@ class Matrix implements Tensor
     /**
      * Return the elementwise minimum of two matrices.
      *
-     * @param  \Rubix\Tensor\Matrix  $a
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $a
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     public static function minimum(Matrix $a, Matrix $b) : self
     {
         if ($a->m() !== $b->m()) {
-            throw new DimensionalityMismatchException("Matrix A needs"
+            throw new DimensionalityMismatchException('Matrix A needs'
                 . " {$a->m()} rows but Matrix B has {$b->m()}.");
         }
 
         if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatchException("Matrix A needs"
+            throw new DimensionalityMismatchException('Matrix A needs'
                 . " {$a->n()} columns but Matrix B has {$b->n()}.");
         }
 
@@ -360,20 +360,20 @@ class Matrix implements Tensor
     /**
      * Return the elementwise maximum of two matrices.
      *
-     * @param  \Rubix\Tensor\Matrix  $a
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $a
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
     public static function maximum(Matrix $a, Matrix $b) : self
     {
         if ($a->m() !== $b->m()) {
-            throw new DimensionalityMismatchException("Matrix A needs"
+            throw new DimensionalityMismatchException('Matrix A needs'
                 . " {$a->m()} rows but Matrix B has {$b->m()}.");
         }
 
         if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatchException("Matrix A needs"
+            throw new DimensionalityMismatchException('Matrix A needs'
                 . " {$a->n()} columns but Matrix B has {$b->n()}.");
         }
 
@@ -389,7 +389,7 @@ class Matrix implements Tensor
     /**
      * Build a matrix by stacking an array of vectors.
      *
-     * @param  \Rubix\Tensor\Vector[]  $vectors
+     * @param \Rubix\Tensor\Vector[] $vectors
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -400,7 +400,7 @@ class Matrix implements Tensor
         foreach ($vectors as $vector) {
             if (!$vector instanceof Vector) {
                 throw new InvalidArgumentException('Cannot stack a non'
-                    . " vector, " . gettype($vector) . " found.");
+                    . ' vector, ' . gettype($vector) . ' found.');
             }
 
             $a[] = $vector->asArray();
@@ -410,10 +410,9 @@ class Matrix implements Tensor
     }
 
     /**
-     * @param  array  $a
-     * @param  bool  $validate
+     * @param array $a
+     * @param bool $validate
      * @throws \InvalidArgumentException
-     * @return void
      */
     public function __construct(array $a = [], bool $validate = true)
     {
@@ -496,7 +495,7 @@ class Matrix implements Tensor
     /**
      * Return a row from the matrix.
      *
-     * @param  int  $index
+     * @param int $index
      * @return (int|float)[]
      */
     public function row(int $index) : array
@@ -507,7 +506,7 @@ class Matrix implements Tensor
     /**
      * Return a row as a vector from the matrix.
      *
-     * @param  int  $index
+     * @param int $index
      * @return \Rubix\Tensor\Vector
      */
     public function rowAsVector(int $index) : Vector
@@ -518,7 +517,7 @@ class Matrix implements Tensor
     /**
      * Return a column from the matrix.
      *
-     * @param  int  $index
+     * @param int $index
      * @return (int|float)[]
      */
     public function column(int $index) : array
@@ -529,7 +528,7 @@ class Matrix implements Tensor
     /**
      * Return a column as a vector from the matrix.
      *
-     * @param  int  $index
+     * @param int $index
      * @return \Rubix\Tensor\ColumnVector
      */
     public function columnAsVector(int $index) : ColumnVector
@@ -648,7 +647,7 @@ class Matrix implements Tensor
     /**
      * Run a function over all of the elements in the matrix.
      *
-     * @param  callable  $fn
+     * @param callable $fn
      * @return self
      */
     public function map(callable $fn) : self
@@ -667,8 +666,8 @@ class Matrix implements Tensor
     /**
      * Reduce the matrix down to a scalar.
      *
-     * @param  callable  $fn
-     * @param  mixed  $initial
+     * @param callable $fn
+     * @param mixed $initial
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -795,7 +794,7 @@ class Matrix implements Tensor
     /**
      * Multiply this matrix with another matrix (matrix-matrix product).
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -832,7 +831,7 @@ class Matrix implements Tensor
     /**
      * Compute the dot product of this matrix and a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \InvalidArgumentException
      * @return \Rubix\Tensor\ColumnVector
      */
@@ -849,8 +848,8 @@ class Matrix implements Tensor
     /**
      * Convolve this matrix with another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
-     * @param  int  $stride
+     * @param \Rubix\Tensor\Matrix $b
+     * @param int $stride
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -981,7 +980,7 @@ class Matrix implements Tensor
      *
      * @return array
      */
-    public function rowReductionMethod(): array
+    public function rowReductionMethod() : array
     {
         $row = $col = $swaps = 0;
 
@@ -1166,7 +1165,7 @@ class Matrix implements Tensor
      * Compute the eigenvalues and eigenvectors of the matrix and return
      * them in a tuple.
      *
-     * @param  bool  $normalize
+     * @param bool $normalize
      * @throws \RuntimeException
      * @return array
      */
@@ -1205,7 +1204,7 @@ class Matrix implements Tensor
      * solution vector b. Returns the column vector x that satisfies
      * the solution.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @return \Rubix\Tensor\ColumnVector
      */
     public function solve(Vector $b) : ColumnVector
@@ -1289,7 +1288,7 @@ class Matrix implements Tensor
      * A universal function to multiply this matrix with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1324,7 +1323,7 @@ class Matrix implements Tensor
      * A universal function to divide this matrix by another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1359,7 +1358,7 @@ class Matrix implements Tensor
      * A universal function to add this matrix with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1394,7 +1393,7 @@ class Matrix implements Tensor
      * A universal function to subtract this matrix from another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1429,7 +1428,7 @@ class Matrix implements Tensor
      * A universal function to raise this matrix to the power of another
      * tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1464,7 +1463,7 @@ class Matrix implements Tensor
      * A universal function to compute the integer modulus of this matrix
      * and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1499,7 +1498,7 @@ class Matrix implements Tensor
      * A universal function to compute the equality comparison of
      * this matrix and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1534,7 +1533,7 @@ class Matrix implements Tensor
      * A universal function to compute the not equal comparison of
      * this matrix and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1569,7 +1568,7 @@ class Matrix implements Tensor
      * A universal function to compute the greater than comparison of
      * this matrix and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1604,7 +1603,7 @@ class Matrix implements Tensor
      * A universal function to compute the greater than or equal to
      * comparison of this matrix and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1639,7 +1638,7 @@ class Matrix implements Tensor
      * A universal function to compute the less than comparison of
      * this matrix and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1674,7 +1673,7 @@ class Matrix implements Tensor
      * A universal function to compute the less than or equal to
      * comparison of this matrix and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1758,7 +1757,7 @@ class Matrix implements Tensor
     /**
      * Return the logarithm of the matrix in specified base.
      *
-     * @param  float  $base
+     * @param float $base
      * @return self
      */
     public function log(float $base = M_E) : self
@@ -1919,7 +1918,7 @@ class Matrix implements Tensor
     /**
      * Return the median vector of this matrix.
      *
-     * @param  float  $p
+     * @param float $p
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @return \Rubix\Tensor\ColumnVector
@@ -1986,7 +1985,7 @@ class Matrix implements Tensor
     /**
      * Round the elements in the matrix to a given decimal place.
      *
-     * @param  int  $precision
+     * @param int $precision
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2037,8 +2036,8 @@ class Matrix implements Tensor
      * Clip the elements in the matrix to be between given minimum and maximum
      * and return a new matrix.
      *
-     * @param  float  $min
-     * @param  float  $max
+     * @param float $min
+     * @param float $max
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2079,7 +2078,7 @@ class Matrix implements Tensor
     /**
      * Clip the tensor to be lower bounded by a given minimum.
      *
-     * @param  float  $min
+     * @param float $min
      * @return mixed
      */
     public function clipLower(float $min)
@@ -2108,7 +2107,7 @@ class Matrix implements Tensor
     /**
      * Clip the tensor to be upper bounded by a given maximum.
      *
-     * @param  float  $max
+     * @param float $max
      * @return mixed
      */
     public function clipUpper(float $max)
@@ -2187,7 +2186,7 @@ class Matrix implements Tensor
     /**
      * Exclude a row from the matrix.
      *
-     * @param  int  $index
+     * @param int $index
      * @return self
      */
     public function rowExclude(int $index) : self
@@ -2204,7 +2203,7 @@ class Matrix implements Tensor
     /**
      * Exclude a column from the matrix.
      *
-     * @param  int  $index
+     * @param int $index
      * @return self
      */
     public function columnExclude(int $index) : self
@@ -2223,7 +2222,7 @@ class Matrix implements Tensor
     /**
      * Attach matrix b above this matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2242,7 +2241,7 @@ class Matrix implements Tensor
     /**
      * Attach matrix b below this matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2261,7 +2260,7 @@ class Matrix implements Tensor
     /**
      * Attach matrix b to the left of this matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2280,7 +2279,7 @@ class Matrix implements Tensor
     /**
      * Attach matrix b to the left of this matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2300,8 +2299,8 @@ class Matrix implements Tensor
      * Repeat the matrix m times along the vertival axes and n times along the
      * horizontal axes.
      *
-     * @param  int  $m
-     * @param  int  $n
+     * @param int $m
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2336,7 +2335,7 @@ class Matrix implements Tensor
     /**
      * Return the element-wise product between this matrix and another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2371,7 +2370,7 @@ class Matrix implements Tensor
     /**
      * Return the division of two elements, element-wise.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2406,7 +2405,7 @@ class Matrix implements Tensor
     /**
      * Add this matrix together with another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2441,7 +2440,7 @@ class Matrix implements Tensor
     /**
      * Subtract a matrix from this matrix element-wise.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2477,7 +2476,7 @@ class Matrix implements Tensor
      * Raise this matrix to the power of the elementwise entry in another
      * matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2513,7 +2512,7 @@ class Matrix implements Tensor
      * Calculate the modulus i.e remainder of division between this matri and
      * another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2549,7 +2548,7 @@ class Matrix implements Tensor
      * Return the element-wise equality comparison of this matrix and
      * another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2585,7 +2584,7 @@ class Matrix implements Tensor
      * Return the element-wise not equal comparison of this matrix and
      * another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2621,7 +2620,7 @@ class Matrix implements Tensor
      * Return the element-wise greater than comparison of this matrix
      * and another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2657,7 +2656,7 @@ class Matrix implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this matrix and another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2693,7 +2692,7 @@ class Matrix implements Tensor
      * Return the element-wise less than comparison of this matrix
      * and another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2729,7 +2728,7 @@ class Matrix implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this matrix and another matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2764,7 +2763,7 @@ class Matrix implements Tensor
     /**
      * Multiply this matrix by a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2793,7 +2792,7 @@ class Matrix implements Tensor
     /**
      * Divide this matrix by a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2822,7 +2821,7 @@ class Matrix implements Tensor
     /**
      * Add this matrix by a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2851,7 +2850,7 @@ class Matrix implements Tensor
     /**
      * Subtract a vector from this matrix.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2880,7 +2879,7 @@ class Matrix implements Tensor
     /**
      * Raise this matrix to the power of a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2909,7 +2908,7 @@ class Matrix implements Tensor
     /**
      * Calculate the modulus of this matrix with a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2939,7 +2938,7 @@ class Matrix implements Tensor
      * Return the element-wise equality comparison of this matrix and a
      * vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2969,7 +2968,7 @@ class Matrix implements Tensor
      * Return the element-wise not equal comparison of this matrix and a
      * vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2999,7 +2998,7 @@ class Matrix implements Tensor
      * Return the element-wise greater than comparison of this matrix
      * and a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3029,7 +3028,7 @@ class Matrix implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this matrix and a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3059,7 +3058,7 @@ class Matrix implements Tensor
      * Return the element-wise less than comparison of this matrix
      * and a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3089,7 +3088,7 @@ class Matrix implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this matrix and a vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3118,7 +3117,7 @@ class Matrix implements Tensor
     /**
      * Multiply this matrix with a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3149,7 +3148,7 @@ class Matrix implements Tensor
     /**
      * Divide this matrix with a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3180,7 +3179,7 @@ class Matrix implements Tensor
     /**
      * Add this matrix to a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3211,7 +3210,7 @@ class Matrix implements Tensor
     /**
      * Subtract a column vector from this matrix.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3242,7 +3241,7 @@ class Matrix implements Tensor
     /**
      * Raise this matrix to the power of a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3273,7 +3272,7 @@ class Matrix implements Tensor
     /**
      * Mod this matrix with a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3305,7 +3304,7 @@ class Matrix implements Tensor
      * Return the element-wise equality comparison of this matrix and
      * a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3337,7 +3336,7 @@ class Matrix implements Tensor
      * Return the element-wise not equal comparison of this matrix and
      * a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3369,7 +3368,7 @@ class Matrix implements Tensor
      * Return the element-wise greater than comparison of this matrix and
      * a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3401,7 +3400,7 @@ class Matrix implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this matrix and a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3433,7 +3432,7 @@ class Matrix implements Tensor
      * Return the element-wise less than comparison of this matrix and
      * a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3465,7 +3464,7 @@ class Matrix implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this matrix and a column vector.
      *
-     * @param  \Rubix\Tensor\ColumnVector  $b
+     * @param \Rubix\Tensor\ColumnVector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -3496,7 +3495,7 @@ class Matrix implements Tensor
     /**
      * Multiply this matrix by a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3529,7 +3528,7 @@ class Matrix implements Tensor
     /**
      * Divide this matrix by a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3558,7 +3557,7 @@ class Matrix implements Tensor
     /**
      * Add this matrix by a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3591,7 +3590,7 @@ class Matrix implements Tensor
     /**
      * Subtract a scalar from this matrix.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3624,7 +3623,7 @@ class Matrix implements Tensor
     /**
      * Raise the matrix to a given scalar power.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3653,7 +3652,7 @@ class Matrix implements Tensor
     /**
      * Calculate the modulus of this matrix with a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3683,7 +3682,7 @@ class Matrix implements Tensor
      * Return the element-wise equality comparison of this matrix and a
      * scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3713,7 +3712,7 @@ class Matrix implements Tensor
      * Return the element-wise not equal comparison of this matrix and a
      * scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3743,7 +3742,7 @@ class Matrix implements Tensor
      * Return the element-wise greater than comparison of this matrix and a
      * scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3773,7 +3772,7 @@ class Matrix implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3803,7 +3802,7 @@ class Matrix implements Tensor
      * Return the element-wise less than comparison of this matrix and a
      * scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3833,7 +3832,7 @@ class Matrix implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -3868,10 +3867,9 @@ class Matrix implements Tensor
     }
 
     /**
-     * @param  mixed  $index
-     * @param  array  $values
+     * @param mixed $index
+     * @param array $values
      * @throws \RuntimeException
-     * @return void
      */
     public function offsetSet($index, $values) : void
     {
@@ -3881,7 +3879,7 @@ class Matrix implements Tensor
     /**
      * Does a given column exist in the matrix.
      *
-     * @param  mixed  $index
+     * @param mixed $index
      * @return bool
      */
     public function offsetExists($index) : bool
@@ -3890,9 +3888,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * @param  mixed  $index
+     * @param mixed $index
      * @throws \RuntimeException
-     * @return void
      */
     public function offsetUnset($index) : void
     {
@@ -3902,7 +3899,7 @@ class Matrix implements Tensor
     /**
      * Return a row from the matrix at the given index.
      *
-     * @param  mixed  $index
+     * @param mixed $index
      * @throws \InvalidArgumentException
      * @return array
      */
@@ -3929,7 +3926,7 @@ class Matrix implements Tensor
     /**
      * Magic getters for tensor properties.
      *
-     * @param  string  $name
+     * @param string $name
      * @throws \Exception
      * @return mixed
      */

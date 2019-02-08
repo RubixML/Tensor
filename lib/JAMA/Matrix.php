@@ -52,7 +52,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
  
@@ -147,7 +147,7 @@ class Matrix
     }
  
     /** Construct a matrix from a copy of a 2-D array.
-    * @param double A[][]  Two-dimensional array of doubles.
+    * @param float A[][]  Two-dimensional array of doubles.
     * @exception  IllegalArgumentException All rows must have the same length
     */
     public function constructWithCopy($A)
@@ -241,7 +241,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
             switch ($match) {
  
       //A($i0...; $j0...)
@@ -361,7 +361,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'integer,integer,object':
@@ -403,7 +403,7 @@ class Matrix
     * checkMatrixDimensions
     * Is matrix B the same size?
     * @param Matrix $B Matrix B
-    * @return boolean
+    * @return bool
     */
     public function checkMatrixDimensions($B = null)
     {
@@ -417,8 +417,6 @@ class Matrix
             trigger_error(ArgumentTypeException, ERROR);
         }
     }
- 
- 
  
     /**
     * set
@@ -527,7 +525,6 @@ class Matrix
         return $this->getRowPacked();
     }
  
- 
     /**
     * getMatrixByRow
     * Get a submatrix by row index/range
@@ -621,7 +618,6 @@ class Matrix
         return $r;
     }
  
- 
     /**
     * norm2
     * Maximum singular value
@@ -706,7 +702,6 @@ class Matrix
         return $s;
     }
  
- 
     /**
     * uminus
     * Unary minus matrix -A
@@ -726,7 +721,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -774,7 +769,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -822,7 +817,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -870,7 +865,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -919,7 +914,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -957,7 +952,6 @@ class Matrix
         }
     }
  
- 
     /**
     * arrayTimesEquals
     * Element-by-element multiplication
@@ -969,7 +963,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -1018,7 +1012,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -1067,7 +1061,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -1116,7 +1110,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -1165,7 +1159,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
  
             switch ($match) {
         case 'object':
@@ -1213,7 +1207,7 @@ class Matrix
     {
         if (func_num_args() > 0) {
             $args  = func_get_args();
-            $match = implode(",", array_map('gettype', $args));
+            $match = implode(',', array_map('gettype', $args));
             switch ($match) {
           case 'object':
             $B = is_a($args[0], 'Matrix') ? $args[0] : trigger_error(ArgumentTypeException, ERROR);
@@ -1244,7 +1238,7 @@ class Matrix
                 $C = new Matrix($this->m, $B->n);
                 for ($i = 0; $i < $C->m; $i++) {
                     for ($j = 0; $j < $C->n; $j++) {
-                        $s = "0";
+                        $s = '0';
                         for ($k = 0; $k < $C->n; $k++) {
                             $s += $this->A[$i][$k] * $B->A[$k][$j];
                         }
@@ -1323,7 +1317,6 @@ class Matrix
         return new QRDecomposition($this);
     }
  
- 
     /**
     * eig
     * Eigenvalue decomposition
@@ -1369,7 +1362,6 @@ class Matrix
         return $this->solve($this->identity($this->m, $this->m));
     }
  
- 
     /**
     * det
     * Calculate determinant
@@ -1385,20 +1377,20 @@ class Matrix
   * Older debugging utility for backwards compatability.
   * @return html version of matrix
   */
-    public function mprint($A, $format="%01.2f", $width=2)
+    public function mprint($A, $format='%01.2f', $width=2)
     {
-        $spacing = "";
+        $spacing = '';
         $m = count($A);
         $n = count($A[0]);
         for ($i = 0; $i < $width; $i++) {
-            $spacing .= "&nbsp;";
+            $spacing .= '&nbsp;';
         }
         for ($i = 0; $i < $m; $i++) {
             for ($j = 0; $j < $n; $j++) {
                 $formatted = sprintf($format, $A[$i][$j]);
                 echo $formatted . $spacing;
             }
-            echo "<br />";
+            echo '<br />';
         }
     }
  

@@ -24,11 +24,10 @@ require_once('utils/Maths.php');
  */
 class SingularValueDecomposition
 {
-
-  /**
-   *    Internal storage of U.
-   *    @var array
-   */
+    /**
+     *    Internal storage of U.
+     *    @var array
+     */
     private $U = [];
 
     /**
@@ -54,7 +53,6 @@ class SingularValueDecomposition
      *    @var int
      */
     private $n;
-
 
     /**
      *    Construct the singular value decomposition
@@ -441,7 +439,6 @@ class SingularValueDecomposition
         } // end while
     } // end constructor
 
-
     /**
      *    Return the left singular vectors
      *
@@ -452,7 +449,6 @@ class SingularValueDecomposition
     {
         return new Matrix($this->U, $this->m, min($this->m + 1, $this->n));
     }
-
 
     /**
      *    Return the right singular vectors
@@ -465,7 +461,6 @@ class SingularValueDecomposition
         return new Matrix($this->V);
     }
 
-
     /**
      *    Return the one-dimensional array of singular values
      *
@@ -476,7 +471,6 @@ class SingularValueDecomposition
     {
         return $this->s;
     }
-
 
     /**
      *    Return the diagonal matrix of singular values
@@ -495,7 +489,6 @@ class SingularValueDecomposition
         return new Matrix($S);
     }
 
-
     /**
      *    Two norm
      *
@@ -507,7 +500,6 @@ class SingularValueDecomposition
         return $this->s[0];
     }
 
-
     /**
      *    Two norm condition number
      *
@@ -518,7 +510,6 @@ class SingularValueDecomposition
     {
         return $this->s[0] / $this->s[min($this->m, $this->n) - 1];
     }
-
 
     /**
      *    Effective numerical matrix rank

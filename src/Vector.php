@@ -59,7 +59,7 @@ class Vector implements Tensor
     /**
      * Factory method to build a new vector from an array.
      *
-     * @param  array  $a
+     * @param array $a
      * @return mixed
      */
     public static function build(array $a = [])
@@ -70,7 +70,7 @@ class Vector implements Tensor
     /**
      * Build a vector foregoing any validation for quicker instantiation.
      *
-     * @param  array  $a
+     * @param array $a
      * @return mixed
      */
     public static function quick(array $a = [])
@@ -81,7 +81,7 @@ class Vector implements Tensor
     /**
      * Build a vector of zeros with n elements.
      *
-     * @param  int  $n
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -98,7 +98,7 @@ class Vector implements Tensor
     /**
      * Build a vector of ones with n elements.
      *
-     * @param  int  $n
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -115,7 +115,7 @@ class Vector implements Tensor
     /**
      * Fill a vector with a given value.
      *
-     * @param  mixed  $value
+     * @param mixed $value
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -123,7 +123,7 @@ class Vector implements Tensor
     {
         if (!is_int($value) and !is_float($value)) {
             throw new InvalidArgumentException('Fill value expects an'
-                . " integer or float, " . gettype($value) . " found.");
+                . ' integer or float, ' . gettype($value) . ' found.');
         }
 
         if ($n < 1) {
@@ -137,7 +137,7 @@ class Vector implements Tensor
     /**
      * Return a random uniform vector with values between 0 and 1.
      *
-     * @param  int  $n
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -161,7 +161,7 @@ class Vector implements Tensor
      * Return a standard normally distributed random vector i.e values between
      * -1 and 1.
      *
-     * @param  int  $n
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -194,7 +194,7 @@ class Vector implements Tensor
     /**
      * Return a uniform random vector with mean 0 and unit variance.
      *
-     * @param  int  $n
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -217,9 +217,9 @@ class Vector implements Tensor
     /**
      * Return evenly spaced values within a given interval.
      *
-     * @param  float  $start
-     * @param  float  $end
-     * @param  float  $interval
+     * @param float $start
+     * @param float $end
+     * @param float $interval
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -236,9 +236,9 @@ class Vector implements Tensor
     /**
      * Return evenly spaced numbers over a specified interval.
      *
-     * @param  float  $start
-     * @param  float  $end
-     * @param  int  $n
+     * @param float $start
+     * @param float $end
+     * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -259,8 +259,8 @@ class Vector implements Tensor
     /**
      * Return the elementwise maximum of two vectors.
      *
-     * @param  \Rubix\Tensor\Vector  $a
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $a
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -279,8 +279,8 @@ class Vector implements Tensor
     /**
      * Return the elementwise minimum of two vectors.
      *
-     * @param  \Rubix\Tensor\Vector  $a
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $a
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -297,10 +297,9 @@ class Vector implements Tensor
     }
 
     /**
-     * @param  array  $a
-     * @param  bool  $validate
+     * @param array $a
+     * @param bool $validate
      * @throws \InvalidArgumentException
-     * @return void
      */
     public function __construct(array $a = [], bool $validate = true)
     {
@@ -399,8 +398,8 @@ class Vector implements Tensor
     /**
      * Return a matrix in the shape specified.
      *
-     * @param  int  $m
-     * @param  int  $n
+     * @param int $m
+     * @param int $n
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -462,7 +461,7 @@ class Vector implements Tensor
      * Map a function over the elements in the vector and return a new
      * vector.
      *
-     * @param  callable  $fn
+     * @param callable $fn
      * @return self
      */
     public function map(callable $fn) : self
@@ -475,8 +474,8 @@ class Vector implements Tensor
     /**
      * Reduce the vector down to a scalar.
      *
-     * @param  callable  $fn
-     * @param  mixed  $initial
+     * @param callable $fn
+     * @param mixed $initial
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -494,7 +493,7 @@ class Vector implements Tensor
     /**
      * Compute the dot product of this vector and another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return int|float
      */
@@ -517,7 +516,7 @@ class Vector implements Tensor
     /**
      * Compute the vector-matrix product of this vector and matrix a.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @return \Rubix\Tensor\Matrix
      */
     public function matmul(Matrix $b) : Matrix
@@ -528,7 +527,7 @@ class Vector implements Tensor
     /**
      * Return the inner product of two vectors.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @return int|float
      */
     public function inner(Vector $b)
@@ -539,7 +538,7 @@ class Vector implements Tensor
     /**
      * Calculate the outer product of this and another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @return \Rubix\Tensor\Matrix
      */
     public function outer(Vector $b) : Matrix
@@ -564,7 +563,7 @@ class Vector implements Tensor
     /**
      * Calculate the cross product between two 3 dimensional vectors.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -587,8 +586,8 @@ class Vector implements Tensor
     /**
      * Convolve this vector with another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
-     * @param  int  $stride
+     * @param \Rubix\Tensor\Vector $b
+     * @param int $stride
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -622,7 +621,7 @@ class Vector implements Tensor
     /**
      * Project this vector on another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @return self
      */
     public function project(Vector $b) : self
@@ -655,7 +654,7 @@ class Vector implements Tensor
     /**
      * Calculate the p-norm of the vector.
      *
-     * @param  float  $p
+     * @param float $p
      * @throws \InvalidArgumentException
      * @return int|float
      */
@@ -683,7 +682,7 @@ class Vector implements Tensor
      * A universal function to multiply this vector with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -714,7 +713,7 @@ class Vector implements Tensor
      * A universal function to divide this vector by another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -745,7 +744,7 @@ class Vector implements Tensor
      * A universal function to add this vector with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -776,7 +775,7 @@ class Vector implements Tensor
      * A universal function to subtract this vector from another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -807,7 +806,7 @@ class Vector implements Tensor
      * A universal function to raise this vector to the power of another
      * tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -838,7 +837,7 @@ class Vector implements Tensor
      * A universal function to compute the modulus of this vector and
      * another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -869,7 +868,7 @@ class Vector implements Tensor
      * A universal function to compute the equality comparison of
      * this vector and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -900,7 +899,7 @@ class Vector implements Tensor
      * A universal function to compute the not equal comparison of
      * this vector and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -931,7 +930,7 @@ class Vector implements Tensor
      * A universal function to compute the greater than comparison of
      * this vector and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -962,7 +961,7 @@ class Vector implements Tensor
      * A universal function to compute the greater than or equal to
      * comparison of this vector and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -993,7 +992,7 @@ class Vector implements Tensor
      * A universal function to compute the less than comparison of
      * this vector and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1024,7 +1023,7 @@ class Vector implements Tensor
      * A universal function to compute the less than or equal to
      * comparison of this vector and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -1104,7 +1103,7 @@ class Vector implements Tensor
     /**
      * Take the log to the given base of each element in the vector.
      *
-     * @param  float  $base
+     * @param float $base
      * @return self
      */
     public function log(float $base = M_E) : self
@@ -1255,7 +1254,7 @@ class Vector implements Tensor
     /**
      * Return the pth percentile of the vector.
      *
-     * @param  float  $p
+     * @param float $p
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @return float
@@ -1309,8 +1308,8 @@ class Vector implements Tensor
     /**
      * Round the elements in the matrix to a given decimal place.
      *
-     * @param  int  $precision
-     * @throws  \InvalidArgumentException
+     * @param int $precision
+     * @throws \InvalidArgumentException
      * @return self
      */
     public function round(int $precision = 0) : self
@@ -1353,8 +1352,8 @@ class Vector implements Tensor
      * Clip the elements in the vector to be between given minimum and maximum
      * and return a new vector.
      *
-     * @param  float  $min
-     * @param  float  $max
+     * @param float $min
+     * @param float $max
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -1389,7 +1388,7 @@ class Vector implements Tensor
     /**
      * Clip the tensor to be lower bounded by a given minimum.
      *
-     * @param  float  $min
+     * @param float $min
      * @return mixed
      */
     public function clipLower(float $min)
@@ -1412,7 +1411,7 @@ class Vector implements Tensor
     /**
      * Clip the tensor to be upper bounded by a given maximum.
      *
-     * @param  float  $max
+     * @param float $max
      * @return mixed
      */
     public function clipUpper(float $max)
@@ -1473,7 +1472,7 @@ class Vector implements Tensor
     /**
      * Multiply this vector with a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1502,7 +1501,7 @@ class Vector implements Tensor
     /**
      * Divide this vector with a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1531,7 +1530,7 @@ class Vector implements Tensor
     /**
      * Add this vector to a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1560,7 +1559,7 @@ class Vector implements Tensor
     /**
      * Subtract a matrix from this vector.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1589,7 +1588,7 @@ class Vector implements Tensor
     /**
      * Raise this vector to the power of a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1618,7 +1617,7 @@ class Vector implements Tensor
     /**
      * Mod this vector with a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1648,7 +1647,7 @@ class Vector implements Tensor
      * Return the element-wise equality comparison of this vector and a
      * matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1678,7 +1677,7 @@ class Vector implements Tensor
      * Return the element-wise not equal comparison of this vector and a
      * matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1708,7 +1707,7 @@ class Vector implements Tensor
      * Return the element-wise greater than comparison of this vector
      * and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1738,7 +1737,7 @@ class Vector implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this vector and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1768,7 +1767,7 @@ class Vector implements Tensor
      * Return the element-wise less than comparison of this vector
      * and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1798,7 +1797,7 @@ class Vector implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this vector and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -1827,7 +1826,7 @@ class Vector implements Tensor
     /**
      * Multiply this vector with another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -1850,7 +1849,7 @@ class Vector implements Tensor
     /**
      * Divide this vector by another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -1873,7 +1872,7 @@ class Vector implements Tensor
     /**
      * Add this vector to another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -1896,7 +1895,7 @@ class Vector implements Tensor
     /**
      * Subtract a vector from this vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -1919,7 +1918,7 @@ class Vector implements Tensor
     /**
      * Raise this vector to a power of another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -1942,7 +1941,7 @@ class Vector implements Tensor
     /**
      * Calculate the modulus of this vector with another vector elementwise.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -1966,7 +1965,7 @@ class Vector implements Tensor
      * Return the element-wise equality comparison of this vector and a
      * another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -1990,7 +1989,7 @@ class Vector implements Tensor
      * Return the element-wise not equal comparison of this vector and a
      * another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2014,7 +2013,7 @@ class Vector implements Tensor
      * Return the element-wise greater than comparison of this vector
      * and a another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2038,7 +2037,7 @@ class Vector implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this vector and a another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2062,7 +2061,7 @@ class Vector implements Tensor
      * Return the element-wise less than comparison of this vector
      * and a another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2086,7 +2085,7 @@ class Vector implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this vector and a another vector.
      *
-     * @param  \Rubix\Tensor\Vector  $b
+     * @param \Rubix\Tensor\Vector $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return self
      */
@@ -2109,7 +2108,7 @@ class Vector implements Tensor
     /**
      * Multiply this vector by a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2132,7 +2131,7 @@ class Vector implements Tensor
     /**
      * Divide this vector by a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2155,7 +2154,7 @@ class Vector implements Tensor
     /**
      * Add a scalar to this vector.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2178,7 +2177,7 @@ class Vector implements Tensor
     /**
      * Subtract a scalar from this vector.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2201,7 +2200,7 @@ class Vector implements Tensor
     /**
      * Raise the vector to a the power of a scalar value.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2224,7 +2223,7 @@ class Vector implements Tensor
     /**
      * Calculate the modulus of this vector with a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2248,7 +2247,7 @@ class Vector implements Tensor
      * Return the element-wise equality comparison of this vector and a
      * scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2272,7 +2271,7 @@ class Vector implements Tensor
      * Return the element-wise not equal comparison of this vector and a
      * scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2296,7 +2295,7 @@ class Vector implements Tensor
      * Return the element-wise greater than comparison of this vector
      * and a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2320,7 +2319,7 @@ class Vector implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2344,7 +2343,7 @@ class Vector implements Tensor
      * Return the element-wise less than comparison of this vector
      * and a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2368,7 +2367,7 @@ class Vector implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param  mixed  $scalar
+     * @param mixed $scalar
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -2399,10 +2398,9 @@ class Vector implements Tensor
     }
 
     /**
-     * @param  mixed  $index
-     * @param  array  $values
+     * @param mixed $index
+     * @param array $values
      * @throws \RuntimeException
-     * @return void
      */
     public function offsetSet($index, $values) : void
     {
@@ -2412,7 +2410,7 @@ class Vector implements Tensor
     /**
      * Does a given column exist in the matrix.
      *
-     * @param  mixed  $index
+     * @param mixed $index
      * @return bool
      */
     public function offsetExists($index) : bool
@@ -2421,9 +2419,8 @@ class Vector implements Tensor
     }
 
     /**
-     * @param  mixed  $index
+     * @param mixed $index
      * @throws \RuntimeException
-     * @return void
      */
     public function offsetUnset($index) : void
     {
@@ -2433,7 +2430,7 @@ class Vector implements Tensor
     /**
      * Return a row from the matrix at the given index.
      *
-     * @param  mixed  $index
+     * @param mixed $index
      * @throws \InvalidArgumentException
      * @return int|float
      */
@@ -2460,7 +2457,7 @@ class Vector implements Tensor
     /**
      * Magic getters for tensor properties.
      *
-     * @param  string  $name
+     * @param string $name
      * @throws \Exception
      * @return mixed
      */

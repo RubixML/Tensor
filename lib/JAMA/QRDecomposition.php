@@ -29,13 +29,13 @@ class QRDecomposition
  
     /**
     * Row dimension.
-    * @var integer
+    * @var int
     */
     private $m;
  
     /**
     * Column dimension.
-    * @var integer
+    * @var int
     */
     private $n;
  
@@ -94,7 +94,7 @@ class QRDecomposition
  
     /**
     * Is the matrix full rank?
-    * @return boolean true if R, and hence A, has full rank, else false.
+    * @return bool true if R, and hence A, has full rank, else false.
     */
     public function isFullRank()
     {

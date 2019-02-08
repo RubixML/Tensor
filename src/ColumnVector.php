@@ -49,7 +49,7 @@ class ColumnVector extends Vector
     /**
      * Compute the vector-matrix product of this vector and matrix a.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @return \Rubix\Tensor\Matrix
      */
     public function matmul(Matrix $b) : Matrix
@@ -60,7 +60,7 @@ class ColumnVector extends Vector
     /**
      * Multiply this column vector with a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -91,7 +91,7 @@ class ColumnVector extends Vector
     /**
      * Divide this column vector with a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -122,7 +122,7 @@ class ColumnVector extends Vector
     /**
      * Add this column vector to a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -150,11 +150,10 @@ class ColumnVector extends Vector
         return Matrix::quick($c);
     }
 
-    
     /**
      * Subtract a matrix from this column vector.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -182,11 +181,10 @@ class ColumnVector extends Vector
         return Matrix::quick($c);
     }
 
-    
     /**
      * Raise this column vector to the power of a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -216,7 +214,7 @@ class ColumnVector extends Vector
     /**
      * Mod this column vector with a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -248,7 +246,7 @@ class ColumnVector extends Vector
      * Return the element-wise equality comparison of this column vector
      * and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -280,7 +278,7 @@ class ColumnVector extends Vector
      * Return the element-wise not equal comparison of this column vector
      * and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -312,7 +310,7 @@ class ColumnVector extends Vector
      * Return the element-wise greater than comparison of this column
      * vector and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -344,7 +342,7 @@ class ColumnVector extends Vector
      * Return the element-wise greater than or equal to comparison of
      * this column vector and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -376,7 +374,7 @@ class ColumnVector extends Vector
      * Return the element-wise less than comparison of this column
      * vector and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */
@@ -408,7 +406,7 @@ class ColumnVector extends Vector
      * Return the element-wise less than or equal to comparison of
      * this column vector and a matrix.
      *
-     * @param  \Rubix\Tensor\Matrix  $b
+     * @param \Rubix\Tensor\Matrix $b
      * @throws \Rubix\Tensor\Exceptions\DimensionalityMismatchException
      * @return \Rubix\Tensor\Matrix
      */

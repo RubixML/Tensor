@@ -26,11 +26,10 @@ namespace JAMA;
  */
 class EigenvalueDecomposition
 {
-
-  /**
-   *    Row and column dimension (square matrix).
-   *    @var int
-   */
+    /**
+     *    Row and column dimension (square matrix).
+     *    @var int
+     */
     private $n;
 
     /**
@@ -70,7 +69,6 @@ class EigenvalueDecomposition
     */
     private $cdivr;
     private $cdivi;
-
 
     /**
      *    Symmetric Householder reduction to tridiagonal form.
@@ -175,7 +173,6 @@ class EigenvalueDecomposition
         $this->V[$this->n-1][$this->n-1] = 1.0;
         $this->e[0] = 0.0;
     }
-
 
     /**
      *    Symmetric tridiagonal QL algorithm.
@@ -286,7 +283,6 @@ class EigenvalueDecomposition
         }
     }
 
-
     /**
      *    Nonsymmetric reduction to Hessenberg form.
      *
@@ -374,7 +370,6 @@ class EigenvalueDecomposition
         }
     }
 
-
     /**
      *    Performs complex division.
      *
@@ -394,7 +389,6 @@ class EigenvalueDecomposition
             $this->cdivi = ($r * $xi - $xr) / $d;
         }
     }
-
 
     /**
      *    Nonsymmetric reduction from Hessenberg to real Schur form.
@@ -783,7 +777,6 @@ class EigenvalueDecomposition
         }
     } // end hqr2
 
-
     /**
      *    Constructor: Check for symmetry, then construct the eigenvalue decomposition
      *
@@ -819,7 +812,6 @@ class EigenvalueDecomposition
         }
     }
 
-
     /**
      *    Return the eigenvector matrix
      *
@@ -830,7 +822,6 @@ class EigenvalueDecomposition
     {
         return new Matrix($this->V, $this->n, $this->n);
     }
-
 
     /**
      *    Return the real parts of the eigenvalues
@@ -843,7 +834,6 @@ class EigenvalueDecomposition
         return $this->d;
     }
 
-
     /**
      *    Return the imaginary parts of the eigenvalues
      *
@@ -854,7 +844,6 @@ class EigenvalueDecomposition
     {
         return $this->e;
     }
-
 
     /**
      *    Return the block diagonal eigenvalue matrix

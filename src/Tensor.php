@@ -29,7 +29,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Map a function over all of the elements in the tensor.
      *
-     * @param  callable  $fn
+     * @param callable $fn
      * @return mixed
      */
     public function map(callable $fn);
@@ -37,8 +37,8 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Reduce the tensor down to a scalar.
      *
-     * @param  callable  $fn
-     * @param  mixed  $initial
+     * @param callable $fn
+     * @param mixed $initial
      * @return int|float
      */
     public function reduce(callable $fn, $initial = 0);
@@ -47,7 +47,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to multiply this tensor with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function multiply($b);
@@ -56,7 +56,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to divide this tensor by another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function divide($b);
@@ -65,7 +65,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to add this tensor with another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function add($b);
@@ -74,7 +74,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to subtract this tensor from another tensor
      * element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function subtract($b);
@@ -83,7 +83,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to raise this tensor to the power of another
      * tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function pow($b);
@@ -92,7 +92,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to compute the integer modulus of this tensor
      * and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function mod($b);
@@ -110,7 +110,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to compute the not equal comparison of
      * this tensor and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return mixed
      */
@@ -120,7 +120,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to compute the greater than comparison of a
      * tensor and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function greater($b);
@@ -129,7 +129,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to compute the greater than or equal to
      * comparison of a tensor and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function greaterEqual($b);
@@ -138,7 +138,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to compute the less than comparison of a
      * tensor and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function less($b);
@@ -147,7 +147,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * A universal function to compute the less than or equal to
      * comparison of a tensor and another tensor element-wise.
      *
-     * @param  mixed  $b
+     * @param mixed $b
      * @return mixed
      */
     public function lessEqual($b);
@@ -183,7 +183,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Return the logarithm of the tensor in a specified base.
      *
-     * @param  float  $base
+     * @param float $base
      * @return mixed
      */
     public function log(float $base = M_E);
@@ -254,7 +254,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Round the elements in the tensor to a given decimal place.
      *
-     * @param  int  $precision
+     * @param int $precision
      * @return self
      */
     public function round(int $precision = 0);
@@ -276,8 +276,8 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Clip the tensor to be between the given minimum and maximum.
      *
-     * @param  float  $min
-     * @param  float  $max
+     * @param float $min
+     * @param float $max
      * @return mixed
      */
     public function clip(float $min, float $max);
@@ -285,7 +285,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Clip the tensor to be lower bounded by a given minimum.
      *
-     * @param  float  $min
+     * @param float $min
      * @return mixed
      */
     public function clipLower(float $min);
@@ -293,7 +293,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Clip the tensor to be upper bounded by a given maximum.
      *
-     * @param  float  $max
+     * @param float $max
      * @return mixed
      */
     public function clipUpper(float $max);

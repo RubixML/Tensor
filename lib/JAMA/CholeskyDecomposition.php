@@ -20,12 +20,11 @@ namespace JAMA;
  */
 class CholeskyDecomposition
 {
-
-  /**
-   *    Decomposition storage
-   *    @var array
-   *    @access private
-   */
+    /**
+     *    Decomposition storage
+     *    @var array
+     *    @access private
+     */
     private $L = [];
 
     /**
@@ -37,11 +36,10 @@ class CholeskyDecomposition
 
     /**
      *    Symmetric positive definite flag
-     *    @var boolean
+     *    @var bool
      *    @access private
      */
     private $isspd = true;
-
 
     /**
      *    CholeskyDecomposition
@@ -82,17 +80,15 @@ class CholeskyDecomposition
         }
     }    //    function __construct()
 
-
     /**
      *    Is the matrix symmetric and positive definite?
      *
-     *    @return boolean
+     *    @return bool
      */
     public function isSPD()
     {
         return $this->isspd;
     }    //    function isSPD()
-
 
     /**
      *    getL
@@ -104,7 +100,6 @@ class CholeskyDecomposition
     {
         return new Matrix($this->L);
     }    //    function getL()
-
 
     /**
      *    Solve A*X = B
