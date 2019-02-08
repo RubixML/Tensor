@@ -38,7 +38,7 @@ class ColumnVector extends Vector
 
     /**
      * Transpose the vector i.e. rotate it.
-     * 
+     *
      * @return mixed
      */
     public function transpose()
@@ -48,7 +48,7 @@ class ColumnVector extends Vector
 
     /**
      * Compute the vector-matrix product of this vector and matrix a.
-     * 
+     *
      * @param  \Rubix\Tensor\Matrix  $b
      * @return \Rubix\Tensor\Matrix
      */
@@ -276,7 +276,7 @@ class ColumnVector extends Vector
         return Matrix::quick($c);
     }
 
-        /**
+    /**
      * Return the element-wise not equal comparison of this column vector
      * and a matrix.
      *

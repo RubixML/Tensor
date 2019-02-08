@@ -97,13 +97,13 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      */
     public function mod($b);
 
-     /**
-     * A universal function to compute the equality comparison of a tensor
-     * and another tensor element-wise.
-     *
-     * @param  mixed  $b
-     * @return mixed
-     */
+    /**
+    * A universal function to compute the equality comparison of a tensor
+    * and another tensor element-wise.
+    *
+    * @param  mixed  $b
+    * @return mixed
+    */
     public function equal($b);
 
     /**
@@ -134,7 +134,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      */
     public function greaterEqual($b);
 
-        /**
+    /**
      * A universal function to compute the less than comparison of a
      * tensor and another tensor element-wise.
      *
@@ -300,7 +300,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
 
     /**
      * Return the element-wise sign indication.
-     * 
+     *
      * @return mixed
      */
     public function sign();

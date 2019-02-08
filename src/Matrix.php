@@ -2,6 +2,14 @@
 
 namespace Rubix\Tensor;
 
+use JAMA\Matrix as JAMA;
+use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
+use InvalidArgumentException;
+use RuntimeException;
+use ArrayIterator;
+use Exception;
+use Closure;
+
 use function gettype;
 use function array_search;
 use function array_values;
@@ -23,14 +31,6 @@ use function sqrt;
 use function log;
 use function sin;
 use function cos;
-
-use JAMA\Matrix as JAMA;
-use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
-use InvalidArgumentException;
-use RuntimeException;
-use ArrayIterator;
-use Exception;
-use Closure;
 
 /**
  * Matrix
@@ -135,7 +135,6 @@ class Matrix implements Tensor
         $a = array_fill(0, $m, array_fill(0, $n, 0));
 
         return self::quick($a);
-        
     }
 
     /**
@@ -270,7 +269,7 @@ class Matrix implements Tensor
                 . ' greater than 0 on all axes.');
         }
 
-        $a = $extras = []; 
+        $a = $extras = [];
 
         for ($i = 0; $i < $m; $i++) {
             $row = [];
@@ -329,7 +328,7 @@ class Matrix implements Tensor
         return self::quick($a);
     }
 
-        /**
+    /**
      * Return the elementwise minimum of two matrices.
      *
      * @param  \Rubix\Tensor\Matrix  $a
@@ -389,7 +388,7 @@ class Matrix implements Tensor
 
     /**
      * Build a matrix by stacking an array of vectors.
-     * 
+     *
      * @param  \Rubix\Tensor\Vector[]  $vectors
      * @throws \InvalidArgumentException
      * @return self
@@ -540,7 +539,7 @@ class Matrix implements Tensor
 
     /**
      * Return the diagonal elements of a square matrix as a vector.
-     * 
+     *
      * @throws \RuntimeException
      * @return \Rubix\Tensor\Vector
      */
@@ -616,7 +615,7 @@ class Matrix implements Tensor
 
     /**
      * Return the index of the minimum element in every row of the matrix.
-     * 
+     *
      * @return \Rubix\Tensor\ColumnVector
      */
     public function argmin() : ColumnVector
@@ -632,7 +631,7 @@ class Matrix implements Tensor
 
     /**
      * Return the index of the maximum element in every row of the matrix.
-     * 
+     *
      * @return \Rubix\Tensor\ColumnVector
      */
     public function argmax() : ColumnVector
@@ -715,7 +714,7 @@ class Matrix implements Tensor
 
     /**
      * Compute the inverse of the matrix.
-     * 
+     *
      * @return self
      */
     public function inverse() : self
@@ -735,7 +734,7 @@ class Matrix implements Tensor
 
     /**
      * Calculate the determinant of the matrix.
-     * 
+     *
      * @throws \RuntimeException
      * @return int|float
      */
@@ -773,7 +772,7 @@ class Matrix implements Tensor
     /**
      * Calculate the rank of the matrix i.e the number of pivots
      * in its reduced row echelon form.
-     * 
+     *
      * @return int
      */
     public function rank() : int
@@ -849,7 +848,7 @@ class Matrix implements Tensor
 
     /**
      * Convolve this matrix with another matrix.
-     * 
+     *
      * @param  \Rubix\Tensor\Matrix  $b
      * @param  int  $stride
      * @throws \InvalidArgumentException
@@ -905,7 +904,7 @@ class Matrix implements Tensor
     /**
      * Calculate the row echelon form (REF) of the matrix. Return the matrix
      * and the number of swaps in a tuple.
-     * 
+     *
      * @return array
      */
     public function ref() : array
@@ -922,7 +921,7 @@ class Matrix implements Tensor
     /**
      * Calculate the row echelon form (REF) of the matrix using Gaussian
      * elimination. Return the matrix and the number of swaps in a tuple.
-     * 
+     *
      * @throws \RuntimeException
      * @return array
      */
@@ -941,7 +940,7 @@ class Matrix implements Tensor
                 if (abs($b[$i][$k]) > abs($b[$index][$k])) {
                     $index = $i;
                 }
-            } 
+            }
 
             if ($b[$index][$k] == 0) {
                 throw new RuntimeException('Cannot compute row echelon form'
@@ -979,7 +978,7 @@ class Matrix implements Tensor
      * Calculate the row echelon form (REF) of the matrix using the row
      * reduction method. Return the matrix and the number of swaps in a
      * tuple.
-     * 
+     *
      * @return array
      */
     public function rowReductionMethod(): array
@@ -1043,7 +1042,7 @@ class Matrix implements Tensor
 
     /**
      * Return the reduced row echelon (RREF) form of the matrix.
-     * 
+     *
      * @return self
      */
     public function rref() : self
@@ -1094,7 +1093,7 @@ class Matrix implements Tensor
      * Return the LU decomposition of the matrix in a tuple where l is
      * the lower triangular matrix, u is the upper triangular matrix,
      * and p is the permutation matrix.
-     * 
+     *
      * @throws \RuntimeException
      * @return self[]
      */
@@ -1166,7 +1165,7 @@ class Matrix implements Tensor
     /**
      * Compute the eigenvalues and eigenvectors of the matrix and return
      * them in a tuple.
-     * 
+     *
      * @param  bool  $normalize
      * @throws \RuntimeException
      * @return array
@@ -1205,7 +1204,7 @@ class Matrix implements Tensor
      * Solve a linear system of equations given the matrix and a
      * solution vector b. Returns the column vector x that satisfies
      * the solution.
-     * 
+     *
      * @param  \Rubix\Tensor\Vector  $b
      * @return \Rubix\Tensor\ColumnVector
      */
@@ -2030,7 +2029,8 @@ class Matrix implements Tensor
      */
     public function ceil() : self
     {
-        return $this->map('ceil');;
+        return $this->map('ceil');
+        ;
     }
 
     /**
@@ -2136,7 +2136,7 @@ class Matrix implements Tensor
 
     /**
      * Return the element-wise sign indication.
-     * 
+     *
      * @return self
      */
     public function sign() : self
@@ -2149,7 +2149,7 @@ class Matrix implements Tensor
             foreach ($row as $value) {
                 if ($value > 0) {
                     $temp[] = 1;
-                } else if ($value < 0) {
+                } elseif ($value < 0) {
                     $temp[] = -1;
                 } else {
                     $temp[] = 0;
@@ -2581,7 +2581,7 @@ class Matrix implements Tensor
         return self::quick($c);
     }
 
-        /**
+    /**
      * Return the element-wise not equal comparison of this matrix and
      * another matrix.
      *
@@ -2965,7 +2965,7 @@ class Matrix implements Tensor
         return self::quick($c);
     }
 
-        /**
+    /**
      * Return the element-wise not equal comparison of this matrix and a
      * vector.
      *
@@ -3799,7 +3799,7 @@ class Matrix implements Tensor
         return self::quick($b);
     }
 
-        /**
+    /**
      * Return the element-wise less than comparison of this matrix and a
      * scalar.
      *
@@ -3928,7 +3928,7 @@ class Matrix implements Tensor
 
     /**
      * Magic getters for tensor properties.
-     * 
+     *
      * @param  string  $name
      * @throws \Exception
      * @return mixed

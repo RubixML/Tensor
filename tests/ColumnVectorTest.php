@@ -39,7 +39,6 @@ class ColumnVectorTest extends TestCase
     public function test_shape()
     {
         $this->assertEquals([3, 1], $this->a->shape());
-
     }
 
     public function test_size()

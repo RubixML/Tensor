@@ -2,7 +2,7 @@
 
 /**
 * @package JAMA
-* 
+*
 *  Error handling
 * @author Michael Bommarito
 * @version 01292005
@@ -20,7 +20,7 @@ define('NOTICE', E_USER_NOTICE);
 //All errors may be defined by the following format:
 //define('ExceptionName', N);
 //$error['lang'][N] = 'Error message';
-$error = array();
+$error = [];
  
 /*
 I've used Babelfish and a little poor knowledge of Romance/Germanic languages for the translations
@@ -76,12 +76,13 @@ $error['EN'][-10] = "All rows must have the same length.";
 * @param string $file File in which the error occured
 * @param int $line Line on which the error occured
 */
-function JAMAError( $type = null, $num = null, $file = null, $line = null, $context = null ) {
-  global $error;
+function JAMAError($type = null, $num = null, $file = null, $line = null, $context = null)
+{
+    global $error;
   
-  $lang = LANG;
-  if( isset($type) && isset($num) && isset($file) && isset($line) )  {
-    switch( $type ) {
+    $lang = LANG;
+    if (isset($type) && isset($num) && isset($file) && isset($line)) {
+        switch ($type) {
       case ERROR:
         echo '<div class="errror"><b>Error:</b> ' . $error[$lang][$num] . '<br />' . $file . ' @ L' . $line . '</div>';
         die();
@@ -110,9 +111,9 @@ function JAMAError( $type = null, $num = null, $file = null, $line = null, $cont
         die();
         break;
     }
-  } else {
-    die( "Invalid arguments to JAMAError()" );
-  }
+    } else {
+        die("Invalid arguments to JAMAError()");
+    }
 }
  
 // TODO MarkBaker

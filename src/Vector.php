@@ -2,6 +2,13 @@
 
 namespace Rubix\Tensor;
 
+use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
+use InvalidArgumentException;
+use RuntimeException;
+use ArrayIterator;
+use Exception;
+use Closure;
+
 use function gettype;
 use function array_search;
 use function array_values;
@@ -21,13 +28,6 @@ use function sqrt;
 use function log;
 use function sin;
 use function cos;
-
-use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
-use InvalidArgumentException;
-use RuntimeException;
-use ArrayIterator;
-use Exception;
-use Closure;
 
 /**
  * Vector
@@ -430,7 +430,7 @@ class Vector implements Tensor
 
     /**
      * Transpose the vector i.e. rotate it.
-     * 
+     *
      * @return mixed
      */
     public function transpose()
@@ -440,7 +440,7 @@ class Vector implements Tensor
 
     /**
      * Return the index of the minimum element in the vector.
-     * 
+     *
      * @return int
      */
     public function argmin() : int
@@ -450,7 +450,7 @@ class Vector implements Tensor
 
     /**
      * Return the index of the maximum element in the vector.
-     * 
+     *
      * @return int
      */
     public function argmax() : int
@@ -516,7 +516,7 @@ class Vector implements Tensor
 
     /**
      * Compute the vector-matrix product of this vector and matrix a.
-     * 
+     *
      * @param  \Rubix\Tensor\Matrix  $b
      * @return \Rubix\Tensor\Matrix
      */
@@ -586,7 +586,7 @@ class Vector implements Tensor
 
     /**
      * Convolve this vector with another vector.
-     * 
+     *
      * @param  \Rubix\Tensor\Vector  $b
      * @param  int  $stride
      * @throws \InvalidArgumentException
@@ -621,7 +621,7 @@ class Vector implements Tensor
 
     /**
      * Project this vector on another vector.
-     * 
+     *
      * @param  \Rubix\Tensor\Vector  $b
      * @return self
      */
@@ -689,7 +689,7 @@ class Vector implements Tensor
      */
     public function multiply($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->multiplyVector($b);
                 break;
@@ -720,7 +720,7 @@ class Vector implements Tensor
      */
     public function divide($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->divideVector($b);
                 break;
@@ -751,7 +751,7 @@ class Vector implements Tensor
      */
     public function add($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->addVector($b);
                 break;
@@ -782,7 +782,7 @@ class Vector implements Tensor
      */
     public function subtract($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->subtractVector($b);
                 break;
@@ -813,7 +813,7 @@ class Vector implements Tensor
      */
     public function pow($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->powVector($b);
                 break;
@@ -844,7 +844,7 @@ class Vector implements Tensor
      */
     public function mod($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->modVector($b);
                 break;
@@ -875,7 +875,7 @@ class Vector implements Tensor
      */
     public function equal($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->equalVector($b);
                 break;
@@ -906,7 +906,7 @@ class Vector implements Tensor
      */
     public function notEqual($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->notEqualVector($b);
                 break;
@@ -937,7 +937,7 @@ class Vector implements Tensor
      */
     public function greater($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->greaterVector($b);
                 break;
@@ -968,7 +968,7 @@ class Vector implements Tensor
      */
     public function greaterEqual($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->greaterEqualVector($b);
                 break;
@@ -999,7 +999,7 @@ class Vector implements Tensor
      */
     public function less($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->lessVector($b);
                 break;
@@ -1030,7 +1030,7 @@ class Vector implements Tensor
      */
     public function lessEqual($b)
     {
-        switch (true) {            
+        switch (true) {
             case $b instanceof Vector:
                 $c = $this->lessEqualVector($b);
                 break;
@@ -1254,7 +1254,7 @@ class Vector implements Tensor
 
     /**
      * Return the pth percentile of the vector.
-     * 
+     *
      * @param  float  $p
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
@@ -1434,7 +1434,7 @@ class Vector implements Tensor
 
     /**
      * Return the element-wise sign indication.
-     * 
+     *
      * @return self
      */
     public function sign() : self
@@ -1444,7 +1444,7 @@ class Vector implements Tensor
         foreach ($this->a as $value) {
             if ($value > 0) {
                 $b[] = 1;
-            } else if ($value < 0) {
+            } elseif ($value < 0) {
                 $b[] = -1;
             } else {
                 $b[] = 0;
@@ -1764,7 +1764,7 @@ class Vector implements Tensor
         return Matrix::quick($c);
     }
 
-        /**
+    /**
      * Return the element-wise less than comparison of this vector
      * and a matrix.
      *
@@ -2340,7 +2340,7 @@ class Vector implements Tensor
         return self::quick($b);
     }
 
-        /**
+    /**
      * Return the element-wise less than comparison of this vector
      * and a scalar.
      *
@@ -2390,7 +2390,7 @@ class Vector implements Tensor
 
     /**
      * Count method to implement countable interface.
-     * 
+     *
      * @return int
      */
     public function count() : int
@@ -2457,9 +2457,9 @@ class Vector implements Tensor
         return new ArrayIterator($this->a);
     }
 
-        /**
+    /**
      * Magic getters for tensor properties.
-     * 
+     *
      * @param  string  $name
      * @throws \Exception
      * @return mixed

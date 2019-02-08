@@ -10,4 +10,5 @@ install:
 
 script:
     - composer analyze
+    - composer check
     - composer test
