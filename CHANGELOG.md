@@ -1,4 +1,4 @@
-- Unreleased
+- 1.0.3
     - Added clip upper and lower bounds
 
 - 1.0.2

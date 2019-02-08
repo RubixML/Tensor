@@ -2,6 +2,26 @@
 
 namespace Rubix\Tensor;
 
+use function gettype;
+use function array_search;
+use function array_values;
+use function array_map;
+use function array_reduce;
+use function array_slice;
+use function array_merge;
+use function array_fill;
+use function is_int;
+use function is_float;
+use function intdiv;
+use function round;
+use function min;
+use function max;
+use function rand;
+use function sqrt;
+use function log;
+use function sin;
+use function cos;
+
 use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
 use InvalidArgumentException;
 use RuntimeException;
@@ -669,7 +689,7 @@ class Vector implements Tensor
      */
     public function multiply($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->multiplyVector($b);
                 break;
@@ -700,7 +720,7 @@ class Vector implements Tensor
      */
     public function divide($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->divideVector($b);
                 break;
@@ -731,7 +751,7 @@ class Vector implements Tensor
      */
     public function add($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->addVector($b);
                 break;
@@ -762,7 +782,7 @@ class Vector implements Tensor
      */
     public function subtract($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->subtractVector($b);
                 break;
@@ -793,7 +813,7 @@ class Vector implements Tensor
      */
     public function pow($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->powVector($b);
                 break;
@@ -824,7 +844,7 @@ class Vector implements Tensor
      */
     public function mod($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->modVector($b);
                 break;
@@ -855,7 +875,7 @@ class Vector implements Tensor
      */
     public function equal($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->equalVector($b);
                 break;
@@ -886,7 +906,7 @@ class Vector implements Tensor
      */
     public function notEqual($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->notEqualVector($b);
                 break;
@@ -917,7 +937,7 @@ class Vector implements Tensor
      */
     public function greater($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->greaterVector($b);
                 break;
@@ -948,7 +968,7 @@ class Vector implements Tensor
      */
     public function greaterEqual($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->greaterEqualVector($b);
                 break;
@@ -979,7 +999,7 @@ class Vector implements Tensor
      */
     public function less($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->lessVector($b);
                 break;
@@ -1010,7 +1030,7 @@ class Vector implements Tensor
      */
     public function lessEqual($b)
     {
-        switch(true) {            
+        switch (true) {            
             case $b instanceof Vector:
                 $c = $this->lessEqualVector($b);
                 break;
@@ -2446,7 +2466,7 @@ class Vector implements Tensor
      */
     public function __get(string $name)
     {
-        switch($name) {
+        switch ($name) {
             case 'm':
                 return $this->m();
 

@@ -2,6 +2,28 @@
 
 namespace Rubix\Tensor;
 
+use function gettype;
+use function array_search;
+use function array_values;
+use function array_map;
+use function array_reduce;
+use function array_slice;
+use function array_merge;
+use function array_fill;
+use function array_pop;
+use function is_array;
+use function is_int;
+use function is_float;
+use function intdiv;
+use function round;
+use function min;
+use function max;
+use function rand;
+use function sqrt;
+use function log;
+use function sin;
+use function cos;
+
 use JAMA\Matrix as JAMA;
 use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
 use InvalidArgumentException;
@@ -378,8 +400,8 @@ class Matrix implements Tensor
 
         foreach ($vectors as $vector) {
             if (!$vector instanceof Vector) {
-                throw new InvalidArgumentException("Cannot stack non"
-                    . " vectors, " . gettype($vector) . " found.");
+                throw new InvalidArgumentException('Cannot stack a non'
+                    . " vector, " . gettype($vector) . " found.");
             }
 
             $a[] = $vector->asArray();
@@ -724,7 +746,7 @@ class Matrix implements Tensor
                 . ' non square matrix.');
         }
 
-        list($b, $swaps) = $this->ref();
+        [$b, $swaps] = $this->ref();
 
         $pi = $b->diagonalAsVector()->product();
 
@@ -835,7 +857,7 @@ class Matrix implements Tensor
      */
     public function convolve(Matrix $b, int $stride = 1) : self
     {
-        list($m, $n) = $b->shape();
+        [$m, $n] = $b->shape();
 
         if ($m > $this->m or $n > $this->n) {
             throw new InvalidArgumentException('Matrix B cannot be'
@@ -1026,7 +1048,7 @@ class Matrix implements Tensor
      */
     public function rref() : self
     {
-        list($b, $swaps) = $this->ref();
+        [$b, $swaps] = $this->ref();
 
         $b = $b->asArray();
 
@@ -1191,7 +1213,7 @@ class Matrix implements Tensor
     {
         $k = $this->m - 1;
 
-        list($l, $u, $p) = $this->lu();
+        [$l, $u, $p] = $this->lu();
 
         $pb = $p->dot($b);
 
@@ -1274,7 +1296,7 @@ class Matrix implements Tensor
      */
     public function multiply($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->multiplyMatrix($b);
                 break;
@@ -1309,7 +1331,7 @@ class Matrix implements Tensor
      */
     public function divide($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->divideMatrix($b);
                 break;
@@ -1344,7 +1366,7 @@ class Matrix implements Tensor
      */
     public function add($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->addMatrix($b);
                 break;
@@ -1379,7 +1401,7 @@ class Matrix implements Tensor
      */
     public function subtract($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->subtractMatrix($b);
                 break;
@@ -1414,7 +1436,7 @@ class Matrix implements Tensor
      */
     public function pow($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->powMatrix($b);
                 break;
@@ -1449,7 +1471,7 @@ class Matrix implements Tensor
      */
     public function mod($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->modMatrix($b);
                 break;
@@ -1484,7 +1506,7 @@ class Matrix implements Tensor
      */
     public function equal($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->equalMatrix($b);
                 break;
@@ -1519,7 +1541,7 @@ class Matrix implements Tensor
      */
     public function notEqual($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->notEqualMatrix($b);
                 break;
@@ -1554,7 +1576,7 @@ class Matrix implements Tensor
      */
     public function greater($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->greaterMatrix($b);
                 break;
@@ -1589,7 +1611,7 @@ class Matrix implements Tensor
      */
     public function greaterEqual($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->greaterEqualMatrix($b);
                 break;
@@ -1624,7 +1646,7 @@ class Matrix implements Tensor
      */
     public function less($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->lessMatrix($b);
                 break;
@@ -1659,7 +1681,7 @@ class Matrix implements Tensor
      */
     public function lessEqual($b)
     {
-        switch(true) {
+        switch (true) {
             case $b instanceof Matrix:
                 $c = $this->lessEqualMatrix($b);
                 break;
@@ -3913,7 +3935,7 @@ class Matrix implements Tensor
      */
     public function __get(string $name)
     {
-        switch($name) {
+        switch ($name) {
             case 'm':
                 return $this->m;
 
