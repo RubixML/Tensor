@@ -1,5 +1,6 @@
 - 1.0.3
     - Added clip upper and lower bounds
+    - Added isSquare method to Matrix
 
 - 1.0.2
     - Added ref using row elimination method

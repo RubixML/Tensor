@@ -10,28 +10,6 @@ use ArrayIterator;
 use Exception;
 use Closure;
 
-use function gettype;
-use function array_search;
-use function array_values;
-use function array_map;
-use function array_reduce;
-use function array_slice;
-use function array_merge;
-use function array_fill;
-use function array_pop;
-use function is_array;
-use function is_int;
-use function is_float;
-use function intdiv;
-use function round;
-use function min;
-use function max;
-use function rand;
-use function sqrt;
-use function log;
-use function sin;
-use function cos;
-
 /**
  * Matrix
  *
@@ -463,6 +441,16 @@ class Matrix implements Tensor
     }
 
     /**
+     * Is this a square matrix?
+     *
+     * @return bool
+     */
+    public function isSquare() : bool
+    {
+        return $this->m === $this->n;
+    }
+
+    /**
      * Return the number of elements in the tensor.
      *
      * @return int
@@ -544,7 +532,7 @@ class Matrix implements Tensor
      */
     public function diagonalAsVector() : Vector
     {
-        if ($this->m !== $this->n) {
+        if (!$this->isSquare()) {
             throw new RuntimeException('Cannot trace diagonal of a'
                 . ' non square matrix.');
         }
@@ -607,9 +595,7 @@ class Matrix implements Tensor
      */
     public function flatten() : Vector
     {
-        $b = array_reduce($this->a, 'array_merge', []);
-
-        return Vector::quick($b);
+        return Vector::quick(array_reduce($this->a, 'array_merge', []));
     }
 
     /**
@@ -739,9 +725,9 @@ class Matrix implements Tensor
      */
     public function determinant()
     {
-        if ($this->m !== $this->n) {
-            throw new RuntimeException('Determinant is undefined for a'
-                . ' non square matrix.');
+        if (!$this->isSquare()) {
+            throw new RuntimeException('Determinant is undefined'
+                . ' for a non square matrix.');
         }
 
         [$b, $swaps] = $this->ref();
@@ -760,9 +746,9 @@ class Matrix implements Tensor
      */
     public function trace()
     {
-        if ($this->m !== $this->n) {
-            throw new InvalidArgumentException('Trace is undefined for a'
-                . ' non square matrix.');
+        if (!$this->isSquare()) {
+            throw new InvalidArgumentException('Trace is undefined'
+                . ' for a non square matrix.');
         }
 
         return $this->diagonalAsVector()->sum();
@@ -1098,9 +1084,9 @@ class Matrix implements Tensor
      */
     public function lu() : array
     {
-        if ($this->m !== $this->n) {
-            throw new RuntimeException('Cannot decompose a non square'
-                . ' matrix.');
+        if (!$this->isSquare()) {
+            throw new RuntimeException('Cannot decompose a non'
+                . ' square matrix.');
         }
 
         $l = self::identity($this->n)->asArray();
@@ -1171,9 +1157,9 @@ class Matrix implements Tensor
      */
     public function eig(bool $normalize = true) : array
     {
-        if ($this->m !== $this->n) {
-            throw new RuntimeException('Cannot decompose a non square'
-                . ' matrix.');
+        if (!$this->isSquare()) {
+            throw new RuntimeException('Cannot decompose a non'
+                . ' square matrix.');
         }
 
         $jama = new JAMA($this->a);

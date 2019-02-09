@@ -9,26 +9,6 @@ use ArrayIterator;
 use Exception;
 use Closure;
 
-use function gettype;
-use function array_search;
-use function array_values;
-use function array_map;
-use function array_reduce;
-use function array_slice;
-use function array_merge;
-use function array_fill;
-use function is_int;
-use function is_float;
-use function intdiv;
-use function round;
-use function min;
-use function max;
-use function rand;
-use function sqrt;
-use function log;
-use function sin;
-use function cos;
-
 /**
  * Vector
  *
