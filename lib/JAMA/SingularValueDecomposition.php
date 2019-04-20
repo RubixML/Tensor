@@ -337,10 +337,10 @@ class SingularValueDecomposition
                       // Calculate the shift.
                       $scale = max(max(
                           max(max(
-                                  abs($this->s[$p-1]),
-                          abs($this->s[$p-2])
+                              abs($this->s[$p-1]),
+                              abs($this->s[$p-2])
                       ), abs($e[$p-2])),
-                                  abs($this->s[$k])
+                          abs($this->s[$k])
                       ), abs($e[$k]));
                       $sp   = $this->s[$p-1] / $scale;
                       $spm1 = $this->s[$p-2] / $scale;

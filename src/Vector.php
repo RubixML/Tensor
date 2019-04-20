@@ -72,7 +72,7 @@ class Vector implements Tensor
                 . " must be greater than 0, $n given.");
         }
 
-        return self::quick(array_fill(0, $n, 0));
+        return static::quick(array_fill(0, $n, 0));
     }
 
     /**
@@ -89,7 +89,7 @@ class Vector implements Tensor
                 . " must be greater than 0, $n given.");
         }
 
-        return self::quick(array_fill(0, $n, 1));
+        return static::quick(array_fill(0, $n, 1));
     }
 
     /**
@@ -111,7 +111,7 @@ class Vector implements Tensor
                 . " must be greater than 0, $n given.");
         }
 
-        return self::quick(array_fill(0, $n, $value));
+        return static::quick(array_fill(0, $n, $value));
     }
 
     /**
@@ -134,7 +134,7 @@ class Vector implements Tensor
             $a[] = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
         }
 
-        return self::quick($a);
+        return static::quick($a);
     }
 
     /**
@@ -168,7 +168,7 @@ class Vector implements Tensor
             $a = array_slice($a, 0, $n);
         }
 
-        return self::quick($a);
+        return static::quick($a);
     }
 
     /**
@@ -191,7 +191,7 @@ class Vector implements Tensor
             $a[] = rand(-PHP_INT_MAX, PHP_INT_MAX) / PHP_INT_MAX;
         }
 
-        return self::quick($a);
+        return static::quick($a);
     }
 
     /**
@@ -210,7 +210,7 @@ class Vector implements Tensor
                  . " than 0, $interval given.");
         }
 
-        return self::quick(range($start, $end, $interval));
+        return static::quick(range($start, $end, $interval));
     }
 
     /**
@@ -233,7 +233,7 @@ class Vector implements Tensor
 
         $interval = ($range / ($n - 1)) - (self::EPSILON * $range);
 
-        return self::range($start, $end, $interval);
+        return static::range($start, $end, $interval);
     }
 
     /**
@@ -253,7 +253,7 @@ class Vector implements Tensor
 
         $c = array_map('max', $a->asArray(), $b->asArray());
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -273,7 +273,7 @@ class Vector implements Tensor
 
         $c = array_map('min', $a->asArray(), $b->asArray());
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -560,7 +560,7 @@ class Vector implements Tensor
         $c[] = ($this->a[2] * $b[0]) - ($this->a[0] * $b[2]);
         $c[] = ($this->a[0] * $b[1]) - ($this->a[1] * $b[0]);
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -595,7 +595,7 @@ class Vector implements Tensor
             $c[] = $sigma;
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -1037,7 +1037,7 @@ class Vector implements Tensor
      */
     public function reciprocal() : self
     {
-        return self::ones($this->n)->divide($this);
+        return static::ones($this->n)->divide($this);
     }
 
     /**
@@ -1094,7 +1094,7 @@ class Vector implements Tensor
             $b[] = log($value, $base);
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -1305,7 +1305,7 @@ class Vector implements Tensor
             $b[] = round($value, $precision);
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -1362,7 +1362,7 @@ class Vector implements Tensor
             $b[] = $value;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -1385,7 +1385,7 @@ class Vector implements Tensor
             $b[] = $value;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -1408,7 +1408,7 @@ class Vector implements Tensor
             $b[] = $value;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -1430,7 +1430,7 @@ class Vector implements Tensor
             }
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -1446,7 +1446,7 @@ class Vector implements Tensor
             $b[] = -$value;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -1812,7 +1812,7 @@ class Vector implements Tensor
      */
     protected function multiplyVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -1823,7 +1823,7 @@ class Vector implements Tensor
             $c[] = $value * $b[$i];
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -1835,7 +1835,7 @@ class Vector implements Tensor
      */
     protected function divideVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -1846,7 +1846,7 @@ class Vector implements Tensor
             $c[] = $value / $b[$i];
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -1858,7 +1858,7 @@ class Vector implements Tensor
      */
     protected function addVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -1869,7 +1869,7 @@ class Vector implements Tensor
             $c[] = $value + $b[$i];
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -1881,7 +1881,7 @@ class Vector implements Tensor
      */
     protected function subtractVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -1892,7 +1892,7 @@ class Vector implements Tensor
             $c[] = $value - $b[$i];
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -1904,7 +1904,7 @@ class Vector implements Tensor
      */
     protected function powVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -1915,7 +1915,7 @@ class Vector implements Tensor
             $c[] = $value ** $b[$i];
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -1927,7 +1927,7 @@ class Vector implements Tensor
      */
     protected function modVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -1938,7 +1938,7 @@ class Vector implements Tensor
             $c[] = $value % $b[$i];
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -1951,7 +1951,7 @@ class Vector implements Tensor
      */
     protected function equalVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -1962,7 +1962,7 @@ class Vector implements Tensor
             $c[] = $value == $b[$i] ? 1 : 0;
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -1975,7 +1975,7 @@ class Vector implements Tensor
      */
     protected function notEqualVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -1986,7 +1986,7 @@ class Vector implements Tensor
             $c[] = $value != $b[$i] ? 1 : 0;
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -1999,7 +1999,7 @@ class Vector implements Tensor
      */
     protected function greaterVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -2010,7 +2010,7 @@ class Vector implements Tensor
             $c[] = $value > $b[$i] ? 1 : 0;
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -2023,7 +2023,7 @@ class Vector implements Tensor
      */
     protected function greaterEqualVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -2034,7 +2034,7 @@ class Vector implements Tensor
             $c[] = $value >= $b[$i] ? 1 : 0;
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -2047,7 +2047,7 @@ class Vector implements Tensor
      */
     protected function lessVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -2058,7 +2058,7 @@ class Vector implements Tensor
             $c[] = $value < $b[$i] ? 1 : 0;
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -2071,7 +2071,7 @@ class Vector implements Tensor
      */
     protected function lessEqualVector(Vector $b) : self
     {
-        if ($this->n !== $b->n()) {
+        if ($this->n !== $b->size()) {
             throw new DimensionalityMismatchException('Vector A requires'
                 . " $this->n elements but Vector B has {$b->size()}.");
         }
@@ -2082,7 +2082,7 @@ class Vector implements Tensor
             $c[] = $value <= $b[$i] ? 1 : 0;
         }
 
-        return self::quick($c);
+        return static::quick($c);
     }
 
     /**
@@ -2105,7 +2105,7 @@ class Vector implements Tensor
             $b[] = $value * $scalar;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2128,7 +2128,7 @@ class Vector implements Tensor
             $b[] = $value / $scalar;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2151,7 +2151,7 @@ class Vector implements Tensor
             $b[] = $value + $scalar;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2174,7 +2174,7 @@ class Vector implements Tensor
             $b[] = $value - $scalar;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2197,7 +2197,7 @@ class Vector implements Tensor
             $b[] = $value ** $scalar;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2220,7 +2220,7 @@ class Vector implements Tensor
             $b[] = $value % $scalar;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2244,7 +2244,7 @@ class Vector implements Tensor
             $b[] = $value == $scalar ? 1 : 0;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2268,7 +2268,7 @@ class Vector implements Tensor
             $b[] = $value != $scalar ? 1 : 0;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2292,7 +2292,7 @@ class Vector implements Tensor
             $b[] = $value > $scalar ? 1 : 0;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2316,7 +2316,7 @@ class Vector implements Tensor
             $b[] = $value >= $scalar ? 1 : 0;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2340,7 +2340,7 @@ class Vector implements Tensor
             $b[] = $value < $scalar ? 1 : 0;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**
@@ -2364,7 +2364,7 @@ class Vector implements Tensor
             $b[] = $value <= $scalar ? 1 : 0;
         }
 
-        return self::quick($b);
+        return static::quick($b);
     }
 
     /**

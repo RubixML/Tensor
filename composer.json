@@ -36,6 +36,12 @@
         }
     },
     "scripts": {
+        "build": [
+            "@composer install",
+            "@analyze",
+            "@check",
+            "@test"
+        ],
         "analyze": "phpstan analyse -c phpstan.neon",
         "check": "php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no",
         "fix": "php-cs-fixer fix --config=.php_cs.dist",
