@@ -44,6 +44,13 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function reduce(callable $fn, $initial = 0);
 
     /**
+     * Transpose the tensor.
+     *
+     * @return mixed
+     */
+    public function transpose();
+
+    /**
      * A universal function to multiply this tensor with another tensor
      * element-wise.
      *
