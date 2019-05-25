@@ -154,9 +154,9 @@ class VectorTest extends TestCase
 
     public function test_shape()
     {
-        $this->assertEquals([1, 8], $this->a->shape());
-        $this->assertEquals([1, 8], $this->b->shape());
-        $this->assertEquals([1, 6], $this->c->shape());
+        $this->assertEquals([8], $this->a->shape());
+        $this->assertEquals([8], $this->b->shape());
+        $this->assertEquals([6], $this->c->shape());
     }
 
     public function test_size()

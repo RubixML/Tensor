@@ -306,7 +306,7 @@ class Vector implements Tensor
      */
     public function shape() : array
     {
-        return [1, $this->n];
+        return [$this->n];
     }
 
     /**

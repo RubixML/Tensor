@@ -7,16 +7,6 @@ use Rubix\Tensor\Exceptions\DimensionalityMismatchException;
 class ColumnVector extends Vector
 {
     /**
-     * Return a tuple with the dimensionality of the tensor.
-     *
-     * @return int[]
-     */
-    public function shape() : array
-    {
-        return [$this->n, 1];
-    }
-
-    /**
      * Return the number of rows in the vector.
      *
      * @return int
