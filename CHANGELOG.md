@@ -1,6 +1,7 @@
 - Unreleased
     - Added transpose to Tensor API
     - Reduced memory footprint of matmul operation
+    - Removed magic getters
 
 - 1.0.3
     - Added clip upper and lower bounds

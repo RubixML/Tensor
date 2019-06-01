@@ -563,13 +563,7 @@ class Matrix implements Tensor
      */
     public function asVectors() : array
     {
-        $vectors = [];
-
-        foreach ($this->a as $row) {
-            $vectors[] = Vector::quick($row);
-        }
-
-        return $vectors;
+        return array_map([Vector::class, 'quick'], $this->a);
     }
 
     /**
@@ -581,8 +575,8 @@ class Matrix implements Tensor
     {
         $vectors = [];
 
-        foreach ($this->transpose() as $column) {
-            $vectors[] = ColumnVector::quick($column);
+        for ($i = 0; $i < $this->m; $i++) {
+            $vectors[] = ColumnVector::quick(array_column($this->a, $i));
         }
 
         return $vectors;
@@ -3910,30 +3904,6 @@ class Matrix implements Tensor
     public function getIterator()
     {
         return new ArrayIterator($this->a);
-    }
-
-    /**
-     * Magic getters for tensor properties.
-     *
-     * @param string $name
-     * @throws \Exception
-     * @return mixed
-     */
-    public function __get(string $name)
-    {
-        switch ($name) {
-            case 'm':
-                return $this->m;
-
-            case 'n':
-                return $this->n;
-
-            case 'T':
-                return $this->transpose();
-            
-            default:
-                throw new Exception('Property does not exist.');
-        }
     }
 
     /**

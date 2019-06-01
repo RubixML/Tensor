@@ -374,11 +374,6 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $z);
         $this->assertEquals($y, $z->asArray());
-
-        $z = $this->a->T;
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($y, $z->asArray());
     }
 
     public function test_inverse()

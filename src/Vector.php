@@ -2435,30 +2435,6 @@ class Vector implements Tensor
     }
 
     /**
-     * Magic getters for tensor properties.
-     *
-     * @param string $name
-     * @throws \Exception
-     * @return mixed
-     */
-    public function __get(string $name)
-    {
-        switch ($name) {
-            case 'm':
-                return $this->m();
-
-            case 'n':
-                return $this->n();
-
-            case 'T':
-                return $this->transpose();
-            
-            default:
-                throw new Exception('Property does not exist.');
-        }
-    }
-
-    /**
      * Convert the tensor into a string representation.
      *
      * @return string
