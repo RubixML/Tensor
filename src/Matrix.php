@@ -791,18 +791,21 @@ class Matrix implements Tensor
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
-        $bT = $b->transpose();
-
+        $p = $b->n();
+        $bHat = $b->asArray();
+        
         $c = [];
 
         foreach ($this->a as $row) {
             $temp = [];
 
-            foreach ($bT as $column) {
+            for ($i = 0; $i < $p; $i++) {
+                $column = array_column($bHat, $i);
+                
                 $sigma = 0;
 
-                foreach ($row as $i => $value) {
-                    $sigma += $value * $column[$i];
+                foreach ($row as $j => $value) {
+                    $sigma += $value * $column[$j];
                 }
 
                 $temp[] = $sigma;
@@ -810,7 +813,7 @@ class Matrix implements Tensor
 
             $c[] = $temp;
         }
-
+        
         return self::quick($c);
     }
 
