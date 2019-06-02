@@ -255,7 +255,7 @@ class Matrix implements Tensor
         for ($i = 0; $i < $m; $i++) {
             $row = [];
             
-            if (!empty($extras)) {
+            if ($extras) {
                 $row[] = array_pop($extras);
             }
 
@@ -265,8 +265,10 @@ class Matrix implements Tensor
 
                 $r = sqrt(-2. * log($r1));
 
-                $row[] = $r * sin($r2 * TWO_PI);
-                $row[] = $r * cos($r2 * TWO_PI);
+                $phi = $r2 * TWO_PI;
+
+                $row[] = $r * sin($phi);
+                $row[] = $r * cos($phi);
             }
 
             if (count($row) > $n) {
@@ -441,6 +443,16 @@ class Matrix implements Tensor
     public function shape() : array
     {
         return [$this->m, $this->n];
+    }
+
+    /**
+     * Return the shape of the tensor as a string.
+     *
+     * @return string
+     */
+    public function shapeString() : string
+    {
+        return (string) $this->m . ' x ' . (string) $this->n;
     }
 
     /**
@@ -674,21 +686,20 @@ class Matrix implements Tensor
     }
 
     /**
-     * Transpose the matrix i.e row become columns and columns
-     * become rows.
+     * Transpose the matrix i.e row become columns and columns become rows.
      *
      * @return self
      */
     public function transpose() : self
     {
         if ($this->m > 1) {
-            $b = array_map(null, ...$this->a);
-        } else {
-            $b = [];
+            return self::quick(array_map(null, ...$this->a));
+        }
+        
+        $b = [];
 
-            for ($i = 0; $i < $this->n; $i++) {
-                $b[] = array_column($this->a, $i);
-            }
+        for ($i = 0; $i < $this->n; $i++) {
+            $b[] = array_column($this->a, $i);
         }
 
         return self::quick($b);
@@ -788,8 +799,8 @@ class Matrix implements Tensor
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
-        $p = $b->n();
         $bHat = $b->asArray();
+        $p = $b->n();
         
         $c = [];
 
@@ -1158,8 +1169,9 @@ class Matrix implements Tensor
     public function eig(bool $normalize = true) : array
     {
         if (!$this->isSquare()) {
-            throw new RuntimeException('Cannot decompose a non'
-                . ' square matrix.');
+            throw new RuntimeException('Cannot eigen decompose a non'
+                . ' square matrix, ' . implode(' x ', $this->shape())
+                . ' matrix given.');
         }
 
         $jama = new JAMA($this->a);
@@ -2326,14 +2338,11 @@ class Matrix implements Tensor
      */
     protected function multiplyMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A require'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2361,14 +2370,11 @@ class Matrix implements Tensor
      */
     protected function divideMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2396,14 +2402,11 @@ class Matrix implements Tensor
      */
     protected function addMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2431,14 +2434,11 @@ class Matrix implements Tensor
      */
     protected function subtractMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2467,14 +2467,11 @@ class Matrix implements Tensor
      */
     protected function powMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2503,14 +2500,11 @@ class Matrix implements Tensor
      */
     protected function modMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2539,14 +2533,11 @@ class Matrix implements Tensor
      */
     protected function equalMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2575,14 +2566,11 @@ class Matrix implements Tensor
      */
     protected function notEqualMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2611,14 +2599,11 @@ class Matrix implements Tensor
      */
     protected function greaterMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2647,14 +2632,11 @@ class Matrix implements Tensor
      */
     protected function greaterEqualMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2683,14 +2665,11 @@ class Matrix implements Tensor
      */
     protected function lessMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];
@@ -2719,14 +2698,11 @@ class Matrix implements Tensor
      */
     protected function lessEqualMatrix(Matrix $b) : self
     {
-        if ($b->m() !== $this->m) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($b->n() !== $this->n) {
-            throw new DimensionalityMismatchException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+        if ($b->shape() !== $this->shape()) {
+            throw new DimensionalityMismatchException(
+                "{$this->shapeString()}"
+                . " matrix needed but {$b->shapeString()} given."
+            );
         }
 
         $c = [];

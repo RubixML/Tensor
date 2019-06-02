@@ -218,6 +218,13 @@ class MatrixTest extends TestCase
         $this->assertEquals([3, 3], $this->c->shape());
     }
 
+    public function test_shape_string()
+    {
+        $this->assertEquals('3 x 3', $this->a->shapeString());
+        $this->assertEquals('3 x 1', $this->b->shapeString());
+        $this->assertEquals('3 x 3', $this->c->shapeString());
+    }
+
     public function test_is_square()
     {
         $this->assertTrue($this->a->isSquare());

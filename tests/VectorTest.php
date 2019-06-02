@@ -159,6 +159,13 @@ class VectorTest extends TestCase
         $this->assertEquals([6], $this->c->shape());
     }
 
+    public function test_shape_string()
+    {
+        $this->assertEquals('8', $this->a->shapeString());
+        $this->assertEquals('8', $this->b->shapeString());
+        $this->assertEquals('6', $this->c->shapeString());
+    }
+
     public function test_size()
     {
         $this->assertEquals(8, $this->a->size());

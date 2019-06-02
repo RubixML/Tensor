@@ -16,6 +16,13 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function shape() : array;
 
     /**
+     * Return the shape of the tensor as a string.
+     *
+     * @return string
+     */
+    public function shapeString() : string;
+
+    /**
      * Return the number of elements in the tensor.
      *
      * @return int

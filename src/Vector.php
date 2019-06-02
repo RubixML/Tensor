@@ -163,8 +163,10 @@ class Vector implements Tensor
             
             $r = sqrt(-2. * log($r1));
 
-            $a[] = $r * sin($r2 * TWO_PI);
-            $a[] = $r * cos($r2 * TWO_PI);
+            $phi = $r2 * TWO_PI;
+
+            $a[] = $r * sin($phi);
+            $a[] = $r * cos($phi);
         }
 
         if (count($a) > $n) {
@@ -310,6 +312,16 @@ class Vector implements Tensor
     public function shape() : array
     {
         return [$this->n];
+    }
+
+    /**
+     * Return the shape of the tensor as a string.
+     *
+     * @return string
+     */
+    public function shapeString() : string
+    {
+        return (string) $this->n;
     }
 
     /**
