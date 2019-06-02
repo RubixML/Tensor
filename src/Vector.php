@@ -9,6 +9,9 @@ use ArrayIterator;
 use Exception;
 use Closure;
 
+use const Rubix\Tensor\EPSILON;
+use const Rubix\Tensor\TWO_PI;
+
 /**
  * Vector
  *
@@ -160,8 +163,8 @@ class Vector implements Tensor
             
             $r = sqrt(-2. * log($r1));
 
-            $a[] = $r * sin($r2 * self::TWO_PI);
-            $a[] = $r * cos($r2 * self::TWO_PI);
+            $a[] = $r * sin($r2 * TWO_PI);
+            $a[] = $r * cos($r2 * TWO_PI);
         }
 
         if (count($a) > $n) {
@@ -231,7 +234,7 @@ class Vector implements Tensor
 
         $range = abs($end - $start);
 
-        $interval = ($range / ($n - 1)) - (self::EPSILON * $range);
+        $interval = ($range / ($n - 1)) - (EPSILON * $range);
 
         return static::range($start, $end, $interval);
     }

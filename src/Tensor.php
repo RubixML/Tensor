@@ -8,10 +8,6 @@ use Countable;
 
 interface Tensor extends ArrayAccess, IteratorAggregate, Countable
 {
-    const TWO_PI = 2. * M_PI;
-
-    const EPSILON = 1e-8;
-
     /**
      * Return a tuple with the dimensionality of the tensor.
      *

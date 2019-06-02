@@ -10,6 +10,9 @@ use ArrayIterator;
 use Exception;
 use Closure;
 
+use const Rubix\Tensor\EPSILON;
+use const Rubix\Tensor\TWO_PI;
+
 /**
  * Matrix
  *
@@ -262,8 +265,8 @@ class Matrix implements Tensor
 
                 $r = sqrt(-2. * log($r1));
 
-                $row[] = $r * sin($r2 * self::TWO_PI);
-                $row[] = $r * cos($r2 * self::TWO_PI);
+                $row[] = $r * sin($r2 * TWO_PI);
+                $row[] = $r * cos($r2 * TWO_PI);
             }
 
             if (count($row) > $n) {
@@ -1134,7 +1137,7 @@ class Matrix implements Tensor
                 }
 
                 $l[$j][$i] = ($pa[$j][$i] - $sigma)
-                    / ($u[$i][$i] ?: self::EPSILON);
+                    / ($u[$i][$i] ?: EPSILON);
             }
         }
 
@@ -1166,8 +1169,7 @@ class Matrix implements Tensor
         $eigenvalues = $decomp->getRealEigenvalues();
         $eigenvectors = $decomp->getV()->getArray();
 
-        $eigenvectors = self::quick($eigenvectors)
-            ->transpose();
+        $eigenvectors = self::quick($eigenvectors)->transpose();
 
         if ($normalize === true) {
             $norm = $eigenvectors->transpose()
@@ -1198,7 +1200,7 @@ class Matrix implements Tensor
 
         $pb = $p->dot($b);
 
-        $y = [$pb[0] / ($l[0][0] ?: self::EPSILON)];
+        $y = [$pb[0] / ($l[0][0] ?: EPSILON)];
 
         for ($i = 1; $i < $this->m; $i++) {
             $sigma = 0;
@@ -1212,7 +1214,7 @@ class Matrix implements Tensor
 
         $x = [];
 
-        $x = [$k => $y[$k] / ($l[$k][$k] ?: self::EPSILON)];
+        $x = [$k => $y[$k] / ($l[$k][$k] ?: EPSILON)];
 
         for ($i = $this->m - 2; $i >= 0; $i--) {
             $sigma = 0;
@@ -3888,7 +3890,7 @@ class Matrix implements Tensor
      */
     public function offsetGet($index) : array
     {
-        if (!isset($this->a[$index])) {
+        if (empty($this->a[$index])) {
             throw new InvalidArgumentException('Element not found at'
                 . " offset $index.");
         }

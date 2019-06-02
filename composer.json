@@ -28,7 +28,10 @@
         "psr-4": {
             "Rubix\\Tensor\\": "src/",
             "JAMA\\": "lib/JAMA"
-        }
+        },
+        "files": [
+            "src/Constants.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
