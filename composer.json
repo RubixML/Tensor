@@ -30,7 +30,7 @@
             "JAMA\\": "lib/JAMA"
         },
         "files": [
-            "src/Constants.php"
+            "src/constants.php"
         ]
     },
     "autoload-dev": {

@@ -1,4 +1,4 @@
-- Unreleased
+- 1.0.4
     - Added transpose to Tensor API
     - Reduced memory footprint of matmul operation
     - Removed magic getters
