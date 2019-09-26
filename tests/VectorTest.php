@@ -1,11 +1,11 @@
 <?php
 
-namespace Rubix\Tensor\Tests;
+namespace Tensor\Tests;
 
-use Rubix\Tensor\Tensor;
-use Rubix\Tensor\Vector;
-use Rubix\Tensor\Matrix;
-use Rubix\Tensor\ColumnVector;
+use Tensor\Tensor;
+use Tensor\Vector;
+use Tensor\Matrix;
+use Tensor\ColumnVector;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use IteratorAggregate;

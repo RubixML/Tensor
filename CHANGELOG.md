@@ -1,3 +1,8 @@
+- Unreleased
+    - Implemented the library as a PHP extension using Zephir
+    - Changed namespace from Rubix\Tensor to \Tensor
+    - Removed Dimensionality Mismatch exception
+
 - 1.0.4
     - Added transpose to Tensor API
     - Reduced memory footprint of matmul operation
