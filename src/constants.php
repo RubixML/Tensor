@@ -1,6 +1,6 @@
 <?php
 
-namespace Tensor
+namespace Rubix\Tensor
 {
     /**
      * A small number used in substitution of 0.

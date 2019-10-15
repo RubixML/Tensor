@@ -1,6 +1,6 @@
 <?php
 
-namespace Tensor;
+namespace Rubix\Tensor;
 
 use IteratorAggregate;
 use ArrayAccess;
@@ -32,19 +32,19 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Map a function over all of the elements in the tensor.
      *
-     * @param callable $callback
+     * @param callable $fn
      * @return mixed
      */
-    public function map(callable $callback);
+    public function map(callable $fn);
 
     /**
      * Reduce the tensor down to a scalar.
      *
-     * @param callable $callback
+     * @param callable $fn
      * @param mixed $initial
      * @return int|float
      */
-    public function reduce(callable $callback, $initial = 0);
+    public function reduce(callable $fn, $initial = 0);
 
     /**
      * Transpose the tensor.
@@ -121,6 +121,7 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      * this tensor and another tensor element-wise.
      *
      * @param mixed $b
+     * @throws \InvalidArgumentException
      * @return mixed
      */
     public function notEqual($b);
