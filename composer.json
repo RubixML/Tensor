@@ -1,14 +1,15 @@
 {
     "name": "rubix/tensor",
     "type": "library",
-    "description": "Tensor provides objects and functions for numerical computing on vectors and matrices in PHP.",
+    "description": "Tensor provides objects for scientific computing in PHP.",
     "homepage": "https://github.com/RubixML/Tensor",
     "license": "MIT",
     "keywords": [
-        "math", "linear-algebra", "matrix", "vector", "tensor", "statistics", "php"
+        "math", "linear-algebra", "matrix", "vector", "tensor", "statistics", "php",
+        "scientific-computing", "computation"
     ],
     "authors": [
-        {
+        { 
             "name": "Andrew DalPino",
             "email": "me@andrewdalpino.com",
             "homepage": "https://andrewdalpino.com",
@@ -20,13 +21,14 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",
+        "phalcon/zephir": "^0.12.4",
         "phpstan/phpstan": "^0.10.0",
         "phpstan/phpstan-phpunit": "^0.10.0",
         "phpunit/phpunit": "7.2.*"
     },
     "autoload": {
         "psr-4": {
-            "Rubix\\Tensor\\": "src/",
+            "Tensor\\": "src/",
             "JAMA\\": "lib/JAMA"
         },
         "files": [
@@ -35,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Rubix\\Tensor\\Tests\\": "tests/"
+            "Tensor\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -47,13 +49,18 @@
         ],
         "analyze": "phpstan analyse -c phpstan.neon",
         "check": "php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no",
+        "compile": "zephir compile",
         "fix": "php-cs-fixer fix --config=.php_cs.dist",
-        "test": "phpunit"
+        "test": "phpunit",
+        "clean": "zephir fullclean"
     },
     "config": {
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "support": {
+        "email": "contact@rubixml.com",
+        "issues": "https://github.com/RubixML/Tensor/issues",
+        "source": "https://github.com/RubixML/Tensor"
+    }
 }

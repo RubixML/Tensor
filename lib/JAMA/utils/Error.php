@@ -80,7 +80,7 @@ function JAMAError($type = null, $num = null, $file = null, $line = null, $conte
     global $error;
   
     $lang = LANG;
-    if (isset($type, $num, $file, $line)) {
+    if (isset($type, $num, $file,$line)) {
         switch ($type) {
       case ERROR:
         echo '<div class="errror"><b>Error:</b> ' . $error[$lang][$num] . '<br />' . $file . ' @ L' . $line . '</div>';
