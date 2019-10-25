@@ -135,7 +135,7 @@ class Matrix implements Tensor
      */
     public static function diagonal(array elements) -> <Matrix>
     {
-        uint n = count(elements);
+        int n = count(elements);
  
         if n < 1 {
             throw new InvalidArgumentException("Dimensionality must be"
@@ -249,7 +249,7 @@ class Matrix implements Tensor
         while count(a) < m {
             array rowA = [];
              
-            if (!empty(extras)) {
+            if !empty(extras) {
                 let rowA[] = array_pop(extras);
             }
  
@@ -265,7 +265,7 @@ class Matrix implements Tensor
                 let rowA[] = r * cos(phi);
             }
  
-            if (count(rowA) > n) {
+            if count(rowA) > n {
                 let extras[] = array_pop(rowA);
             }
  
@@ -369,15 +369,28 @@ class Matrix implements Tensor
     {
         var vector;
 
+        if empty(vectors) {
+            return self::quick();
+        }
+
+        var size = reset(vectors)->size();
+
         array a = [];
 
         for vector in vectors {
-            if unlikely !(vector instanceof Vector) {
-                throw new InvalidArgumentException("Cannot stack a non"
-                    . " vector, " . gettype(vector) . " found.");
+            if likely vector instanceof Vector {
+                if unlikely vector->size() !== size {
+                    throw new InvalidArgumentException("Vectors must"
+                        . " all be the same size.");
+                }
+
+                let a[] = vector->asArray();
+
+                continue;
             }
 
-            let a[] = vector->asArray();
+            throw new InvalidArgumentException("Cannot stack a non"
+                . " vector, " . gettype(vector) . " found.");
         }
 
         return self::quick(a);
@@ -392,7 +405,7 @@ class Matrix implements Tensor
     {
         var row, value;
 
-        uint m = count(a);
+        int m = count(a);
         uint n = is_array(current(a)) ? count(current(a)) : 1;
 
         let n = m === 0 ? 0 : n;
@@ -757,7 +770,7 @@ class Matrix implements Tensor
 
         var rref = this->rref();
 
-        int pivots = 0;
+        uint pivots = 0;
 
         for row in iterator(rref) {
             for value in row {
@@ -786,13 +799,13 @@ class Matrix implements Tensor
                 . this->n . " rows but Matrix B has " . b->m() . ".");
         }
 
-        uint j;
+        int j;
         float sigma;
         var k, rowA, valueA;
 
         var p = b->n();
 
-        var bHat = b->asArray();
+        var bHat = b->transpose()->asArray();
          
         array c = [];
  
@@ -800,12 +813,12 @@ class Matrix implements Tensor
             array rowC = [];
  
             for j in range(0, p - 1) {
-                var column = array_column(bHat, j);
+                var columnB = bHat[j];
                  
                 let sigma = 0.0;
  
                 for k, valueA in rowA {
-                    let sigma += valueA * column[k];
+                    let sigma += valueA * columnB[k];
                 }
  
                 let rowC[] = sigma;
@@ -839,11 +852,11 @@ class Matrix implements Tensor
      * Convolve this matrix with another matrix.
      *
      * @param \Tensor\Matrix b
-     * @param int stride
+     * @param uint stride
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function convolve(<Matrix> b, int stride = 1) -> <Matrix>
+    public function convolve(<Matrix> b, uint stride = 1) -> <Matrix>
     {
         var m = b->m();
         var n = b->n();
@@ -859,7 +872,7 @@ class Matrix implements Tensor
         }
 
         uint i, j;
-        var k, l, rowB, valueB;
+        var k, l, valueA, rowB, valueB;
 
         var p = intdiv(m, 2);
         var q = intdiv(n, 2);
@@ -921,7 +934,6 @@ class Matrix implements Tensor
     public function gaussianElimination() -> array
     {
         int i, j, k, index;
-
         var temp, diag, scale;
 
         var minDim = min(this->shape());
@@ -989,7 +1001,7 @@ class Matrix implements Tensor
         int row = 0;
         int col = 0;
 
-        int swaps = 0;
+        uint swaps = 0;
 
         while row < this->m && col < this->n {
             let t = b[row];
@@ -1153,7 +1165,7 @@ class Matrix implements Tensor
                let sigma = 0.0;
 
                 for k in range(0, j - 1) {
-                    let sigma = sigma + u[k][i] * l[j][k];
+                    let sigma += u[k][i] * l[j][k];
                 }
 
                 let u[j][i] = (float) pa[j][i] - sigma;
@@ -1163,7 +1175,7 @@ class Matrix implements Tensor
                 let sigma = 0.0;
 
                 for k in range(0, i - 1) {
-                    let sigma = sigma + u[k][i] * l[j][k];
+                    let sigma += u[k][i] * l[j][k];
                 }
 
                 let l[j][i] = ((float) pa[j][i] - sigma)
@@ -1201,7 +1213,6 @@ class Matrix implements Tensor
     public function solve(<Vector> b) -> <ColumnVector>
     {
         int i, j, k;
-        float sigma;
 
         let k = this->m - 1;
 
@@ -1213,28 +1224,28 @@ class Matrix implements Tensor
 
         var pb = p->dot(b);
 
-        array y = [pb[0] / (l[0][0] ?: self::EPSILON)];
+        array y = [0: pb[0] / (l[0][0] ?: self::EPSILON)];
 
         for i in range(1, this->m - 1) {
-            let sigma = 0.0;
+            var sigma = 0.0;
 
             for j in range(0, i - 1) {
-                let sigma = sigma + (float) l[i][j] * y[j];
+                let sigma += l[i][j] * y[j];
             }
 
-            let y[] = ((float) pb[i] - sigma) / l[i][i];
+            let y[] = (pb[i] - sigma) / l[i][i];
         }
 
         array x = [k: y[k] / (l[k][k] ?: self::EPSILON)];
 
         for i in reverse range(0, this->m - 2) {
-            let sigma = 0.0;
+            var sigma = 0.0;
 
             for j in range(i + 1, this->m - 1) {
-                let sigma = sigma + (float) u[i][j] * x[j];
+                let sigma += u[i][j] * x[j];
             }
 
-            let x[i] = ((float) y[i] - sigma) / u[i][i];
+            let x[i] = (y[i] - sigma) / u[i][i];
         }
 
         return ColumnVector::quick(array_reverse(x));
@@ -1763,7 +1774,7 @@ class Matrix implements Tensor
      *
      * @return self
      */
-    public function degrees() -> <Matrix>
+    public function rad2deg() -> <Matrix>
     {
         return this->map("rad2deg");
     }
@@ -1773,7 +1784,7 @@ class Matrix implements Tensor
      *
      * @return self
      */
-    public function radians() -> <Matrix>
+    public function deg2rad() -> <Matrix>
     {
       return this->map("deg2rad");
     }
@@ -1856,7 +1867,7 @@ class Matrix implements Tensor
 
             sort(rowA);
 
-            if (this->n % 2 === 1) {
+            if this->n % 2 === 1 {
                 let median = rowA[mid];
             } else {
                 let median = (rowA[mid - 1] + rowA[mid]) / 2.0;
@@ -1941,14 +1952,13 @@ class Matrix implements Tensor
      * Round the elements in the matrix to a given decimal place.
      *
      * @param int precision
-     * @throws \InvalidArgumentException
      * @return self
      */
     public function round(int precision = 0) -> <Matrix>
     {
         if precision < 0 {
             throw new InvalidArgumentException("Decimal precision cannot"
-                . " be less than 0, " . strval(precision) . " given.");
+                . " be less than 0, ". strval(precision) . " given.");
         }
 
         var row, value;
@@ -3931,12 +3941,14 @@ class Matrix implements Tensor
      */
     public function offsetGet(index) -> array
     {
-        if empty(this->a[index]) {
-            throw new InvalidArgumentException("Element not found at"
-                . " offset " . (string) index . ".");
+        var value;
+
+        if fetch value, this->a[index] {
+            return value;
         }
 
-        return this->a[index];
+        throw new InvalidArgumentException("Element not found at"
+            . " offset " . (string) index . ".");
     }
 
     /**

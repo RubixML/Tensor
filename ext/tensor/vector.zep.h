@@ -62,8 +62,8 @@ PHP_METHOD(Tensor_Vector, log);
 PHP_METHOD(Tensor_Vector, sin);
 PHP_METHOD(Tensor_Vector, cos);
 PHP_METHOD(Tensor_Vector, tan);
-PHP_METHOD(Tensor_Vector, degrees);
-PHP_METHOD(Tensor_Vector, radians);
+PHP_METHOD(Tensor_Vector, rad2deg);
+PHP_METHOD(Tensor_Vector, deg2rad);
 PHP_METHOD(Tensor_Vector, sum);
 PHP_METHOD(Tensor_Vector, product);
 PHP_METHOD(Tensor_Vector, min);
@@ -543,16 +543,16 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_tan, 0, 0, IS_OBJE
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_degrees, 0, 0, Tensor\\Vector, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_rad2deg, 0, 0, Tensor\\Vector, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_degrees, 0, 0, IS_OBJECT, "Tensor\\Vector", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_rad2deg, 0, 0, IS_OBJECT, "Tensor\\Vector", 0)
 #endif
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_radians, 0, 0, Tensor\\Vector, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_deg2rad, 0, 0, Tensor\\Vector, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_radians, 0, 0, IS_OBJECT, "Tensor\\Vector", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_deg2rad, 0, 0, IS_OBJECT, "Tensor\\Vector", 0)
 #endif
 ZEND_END_ARG_INFO()
 
@@ -1048,8 +1048,8 @@ ZEPHIR_INIT_FUNCS(tensor_vector_method_entry) {
 	PHP_ME(Tensor_Vector, sin, arginfo_tensor_vector_sin, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, cos, arginfo_tensor_vector_cos, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, tan, arginfo_tensor_vector_tan, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Vector, degrees, arginfo_tensor_vector_degrees, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Vector, radians, arginfo_tensor_vector_radians, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Vector, rad2deg, arginfo_tensor_vector_rad2deg, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Vector, deg2rad, arginfo_tensor_vector_deg2rad, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, sum, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, product, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, min, NULL, ZEND_ACC_PUBLIC)

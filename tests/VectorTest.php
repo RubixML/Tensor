@@ -864,9 +864,9 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_degrees()
+    public function test_rad2deg()
     {
-        $z = $this->c->degrees();
+        $z = $this->c->rad2deg();
 
         $expected = [
             229.1831180523293, 372.42256683503507, 166.15776058793872,
@@ -877,9 +877,9 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_radians()
+    public function test_deg2rad()
     {
-        $z = $this->c->radians();
+        $z = $this->c->deg2rad();
 
         $expected = [
             0.06981317007977318, 0.11344640137963141, 0.05061454830783556,

@@ -75,8 +75,8 @@ PHP_METHOD(Tensor_Matrix, log);
 PHP_METHOD(Tensor_Matrix, sin);
 PHP_METHOD(Tensor_Matrix, cos);
 PHP_METHOD(Tensor_Matrix, tan);
-PHP_METHOD(Tensor_Matrix, degrees);
-PHP_METHOD(Tensor_Matrix, radians);
+PHP_METHOD(Tensor_Matrix, rad2deg);
+PHP_METHOD(Tensor_Matrix, deg2rad);
 PHP_METHOD(Tensor_Matrix, sum);
 PHP_METHOD(Tensor_Matrix, product);
 PHP_METHOD(Tensor_Matrix, min);
@@ -707,16 +707,16 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_tan, 0, 0, IS_OBJE
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_degrees, 0, 0, Tensor\\Matrix, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_rad2deg, 0, 0, Tensor\\Matrix, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_degrees, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_rad2deg, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_radians, 0, 0, Tensor\\Matrix, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_deg2rad, 0, 0, Tensor\\Matrix, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_radians, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_deg2rad, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
 ZEND_END_ARG_INFO()
 
@@ -1471,8 +1471,8 @@ ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
 	PHP_ME(Tensor_Matrix, sin, arginfo_tensor_matrix_sin, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, cos, arginfo_tensor_matrix_cos, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, tan, arginfo_tensor_matrix_tan, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Matrix, degrees, arginfo_tensor_matrix_degrees, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Matrix, radians, arginfo_tensor_matrix_radians, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Matrix, rad2deg, arginfo_tensor_matrix_rad2deg, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Matrix, deg2rad, arginfo_tensor_matrix_deg2rad, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, sum, arginfo_tensor_matrix_sum, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, product, arginfo_tensor_matrix_product, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, min, arginfo_tensor_matrix_min, ZEND_ACC_PUBLIC)

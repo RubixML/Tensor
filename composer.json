@@ -5,7 +5,8 @@
     "homepage": "https://github.com/RubixML/Tensor",
     "license": "MIT",
     "keywords": [
-        "math", "linear-algebra", "matrix", "vector", "tensor", "statistics", "php"
+        "math", "linear-algebra", "matrix", "vector", "tensor", "statistics", "php",
+        "scientific-computing", "computation"
     ],
     "authors": [
         { 
@@ -57,6 +58,9 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "support": {
+        "email": "contact@rubixml.com",
+        "issues": "https://github.com/RubixML/Tensor/issues",
+        "source": "https://github.com/RubixML/Tensor"
+    }
 }

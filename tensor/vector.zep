@@ -194,7 +194,8 @@ class Vector implements Tensor
         array a = [];
 
         while count(a) < n {
-            let a[] = rand(-PHP_INT_MAX, PHP_INT_MAX) / PHP_INT_MAX;
+            let a[] = rand(-PHP_INT_MAX, PHP_INT_MAX)
+                / PHP_INT_MAX;
         }
 
         return static::quick(a);
@@ -506,7 +507,7 @@ class Vector implements Tensor
 
         var i, valueA;
 
-        float sigma = 0.0;
+        var sigma = 0.0;
 
         for i, valueA in this->a {
             let sigma += valueA * b[i];
@@ -1128,7 +1129,7 @@ class Vector implements Tensor
      *
      * @return self
      */
-    public function degrees() -> <Vector>
+    public function rad2deg() -> <Vector>
     {
         return this->map("rad2deg");
     }
@@ -1138,7 +1139,7 @@ class Vector implements Tensor
      *
      * @return self
      */
-    public function radians() -> <Vector>
+    public function deg2rad() -> <Vector>
     {
         return this->map("deg2rad");
     }
@@ -1378,6 +1379,7 @@ class Vector implements Tensor
         var valueA;
 
         array b = [];
+        
         for valueA in this->a {
             if valueA < min {
                 let b[] = min;

@@ -1081,7 +1081,7 @@ class Vector implements Tensor
      *
      * @return self
      */
-    public function degrees() : self
+    public function rad2deg() : self
     {
         return $this->map('rad2deg');
     }
@@ -1091,7 +1091,7 @@ class Vector implements Tensor
      *
      * @return self
      */
-    public function radians() : self
+    public function deg2rad() : self
     {
         return $this->map('deg2rad');
     }

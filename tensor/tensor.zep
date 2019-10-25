@@ -221,14 +221,14 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
      *
      * @return mixed
      */
-    public function degrees();
+    public function rad2deg();
 
     /**
      * Convert angles from degrees to radians.
      *
      * @return mixed
      */
-    public function radians();
+    public function deg2rad();
 
     /**
      * Sum the tensor.

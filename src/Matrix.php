@@ -379,12 +379,25 @@ class Matrix implements Tensor
      */
     public static function stack(array $vectors) : self
     {
+        if (empty($vectors)) {
+            return self::quick();
+        }
+
+        $proto = reset($vectors);
+
+        $size = $proto instanceof Vector ? $proto->size() : 0;
+
         $a = [];
 
         foreach ($vectors as $vector) {
             if (!$vector instanceof Vector) {
                 throw new InvalidArgumentException('Cannot stack a non'
                     . ' vector, ' . gettype($vector) . ' found.');
+            }
+
+            if ($vector->size() !== $size) {
+                throw new InvalidArgumentException('Vectors must all'
+                    . ' be the same size.');
             }
 
             $a[] = $vector->asArray();
@@ -804,26 +817,26 @@ class Matrix implements Tensor
 
         $p = $b->n();
 
-        $b = $b->asArray();
+        $bHat = $b->transpose()->asArray();
         
         $c = [];
 
         foreach ($this->a as $row) {
-            $temp = [];
+            $rowC = [];
 
-            for ($i = 0; $i < $p; $i++) {
-                $column = array_column($b, $i);
+            for ($j = 0; $j < $p; $j++) {
+                $columnB = $bHat[$j];
                 
                 $sigma = 0;
 
-                foreach ($row as $j => $value) {
-                    $sigma += $value * $column[$j];
+                foreach ($row as $k => $value) {
+                    $sigma += $value * $columnB[$k];
                 }
 
-                $temp[] = $sigma;
+                $rowC[] = $sigma;
             }
 
-            $c[] = $temp;
+            $c[] = $rowC;
         }
         
         return self::quick($c);
@@ -1738,7 +1751,7 @@ class Matrix implements Tensor
      *
      * @return self
      */
-    public function degrees() : self
+    public function rad2deg() : self
     {
         return $this->map('rad2deg');
     }
@@ -1748,7 +1761,7 @@ class Matrix implements Tensor
      *
      * @return self
      */
-    public function radians() : self
+    public function deg2rad() : self
     {
         return $this->map('deg2rad');
     }

@@ -238,14 +238,14 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, tan);
  *
  * @return mixed
  */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, degrees);
+ZEPHIR_DOC_METHOD(Tensor_Tensor, rad2deg);
 
 /**
  * Convert angles from degrees to radians.
  *
  * @return mixed
  */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, radians);
+ZEPHIR_DOC_METHOD(Tensor_Tensor, deg2rad);
 
 /**
  * Sum the tensor.

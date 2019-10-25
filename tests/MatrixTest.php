@@ -1385,9 +1385,9 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_degrees()
+    public function test_rad2deg()
     {
-        $z = $this->b->degrees();
+        $z = $this->b->rad2deg();
 
         $expected = [
             [744.8451336700701],
@@ -1399,9 +1399,9 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_radians()
+    public function test_deg2rad()
     {
-        $z = $this->b->radians();
+        $z = $this->b->deg2rad();
 
         $expected = [
             [0.22689280275926282],
