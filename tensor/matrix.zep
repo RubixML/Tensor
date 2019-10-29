@@ -1,5 +1,8 @@
 namespace Tensor;
 
+use Tensor\Decompositions\Lu;
+use Tensor\Decompositions\Ref;
+use Tensor\Decompositions\Rref;
 use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
@@ -907,153 +910,20 @@ class Matrix implements Tensor
         return self::quick(c);
     }
 
-     /**
-     * Calculate the row echelon form (REF) of the matrix. Return the matrix
-     * and the number of swaps in a tuple.
+    /**
+     * Calculate the row echelon form (REF) of the matrix. Return the reduced
+     * matrix and the number of swaps needed to compute the REF.
      *
      * @return array
      */
     public function ref() -> array
     {
-        var e;
-        
-        try {
-            return this->gaussianElimination();
-        } catch RuntimeException, e {
-            return this->rowReductionMethod();
-        }
-    }
+        var ref = Ref::decompose(this);
 
-    /**
-     * Calculate the row echelon form (REF) of the matrix using Gaussian
-     * elimination. Return the matrix and the number of swaps in a tuple.
-     *
-     * @throws \RuntimeException
-     * @return array
-     */
-    public function gaussianElimination() -> array
-    {
-        int i, j, k, index;
-        var temp, diag, scale;
+        var a = ref->a();
+        var swaps = ref->swaps();
 
-        var minDim = min(this->shape());
-
-        var b = this->a;
-
-        uint swaps = 0;
-
-        for k in range(0, minDim - 1) {
-            let index = k;
-
-            for i in range(k, this->m - 1) {
-                if abs(b[i][k]) > abs(b[index][k]) {
-                    let index = i;
-                }
-            }
-
-            if unlikely b[index][k] == 0 {
-                throw new RuntimeException("Cannot compute row echelon form"
-                    . " of a singular matrix.");
-            }
-
-            if k !== index {
-                let temp = b[k];
-
-                let b[k] = b[index];
-                let b[index] = temp;
-
-                let swaps++;
-            }
-
-            let diag = b[k][k];
-
-            for i in range(k + 1, this->m - 1) {
-                let scale = diag != 0 ? b[i][k] / diag : 1;
-
-                for j in range(k + 1, this->n - 1) {
-                    let b[i][j] = b[i][j] - scale * b[k][j];
-                }
-
-                let b[i][k] = 0;
-            }
-        }
-
-        let b = self::quick(b);
-
-        return [b, swaps];
-    }
-
-    /**
-     * Calculate the row echelon form (REF) of the matrix using the row
-     * reduction method. Return the matrix and the number of swaps in a
-     * tuple.
-     *
-     * @return array
-     */
-    public function rowReductionMethod() -> array
-    {
-        int i, j;
-        var t, b;
-        var scale, divisor, temp;
-
-        let b = this->a;
-
-        int row = 0;
-        int col = 0;
-
-        uint swaps = 0;
-
-        while row < this->m && col < this->n {
-            let t = b[row];
-
-            if t[col] == 0 {
-                for i in range(row + 1, this->m - 1) {
-                    if b[i][col] != 0 {
-                        let temp = b[i];
-
-                        let b[i] = t;
-                        let t = temp;
-
-                        let swaps++;
-
-                        break;
-                    }
-                }
-            }
-
-            if t[col] == 0 {
-                let col++;
-
-                continue;
-            }
-
-            let divisor = t[col];
-
-            if divisor != 1 {
-                for i in range(0, this->n - 1) {
-                    let t[i] = t[i] / divisor;
-                }
-            }
-
-            for i in range(row + 1, this->m - 1) {
-                let scale = b[i][col];
-
-                if scale != 0 {
-                    for j in range(0, this->n - 1) {
-                        let b[i][j] = b[i][j] - scale * t[j];
-                    }
-                }
-            }
-
-            let b[row] = t;
-
-            let row++;
-            let col++;
-        }
-
-        let b = self::quick(b);
-
-        return [b, swaps];
+        return [a, swaps];
     }
 
     /**
@@ -1063,53 +933,9 @@ class Matrix implements Tensor
      */
     public function rref() -> <self>
     {
-        int i, j;
-        var t, scale, divisor;
+        var a = Rref::decompose(this)->a();
 
-        int row = 0;
-        int col = 0;
-
-        var ref = this->ref();
-
-        var b = ref[0];
-        var swaps = ref[1];
-
-        let b = b->asArray();
-
-        while row < this->m && col < this->n {
-            let t = b[row];
-
-            if abs(t[col]) == 0 {
-                let col++;
-
-                continue;
-            }
-
-            let divisor = t[col];
-
-            if divisor != 1 {
-                for i in range(0, this->n - 1) {
-                    let t[i] = t[i] / divisor;
-                }
-            }
-
-            for i in reverse range(0, row - 1) {
-                let scale = b[i][col];
-
-                if scale != 0 {
-                    for j in range(0, this->n - 1) {
-                        let b[i][j] = b[i][j] - scale * t[j];
-                    }
-                }
-            }
-
-            let b[row] = t;
-
-            let row++;
-            let col++;
-        }
-
-        return self::quick(b);
+        return a;
     }
 
     /**
@@ -1122,70 +948,12 @@ class Matrix implements Tensor
      */
     public function lu() -> array
     {
-        if !this->isSquare() {
-            throw new RuntimeException("Cannot decompose a non"
-                . " square matrix.");
-        }
+        var lup = Lu::decompose(this);
 
-        int i, j, k, row;
-        float sigma;
-        var max, temp;
-
-        var l = self::identity(this->n)->asArray();
-        var u = self::zeros(this->n, this->n)->asArray();
-        var p = self::identity(this->n)->asArray();
-
-        for i in range(0, this->n - 1) {
-            let max = this->a[i][i];
-
-            let row = i;
-
-            for j in range(i, this->n - 1) {
-                if this->a[j][i] > max {
-                    let max = this->a[j][i];
-
-                    let row = j;
-                }
-            }
-
-            if i !== row {
-                let temp = p[i];
-
-                let p[i] = p[row];
-                let p[row] = temp;
-            }
-        }
-
-        let p = self::quick(p);
-
-        var pa = p->matmul(this);
-
-        for i in range(0, this->n - 1) {
-            for j in range(0, i) {
-               let sigma = 0.0;
-
-                for k in range(0, j - 1) {
-                    let sigma += u[k][i] * l[j][k];
-                }
-
-                let u[j][i] = (float) pa[j][i] - sigma;
-            }
-
-            for j in range(i, this->n - 1) {
-                let sigma = 0.0;
-
-                for k in range(0, i - 1) {
-                    let sigma += u[k][i] * l[j][k];
-                }
-
-                let l[j][i] = ((float) pa[j][i] - sigma)
-                    / (u[i][i] ?: self::EPSILON);
-            }
-        }
-
-        let l = self::quick(l);
-        let u = self::quick(u);
-
+        var l = lup->l();
+        var u = lup->u();
+        var p = lup->p();
+        
         return [l, u, p];
     }
 

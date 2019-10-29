@@ -1,6 +1,7 @@
 - Unreleased
     - Implemented the library as a PHP extension using Zephir lang
     - Changed namespace from Rubix\Tensor to \Tensor
+    - Matrix decompositions are now a separate abstraction
     - Removed Dimensionality Mismatch exception
 
 - 1.0.4

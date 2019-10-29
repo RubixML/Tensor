@@ -23,9 +23,13 @@
 
 
 
+zend_class_entry *tensor_decompositions_decomposition_ce;
 zend_class_entry *tensor_tensor_ce;
 zend_class_entry *tensor_vector_ce;
 zend_class_entry *tensor_columnvector_ce;
+zend_class_entry *tensor_decompositions_lu_ce;
+zend_class_entry *tensor_decompositions_ref_ce;
+zend_class_entry *tensor_decompositions_rref_ce;
 zend_class_entry *tensor_matrix_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(tensor)
@@ -38,9 +42,13 @@ static PHP_MINIT_FUNCTION(tensor)
 {
 	REGISTER_INI_ENTRIES();
 	zephir_module_init();
+	ZEPHIR_INIT(Tensor_Decompositions_Decomposition);
 	ZEPHIR_INIT(Tensor_Tensor);
 	ZEPHIR_INIT(Tensor_Vector);
 	ZEPHIR_INIT(Tensor_ColumnVector);
+	ZEPHIR_INIT(Tensor_Decompositions_Lu);
+	ZEPHIR_INIT(Tensor_Decompositions_Ref);
+	ZEPHIR_INIT(Tensor_Decompositions_Rref);
 	ZEPHIR_INIT(Tensor_Matrix);
 	
 	return SUCCESS;

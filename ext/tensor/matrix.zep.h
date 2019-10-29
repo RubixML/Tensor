@@ -44,8 +44,6 @@ PHP_METHOD(Tensor_Matrix, matmul);
 PHP_METHOD(Tensor_Matrix, dot);
 PHP_METHOD(Tensor_Matrix, convolve);
 PHP_METHOD(Tensor_Matrix, ref);
-PHP_METHOD(Tensor_Matrix, gaussianElimination);
-PHP_METHOD(Tensor_Matrix, rowReductionMethod);
 PHP_METHOD(Tensor_Matrix, rref);
 PHP_METHOD(Tensor_Matrix, lu);
 PHP_METHOD(Tensor_Matrix, eig);
@@ -539,20 +537,6 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_ref, 0, 0, IS_ARRAY, 0)
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_ref, 0, 0, IS_ARRAY, NULL, 0)
-#endif
-ZEND_END_ARG_INFO()
-
-#if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_gaussianelimination, 0, 0, IS_ARRAY, 0)
-#else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_gaussianelimination, 0, 0, IS_ARRAY, NULL, 0)
-#endif
-ZEND_END_ARG_INFO()
-
-#if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_rowreductionmethod, 0, 0, IS_ARRAY, 0)
-#else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_rowreductionmethod, 0, 0, IS_ARRAY, NULL, 0)
 #endif
 ZEND_END_ARG_INFO()
 
@@ -1440,8 +1424,6 @@ ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
 	PHP_ME(Tensor_Matrix, dot, arginfo_tensor_matrix_dot, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, convolve, arginfo_tensor_matrix_convolve, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, ref, arginfo_tensor_matrix_ref, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Matrix, gaussianElimination, arginfo_tensor_matrix_gaussianelimination, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Matrix, rowReductionMethod, arginfo_tensor_matrix_rowreductionmethod, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, rref, arginfo_tensor_matrix_rref, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, lu, arginfo_tensor_matrix_lu, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, eig, arginfo_tensor_matrix_eig, ZEND_ACC_PUBLIC)

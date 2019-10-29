@@ -463,36 +463,6 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_gaussian_elimination()
-    {
-        [$z, $swaps] = $this->a->gaussianElimination();
-
-        $expected = [
-            [22, -17, 12],
-            [0, 14.09090909090909, -4.181818181818182],
-            [0, 0, -17.10322580645161],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-        $this->assertEquals(0, $swaps);
-    }
-    
-    public function test_row_reduction_method()
-    {
-        [$z, $swaps] = $this->a->rowReductionMethod();
-
-        $expected = [
-            [1, -0.7727272727272727, 0.5454545454545454],
-            [0, 1., -0.29677419354838713],
-            [0., 0., 1.],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-        $this->assertEquals(0, $swaps);
-    }
-
     public function test_rref()
     {
         $z = $this->a->rref();

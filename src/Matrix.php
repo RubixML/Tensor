@@ -2,7 +2,10 @@
 
 namespace Tensor;
 
-use JAMA\Matrix as JAMA;
+use Tensor\Decompositions\LU;
+use Tensor\Decompositions\REF;
+use Tensor\Decompositions\RREF;
+use Tensor\Decompositions\Eigen;
 use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
@@ -915,262 +918,47 @@ class Matrix implements Tensor
     }
 
     /**
-     * Calculate the row echelon form (REF) of the matrix. Return the matrix
-     * and the number of swaps in a tuple.
+     * Calculate the row echelon form (REF) of the matrix. Return the reduced
+     * matrix and the number of swaps needed to compute the REF.
      *
      * @return array
      */
     public function ref() : array
     {
-        try {
-            return $this->gaussianElimination();
-        } catch (RuntimeException $e) {
-            return $this->rowReductionMethod();
-        }
+        $ref = REF::decompose($this);
+
+        return [
+            $ref->a(),
+            $ref->swaps(),
+        ];
     }
 
     /**
-     * Calculate the row echelon form (REF) of the matrix using Gaussian
-     * elimination. Return the matrix and the number of swaps in a tuple.
-     *
-     * @throws \RuntimeException
-     * @return array
-     */
-    public function gaussianElimination() : array
-    {
-        $minDim = min($this->shape());
-
-        $b = $this->a;
-
-        $swaps = 0;
-
-        for ($k = 0; $k < $minDim; $k++) {
-            $index = $k;
-
-            for ($i = $k; $i < $this->m; $i++) {
-                if (abs($b[$i][$k]) > abs($b[$index][$k])) {
-                    $index = $i;
-                }
-            }
-
-            if ($b[$index][$k] == 0) {
-                throw new RuntimeException('Cannot compute row echelon form'
-                    . ' of a singular matrix.');
-            }
-
-            if ($k !== $index) {
-                $temp = $b[$k];
-
-                $b[$k] = $b[$index];
-                $b[$index] = $temp;
-
-                $swaps++;
-            }
-
-            $diag = $b[$k][$k];
-
-            for ($i = $k + 1; $i < $this->m; $i++) {
-                $scale = $diag != 0 ? $b[$i][$k] / $diag : 1;
-                
-                for ($j = $k + 1; $j < $this->n; $j++) {
-                    $b[$i][$j] -= $scale * $b[$k][$j];
-                }
-                
-                $b[$i][$k] = 0;
-            }
-        }
-
-        $b = self::quick($b);
-
-        return [$b, $swaps];
-    }
-
-    /**
-     * Calculate the row echelon form (REF) of the matrix using the row
-     * reduction method. Return the matrix and the number of swaps in a
-     * tuple.
-     *
-     * @return array
-     */
-    public function rowReductionMethod() : array
-    {
-        $row = $col = $swaps = 0;
-
-        $b = $this->a;
-
-        while ($row < $this->m and $col < $this->n) {
-            $t = $b[$row];
-
-            if ($t[$col] == 0) {
-                for ($i = $row + 1; $i < $this->m; $i++) {
-                    if ($b[$i][$col] != 0) {
-                        $temp = $b[$i];
-
-                        $b[$i] = $t;
-                        $t = $temp;
-        
-                        $swaps++;
-
-                        break 1;
-                    }
-                }
-            }
-
-            if ($t[$col] == 0) {
-                $col++;
-
-                continue 1;
-            }
-
-            $divisor = $t[$col];
-
-            if ($divisor != 1) {
-                for ($i = 0; $i < $this->n; $i++) {
-                    $t[$i] /= $divisor;
-                }
-            }
-
-            for ($i = $row + 1; $i < $this->m; $i++) {
-                $scale = $b[$i][$col];
-
-                if ($scale != 0) {
-                    for ($j = 0; $j < $this->n; $j++) {
-                        $b[$i][$j] -= $scale * $t[$j];
-                    }
-                }
-            }
-
-            $b[$row] = $t;
-
-            $row++;
-            $col++;
-        }
-
-        $b = self::quick($b);
-
-        return [$b, $swaps];
-    }
-
-    /**
-     * Return the reduced row echelon (RREF) form of the matrix.
+     * Return the reduced row echelon (RREF) form of the matrix. Return the
+     * reduced matrix and the number of swaps needed to compute the RREF.
      *
      * @return self
      */
     public function rref() : self
     {
-        [$b, $swaps] = $this->ref();
-
-        $b = $b->asArray();
-
-        $row = $col = 0;
-
-        while ($row < $this->m and $col < $this->n) {
-            $t = $b[$row];
-
-            if (abs($t[$col]) == 0) {
-                $col++;
-
-                continue 1;
-            }
-
-            $divisor = $t[$col];
-
-            if ($divisor != 1) {
-                for ($i = 0; $i < $this->n; $i++) {
-                    $t[$i] /= $divisor;
-                }
-            }
-
-            for ($i = $row - 1; $i >= 0; $i--) {
-                $scale = $b[$i][$col];
-
-                if ($scale != 0) {
-                    for ($j = 0; $j < $this->n; $j++) {
-                        $b[$i][$j] += -$scale * $t[$j];
-                    }
-                }
-            }
-
-            $b[$row] = $t;
-
-            $row++;
-            $col++;
-        }
-
-        return self::quick($b);
+        return RREF::decompose($this)->a();
     }
 
     /**
-     * Return the LU decomposition of the matrix in a tuple where l is
-     * the lower triangular matrix, u is the upper triangular matrix,
-     * and p is the permutation matrix.
+     * Return the LU decomposition of the matrix.
      *
      * @throws \RuntimeException
      * @return self[]
      */
     public function lu() : array
     {
-        if (!$this->isSquare()) {
-            throw new RuntimeException('Cannot decompose a non'
-                . ' square matrix.');
-        }
+        $lup = LU::decompose($this);
 
-        $l = self::identity($this->n)->asArray();
-        $u = self::zeros($this->n, $this->n)->asArray();
-        $p = self::identity($this->n)->asArray();
-
-        for ($i = 0; $i < $this->n; $i++) {
-            $max = $this->a[$i][$i];
-
-            $row = $i;
-
-            for ($j = $i; $j < $this->n; $j++) {
-                if ($this->a[$j][$i] > $max) {
-                    $max = $this->a[$j][$i];
-                    
-                    $row = $j;
-                }
-            }
-            
-            if ($i !== $row) {
-                $temp = $p[$i];
-
-                $p[$i] = $p[$row];
-                $p[$row] = $temp;
-            }
-        }
-
-        $p = self::quick($p);
-
-        $pa = $p->matmul($this);
-
-        for ($i = 0; $i < $this->n; $i++) {
-            for ($j = 0; $j <= $i; $j++) {
-                $sigma = 0;
-
-                for ($k = 0; $k < $j; $k++) {
-                    $sigma += $u[$k][$i] * $l[$j][$k];
-                }
-
-                $u[$j][$i] = $pa[$j][$i] - $sigma;
-            }
-
-            for ($j = $i; $j < $this->n; $j++) {
-                $sigma = 0;
-
-                for ($k = 0; $k < $i; $k++) {
-                    $sigma += $u[$k][$i] * $l[$j][$k];
-                }
-
-                $l[$j][$i] = ($pa[$j][$i] - $sigma)
-                    / ($u[$i][$i] ?: EPSILON);
-            }
-        }
-
-        $l = self::quick($l);
-        $u = self::quick($u);
-
-        return [$l, $u, $p];
+        return [
+            $lup->l(),
+            $lup->u(),
+            $lup->p(),
+        ];
     }
 
     /**
@@ -1178,34 +966,24 @@ class Matrix implements Tensor
      * them in a tuple.
      *
      * @param bool $normalize
-     * @throws \RuntimeException
      * @return array
      */
     public function eig(bool $normalize = true) : array
     {
-        if (!$this->isSquare()) {
-            throw new RuntimeException('Cannot eigen decompose a non'
-                . ' square matrix, ' . implode(' x ', $this->shape())
-                . ' matrix given.');
-        }
+        $eig = Eigen::decompose($this);
 
-        $jama = new JAMA($this->a);
+        $eigenvectors = $eig->eigenvectors();
+        $eigenvalues = $eig->eigenvalues();
 
-        $decomp = $jama->eig();
-
-        $eigenvalues = $decomp->getRealEigenvalues();
-        $eigenvectors = $decomp->getV()->getArray();
-
-        $eigenvectors = self::quick($eigenvectors)->transpose();
-
-        if ($normalize === true) {
-            $norm = $eigenvectors->transpose()
+        if ($normalize) {
+            $norm = $eigenvectors
+                ->transpose()
                 ->square()
                 ->sum()
-                ->sqrt()
-                ->transpose();
+                ->sqrt();
         
-            $eigenvectors = $eigenvectors->divide($norm);
+            $eigenvectors = $eigenvectors
+                ->divide($norm->transpose());
         }
 
         return [$eigenvalues, $eigenvectors];
@@ -1221,9 +999,9 @@ class Matrix implements Tensor
      */
     public function solve(Vector $b) : ColumnVector
     {
-        $k = $this->m - 1;
-
         [$l, $u, $p] = $this->lu();
+
+        $k = $this->m - 1;
 
         $pb = $p->dot($b);
 
@@ -1236,7 +1014,8 @@ class Matrix implements Tensor
                 $sigma += $l[$i][$j] * $y[$j];
             }
 
-            $y[] = ($pb[$i] - $sigma) / $l[$i][$i];
+            $y[] = ($pb[$i] - $sigma)
+                / $l[$i][$i];
         }
 
         $x = [$k => $y[$k] / ($l[$k][$k] ?: EPSILON)];
@@ -1248,7 +1027,8 @@ class Matrix implements Tensor
                 $sigma += $u[$i][$j] * $x[$j];
             }
 
-            $x[$i] = ($y[$i] - $sigma) / $u[$i][$i];
+            $x[$i] = ($y[$i] - $sigma)
+                / $u[$i][$i];
         }
 
         return ColumnVector::quick(array_reverse($x));
