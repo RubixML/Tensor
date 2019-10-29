@@ -39,7 +39,7 @@ class Ref implements Decomposition
      * @param \Tensor\Matrix a
      * @return self
      */
-    public static function decompose(<Matrix> a) -> <Ref>
+    public static function decompose(const <Matrix> a) -> <Ref>
     {
         var e;
 
@@ -58,7 +58,7 @@ class Ref implements Decomposition
      * @throws \RuntimeException
      * @return self
      */
-    public static function gaussianElimination(<Matrix> a) -> <Ref>
+    public static function gaussianElimination(const <Matrix> a) -> <Ref>
     {
         int i, j, k, index;
         var temp, diag, scale;
@@ -121,7 +121,7 @@ class Ref implements Decomposition
      * @param \Tensor\Matrix a
      * @return self
      */
-    public static function rowReductionMethod(<Matrix> a) -> <Ref>
+    public static function rowReductionMethod(const <Matrix> a) -> <Ref>
     {
         int i, j;
         var t, scale, divisor, temp;
@@ -194,7 +194,7 @@ class Ref implements Decomposition
      * @param int swaps
      * @throws \InvalidArgumentException
      */
-    public function __construct(<Matrix> a, int swaps)
+    public function __construct(const <Matrix> a, const int swaps)
     {
         if swaps < 0 {
             throw new InvalidArgumentException("The number of swaps must"

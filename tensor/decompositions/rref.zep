@@ -28,7 +28,7 @@ class Rref implements Decomposition
      * @param \Tensor\Matrix a
      * @return self
      */
-    public static function decompose(<Matrix> a) -> <Rref>
+    public static function decompose(const <Matrix> a) -> <Rref>
     {
         int i, j;
         var t, scale, divisor;
@@ -88,7 +88,7 @@ class Rref implements Decomposition
      * @param \Tensor\Matrix a
      * @throws \InvalidArgumentException
      */
-    public function __construct(<Matrix> a)
+    public function __construct(const <Matrix> a)
     {
         let this->a = a;
     }

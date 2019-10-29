@@ -68,7 +68,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function zeros(int n) -> <Vector>
+    public static function zeros(const int n) -> <Vector>
     {
         if n < 1 {
             throw new InvalidArgumentException("The number of elements"
@@ -85,7 +85,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function ones(int n) -> <Vector>
+    public static function ones(const int n) -> <Vector>
     {
         if n < 1 {
             throw new InvalidArgumentException("The number of elements"
@@ -103,7 +103,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function fill(value, int n) -> <Vector>
+    public static function fill(const value, const int n) -> <Vector>
     {
         if !is_int(value) && !is_float(value) {
             throw new InvalidArgumentException("Value must be an"
@@ -126,7 +126,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function rand(int n) -> <Vector>
+    public static function rand(const int n) -> <Vector>
     {
         if n < 1 {
             throw new InvalidArgumentException("The number of elements"
@@ -149,7 +149,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function gaussian(int n) -> <Vector>
+    public static function gaussian(const int n) -> <Vector>
     {
         if n < 1 {
             throw new InvalidArgumentException("The number of elements"
@@ -184,7 +184,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function uniform(int n) -> <Vector>
+    public static function uniform(const int n) -> <Vector>
     {
         if n < 1 {
             throw new InvalidArgumentException("The number of elements"
@@ -209,7 +209,7 @@ class Vector implements Tensor
      * @param mixed interval
      * @return self
      */
-    public static function range(start, end, interval = 1) -> <Vector>
+    public static function range(const start, const end, const interval = 1) -> <Vector>
     {
         return static::quick(range(start, end, interval));
     }
@@ -223,7 +223,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function linspace(float start, float end, int n) -> <Vector>
+    public static function linspace(const float start, const float end, const int n) -> <Vector>
     {
         if n < 1 {
             throw new InvalidArgumentException("The number of elements"
@@ -245,7 +245,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function maximum(<Vector> a, <Vector> b) -> <Vector>
+    public static function maximum(const <Vector> a, const <Vector> b) -> <Vector>
     {
         if a->n() !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -264,7 +264,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function minimum(<Vector> a, <Vector> b) -> <Vector>
+    public static function minimum(const <Vector> a, const <Vector> b) -> <Vector>
     {
         if a->n() !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -280,7 +280,7 @@ class Vector implements Tensor
      * @param bool validate
      * @throws \InvalidArgumentException
      */
-    public function __construct(array a = [], bool validate = true)
+    public function __construct(array a = [], const bool validate = true)
     {
         var value; 
 
@@ -396,7 +396,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    public function reshape(int m, int n) -> <Matrix>
+    public function reshape(const int m, const int n) -> <Matrix>
     {
         if m < 0 || n < 0 {
             throw new InvalidArgumentException("The number of rows"
@@ -466,7 +466,7 @@ class Vector implements Tensor
      * @param callable callback
      * @return self
      */
-    public function map(callback) -> <Vector>
+    public function map(const callback) -> <Vector>
     {
         return static::quick(array_map(callback, this->a));
     }
@@ -479,7 +479,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function reduce(callback, initial = 0)
+    public function reduce(const callback, const initial = 0)
     {
         if !is_int(initial) && !is_float(initial) {
             throw new InvalidArgumentException("Initial value must"
@@ -497,7 +497,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return int|float
      */
-    public function dot(<Vector> b)
+    public function dot(const <Vector> b)
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires"
@@ -524,7 +524,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function convolve(<Vector> b, int stride = 1) -> <Vector>
+    public function convolve(const <Vector> b, const int stride = 1) -> <Vector>
     {
         if b->size() > this->n {
             throw new InvalidArgumentException("Vector B cannot be"
@@ -564,7 +564,7 @@ class Vector implements Tensor
      * @param \Tensor\Matrix b
      * @return \Tensor\Matrix
      */
-    public function matmul(<Matrix> b) -> <Matrix>
+    public function matmul(const <Matrix> b) -> <Matrix>
     {
         return this->asRowMatrix()->matmul(b);
     }
@@ -575,7 +575,7 @@ class Vector implements Tensor
      * @param \Tensor\Vector b
      * @return int|float
      */
-    public function inner(<Vector> b)
+    public function inner(const <Vector> b)
     {
         return this->dot(b);
     }
@@ -586,7 +586,7 @@ class Vector implements Tensor
      * @param \Tensor\Vector b
      * @return \Tensor\Matrix
      */
-    public function outer(<Vector> b) -> <Matrix>
+    public function outer(const <Vector> b) -> <Matrix>
     {
         var j, valueA, valueB;
 
@@ -614,7 +614,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function cross(<Vector> b) -> <Vector>
+    public function cross(const <Vector> b) -> <Vector>
     {
         if this->n !== 3 || b->size() !== 3 {
             throw new InvalidArgumentException("Cross product is"
@@ -636,7 +636,7 @@ class Vector implements Tensor
      * @param \Tensor\Vector b
      * @return self
      */
-    public function project(<Vector> b) -> <Vector>
+    public function project(const <Vector> b) -> <Vector>
     {
         return b->multiply(this->dot(b) / (pow(b->l2Norm(), 2)));
     }
@@ -668,7 +668,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return int|float
      */
-    public function pNorm(float p = 3.0)
+    public function pNorm(const float p = 3.0)
     {
         if p <= 0.0 {
             throw new InvalidArgumentException("P must be greater"
@@ -696,7 +696,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function multiply(b)
+    public function multiply(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -724,7 +724,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function divide(b)
+    public function divide(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -752,7 +752,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function add(b)
+    public function add(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -780,7 +780,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function subtract(b)
+    public function subtract(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -808,7 +808,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function pow(b)
+    public function pow(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -836,7 +836,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function mod(b)
+    public function mod(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -864,7 +864,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function equal(b)
+    public function equal(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -892,7 +892,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function notEqual(b)
+    public function notEqual(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -920,7 +920,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function greater(b)
+    public function greater(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -948,7 +948,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function greaterEqual(b)
+    public function greaterEqual(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -976,7 +976,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function less(b)
+    public function less(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -1004,7 +1004,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function lessEqual(b)
+    public function lessEqual(const b)
     {
         if is_object(b) {
             switch (true) {
@@ -1081,7 +1081,7 @@ class Vector implements Tensor
      * @param float base
      * @return self
      */
-    public function log(float base = self::M_E) -> <Vector>
+    public function log(const float base = self::M_E) -> <Vector>
     {
         var valueA;
 
@@ -1238,7 +1238,7 @@ class Vector implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function percentile(float p)
+    public function percentile(const float p)
     {
         if p < 0.0 || p > 100.0 {
             throw new InvalidArgumentException("P must be between"
@@ -1291,7 +1291,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function round(int precision = 0) -> <Vector>
+    public function round(const int precision = 0) -> <Vector>
     {
         if precision < 0 {
             throw new InvalidArgumentException("Decimal precision cannot"
@@ -1338,7 +1338,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function clip(float min, float max) -> <Vector>
+    public function clip(const float min, const float max) -> <Vector>
     {
         if min > max {
             throw new InvalidArgumentException("Minimum cannot be"
@@ -1374,7 +1374,7 @@ class Vector implements Tensor
      * @param float min
      * @return self
      */
-    public function clipLower(float min) -> <Vector>
+    public function clipLower(const float min) -> <Vector>
     {
         var valueA;
 
@@ -1399,7 +1399,7 @@ class Vector implements Tensor
      * @param float max
      * @return self
      */
-    public function clipUpper(float max) -> <Vector>
+    public function clipUpper(const float max) -> <Vector>
     {
         var valueA;
 
@@ -1467,7 +1467,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-     protected function multiplyMatrix(<Matrix> b) -> <Matrix>
+     protected function multiplyMatrix(const <Matrix> b) -> <Matrix>
      {
          if this->n !== b->n() {
              throw new InvalidArgumentException("Vector A requires "
@@ -1499,7 +1499,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function divideMatrix(<Matrix> b) -> <Matrix>
+    protected function divideMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1531,7 +1531,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function addMatrix(<Matrix> b) -> <Matrix>
+    protected function addMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1563,7 +1563,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function subtractMatrix(<Matrix> b) -> <Matrix>
+    protected function subtractMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1595,7 +1595,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function powMatrix(<Matrix> b) -> <Matrix>
+    protected function powMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1627,7 +1627,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function modMatrix(<Matrix> b) -> <Matrix>
+    protected function modMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1660,7 +1660,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function equalMatrix(<Matrix> b) -> <Matrix>
+    protected function equalMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1693,7 +1693,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function notEqualMatrix(<Matrix> b) -> <Matrix>
+    protected function notEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1726,7 +1726,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterMatrix(<Matrix> b) -> <Matrix>
+    protected function greaterMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1759,7 +1759,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterEqualMatrix(<Matrix> b) -> <Matrix>
+    protected function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1792,7 +1792,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessMatrix(<Matrix> b) -> <Matrix>
+    protected function lessMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1825,7 +1825,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessEqualMatrix(<Matrix> b) -> <Matrix>
+    protected function lessEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1857,7 +1857,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyVector(<Vector> b) -> <Vector>
+    protected function multiplyVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1883,7 +1883,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideVector(<Vector> b) -> <Vector>
+    protected function divideVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1909,7 +1909,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addVector(<Vector> b) -> <Vector>
+    protected function addVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1935,7 +1935,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractVector(<Vector> b) -> <Vector>
+    protected function subtractVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1961,7 +1961,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powVector(<Vector> b) -> <Vector>
+    protected function powVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1987,7 +1987,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modVector(<Vector> b) -> <Vector>
+    protected function modVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2014,7 +2014,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalVector(<Vector> b) -> <Vector>
+    protected function equalVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2041,7 +2041,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualVector(<Vector> b) -> <Vector>
+    protected function notEqualVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2068,7 +2068,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterVector(<Vector> b) -> <Vector>
+    protected function greaterVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2095,7 +2095,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualVector(<Vector> b) -> <Vector>
+    protected function greaterEqualVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2122,7 +2122,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessVector(<Vector> b) -> <Vector>
+    protected function lessVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2149,7 +2149,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualVector(<Vector> b) -> <Vector>
+    protected function lessEqualVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2175,7 +2175,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-     protected function multiplyScalar(scalar) -> <Vector>
+     protected function multiplyScalar(const scalar) -> <Vector>
      {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2201,7 +2201,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideScalar(scalar) -> <Vector>
+    protected function divideScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2227,7 +2227,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addScalar(scalar) -> <Vector>
+    protected function addScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2253,7 +2253,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractScalar(scalar) -> <Vector>
+    protected function subtractScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2279,7 +2279,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-     protected function powScalar(scalar) -> <Vector>
+     protected function powScalar(const scalar) -> <Vector>
      {
          if !is_int(scalar) && !is_float(scalar) {
              throw new InvalidArgumentException("Scalar must be an"
@@ -2305,7 +2305,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modScalar(scalar) -> <Vector>
+    protected function modScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2332,7 +2332,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalScalar(scalar) -> <Vector>
+    protected function equalScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2359,7 +2359,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualScalar(scalar) -> <Vector>
+    protected function notEqualScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2386,7 +2386,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterScalar(scalar) -> <Vector>
+    protected function greaterScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2413,7 +2413,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualScalar(scalar) -> <Vector>
+    protected function greaterEqualScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2440,7 +2440,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessScalar(scalar) -> <Vector>
+    protected function lessScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2467,7 +2467,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualScalar(scalar) -> <Vector>
+    protected function lessEqualScalar(const scalar) -> <Vector>
     {
         if !is_int(scalar) && !is_float(scalar) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2512,7 +2512,7 @@ class Vector implements Tensor
      * @param mixed index
      * @return bool
      */
-    public function offsetExists(index) -> bool
+    public function offsetExists(const index) -> bool
     {
         return isset(this->a[index]);
     }
@@ -2533,7 +2533,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return int|float
      */
-    public function offsetGet(index)
+    public function offsetGet(const index)
     {
         if !isset(this->a[index]) {
             throw new InvalidArgumentException("Element not found at "

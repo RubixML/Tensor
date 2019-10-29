@@ -44,7 +44,7 @@ class Lu implements Decomposition
      * @param \Tensor\Matrix a
      * @return self
      */
-    public static function decompose(<Matrix> a) -> <Lu>
+    public static function decompose(const <Matrix> a) -> <Lu>
     {
         if !a->isSquare() {
             throw new RuntimeException("Cannot decompose a non square matrix.");
@@ -119,7 +119,7 @@ class Lu implements Decomposition
      * @param \Tensor\Matrix u
      * @param \Tensor\Matrix p
      */
-    public function __construct(<Matrix> l, <Matrix> u, <Matrix> p)
+    public function __construct(const <Matrix> l, const <Matrix> u, const <Matrix> p)
     {
         let this->l = l;
         let this->u = u;
