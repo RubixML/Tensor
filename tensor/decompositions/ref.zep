@@ -41,11 +41,9 @@ class Ref implements Decomposition
      */
     public static function decompose(const <Matrix> a) -> <Ref>
     {
-        var e;
-
         try {
             return self::gaussianElimination(a);
-        } catch RuntimeException, e {
+        } catch RuntimeException {
             return self::rowReductionMethod(a);
         }
     }

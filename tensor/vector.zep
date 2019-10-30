@@ -2535,12 +2535,14 @@ class Vector implements Tensor
      */
     public function offsetGet(const index)
     {
-        if !isset(this->a[index]) {
-            throw new InvalidArgumentException("Element not found at "
-                . " offset " . (string) index . ".");
+        var value;
+
+        if fetch value, this->a[index] {
+            return value;
         }
 
-        return this->a[index];
+        throw new InvalidArgumentException("Element not found at"
+            . " offset " . (string) index . ".");
     }
 
     /**

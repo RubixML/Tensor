@@ -193,7 +193,6 @@ class Matrix implements Tensor
             throw new InvalidArgumentException("Dimensionality must be"
                 . " greater than 0 for all axes.");
         }
-
  
         return self::quick(array_fill(0, m, array_fill(0, n, value)));
     }
@@ -875,7 +874,7 @@ class Matrix implements Tensor
         }
 
         uint i, j;
-        var k, l, valueA, rowB, valueB;
+        var k, l, rowB, valueB;
 
         var p = intdiv(m, 2);
         var q = intdiv(n, 2);

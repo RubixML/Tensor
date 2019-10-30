@@ -250,7 +250,7 @@ PHP_METHOD(Tensor_Vector, fill) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long n, ZEPHIR_LAST_CALL_STATUS;
-	zval *value, value_sub, *n_param = NULL, _1, _9, _10, _11, _2$$3, _3$$3, _4$$3, _5$$4, _6$$4, _7$$4, _8$$4;
+	zval *value = NULL, value_sub, *n_param = NULL, _1, _9, _10, _11, _2$$3, _3$$3, _4$$3, _5$$4, _6$$4, _7$$4, _8$$4;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&value_sub);
@@ -578,7 +578,7 @@ PHP_METHOD(Tensor_Vector, range) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *start, start_sub, *end, end_sub, *interval = NULL, interval_sub, _0;
+	zval *start = NULL, start_sub, *end = NULL, end_sub, *interval = NULL, interval_sub, _0;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&start_sub);
@@ -678,7 +678,7 @@ PHP_METHOD(Tensor_Vector, maximum) {
 	zval _4$$3, _6$$3, _7$$3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a, a_sub, *b, b_sub, _0, _1, _8, _9, _10, _11, _2$$3, _3$$3, _5$$3;
+	zval *a = NULL, a_sub, *b = NULL, b_sub, _0, _1, _8, _9, _10, _11, _2$$3, _3$$3, _5$$3;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -749,7 +749,7 @@ PHP_METHOD(Tensor_Vector, minimum) {
 	zval _4$$3, _6$$3, _7$$3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a, a_sub, *b, b_sub, _0, _1, _8, _9, _10, _11, _2$$3, _3$$3, _5$$3;
+	zval *a = NULL, a_sub, *b = NULL, b_sub, _0, _1, _8, _9, _10, _11, _2$$3, _3$$3, _5$$3;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -1311,7 +1311,7 @@ PHP_METHOD(Tensor_Vector, map) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *callback, callback_sub, _0, _1;
+	zval *callback = NULL, callback_sub, _0, _1;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&callback_sub);
@@ -1345,7 +1345,7 @@ PHP_METHOD(Tensor_Vector, reduce) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *callback, callback_sub, *initial = NULL, initial_sub, _1, _5, _2$$3, _3$$3, _4$$3;
+	zval *callback = NULL, callback_sub, *initial = NULL, initial_sub, _1, _5, _2$$3, _3$$3, _4$$3;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&callback_sub);
@@ -1406,7 +1406,7 @@ PHP_METHOD(Tensor_Vector, dot) {
 	zend_ulong _11;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, sigma, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, sigma, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1518,7 +1518,7 @@ PHP_METHOD(Tensor_Vector, convolve) {
 	zend_ulong i = 0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long stride, ZEPHIR_LAST_CALL_STATUS, _10, _11, k$$6;
-	zval *b, b_sub, *stride_param = NULL, _0, _1, j, valueA, valueB, _8, _2$$3, _4$$4, _5$$4, _6$$4, _7$$4, _15$$5, _13$$6, _14$$7;
+	zval *b = NULL, b_sub, *stride_param = NULL, _0, _1, j, valueA, valueB, _8, _2$$3, _4$$4, _5$$4, _6$$4, _7$$4, _15$$5, _13$$6, _14$$7;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1633,7 +1633,7 @@ PHP_METHOD(Tensor_Vector, matmul) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0;
+	zval *b = NULL, b_sub, _0;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1662,7 +1662,7 @@ PHP_METHOD(Tensor_Vector, inner) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub;
+	zval *b = NULL, b_sub;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1691,7 +1691,7 @@ PHP_METHOD(Tensor_Vector, outer) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_7 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, j, valueA, valueB, n, _0, *_1, _2, _4$$4, _6$$6;
+	zval *b = NULL, b_sub, j, valueA, valueB, n, _0, *_1, _2, _4$$4, _6$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1790,7 +1790,7 @@ PHP_METHOD(Tensor_Vector, cross) {
 	zend_bool _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _2, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _3$$3;
+	zval *b = NULL, b_sub, _0, _2, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _3$$3;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1893,7 +1893,7 @@ PHP_METHOD(Tensor_Vector, project) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, _2, _3, _4;
+	zval *b = NULL, b_sub, _0, _1, _2, _3, _4;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2070,7 +2070,7 @@ PHP_METHOD(Tensor_Vector, multiply) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2138,7 +2138,7 @@ PHP_METHOD(Tensor_Vector, divide) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2206,7 +2206,7 @@ PHP_METHOD(Tensor_Vector, add) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2274,7 +2274,7 @@ PHP_METHOD(Tensor_Vector, subtract) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2342,7 +2342,7 @@ PHP_METHOD(Tensor_Vector, pow) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2410,7 +2410,7 @@ PHP_METHOD(Tensor_Vector, mod) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2478,7 +2478,7 @@ PHP_METHOD(Tensor_Vector, equal) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2546,7 +2546,7 @@ PHP_METHOD(Tensor_Vector, notEqual) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2614,7 +2614,7 @@ PHP_METHOD(Tensor_Vector, greater) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2682,7 +2682,7 @@ PHP_METHOD(Tensor_Vector, greaterEqual) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2750,7 +2750,7 @@ PHP_METHOD(Tensor_Vector, less) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -2818,7 +2818,7 @@ PHP_METHOD(Tensor_Vector, lessEqual) {
 	zend_bool _0$$3, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _2, _3, _4, _5;
+	zval *b = NULL, b_sub, _2, _3, _4, _5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -4080,7 +4080,7 @@ PHP_METHOD(Tensor_Vector, multiplyMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -4208,7 +4208,7 @@ PHP_METHOD(Tensor_Vector, divideMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -4336,7 +4336,7 @@ PHP_METHOD(Tensor_Vector, addMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -4464,7 +4464,7 @@ PHP_METHOD(Tensor_Vector, subtractMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -4592,7 +4592,7 @@ PHP_METHOD(Tensor_Vector, powMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -4720,7 +4720,7 @@ PHP_METHOD(Tensor_Vector, modMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -4849,7 +4849,7 @@ PHP_METHOD(Tensor_Vector, equalMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -4990,7 +4990,7 @@ PHP_METHOD(Tensor_Vector, notEqualMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -5131,7 +5131,7 @@ PHP_METHOD(Tensor_Vector, greaterMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -5272,7 +5272,7 @@ PHP_METHOD(Tensor_Vector, greaterEqualMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -5413,7 +5413,7 @@ PHP_METHOD(Tensor_Vector, lessMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -5554,7 +5554,7 @@ PHP_METHOD(Tensor_Vector, lessEqualMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_19 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
+	zval *b = NULL, b_sub, _0, _1, j, rowB, valueB, _2$$3, _3$$3, _5$$3, *_9$$4, _10$$4, _13$$5, _14$$5, _15$$5, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -5692,7 +5692,7 @@ PHP_METHOD(Tensor_Vector, multiplyVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -5803,7 +5803,7 @@ PHP_METHOD(Tensor_Vector, divideVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -5914,7 +5914,7 @@ PHP_METHOD(Tensor_Vector, addVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -6025,7 +6025,7 @@ PHP_METHOD(Tensor_Vector, subtractVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -6136,7 +6136,7 @@ PHP_METHOD(Tensor_Vector, powVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -6247,7 +6247,7 @@ PHP_METHOD(Tensor_Vector, modVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -6359,7 +6359,7 @@ PHP_METHOD(Tensor_Vector, equalVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -6483,7 +6483,7 @@ PHP_METHOD(Tensor_Vector, notEqualVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -6607,7 +6607,7 @@ PHP_METHOD(Tensor_Vector, greaterVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -6731,7 +6731,7 @@ PHP_METHOD(Tensor_Vector, greaterEqualVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -6855,7 +6855,7 @@ PHP_METHOD(Tensor_Vector, lessVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -6979,7 +6979,7 @@ PHP_METHOD(Tensor_Vector, lessEqualVector) {
 	zval c;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
+	zval *b = NULL, b_sub, _0, _1, i, valueA, _8, *_9, _10, _2$$3, _3$$3, _5$$3, _13$$4, _14$$4, _15$$5, _16$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -7100,7 +7100,7 @@ PHP_METHOD(Tensor_Vector, multiplyScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -7190,7 +7190,7 @@ PHP_METHOD(Tensor_Vector, divideScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -7280,7 +7280,7 @@ PHP_METHOD(Tensor_Vector, addScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -7370,7 +7370,7 @@ PHP_METHOD(Tensor_Vector, subtractScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -7460,7 +7460,7 @@ PHP_METHOD(Tensor_Vector, powScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -7550,7 +7550,7 @@ PHP_METHOD(Tensor_Vector, modScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -7641,7 +7641,7 @@ PHP_METHOD(Tensor_Vector, equalScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -7744,7 +7744,7 @@ PHP_METHOD(Tensor_Vector, notEqualScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -7847,7 +7847,7 @@ PHP_METHOD(Tensor_Vector, greaterScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -7950,7 +7950,7 @@ PHP_METHOD(Tensor_Vector, greaterEqualScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -8053,7 +8053,7 @@ PHP_METHOD(Tensor_Vector, lessScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -8156,7 +8156,7 @@ PHP_METHOD(Tensor_Vector, lessEqualScalar) {
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *scalar, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
+	zval *scalar = NULL, scalar_sub, _1, valueA, _5, *_6, _7, _2$$3, _3$$3, _4$$3, _8$$4, _9$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&scalar_sub);
@@ -8289,7 +8289,7 @@ PHP_METHOD(Tensor_Vector, offsetSet) {
  */
 PHP_METHOD(Tensor_Vector, offsetExists) {
 
-	zval *index, index_sub, _0;
+	zval *index = NULL, index_sub, _0;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&index_sub);
@@ -8333,41 +8333,39 @@ PHP_METHOD(Tensor_Vector, offsetUnset) {
  */
 PHP_METHOD(Tensor_Vector, offsetGet) {
 
-	zval _2$$3, _3$$3;
+	zval _2, _3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *index, index_sub, _0, _4, _5, _1$$3;
+	zval *index = NULL, index_sub, value, _0, _1;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&index_sub);
+	ZVAL_UNDEF(&value);
 	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_4);
-	ZVAL_UNDEF(&_5);
-	ZVAL_UNDEF(&_1$$3);
-	ZVAL_UNDEF(&_2$$3);
-	ZVAL_UNDEF(&_3$$3);
+	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_3);
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &index);
 
 
 
+	ZEPHIR_OBS_VAR(&value);
 	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	if (!(zephir_array_isset(&_0, index))) {
-		ZEPHIR_INIT_VAR(&_1$$3);
-		object_init_ex(&_1$$3, spl_ce_InvalidArgumentException);
-		zephir_get_strval(&_2$$3, index);
-		ZEPHIR_INIT_VAR(&_3$$3);
-		ZEPHIR_CONCAT_SSVS(&_3$$3, "Element not found at ", " offset ", &_2$$3, ".");
-		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 3, &_3$$3);
-		zephir_check_call_status();
-		zephir_throw_exception_debug(&_1$$3, "tensor/vector.zep", 2540);
-		ZEPHIR_MM_RESTORE();
-		return;
+	if (zephir_array_isset_fetch(&value, &_0, index, 0)) {
+		RETURN_CCTOR(&value);
 	}
-	zephir_read_property(&_4, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	zephir_array_fetch(&_5, &_4, index, PH_NOISY | PH_READONLY, "tensor/vector.zep", 2543);
-	RETURN_CTOR(&_5);
+	ZEPHIR_INIT_VAR(&_1);
+	object_init_ex(&_1, spl_ce_InvalidArgumentException);
+	zephir_get_strval(&_2, index);
+	ZEPHIR_INIT_VAR(&_3);
+	ZEPHIR_CONCAT_SSVS(&_3, "Element not found at", " offset ", &_2, ".");
+	ZEPHIR_CALL_METHOD(NULL, &_1, "__construct", NULL, 3, &_3);
+	zephir_check_call_status();
+	zephir_throw_exception_debug(&_1, "tensor/vector.zep", 2545);
+	ZEPHIR_MM_RESTORE();
+	return;
 
 }
 

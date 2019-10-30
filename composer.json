@@ -48,9 +48,12 @@
             "@test"
         ],
         "analyze": "phpstan analyse -c phpstan.neon",
+        "build-ext": "zephir build",
         "check": "php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no",
         "compile": "zephir compile",
         "fix": "php-cs-fixer fix --config=.php_cs.dist",
+        "generate": "zephir generate",
+        "install-ext": "zephir install",
         "test": "phpunit",
         "clean": "zephir fullclean"
     },

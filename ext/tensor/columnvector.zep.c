@@ -174,7 +174,7 @@ PHP_METHOD(Tensor_ColumnVector, matmul) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0;
+	zval *b = NULL, b_sub, _0;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -208,7 +208,7 @@ PHP_METHOD(Tensor_ColumnVector, multiplyMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -323,7 +323,7 @@ PHP_METHOD(Tensor_ColumnVector, divideMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -438,7 +438,7 @@ PHP_METHOD(Tensor_ColumnVector, addMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -553,7 +553,7 @@ PHP_METHOD(Tensor_ColumnVector, subtractMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -668,7 +668,7 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -783,7 +783,7 @@ PHP_METHOD(Tensor_ColumnVector, modMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -899,7 +899,7 @@ PHP_METHOD(Tensor_ColumnVector, equalMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1027,7 +1027,7 @@ PHP_METHOD(Tensor_ColumnVector, notEqualMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1155,7 +1155,7 @@ PHP_METHOD(Tensor_ColumnVector, greaterMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1283,7 +1283,7 @@ PHP_METHOD(Tensor_ColumnVector, greaterEqualMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1411,7 +1411,7 @@ PHP_METHOD(Tensor_ColumnVector, lessMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
@@ -1539,7 +1539,7 @@ PHP_METHOD(Tensor_ColumnVector, lessEqualMatrix) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_14 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *b, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
+	zval *b = NULL, b_sub, _0, _1, i, rowB, valueB, _2$$3, _3$$3, _5$$3, valueA$$4, _9$$4, *_10$$4, _11$$4, _12$$5, _13$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
