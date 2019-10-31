@@ -1507,6 +1507,16 @@ class Matrix implements Tensor
     }
 
     /**
+     * Compute the arc sine of the matrix.
+     *
+     * @return self
+     */
+    public function asin() : self
+    {
+        return $this->map('asin');
+    }
+
+    /**
      * Return the cosine of the matrix.
      *
      * @return self
@@ -1517,6 +1527,16 @@ class Matrix implements Tensor
     }
 
     /**
+     * Compute the arc cosine of the matrix.
+     *
+     * @return self
+     */
+    public function acos() : self
+    {
+        return $this->map('acos');
+    }
+
+    /**
      * Return the tangent of the matrix.
      *
      * @return self
@@ -1524,6 +1544,16 @@ class Matrix implements Tensor
     public function tan() : self
     {
         return $this->map('tan');
+    }
+
+    /**
+     * Compute the arc tangent of the matrix.
+     *
+     * @return self
+     */
+    public function atan() : self
+    {
+        return $this->map('atan');
     }
 
     /**

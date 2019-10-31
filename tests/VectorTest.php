@@ -838,6 +838,18 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
+    public function test_asin()
+    {
+        $z = Vector::quick([0.1, 0.3, -0.5])->asin();
+
+        $expected = [
+            0.1001674211615598, 0.3046926540153975, -0.5235987755982989,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
     public function test_cos()
     {
         $z = $this->c->cos();
@@ -851,6 +863,18 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
+    public function test_acos()
+    {
+        $z = Vector::quick([0.1, 0.3, -0.5])->acos();
+
+        $expected = [
+            1.4706289056333368, 1.2661036727794992, 2.0943951023931957,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
     public function test_tan()
     {
         $z = $this->c->tan();
@@ -858,6 +882,19 @@ class VectorTest extends TestCase
         $expected = [
             1.1578212823495777, 0.22027720034589682, -0.24640539397196634,
             2.237160944224742, -0.6015966130897586, -0.7863636563696398,
+        ];
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
+    public function test_atan()
+    {
+        $z = $this->c->atan();
+
+        $expected = [
+            1.3258176636680326, 1.4181469983996315, 1.2387368592520112,
+            1.5208379310729538, 1.2036224929766774, 1.486959684726482,
         ];
 
         $this->assertInstanceOf(Vector::class, $z);

@@ -203,6 +203,13 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function sin();
 
     /**
+     * Compute the arc sine of the tensor.
+     *
+     * @return mixed
+     */
+     public function asin();
+
+    /**
      * Return the cosine of the tensor.
      *
      * @return mixed
@@ -210,11 +217,25 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function cos();
 
     /**
+     * Compute the arc cosine of the tensor.
+     *
+     * @return mixed
+     */
+     public function acos();
+
+    /**
      * Return the tangent of the tensor.
      *
      * @return mixed
      */
     public function tan();
+
+    /**
+     * Compute the arc tangent of the tensor.
+     *
+     * @return mixed
+     */
+     public function atan();
 
     /**
      * Convert angles from radians to degrees.

@@ -1105,6 +1105,16 @@ class Vector implements Tensor
     }
 
     /**
+     * Compute the arc sine of the vector.
+     *
+     * @return self
+     */
+    public function asin() -> <Vector>
+    {
+        return this->map("asin");
+    }
+
+    /**
      * Return the cosine of this vector.
      *
      * @return self
@@ -1115,6 +1125,16 @@ class Vector implements Tensor
     }
 
     /**
+     * Compute the arc cosine of the vector.
+     *
+     * @return self
+     */
+    public function acos() -> <Vector>
+    {
+        return this->map("acos");
+    }
+
+    /**
      * Return the tangent of this vector.
      *
      * @return self
@@ -1122,6 +1142,16 @@ class Vector implements Tensor
     public function tan() -> <Vector>
     {
         return this->map("tan");
+    }
+
+    /**
+     * Compute the arc tangent of the vector.
+     *
+     * @return self
+     */
+    public function atan() -> <Vector>
+    {
+        return this->map("atan");
     }
 
     /**

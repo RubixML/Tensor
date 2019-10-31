@@ -1514,6 +1514,16 @@ class Matrix implements Tensor
     {
         return this->map("sin");
     }
+
+    /**
+     * Compute the arc sine of the matrix.
+     *
+     * @return self
+     */
+    public function asin() -> <Matrix>
+    {
+        return this->map("asin");
+    }
  
     /**
      * Return the cosine of the matrix.
@@ -1524,6 +1534,16 @@ class Matrix implements Tensor
     {
         return this->map("cos");
     }
+
+    /**
+     * Compute the arc cosine of the matrix.
+     *
+     * @return self
+     */
+    public function acos() -> <Matrix>
+    {
+        return this->map("acos");
+    }
  
     /**
      * Return the tangent of the matrix.
@@ -1533,6 +1553,16 @@ class Matrix implements Tensor
     public function tan() -> <Matrix>
     {
         return this->map("tan");
+    }
+
+    /**
+     * Compute the arc tangent of the matrix.
+     *
+     * @return self
+     */
+    public function atan() -> <Matrix>
+    {
+        return this->map("atan");
     }
  
     /**
@@ -2042,23 +2072,23 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function repeat(int m = 1, int n = 1) -> <Matrix>
+    public function repeat(const int m = 1, const int n = 1) -> <Matrix>
     {
         if m < 1 || n < 1 {
             throw new InvalidArgumentException("Cannot repeat less than"
                 . " 1 row or column.");
         }
 
-        uint j;
+        int j, k;
         var i, rowA;
 
         var b = this->a;
 
-        let n -= 1;
+        let k = n - 1;
 
-        if n > 0 {
+        if k > 0 {
             for i, rowA in this->a {
-                for j in range(0, n - 1) {
+                for j in range(0, k - 1) {
                     let b[i] = array_merge(b[i], rowA);
                 }
             }

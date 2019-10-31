@@ -1057,6 +1057,16 @@ class Vector implements Tensor
     }
 
     /**
+     * Compute the arc sine of the vector.
+     *
+     * @return self
+     */
+    public function asin() : self
+    {
+        return $this->map('asin');
+    }
+
+    /**
      * Return the cosine of this vector.
      *
      * @return self
@@ -1067,6 +1077,16 @@ class Vector implements Tensor
     }
 
     /**
+     * Compute the arc cosine of the vector.
+     *
+     * @return self
+     */
+    public function acos() : self
+    {
+        return $this->map('acos');
+    }
+
+    /**
      * Return the tangent of this vector.
      *
      * @return self
@@ -1074,6 +1094,16 @@ class Vector implements Tensor
     public function tan() : self
     {
         return $this->map('tan');
+    }
+
+    /**
+     * Compute the arc tangent of the vector.
+     *
+     * @return self
+     */
+    public function atan() : self
+    {
+        return $this->map('atan');
     }
 
     /**

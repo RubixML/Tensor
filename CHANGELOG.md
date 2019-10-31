@@ -3,6 +3,7 @@
     - Changed namespace from Rubix\Tensor to \Tensor
     - Matrix decompositions are now a separate abstraction
     - Removed Dimensionality Mismatch exception
+    - Added inverse trigonomic methods to tensor interface
 
 - 1.0.4
     - Added transpose to Tensor API

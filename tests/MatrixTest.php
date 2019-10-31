@@ -1327,6 +1327,24 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
+    public function test_asin()
+    {
+        $z = Matrix::quick([
+            [0.32],
+            [-0.5],
+            [0.01],
+        ])->asin();
+        
+        $expected = [
+            [0.3257294872946302],
+            [-0.5235987755982989],
+            [0.010000166674167114],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
     public function test_cos()
     {
         $z = $this->b->cos();
@@ -1341,6 +1359,24 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
+    public function test_acos()
+    {
+        $z = Matrix::quick([
+            [0.32],
+            [-0.5],
+            [0.01],
+        ])->acos();
+
+        $expected = [
+            [1.2450668395002664],
+            [2.0943951023931957],
+            [1.5607961601207294],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
     public function test_tan()
     {
         $z = $this->b->tan();
@@ -1349,6 +1385,20 @@ class MatrixTest extends TestCase
             [0.4630211329364896],
             [-225.95084645419513],
             [-0.45231565944180985],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
+    public function test_atan()
+    {
+        $z = $this->b->atan();
+
+        $expected = [
+            [1.4940244355251187],
+            [1.4801364395941514],
+            [1.460139105621001],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
