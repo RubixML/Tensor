@@ -896,15 +896,22 @@ class Matrix implements Tensor
                 $sigma = 0;
 
                 foreach ($b as $k => $rowB) {
+                    $x = $i + $p - (int) $k;
+
+                    if ($x < 0 or $x >= $this->m) {
+                        continue 1;
+                    }
+
+                    $rowA = $this->a[$x];
+
                     foreach ($rowB as $l => $valueB) {
-                        $x = $i + $p - (int) $k;
                         $y = $j + $q - (int) $l;
 
-                        if ($x < 0 or $x >= $this->n or $y < 0 or $y >= $this->m) {
+                        if ($y < 0 or $y >= $this->n) {
                             continue 1;
                         }
 
-                        $sigma += $this->a[$x][$y] * $valueB;
+                        $sigma += $rowA[$y] * $valueB;
                     }
                 }
 

@@ -874,7 +874,8 @@ class Matrix implements Tensor
         }
 
         uint i, j;
-        var k, l, rowB, valueB;
+        int x, y;
+        var k, l, rowA, rowB, valueB;
 
         var p = intdiv(m, 2);
         var q = intdiv(n, 2);
@@ -888,15 +889,22 @@ class Matrix implements Tensor
                 var sigma = 0;
 
                 for k, rowB in iterator(b) {
-                    for l, valueB in rowB {
-                        int x = i + p - (int) k;
-                        int y = j + q - (int) l;
+                    let x = i + p - (int) k;
 
-                        if unlikely x < 0 || x >= this->n || y < 0 || y >= this->m {
+                    if unlikely x < 0 || x >= this->m {
+                        continue;
+                    }
+
+                    let rowA = this->a[x];
+
+                    for l, valueB in rowB {
+                        let y = j + q - (int) l;
+
+                        if unlikely y < 0 || y >= this->n {
                             continue;
                         }
 
-                        let sigma += this->a[x][y] * valueB;
+                        let sigma += rowA[y] * valueB;
                     }
                 }
 
