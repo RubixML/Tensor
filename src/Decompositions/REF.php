@@ -68,10 +68,10 @@ class REF implements Decomposition
 
         $swaps = 0;
 
-        for ($i = 0; $i < $minDim; $i++) {
+        for ($i = 0; $i < $minDim; ++$i) {
             $index = $i;
 
-            for ($j = $i; $j < $m; $j++) {
+            for ($j = $i; $j < $m; ++$j) {
                 if (abs($b[$j][$i]) > abs($b[$index][$i])) {
                     $index = $j;
                 }
@@ -88,15 +88,15 @@ class REF implements Decomposition
                 $b[$i] = $b[$index];
                 $b[$index] = $temp;
 
-                $swaps++;
+                ++$swaps;
             }
 
             $diag = $b[$i][$i];
 
-            for ($j = $i + 1; $j < $m; $j++) {
+            for ($j = $i + 1; $j < $m; ++$j) {
                 $scale = $diag != 0 ? $b[$j][$i] / $diag : 1;
                 
-                for ($k = $i + 1; $k < $n; $k++) {
+                for ($k = $i + 1; $k < $n; ++$k) {
                     $b[$j][$k] -= $scale * $b[$i][$k];
                 }
                 
@@ -128,14 +128,14 @@ class REF implements Decomposition
             $t = $b[$row];
 
             if ($t[$col] == 0) {
-                for ($i = $row + 1; $i < $m; $i++) {
+                for ($i = $row + 1; $i < $m; ++$i) {
                     if ($b[$i][$col] != 0) {
                         $temp = $b[$i];
 
                         $b[$i] = $t;
                         $t = $temp;
         
-                        $swaps++;
+                        ++$swaps;
 
                         break 1;
                     }
@@ -143,7 +143,7 @@ class REF implements Decomposition
             }
 
             if ($t[$col] == 0) {
-                $col++;
+                ++$col;
 
                 continue 1;
             }
@@ -151,16 +151,16 @@ class REF implements Decomposition
             $divisor = $t[$col];
 
             if ($divisor != 1) {
-                for ($i = 0; $i < $n; $i++) {
+                for ($i = 0; $i < $n; ++$i) {
                     $t[$i] /= $divisor;
                 }
             }
 
-            for ($i = $row + 1; $i < $m; $i++) {
+            for ($i = $row + 1; $i < $m; ++$i) {
                 $scale = $b[$i][$col];
 
                 if ($scale != 0) {
-                    for ($j = 0; $j < $n; $j++) {
+                    for ($j = 0; $j < $n; ++$j) {
                         $b[$i][$j] -= $scale * $t[$j];
                     }
                 }
@@ -168,8 +168,8 @@ class REF implements Decomposition
 
             $b[$row] = $t;
 
-            $row++;
-            $col++;
+            ++$row;
+            ++$col;
         }
 
         $b = Matrix::quick($b);

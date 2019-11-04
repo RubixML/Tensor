@@ -539,7 +539,7 @@ class Vector implements Tensor
         foreach ($this->a as $i => $valueA) {
             $rowC = [];
 
-            for ($j = 0; $j < $n; $j++) {
+            for ($j = 0; $j < $n; ++$j) {
                 $rowC[] = $valueA * $b[$j];
             }
 

@@ -15,7 +15,7 @@
 #define PHP_TENSOR_EXTNAME     "tensor"
 #define PHP_TENSOR_AUTHOR      "Andrew DalPino"
 #define PHP_TENSOR_ZEPVERSION  "0.12.11-$Id$"
-#define PHP_TENSOR_DESCRIPTION "Tensor provides objects for scientific computing in PHP."
+#define PHP_TENSOR_DESCRIPTION "Tensor is a library and extension that provides objects for scientific computing in PHP."
 
 
 

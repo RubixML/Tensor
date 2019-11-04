@@ -1,6 +1,7 @@
 {
     "namespace": "tensor",
     "name": "tensor",
+    "extension-name": "tensor",
     "description": "Tensor is a library and extension that provides objects for scientific computing in PHP.",
     "author": "Andrew DalPino",
     "version": "0.0.1-alpha",
@@ -15,6 +16,7 @@
     "extra-sources": [
 
     ],
+    "extra-cflags": "-march=native -O3 -pipe",
     "optimizer-dirs": [
         "optimizers"
     ],
@@ -55,7 +57,7 @@
         "conditional-initialization": true
     },
     "extra": {
-        "indent": "spaces",
-        "export-classes": true
+        "export-classes": true,
+        "indent": "spaces"
     }
 }

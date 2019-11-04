@@ -44,7 +44,7 @@ class RREF implements Decomposition
             $t = $b[$row];
 
             if (abs($t[$col]) == 0) {
-                $col++;
+                ++$col;
 
                 continue 1;
             }
@@ -52,16 +52,16 @@ class RREF implements Decomposition
             $divisor = $t[$col];
 
             if ($divisor != 1) {
-                for ($i = 0; $i < $n; $i++) {
+                for ($i = 0; $i < $n; ++$i) {
                     $t[$i] /= $divisor;
                 }
             }
 
-            for ($i = $row - 1; $i >= 0; $i--) {
+            for ($i = $row - 1; $i >= 0; --$i) {
                 $scale = $b[$i][$col];
 
                 if ($scale != 0) {
-                    for ($j = 0; $j < $n; $j++) {
+                    for ($j = 0; $j < $n; ++$j) {
                         $b[$i][$j] += -$scale * $t[$j];
                     }
                 }
@@ -69,8 +69,8 @@ class RREF implements Decomposition
 
             $b[$row] = $t;
 
-            $row++;
-            $col++;
+            ++$row;
+            ++$col;
         }
 
         $b = Matrix::quick($b);

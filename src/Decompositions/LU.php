@@ -58,12 +58,12 @@ class LU implements Decomposition
         $u = Matrix::zeros($n, $n)->asArray();
         $p = Matrix::identity($n)->asArray();
 
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; ++$i) {
             $max = $a[$i][$i];
 
             $row = $i;
 
-            for ($j = $i; $j < $n; $j++) {
+            for ($j = $i; $j < $n; ++$j) {
                 if ($a[$j][$i] > $max) {
                     $max = $a[$j][$i];
                     
@@ -83,21 +83,21 @@ class LU implements Decomposition
 
         $pa = $p->matmul($a);
 
-        for ($i = 0; $i < $n; $i++) {
-            for ($j = 0; $j <= $i; $j++) {
+        for ($i = 0; $i < $n; ++$i) {
+            for ($j = 0; $j <= $i; ++$j) {
                 $sigma = 0;
 
-                for ($k = 0; $k < $j; $k++) {
+                for ($k = 0; $k < $j; ++$k) {
                     $sigma += $u[$k][$i] * $l[$j][$k];
                 }
 
                 $u[$j][$i] = $pa[$j][$i] - $sigma;
             }
 
-            for ($j = $i; $j < $n; $j++) {
+            for ($j = $i; $j < $n; ++$j) {
                 $sigma = 0;
 
-                for ($k = 0; $k < $i; $k++) {
+                for ($k = 0; $k < $i; ++$k) {
                     $sigma += $u[$k][$i] * $l[$j][$k];
                 }
 

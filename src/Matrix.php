@@ -87,10 +87,10 @@ class Matrix implements Tensor
 
         $a = [];
 
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; ++$i) {
             $rowA = [];
 
-            for ($j = 0; $j < $n; $j++) {
+            for ($j = 0; $j < $n; ++$j) {
                 $rowA[] = $i === $j ? 1 : 0;
             }
 
@@ -167,10 +167,10 @@ class Matrix implements Tensor
 
         $a = [];
 
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; ++$i) {
             $rowA = [];
 
-            for ($j = 0; $j < $n; $j++) {
+            for ($j = 0; $j < $n; ++$j) {
                 $rowA[] = $i === $j ? $elements[$i] : 0;
             }
 
@@ -571,7 +571,7 @@ class Matrix implements Tensor
 
         $b = [];
 
-        for ($i = 0; $i < $this->m; $i++) {
+        for ($i = 0; $i < $this->m; ++$i) {
             $b[] = $this->a[$i][$i];
         }
 
@@ -607,7 +607,7 @@ class Matrix implements Tensor
     {
         $vectors = [];
 
-        for ($i = 0; $i < $this->m; $i++) {
+        for ($i = 0; $i < $this->m; ++$i) {
             $vectors[] = ColumnVector::quick(array_column($this->a, $i));
         }
 
@@ -715,7 +715,7 @@ class Matrix implements Tensor
         
         $b = [];
 
-        for ($i = 0; $i < $this->n; $i++) {
+        for ($i = 0; $i < $this->n; ++$i) {
             $b[] = array_column($this->a, $i);
         }
 
@@ -794,7 +794,7 @@ class Matrix implements Tensor
         foreach ($b as $rowB) {
             foreach ($rowB as $valueB) {
                 if ($valueB != 0) {
-                    $pivots++;
+                    ++$pivots;
 
                     continue 2;
                 }
@@ -815,10 +815,10 @@ class Matrix implements Tensor
             return false;
         }
 
-        for ($i = 0; $i < $this->m - 1; $i++) {
+        for ($i = 0; $i < $this->m - 1; ++$i) {
             $rowA = $this->a[$i];
 
-            for ($j = $i + 1; $j < $this->n; $j++) {
+            for ($j = $i + 1; $j < $this->n; ++$j) {
                 if ($rowA[$j] != $this->a[$j][$i]) {
                     return false;
                 }
@@ -840,7 +840,7 @@ class Matrix implements Tensor
             return false;
         }
 
-        for ($i = 1; $i <= $this->n; $i++) {
+        for ($i = 1; $i <= $this->n; ++$i) {
             if ($this->subMatrix(0, $i)->det() <= 0) {
                 return false;
             }
@@ -861,7 +861,7 @@ class Matrix implements Tensor
             return false;
         }
 
-        for ($i = 1; $i <= $this->n; $i++) {
+        for ($i = 1; $i <= $this->n; ++$i) {
             if ($this->subMatrix(0, $i)->det() < 0) {
                 return false;
             }
@@ -886,15 +886,15 @@ class Matrix implements Tensor
 
         $p = $b->n();
 
-        $bHat = $b->transpose()->asArray();
+        $bT = $b->transpose();
         
         $c = [];
 
         foreach ($this->a as $row) {
             $rowC = [];
 
-            for ($j = 0; $j < $p; $j++) {
-                $columnB = $bHat[$j];
+            for ($j = 0; $j < $p; ++$j) {
+                $columnB = $bT[$j];
                 
                 $sigma = 0;
 
@@ -1080,10 +1080,10 @@ class Matrix implements Tensor
 
         $y = [$pb[0] / ($l[0][0] ?: EPSILON)];
 
-        for ($i = 1; $i < $this->m; $i++) {
+        for ($i = 1; $i < $this->m; ++$i) {
             $sigma = 0;
 
-            for ($j = 0; $j <= $i - 1; $j++) {
+            for ($j = 0; $j <= $i - 1; ++$j) {
                 $sigma += $l[$i][$j] * $y[$j];
             }
 
@@ -1093,10 +1093,10 @@ class Matrix implements Tensor
 
         $x = [$k => $y[$k] / ($l[$k][$k] ?: EPSILON)];
 
-        for ($i = $this->m - 2; $i >= 0; $i--) {
+        for ($i = $this->m - 2; $i >= 0; --$i) {
             $sigma = 0;
 
-            for ($j = $i + 1; $j < $this->m; $j++) {
+            for ($j = $i + 1; $j < $this->m; ++$j) {
                 $sigma += $u[$i][$j] * $x[$j];
             }
 
@@ -2036,12 +2036,12 @@ class Matrix implements Tensor
 
         $b = [];
 
-        for ($i = $offset; $i < $k; $i++) {
+        for ($i = $offset; $i < $k; ++$i) {
             $rowA = $this->a[$i];
 
             $rowB = [];
 
-            for ($j = $offset; $j < $k; $j++) {
+            for ($j = $offset; $j < $k; ++$j) {
                 $rowB[] = $rowA[$j];
             }
 
@@ -2141,7 +2141,7 @@ class Matrix implements Tensor
 
         if ($n > 0) {
             foreach ($this->a as $i => $rowA) {
-                for ($j = 0; $j < $n; $j++) {
+                for ($j = 0; $j < $n; ++$j) {
                     $b[$i] = array_merge($b[$i], $rowA);
                 }
             }
@@ -2149,7 +2149,7 @@ class Matrix implements Tensor
 
         $c = [];
 
-        for ($i = 0; $i < $m; $i++) {
+        for ($i = 0; $i < $m; ++$i) {
             $c = array_merge($c, $b);
         }
 
