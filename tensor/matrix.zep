@@ -743,7 +743,7 @@ class Matrix implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function determinant()
+    public function det()
     {
         if !this->isSquare() {
             throw new RuntimeException("Determinant is undefined"
@@ -788,6 +788,79 @@ class Matrix implements Tensor
     }
 
     /**
+     * Is the matrix symmetric i.e. is it equal to its own transpose?
+     * 
+     * @return bool
+     */
+    public function symmetric() -> bool
+    {
+        if !this->isSquare() {
+            return false;
+        }
+
+        int i, j;
+        var rowA;
+
+        for i in range(0, this->m - 2) {
+            let rowA = this->a[i];
+
+            for j in range(i + 1, this->n - 1) {
+                if rowA[j] != this->a[j][i] {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Is the matrix positive definite i.e. do all of its principal
+     * minor matrices have a determinant greater than 0.
+     * 
+     * @return bool
+     */
+    public function positiveDefinite() -> bool
+    {
+        if !this->symmetric() {
+            return false;
+        }
+
+        int i;
+
+        for i in range(1, this->n) {
+            if this->subMatrix(0, i)->det() <= 0 {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Is the matrix positive semidefinite i.e. do all of its principal
+     * minor matrices have a determinant greater or equal to 0.
+     * 
+     * @return bool
+     */
+    public function positiveSemidefinite() -> bool
+    {
+        if !this->symmetric() {
+            return false;
+        }
+
+        int i;
+
+        for i in range(1, this->n) {
+            if this->subMatrix(0, i)->det() < 0 {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Multiply this matrix with another matrix (matrix-matrix product).
      *
      * @param \Tensor\Matrix b
@@ -807,7 +880,7 @@ class Matrix implements Tensor
 
         var p = b->n();
 
-        var bHat = b->transpose()->asArray();
+        var bT = b->transpose();
          
         array c = [];
  
@@ -815,7 +888,7 @@ class Matrix implements Tensor
             array rowC = [];
  
             for j in range(0, p - 1) {
-                var columnB = bHat[j];
+                var columnB = bT[j];
                  
                 let sigma = 0.0;
  
@@ -1964,36 +2037,50 @@ class Matrix implements Tensor
     }
 
     /**
-     * Exclude a row from the matrix.
-     *
-     * @param int index
+     * Return the square submatrix starting at an offset on the diagonal
+     * and excluding the last n rows and columns.
+     * 
+     * @param int offset
+     * @param int n
+     * @throws InvalidArgumentExeption
      * @return self
      */
-    public function rowExclude(const int index) -> <Matrix>
+    public function subMatrix(const int offset = 0, const int n = 1) -> <Matrix>
     {
-        var b = this->a;
+        if offset < 0 {
+            throw new InvalidArgumentException("Offset cannot be less"
+                . " than 0, " . strval(offset) . " given.");
+        }
 
-        unset(b[index]);
+        if n < 0 {
+            throw new InvalidArgumentException("N cannot be less than"
+                . " 0, " . strval(n) . " given.");
+        }
 
-        return self::quick(array_values(b));
-    }
+        int last = offset + n;
 
-    /**
-     * Exclude a column from the matrix.
-     *
-     * @param int index
-     * @return self
-     */
-    public function columnExclude(const int index) -> <Matrix>
-    {
+        if last > this->m || last > this->n {
+            throw new InvalidArgumentException("Sub matrix is out of"
+                . " bounds of matrix A.");
+        }
+
+        int i, j;
         var rowA;
+
+        int k = this->n - n - 1;
 
         array b = [];
 
-        for rowA in this->a {
-            unset(rowA[index]);
+        for i in range(offset, k) {
+            let rowA = this->a[i];
 
-            let b[] = array_values(rowA);
+            array rowB = [];
+
+            for j in range(offset, k) {
+                let rowB[] = rowA[j];
+            }
+
+            let b[] = rowB;
         }
 
         return self::quick(b);

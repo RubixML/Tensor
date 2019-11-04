@@ -5,6 +5,11 @@
     - Removed Dimensionality Mismatch exception
     - Added inverse trigonomic methods to tensor interface
     - Added Array-Like interface
+    - Removed Column/Row exclude methods from Matrix
+    - Changed method signature of matrix determinant
+    - Added return sub matrix
+    - Added positive definite and semidefinite methods to Matrix
+    - Added is symmetric method to Matrix
 
 - 1.0.4
     - Added transpose to Tensor API

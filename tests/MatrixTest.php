@@ -396,10 +396,45 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_determinant()
+    public function test_det()
     {
-        $this->assertEquals(-5301.999999999999, $this->a->determinant());
-        $this->assertEquals(-544., $this->c->determinant());
+        $this->assertEquals(-5301.999999999999, $this->a->det());
+        $this->assertEquals(-544., $this->c->det());
+    }
+
+    public function test_symmetric()
+    {
+        $a = Matrix::quick([
+            [1, 5, 2],
+            [5, 1, 3],
+            [2, 3, 1],
+        ]);
+
+        $this->assertTrue($a->symmetric());
+
+        $this->assertFalse($this->a->symmetric());
+    }
+
+    public function test_positive_definite()
+    {
+        $a = Matrix::quick([
+            [1, 5, 2],
+            [5, 1, 3],
+            [2, 3, 1],
+        ]);
+
+        $this->assertFalse($a->positiveDefinite());
+    }
+
+    public function test_positive_semidefinite()
+    {
+        $a = Matrix::quick([
+            [1, 5, 2],
+            [5, 1, 3],
+            [2, 3, 1],
+        ]);
+
+        $this->assertFalse($a->positiveSemidefinite());
     }
 
     public function test_rank()
@@ -1672,27 +1707,13 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_row_exclude()
+    public function test_sub_matrix()
     {
-        $z = $this->a->rowExclude(2);
+        $z = $this->a->subMatrix(1, 0);
 
         $expected = [
-            [22, -17, 12],
-            [4, 11, -2],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    public function test_column_exclude()
-    {
-        $z = $this->a->columnExclude(1);
-
-        $expected = [
-            [22, 12],
-            [4, -2],
-            [20, -9],
+            [11, -2],
+            [-6, -9],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);

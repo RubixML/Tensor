@@ -748,7 +748,7 @@ class Matrix implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function determinant()
+    public function det()
     {
         if (!$this->isSquare()) {
             throw new RuntimeException('Determinant is undefined'
@@ -802,6 +802,72 @@ class Matrix implements Tensor
         }
 
         return $pivots;
+    }
+
+    /**
+     * Is the matrix symmetric i.e. is it equal to its own transpose?
+     *
+     * @return bool
+     */
+    public function symmetric() : bool
+    {
+        if (!$this->isSquare()) {
+            return false;
+        }
+
+        for ($i = 0; $i < $this->m - 1; $i++) {
+            $rowA = $this->a[$i];
+
+            for ($j = $i + 1; $j < $this->n; $j++) {
+                if ($rowA[$j] != $this->a[$j][$i]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Is the matrix positive definite i.e. do all of its principal
+     * minor matrices have a determinant greater than 0.
+     *
+     * @return bool
+     */
+    public function positiveDefinite() : bool
+    {
+        if (!$this->symmetric()) {
+            return false;
+        }
+
+        for ($i = 1; $i <= $this->n; $i++) {
+            if ($this->subMatrix(0, $i)->det() <= 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Is the matrix positive semidefinite i.e. do all of its principal
+     * minor matrices have a determinant greater or equal to 0.
+     *
+     * @return bool
+     */
+    public function positiveSemidefinite() : bool
+    {
+        if (!$this->symmetric()) {
+            return false;
+        }
+
+        for ($i = 1; $i <= $this->n; $i++) {
+            if ($this->subMatrix(0, $i)->det() < 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -1939,36 +2005,47 @@ class Matrix implements Tensor
     }
 
     /**
-     * Exclude a row from the matrix.
+     * Return the square submatrix starting at an offset on the diagonal
+     * and excluding the last n rows and columns.
      *
-     * @param int $index
+     * @param int $offset
+     * @param int $n
+     * @throws InvalidArgumentException
      * @return self
      */
-    public function rowExclude(int $index) : self
+    public function subMatrix(int $offset = 0, int $n = 1) : self
     {
-        $b = $this->a;
+        if ($offset < 0) {
+            throw new InvalidArgumentException(' Offset cannot be less'
+                . " than 0, $offset given.");
+        }
 
-        unset($b[$index]);
+        if ($n < 0) {
+            throw new InvalidArgumentException('N cannot be less than'
+                . " 0, $n given.");
+        }
 
-        $b = array_values($b);
+        $last = $offset + $n;
 
-        return self::quick($b);
-    }
+        if ($last > $this->m or $last > $this->n) {
+            throw new InvalidArgumentException('Sub matrix is out of'
+                . ' bounds of matrix A.');
+        }
 
-    /**
-     * Exclude a column from the matrix.
-     *
-     * @param int $index
-     * @return self
-     */
-    public function columnExclude(int $index) : self
-    {
-        $b = $this->a;
+        $k = $this->n - $n;
 
-        foreach ($b as &$rowB) {
-            unset($rowB[$index]);
+        $b = [];
 
-            $rowB = array_values($rowB);
+        for ($i = $offset; $i < $k; $i++) {
+            $rowA = $this->a[$i];
+
+            $rowB = [];
+
+            for ($j = $offset; $j < $k; $j++) {
+                $rowB[] = $rowA[$j];
+            }
+
+            $b[] = $rowB;
         }
 
         return self::quick($b);
