@@ -1,32 +1,7 @@
 namespace Tensor;
 
-use IteratorAggregate;
-use ArrayAccess;
-use Countable;
-
-interface Tensor extends ArrayAccess, IteratorAggregate, Countable
+interface Tensor extends ArrayLike
 {
-    /**
-     * Return a tuple with the dimensionality of the tensor.
-     *
-     * @return int[]
-     */
-    public function shape() -> array;
-
-    /**
-     * Return the shape of the tensor as a string.
-     *
-     * @return string
-     */
-    public function shapeString() -> string;
-
-    /**
-     * Return the number of elements in the tensor.
-     *
-     * @return int
-     */
-    public function size() -> int;
-
     /**
      * Map a function over all of the elements in the tensor.
      *
@@ -341,11 +316,11 @@ interface Tensor extends ArrayAccess, IteratorAggregate, Countable
     public function negate();
 
     /**
-     * Return the elements of the tensor in an array.
+     * Return the shape of the tensor as a string.
      *
-     * @return array
+     * @return string
      */
-    public function asArray() -> array;
+    public function shapeString() -> string;
 
     /**
      * Convert the tensor into a string representation.

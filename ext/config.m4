@@ -9,7 +9,8 @@ if test "$PHP_TENSOR" = "yes"; then
 	fi
 
 	AC_DEFINE(HAVE_TENSOR, 1, [Whether you have Tensor])
-	tensor_sources="tensor.c kernel/main.c kernel/memory.c kernel/exception.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c tensor/decompositions/decomposition.zep.c
+	tensor_sources="tensor.c kernel/main.c kernel/memory.c kernel/exception.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c tensor/arraylike.zep.c
+	tensor/decompositions/decomposition.zep.c
 	tensor/tensor.zep.c
 	tensor/vector.zep.c
 	tensor/columnvector.zep.c
@@ -59,6 +60,6 @@ if test "$PHP_TENSOR" = "yes"; then
 
 	CPPFLAGS=$old_CPPFLAGS
 
-	PHP_INSTALL_HEADERS([ext/tensor], [tensor/decompositions/decomposition.zep.h tensor/tensor.zep.h tensor/vector.zep.h tensor/columnvector.zep.h tensor/decompositions/lu.zep.h tensor/decompositions/ref.zep.h tensor/decompositions/rref.zep.h tensor/matrix.zep.h])
+	PHP_INSTALL_HEADERS([ext/tensor], [tensor/arraylike.zep.h tensor/decompositions/decomposition.zep.h tensor/tensor.zep.h tensor/vector.zep.h tensor/columnvector.zep.h tensor/decompositions/lu.zep.h tensor/decompositions/ref.zep.h tensor/decompositions/rref.zep.h tensor/matrix.zep.h])
 
 fi

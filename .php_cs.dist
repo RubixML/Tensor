@@ -24,4 +24,4 @@ return Config::create()->setRules([
     'phpdoc_var_without_name' => true,
     'return_type_declaration' => ['space_before' => 'one'],
     'single_quote' => true,
-])->setFinder(Finder::create()->exclude(['ext/run-tests.php'])->in(__DIR__));
+])->setFinder(Finder::create()->in(__DIR__));

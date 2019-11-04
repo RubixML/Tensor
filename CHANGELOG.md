@@ -4,6 +4,7 @@
     - Matrix decompositions are now a separate abstraction
     - Removed Dimensionality Mismatch exception
     - Added inverse trigonomic methods to tensor interface
+    - Added Array-Like interface
 
 - 1.0.4
     - Added transpose to Tensor API

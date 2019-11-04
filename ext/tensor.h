@@ -4,6 +4,7 @@
 #ifndef ZEPHIR_CLASS_ENTRIES_H
 #define ZEPHIR_CLASS_ENTRIES_H
 
+#include "tensor/arraylike.zep.h"
 #include "tensor/decompositions/decomposition.zep.h"
 #include "tensor/tensor.zep.h"
 #include "tensor/vector.zep.h"

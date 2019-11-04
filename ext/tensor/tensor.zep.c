@@ -16,33 +16,10 @@ ZEPHIR_INIT_CLASS(Tensor_Tensor) {
 
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Tensor, tensor, tensor, tensor_tensor_method_entry);
 
-	zend_class_implements(tensor_tensor_ce, 1, zend_ce_arrayaccess);
-	zend_class_implements(tensor_tensor_ce, 1, zend_ce_aggregate);
-	zend_class_implements(tensor_tensor_ce, 1, spl_ce_Countable);
+	zend_class_implements(tensor_tensor_ce, 1, tensor_arraylike_ce);
 	return SUCCESS;
 
 }
-
-/**
- * Return a tuple with the dimensionality of the tensor.
- *
- * @return int[]
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, shape);
-
-/**
- * Return the shape of the tensor as a string.
- *
- * @return string
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, shapeString);
-
-/**
- * Return the number of elements in the tensor.
- *
- * @return int
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, size);
 
 /**
  * Map a function over all of the elements in the tensor.
@@ -358,11 +335,11 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, sign);
 ZEPHIR_DOC_METHOD(Tensor_Tensor, negate);
 
 /**
- * Return the elements of the tensor in an array.
+ * Return the shape of the tensor as a string.
  *
- * @return array
+ * @return string
  */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, asArray);
+ZEPHIR_DOC_METHOD(Tensor_Tensor, shapeString);
 
 /**
  * Convert the tensor into a string representation.

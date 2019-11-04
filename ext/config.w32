@@ -10,8 +10,8 @@ if (PHP_TENSOR != "no") {
     AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
   }
   
-  ADD_SOURCES(configure_module_dirname + "/tensor/decompositions", "decomposition.zep.c lu.zep.c ref.zep.c rref.zep.c", "tensor");
-	ADD_SOURCES(configure_module_dirname + "/tensor", "tensor.zep.c vector.zep.c columnvector.zep.c matrix.zep.c", "tensor");
+  ADD_SOURCES(configure_module_dirname + "/tensor", "arraylike.zep.c tensor.zep.c vector.zep.c columnvector.zep.c matrix.zep.c", "tensor");
+	ADD_SOURCES(configure_module_dirname + "/tensor/decompositions", "decomposition.zep.c lu.zep.c ref.zep.c rref.zep.c", "tensor");
   ADD_FLAG("CFLAGS_TENSOR", "/D ZEPHIR_RELEASE /Oi /Ot /Oy /Ob2 /Gs /GF /Gy /GL");
   ADD_FLAG("CFLAGS", "/D ZEPHIR_RELEASE /Oi /Ot /Oy /Ob2 /Gs /GF /Gy /GL");
   ADD_FLAG("LDFLAGS", "/LTCG");

@@ -5,6 +5,7 @@ namespace Tensor\Tests;
 use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
+use Tensor\ArrayLike;
 use Tensor\ColumnVector;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
@@ -54,9 +55,7 @@ class MatrixTest extends TestCase
     {
         $this->assertInstanceOf(Matrix::class, $this->a);
         $this->assertInstanceOf(Tensor::class, $this->a);
-        $this->assertInstanceOf(Countable::class, $this->a);
-        $this->assertInstanceOf(IteratorAggregate::class, $this->a);
-        $this->assertInstanceOf(ArrayAccess::class, $this->a);
+        $this->assertInstanceOf(ArrayLike::class, $this->a);
     }
 
     public function test_build_bad_element()
