@@ -1,7 +1,7 @@
 {
     "namespace": "tensor",
     "name": "tensor",
-    "description": "Tensor provides objects for scientific computing in PHP.",
+    "description": "Tensor is a library and extension that provides objects for scientific computing in PHP.",
     "author": "Andrew DalPino",
     "version": "0.0.1-alpha",
     "verbose": true,

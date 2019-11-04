@@ -1,5 +1,5 @@
 # Rubix Tensor
-Tensor is a library and extension that provides objects for fast scientific computing in [PHP](https://php.net).
+Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net).
 
 ## Installation
 Install Tensor into your project with [Composer](https://getcomposer.org/):

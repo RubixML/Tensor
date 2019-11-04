@@ -1006,7 +1006,7 @@ class Vector implements Tensor
      */
     public function square() : self
     {
-        return $this->powScalar(2);
+        return $this->multiply($this);
     }
 
     /**
