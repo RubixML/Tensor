@@ -18,7 +18,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/decompositions/ref.zep.c
 	tensor/decompositions/rref.zep.c
 	tensor/matrix.zep.c "
-	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -march=native -O3 -pipe)
+	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -march=native -O2 -pipe)
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
 	old_CPPFLAGS=$CPPFLAGS

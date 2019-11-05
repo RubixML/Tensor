@@ -2574,19 +2574,7 @@ class Matrix implements Tensor
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
-        $c = [];
-
-        foreach ($this->a as $rowA) {
-            $rowC = [];
-
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA * $b[$j];
-            }
-
-            $c[] = $rowC;
-        }
-
-        return self::quick($c);
+        return $b->multiply($this);
     }
 
     /**
@@ -2608,8 +2596,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA / $b[$j];
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] / $valueB;
             }
 
             $c[] = $rowC;
@@ -2632,19 +2620,7 @@ class Matrix implements Tensor
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
-        $c = [];
-
-        foreach ($this->a as $rowA) {
-            $rowC = [];
-
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA + $b[$j];
-            }
-
-            $c[] = $rowC;
-        }
-
-        return self::quick($c);
+        return $b->add($this);
     }
 
     /**
@@ -2666,8 +2642,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA - $b[$j];
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] - $valueB;
             }
 
             $c[] = $rowC;
@@ -2695,8 +2671,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA ** $b[$j];
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] ** $valueB;
             }
 
             $c[] = $rowC;
@@ -2724,8 +2700,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA % $b[$j];
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] % $valueB;
             }
 
             $c[] = $rowC;
@@ -2754,8 +2730,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA == $b[$j] ? 1 : 0;
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] == $valueB ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -2784,8 +2760,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA != $b[$j] ? 1 : 0;
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] != $valueB ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -2814,8 +2790,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA > $b[$j] ? 1 : 0;
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] > $valueB ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -2844,8 +2820,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA >= $b[$j] ? 1 : 0;
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] >= $valueB ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -2874,8 +2850,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA < $b[$j] ? 1 : 0;
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] < $valueB ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -2904,8 +2880,8 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA <= $b[$j] ? 1 : 0;
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] <= $valueB ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -3304,10 +3280,6 @@ class Matrix implements Tensor
         if (!is_int($scalar) and !is_float($scalar)) {
             throw new InvalidArgumentException('Scalar must be an integer'
                 . ' or float, ' . gettype($scalar) . ' found.');
-        }
-
-        if ($scalar == 0) {
-            return self::zeros(...$this->shape());
         }
 
         $b = [];

@@ -2617,21 +2617,7 @@ class Matrix implements Tensor
                 . (string) b->n() . ".");
         }
     
-        var j, rowA, valueB;
-
-        array c = [];
-    
-        for rowA in this->a {
-            array rowC = [];
-    
-            for j, valueB in iterator(b) {
-                let rowC[] = rowA[j] * valueB;
-            }
-    
-            let c[] = rowC;
-        }
-    
-        return self::quick(c);
+        return b->multiply(this);
     }
 
     /**
@@ -2681,21 +2667,7 @@ class Matrix implements Tensor
                 . (string) b->n() . ".");
         }
     
-        var j, rowA, valueB;
-
-        array c = [];
-    
-        for rowA in this->a {
-            array rowC = [];
-    
-            for j, valueB in iterator(b) {
-                let rowC[] = rowA[j] + valueB;
-            }
-    
-            let c[] = rowC;
-        }
-    
-        return self::quick(c);
+        return b->add(this);
     }
 
     /**
