@@ -40,6 +40,7 @@ PHP_METHOD(Tensor_Matrix, transpose);
 PHP_METHOD(Tensor_Matrix, inverse);
 PHP_METHOD(Tensor_Matrix, det);
 PHP_METHOD(Tensor_Matrix, rank);
+PHP_METHOD(Tensor_Matrix, fullRank);
 PHP_METHOD(Tensor_Matrix, symmetric);
 PHP_METHOD(Tensor_Matrix, positiveDefinite);
 PHP_METHOD(Tensor_Matrix, positiveSemidefinite);
@@ -508,6 +509,13 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_rank, 0, 0, IS_LONG, 0)
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_rank, 0, 0, IS_LONG, NULL, 0)
+#endif
+ZEND_END_ARG_INFO()
+
+#if PHP_VERSION_ID >= 70200
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_fullrank, 0, 0, _IS_BOOL, 0)
+#else
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_fullrank, 0, 0, _IS_BOOL, NULL, 0)
 #endif
 ZEND_END_ARG_INFO()
 
@@ -1476,6 +1484,7 @@ ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
 	PHP_ME(Tensor_Matrix, inverse, arginfo_tensor_matrix_inverse, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, det, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, rank, arginfo_tensor_matrix_rank, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Matrix, fullRank, arginfo_tensor_matrix_fullrank, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, symmetric, arginfo_tensor_matrix_symmetric, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, positiveDefinite, arginfo_tensor_matrix_positivedefinite, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, positiveSemidefinite, arginfo_tensor_matrix_positivesemidefinite, ZEND_ACC_PUBLIC)

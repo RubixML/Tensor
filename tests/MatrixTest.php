@@ -452,6 +452,13 @@ class MatrixTest extends TestCase
         $this->assertEquals(3, $this->c->rank());
     }
 
+    public function test_full_rank()
+    {
+        $this->assertTrue($this->a->fullRank());
+        $this->assertTrue($this->b->fullRank());
+        $this->assertTrue($this->c->fullRank());
+    }
+
     public function test_reciprocal()
     {
         $z = $this->a->reciprocal();

@@ -780,6 +780,16 @@ class Matrix implements Tensor
     }
 
     /**
+     * Is the matrix full rank?
+     * 
+     * @return bool
+     */
+     public function fullRank() -> bool
+     {
+         return this->rank() === min(this->shape());
+     }
+
+    /**
      * Is the matrix symmetric i.e. is it equal to its own transpose?
      * 
      * @return bool
