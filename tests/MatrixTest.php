@@ -6,7 +6,9 @@ use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
 use Tensor\ArrayLike;
+use Tensor\Statistical;
 use Tensor\ColumnVector;
+use Tensor\Trigonometric;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use IteratorAggregate;
@@ -54,6 +56,8 @@ class MatrixTest extends TestCase
     public function test_build_matrix()
     {
         $this->assertInstanceOf(Matrix::class, $this->a);
+        $this->assertInstanceOf(Trigonometric::class, $this->a);
+        $this->assertInstanceOf(Statistical::class, $this->a);
         $this->assertInstanceOf(Tensor::class, $this->a);
         $this->assertInstanceOf(ArrayLike::class, $this->a);
     }

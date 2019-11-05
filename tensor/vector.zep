@@ -13,7 +13,7 @@ use ArrayIterator;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Vector implements Tensor
+class Vector implements Tensor, Trigonometric, Statistical
 {
     const EPSILON = 0.00000001;
 

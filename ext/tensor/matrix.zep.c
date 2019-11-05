@@ -70,6 +70,8 @@ ZEPHIR_INIT_CLASS(Tensor_Matrix) {
 	zephir_declare_class_constant_double(tensor_matrix_ce, SL("M_E"), 2.7182818284590452354);
 
 	zend_class_implements(tensor_matrix_ce, 1, tensor_tensor_ce);
+	zend_class_implements(tensor_matrix_ce, 1, tensor_trigonometric_ce);
+	zend_class_implements(tensor_matrix_ce, 1, tensor_statistical_ce);
 	return SUCCESS;
 
 }

@@ -19,7 +19,7 @@ use const Tensor\TWO_PI;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Vector implements Tensor
+class Vector implements Tensor, Trigonometric, Statistical
 {
     /**
      * The 1-d sequential array that holds the values of the vector.

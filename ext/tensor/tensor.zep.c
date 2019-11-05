@@ -190,62 +190,6 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, exp);
 ZEPHIR_DOC_METHOD(Tensor_Tensor, log);
 
 /**
- * Return the sine of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, sin);
-
-/**
- * Compute the arc sine of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, asin);
-
-/**
- * Return the cosine of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, cos);
-
-/**
- * Compute the arc cosine of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, acos);
-
-/**
- * Return the tangent of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, tan);
-
-/**
- * Compute the arc tangent of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, atan);
-
-/**
- * Convert angles from radians to degrees.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, rad2deg);
-
-/**
- * Convert angles from degrees to radians.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, deg2rad);
-
-/**
  * Sum the tensor.
  *
  * @return mixed

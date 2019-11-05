@@ -24,7 +24,7 @@ use const Tensor\TWO_PI;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Matrix implements Tensor
+class Matrix implements Tensor, Trigonometric, Statistical
 {
     /**
      * A 2-dimensional sequential array that holds the values of the matrix.

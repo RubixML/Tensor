@@ -16,7 +16,7 @@ use ArrayIterator;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Matrix implements Tensor
+class Matrix implements Tensor, Trigonometric, Statistical
 {
     const EPSILON = 0.00000001;
 

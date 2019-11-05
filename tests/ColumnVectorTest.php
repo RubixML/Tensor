@@ -6,7 +6,9 @@ use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
 use Tensor\ArrayLike;
+use Tensor\Statistical;
 use Tensor\ColumnVector;
+use Tensor\Trigonometric;
 use PHPUnit\Framework\TestCase;
 
 class ColumnVectorTest extends TestCase
@@ -34,6 +36,8 @@ class ColumnVectorTest extends TestCase
     {
         $this->assertInstanceOf(ColumnVector::class, $this->a);
         $this->assertInstanceOf(Vector::class, $this->a);
+        $this->assertInstanceOf(Trigonometric::class, $this->a);
+        $this->assertInstanceOf(Statistical::class, $this->a);
         $this->assertInstanceOf(Tensor::class, $this->a);
         $this->assertInstanceOf(ArrayLike::class, $this->a);
     }
