@@ -1259,7 +1259,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_multiplyscalar, 0, 
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_multiplyscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1267,7 +1267,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_dividescalar, 0, 1,
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_dividescalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1275,7 +1275,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_addscalar, 0, 1, Te
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_addscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1283,7 +1283,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_subtractscalar, 0, 
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_subtractscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1291,7 +1291,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_powscalar, 0, 1, Te
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_powscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1299,7 +1299,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_modscalar, 0, 1, Te
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_modscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1307,7 +1307,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_equalscalar, 0, 1, 
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_equalscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1315,7 +1315,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_notequalscalar, 0, 
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_notequalscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1323,7 +1323,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_greaterscalar, 0, 1
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_greaterscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1331,7 +1331,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_greaterequalscalar,
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_greaterequalscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1339,7 +1339,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_lessscalar, 0, 1, T
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_lessscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1347,7 +1347,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_lessequalscalar, 0,
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_lessequalscalar, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
-	ZEND_ARG_INFO(0, scalar)
+	ZEND_ARG_INFO(0, b)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200

@@ -2065,283 +2065,283 @@ class Vector implements Tensor, Trigonometric, Statistical
     /**
      * Multiply this vector by a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyScalar($scalar) : self
+    protected function multiplyScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA * $scalar;
+            $c[] = $valueA * $b;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Divide this vector by a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideScalar($scalar) : self
+    protected function divideScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA / $scalar;
+            $c[] = $valueA / $b;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Add a scalar to this vector.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addScalar($scalar) : self
+    protected function addScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA + $scalar;
+            $c[] = $valueA + $b;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Subtract a scalar from this vector.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractScalar($scalar) : self
+    protected function subtractScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA - $scalar;
+            $c[] = $valueA - $b;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Raise the vector to a the power of a scalar value.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powScalar($scalar) : self
+    protected function powScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
     
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA ** $scalar;
+            $c[] = $valueA ** $b;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Calculate the modulus of this vector with a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modScalar($scalar) : self
+    protected function modScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA % $scalar;
+            $c[] = $valueA % $b;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Return the element-wise equality comparison of this vector and a
      * scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalScalar($scalar) : self
+    protected function equalScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA == $scalar ? 1 : 0;
+            $c[] = $valueA == $b ? 1 : 0;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Return the element-wise not equal comparison of this vector and a
      * scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualScalar($scalar) : self
+    protected function notEqualScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA != $scalar ? 1 : 0;
+            $c[] = $valueA != $b ? 1 : 0;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Return the element-wise greater than comparison of this vector
      * and a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterScalar($scalar) : self
+    protected function greaterScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA > $scalar ? 1 : 0;
+            $c[] = $valueA > $b ? 1 : 0;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Return the element-wise greater than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualScalar($scalar) : self
+    protected function greaterEqualScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA >= $scalar ? 1 : 0;
+            $c[] = $valueA >= $b ? 1 : 0;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Return the element-wise less than comparison of this vector
      * and a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessScalar($scalar) : self
+    protected function lessScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA < $scalar ? 1 : 0;
+            $c[] = $valueA < $b ? 1 : 0;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
      * Return the element-wise less than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualScalar($scalar) : self
+    protected function lessEqualScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $valueA) {
-            $b[] = $valueA <= $scalar ? 1 : 0;
+            $c[] = $valueA <= $b ? 1 : 0;
         }
 
-        return static::quick($b);
+        return static::quick($c);
     }
 
     /**
@@ -2393,12 +2393,12 @@ class Vector implements Tensor, Trigonometric, Statistical
      */
     public function offsetGet($index)
     {
-        if (!isset($this->a[$index])) {
-            throw new InvalidArgumentException('Element not found at the'
-                . " given offset $index.");
+        if (isset($this->a[$index])) {
+            return $this->a[$index];
         }
 
-        return $this->a[$index];
+        throw new InvalidArgumentException('Element not found at the'
+            . " given offset $index.");
     }
 
     /**

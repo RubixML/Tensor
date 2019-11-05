@@ -2201,319 +2201,319 @@ class Vector implements Tensor, Trigonometric, Statistical
     /**
      * Multiply this vector by a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-     protected function multiplyScalar(const scalar) -> <Vector>
+     protected function multiplyScalar(const b) -> <Vector>
      {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
- 
-        var valueA;
 
-        array b = [];
- 
+        var valueA;
+        
+        array c = [];
+
         for valueA in this->a {
-            let b[] = valueA * scalar;
+            let c[] = valueA * b;
         }
- 
-        return static::quick(b);
+
+        return static::quick(c);
     }
 
     /**
      * Divide this vector by a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideScalar(const scalar) -> <Vector>
+    protected function divideScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
-
-        array b = [];
+        
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA / scalar;
+            let c[] = valueA / b;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**
      * Add a scalar to this vector.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addScalar(const scalar) -> <Vector>
+    protected function addScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
-
-        array b = [];
+        
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA + scalar;
+            let c[] = valueA + b;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**
      * Subtract a scalar from this vector.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractScalar(const scalar) -> <Vector>
+    protected function subtractScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
-
-        array b = [];
+        
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA - scalar;
+            let c[] = valueA - b;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**
      * Raise the vector to a the power of a scalar value.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-     protected function powScalar(const scalar) -> <Vector>
+     protected function powScalar(const b) -> <Vector>
      {
-         if !is_int(scalar) && !is_float(scalar) {
-             throw new InvalidArgumentException("Scalar must be an"
-                 . " integnr or floating point number, "
-                 . gettype(scalar) . " given.");
-         }
-     
-         var valueA;
+        if !is_int(b) && !is_float(b) {
+            throw new InvalidArgumentException("Scalar must be an"
+                . " integnr or floating point number, "
+                . gettype(b) . " given.");
+        }
 
-         array b = [];
- 
-         for valueA in this->a {
-             let b[] = pow(valueA, scalar);
-         }
- 
-         return static::quick(b);
+        var valueA;
+        
+        array c = [];
+
+        for valueA in this->a {
+            let c[] = pow(valueA, b);
+        }
+
+        return static::quick(c);
      }
 
     /**
      * Calculate the modulus of this vector with a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modScalar(const scalar) -> <Vector>
+    protected function modScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
-
-        array b = [];
+        
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA % scalar;
+            let c[] = valueA % b;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**
      * Return the element-wise equality comparison of this vector and a
      * scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalScalar(const scalar) -> <Vector>
+    protected function equalScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
-
-        array b = [];
+        
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA == scalar ? 1 : 0;
+            let c[] = valueA == b ? 1 : 0;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**
      * Return the element-wise not equal comparison of this vector and a
      * scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualScalar(const scalar) -> <Vector>
+    protected function notEqualScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
-
-        array b = [];
+        
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA != scalar ? 1 : 0;
+            let c[] = valueA != b ? 1 : 0;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**
      * Return the element-wise greater than comparison of this vector
      * and a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterScalar(const scalar) -> <Vector>
+    protected function greaterScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
-
-        array b = [];
+        
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA > scalar ? 1 : 0;
+            let c[] = valueA > b ? 1 : 0;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**
      * Return the element-wise greater than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualScalar(const scalar) -> <Vector>
+    protected function greaterEqualScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
-
-        array b = [];
+        
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA >= scalar ? 1 : 0;
+            let c[] = valueA >= b ? 1 : 0;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**
      * Return the element-wise less than comparison of this vector
      * and a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessScalar(const scalar) -> <Vector>
+    protected function lessScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
-
-        array b = [];
+        
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA < scalar ? 1 : 0;
+            let c[] = valueA < b ? 1 : 0;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**
      * Return the element-wise less than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualScalar(const scalar) -> <Vector>
+    protected function lessEqualScalar(const b) -> <Vector>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var valueA;
         
-        array b = [];
+        array c = [];
 
         for valueA in this->a {
-            let b[] = valueA <= scalar ? 1 : 0;
+            let c[] = valueA <= b ? 1 : 0;
         }
 
-        return static::quick(b);
+        return static::quick(c);
     }
 
     /**

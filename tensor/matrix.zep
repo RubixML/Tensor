@@ -592,12 +592,12 @@ class Matrix implements Tensor, Trigonometric, Statistical
      */
     public function asColumnVectors() -> array
     {
-        uint i;
+        int i;
 
         array vectors = [];
 
-        for i in range(0, this->m - 1) {
-            let vectors[] = ColumnVector::quick(array_column(this->a, i));
+        for i in range(0, this->n - 1) {
+            let vectors[] = this->columnAsVector(i);
         }
 
         return vectors;
@@ -3381,380 +3381,380 @@ class Matrix implements Tensor, Trigonometric, Statistical
     /**
      * Multiply this matrix by a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyScalar(const scalar) -> <Matrix>
+    protected function multiplyScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA * scalar;
+                let rowC[] = valueA * b;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Divide this matrix by a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideScalar(const scalar) -> <Matrix>
+    protected function divideScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA / scalar;
+                let rowC[] = valueA / b;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Add this matrix by a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addScalar(const scalar) -> <Matrix>
+    protected function addScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA + scalar;
+                let rowC[] = valueA + b;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Subtract a scalar from this matrix.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractScalar(const scalar) -> <Matrix>
+    protected function subtractScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA - scalar;
+                let rowC[] = valueA - b;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Raise the matrix to a given scalar power.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powScalar(const scalar) -> <Matrix>
+    protected function powScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
-                . gettype(scalar) . " given.");
+                . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = pow(valueA, scalar);
+                let rowC[] = pow(valueA, b);
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Calculate the modulus of this matrix with a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modScalar(const scalar) -> <Matrix>
+    protected function modScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA % scalar;
+                let rowC[] = valueA % b;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Return the element-wise equality comparison of this matrix and a
      * scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalScalar(const scalar) -> <Matrix>
+    protected function equalScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA == scalar ? 1 : 0;
+                let rowC[] = valueA == b ? 1 : 0;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Return the element-wise not equal comparison of this matrix and a
      * scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualScalar(const scalar) -> <Matrix>
+    protected function notEqualScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA != scalar ? 1 : 0;
+                let rowC[] = valueA != b ? 1 : 0;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Return the element-wise greater than comparison of this matrix and a
      * scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterScalar(const scalar) -> <Matrix>
+    protected function greaterScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA > scalar ? 1 : 0;
+                let rowC[] = valueA > b ? 1 : 0;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Return the element-wise greater than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualScalar(const scalar) -> <Matrix>
+    protected function greaterEqualScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA >= scalar ? 1 : 0;
+                let rowC[] = valueA >= b ? 1 : 0;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Return the element-wise less than comparison of this matrix and a
      * scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessScalar(const scalar) -> <Matrix>
+    protected function lessScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
 
-        array b = [];
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA < scalar ? 1 : 0;
+                let rowC[] = valueA < b ? 1 : 0;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**
      * Return the element-wise less than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param mixed scalar
+     * @param mixed b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualScalar(const scalar) -> <Matrix>
+    protected function lessEqualScalar(const b) -> <Matrix>
     {
-        if !is_int(scalar) && !is_float(scalar) {
+        if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(scalar) . " given.");
+                . " floating point number, " . gettype(b) . " given.");
         }
 
         var rowA, valueA;
-        
-        array b = [];
+
+        array c = [];
 
         for rowA in this->a {
-            array rowB = [];
+            array rowC = [];
 
             for valueA in rowA {
-                let rowB[] = valueA <= scalar ? 1 : 0;
+                let rowC[] = valueA <= b ? 1 : 0;
             }
 
-            let b[] = rowB;
+            let c[] = rowC;
         }
 
-        return self::quick(b);
+        return self::quick(c);
     }
 
     /**

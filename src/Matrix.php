@@ -115,9 +115,7 @@ class Matrix implements Tensor, Trigonometric, Statistical
                 . ' greater than 0 on all axes.');
         }
 
-        $a = array_fill(0, $m, array_fill(0, $n, 0));
-
-        return self::quick($a);
+        return self::fill(0, $m, $n);
     }
 
     /**
@@ -134,10 +132,8 @@ class Matrix implements Tensor, Trigonometric, Statistical
             throw new InvalidArgumentException('Dimensionality must be'
                 . ' greater than 0 on all axes.');
         }
-
-        $a = array_fill(0, $m, array_fill(0, $n, 1));
     
-        return self::quick($a);
+        return self::fill(1, $m, $n);
     }
 
     /**
@@ -201,9 +197,7 @@ class Matrix implements Tensor, Trigonometric, Statistical
                 . ' greater than 0 on all axes.');
         }
 
-        $a = array_fill(0, $m, array_fill(0, $n, $value));
-
-        return self::quick($a);
+        return self::quick(array_fill(0, $m, array_fill(0, $n, $value)));
     }
 
     /**
@@ -425,11 +419,7 @@ class Matrix implements Tensor, Trigonometric, Statistical
             $a = array_values($a);
 
             foreach ($a as &$row) {
-                if (is_array($row)) {
-                    $row = array_values($row);
-                } else {
-                    $row = [$row];
-                }
+                $row = is_array($row) ? array_values($row) : [$row];
 
                 if (count($row) !== $n) {
                     throw new InvalidArgumentException('The number of columns'
@@ -607,8 +597,8 @@ class Matrix implements Tensor, Trigonometric, Statistical
     {
         $vectors = [];
 
-        for ($i = 0; $i < $this->m; ++$i) {
-            $vectors[] = ColumnVector::quick(array_column($this->a, $i));
+        for ($i = 0; $i < $this->n; ++$i) {
+            $vectors[] = $this->columnAsVector($i);
         }
 
         return $vectors;
@@ -841,7 +831,9 @@ class Matrix implements Tensor, Trigonometric, Statistical
         }
 
         for ($i = 1; $i <= $this->n; ++$i) {
-            if ($this->subMatrix(0, $i)->det() <= 0) {
+            $b = $this->subMatrix(0, $i);
+
+            if ($b->det() <= 0) {
                 return false;
             }
         }
@@ -862,7 +854,9 @@ class Matrix implements Tensor, Trigonometric, Statistical
         }
 
         for ($i = 1; $i <= $this->n; ++$i) {
-            if ($this->subMatrix(0, $i)->det() < 0) {
+            $b = $this->subMatrix(0, $i);
+
+            if ($b->det() < 0) {
                 return false;
             }
         }
@@ -2137,11 +2131,11 @@ class Matrix implements Tensor, Trigonometric, Statistical
 
         $b = $this->a;
 
-        $n -= 1;
+        $k = $n - 1;
 
         if ($n > 0) {
             foreach ($this->a as $i => $rowA) {
-                for ($j = 0; $j < $n; ++$j) {
+                for ($j = 0; $j < $k; ++$j) {
                     $b[$i] = array_merge($b[$i], $rowA);
                 }
             }
@@ -3271,363 +3265,355 @@ class Matrix implements Tensor, Trigonometric, Statistical
     /**
      * Multiply this matrix by a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyScalar($scalar) : self
+    protected function multiplyScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA * $scalar;
+                $rowC[] = $valueA * $b;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Divide this matrix by a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideScalar($scalar) : self
+    protected function divideScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA / $scalar;
+                $rowC[] = $valueA / $b;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Add this matrix by a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addScalar($scalar) : self
+    protected function addScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        if ($scalar == 0) {
-            return clone $this;
-        }
-
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA + $scalar;
+                $rowC[] = $valueA + $b;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Subtract a scalar from this matrix.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractScalar($scalar) : self
+    protected function subtractScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        if ($scalar == 0) {
-            return clone $this;
-        }
-
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA - $scalar;
+                $rowC[] = $valueA - $b;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Raise the matrix to a given scalar power.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powScalar($scalar) : self
+    protected function powScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA ** $scalar;
+                $rowC[] = $valueA ** $b;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Calculate the modulus of this matrix with a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modScalar($scalar) : self
+    protected function modScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA % $scalar;
+                $rowC[] = $valueA % $b;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Return the element-wise equality comparison of this matrix and a
      * scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalScalar($scalar) : self
+    protected function equalScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA == $scalar ? 1 : 0;
+                $rowC[] = $valueA == $b ? 1 : 0;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Return the element-wise not equal comparison of this matrix and a
      * scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualScalar($scalar) : self
+    protected function notEqualScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA != $scalar ? 1 : 0;
+                $rowC[] = $valueA != $b ? 1 : 0;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Return the element-wise greater than comparison of this matrix and a
      * scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterScalar($scalar) : self
+    protected function greaterScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA > $scalar ? 1 : 0;
+                $rowC[] = $valueA > $b ? 1 : 0;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Return the element-wise greater than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualScalar($scalar) : self
+    protected function greaterEqualScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA >= $scalar ? 1 : 0;
+                $rowC[] = $valueA >= $b ? 1 : 0;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Return the element-wise less than comparison of this matrix and a
      * scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessScalar($scalar) : self
+    protected function lessScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA < $scalar ? 1 : 0;
+                $rowC[] = $valueA < $b ? 1 : 0;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
      * Return the element-wise less than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param mixed $scalar
+     * @param mixed $b
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualScalar($scalar) : self
+    protected function lessEqualScalar($b) : self
     {
-        if (!is_int($scalar) and !is_float($scalar)) {
+        if (!is_int($b) and !is_float($b)) {
             throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($scalar) . ' found.');
+                . ' or float, ' . gettype($b) . ' found.');
         }
 
-        $b = [];
+        $c = [];
 
         foreach ($this->a as $rowA) {
-            $rowB = [];
+            $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowB[] = $valueA <= $scalar ? 1 : 0;
+                $rowC[] = $valueA <= $b ? 1 : 0;
             }
 
-            $b[] = $rowB;
+            $c[] = $rowC;
         }
 
-        return self::quick($b);
+        return self::quick($c);
     }
 
     /**
@@ -3677,12 +3663,12 @@ class Matrix implements Tensor, Trigonometric, Statistical
      */
     public function offsetGet($index) : array
     {
-        if (empty($this->a[$index])) {
-            throw new InvalidArgumentException('Element not found at'
-                . " offset $index.");
+        if (isset($this->a[$index])) {
+            return $this->a[$index];
         }
 
-        return $this->a[$index];
+        throw new InvalidArgumentException('Element not found at'
+            . " offset $index.");
     }
 
     /**
