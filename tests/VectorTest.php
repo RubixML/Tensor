@@ -6,6 +6,8 @@ use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
 use Tensor\ArrayLike;
+use Tensor\Arithmetic;
+use Tensor\Comparable;
 use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
@@ -44,9 +46,11 @@ class VectorTest extends TestCase
     public function test_build_vector()
     {
         $this->assertInstanceOf(Vector::class, $this->a);
+        $this->assertInstanceOf(Tensor::class, $this->a);
+        $this->assertInstanceOf(Arithmetic::class, $this->a);
+        $this->assertInstanceOf(Comparable::class, $this->a);
         $this->assertInstanceOf(Trigonometric::class, $this->a);
         $this->assertInstanceOf(Statistical::class, $this->a);
-        $this->assertInstanceOf(Tensor::class, $this->a);
         $this->assertInstanceOf(ArrayLike::class, $this->a);
     }
 

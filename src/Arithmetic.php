@@ -87,12 +87,26 @@ interface Arithmetic
     public function exp();
 
     /**
+     * Return the exponential of the tensor minus 1.
+     *
+     * @return mixed
+     */
+    public function expm1();
+
+    /**
      * Return the logarithm of the tensor in a specified base.
      *
      * @param float $base
      * @return mixed
      */
     public function log(float $base = M_E);
+
+    /**
+     * Return the log of 1 plus the tensor i.e. a transform.
+     *
+     * @return mixed
+     */
+    public function log1p();
 
     /**
      * Sum the tensor.

@@ -1,11 +1,7 @@
 namespace Tensor;
 
 interface Arithmetic
-{
-    const M_PI = 3.14159265358979323846;
-
-    const TWO_PI = 6.28318530718;
-    
+{    
     const M_E = 2.7182818284590452354;
     
     /**
@@ -15,7 +11,7 @@ interface Arithmetic
      * @param mixed b
      * @return mixed
      */
-    public function multiply(b);
+    public function multiply(const b);
 
     /**
      * A universal function to divide this tensor by another tensor
@@ -24,7 +20,7 @@ interface Arithmetic
      * @param mixed b
      * @return mixed
      */
-    public function divide(b);
+    public function divide(const b);
 
     /**
      * A universal function to add this tensor with another tensor
@@ -33,7 +29,7 @@ interface Arithmetic
      * @param mixed b
      * @return mixed
      */
-    public function add(b);
+    public function add(const b);
 
     /**
      * A universal function to subtract this tensor from another tensor
@@ -42,7 +38,7 @@ interface Arithmetic
      * @param mixed b
      * @return mixed
      */
-    public function subtract(b);
+    public function subtract(const b);
 
     /**
      * A universal function to raise this tensor to the power of another
@@ -51,7 +47,7 @@ interface Arithmetic
      * @param mixed b
      * @return mixed
      */
-    public function pow(b);
+    public function pow(const b);
 
     /**
      * A universal function to compute the integer modulus of this tensor
@@ -60,7 +56,7 @@ interface Arithmetic
      * @param mixed b
      * @return mixed
      */
-    public function mod(b);
+    public function mod(const b);
 
     /**
      * Take the absolute value of the tensor.
@@ -91,12 +87,26 @@ interface Arithmetic
     public function exp();
 
     /**
+     * Return the exponential of the tensor minus 1.
+     *
+     * @return mixed
+     */
+    public function expm1();
+
+    /**
      * Return the logarithm of the tensor in a specified base.
      *
      * @param float base
      * @return mixed
      */
-    public function log(float base = self::M_E);
+    public function log(const float base = self::M_E);
+
+    /**
+     * Return the log of 1 plus the tensor i.e. a transform.
+     *
+     * @return mixed
+     */
+    public function log1p();
 
     /**
      * Sum the tensor.

@@ -16,10 +16,6 @@ ZEPHIR_INIT_CLASS(Tensor_Arithmetic) {
 
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Arithmetic, tensor, arithmetic, tensor_arithmetic_method_entry);
 
-	zephir_declare_class_constant_double(tensor_arithmetic_ce, SL("M_PI"), 3.14159265358979323846);
-
-	zephir_declare_class_constant_double(tensor_arithmetic_ce, SL("TWO_PI"), 6.28318530718);
-
 	zephir_declare_class_constant_double(tensor_arithmetic_ce, SL("M_E"), 2.7182818284590452354);
 
 	return SUCCESS;
@@ -109,12 +105,26 @@ ZEPHIR_DOC_METHOD(Tensor_Arithmetic, sqrt);
 ZEPHIR_DOC_METHOD(Tensor_Arithmetic, exp);
 
 /**
+ * Return the exponential of the tensor minus 1.
+ *
+ * @return mixed
+ */
+ZEPHIR_DOC_METHOD(Tensor_Arithmetic, expm1);
+
+/**
  * Return the logarithm of the tensor in a specified base.
  *
  * @param float base
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Arithmetic, log);
+
+/**
+ * Return the log of 1 plus the tensor i.e. a transform.
+ *
+ * @return mixed
+ */
+ZEPHIR_DOC_METHOD(Tensor_Arithmetic, log1p);
 
 /**
  * Sum the tensor.

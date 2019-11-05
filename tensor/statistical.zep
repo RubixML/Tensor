@@ -22,5 +22,5 @@ interface Statistical
      * @param float p
      * @return mixed
      */
-    public function percentile(float p);
+    public function percentile(const float p);
 }

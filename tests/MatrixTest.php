@@ -6,6 +6,8 @@ use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
 use Tensor\ArrayLike;
+use Tensor\Arithmetic;
+use Tensor\Comparable;
 use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
@@ -56,9 +58,11 @@ class MatrixTest extends TestCase
     public function test_build_matrix()
     {
         $this->assertInstanceOf(Matrix::class, $this->a);
+        $this->assertInstanceOf(Tensor::class, $this->a);
+        $this->assertInstanceOf(Arithmetic::class, $this->a);
+        $this->assertInstanceOf(Comparable::class, $this->a);
         $this->assertInstanceOf(Trigonometric::class, $this->a);
         $this->assertInstanceOf(Statistical::class, $this->a);
-        $this->assertInstanceOf(Tensor::class, $this->a);
         $this->assertInstanceOf(ArrayLike::class, $this->a);
     }
 
@@ -1343,6 +1347,20 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
+    public function test_expm1()
+    {
+        $z = $this->b->expm1();
+
+        $expected = [
+            [442412.3920089205],
+            [59873.14171519782],
+            [8102.083927575384],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
     public function test_log()
     {
         $z = $this->b->log();
@@ -1351,6 +1369,20 @@ class MatrixTest extends TestCase
             [2.5649493574615367],
             [2.3978952727983707],
             [2.1972245773362196],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
+    public function test_log1p()
+    {
+        $z = $this->b->log1p();
+
+        $expected = [
+            [2.6390573296152584],
+            [2.4849066497880004],
+            [2.302585092994046],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);

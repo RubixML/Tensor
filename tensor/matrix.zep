@@ -47,7 +47,7 @@ class Matrix implements Tensor
      * @param array a
      * @return self
      */
-    public static function build(array a = []) -> <Matrix>
+    public static function build(const array a = []) -> <Matrix>
     {
         return new self(a, true);
     }
@@ -58,7 +58,7 @@ class Matrix implements Tensor
      * @param array a
      * @return self
      */
-    public static function quick(array a = []) -> <Matrix>
+    public static function quick(const array a = []) -> <Matrix>
     {
         return new self(a, false);
     }
@@ -696,7 +696,7 @@ class Matrix implements Tensor
      */
     public function transpose() -> <Matrix>
     {
-        uint i;
+        int i;
 
         array b = [];
  
@@ -764,7 +764,7 @@ class Matrix implements Tensor
 
         var rref = this->rref();
 
-        uint pivots = 0;
+        int pivots = 0;
 
         for row in iterator(rref) {
             for value in row {
@@ -821,7 +821,9 @@ class Matrix implements Tensor
         int i;
 
         for i in range(1, this->n) {
-            if this->subMatrix(0, i)->det() <= 0 {
+            var b = this->subMatrix(0, i);
+
+            if b->det() <= 0 {
                 return false;
             }
         }
@@ -844,7 +846,9 @@ class Matrix implements Tensor
         int i;
 
         for i in range(1, this->n) {
-            if this->subMatrix(0, i)->det() < 0 {
+            var b = this->subMatrix(0, i);
+
+            if b->det() < 0 {
                 return false;
             }
         }
@@ -863,7 +867,8 @@ class Matrix implements Tensor
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Matrix A requires "
-                . this->n . " rows but Matrix B has " . b->m() . ".");
+                . (string) this->n . " rows but Matrix B has "
+                . (string) b->m() . ".");
         }
 
         int j;
@@ -872,7 +877,7 @@ class Matrix implements Tensor
 
         var p = b->n();
 
-        var bT = b->transpose()->asArray();
+        var bT = b->transpose();
          
         array c = [];
  
@@ -1554,6 +1559,16 @@ class Matrix implements Tensor
     }
 
     /**
+    * Return the exponential of the tensor minus 1.
+    *
+    * @return self
+    */
+    public function expm1() -> <Matrix>
+    {
+        return this->map("expm1");
+    }
+
+    /**
      * Return the logarithm of the matrix in specified base.
      *
      * @param float base
@@ -1576,7 +1591,17 @@ class Matrix implements Tensor
         }
  
         return self::quick(b);
-     }
+    }
+
+    /**
+    * Return the log of 1 plus the tensor i.e. a transform.
+    *
+    * @return self
+    */
+    public function log1p() -> <Matrix>
+    {
+        return this->map("log1p");
+    }
  
     /**
      * Return the sine of the matrix.

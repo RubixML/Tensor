@@ -19,7 +19,7 @@ class ColumnVector extends Vector
      * @param array a
      * @return self
      */
-    public static function build(array a = [])
+    public static function build(const array a = [])
     {
         return new self(a, true);
     }
@@ -30,7 +30,7 @@ class ColumnVector extends Vector
      * @param array a
      * @return self
      */
-    public static function quick(array a = [])
+    public static function quick(const array a = [])
     {
         return new self(a, false);
     }

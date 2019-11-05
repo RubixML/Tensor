@@ -24,7 +24,7 @@ ZEPHIR_INIT_CLASS(Tensor_Comparable) {
  * A universal function to compute the equality comparison of a tensor
  * and another tensor element-wise.
  *
- * @param  mixed  b
+ * @param  mixed b
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Comparable, equal);

@@ -12,6 +12,7 @@
     - Added is symmetric method to Matrix
     - Added Statistical and Trigonometric interfaces
     - Added Arithmetic and Comparable interfaces
+    - Added log1p and expm1 methods to the Arithmetic interface
 
 - 1.0.4
     - Added transpose to Tensor API

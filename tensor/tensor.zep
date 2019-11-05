@@ -10,7 +10,7 @@ interface Tensor extends ArrayLike, Arithmetic, Comparable, Trigonometric, Stati
      * @param callable callback
      * @return mixed
      */
-    public function map(callable callback);
+    public function map(const callback);
 
     /**
      * Reduce the tensor down to a scalar.
@@ -19,7 +19,7 @@ interface Tensor extends ArrayLike, Arithmetic, Comparable, Trigonometric, Stati
      * @param mixed initial
      * @return mixed
      */
-    public function reduce(callable callback, initial = 0);
+    public function reduce(const callback, const initial = 0);
 
     /**
      * Transpose the tensor.
@@ -35,7 +35,7 @@ interface Tensor extends ArrayLike, Arithmetic, Comparable, Trigonometric, Stati
      * @param float max
      * @return mixed
      */
-    public function clip(float min, float max);
+    public function clip(const float min, const float max);
 
     /**
      * Clip the tensor to be lower bounded by a given minimum.
@@ -43,7 +43,7 @@ interface Tensor extends ArrayLike, Arithmetic, Comparable, Trigonometric, Stati
      * @param float min
      * @return mixed
      */
-    public function clipLower(float min);
+    public function clipLower(const float min);
 
     /**
      * Clip the tensor to be upper bounded by a given maximum.
@@ -51,7 +51,7 @@ interface Tensor extends ArrayLike, Arithmetic, Comparable, Trigonometric, Stati
      * @param float max
      * @return mixed
      */
-    public function clipUpper(float max);
+    public function clipUpper(const float max);
 
     /**
      * Return the shape of the tensor as a string.

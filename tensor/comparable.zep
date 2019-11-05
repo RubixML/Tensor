@@ -6,10 +6,10 @@ interface Comparable
     * A universal function to compute the equality comparison of a tensor
     * and another tensor element-wise.
     *
-    * @param  mixed  b
+    * @param  mixed b
     * @return mixed
     */
-    public function equal(b);
+    public function equal(const b);
 
     /**
      * A universal function to compute the not equal comparison of
@@ -18,7 +18,7 @@ interface Comparable
      * @param mixed b
      * @return mixed
      */
-    public function notEqual(b);
+    public function notEqual(const b);
 
     /**
      * A universal function to compute the greater than comparison of a
@@ -27,7 +27,7 @@ interface Comparable
      * @param mixed b
      * @return mixed
      */
-    public function greater(b);
+    public function greater(const b);
 
     /**
      * A universal function to compute the greater than or equal to
@@ -36,7 +36,7 @@ interface Comparable
      * @param mixed b
      * @return mixed
      */
-    public function greaterEqual(b);
+    public function greaterEqual(const b);
 
     /**
      * A universal function to compute the less than comparison of a
@@ -45,7 +45,7 @@ interface Comparable
      * @param mixed b
      * @return mixed
      */
-    public function less(b);
+    public function less(const b);
 
     /**
      * A universal function to compute the less than or equal to
@@ -54,5 +54,5 @@ interface Comparable
      * @param mixed b
      * @return mixed
      */
-    public function lessEqual(b);
+    public function lessEqual(const b);
 }

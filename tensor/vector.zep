@@ -7,7 +7,7 @@ use ArrayIterator;
 /**
  * Vector
  *
- * A one dimensional (rank 1) tensor with integer and/or floating point elements..
+ * A one dimensional (rank 1) tensor with integer and/or floating point elements.
  *
  * @category    Scientific Computing
  * @package     Rubix/Tensor
@@ -37,7 +37,7 @@ class Vector implements Tensor
      * @param array a
      * @return self
      */
-    public static function build(array a = [])
+    public static function build(const array a = [])
     {
         return new self(a, true);
     }
@@ -48,7 +48,7 @@ class Vector implements Tensor
      * @param array a
      * @return self
      */
-    public static function quick(array a = [])
+    public static function quick(const array a = [])
     {
         return new self(a, false);
     }
@@ -1068,6 +1068,16 @@ class Vector implements Tensor
     }
 
     /**
+    * Return the exponential of the vector minus 1.
+    *
+    * @return self
+    */
+    public function expm1() -> <Vector>
+    {
+        return this->map("expm1");
+    }
+
+    /**
      * Take the log to the given base of each element in the vector.
      *
      * @param float base
@@ -1084,6 +1094,16 @@ class Vector implements Tensor
         }
 
         return static::quick(b);
+    }
+
+    /**
+    * Return the log of 1 plus the tensor i.e. a transform.
+    *
+    * @return self
+    */
+    public function log1p() -> <Vector>
+    {
+        return this->map("log1p");
     }
 
     /**

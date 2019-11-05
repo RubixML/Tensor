@@ -880,7 +880,7 @@ class Matrix implements Tensor
 
         $p = $b->n();
 
-        $bT = $b->transpose()->asArray();
+        $bT = $b->transpose();
         
         $c = [];
 
@@ -1541,6 +1541,16 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the exponential of the tensor minus 1.
+     *
+     * @return mixed
+     */
+    public function expm1()
+    {
+        return $this->map('expm1');
+    }
+
+    /**
      * Return the logarithm of the matrix in specified base.
      *
      * @param float $base
@@ -1561,6 +1571,16 @@ class Matrix implements Tensor
         }
 
         return self::quick($b);
+    }
+
+    /**
+     * Return the log of 1 plus the tensor i.e. a transform.
+     *
+     * @return self
+     */
+    public function log1p() : self
+    {
+        return $this->map('log1p');
     }
 
     /**

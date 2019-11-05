@@ -58,7 +58,9 @@ PHP_METHOD(Tensor_Vector, abs);
 PHP_METHOD(Tensor_Vector, square);
 PHP_METHOD(Tensor_Vector, sqrt);
 PHP_METHOD(Tensor_Vector, exp);
+PHP_METHOD(Tensor_Vector, expm1);
 PHP_METHOD(Tensor_Vector, log);
+PHP_METHOD(Tensor_Vector, log1p);
 PHP_METHOD(Tensor_Vector, sin);
 PHP_METHOD(Tensor_Vector, asin);
 PHP_METHOD(Tensor_Vector, cos);
@@ -513,6 +515,13 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_exp, 0, 0, IS_OBJE
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_expm1, 0, 0, Tensor\\Vector, 0)
+#else
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_expm1, 0, 0, IS_OBJECT, "Tensor\\Vector", 0)
+#endif
+ZEND_END_ARG_INFO()
+
+#if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_log, 0, 0, Tensor\\Vector, 0)
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_log, 0, 0, IS_OBJECT, "Tensor\\Vector", 0)
@@ -521,6 +530,13 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_log, 0, 0, IS_OBJE
 	ZEND_ARG_TYPE_INFO(0, base, IS_DOUBLE, 0)
 #else
 	ZEND_ARG_INFO(0, base)
+#endif
+ZEND_END_ARG_INFO()
+
+#if PHP_VERSION_ID >= 70200
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_log1p, 0, 0, Tensor\\Vector, 0)
+#else
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_log1p, 0, 0, IS_OBJECT, "Tensor\\Vector", 0)
 #endif
 ZEND_END_ARG_INFO()
 
@@ -1068,7 +1084,9 @@ ZEPHIR_INIT_FUNCS(tensor_vector_method_entry) {
 	PHP_ME(Tensor_Vector, square, arginfo_tensor_vector_square, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, sqrt, arginfo_tensor_vector_sqrt, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, exp, arginfo_tensor_vector_exp, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Vector, expm1, arginfo_tensor_vector_expm1, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, log, arginfo_tensor_vector_log, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Vector, log1p, arginfo_tensor_vector_log1p, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, sin, arginfo_tensor_vector_sin, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, asin, arginfo_tensor_vector_asin, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, cos, arginfo_tensor_vector_cos, ZEND_ACC_PUBLIC)

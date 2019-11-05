@@ -16,6 +16,10 @@ ZEPHIR_INIT_CLASS(Tensor_Trigonometric) {
 
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Trigonometric, tensor, trigonometric, tensor_trigonometric_method_entry);
 
+	zephir_declare_class_constant_double(tensor_trigonometric_ce, SL("M_PI"), 3.14159265358979323846);
+
+	zephir_declare_class_constant_double(tensor_trigonometric_ce, SL("TWO_PI"), 6.28318530718);
+
 	return SUCCESS;
 
 }

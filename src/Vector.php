@@ -1028,6 +1028,16 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the exponential of the tensor minus 1.
+     *
+     * @return mixed
+     */
+    public function expm1()
+    {
+        return $this->map('expm1');
+    }
+
+    /**
      * Take the log to the given base of each element in the vector.
      *
      * @param float $base
@@ -1042,6 +1052,16 @@ class Vector implements Tensor
         }
 
         return static::quick($b);
+    }
+
+    /**
+     * Return the log of 1 plus the tensor i.e. a transform.
+     *
+     * @return self
+     */
+    public function log1p() : self
+    {
+        return $this->map('log1p');
     }
 
     /**
