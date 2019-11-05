@@ -11,6 +11,7 @@
     - Added positive definite and semidefinite methods to Matrix
     - Added is symmetric method to Matrix
     - Added Statistical and Trigonometric interfaces
+    - Added Arithmetic and Comparable interfaces
 
 - 1.0.4
     - Added transpose to Tensor API

@@ -16,7 +16,13 @@ ZEPHIR_INIT_CLASS(Tensor_Tensor) {
 
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Tensor, tensor, tensor, tensor_tensor_method_entry);
 
+	zephir_declare_class_constant_double(tensor_tensor_ce, SL("EPSILON"), 0.00000001);
+
 	zend_class_implements(tensor_tensor_ce, 1, tensor_arraylike_ce);
+	zend_class_implements(tensor_tensor_ce, 1, tensor_arithmetic_ce);
+	zend_class_implements(tensor_tensor_ce, 1, tensor_comparable_ce);
+	zend_class_implements(tensor_tensor_ce, 1, tensor_trigonometric_ce);
+	zend_class_implements(tensor_tensor_ce, 1, tensor_statistical_ce);
 	return SUCCESS;
 
 }
@@ -34,7 +40,7 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, map);
  *
  * @param callable callback
  * @param mixed initial
- * @return int|float
+ * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, reduce);
 
@@ -44,200 +50,6 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, reduce);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, transpose);
-
-/**
- * A universal function to multiply this tensor with another tensor
- * element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, multiply);
-
-/**
- * A universal function to divide this tensor by another tensor
- * element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, divide);
-
-/**
- * A universal function to add this tensor with another tensor
- * element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, add);
-
-/**
- * A universal function to subtract this tensor from another tensor
- * element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, subtract);
-
-/**
- * A universal function to raise this tensor to the power of another
- * tensor element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, pow);
-
-/**
- * A universal function to compute the integer modulus of this tensor
- * and another tensor element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, mod);
-
-/**
- * A universal function to compute the equality comparison of a tensor
- * and another tensor element-wise.
- *
- * @param  mixed  b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, equal);
-
-/**
- * A universal function to compute the not equal comparison of
- * this tensor and another tensor element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, notEqual);
-
-/**
- * A universal function to compute the greater than comparison of a
- * tensor and another tensor element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, greater);
-
-/**
- * A universal function to compute the greater than or equal to
- * comparison of a tensor and another tensor element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, greaterEqual);
-
-/**
- * A universal function to compute the less than comparison of a
- * tensor and another tensor element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, less);
-
-/**
- * A universal function to compute the less than or equal to
- * comparison of a tensor and another tensor element-wise.
- *
- * @param mixed b
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, lessEqual);
-
-/**
- * Take the absolute value of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, abs);
-
-/**
- * Square the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, square);
-
-/**
- * Return the square root of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, sqrt);
-
-/**
- * Return the exponential of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, exp);
-
-/**
- * Return the logarithm of the tensor in a specified base.
- *
- * @param float base
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, log);
-
-/**
- * Sum the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, sum);
-
-/**
- * Calculate the product of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, product);
-
-/**
- * Return the minimum of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, min);
-
-/**
- * Return the maximum of the tensor.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, max);
-
-/**
- * Round the elements in the tensor to a given decimal place.
- *
- * @param int precision
- * @return self
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, round);
-
-/**
- * Round the tensor down to the nearest integer.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, floor);
-
-/**
- * Round the tensor up to the nearest integer.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, ceil);
 
 /**
  * Clip the tensor to be between the given minimum and maximum.
@@ -263,20 +75,6 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, clipLower);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, clipUpper);
-
-/**
- * Return the element-wise sign indication.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, sign);
-
-/**
- * Negate the tensor i.e take the negative.
- *
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Tensor, negate);
 
 /**
  * Return the shape of the tensor as a string.

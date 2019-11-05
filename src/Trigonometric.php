@@ -2,8 +2,12 @@
 
 namespace Tensor;
 
-interface Trigonometric extends Tensor
+interface Trigonometric
 {
+    const M_PI = 3.14159265358979323846;
+
+    const TWO_PI = 6.28318530718;
+    
     /**
      * Return the sine of the tensor.
      *

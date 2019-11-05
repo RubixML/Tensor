@@ -1,6 +1,6 @@
 namespace Tensor;
 
-interface Trigonometric extends Tensor
+interface Trigonometric
 {
     /**
      * Return the sine of the tensor.

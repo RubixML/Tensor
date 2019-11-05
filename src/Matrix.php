@@ -24,7 +24,7 @@ use const Tensor\TWO_PI;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Matrix implements Tensor, Trigonometric, Statistical
+class Matrix implements Tensor
 {
     /**
      * A 2-dimensional sequential array that holds the values of the matrix.
@@ -884,7 +884,7 @@ class Matrix implements Tensor, Trigonometric, Statistical
         
         $c = [];
 
-        foreach ($this->a as $row) {
+        foreach ($this->a as $rowA) {
             $rowC = [];
 
             for ($j = 0; $j < $p; ++$j) {
@@ -892,8 +892,8 @@ class Matrix implements Tensor, Trigonometric, Statistical
                 
                 $sigma = 0;
 
-                foreach ($row as $k => $value) {
-                    $sigma += $value * $columnB[$k];
+                foreach ($rowA as $k => $valueA) {
+                    $sigma += $valueA * $columnB[$k];
                 }
 
                 $rowC[] = $sigma;

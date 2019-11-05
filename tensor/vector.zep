@@ -13,16 +13,8 @@ use ArrayIterator;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Vector implements Tensor, Trigonometric, Statistical
+class Vector implements Tensor
 {
-    const EPSILON = 0.00000001;
-
-    const M_PI = 3.14159265358979323846;
-
-    const TWO_PI = 6.28318530718;
-
-    const M_E = 2.7182818284590452354;
-
     /**
      * A 1-d sequential array holding the elements of the vector.
      *

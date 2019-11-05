@@ -18,14 +18,26 @@ $ composer require rubix/tensor
 See this [guide](https://docs.zephir-lang.com/0.12/en/installation) for additional requirements for compiling and installing the PHP extension from source with [Zephir](https://docs.zephir-lang.com/0.12/en/welcome).
 
 ## Compiling the Extension
-To compile the PHP extension from source you can call `composer compile`.
+Clone the repository locally using [Git](https://git-scm.com/):
+
+```sh
+$ git clone https://github.com/RubixML/Tensor
+```
+
+Install dependencies using [Composer](https://getcomposer.org/):
+
+```sh
+$ composer install
+```
+
+To compile the PHP extension from source you can run `composer compile`:
 
 ```sh
 $ composer compile
 ```
 
 ## Installing the Extension
-To compile and install the extension in one command simply call `composer install-ext`.
+To compile and install the extension in one command simply call `composer install-ext`:
 
 ```sh
 $ composer install-ext

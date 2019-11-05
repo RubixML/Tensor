@@ -2,7 +2,7 @@
 
 namespace Tensor;
 
-interface Statistical extends Tensor
+interface Statistical
 {
     /**
      * Return the mean of the tensor.

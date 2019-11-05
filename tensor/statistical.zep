@@ -1,6 +1,6 @@
 namespace Tensor;
 
-interface Statistical extends Tensor
+interface Statistical
 {
     /**
      * Return the mean of the tensor.
@@ -19,8 +19,8 @@ interface Statistical extends Tensor
     /**
      * Return the pth percentile of the tensor.
      *
-     * @param float $p
+     * @param float p
      * @return mixed
      */
-    public function percentile(float $p);
+    public function percentile(float p);
 }

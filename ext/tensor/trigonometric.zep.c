@@ -16,7 +16,6 @@ ZEPHIR_INIT_CLASS(Tensor_Trigonometric) {
 
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Trigonometric, tensor, trigonometric, tensor_trigonometric_method_entry);
 
-	zend_class_implements(tensor_trigonometric_ce, 1, tensor_tensor_ce);
 	return SUCCESS;
 
 }
