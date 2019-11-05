@@ -505,12 +505,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
-        var sigma = 0.0;
+        float sigma = 0.0;
 
-        for i, valueA in this->a {
-            let sigma += valueA * b[i];
+        for i, valueB in iterator(b) {
+            let sigma += this->a[i] * valueB;
         }
 
         return sigma;
@@ -1895,12 +1895,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA * b[i];
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] * valueB;
         }
 
         return static::quick(c);
@@ -1921,12 +1921,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA / b[i];
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] / valueB;
         }
 
         return static::quick(c);
@@ -1947,12 +1947,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA + b[i];
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] + valueB;
         }
 
         return static::quick(c);
@@ -1973,12 +1973,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA - b[i];
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] - valueB;
         }
 
         return static::quick(c);
@@ -1999,12 +1999,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = pow(valueA, b[i]);
+        for i, valueB in iterator(b) {
+            let c[] = pow(this->a[i], valueB);
         }
 
         return static::quick(c);
@@ -2025,12 +2025,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA % b[i];
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] % valueB;
         }
 
         return static::quick(c);
@@ -2052,12 +2052,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA == b[i] ? 1 : 0;
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] == valueB ? 1 : 0;
         }
 
         return static::quick(c);
@@ -2079,12 +2079,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA != b[i] ? 1 : 0;
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] != valueB ? 1 : 0;
         }
 
         return static::quick(c);
@@ -2106,12 +2106,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA > b[i] ? 1 : 0;
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] > valueB ? 1 : 0;
         }
 
         return static::quick(c);
@@ -2133,12 +2133,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA >= b[i] ? 1 : 0;
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] >= valueB ? 1 : 0;
         }
 
         return static::quick(c);
@@ -2160,12 +2160,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA < b[i] ? 1 : 0;
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] < valueB ? 1 : 0;
         }
 
         return static::quick(c);
@@ -2187,12 +2187,12 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueA;
+        var i, valueB;
 
         array c = [];
 
-        for i, valueA in this->a {
-            let c[] = valueA <= b[i] ? 1 : 0;
+        for i, valueB in iterator(b) {
+            let c[] = this->a[i] <= valueB ? 1 : 0;
         }
 
         return static::quick(c);

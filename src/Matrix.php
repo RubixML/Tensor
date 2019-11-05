@@ -571,8 +571,8 @@ class Matrix implements Tensor
 
         $b = [];
 
-        for ($i = 0; $i < $this->m; ++$i) {
-            $b[] = $this->a[$i][$i];
+        foreach ($this->a as $i => $rowA) {
+            $b[] = $rowA[$i];
         }
 
         return Vector::quick($b);
@@ -886,7 +886,7 @@ class Matrix implements Tensor
 
         $p = $b->n();
 
-        $bT = $b->transpose();
+        $bT = $b->transpose()->asArray();
         
         $c = [];
 

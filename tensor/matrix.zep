@@ -554,12 +554,12 @@ class Matrix implements Tensor
                 . " non square matrix.");
         }
 
-        int i;
+        var i, rowA;
 
         array b = [];
 
-        for i in range(0, this->m - 1) {
-            let b[] = this->a[i][i];
+        for i, rowA in this->a {
+            let b[] = rowA[i];
         }
 
         return Vector::quick(b);
@@ -880,7 +880,7 @@ class Matrix implements Tensor
 
         var p = b->n();
 
-        var bT = b->transpose();
+        var bT = b->transpose()->asArray();
          
         array c = [];
  

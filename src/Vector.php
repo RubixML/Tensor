@@ -495,8 +495,8 @@ class Vector implements Tensor
 
         $sigma = 0.;
 
-        foreach ($this->a as $i => $valueA) {
-            $sigma += $valueA * $b[$i];
+        foreach ($b as $i => $valueB) {
+            $sigma += $this->a[$i] * $valueB;
         }
 
         return $sigma;
@@ -532,15 +532,13 @@ class Vector implements Tensor
      */
     public function outer(Vector $b) : Matrix
     {
-        $n = $b->n();
-
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
+        foreach ($this->a as $valueA) {
             $rowC = [];
-
-            for ($j = 0; $j < $n; ++$j) {
-                $rowC[] = $valueA * $b[$j];
+            
+            foreach ($b as $valueB) {
+                $rowC[] = $valueA * $valueB;
             }
 
             $c[] = $rowC;
@@ -1798,8 +1796,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA * $b[$i];
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] * $valueB;
         }
 
         return static::quick($c);
@@ -1821,8 +1819,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA / $b[$i];
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] / $valueB;
         }
 
         return static::quick($c);
@@ -1844,8 +1842,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA + $b[$i];
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] + $valueB;
         }
 
         return static::quick($c);
@@ -1867,8 +1865,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA - $b[$i];
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] - $valueB;
         }
 
         return static::quick($c);
@@ -1890,8 +1888,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA ** $b[$i];
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] ** $valueB;
         }
 
         return static::quick($c);
@@ -1913,8 +1911,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA % $b[$i];
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] % $valueB;
         }
 
         return static::quick($c);
@@ -1937,8 +1935,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA == $b[$i] ? 1 : 0;
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] == $valueB ? 1 : 0;
         }
 
         return static::quick($c);
@@ -1961,8 +1959,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA != $b[$i] ? 1 : 0;
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] != $valueB ? 1 : 0;
         }
 
         return static::quick($c);
@@ -1985,8 +1983,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA > $b[$i] ? 1 : 0;
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] > $valueB ? 1 : 0;
         }
 
         return static::quick($c);
@@ -2009,8 +2007,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA >= $b[$i] ? 1 : 0;
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] >= $valueB ? 1 : 0;
         }
 
         return static::quick($c);
@@ -2033,8 +2031,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA < $b[$i] ? 1 : 0;
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] < $valueB ? 1 : 0;
         }
 
         return static::quick($c);
@@ -2057,8 +2055,8 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $valueA) {
-            $c[] = $valueA <= $b[$i] ? 1 : 0;
+        foreach ($b as $i => $valueB) {
+            $c[] = $this->a[$i] <= $valueB ? 1 : 0;
         }
 
         return static::quick($c);
