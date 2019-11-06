@@ -499,20 +499,20 @@ PHP_METHOD(Tensor_Vector, poisson) {
 
 	zval a;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_4 = NULL;
-	double lambda, p = 0;
-	zval *n_param = NULL, *lambda_param = NULL, l, _0, _1$$4, _2$$4, _3$$4, _5$$4, _6$$4, _7$$3;
+	zephir_fcall_cache_entry *_5 = NULL;
+	double lambda, p = 0, l;
+	zval *n_param = NULL, *lambda_param = NULL, _0, _1, _2$$4, _3$$4, _4$$4, _6$$4, _7$$4, _8$$3;
 	zend_long n, ZEPHIR_LAST_CALL_STATUS, k = 0;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&l);
 	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_1$$4);
+	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2$$4);
 	ZVAL_UNDEF(&_3$$4);
-	ZVAL_UNDEF(&_5$$4);
+	ZVAL_UNDEF(&_4$$4);
 	ZVAL_UNDEF(&_6$$4);
-	ZVAL_UNDEF(&_7$$3);
+	ZVAL_UNDEF(&_7$$4);
+	ZVAL_UNDEF(&_8$$3);
 	ZVAL_UNDEF(&a);
 
 	ZEPHIR_MM_GROW();
@@ -527,8 +527,9 @@ PHP_METHOD(Tensor_Vector, poisson) {
 
 
 	ZVAL_DOUBLE(&_0, -lambda);
-	ZEPHIR_CALL_FUNCTION(&l, "exp", NULL, 9, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "exp", NULL, 9, &_0);
 	zephir_check_call_status();
+	l = zephir_get_doubleval(&_1);
 	ZEPHIR_INIT_VAR(&a);
 	array_init(&a);
 	while (1) {
@@ -538,24 +539,24 @@ PHP_METHOD(Tensor_Vector, poisson) {
 		k = 0;
 		p = 1.0;
 		while (1) {
-			if (!(ZEPHIR_LT_DOUBLE(&l, &p))) {
+			if (!(p > l)) {
 				break;
 			}
 			k++;
-			ZEPHIR_INIT_NVAR(&_1$$4);
-			ZEPHIR_GET_CONSTANT(&_1$$4, "PHP_INT_MAX");
-			ZVAL_LONG(&_2$$4, 0);
-			ZEPHIR_CALL_FUNCTION(&_3$$4, "rand", &_4, 6, &_2$$4, &_1$$4);
+			ZEPHIR_INIT_NVAR(&_2$$4);
+			ZEPHIR_GET_CONSTANT(&_2$$4, "PHP_INT_MAX");
+			ZVAL_LONG(&_3$$4, 0);
+			ZEPHIR_CALL_FUNCTION(&_4$$4, "rand", &_5, 6, &_3$$4, &_2$$4);
 			zephir_check_call_status();
-			ZEPHIR_INIT_NVAR(&_5$$4);
-			ZEPHIR_GET_CONSTANT(&_5$$4, "PHP_INT_MAX");
 			ZEPHIR_INIT_NVAR(&_6$$4);
-			div_function(&_6$$4, &_3$$4, &_5$$4);
-			p *= zephir_get_numberval(&_6$$4);
+			ZEPHIR_GET_CONSTANT(&_6$$4, "PHP_INT_MAX");
+			ZEPHIR_INIT_NVAR(&_7$$4);
+			div_function(&_7$$4, &_4$$4, &_6$$4);
+			p *= zephir_get_numberval(&_7$$4);
 		}
-		ZEPHIR_INIT_NVAR(&_7$$3);
-		ZVAL_LONG(&_7$$3, (k - 1));
-		zephir_array_append(&a, &_7$$3, PH_SEPARATE, "tensor/vector.zep", 200);
+		ZEPHIR_INIT_NVAR(&_8$$3);
+		ZVAL_LONG(&_8$$3, (k - 1));
+		zephir_array_append(&a, &_8$$3, PH_SEPARATE, "tensor/vector.zep", 200);
 	}
 	ZEPHIR_RETURN_CALL_STATIC("quick", NULL, 0, &a);
 	zephir_check_call_status();

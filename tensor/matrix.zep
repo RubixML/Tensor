@@ -3,6 +3,7 @@ namespace Tensor;
 use Tensor\Decompositions\Lu;
 use Tensor\Decompositions\Ref;
 use Tensor\Decompositions\Rref;
+use Tensor\Decompositions\Cholesky;
 use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
@@ -283,7 +284,7 @@ class Matrix implements Tensor
         int k;
         float p;
 
-        var l = exp(-lambda);
+        float l = (float) exp(-lambda);
 
         array a = [];
 
@@ -294,7 +295,7 @@ class Matrix implements Tensor
                 let k = 0;
                 let p = 1.0;
 
-                while p > l.0 {
+                while p > l {
                     let k++;
 
                     let p *= rand(0, PHP_INT_MAX)
@@ -1083,6 +1084,16 @@ class Matrix implements Tensor
         var p = lup->p();
         
         return [l, u, p];
+    }
+
+    /**
+     * Return the lower triangular matrix of the Cholesky decomposition.
+     * 
+     * @return self
+     */
+    public function cholesky() -> <Matrix>
+    {
+        return Cholesky::decompose(this)->l();
     }
 
     /**

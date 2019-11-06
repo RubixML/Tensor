@@ -194,7 +194,7 @@ PHP_METHOD(Tensor_Decompositions_Rref, decompose) {
 	zephir_check_call_status();
 	ZEPHIR_CPY_WRT(&b, &_0);
 	object_init_ex(return_value, tensor_decompositions_rref_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &b);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 27, &b);
 	zephir_check_call_status();
 	RETURN_MM();
 

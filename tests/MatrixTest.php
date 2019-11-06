@@ -560,6 +560,27 @@ class MatrixTest extends TestCase
         $this->assertEquals($uHat, $u->asArray());
     }
 
+    public function test_cholesky()
+    {
+        $a = Matrix::quick([
+            [2, -1, 0],
+            [-1, 2, -1],
+            [0, -1, 2],
+        ]);
+
+        $l = $a->cholesky();
+
+        $expected = [
+            [1.4142135623730951, 0, 0],
+            [-0.7071067811865475, 1.224744871391589, 0],
+            [0, -0.8164965809277261, 1.1547005383792515],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $l);
+        $this->assertCount(9, $l);
+        $this->assertEquals($expected, $l->asArray());
+    }
+
     public function test_eig()
     {
         if (extension_loaded('tensor')) {

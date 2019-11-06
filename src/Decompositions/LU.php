@@ -49,7 +49,8 @@ class LU implements Decomposition
     public static function decompose(Matrix $a) : self
     {
         if (!$a->isSquare()) {
-            throw new RuntimeException('Cannot decompose a non square matrix.');
+            throw new RuntimeException('Cannot LU decompose a'
+                . ' non square matrix.');
         }
 
         $n = $a->n();

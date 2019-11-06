@@ -296,7 +296,7 @@ PHP_METHOD(Tensor_Decompositions_Ref, gaussianElimination) {
 	ZEPHIR_CPY_WRT(&b, &_35);
 	object_init_ex(return_value, tensor_decompositions_ref_ce);
 	ZVAL_LONG(&_37, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 25, &b, &_37);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &b, &_37);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -479,7 +479,7 @@ PHP_METHOD(Tensor_Decompositions_Ref, rowReductionMethod) {
 	ZEPHIR_CPY_WRT(&b, &_25);
 	object_init_ex(return_value, tensor_decompositions_ref_ce);
 	ZVAL_LONG(&_27, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 25, &b, &_27);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &b, &_27);
 	zephir_check_call_status();
 	RETURN_MM();
 

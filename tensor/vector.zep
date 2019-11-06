@@ -182,7 +182,7 @@ class Vector implements Tensor
         int k;
         float p;
 
-        var l = exp(-lambda);
+        float l = (float) exp(-lambda);
 
         array a = [];
 

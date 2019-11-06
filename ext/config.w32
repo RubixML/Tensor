@@ -11,7 +11,7 @@ if (PHP_TENSOR != "no") {
   }
   
   ADD_SOURCES(configure_module_dirname + "/tensor", "arithmetic.zep.c arraylike.zep.c comparable.zep.c statistical.zep.c trigonometric.zep.c tensor.zep.c vector.zep.c columnvector.zep.c matrix.zep.c", "tensor");
-	ADD_SOURCES(configure_module_dirname + "/tensor/decompositions", "decomposition.zep.c lu.zep.c ref.zep.c rref.zep.c", "tensor");
+	ADD_SOURCES(configure_module_dirname + "/tensor/decompositions", "decomposition.zep.c cholesky.zep.c lu.zep.c ref.zep.c rref.zep.c", "tensor");
   ADD_FLAG("CFLAGS_TENSOR", "/D ZEPHIR_RELEASE /Oi /Ot /Oy /Ob2 /Gs /GF /Gy /GL");
   ADD_FLAG("CFLAGS", "/D ZEPHIR_RELEASE /Oi /Ot /Oy /Ob2 /Gs /GF /Gy /GL");
   ADD_FLAG("LDFLAGS", "/LTCG");

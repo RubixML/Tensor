@@ -6,6 +6,7 @@ use Tensor\Decompositions\LU;
 use Tensor\Decompositions\REF;
 use Tensor\Decompositions\RREF;
 use Tensor\Decompositions\Eigen;
+use Tensor\Decompositions\Cholesky;
 use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
@@ -1074,6 +1075,16 @@ class Matrix implements Tensor
             $lup->u(),
             $lup->p(),
         ];
+    }
+
+    /**
+     * Return the lower triangular matrix of the Cholesky decomposition.
+     *
+     * @return self
+     */
+    public function cholesky() : self
+    {
+        return Cholesky::decompose($this)->l();
     }
 
     /**
