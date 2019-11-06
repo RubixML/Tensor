@@ -182,6 +182,14 @@ class MatrixTest extends TestCase
         $this->assertCount(9, $z);
     }
 
+    public function test_build_poisson()
+    {
+        $z = Matrix::poisson(6, 4, 2.);
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertCount(24, $z);
+    }
+
     public function test_build_uniform()
     {
         $z = Matrix::uniform(3, 3);

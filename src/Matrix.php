@@ -279,6 +279,44 @@ class Matrix implements Tensor
     }
 
     /**
+     * Generate a m x n matrix with elements from a Poisson distribution.
+     *
+     * @param int $m
+     * @param int $n
+     * @param float $lambda
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public static function poisson(int $m, int $n, float $lambda = 1.) : self
+    {
+        $l = exp(-$lambda);
+
+        $a = [];
+
+        while (count($a) < $m) {
+            $rowA = [];
+
+            while (count($rowA) < $n) {
+                $k = 0;
+                $p = 1.;
+
+                while ($p > $l) {
+                    ++$k;
+                    
+                    $p *= rand(0, PHP_INT_MAX)
+                        / PHP_INT_MAX;
+                }
+
+                $rowA[] = $k - 1;
+            }
+
+            $a[] = $rowA;
+        }
+
+        return self::quick($a);
+    }
+
+    /**
      * Return a uniform random matrix with mean 0 and unit variance.
      *
      * @param int $m
@@ -1801,8 +1839,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the row variance of the matrix and return it in a tuple along
-     * with the mean.
+     * Compute the row variance of the matrix.
      *
      * @return \Tensor\ColumnVector
      */

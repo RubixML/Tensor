@@ -56,7 +56,7 @@ PHP_METHOD(Tensor_Decompositions_Rref, decompose) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_4 = NULL, *_22 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, row, col, _11$$3, _12$$3, _6$$5, _7$$5, _15$$8, _16$$8;
-	zval *a = NULL, a_sub, t, scale, divisor, m, n, ref, b, swaps, _0, _2$$3, _3$$3, _8$$6, _9$$6, _13$$7, _17$$9, _18$$9, _19$$9, _20$$9, _21$$9;
+	zval *a, a_sub, t, scale, divisor, m, n, ref, b, swaps, _0, _2$$3, _3$$3, _8$$6, _9$$6, _13$$7, _17$$9, _18$$9, _19$$9, _20$$9, _21$$9;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -111,7 +111,7 @@ PHP_METHOD(Tensor_Decompositions_Rref, decompose) {
 		ZEPHIR_OBS_NVAR(&t);
 		zephir_array_fetch_long(&t, &b, row, PH_NOISY, "tensor/decompositions/rref.zep", 50);
 		zephir_array_fetch_long(&_2$$3, &t, col, PH_NOISY | PH_READONLY, "tensor/decompositions/rref.zep", 52);
-		ZEPHIR_CALL_FUNCTION(&_3$$3, "abs", &_4, 10, &_2$$3);
+		ZEPHIR_CALL_FUNCTION(&_3$$3, "abs", &_4, 11, &_2$$3);
 		zephir_check_call_status();
 		if (ZEPHIR_IS_LONG(&_3$$3, 0)) {
 			col++;
@@ -194,7 +194,7 @@ PHP_METHOD(Tensor_Decompositions_Rref, decompose) {
 	zephir_check_call_status();
 	ZEPHIR_CPY_WRT(&b, &_0);
 	object_init_ex(return_value, tensor_decompositions_rref_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 25, &b);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &b);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -206,7 +206,7 @@ PHP_METHOD(Tensor_Decompositions_Rref, decompose) {
  */
 PHP_METHOD(Tensor_Decompositions_Rref, __construct) {
 
-	zval *a = NULL, a_sub;
+	zval *a, a_sub;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);

@@ -107,6 +107,14 @@ class VectorTest extends TestCase
         $this->assertCount(4, $z);
     }
 
+    public function test_build_poisson()
+    {
+        $z = Vector::poisson(10, 2.);
+
+        $this->assertInstanceOf(Vector::class, $z);
+        $this->assertCount(10, $z);
+    }
+
     public function test_build_uniform()
     {
         $z = Vector::uniform(5);

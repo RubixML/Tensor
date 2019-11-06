@@ -270,6 +270,47 @@ class Matrix implements Tensor
     }
 
     /**
+     * Generate a m x n matrix with elements from a Poisson distribution.
+     *
+     * @param int m
+     * @param int n
+     * @param float lambda
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public static function poisson(const int m, const int n, const float lambda = 1.0) -> <Matrix>
+    {
+        int k;
+        float p;
+
+        var l = exp(-lambda);
+
+        array a = [];
+
+        while count(a) < m {
+            array rowA = [];
+
+            while count(rowA) < n {
+                let k = 0;
+                let p = 1.0;
+
+                while p > l.0 {
+                    let k++;
+
+                    let p *= rand(0, PHP_INT_MAX)
+                        / PHP_INT_MAX;
+                }
+
+                let rowA[] = k - 1;
+            }
+
+            let a[] = rowA;
+        }
+
+        return self::quick(a);
+    }
+
+    /**
      * Return a random uniformly distributed matrix with values between -1 and 1.
      *
      * @param int m

@@ -15,5 +15,6 @@ ZEPHIR_INIT_FUNCS(tensor_statistical_method_entry) {
 	PHP_ABSTRACT_ME(Tensor_Statistical, mean, NULL)
 	PHP_ABSTRACT_ME(Tensor_Statistical, median, NULL)
 	PHP_ABSTRACT_ME(Tensor_Statistical, percentile, arginfo_tensor_statistical_percentile)
+	PHP_ABSTRACT_ME(Tensor_Statistical, variance, NULL)
 	PHP_FE_END
 };

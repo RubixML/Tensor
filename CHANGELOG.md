@@ -14,6 +14,7 @@
     - Added Arithmetic and Comparable interfaces
     - Added log1p and expm1 methods to the Arithmetic interface
     - Added matrix full rank method
+    - Added generate random Poisson distribution
 
 - 1.0.4
     - Added transpose to Tensor API

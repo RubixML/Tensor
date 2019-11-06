@@ -23,4 +23,11 @@ interface Statistical
      * @return mixed
      */
     public function percentile(const float p);
+
+    /**
+     * Compute the variance of the tensor.
+     *
+     * @return mixed
+     */
+    public function variance();
 }

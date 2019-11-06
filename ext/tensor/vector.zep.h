@@ -10,6 +10,7 @@ PHP_METHOD(Tensor_Vector, ones);
 PHP_METHOD(Tensor_Vector, fill);
 PHP_METHOD(Tensor_Vector, rand);
 PHP_METHOD(Tensor_Vector, gaussian);
+PHP_METHOD(Tensor_Vector, poisson);
 PHP_METHOD(Tensor_Vector, uniform);
 PHP_METHOD(Tensor_Vector, range);
 PHP_METHOD(Tensor_Vector, linspace);
@@ -196,6 +197,23 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_gaussian, 0, 1, IS
 	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
 #else
 	ZEND_ARG_INFO(0, n)
+#endif
+ZEND_END_ARG_INFO()
+
+#if PHP_VERSION_ID >= 70200
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_poisson, 0, 1, Tensor\\Vector, 0)
+#else
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_poisson, 0, 1, IS_OBJECT, "Tensor\\Vector", 0)
+#endif
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, n)
+#endif
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, lambda, IS_DOUBLE, 0)
+#else
+	ZEND_ARG_INFO(0, lambda)
 #endif
 ZEND_END_ARG_INFO()
 
@@ -1036,6 +1054,7 @@ ZEPHIR_INIT_FUNCS(tensor_vector_method_entry) {
 	PHP_ME(Tensor_Vector, fill, arginfo_tensor_vector_fill, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Tensor_Vector, rand, arginfo_tensor_vector_rand, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Tensor_Vector, gaussian, arginfo_tensor_vector_gaussian, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
+	PHP_ME(Tensor_Vector, poisson, arginfo_tensor_vector_poisson, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Tensor_Vector, uniform, arginfo_tensor_vector_uniform, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Tensor_Vector, range, arginfo_tensor_vector_range, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Tensor_Vector, linspace, arginfo_tensor_vector_linspace, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
