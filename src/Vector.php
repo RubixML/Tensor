@@ -1297,16 +1297,29 @@ class Vector implements Tensor
     /**
      * Return the variance of the vector.
      *
+     * @param mixed $mean
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      * @return int|float
      */
-    public function variance()
+    public function variance($mean = null)
     {
+        if (isset($mean) and !is_int($mean) and !is_float($mean)) {
+            throw new InvalidArgumentException('Mean scalar must be'
+                . ' an integer or floating point number '
+                . gettype($mean) . ' given.');
+        }
+
         if ($this->n === 0) {
             throw new RuntimeException('Variance is not defined for'
                 . ' an empty vector.');
         }
 
-        $ssd = $this->subtract($this->mean())
+        if (is_null($mean)) {
+            $mean = $this->mean();
+        }
+
+        $ssd = $this->subtract($mean)
             ->square()
             ->sum();
 

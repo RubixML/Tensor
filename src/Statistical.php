@@ -29,7 +29,8 @@ interface Statistical
     /**
      * Compute the variance of the tensor.
      *
+     * @param mixed $mean
      * @return mixed
      */
-    public function variance();
+    public function variance($mean = null);
 }

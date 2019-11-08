@@ -45,6 +45,7 @@ ZEPHIR_DOC_METHOD(Tensor_Statistical, percentile);
 /**
  * Compute the variance of the tensor.
  *
+ * @param mixed mean
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Statistical, variance);

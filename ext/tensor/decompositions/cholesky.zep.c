@@ -38,7 +38,7 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Cholesky) {
 	ZEPHIR_REGISTER_CLASS(Tensor\\Decompositions, Cholesky, tensor, decompositions_cholesky, tensor_decompositions_cholesky_method_entry, 0);
 
 	/**
-	 * The lower triagular matrix.
+	 * The lower triangular matrix.
 	 * 
 	 * @var \Tensor\Matrix
 	 */

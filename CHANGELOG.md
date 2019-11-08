@@ -16,6 +16,7 @@
     - Added matrix full rank method
     - Added generate random Poisson distribution
     - Added Cholesky decomposition
+    - Variance now takes an optional mean argument
 
 - 1.0.4
     - Added transpose to Tensor API

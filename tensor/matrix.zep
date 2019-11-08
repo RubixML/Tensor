@@ -1877,14 +1877,32 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the row variance of the matrix and return it in a tuple along
-     * with the mean.
+     * Compute the row variance of the matrix.
      *
+     * @param mixed mean
+     * @throws \InvalidArgumentException
      * @return \Tensor\ColumnVector
      */
-    public function variance() -> <ColumnVector>
+    public function variance(mean = null) -> <ColumnVector>
     {
-        return this->subtract(this->mean())
+        if !is_null(mean) {
+            if !(mean instanceof ColumnVector) {
+                throw new InvalidArgumentException("Mean must be a"
+                . " column vector " . gettype(mean) . " given.");
+            }
+
+            if mean->size() !== this->n {
+                throw new InvalidArgumentException("Mean vector must"
+                    . " have " . (string) this->n . " elements, "
+                    . (string) mean->size() . " given.");
+            }
+        }
+
+        if is_null(mean) {
+            let mean = this->mean();
+        }
+
+        return this->subtract(mean)
             ->square()
             ->sum()
             ->divide(this->m);
