@@ -63,12 +63,13 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_4 = NULL, *_28 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, k = 0, _6, _7, _9$$4, _10$$4, _12$$5, _13$$5;
-	zval *a, a_sub, _0, m, l, _3, _27, _1$$3, _19$$5, _20$$5, _21$$5, _22$$5, _23$$5, _24$$5, _25$$5, _26$$5, _14$$6, _15$$6, _16$$6, _17$$6, _18$$6;
+	zval *a, a_sub, _0, m, aHat, l, _3, _27, _1$$3, _19$$5, _20$$5, _21$$5, _22$$5, _23$$5, _24$$5, _25$$5, _26$$5, _14$$6, _15$$6, _16$$6, _17$$6, _18$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&m);
+	ZVAL_UNDEF(&aHat);
 	ZVAL_UNDEF(&l);
 	ZVAL_UNDEF(&_3);
 	ZVAL_UNDEF(&_27);
@@ -107,6 +108,8 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 		return;
 	}
 	ZEPHIR_CALL_METHOD(&m, a, "m", NULL, 0);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(&aHat, a, "asarray", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_CE_STATIC(&_3, tensor_matrix_ce, "zeros", &_4, 0, &m, &m);
 	zephir_check_call_status();
@@ -155,10 +158,10 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 								_11$$5 = 1;
 							}
 							k = _12$$5;
-							zephir_array_fetch_long(&_14$$6, &l, i, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 50);
-							zephir_array_fetch_long(&_15$$6, &_14$$6, k, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 50);
-							zephir_array_fetch_long(&_16$$6, &l, j, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 50);
-							zephir_array_fetch_long(&_17$$6, &_16$$6, k, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 50);
+							zephir_array_fetch_long(&_14$$6, &l, i, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 52);
+							zephir_array_fetch_long(&_15$$6, &_14$$6, k, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 52);
+							zephir_array_fetch_long(&_16$$6, &l, j, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 52);
+							zephir_array_fetch_long(&_17$$6, &_16$$6, k, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 52);
 							ZEPHIR_INIT_NVAR(&_18$$6);
 							mul_function(&_18$$6, &_15$$6, &_17$$6);
 							sigma += zephir_get_numberval(&_18$$6);
@@ -166,16 +169,16 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 					}
 					ZEPHIR_INIT_NVAR(&_19$$5);
 					if (i == j) {
-						zephir_array_fetch_long(&_20$$5, a, i, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 54);
-						zephir_array_fetch_long(&_21$$5, &_20$$5, i, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 54);
+						zephir_array_fetch_long(&_20$$5, &aHat, i, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 56);
+						zephir_array_fetch_long(&_21$$5, &_20$$5, i, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 56);
 						ZVAL_DOUBLE(&_22$$5, (zephir_get_numberval(&_21$$5) - sigma));
 						ZEPHIR_INIT_NVAR(&_19$$5);
 						ZVAL_DOUBLE(&_19$$5, sqrt((zephir_get_numberval(&_21$$5) - sigma)));
 					} else {
-						zephir_array_fetch_long(&_23$$5, &l, j, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 55);
-						zephir_array_fetch_long(&_24$$5, &_23$$5, j, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 55);
-						zephir_array_fetch_long(&_25$$5, a, i, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 55);
-						zephir_array_fetch_long(&_26$$5, &_25$$5, j, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 55);
+						zephir_array_fetch_long(&_23$$5, &l, j, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 57);
+						zephir_array_fetch_long(&_24$$5, &_23$$5, j, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 57);
+						zephir_array_fetch_long(&_25$$5, &aHat, i, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 57);
+						zephir_array_fetch_long(&_26$$5, &_25$$5, j, PH_NOISY | PH_READONLY, "tensor/decompositions/cholesky.zep", 57);
 						ZEPHIR_INIT_NVAR(&_19$$5);
 						ZVAL_DOUBLE(&_19$$5, (zephir_safe_div_long_zval(1, &_24$$5) * (zephir_get_numberval(&_26$$5) - sigma)));
 					}

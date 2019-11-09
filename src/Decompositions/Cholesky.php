@@ -41,6 +41,8 @@ class Cholesky implements Decomposition
 
         $m = $a->m();
 
+        $a = $a->asArray();
+
         $l = Matrix::zeros($m, $m)->asArray();
 
         for ($i = 0; $i < $m; ++$i) {

@@ -929,7 +929,7 @@ class Matrix implements Tensor
 
         $p = $b->n();
 
-        $bT = $b->transpose();
+        $bT = $b->transpose()->asArray();
         
         $c = [];
 
@@ -992,6 +992,8 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Stride cannot be'
                 . " less than 1, $stride given.");
         }
+
+        $b = $b->asArray();
 
         $p = intdiv($m, 2);
         $q = intdiv($n, 2);
@@ -2264,8 +2266,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2297,8 +2299,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2330,8 +2332,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2363,8 +2365,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2397,8 +2399,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2431,8 +2433,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2465,8 +2467,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2499,8 +2501,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2533,8 +2535,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2567,8 +2569,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2601,8 +2603,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2635,8 +2637,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $rowB = $b[$i];
+        foreach ($b->asArray() as $i => $rowB) {
+            $rowA = $this->a[$i];
 
             $rowC = [];
 
@@ -2664,7 +2666,21 @@ class Matrix implements Tensor
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
-        return $b->multiply($this);
+        $b = $b->asArray();
+
+        $c = [];
+
+        foreach ($this->a as $rowA) {
+            $rowC = [];
+
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] * $valueB;
+            }
+
+            $c[] = $rowC;
+        }
+
+        return self::quick($c);
     }
 
     /**
@@ -2680,6 +2696,8 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
+
+        $b = $b->asArray();
 
         $c = [];
 
@@ -2710,7 +2728,21 @@ class Matrix implements Tensor
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
-        return $b->add($this);
+        $b = $b->asArray();
+
+        $c = [];
+
+        foreach ($this->a as $rowA) {
+            $rowC = [];
+
+            foreach ($b as $j => $valueB) {
+                $rowC[] = $rowA[$j] + $valueB;
+            }
+
+            $c[] = $rowC;
+        }
+
+        return self::quick($c);
     }
 
     /**
@@ -2726,6 +2758,8 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
+
+        $b = $b->asArray();
 
         $c = [];
 
@@ -2756,6 +2790,8 @@ class Matrix implements Tensor
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
+        $b = $b->asArray();
+
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -2784,6 +2820,8 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
+
+        $b = $b->asArray();
 
         $c = [];
 
@@ -2815,6 +2853,8 @@ class Matrix implements Tensor
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
+        $b = $b->asArray();
+
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -2844,6 +2884,8 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
+
+        $b = $b->asArray();
 
         $c = [];
 
@@ -2875,6 +2917,8 @@ class Matrix implements Tensor
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
+        $b = $b->asArray();
+
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -2904,6 +2948,8 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
+
+        $b = $b->asArray();
 
         $c = [];
 
@@ -2935,6 +2981,8 @@ class Matrix implements Tensor
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
 
+        $b = $b->asArray();
+
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -2964,6 +3012,8 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Matrix A requires'
                 . " $this->n columns but Vector B has {$b->n()}.");
         }
+
+        $b = $b->asArray();
 
         $c = [];
 
@@ -2996,8 +3046,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3027,8 +3077,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3058,8 +3108,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3089,8 +3139,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3120,8 +3170,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3151,8 +3201,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3183,8 +3233,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3215,8 +3265,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3247,8 +3297,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3279,8 +3329,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3311,8 +3361,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 
@@ -3343,8 +3393,8 @@ class Matrix implements Tensor
 
         $c = [];
 
-        foreach ($this->a as $i => $rowA) {
-            $valueB = $b[$i];
+        foreach ($b->asArray() as $i => $valueB) {
+            $rowA = $this->a[$i];
             
             $rowC = [];
 

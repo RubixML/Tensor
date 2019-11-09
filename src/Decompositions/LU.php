@@ -55,19 +55,22 @@ class LU implements Decomposition
 
         $n = $a->n();
 
+        $aHat = $a->asArray();
+
         $l = Matrix::identity($n)->asArray();
         $u = Matrix::zeros($n, $n)->asArray();
         $p = Matrix::identity($n)->asArray();
 
         for ($i = 0; $i < $n; ++$i) {
-            $max = $a[$i][$i];
+            $max = $aHat[$i][$i];
 
             $row = $i;
 
             for ($j = $i; $j < $n; ++$j) {
-                if ($a[$j][$i] > $max) {
-                    $max = $a[$j][$i];
-                    
+                $valueA = $aHat[$j][$i];
+
+                if ($valueA > $max) {
+                    $max = $valueA;
                     $row = $j;
                 }
             }
@@ -82,7 +85,7 @@ class LU implements Decomposition
 
         $p = Matrix::quick($p);
 
-        $pa = $p->matmul($a);
+        $pa = $p->matmul($a)->asArray();
 
         for ($i = 0; $i < $n; ++$i) {
             for ($j = 0; $j <= $i; ++$j) {

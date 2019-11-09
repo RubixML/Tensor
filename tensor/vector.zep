@@ -535,7 +535,7 @@ class Vector implements Tensor
 
         float sigma = 0.0;
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let sigma += this->a[i] * valueB;
         }
 
@@ -562,18 +562,20 @@ class Vector implements Tensor
                 . " less than 1, " . strval(stride). " given.");
         }
 
-        uint i;
+        int i;
         var j, valueA, valueB;
+
+        var bHat = b->asArray();
 
         array c = [];
 
         for i in range(0, this->n - 1, stride) {
             float sigma = 0;
 
-            for j, valueB in iterator(b) {
+            for j, valueB in bHat {
                 int k = i - (int) j;
 
-                if likely fetch valueA, this->a[k] {
+                if fetch valueA, this->a[k] {
                     let sigma += valueA * valueB;
                 }
             }
@@ -1558,30 +1560,30 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-     protected function multiplyMatrix(const <Matrix> b) -> <Matrix>
-     {
-         if this->n !== b->n() {
-             throw new InvalidArgumentException("Vector A requires "
-                 . (string) this->n . " columns but Matrix B has "
-                 . (string) b->n() . ".");
-         }
+    protected function multiplyMatrix(const <Matrix> b) -> <Matrix>
+    {
+        if this->n !== b->n() {
+            throw new InvalidArgumentException("Vector A requires "
+                . (string) this->n . " columns but Matrix B has "
+                . (string) b->n() . ".");
+        }
  
-         var j, rowB, valueB;
+        var j, rowB, valueA;
 
-         array c = [];
+        array c = [];
  
-         for rowB in iterator(b) {
-             array rowC = [];
+        for rowB in b->asArray() {
+            array rowC = [];
  
-             for j, valueB in rowB {
-                 let rowC[] = this->a[j] * valueB;
-             }
+            for j, valueA in this->a {
+                let rowC[] = valueA * rowB[j];
+            }
  
-             let c[] = rowC;
-         }
+            let c[] = rowC;
+        }
  
-         return Matrix::quick(c);
-     }
+        return Matrix::quick(c);
+    }
 
     /**
      * Divide this vector with a matrix.
@@ -1598,15 +1600,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] / valueB;
+            for j, valueA in this->a {
+                let rowC[] = valueA / rowB[j];
             }
 
             let c[] = rowC;
@@ -1630,15 +1632,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] + valueB;
+            for j, valueA in this->a {
+                let rowC[] = valueA + rowB[j];
             }
 
             let c[] = rowC;
@@ -1662,15 +1664,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] - valueB;
+            for j, valueA in this->a {
+                let rowC[] = valueA - rowB[j];
             }
 
             let c[] = rowC;
@@ -1694,15 +1696,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = pow(this->a[j], valueB);
+            for j, valueA in this->a {
+                let rowC[] = pow(valueA, rowB[j]);
             }
 
             let c[] = rowC;
@@ -1726,15 +1728,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
         
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] % valueB;
+            for j, valueA in this->a {
+                let rowC[] = valueA % rowB[j];
             }
 
             let c[] = rowC;
@@ -1759,15 +1761,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] == valueB ? 1 : 0;
+            for j, valueA in this->a {
+                let rowC[] = valueA == rowB[j] ? 1 : 0;
             }
 
             let c[] = rowC;
@@ -1792,15 +1794,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] != valueB ? 1 : 0;
+            for j, valueA in this->a {
+                let rowC[] = valueA != rowB[j] ? 1 : 0;
             }
 
             let c[] = rowC;
@@ -1825,15 +1827,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] > valueB ? 1 : 0;
+            for j, valueA in this->a {
+                let rowC[] = valueA > rowB[j] ? 1 : 0;
             }
 
             let c[] = rowC;
@@ -1858,15 +1860,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] >= valueB ? 1 : 0;
+            for j, valueA in this->a {
+                let rowC[] = valueA >= rowB[j] ? 1 : 0;
             }
 
             let c[] = rowC;
@@ -1891,15 +1893,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] < valueB ? 1 : 0;
+            for j, valueA in this->a {
+                let rowC[] = valueA < rowB[j] ? 1 : 0;
             }
 
             let c[] = rowC;
@@ -1924,15 +1926,15 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueB;
+        var j, rowB, valueA;
 
         array c = [];
 
-        for rowB in iterator(b) {
+        for rowB in b->asArray() {
             array rowC = [];
 
-            for j, valueB in rowB {
-                let rowC[] = this->a[j] <= valueB ? 1 : 0;
+            for j, valueA in this->a {
+                let rowC[] = valueA <= rowB[j] ? 1 : 0;
             }
 
             let c[] = rowC;
@@ -1960,7 +1962,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] * valueB;
         }
 
@@ -1986,7 +1988,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] / valueB;
         }
 
@@ -2012,7 +2014,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] + valueB;
         }
 
@@ -2038,7 +2040,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] - valueB;
         }
 
@@ -2064,7 +2066,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = pow(this->a[i], valueB);
         }
 
@@ -2090,7 +2092,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] % valueB;
         }
 
@@ -2117,7 +2119,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] == valueB ? 1 : 0;
         }
 
@@ -2144,7 +2146,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] != valueB ? 1 : 0;
         }
 
@@ -2171,7 +2173,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] > valueB ? 1 : 0;
         }
 
@@ -2198,7 +2200,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] >= valueB ? 1 : 0;
         }
 
@@ -2225,7 +2227,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] < valueB ? 1 : 0;
         }
 
@@ -2252,7 +2254,7 @@ class Vector implements Tensor
 
         array c = [];
 
-        for i, valueB in iterator(b) {
+        for i, valueB in b->asArray() {
             let c[] = this->a[i] <= valueB ? 1 : 0;
         }
 

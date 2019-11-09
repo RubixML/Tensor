@@ -72,7 +72,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -103,7 +103,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -134,7 +134,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -165,7 +165,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -196,7 +196,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -227,7 +227,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -259,7 +259,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -291,7 +291,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -323,7 +323,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -355,7 +355,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -387,7 +387,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];
@@ -419,7 +419,7 @@ class ColumnVector extends Vector
 
         $c = [];
 
-        foreach ($b as $i => $rowB) {
+        foreach ($b->asArray() as $i => $rowB) {
             $valueA = $this->a[$i];
 
             $rowC = [];

@@ -91,12 +91,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -125,12 +125,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -159,12 +159,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -193,12 +193,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -227,12 +227,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -261,12 +261,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -296,12 +296,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -331,12 +331,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -366,12 +366,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -401,12 +401,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -436,12 +436,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
 
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 
@@ -471,12 +471,12 @@ class ColumnVector extends Vector
                 . (string) b->m() . ".");
         }
 
-        var i, rowB, valueB;
+        var i, rowB, valueB, valueA;
         
         array c = [];
 
-        for i, rowB in iterator(b) {
-            var valueA = this->a[i];
+        for i, rowB in b->asArray() {
+            let valueA = this->a[i];
 
             array rowC = [];
 

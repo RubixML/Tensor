@@ -621,6 +621,8 @@ class Vector implements Tensor
                 . " less than 1, $stride given.");
         }
 
+        $b = $b->asArray();
+
         $c = [];
 
         for ($i = 0; $i < $this->n; $i += $stride) {
@@ -1506,11 +1508,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] * $valueB;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA * $rowB[$j];
             }
 
             $c[] = $rowC;
@@ -1535,11 +1537,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] / $valueB;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA / $rowB[$j];
             }
 
             $c[] = $rowC;
@@ -1564,11 +1566,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] + $valueB;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA + $rowB[$j];
             }
 
             $c[] = $rowC;
@@ -1593,11 +1595,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] - $valueB;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA - $rowB[$j];
             }
 
             $c[] = $rowC;
@@ -1622,11 +1624,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] ** $valueB;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA ** $rowB[$j];
             }
 
             $c[] = $rowC;
@@ -1651,11 +1653,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] % $valueB;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA % $rowB[$j];
             }
 
             $c[] = $rowC;
@@ -1681,11 +1683,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] == $valueB ? 1 : 0;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA == $rowB[$j] ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -1711,11 +1713,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] != $valueB ? 1 : 0;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA != $rowB[$j] ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -1741,11 +1743,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] > $valueB ? 1 : 0;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA > $rowB[$j] ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -1771,11 +1773,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] >= $valueB ? 1 : 0;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA >= $rowB[$j] ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -1801,11 +1803,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] < $valueB ? 1 : 0;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA < $rowB[$j] ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -1831,11 +1833,11 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $rowB) {
+        foreach ($b->asArray() as $rowB) {
             $rowC = [];
 
-            foreach ($rowB as $j => $valueB) {
-                $rowC[] = $this->a[$j] <= $valueB ? 1 : 0;
+            foreach ($this->a as $j => $valueA) {
+                $rowC[] = $valueA < $rowB[$j] ? 1 : 0;
             }
 
             $c[] = $rowC;
@@ -1860,7 +1862,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] * $valueB;
         }
 
@@ -1883,7 +1885,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] / $valueB;
         }
 
@@ -1906,7 +1908,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] + $valueB;
         }
 
@@ -1929,7 +1931,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] - $valueB;
         }
 
@@ -1952,7 +1954,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] ** $valueB;
         }
 
@@ -1975,7 +1977,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] % $valueB;
         }
 
@@ -1999,7 +2001,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] == $valueB ? 1 : 0;
         }
 
@@ -2023,7 +2025,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] != $valueB ? 1 : 0;
         }
 
@@ -2047,7 +2049,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] > $valueB ? 1 : 0;
         }
 
@@ -2071,7 +2073,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] >= $valueB ? 1 : 0;
         }
 
@@ -2095,7 +2097,7 @@ class Vector implements Tensor
 
         $c = [];
 
-        foreach ($b as $i => $valueB) {
+        foreach ($b->asArray() as $i => $valueB) {
             $c[] = $this->a[$i] < $valueB ? 1 : 0;
         }
 

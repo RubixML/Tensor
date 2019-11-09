@@ -52,23 +52,26 @@ class Lu implements Decomposition
 
         int i, j, k, row;
         float sigma;
-        var max, temp;
+        var max, temp, valueA;
 
         var n = a->n();
+
+        var aHat = a->asArray();
 
         var l = Matrix::identity(n)->asArray();
         var u = Matrix::zeros(n, n)->asArray();
         var p = Matrix::identity(n)->asArray();
 
         for i in range(0, n - 1) {
-            let max = a[i][i];
+            let max = aHat[i][i];
 
             let row = i;
 
             for j in range(i, n - 1) {
-                if a[j][i] > max {
-                    let max = a[j][i];
+                let valueA = aHat[j][i];
 
+                if valueA > max {
+                    let max = valueA;
                     let row = j;
                 }
             }
@@ -83,7 +86,7 @@ class Lu implements Decomposition
 
         let p = Matrix::quick(p);
 
-        var pa = p->matmul(a);
+        var pa = p->matmul(a)->asArray();
 
         for i in range(0, n - 1) {
             for j in range(0, i) {

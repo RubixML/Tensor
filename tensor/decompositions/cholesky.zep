@@ -40,6 +40,8 @@ class Cholesky implements Decomposition
 
         var m = a->m();
 
+        var aHat = a->asArray();
+
         var l = Matrix::zeros(m, m)->asArray();
 
         for i in range(0, m - 1) {
@@ -51,8 +53,8 @@ class Cholesky implements Decomposition
                 }
 
                 let l[i][j] = i === j
-                    ? sqrt(a[i][i] - sigma)
-                    : 1 / l[j][j] * (a[i][j] - sigma);
+                    ? sqrt(aHat[i][i] - sigma)
+                    : 1 / l[j][j] * (aHat[i][j] - sigma);
             }
         }
 
