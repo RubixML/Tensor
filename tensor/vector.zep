@@ -492,7 +492,7 @@ class Vector implements Tensor
      * @param callable callback
      * @return self
      */
-    public function map(const callback) -> <Vector>
+    public function map(const var callback) -> <Vector>
     {
         return static::quick(array_map(callback, this->a));
     }
@@ -505,7 +505,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function reduce(const callback, const initial = 0)
+    public function reduce(const var callback, const var initial = 0)
     {
         if !is_int(initial) && !is_float(initial) {
             throw new InvalidArgumentException("Initial value must"
@@ -724,7 +724,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function multiply(const b)
+    public function multiply(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -752,7 +752,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function divide(const b)
+    public function divide(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -780,7 +780,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function add(const b)
+    public function add(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -808,7 +808,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function subtract(const b)
+    public function subtract(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -836,7 +836,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function pow(const b)
+    public function pow(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -864,7 +864,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function mod(const b)
+    public function mod(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -892,7 +892,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function equal(const b)
+    public function equal(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -920,7 +920,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function notEqual(const b)
+    public function notEqual(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -948,7 +948,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function greater(const b)
+    public function greater(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -976,7 +976,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function greaterEqual(const b)
+    public function greaterEqual(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -1004,7 +1004,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function less(const b)
+    public function less(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -1032,7 +1032,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function lessEqual(const b)
+    public function lessEqual(const var b)
     {
         if is_object(b) {
             switch (true) {
@@ -1270,7 +1270,7 @@ class Vector implements Tensor
      */
     public function mean()
     {
-        if empty(this->a) {
+        if this->n < 1 {
             throw new RuntimeException("Mean is not defined for"
                 . " an empty vector.");
         }
@@ -1286,7 +1286,7 @@ class Vector implements Tensor
      */
     public function median()
     {
-        if empty(this->a) {
+        if this->n < 1 {
             throw new RuntimeException("Median is not defined for"
                 . " an empty vector.");
         }
@@ -1323,7 +1323,7 @@ class Vector implements Tensor
                 . " 0 and 100, " . strval(p) . " given.");
         }
 
-        if empty(this->a) {
+        if this->n < 1 {
             throw new RuntimeException("Percentile is not defined for"
                 . " an empty vector.");
         }
@@ -1351,7 +1351,7 @@ class Vector implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function variance(mean = null)
+    public function variance(var mean = null)
     {
         if !is_null(mean) {
             if !is_int(mean) && !is_float(mean) {
@@ -1361,7 +1361,7 @@ class Vector implements Tensor
             }
         }
 
-        if this->n === 0 {
+        if this->n < 1 {
             throw new RuntimeException("Variance is not defined for"
                 . " an empty vector.");
         }
@@ -2268,7 +2268,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-     protected function multiplyScalar(const b) -> <Vector>
+     protected function multiplyScalar(const var b) -> <Vector>
      {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2294,7 +2294,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideScalar(const b) -> <Vector>
+    protected function divideScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2320,7 +2320,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addScalar(const b) -> <Vector>
+    protected function addScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2346,7 +2346,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractScalar(const b) -> <Vector>
+    protected function subtractScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2372,7 +2372,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-     protected function powScalar(const b) -> <Vector>
+     protected function powScalar(const var b) -> <Vector>
      {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2398,7 +2398,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modScalar(const b) -> <Vector>
+    protected function modScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2425,7 +2425,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalScalar(const b) -> <Vector>
+    protected function equalScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2452,7 +2452,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualScalar(const b) -> <Vector>
+    protected function notEqualScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2479,7 +2479,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterScalar(const b) -> <Vector>
+    protected function greaterScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2506,7 +2506,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualScalar(const b) -> <Vector>
+    protected function greaterEqualScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2533,7 +2533,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessScalar(const b) -> <Vector>
+    protected function lessScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2560,7 +2560,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualScalar(const b) -> <Vector>
+    protected function lessEqualScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2594,7 +2594,7 @@ class Vector implements Tensor
      * @param array values
      * @throws \RuntimeException
      */
-    public function offsetSet(index, values) -> void
+    public function offsetSet(const var index, const var values) -> void
     {
         throw new RuntimeException("Vector cannot be mutated directly.");
     }
@@ -2605,7 +2605,7 @@ class Vector implements Tensor
      * @param mixed index
      * @return bool
      */
-    public function offsetExists(const index) -> bool
+    public function offsetExists(const var index) -> bool
     {
         return isset(this->a[index]);
     }
@@ -2614,7 +2614,7 @@ class Vector implements Tensor
      * @param mixed index
      * @throws \RuntimeException
      */
-    public function offsetUnset(index) -> void
+    public function offsetUnset(const var index) -> void
     {
         throw new RuntimeException("Vector cannot be mutated directly.");
     }
@@ -2626,7 +2626,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return int|float
      */
-    public function offsetGet(const index)
+    public function offsetGet(const var index)
     {
         var value;
 

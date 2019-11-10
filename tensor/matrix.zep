@@ -689,7 +689,7 @@ class Matrix implements Tensor
      * @param callable callback
      * @return self
      */
-    public function map(const callback) -> <Matrix>
+    public function map(const var callback) -> <Matrix>
     {
         var rowA;
 
@@ -710,7 +710,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function reduce(const callback, const initial = 0)
+    public function reduce(const var callback, const var initial = 0)
     {
         if !is_int(initial) && !is_float(initial) {
             throw new InvalidArgumentException("Initial value must"
@@ -1206,7 +1206,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function multiply(const b)
+    public function multiply(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1237,7 +1237,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function divide(const b)
+    public function divide(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1268,7 +1268,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function add(const b)
+    public function add(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1299,7 +1299,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function subtract(const b)
+    public function subtract(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1330,7 +1330,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function pow(const b)
+    public function pow(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1361,7 +1361,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function mod(const b)
+    public function mod(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1392,7 +1392,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function equal(const b)
+    public function equal(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1423,7 +1423,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function notEqual(const b)
+    public function notEqual(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1454,7 +1454,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function greater(const b)
+    public function greater(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1485,7 +1485,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function greaterEqual(const b)
+    public function greaterEqual(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1516,7 +1516,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function less(const b)
+    public function less(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1547,7 +1547,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return mixed
      */
-    public function lessEqual(const b)
+    public function lessEqual(const var b)
     {
         if is_object(b) {
             switch true {
@@ -1884,7 +1884,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\ColumnVector
      */
-    public function variance(mean = null) -> <ColumnVector>
+    public function variance(var mean = null) -> <ColumnVector>
     {
         if !is_null(mean) {
             if !(mean instanceof ColumnVector) {
@@ -3535,7 +3535,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyScalar(const b) -> <Matrix>
+    protected function multiplyScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3566,7 +3566,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideScalar(const b) -> <Matrix>
+    protected function divideScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3597,7 +3597,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addScalar(const b) -> <Matrix>
+    protected function addScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3628,7 +3628,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractScalar(const b) -> <Matrix>
+    protected function subtractScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3659,7 +3659,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powScalar(const b) -> <Matrix>
+    protected function powScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -3691,7 +3691,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modScalar(const b) -> <Matrix>
+    protected function modScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3723,7 +3723,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalScalar(const b) -> <Matrix>
+    protected function equalScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3755,7 +3755,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualScalar(const b) -> <Matrix>
+    protected function notEqualScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3787,7 +3787,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterScalar(const b) -> <Matrix>
+    protected function greaterScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3819,7 +3819,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualScalar(const b) -> <Matrix>
+    protected function greaterEqualScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3851,7 +3851,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessScalar(const b) -> <Matrix>
+    protected function lessScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3883,7 +3883,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualScalar(const b) -> <Matrix>
+    protected function lessEqualScalar(const var b) -> <Matrix>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
@@ -3920,7 +3920,7 @@ class Matrix implements Tensor
      * @param array values
      * @throws \RuntimeException
      */
-    public function offsetSet(index, values) -> void
+    public function offsetSet(const var index, const var values) -> void
     {
         throw new RuntimeException("Matrix cannot be mutated directly.");
     }
@@ -3931,7 +3931,7 @@ class Matrix implements Tensor
      * @param mixed index
      * @return bool
      */
-    public function offsetExists(const index) -> bool
+    public function offsetExists(const var index) -> bool
     {
         return isset(this->a[index]);
     }
@@ -3940,7 +3940,7 @@ class Matrix implements Tensor
      * @param mixed index
      * @throws \RuntimeException
      */
-    public function offsetUnset(index) -> void
+    public function offsetUnset(const var index) -> void
     {
         throw new RuntimeException("Matrix cannot be mutated directly.");
     }
@@ -3952,7 +3952,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return array
      */
-    public function offsetGet(const index) -> array
+    public function offsetGet(const var index) -> array
     {
         var value;
 
@@ -3991,7 +3991,7 @@ class Matrix implements Tensor
      * @param array row
      * @return string
      */
-    protected function implodeRow(string carry, array row) -> string
+    protected function implodeRow(const string carry, const array row) -> string
     {
         return carry . PHP_EOL . "[ " . implode(" ", row) . " ]";
     }

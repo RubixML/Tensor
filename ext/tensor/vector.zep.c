@@ -3534,9 +3534,8 @@ PHP_METHOD(Tensor_Vector, mean) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_OBS_VAR(&_0);
-	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC);
-	if (ZEPHIR_IS_EMPTY(&_0)) {
+	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
+	if (ZEPHIR_LT_LONG(&_0, 1)) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		object_init_ex(&_1$$3, spl_ce_RuntimeException);
 		ZEPHIR_INIT_VAR(&_2$$3);
@@ -3583,9 +3582,8 @@ PHP_METHOD(Tensor_Vector, median) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_OBS_VAR(&_0);
-	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC);
-	if (ZEPHIR_IS_EMPTY(&_0)) {
+	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
+	if (ZEPHIR_LT_LONG(&_0, 1)) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		object_init_ex(&_1$$3, spl_ce_RuntimeException);
 		ZEPHIR_INIT_VAR(&_2$$3);
@@ -3677,9 +3675,8 @@ PHP_METHOD(Tensor_Vector, percentile) {
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_OBS_VAR(&_5);
-	zephir_read_property(&_5, this_ptr, SL("a"), PH_NOISY_CC);
-	if (ZEPHIR_IS_EMPTY(&_5)) {
+	zephir_read_property(&_5, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
+	if (ZEPHIR_LT_LONG(&_5, 1)) {
 		ZEPHIR_INIT_VAR(&_6$$4);
 		object_init_ex(&_6$$4, spl_ce_RuntimeException);
 		ZEPHIR_INIT_VAR(&_7$$4);
@@ -3773,7 +3770,7 @@ PHP_METHOD(Tensor_Vector, variance) {
 		}
 	}
 	zephir_read_property(&_5, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
-	if (ZEPHIR_IS_LONG_IDENTICAL(&_5, 0)) {
+	if (ZEPHIR_LT_LONG(&_5, 1)) {
 		ZEPHIR_INIT_VAR(&_6$$5);
 		object_init_ex(&_6$$5, spl_ce_RuntimeException);
 		ZEPHIR_INIT_VAR(&_7$$5);
