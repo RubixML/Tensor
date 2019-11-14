@@ -1866,9 +1866,9 @@ class Matrix implements Tensor
                 . ' column vector ' . gettype($mean) . ' given.');
             }
 
-            if ($mean->size() !== $this->n) {
+            if ($mean->m() !== $this->m) {
                 throw new InvalidArgumentException('Mean vector must'
-                    . " have $this->n elements, {$mean->size()} given.");
+                    . " have $this->m rows, {$mean->m()} given.");
             }
         }
 
