@@ -1,4 +1,4 @@
-- 2.0.0-beta
+- 2.0.0
     - Implemented the library as an extension using Zephir lang
     - Changed namespace from Rubix\Tensor to \Tensor
     - Matrix decompositions are now a separate abstraction
