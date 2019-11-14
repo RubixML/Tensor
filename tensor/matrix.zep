@@ -1892,10 +1892,10 @@ class Matrix implements Tensor
                 . " column vector " . gettype(mean) . " given.");
             }
 
-            if mean->size() !== this->n {
+            if mean->m() !== this->m {
                 throw new InvalidArgumentException("Mean vector must"
-                    . " have " . (string) this->n . " elements, "
-                    . (string) mean->size() . " given.");
+                    . " have " . (string) this->m . " rows, "
+                    . (string) mean->m() . " given.");
             }
         }
 

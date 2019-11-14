@@ -5816,20 +5816,20 @@ PHP_METHOD(Tensor_Matrix, variance) {
 			ZEPHIR_MM_RESTORE();
 			return;
 		}
-		ZEPHIR_CALL_METHOD(&_3$$3, mean, "size", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, mean, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_read_property(&_4$$3, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
+		zephir_read_property(&_4$$3, this_ptr, SL("m"), PH_NOISY_CC | PH_READONLY);
 		if (!ZEPHIR_IS_IDENTICAL(&_3$$3, &_4$$3)) {
 			ZEPHIR_INIT_VAR(&_5$$5);
 			object_init_ex(&_5$$5, spl_ce_InvalidArgumentException);
 			ZEPHIR_OBS_VAR(&_6$$5);
-			zephir_read_property(&_6$$5, this_ptr, SL("n"), PH_NOISY_CC);
+			zephir_read_property(&_6$$5, this_ptr, SL("m"), PH_NOISY_CC);
 			zephir_get_strval(&_7$$5, &_6$$5);
-			ZEPHIR_CALL_METHOD(&_8$$5, mean, "size", NULL, 0);
+			ZEPHIR_CALL_METHOD(&_8$$5, mean, "m", NULL, 0);
 			zephir_check_call_status();
 			zephir_get_strval(&_9$$5, &_8$$5);
 			ZEPHIR_INIT_VAR(&_10$$5);
-			ZEPHIR_CONCAT_SSVSVS(&_10$$5, "Mean vector must", " have ", &_7$$5, " elements, ", &_9$$5, " given.");
+			ZEPHIR_CONCAT_SSVSVS(&_10$$5, "Mean vector must", " have ", &_7$$5, " rows, ", &_9$$5, " given.");
 			ZEPHIR_CALL_METHOD(NULL, &_5$$5, "__construct", NULL, 3, &_10$$5);
 			zephir_check_call_status();
 			zephir_throw_exception_debug(&_5$$5, "tensor/matrix.zep", 1898);
