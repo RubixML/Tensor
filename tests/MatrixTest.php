@@ -1873,13 +1873,10 @@ class MatrixTest extends TestCase
 
     public function test_to_string()
     {
-        $outcome = '[ 22 -17 12 ]' . "\r\n"
-                    . '[ 4 11 -2 ]' . "\r\n"
+        $outcome = '[ 22 -17 12 ]' . PHP_EOL
+                    . '[ 4 11 -2 ]' . PHP_EOL
                     . '[ 20 -6 -9 ]';
 
-        // Windows/Linux have diff line endings
-        // $this->assertEquals($outcome, (string) $this->a);
-
-        $this->assertTrue(true);
+        $this->assertEquals($outcome, (string) $this->a);
     }
 }

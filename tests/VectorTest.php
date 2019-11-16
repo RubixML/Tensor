@@ -1109,10 +1109,7 @@ class VectorTest extends TestCase
     public function test_to_string()
     {
         $outcome = '[ -15 25 35 -36 -72 89 106 45 ]';
-
-        // Windows/Linux have diff line endings
-        // $this->assertEquals($outcome, (string) $this->a);
-
-        $this->assertTrue(true);
+        
+        $this->assertEquals($outcome, (string) $this->a);
     }
 }

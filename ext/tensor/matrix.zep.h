@@ -1640,6 +1640,6 @@ ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
 	PHP_ME(Tensor_Matrix, offsetGet, arginfo_tensor_matrix_offsetget, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, getIterator, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, __toString, arginfo_tensor_matrix___tostring, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Matrix, implodeRow, arginfo_tensor_matrix_imploderow, ZEND_ACC_PROTECTED)
+	PHP_ME(Tensor_Matrix, implodeRow, arginfo_tensor_matrix_imploderow, ZEND_ACC_PROTECTED|ZEND_ACC_STATIC)
 	PHP_FE_END
 };

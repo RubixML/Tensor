@@ -3,7 +3,7 @@
     - Changed namespace from Rubix\Tensor to \Tensor
     - Matrix decompositions are now a separate abstraction
     - Removed Dimensionality Mismatch exception
-    - Added inverse trigonomic methods to tensor interface
+    - Added inverse trigonometric methods to Trigonometric interface
     - Added Array-Like interface
     - Removed Column/Row exclude methods from Matrix
     - Changed method signature of matrix determinant

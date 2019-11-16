@@ -3844,7 +3844,7 @@ class Matrix implements Tensor
      * @param array $row
      * @return string
      */
-    protected function implodeRow(string $carry, array $row) : string
+    protected static function implodeRow(string $carry, array $row) : string
     {
         return $carry . PHP_EOL . '[ ' . implode(' ', $row) . ' ]';
     }
