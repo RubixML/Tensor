@@ -5,7 +5,7 @@
     "description": "Tensor is a library and extension that provides objects for scientific computing in PHP.",
     "author": "Andrew DalPino",
     "version": "2.0.0-alpha",
-    "verbose": false,
+    "verbose": true,
     "requires": {
         "extensions": []
     },
@@ -14,7 +14,7 @@
         "stubs-run-after-generate": false
     },
     "extra-sources": [
-
+        
     ],
     "optimizer-dirs": [
         "optimizers"

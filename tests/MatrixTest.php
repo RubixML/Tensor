@@ -1856,7 +1856,7 @@ class MatrixTest extends TestCase
 
     public function test_repeat()
     {
-        $z = $this->b->repeat(2, 4);
+        $z = $this->b->repeat(1, 3);
 
         $expected = [
             [13, 13, 13, 13],

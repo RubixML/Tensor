@@ -1883,8 +1883,8 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the covariance of this matrix and return it in a tuple along with
-     * the computed mean.
+     * Compute the empirical covariance of this matrix and return it in a tuple
+     * along with the computed mean.
      *
      * @return self
      */
@@ -2220,26 +2220,19 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function repeat(int $m = 1, int $n = 1) : self
+    public function repeat(int $m, int $n) : self
     {
-        if ($m < 1 or $n < 1) {
-            throw new InvalidArgumentException('Cannot repeat less than 1'
-                . ' row or column.');
-        }
-
         $b = $this->a;
-
-        $k = $n - 1;
 
         if ($n > 0) {
             foreach ($this->a as $i => $rowA) {
-                for ($j = 0; $j < $k; ++$j) {
+                for ($j = 0; $j < $n; ++$j) {
                     $b[$i] = array_merge($b[$i], $rowA);
                 }
             }
         }
 
-        $c = [];
+        $c = $b;
 
         for ($i = 0; $i < $m; ++$i) {
             $c = array_merge($c, $b);

@@ -2265,31 +2265,24 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public function repeat(const int m = 1, const int n = 1) -> <Matrix>
+    public function repeat(const int m, const int n) -> <Matrix>
     {
-        if m < 1 || n < 1 {
-            throw new InvalidArgumentException("Cannot repeat less than"
-                . " 1 row or column.");
-        }
-
         int j, k;
         var i, rowA;
 
         var b = this->a;
 
-        let k = n - 1;
-
-        if k > 0 {
+        if n > 0 {
             for i, rowA in this->a {
-                for j in range(0, k - 1) {
+                for j in range(0, n - 1) {
                     let b[i] = array_merge(b[i], rowA);
                 }
             }
         }
 
-        array c = [];
+        var c = b;
 
-        for i in range(0, m - 1) {
+        for k in range(0, m - 1) {
             let c = array_merge(c, b);
         }
 
