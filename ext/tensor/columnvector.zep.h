@@ -21,6 +21,22 @@ PHP_METHOD(Tensor_ColumnVector, greaterMatrix);
 PHP_METHOD(Tensor_ColumnVector, greaterEqualMatrix);
 PHP_METHOD(Tensor_ColumnVector, lessMatrix);
 PHP_METHOD(Tensor_ColumnVector, lessEqualMatrix);
+void zep_Tensor_ColumnVector_m_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_ColumnVector_n_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_ColumnVector_transpose_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_ColumnVector_matmul_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_multiplyMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_divideMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_addMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_subtractMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_powMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_modMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_equalMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_notEqualMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_greaterMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_greaterEqualMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_lessMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_ColumnVector_lessEqualMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_build, 0, 0, 0)
 	ZEND_ARG_ARRAY_INFO(0, a, 0)
@@ -145,6 +161,58 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_columnvector_lessequalmatr
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_columnvector_lessequalmatrix, 0, 1, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_matmul_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_multiplymatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_dividematrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_addmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_subtractmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_powmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_modmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_equalmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_notequalmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_greatermatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_greaterequalmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_lessmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_lessequalmatrix_zephir_internal_call, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
 ZEND_END_ARG_INFO()
 

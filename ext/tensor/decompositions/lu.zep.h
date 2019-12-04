@@ -8,6 +8,10 @@ PHP_METHOD(Tensor_Decompositions_Lu, __construct);
 PHP_METHOD(Tensor_Decompositions_Lu, l);
 PHP_METHOD(Tensor_Decompositions_Lu, u);
 PHP_METHOD(Tensor_Decompositions_Lu, p);
+void zep_Tensor_Decompositions_Lu_decompose_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *a_ext );
+void zep_Tensor_Decompositions_Lu_l_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Decompositions_Lu_u_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Decompositions_Lu_p_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
 
 #if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_decompositions_lu_decompose, 0, 1, Tensor\\Decompositions\\Lu, 0)
@@ -42,6 +46,10 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_decompositions_lu_p, 0, 0,
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_decompositions_lu_p, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_decompositions_lu_decompose_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, a, Tensor\\Matrix, 0)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(tensor_decompositions_lu_method_entry) {

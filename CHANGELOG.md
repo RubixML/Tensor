@@ -1,4 +1,5 @@
 - Unreleased
+    - Matrix stacking now row or columnwise
     - Changed method signature and behavior of repeat matrix
 
 - 2.0.0

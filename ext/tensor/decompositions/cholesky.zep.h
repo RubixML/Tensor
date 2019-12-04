@@ -7,6 +7,9 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose);
 PHP_METHOD(Tensor_Decompositions_Cholesky, __construct);
 PHP_METHOD(Tensor_Decompositions_Cholesky, l);
 PHP_METHOD(Tensor_Decompositions_Cholesky, lT);
+void zep_Tensor_Decompositions_Cholesky_decompose_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *a_ext );
+void zep_Tensor_Decompositions_Cholesky_l_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Decompositions_Cholesky_lT_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
 
 #if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_decompositions_cholesky_decompose, 0, 1, Tensor\\Decompositions\\Cholesky, 0)
@@ -32,6 +35,10 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_decompositions_cholesky_lt
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_decompositions_cholesky_lt, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_decompositions_cholesky_decompose_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, a, Tensor\\Matrix, 0)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(tensor_decompositions_cholesky_method_entry) {

@@ -409,7 +409,7 @@ class Matrix implements Tensor
     /**
      * Build a matrix by stacking an array of vectors.
      *
-     * @param \Tensor\Vector[] $vectors
+     * @param array $vectors
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -423,12 +423,19 @@ class Matrix implements Tensor
 
         $size = $proto instanceof Vector ? $proto->size() : 0;
 
+        $columnwise = $proto instanceof ColumnVector;
+
         $a = [];
 
         foreach ($vectors as $vector) {
             if (!$vector instanceof Vector) {
                 throw new InvalidArgumentException('Cannot stack a non'
                     . ' vector, ' . gettype($vector) . ' found.');
+            }
+
+            if ($columnwise and !$vector instanceof ColumnVector) {
+                throw new InvalidArgumentException('Cannot stack a non'
+                    . ' column vector, ' . gettype($vector) . ' found.');
             }
 
             if ($vector->size() !== $size) {
@@ -439,7 +446,9 @@ class Matrix implements Tensor
             $a[] = $vector->asArray();
         }
 
-        return self::quick($a);
+        $a = self::quick($a);
+
+        return $columnwise ? $a->transpose() : $a;
     }
 
     /**

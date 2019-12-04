@@ -75,7 +75,7 @@ class MatrixTest extends TestCase
         ]);
     }
 
-    public function test_stack()
+    public function test_stack_row_vectors()
     {
         $z = Matrix::stack([
             $this->d,
@@ -87,6 +87,24 @@ class MatrixTest extends TestCase
             [2, 10, -1],
             [2, 10, -1],
             [2, 10, -1],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
+    public function test_stack_column_vectors()
+    {
+        $z = Matrix::stack([
+            $this->e,
+            $this->e,
+            $this->e,
+        ]);
+
+        $expected = [
+            [2.5, 2.5, 2.5],
+            [-1, -1, -1],
+            [4.8,4.8, 4.8],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);

@@ -129,6 +129,121 @@ PHP_METHOD(Tensor_Vector, offsetUnset);
 PHP_METHOD(Tensor_Vector, offsetGet);
 PHP_METHOD(Tensor_Vector, getIterator);
 PHP_METHOD(Tensor_Vector, __toString);
+void zep_Tensor_Vector_zeros_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *n_param_ext);
+void zep_Tensor_Vector_ones_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *n_param_ext);
+void zep_Tensor_Vector_fill_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *value_ext , zval *n_param_ext);
+void zep_Tensor_Vector_rand_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *n_param_ext);
+void zep_Tensor_Vector_gaussian_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *n_param_ext);
+void zep_Tensor_Vector_uniform_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *n_param_ext);
+void zep_Tensor_Vector_linspace_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *start_param_ext, zval *end_param_ext, zval *n_param_ext);
+void zep_Tensor_Vector_maximum_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *a_ext , zval *b_ext );
+void zep_Tensor_Vector_minimum_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *a_ext , zval *b_ext );
+void zep_Tensor_Vector_shape_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_shapeString_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_size_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_m_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_n_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_asArray_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_asRowMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_asColumnMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_reshape_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *m_param_ext, zval *n_param_ext);
+void zep_Tensor_Vector_transpose_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_argmin_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_argmax_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_map_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *callback_ext );
+void zep_Tensor_Vector_dot_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_matmul_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_inner_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_outer_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_cross_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_project_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_l1Norm_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_l2Norm_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_maxNorm_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_multiply_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_divide_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_add_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_subtract_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_pow_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_mod_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_equal_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_notEqual_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_greater_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_greaterEqual_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_less_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_lessEqual_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_reciprocal_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_abs_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_square_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_sqrt_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_exp_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_expm1_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_log1p_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_sin_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_asin_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_cos_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_acos_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_tan_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_atan_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_rad2deg_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_deg2rad_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_sum_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_product_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_min_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_max_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_mean_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_median_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_percentile_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *p_param_ext);
+void zep_Tensor_Vector_floor_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_ceil_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_clip_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *min_param_ext, zval *max_param_ext);
+void zep_Tensor_Vector_clipLower_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *min_param_ext);
+void zep_Tensor_Vector_clipUpper_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *max_param_ext);
+void zep_Tensor_Vector_sign_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_negate_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_multiplyMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_divideMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_addMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_subtractMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_powMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_modMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_equalMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_notEqualMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_greaterMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_greaterEqualMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_lessMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_lessEqualMatrix_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_multiplyVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_divideVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_addVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_subtractVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_powVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_modVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_equalVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_notEqualVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_greaterVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_greaterEqualVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_lessVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_lessEqualVector_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_multiplyScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_divideScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_addScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_subtractScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_powScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_modScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_equalScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_notEqualScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_greaterScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_greaterEqualScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_lessScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_lessEqualScalar_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *b_ext );
+void zep_Tensor_Vector_count_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector_offsetSet_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *index_ext , zval *values_ext );
+void zep_Tensor_Vector_offsetExists_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *index_ext );
+void zep_Tensor_Vector_offsetUnset_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *index_ext );
+void zep_Tensor_Vector_offsetGet_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used, zval *index_ext );
+void zep_Tensor_Vector_getIterator_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
+void zep_Tensor_Vector___toString_zephir_internal_call(int ht, zend_execute_data *execute_data, zval *return_value, zval *this_ptr, int return_value_used);
 zend_object *zephir_init_properties_Tensor_Vector(zend_class_entry *class_type TSRMLS_DC);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_build, 0, 0, 0)
@@ -1048,6 +1163,370 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector___tostring, 0, 0, 
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector___tostring, 0, 0, IS_STRING, NULL, 0)
 #endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_zeros_zephir_internal_call, 0, 0, 1)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, n)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_ones_zephir_internal_call, 0, 0, 1)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, n)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_fill_zephir_internal_call, 0, 0, 2)
+	ZEND_ARG_INFO(0, value)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, n)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_rand_zephir_internal_call, 0, 0, 1)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, n)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_gaussian_zephir_internal_call, 0, 0, 1)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, n)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_uniform_zephir_internal_call, 0, 0, 1)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, n)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_linspace_zephir_internal_call, 0, 0, 3)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, start, IS_DOUBLE, 0)
+#else
+	ZEND_ARG_INFO(0, start)
+#endif
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, end, IS_DOUBLE, 0)
+#else
+	ZEND_ARG_INFO(0, end)
+#endif
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, n)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_maximum_zephir_internal_call, 0, 0, 2)
+	ZEND_ARG_OBJ_INFO(0, a, Tensor\\Vector, 0)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_minimum_zephir_internal_call, 0, 0, 2)
+	ZEND_ARG_OBJ_INFO(0, a, Tensor\\Vector, 0)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_reshape_zephir_internal_call, 0, 0, 2)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, m, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, m)
+#endif
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, n)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_map_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, callback)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_dot_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_matmul_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_inner_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_outer_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_cross_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_project_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_multiply_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_divide_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_add_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_subtract_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_pow_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_mod_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_equal_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_notequal_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_greater_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_greaterequal_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_less_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_lessequal_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_percentile_zephir_internal_call, 0, 0, 1)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, p, IS_DOUBLE, 0)
+#else
+	ZEND_ARG_INFO(0, p)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_clip_zephir_internal_call, 0, 0, 2)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, min, IS_DOUBLE, 0)
+#else
+	ZEND_ARG_INFO(0, min)
+#endif
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, max, IS_DOUBLE, 0)
+#else
+	ZEND_ARG_INFO(0, max)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_cliplower_zephir_internal_call, 0, 0, 1)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, min, IS_DOUBLE, 0)
+#else
+	ZEND_ARG_INFO(0, min)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_clipupper_zephir_internal_call, 0, 0, 1)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, max, IS_DOUBLE, 0)
+#else
+	ZEND_ARG_INFO(0, max)
+#endif
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_multiplymatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_dividematrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_addmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_subtractmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_powmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_modmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_equalmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_notequalmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_greatermatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_greaterequalmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_lessmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_lessequalmatrix_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_multiplyvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_dividevector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_addvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_subtractvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_powvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_modvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_equalvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_notequalvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_greatervector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_greaterequalvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_lessvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_lessequalvector_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_multiplyscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_dividescalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_addscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_subtractscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_powscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_modscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_equalscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_notequalscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_greaterscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_greaterequalscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_lessscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_lessequalscalar_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, b)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_offsetset_zephir_internal_call, 0, 0, 2)
+	ZEND_ARG_INFO(0, index)
+	ZEND_ARG_INFO(0, values)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_offsetexists_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, index)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_offsetunset_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, index)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_offsetget_zephir_internal_call, 0, 0, 1)
+	ZEND_ARG_INFO(0, index)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(tensor_vector_method_entry) {
