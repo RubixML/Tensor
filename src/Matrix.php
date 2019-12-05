@@ -13,6 +13,9 @@ use ArrayIterator;
 use Exception;
 use Closure;
 
+use function count;
+use function is_null;
+
 use const Tensor\EPSILON;
 use const Tensor\TWO_PI;
 
