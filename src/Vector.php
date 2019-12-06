@@ -43,7 +43,7 @@ class Vector implements Tensor
     /**
      * Factory method to build a new vector from an array.
      *
-     * @param array $a
+     * @param mixed[] $a
      * @return mixed
      */
     public static function build(array $a = [])
@@ -54,7 +54,7 @@ class Vector implements Tensor
     /**
      * Build a vector foregoing any validation for quicker instantiation.
      *
-     * @param array $a
+     * @param mixed[] $a
      * @return mixed
      */
     public static function quick(array $a = [])
@@ -310,11 +310,11 @@ class Vector implements Tensor
     }
 
     /**
-     * @param array $a
+     * @param mixed[] $a
      * @param bool $validate
      * @throws \InvalidArgumentException
      */
-    public function __construct(array $a = [], bool $validate = true)
+    final public function __construct(array $a = [], bool $validate = true)
     {
         if ($validate) {
             $a = array_values($a);
@@ -322,8 +322,8 @@ class Vector implements Tensor
             foreach ($a as $value) {
                 if (!is_int($value) and !is_float($value)) {
                     throw new InvalidArgumentException('Element must be'
-                        . ' an integer or float, ' . gettype($value)
-                        . ' found.');
+                        . ' an integer or floating point number, '
+                        . gettype($value) . ' given.');
                 }
             }
         }
@@ -385,7 +385,7 @@ class Vector implements Tensor
     /**
      * Return the vector as an array.
      *
-     * @return array
+     * @return (int|float)[]
      */
     public function asArray() : array
     {
@@ -1066,9 +1066,9 @@ class Vector implements Tensor
     /**
      * Return the exponential of the tensor minus 1.
      *
-     * @return mixed
+     * @return self
      */
-    public function expm1()
+    public function expm1() : self
     {
         return $this->map('expm1');
     }
@@ -2134,17 +2134,12 @@ class Vector implements Tensor
     /**
      * Multiply this vector by a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function multiplyScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2157,17 +2152,12 @@ class Vector implements Tensor
     /**
      * Divide this vector by a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function divideScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2180,17 +2170,12 @@ class Vector implements Tensor
     /**
      * Add a scalar to this vector.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function addScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2203,17 +2188,12 @@ class Vector implements Tensor
     /**
      * Subtract a scalar from this vector.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function subtractScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2226,17 +2206,12 @@ class Vector implements Tensor
     /**
      * Raise the vector to a the power of a scalar value.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function powScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-    
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2249,17 +2224,12 @@ class Vector implements Tensor
     /**
      * Calculate the modulus of this vector with a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function modScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2273,17 +2243,12 @@ class Vector implements Tensor
      * Return the element-wise equality comparison of this vector and a
      * scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function equalScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2297,17 +2262,12 @@ class Vector implements Tensor
      * Return the element-wise not equal comparison of this vector and a
      * scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function notEqualScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2321,17 +2281,12 @@ class Vector implements Tensor
      * Return the element-wise greater than comparison of this vector
      * and a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function greaterScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2345,17 +2300,12 @@ class Vector implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function greaterEqualScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2369,17 +2319,12 @@ class Vector implements Tensor
      * Return the element-wise less than comparison of this vector
      * and a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function lessScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2393,17 +2338,12 @@ class Vector implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function lessEqualScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $valueA) {
@@ -2425,7 +2365,7 @@ class Vector implements Tensor
 
     /**
      * @param mixed $index
-     * @param array $values
+     * @param mixed[] $values
      * @throws \RuntimeException
      */
     public function offsetSet($index, $values) : void
@@ -2473,7 +2413,7 @@ class Vector implements Tensor
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \ArrayIterator
+     * @return \ArrayIterator<int, int|float>
      */
     public function getIterator()
     {

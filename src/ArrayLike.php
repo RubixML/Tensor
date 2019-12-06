@@ -6,6 +6,10 @@ use IteratorAggregate;
 use ArrayAccess;
 use Countable;
 
+/**
+ * @extends ArrayAccess<int, mixed>
+ * @extends IteratorAggregate<int, mixed>
+ */
 interface ArrayLike extends ArrayAccess, IteratorAggregate, Countable
 {
     /**
@@ -25,7 +29,7 @@ interface ArrayLike extends ArrayAccess, IteratorAggregate, Countable
     /**
      * Return the elements of the array-like as a PHP array.
      *
-     * @return array
+     * @return mixed[]
      */
     public function asArray() : array;
 }

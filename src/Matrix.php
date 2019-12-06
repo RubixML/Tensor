@@ -56,7 +56,7 @@ class Matrix implements Tensor
     /**
      * Factory method to build a new matrix from an array.
      *
-     * @param array $a
+     * @param mixed[] $a
      * @return self
      */
     public static function build(array $a = []) : self
@@ -67,7 +67,7 @@ class Matrix implements Tensor
     /**
      * Build a new matrix foregoing any validation for quicker instantiation.
      *
-     * @param array $a
+     * @param mixed[] $a
      * @return self
      */
     public static function quick(array $a = []) : self
@@ -144,7 +144,7 @@ class Matrix implements Tensor
      * Build a diagonal matrix with the value of each element along the
      * diagonal and 0s everywhere else.
      *
-     * @param array $elements
+     * @param mixed[] $elements
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -412,7 +412,7 @@ class Matrix implements Tensor
     /**
      * Build a matrix by stacking an array of vectors.
      *
-     * @param array $vectors
+     * @param mixed[] $vectors
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -455,7 +455,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * @param array $a
+     * @param mixed[] $a
      * @param bool $validate
      * @throws \InvalidArgumentException
      */
@@ -1051,7 +1051,7 @@ class Matrix implements Tensor
      * Calculate the row echelon form (REF) of the matrix. Return the reduced
      * matrix and the number of swaps needed to compute the REF.
      *
-     * @return array
+     * @return mixed[]
      */
     public function ref() : array
     {
@@ -1106,7 +1106,7 @@ class Matrix implements Tensor
      * them in a tuple.
      *
      * @param bool $normalize
-     * @return array
+     * @return mixed[]
      */
     public function eig(bool $normalize = true) : array
     {
@@ -3416,17 +3416,12 @@ class Matrix implements Tensor
     /**
      * Multiply this matrix by a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function multiplyScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3445,17 +3440,12 @@ class Matrix implements Tensor
     /**
      * Divide this matrix by a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function divideScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3474,17 +3464,12 @@ class Matrix implements Tensor
     /**
      * Add this matrix by a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function addScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3503,17 +3488,12 @@ class Matrix implements Tensor
     /**
      * Subtract a scalar from this matrix.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function subtractScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3532,17 +3512,12 @@ class Matrix implements Tensor
     /**
      * Raise the matrix to a given scalar power.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function powScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3561,17 +3536,12 @@ class Matrix implements Tensor
     /**
      * Calculate the modulus of this matrix with a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function modScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3591,17 +3561,12 @@ class Matrix implements Tensor
      * Return the element-wise equality comparison of this matrix and a
      * scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function equalScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3621,17 +3586,12 @@ class Matrix implements Tensor
      * Return the element-wise not equal comparison of this matrix and a
      * scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function notEqualScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3651,17 +3611,12 @@ class Matrix implements Tensor
      * Return the element-wise greater than comparison of this matrix and a
      * scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function greaterScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3681,17 +3636,12 @@ class Matrix implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function greaterEqualScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3711,17 +3661,12 @@ class Matrix implements Tensor
      * Return the element-wise less than comparison of this matrix and a
      * scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function lessScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3741,17 +3686,12 @@ class Matrix implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param mixed $b
+     * @param int|float $b
      * @throws \InvalidArgumentException
      * @return self
      */
     protected function lessEqualScalar($b) : self
     {
-        if (!is_int($b) and !is_float($b)) {
-            throw new InvalidArgumentException('Scalar must be an integer'
-                . ' or float, ' . gettype($b) . ' found.');
-        }
-
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -3777,7 +3717,7 @@ class Matrix implements Tensor
 
     /**
      * @param mixed $index
-     * @param array $values
+     * @param (int|float)[] $values
      * @throws \RuntimeException
      */
     public function offsetSet($index, $values) : void
@@ -3810,7 +3750,7 @@ class Matrix implements Tensor
      *
      * @param mixed $index
      * @throws \InvalidArgumentException
-     * @return array
+     * @return (int|float)[]
      */
     public function offsetGet($index) : array
     {
@@ -3825,7 +3765,7 @@ class Matrix implements Tensor
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \ArrayIterator
+     * @return \ArrayIterator<int, array>
      */
     public function getIterator()
     {
@@ -3846,7 +3786,7 @@ class Matrix implements Tensor
      * Implode a row of the matrix and return the output.
      *
      * @param string $carry
-     * @param array $row
+     * @param (int|float)[] $row
      * @return string
      */
     protected static function implodeRow(string $carry, array $row) : string

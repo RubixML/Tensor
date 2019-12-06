@@ -59,7 +59,7 @@ class Eigen implements Decomposition
     }
 
     /**
-     * @param array $eigenvalues
+     * @param (int|float)[] $eigenvalues
      * @param \Tensor\Matrix $eigenvectors
      */
     public function __construct(array $eigenvalues, Matrix $eigenvectors)
@@ -71,7 +71,7 @@ class Eigen implements Decomposition
     /**
      * Return the eigenvalues of the eigendecomposition.
      *
-     * @return array
+     * @return (int|float)[]
      */
     public function eigenvalues() : array
     {
