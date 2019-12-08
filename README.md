@@ -8,7 +8,7 @@ $ composer require rubix/tensor
 ```
 
 ## Requirements
-- [PHP](https://php.net) 7.1.3 or above
+- [PHP](https://php.net) 7.2 or above
 
 ### Optional
 - A C compiler such as [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/), or [Visual C++](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads) to compile the extension

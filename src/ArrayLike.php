@@ -8,7 +8,7 @@ use Countable;
 
 /**
  * @extends ArrayAccess<int, mixed>
- * @extends IteratorAggregate<int, mixed>
+ * @extends IteratorAggregate<mixed>
  */
 interface ArrayLike extends ArrayAccess, IteratorAggregate, Countable
 {
