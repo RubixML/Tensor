@@ -3974,7 +3974,7 @@ class Matrix implements Tensor
      */
     public function __toString() -> string
     {
-        return trim(array_reduce(this->a, ["Tensor\\Matrix", "implodeRow"], ""));
+        return array_reduce(this->a, ["Tensor\\Matrix", "implodeRow"], "") . PHP_EOL;
     }
 
     /**

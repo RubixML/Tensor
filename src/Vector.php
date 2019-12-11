@@ -2427,6 +2427,6 @@ class Vector implements Tensor
      */
     public function __toString() : string
     {
-        return '[ ' . implode(' ', $this->a) . ' ]';
+        return '[ ' . implode(' ', $this->a) . ' ]' . PHP_EOL;
     }
 }

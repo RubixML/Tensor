@@ -1906,9 +1906,10 @@ class MatrixTest extends TestCase
 
     public function test_to_string() : void
     {
-        $outcome = '[ 22 -17 12 ]' . PHP_EOL
-                    . '[ 4 11 -2 ]' . PHP_EOL
-                    . '[ 20 -6 -9 ]';
+        $outcome = PHP_EOL
+            . '[ 22 -17 12 ]' . PHP_EOL
+            . '[ 4 11 -2 ]' . PHP_EOL
+            . '[ 20 -6 -9 ]' . PHP_EOL;
 
         $this->assertEquals($outcome, (string) $this->a);
     }

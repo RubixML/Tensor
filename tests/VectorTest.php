@@ -1120,7 +1120,7 @@ class VectorTest extends TestCase
 
     public function test_to_string() : void
     {
-        $outcome = '[ -15 25 35 -36 -72 89 106 45 ]';
+        $outcome = '[ -15 25 35 -36 -72 89 106 45 ]' . PHP_EOL;
         
         $this->assertEquals($outcome, (string) $this->a);
     }
