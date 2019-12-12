@@ -403,33 +403,42 @@ class Matrix implements Tensor
      */
     public static function stack(const array vectors) -> <Matrix>
     {
-        var vector;
-
         if empty(vectors) {
             return self::quick();
         }
 
-        var size = reset(vectors)->size();
+        var vector;
+
+        var proto = reset(vectors);
+
+        var size = proto->size();
+
+        bool columnwise = proto instanceof ColumnVector;
 
         array a = [];
 
         for vector in vectors {
-            if likely vector instanceof Vector {
-                if unlikely vector->size() !== size {
-                    throw new InvalidArgumentException("Vectors must"
-                        . " all be the same size.");
-                }
-
-                let a[] = vector->asArray();
-
-                continue;
+            if unlikely !(vector instanceof Vector) {
+                throw new InvalidArgumentException("Cannot stack a non"
+                    . " vector, " . gettype(vector) . " found.");
             }
 
-            throw new InvalidArgumentException("Cannot stack a non"
-                . " vector, " . gettype(vector) . " found.");
+            if unlikely columnwise && !(vector instanceof ColumnVector) {
+                throw new InvalidArgumentException("Cannot stack a non"
+                    . " column vector, " . gettype(vector) . " found.");
+            }
+
+            if unlikely vector->size() !== size {
+                throw new InvalidArgumentException("Vectors must"
+                    . " all be the same size.");
+            }
+
+            let a[] = vector->asArray();
         }
 
-        return self::quick(a);
+        var b = self::quick(a);
+
+        return columnwise ? b->transpose() : b;
     }
 
     /**
