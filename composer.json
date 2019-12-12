@@ -1,7 +1,7 @@
 {
     "name": "rubix/tensor",
     "type": "library",
-    "description": "Tensor provides objects for scientific computing in PHP.",
+    "description": "Tensor is a library and extension that provides objects for scientific computing in PHP.",
     "homepage": "https://github.com/RubixML/Tensor",
     "license": "MIT",
     "keywords": [

@@ -1,4 +1,7 @@
-# Rubix Tensor
+# Tensor: Scientific Computing for PHP
+
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/rubix/tensor.svg?style=flat-square&colorB=8892BF)](https://www.php.net/) [![Latest Stable Version](https://img.shields.io/packagist/v/rubix/tensor.svg?style=flat-square&colorB=orange)](https://packagist.org/packages/rubix/tensor) [![Travis](https://img.shields.io/travis/RubixML/Tensor.svg?style=flat-square)](https://travis-ci.org/RubixML/Tensor) [![Downloads from Packagist](https://img.shields.io/packagist/dt/rubix/tensor.svg?style=flat-square&colorB=red)](https://packagist.org/packages/rubix/tensor)
+
 Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net).
 
 ## Installation
