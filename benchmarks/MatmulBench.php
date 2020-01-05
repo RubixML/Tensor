@@ -43,7 +43,7 @@ class MatmulBench
 
     /**
      * @Subject
-     * @Iterations(3)
+     * @Iterations(10)
      * @BeforeMethods({"setUpLarge"})
      * @OutputTimeUnit("seconds", precision=3)
      */

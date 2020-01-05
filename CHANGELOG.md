@@ -1,3 +1,5 @@
+- Unreleased
+
 - 2.0.1
     - Added benchmarks
     - Matrix stacking now row or columnwise

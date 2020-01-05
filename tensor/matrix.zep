@@ -932,9 +932,8 @@ class Matrix implements Tensor
                 . (string) b->m() . ".");
         }
 
-        int j;
         float sigma;
-        var k, rowA, valueA;
+        var k, rowA, valueA, columnB;
 
         var p = b->n();
 
@@ -945,9 +944,7 @@ class Matrix implements Tensor
         for rowA in this->a {
             array rowC = [];
  
-            for j in range(0, p - 1) {
-                var columnB = bT[j];
-                 
+            for columnB in bT {
                 let sigma = 0.0;
  
                 for k, valueA in rowA {
@@ -955,12 +952,12 @@ class Matrix implements Tensor
                 }
  
                 let rowC[] = sigma;
-             }
+            }
  
-             let c[] = rowC;
-         }
+            let c[] = rowC;
+        }
          
-         return self::quick(c);
+        return self::quick(c);
     }
 
     /**

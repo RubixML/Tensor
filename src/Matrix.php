@@ -948,9 +948,7 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             $rowC = [];
 
-            for ($j = 0; $j < $p; ++$j) {
-                $columnB = $bT[$j];
-                
+            foreach ($bT as $columnB) {
                 $sigma = 0;
 
                 foreach ($rowA as $k => $valueA) {
