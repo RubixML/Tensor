@@ -2,32 +2,32 @@
 
 namespace Tensor\Benchmarks;
 
-use Tensor\Matrix;
+use Tensor\Vector;
 
-class MatmulBench
+class VectorDotBench
 {
     /**
-     * @var \Tensor\Matrix
+     * @var \Tensor\Vector
      */
     protected $a;
 
     /**
-     * @var \Tensor\Matrix
+     * @var \Tensor\Vector
      */
     protected $b;
 
     public function setUpSmall() : void
     {
-        $this->a = Matrix::uniform(50, 100);
+        $this->a = Vector::uniform(1000);
 
-        $this->b = Matrix::uniform(100, 50);
+        $this->b = Vector::uniform(1000);
     }
 
     public function setUpLarge() : void
     {
-        $this->a = Matrix::uniform(500, 1000);
+        $this->a = Vector::uniform(10000);
 
-        $this->b = Matrix::uniform(1000, 500);
+        $this->b = Vector::uniform(10000);
     }
 
     /**
@@ -36,19 +36,19 @@ class MatmulBench
      * @BeforeMethods({"setUpSmall"})
      * @OutputTimeUnit("milliseconds", precision=3)
      */
-    public function matmul_small() : void
+    public function dot_small() : void
     {
-        $this->a->matmul($this->b);
+        $this->a->dot($this->b);
     }
 
     /**
      * @Subject
      * @Iterations(5)
      * @BeforeMethods({"setUpLarge"})
-     * @OutputTimeUnit("seconds", precision=3)
+     * @OutputTimeUnit("milliseconds", precision=3)
      */
-    public function matmul_large() : void
+    public function dot_large() : void
     {
-        $this->a->matmul($this->b);
+        $this->a->dot($this->b);
     }
 }

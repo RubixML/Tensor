@@ -129,7 +129,6 @@ PHP_METHOD(Tensor_Vector, offsetUnset);
 PHP_METHOD(Tensor_Vector, offsetGet);
 PHP_METHOD(Tensor_Vector, getIterator);
 PHP_METHOD(Tensor_Vector, __toString);
-zend_object *zephir_init_properties_Tensor_Vector(zend_class_entry *class_type TSRMLS_DC);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_build, 0, 0, 0)
 	ZEND_ARG_ARRAY_INFO(0, a, 0)

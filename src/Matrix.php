@@ -35,9 +35,7 @@ class Matrix implements Tensor
      *
      * @var array[]
      */
-    protected $a = [
-        //
-    ];
+    protected $a;
 
     /**
      * The number of rows in the matrix.
@@ -219,14 +217,15 @@ class Matrix implements Tensor
                 . ' greater than 0 on all axes.');
         }
 
+        $max = getrandmax();
+
         $a = [];
 
         while (count($a) < $m) {
             $rowA = [];
 
             while (count($rowA) < $n) {
-                $rowA[] = rand(0, PHP_INT_MAX)
-                    / PHP_INT_MAX;
+                $rowA[] = rand(0, $max) / $max;
             }
 
             $a[] = $rowA;
@@ -251,6 +250,8 @@ class Matrix implements Tensor
                 . ' greater than 0 on all axes.');
         }
 
+        $max = getrandmax();
+
         $a = $extras = [];
 
         while (count($a) < $m) {
@@ -261,8 +262,8 @@ class Matrix implements Tensor
             }
 
             while (count($rowA) < $n) {
-                $r1 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
-                $r2 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
+                $r1 = rand(0, $max) / $max;
+                $r2 = rand(0, $max) / $max;
 
                 $r = sqrt(-2. * log($r1));
 
@@ -293,6 +294,8 @@ class Matrix implements Tensor
      */
     public static function poisson(int $m, int $n, float $lambda = 1.) : self
     {
+        $max = getrandmax();
+
         $l = exp(-$lambda);
 
         $a = [];
@@ -307,8 +310,7 @@ class Matrix implements Tensor
                 while ($p > $l) {
                     ++$k;
                     
-                    $p *= rand(0, PHP_INT_MAX)
-                        / PHP_INT_MAX;
+                    $p *= rand(0, $max) / $max;
                 }
 
                 $rowA[] = $k - 1;
@@ -335,14 +337,15 @@ class Matrix implements Tensor
                 . ' greater than 0 on all axes.');
         }
 
+        $max = getrandmax();
+
         $a = [];
 
         while (count($a) < $m) {
             $rowA = [];
 
             while (count($rowA) < $n) {
-                $rowA[] = rand(-PHP_INT_MAX, PHP_INT_MAX)
-                    / PHP_INT_MAX;
+                $rowA[] = rand(-$max, $max) / $max;
             }
 
             $a[] = $rowA;
@@ -352,7 +355,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the elementwise minimum of two matrices.
+     * Return the element-wise minimum of two matrices.
      *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Matrix $b
@@ -381,7 +384,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the elementwise maximum of two matrices.
+     * Return the element-wise maximum of two matrices.
      *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Matrix $b
@@ -903,7 +906,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Is the matrix positive semidefinite i.e. do all of its principal
+     * Is the matrix positive semi-definite i.e. do all of its principal
      * minor matrices have a determinant greater or equal to 0.
      *
      * @return bool
@@ -939,8 +942,6 @@ class Matrix implements Tensor
                 . " $this->n rows but Matrix B has {$b->m()}.");
         }
 
-        $p = $b->n();
-
         $bT = $b->transpose()->asArray();
         
         $c = [];
@@ -949,7 +950,7 @@ class Matrix implements Tensor
             $rowC = [];
 
             foreach ($bT as $columnB) {
-                $sigma = 0;
+                $sigma = 0.0;
 
                 foreach ($rowA as $k => $valueA) {
                     $sigma += $valueA * $columnB[$k];
@@ -1141,7 +1142,7 @@ class Matrix implements Tensor
 
         $k = $this->m - 1;
 
-        $pb = $p->dot($b);
+        $pb = $p->dot($b)->asArray();
 
         $y = [$pb[0] / ($l[0][0] ?: EPSILON)];
 
@@ -1193,7 +1194,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Retrn the infinity norm of the matrix.
+     * Return the infinity norm of the matrix.
      *
      * @return int|float
      */
@@ -1582,7 +1583,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the square of the matrix elementwise.
+     * Return the square of the matrix element-wise.
      *
      * @return self
      */
@@ -2085,7 +2086,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Negate the matrix i.e take the negative of each value elementwise.
+     * Negate the matrix i.e take the negative of each value element-wise.
      *
      * @return self
      */
@@ -2222,7 +2223,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Repeat the matrix m times along the vertival axes and n times along the
+     * Repeat the matrix m times along the vertical axes and n times along the
      * horizontal axes.
      *
      * @param int $m
@@ -2384,7 +2385,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Raise this matrix to the power of the elementwise entry in another
+     * Raise this matrix to the power of the element-wise entry in another
      * matrix.
      *
      * @param \Tensor\Matrix $b
@@ -2418,7 +2419,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Calculate the modulus i.e remainder of division between this matri and
+     * Calculate the modulus i.e remainder of division between this matrix and
      * another matrix.
      *
      * @param \Tensor\Matrix $b

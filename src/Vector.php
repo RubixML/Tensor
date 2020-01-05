@@ -29,9 +29,7 @@ class Vector implements Tensor
      *
      * @var (int|float)[]
      */
-    protected $a = [
-        //
-    ];
+    protected $a;
 
     /**
      * The number of elements in the vector.
@@ -133,11 +131,12 @@ class Vector implements Tensor
                 . " must be greater than 0, $n given.");
         }
 
+        $max = getrandmax();
+
         $a = [];
 
         while (count($a) < $n) {
-            $a[] = rand(0, PHP_INT_MAX)
-                / PHP_INT_MAX;
+            $a[] = rand(0, $max) / $max;
         }
 
         return static::quick($a);
@@ -157,11 +156,13 @@ class Vector implements Tensor
                 . " must be greater than 0, $n given.");
         }
 
+        $max = getrandmax();
+
         $a = [];
 
         while (count($a) < $n) {
-            $r1 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
-            $r2 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
+            $r1 = rand(0, $max) / $max;
+            $r2 = rand(0, $max) / $max;
             
             $r = sqrt(-2. * log($r1));
 
@@ -188,6 +189,8 @@ class Vector implements Tensor
      */
     public static function poisson(int $n, float $lambda = 1.) : self
     {
+        $max = getrandmax();
+
         $l = exp(-$lambda);
 
         $a = [];
@@ -199,8 +202,7 @@ class Vector implements Tensor
             while ($p > $l) {
                 ++$k;
                 
-                $p *= rand(0, PHP_INT_MAX)
-                    / PHP_INT_MAX;
+                $p *= rand(0, $max) / $max;
             }
 
             $a[] = $k - 1;
@@ -223,11 +225,12 @@ class Vector implements Tensor
                 . " must be greater than 0, $n given.");
         }
 
+        $max = getrandmax();
+
         $a = [];
 
         while (count($a) < $n) {
-            $a[] = rand(-PHP_INT_MAX, PHP_INT_MAX)
-                / PHP_INT_MAX;
+            $a[] = rand(-$max, $max) / $max;
         }
 
         return static::quick($a);
@@ -270,7 +273,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the elementwise maximum of two vectors.
+     * Return the element-wise maximum of two vectors.
      *
      * @param \Tensor\Vector $a
      * @param \Tensor\Vector $b
@@ -290,7 +293,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the elementwise minimum of two vectors.
+     * Return the element-wise minimum of two vectors.
      *
      * @param \Tensor\Vector $a
      * @param \Tensor\Vector $b
@@ -1480,7 +1483,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Negate the vector i.e take the negative of each value elementwise.
+     * Negate the vector i.e take the negative of each value element-wise.
      *
      * @return self
      */
@@ -1965,7 +1968,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Calculate the modulus of this vector with another vector elementwise.
+     * Calculate the modulus of this vector with another vector element-wise.
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException

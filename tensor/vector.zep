@@ -20,9 +20,7 @@ class Vector implements Tensor
      *
      * @var (int|float)[]
      */
-    protected a = [
-        //
-    ];
+    protected a;
 
     /**
      * The number of elements in the vector.
@@ -220,8 +218,7 @@ class Vector implements Tensor
         array a = [];
 
         while count(a) < n {
-            let a[] = rand(-PHP_INT_MAX, PHP_INT_MAX)
-                / PHP_INT_MAX;
+            let a[] = rand(-PHP_INT_MAX, PHP_INT_MAX) / PHP_INT_MAX;
         }
 
         return static::quick(a);
@@ -1572,9 +1569,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
  
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
  
             for j, valueA in this->a {
                 let rowC[] = valueA * rowB[j];
@@ -1604,9 +1602,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA / rowB[j];
@@ -1636,9 +1635,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA + rowB[j];
@@ -1668,9 +1668,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA - rowB[j];
@@ -1700,9 +1701,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = pow(valueA, rowB[j]);
@@ -1732,9 +1734,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
         
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA % rowB[j];
@@ -1765,9 +1768,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA == rowB[j] ? 1 : 0;
@@ -1798,9 +1802,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA != rowB[j] ? 1 : 0;
@@ -1831,9 +1836,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA > rowB[j] ? 1 : 0;
@@ -1864,9 +1870,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA >= rowB[j] ? 1 : 0;
@@ -1897,9 +1904,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA < rowB[j] ? 1 : 0;
@@ -1930,9 +1938,10 @@ class Vector implements Tensor
         var j, rowB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for rowB in b->asArray() {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueA in this->a {
                 let rowC[] = valueA <= rowB[j] ? 1 : 0;

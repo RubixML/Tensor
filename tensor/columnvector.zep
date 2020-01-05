@@ -94,11 +94,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA * valueB;
@@ -128,11 +129,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA / valueB;
@@ -162,11 +164,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA + valueB;
@@ -196,11 +199,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA - valueB;
@@ -230,11 +234,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = pow(valueA, valueB);
@@ -264,11 +269,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA % valueB;
@@ -299,11 +305,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA == valueB ? 1 : 0;
@@ -334,11 +341,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA != valueB ? 1 : 0;
@@ -369,11 +377,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA > valueB ? 1 : 0;
@@ -404,11 +413,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA >= valueB ? 1 : 0;
@@ -439,11 +449,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
 
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA < valueB ? 1 : 0;
@@ -474,11 +485,12 @@ class ColumnVector extends Vector
         var i, rowB, valueB, valueA;
         
         array c = [];
+        array rowC = [];
 
         for i, rowB in b->asArray() {
             let valueA = this->a[i];
 
-            array rowC = [];
+            let rowC = [];
 
             for valueB in rowB {
                 let rowC[] = valueA <= valueB ? 1 : 0;

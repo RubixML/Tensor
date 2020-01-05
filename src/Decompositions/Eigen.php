@@ -10,7 +10,7 @@ use RuntimeException;
  * Eigen
  *
  * The Eigendecompositon or (Spectral decomposition) is a matrix factorization
- * resulting in a matrix of eigenvectors and a coresponding array of eigenvalues.
+ * resulting in a matrix of eigenvectors and a corresponding array of eigenvalues.
  *
  * @category    Scientific Computing
  * @package     Rubix/Tensor

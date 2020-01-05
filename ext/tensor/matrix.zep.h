@@ -165,7 +165,6 @@ PHP_METHOD(Tensor_Matrix, offsetGet);
 PHP_METHOD(Tensor_Matrix, getIterator);
 PHP_METHOD(Tensor_Matrix, __toString);
 PHP_METHOD(Tensor_Matrix, implodeRow);
-zend_object *zephir_init_properties_Tensor_Matrix(zend_class_entry *class_type TSRMLS_DC);
 
 #if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_build, 0, 0, Tensor\\Matrix, 0)

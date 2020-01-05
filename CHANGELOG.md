@@ -1,4 +1,5 @@
 - Unreleased
+    - Extension now uses Mersenne Twister RNG explicitly
 
 - 2.0.1
     - Added benchmarks
