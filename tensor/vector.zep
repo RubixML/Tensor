@@ -32,7 +32,7 @@ class Vector implements Tensor
     /**
      * Factory method to build a new vector from an array.
      *
-     * @param array a
+     * @param (int|float)[] a
      * @return self
      */
     public static function build(const array a = [])
@@ -43,7 +43,7 @@ class Vector implements Tensor
     /**
      * Build a vector foregoing any validation for quicker instantiation.
      *
-     * @param array a
+     * @param (int|float)[] a
      * @return self
      */
     public static function quick(const array a = [])
@@ -88,7 +88,7 @@ class Vector implements Tensor
     /**
      * Fill a vector with a given value.
      *
-     * @param mixed value
+     * @param int|float value
      * @param int n
      * @throws \InvalidArgumentException
      * @return self
@@ -123,10 +123,12 @@ class Vector implements Tensor
                 . " must be greater than 0, " . strval(n) . " given.");
         }
 
+        var max = mt_getrandmax();
+
         array a = [];
 
         while count(a) < n {
-            let a[] = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
+            let a[] = mt_rand() / max;
         }
 
         return static::quick(a);
@@ -146,11 +148,13 @@ class Vector implements Tensor
                 . " must be greater than 0, " . strval(n) . " given.");
         }
 
+        var max = mt_getrandmax();
+
         array a = [];
 
         while count(a) < n {
-            float r1 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
-            float r2 = rand(0, PHP_INT_MAX) / PHP_INT_MAX;
+            float r1 = mt_rand() / max;
+            float r2 = mt_rand() / max;
             
             float r = sqrt(-2.0 * log(r1));
 
@@ -180,6 +184,8 @@ class Vector implements Tensor
         int k;
         float p;
 
+        var max = mt_getrandmax();
+
         float l = (float) exp(-lambda);
 
         array a = [];
@@ -191,8 +197,7 @@ class Vector implements Tensor
             while p > l {
                 let k++;
                 
-                let p *= rand(0, PHP_INT_MAX)
-                    / PHP_INT_MAX;
+                let p *= mt_rand() / max;
             }
 
             let a[] = k - 1;
@@ -214,11 +219,13 @@ class Vector implements Tensor
             throw new InvalidArgumentException("The number of elements"
                 . " must be greater than 0, " . strval(n) . " given.");
         }
+
+        var max = mt_getrandmax();
         
         array a = [];
 
         while count(a) < n {
-            let a[] = rand(-PHP_INT_MAX, PHP_INT_MAX) / PHP_INT_MAX;
+            let a[] = mt_rand(-max, max) / max;
         }
 
         return static::quick(a);
@@ -227,9 +234,9 @@ class Vector implements Tensor
     /**
      * Return evenly spaced values within a given interval.
      *
-     * @param mixed start
-     * @param mixed end
-     * @param mixed interval
+     * @param int|float start
+     * @param int|float end
+     * @param int|float interval
      * @return self
      */
     public static function range(const start, const end, const interval = 1) -> <Vector>
@@ -299,7 +306,7 @@ class Vector implements Tensor
     }
 
     /**
-     * @param array a
+     * @param mixed[] a
      * @param bool validate
      * @throws \InvalidArgumentException
      */
@@ -376,7 +383,7 @@ class Vector implements Tensor
     /**
      * Return the vector as an array.
      *
-     * @return array
+     * @return (int|float)[]
      */
     public function asArray() -> array
     {
@@ -436,9 +443,10 @@ class Vector implements Tensor
         int k = 0;
 
         array b = [];
+        array rowB = [];
 
         while count(b) < m {
-            array rowB = [];
+            let rowB = [];
 
             while count(rowB) < n {
                 let rowB[] = this->a[k];
@@ -498,9 +506,9 @@ class Vector implements Tensor
      * Reduce the vector down to a scalar.
      *
      * @param callable callback
-     * @param mixed initial
+     * @param int|float initial
      * @throws \InvalidArgumentException
-     * @return mixed
+     * @return int|float
      */
     public function reduce(const var callback, const var initial = 0)
     {
@@ -518,9 +526,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector b
      * @throws \InvalidArgumentException
-     * @return int|float
+     * @return float
      */
-    public function dot(const <Vector> b)
+    public function dot(const <Vector> b) -> float
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires"

@@ -66,13 +66,6 @@ class VectorTest extends TestCase
         $this->assertInstanceOf(ArrayLike::class, $this->a);
     }
 
-    public function test_build_bad_element() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::build([0, 0.1, 'bad']);
-    }
-
     public function test_build_zeros() : void
     {
         $z = Vector::zeros(4);

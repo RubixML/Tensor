@@ -54,7 +54,7 @@ class Matrix implements Tensor
     /**
      * Factory method to build a new matrix from an array.
      *
-     * @param mixed[] $a
+     * @param array[] $a
      * @return self
      */
     public static function build(array $a = []) : self
@@ -65,7 +65,7 @@ class Matrix implements Tensor
     /**
      * Build a new matrix foregoing any validation for quicker instantiation.
      *
-     * @param mixed[] $a
+     * @param array[] $a
      * @return self
      */
     public static function quick(array $a = []) : self
@@ -142,7 +142,7 @@ class Matrix implements Tensor
      * Build a diagonal matrix with the value of each element along the
      * diagonal and 0s everywhere else.
      *
-     * @param mixed[] $elements
+     * @param (int|float)[] $elements
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -153,14 +153,6 @@ class Matrix implements Tensor
         if ($n < 1) {
             throw new InvalidArgumentException('Dimensionality must be'
                 . ' greater than 0 on all axes.');
-        }
-
-        foreach ($elements as $element) {
-            if (!is_int($element) and !is_float($element)) {
-                throw new InvalidArgumentException('Diagonal element'
-                    . ' must be an integer or float, '
-                    . gettype($element) . ' found.');
-            }
         }
 
         $a = [];
@@ -181,7 +173,7 @@ class Matrix implements Tensor
     /**
      * Fill a matrix with a given value at each element.
      *
-     * @param mixed $value
+     * @param int|float $value
      * @param int $m
      * @param int $n
      * @throws \InvalidArgumentException
@@ -189,11 +181,6 @@ class Matrix implements Tensor
      */
     public static function fill($value, int $m, int $n) : self
     {
-        if (!is_int($value) and !is_float($value)) {
-            throw new InvalidArgumentException('Fill value must be an'
-                . ' integer or float, ' . gettype($value) . ' found.');
-        }
-
         if ($m < 1 or $n < 1) {
             throw new InvalidArgumentException('Dimensionality must be'
                 . ' greater than 0 on all axes.');
@@ -225,7 +212,7 @@ class Matrix implements Tensor
             $rowA = [];
 
             while (count($rowA) < $n) {
-                $rowA[] = rand(0, $max) / $max;
+                $rowA[] = rand() / $max;
             }
 
             $a[] = $rowA;
@@ -262,8 +249,8 @@ class Matrix implements Tensor
             }
 
             while (count($rowA) < $n) {
-                $r1 = rand(0, $max) / $max;
-                $r2 = rand(0, $max) / $max;
+                $r1 = rand() / $max;
+                $r2 = rand() / $max;
 
                 $r = sqrt(-2. * log($r1));
 
@@ -310,7 +297,7 @@ class Matrix implements Tensor
                 while ($p > $l) {
                     ++$k;
                     
-                    $p *= rand(0, $max) / $max;
+                    $p *= rand() / $max;
                 }
 
                 $rowA[] = $k - 1;
@@ -415,7 +402,7 @@ class Matrix implements Tensor
     /**
      * Build a matrix by stacking an array of vectors.
      *
-     * @param mixed[] $vectors
+     * @param \Tensor\Vector[] $vectors
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -427,18 +414,13 @@ class Matrix implements Tensor
 
         $proto = reset($vectors);
 
-        $size = $proto instanceof Vector ? $proto->size() : 0;
+        $size = $proto->size();
 
         $columnwise = $proto instanceof ColumnVector;
 
         $a = [];
 
         foreach ($vectors as $vector) {
-            if (!$vector instanceof Vector) {
-                throw new InvalidArgumentException('Cannot stack a non'
-                    . ' vector, ' . gettype($vector) . ' found.');
-            }
-
             if ($columnwise and !$vector instanceof ColumnVector) {
                 throw new InvalidArgumentException('Cannot stack a non'
                     . ' column vector, ' . gettype($vector) . ' found.');
@@ -458,7 +440,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * @param mixed[] $a
+     * @param array[] $a
      * @param bool $validate
      * @throws \InvalidArgumentException
      */
@@ -473,7 +455,7 @@ class Matrix implements Tensor
             $a = array_values($a);
 
             foreach ($a as &$row) {
-                $row = is_array($row) ? array_values($row) : [$row];
+                $row = array_values($row);
 
                 if (count($row) !== $n) {
                     throw new InvalidArgumentException('The number of columns'
@@ -723,18 +705,12 @@ class Matrix implements Tensor
      * Reduce the matrix down to a scalar.
      *
      * @param callable $callback
-     * @param mixed $initial
+     * @param int|float $initial
      * @throws \InvalidArgumentException
-     * @return mixed
+     * @return int|float
      */
     public function reduce(callable $callback, $initial = 0)
     {
-        if (!is_int($initial) and !is_float($initial)) {
-            throw new InvalidArgumentException('Initial value must'
-                . ' be an integer or float, ' . gettype($initial)
-                . ' found.');
-        }
-
         $carry = $initial;
 
         foreach ($this->a as $rowA) {
@@ -1615,9 +1591,9 @@ class Matrix implements Tensor
     /**
      * Return the exponential of the tensor minus 1.
      *
-     * @return mixed
+     * @return self
      */
-    public function expm1()
+    public function expm1() : self
     {
         return $this->map('expm1');
     }

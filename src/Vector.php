@@ -41,7 +41,7 @@ class Vector implements Tensor
     /**
      * Factory method to build a new vector from an array.
      *
-     * @param mixed[] $a
+     * @param (int|float)[] $a
      * @return mixed
      */
     public static function build(array $a = [])
@@ -52,7 +52,7 @@ class Vector implements Tensor
     /**
      * Build a vector foregoing any validation for quicker instantiation.
      *
-     * @param mixed[] $a
+     * @param (int|float)[] $a
      * @return mixed
      */
     public static function quick(array $a = [])
@@ -97,18 +97,13 @@ class Vector implements Tensor
     /**
      * Fill a vector with a given value.
      *
-     * @param mixed $value
+     * @param int|float $value
      * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
     public static function fill($value, int $n) : self
     {
-        if (!is_int($value) and !is_float($value)) {
-            throw new InvalidArgumentException('Fill value expects an'
-                . ' integer or float, ' . gettype($value) . ' found.');
-        }
-
         if ($n < 1) {
             throw new InvalidArgumentException('The number of elements'
                 . " must be greater than 0, $n given.");
@@ -136,7 +131,7 @@ class Vector implements Tensor
         $a = [];
 
         while (count($a) < $n) {
-            $a[] = rand(0, $max) / $max;
+            $a[] = rand() / $max;
         }
 
         return static::quick($a);
@@ -161,8 +156,8 @@ class Vector implements Tensor
         $a = [];
 
         while (count($a) < $n) {
-            $r1 = rand(0, $max) / $max;
-            $r2 = rand(0, $max) / $max;
+            $r1 = rand() / $max;
+            $r2 = rand() / $max;
             
             $r = sqrt(-2. * log($r1));
 
@@ -202,7 +197,7 @@ class Vector implements Tensor
             while ($p > $l) {
                 ++$k;
                 
-                $p *= rand(0, $max) / $max;
+                $p *= rand() / $max;
             }
 
             $a[] = $k - 1;
@@ -239,9 +234,9 @@ class Vector implements Tensor
     /**
      * Return evenly spaced values within a given interval.
      *
-     * @param mixed $start
-     * @param mixed $end
-     * @param mixed $interval
+     * @param int|float $start
+     * @param int|float $end
+     * @param int|float $interval
      * @return self
      */
     public static function range($start, $end, $interval = 1) : self
@@ -501,18 +496,11 @@ class Vector implements Tensor
      * Reduce the vector down to a scalar.
      *
      * @param callable $callback
-     * @param mixed $initial
-     * @throws \InvalidArgumentException
-     * @return mixed
+     * @param int|float $initial
+     * @return int|float
      */
     public function reduce(callable $callback, $initial = 0)
     {
-        if (!is_int($initial) and !is_float($initial)) {
-            throw new InvalidArgumentException('Initial value must'
-                . ' be an integer or float, ' . gettype($initial)
-                . ' found.');
-        }
-
         return array_reduce($this->a, $callback, $initial);
     }
 

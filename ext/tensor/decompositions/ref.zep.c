@@ -165,7 +165,7 @@ PHP_METHOD(Tensor_Decompositions_Ref, gaussianElimination) {
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&n, a, "n", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&minDim, "min", NULL, 14, &m, &n);
+	ZEPHIR_CALL_FUNCTION(&minDim, "min", NULL, 15, &m, &n);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&b, a, "asarray", NULL, 0);
 	zephir_check_call_status();
@@ -201,11 +201,11 @@ PHP_METHOD(Tensor_Decompositions_Ref, gaussianElimination) {
 					i = _4$$3;
 					zephir_array_fetch_long(&_6$$4, &b, i, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 77);
 					zephir_array_fetch_long(&_7$$4, &_6$$4, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 77);
-					ZEPHIR_CALL_FUNCTION(&_8$$4, "abs", &_9, 11, &_7$$4);
+					ZEPHIR_CALL_FUNCTION(&_8$$4, "abs", &_9, 12, &_7$$4);
 					zephir_check_call_status();
 					zephir_array_fetch_long(&_10$$4, &b, index, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 77);
 					zephir_array_fetch_long(&_11$$4, &_10$$4, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 77);
-					ZEPHIR_CALL_FUNCTION(&_12$$4, "abs", &_9, 11, &_11$$4);
+					ZEPHIR_CALL_FUNCTION(&_12$$4, "abs", &_9, 12, &_11$$4);
 					zephir_check_call_status();
 					if (ZEPHIR_GT(&_8$$4, &_12$$4)) {
 						index = i;
@@ -219,7 +219,7 @@ PHP_METHOD(Tensor_Decompositions_Ref, gaussianElimination) {
 				object_init_ex(&_15$$6, spl_ce_RuntimeException);
 				ZEPHIR_INIT_NVAR(&_16$$6);
 				ZEPHIR_CONCAT_SS(&_16$$6, "Cannot compute row echelon form", " of a singular matrix.");
-				ZEPHIR_CALL_METHOD(NULL, &_15$$6, "__construct", &_17, 20, &_16$$6);
+				ZEPHIR_CALL_METHOD(NULL, &_15$$6, "__construct", &_17, 21, &_16$$6);
 				zephir_check_call_status();
 				zephir_throw_exception_debug(&_15$$6, "tensor/decompositions/ref.zep", 84);
 				ZEPHIR_MM_RESTORE();
@@ -296,7 +296,7 @@ PHP_METHOD(Tensor_Decompositions_Ref, gaussianElimination) {
 	ZEPHIR_CPY_WRT(&b, &_35);
 	object_init_ex(return_value, tensor_decompositions_ref_ce);
 	ZVAL_LONG(&_37, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &b, &_37);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 27, &b, &_37);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -479,7 +479,7 @@ PHP_METHOD(Tensor_Decompositions_Ref, rowReductionMethod) {
 	ZEPHIR_CPY_WRT(&b, &_25);
 	object_init_ex(return_value, tensor_decompositions_ref_ce);
 	ZVAL_LONG(&_27, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &b, &_27);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 27, &b, &_27);
 	zephir_check_call_status();
 	RETURN_MM();
 

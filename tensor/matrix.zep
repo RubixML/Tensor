@@ -43,7 +43,7 @@ class Matrix implements Tensor
     /**
      * Factory method to build a new matrix from an array.
      *
-     * @param array a
+     * @param array[] a
      * @return self
      */
     public static function build(const array a = []) -> <Matrix>
@@ -54,7 +54,7 @@ class Matrix implements Tensor
     /**
      * Build a new matrix foregoing any validation for quicker instantiation.
      *
-     * @param array a
+     * @param array[] a
      * @return self
      */
     public static function quick(const array a = []) -> <Matrix>
@@ -123,7 +123,7 @@ class Matrix implements Tensor
      * Build a matrix with the value of each element along the diagonal
      * and zeros everywhere else.
      *
-     * @param array elements
+     * @param (int|float)[] elements
      * @throws \InvalidArgumentException
      * @return self
      */
@@ -166,7 +166,7 @@ class Matrix implements Tensor
     /**
      * Fill a matrix with a given value at each element.
      *
-     * @param mixed value
+     * @param int|float value
      * @param int m
      * @param int n
      * @throws \InvalidArgumentException
@@ -211,7 +211,7 @@ class Matrix implements Tensor
             array rowA = [];
  
             while count(rowA) < n {
-                let rowA[] = mt_rand(0, max) / max;
+                let rowA[] = mt_rand() / max;
             }
  
             let a[] = rowA;
@@ -249,8 +249,8 @@ class Matrix implements Tensor
             }
  
             while count(rowA) < n {
-                float r1 = mt_rand(0, max) / max;
-                float r2 = mt_rand(0, max) / max;
+                float r1 = mt_rand() / max;
+                float r2 = mt_rand() / max;
  
                 float r = sqrt(-2.0 * log(r1));
  
@@ -300,7 +300,7 @@ class Matrix implements Tensor
                 while p > l {
                     let k++;
 
-                    let p *= mt_rand(0, max) / max;
+                    let p *= mt_rand() / max;
                 }
 
                 let rowA[] = k - 1;
@@ -445,7 +445,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * @param array a
+     * @param array[] a
      * @param bool validate
      * @throws \InvalidArgumentException
      */
@@ -718,9 +718,9 @@ class Matrix implements Tensor
      * Reduce the matrix down to a scalar using a callback function.
      *
      * @param callable callback
-     * @param mixed initial
+     * @param int|float initial
      * @throws \InvalidArgumentException
-     * @return mixed
+     * @return int|float
      */
     public function reduce(const var callback, const var initial = 0)
     {
@@ -1206,8 +1206,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * A universal function to multiply this matrix with another tensor
-     * element-wise.
+     * A universal function to multiply this matrix with another tensor element-wise.
      *
      * @param mixed b
      * @throws \InvalidArgumentException
@@ -1335,7 +1334,7 @@ class Matrix implements Tensor
      *
      * @param mixed b
      * @throws \InvalidArgumentException
-     * @return mixed
+     * @return self
      */
     public function pow(const var b)
     {

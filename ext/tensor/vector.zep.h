@@ -387,7 +387,11 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_reduce, 0, 0, 1)
 	ZEND_ARG_INFO(0, initial)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_dot, 0, 0, 1)
+#if PHP_VERSION_ID >= 70200
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_dot, 0, 1, IS_DOUBLE, 0)
+#else
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_dot, 0, 1, IS_DOUBLE, NULL, 0)
+#endif
 	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
 ZEND_END_ARG_INFO()
 
