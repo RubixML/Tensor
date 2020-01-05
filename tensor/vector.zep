@@ -563,6 +563,7 @@ class Vector implements Tensor
         }
 
         int i;
+        float sigma;
         var j, valueA, valueB;
 
         var bHat = b->asArray();
@@ -570,7 +571,7 @@ class Vector implements Tensor
         array c = [];
 
         for i in range(0, this->n - 1, stride) {
-            float sigma = 0;
+            let sigma = 0.0;
 
             for j, valueB in bHat {
                 int k = i - (int) j;

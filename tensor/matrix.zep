@@ -938,7 +938,7 @@ class Matrix implements Tensor
         var p = b->n();
 
         var bT = b->transpose()->asArray();
-         
+
         array c = [];
  
         for rowA in this->a {
@@ -1002,12 +1002,13 @@ class Matrix implements Tensor
         }
 
         int i, j, x, y;
+        float sigma;
         var k, l, rowA, rowB, valueB;
 
-        var bHat = b->asArray();
+        int p = (int) intdiv(m, 2);
+        int q = (int) intdiv(n, 2);
 
-        var p = intdiv(m, 2);
-        var q = intdiv(n, 2);
+        var bHat = b->asArray();
 
         array c = [];
 
@@ -1015,7 +1016,7 @@ class Matrix implements Tensor
             array rowC = [];
 
             for j in range(0, this->n - 1, stride) {
-                var sigma = 0;
+                let sigma = 0.0;
 
                 for k, rowB in bHat {
                     let x = i + p - (int) k;
@@ -1056,10 +1057,7 @@ class Matrix implements Tensor
     {
         var ref = Ref::decompose(this);
 
-        var a = ref->a();
-        var swaps = ref->swaps();
-
-        return [a, swaps];
+        return [ref->a(), ref->swaps()];
     }
 
     /**
@@ -1069,9 +1067,7 @@ class Matrix implements Tensor
      */
     public function rref() -> <self>
     {
-        var a = Rref::decompose(this)->a();
-
-        return a;
+        return Rref::decompose(this)->a();
     }
 
     /**
@@ -1085,12 +1081,8 @@ class Matrix implements Tensor
     public function lu() -> array
     {
         var lup = Lu::decompose(this);
-
-        var l = lup->l();
-        var u = lup->u();
-        var p = lup->p();
         
-        return [l, u, p];
+        return [lup->l(), lup->u(), lup->p()];
     }
 
     /**
