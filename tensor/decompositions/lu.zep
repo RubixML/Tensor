@@ -47,20 +47,26 @@ class Lu implements Decomposition
     public static function decompose(const <Matrix> a) -> <Lu>
     {
         if !a->isSquare() {
-            throw new RuntimeException("Cannot decompose a non square matrix.");
+            throw new RuntimeException("Cannot decompose a non-square matrix.");
         }
 
         int i, j, k, row;
         float sigma;
+        array aHat = [];
+        array l = [];
+        array u = [];
+        array p = [];
+        array pa = [];
+
         var max, temp, valueA;
 
         var n = a->n();
 
-        var aHat = a->asArray();
+        let aHat = (array) a->asArray();
 
-        var l = Matrix::identity(n)->asArray();
-        var u = Matrix::zeros(n, n)->asArray();
-        var p = Matrix::identity(n)->asArray();
+        let l = (array) Matrix::identity(n)->asArray();
+        let u = (array) Matrix::zeros(n, n)->asArray();
+        let p = (array) Matrix::identity(n)->asArray();
 
         for i in range(0, n - 1) {
             let max = aHat[i][i];
@@ -84,9 +90,7 @@ class Lu implements Decomposition
             }
         }
 
-        let p = Matrix::quick(p);
-
-        var pa = p->matmul(a)->asArray();
+        let pa = (array) Matrix::quick(p)->matmul(a)->asArray();
 
         for i in range(0, n - 1) {
             for j in range(0, i) {
@@ -111,10 +115,11 @@ class Lu implements Decomposition
             }
         }
 
-        let l = Matrix::quick(l);
-        let u = Matrix::quick(u);
-
-        return new self(l, u, p);
+        return new self(
+            Matrix::quick(l),
+            Matrix::quick(u),
+            Matrix::quick(p)
+        );
     }
 
     /**

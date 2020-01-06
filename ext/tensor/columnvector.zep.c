@@ -42,7 +42,7 @@ ZEPHIR_INIT_CLASS(Tensor_ColumnVector) {
 /**
  * Factory method to build a new vector from an array.
  *
- * @param array a
+ * @param (int|float)[] a
  * @return self
  */
 PHP_METHOD(Tensor_ColumnVector, build) {
@@ -78,7 +78,7 @@ PHP_METHOD(Tensor_ColumnVector, build) {
 /**
  * Build a vector foregoing any validation for quicker instantiation.
  *
- * @param array a
+ * @param (int|float)[] a
  * @return self
  */
 PHP_METHOD(Tensor_ColumnVector, quick) {

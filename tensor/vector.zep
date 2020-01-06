@@ -123,19 +123,20 @@ class Vector implements Tensor
                 . " must be greater than 0, " . strval(n) . " given.");
         }
 
-        var max = mt_getrandmax();
-
         array a = [];
 
+        var max = mt_getrandmax();
+
         while count(a) < n {
-            let a[] = mt_rand() / max;
+            let a[] = mt_rand(0, max) / max;
         }
 
         return static::quick(a);
     }
 
     /**
-     * Return a standard normally distributed (Gaussian) random vector.
+     * Return a standard normally distributed (Gaussian) random vector with mean 0
+     * and unit variance.
      *
      * @param int n
      * @throws \InvalidArgumentException
@@ -148,17 +149,15 @@ class Vector implements Tensor
                 . " must be greater than 0, " . strval(n) . " given.");
         }
 
-        var max = mt_getrandmax();
-
+        var r, phi;
         array a = [];
 
-        while count(a) < n {
-            float r1 = mt_rand() / max;
-            float r2 = mt_rand() / max;
-            
-            float r = sqrt(-2.0 * log(r1));
+        var max = mt_getrandmax();
 
-            float phi = r2 * self::TWO_PI;
+        while count(a) < n {
+            let r = sqrt(-2.0 * log(mt_rand(0, max) / max));
+
+            let phi = mt_rand(0, max) / max * self::TWO_PI;
 
             let a[] = r * sin(phi);
             let a[] = r * cos(phi);
@@ -183,12 +182,11 @@ class Vector implements Tensor
     {
         int k;
         float p;
-
-        var max = mt_getrandmax();
+        array a = [];
 
         float l = (float) exp(-lambda);
 
-        array a = [];
+        var max = mt_getrandmax();
 
         while count(a) < n {
             let k = 0;
@@ -197,7 +195,7 @@ class Vector implements Tensor
             while p > l {
                 let k++;
                 
-                let p *= mt_rand() / max;
+                let p *= mt_rand(0, max) / max;
             }
 
             let a[] = k - 1;
@@ -219,10 +217,10 @@ class Vector implements Tensor
             throw new InvalidArgumentException("The number of elements"
                 . " must be greater than 0, " . strval(n) . " given.");
         }
-
-        var max = mt_getrandmax();
         
         array a = [];
+
+        var max = mt_getrandmax();
 
         while count(a) < n {
             let a[] = mt_rand(-max, max) / max;
@@ -441,7 +439,6 @@ class Vector implements Tensor
         }
 
         int k = 0;
-
         array b = [];
         array rowB = [];
 
@@ -570,10 +567,9 @@ class Vector implements Tensor
         int i;
         float sigma;
         var j, valueA, valueB;
+        array c = [];
 
         var bHat = b->asArray();
-
-        array c = [];
 
         for i in range(0, this->n - 1, stride) {
             let sigma = 0.0;
@@ -622,14 +618,14 @@ class Vector implements Tensor
      */
     public function outer(const <Vector> b) -> <Matrix>
     {
-        var j, valueA, valueB;
-
         var n = b->n();
 
+        var j, valueA, valueB;
         array c = [];
+        array rowC = [];
 
         for valueA in this->a {
-            array rowC = [];
+            let rowC = [];
 
             for j, valueB in iterator(b) {
                 let rowC[] = valueA * valueB;
@@ -1128,7 +1124,6 @@ class Vector implements Tensor
     public function log(const float base = self::M_E) -> <Vector>
     {
         var valueA;
-
         array b = [];
 
         for valueA in this->a {
@@ -1398,7 +1393,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-
         array b = [];
 
         for valueA in this->a {
@@ -1445,7 +1439,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-
         array b = [];
 
         for valueA in this->a {
@@ -1476,7 +1469,6 @@ class Vector implements Tensor
     public function clipLower(const float min) -> <Vector>
     {
         var valueA;
-
         array b = [];
         
         for valueA in this->a {
@@ -1501,7 +1493,6 @@ class Vector implements Tensor
     public function clipUpper(const float max) -> <Vector>
     {
         var valueA;
-
         array b = [];
 
         for valueA in this->a {
@@ -1525,7 +1516,6 @@ class Vector implements Tensor
     public function sign() -> <Vector>
     {
         var valueA;
-
         array b = [];
 
         for valueA in this->a {
@@ -1549,7 +1539,6 @@ class Vector implements Tensor
     public function negate() -> <Vector>
     {
         var valueA;
-
         array b = [];
 
         for valueA in this->a {
@@ -1575,7 +1564,6 @@ class Vector implements Tensor
         }
  
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
  
@@ -1608,7 +1596,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1641,7 +1628,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1674,7 +1660,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1707,7 +1692,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1740,7 +1724,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-        
         array c = [];
         array rowC = [];
 
@@ -1774,7 +1757,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1808,7 +1790,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1842,7 +1823,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1876,7 +1856,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1910,7 +1889,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1944,7 +1922,6 @@ class Vector implements Tensor
         }
 
         var j, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -1977,7 +1954,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2003,7 +1979,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2029,7 +2004,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2055,7 +2029,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2081,7 +2054,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2107,7 +2079,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2134,7 +2105,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2161,7 +2131,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2188,7 +2157,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2215,7 +2183,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2242,7 +2209,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2269,7 +2235,6 @@ class Vector implements Tensor
         }
 
         var i, valueB;
-
         array c = [];
 
         for i, valueB in b->asArray() {
@@ -2295,7 +2260,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2321,7 +2285,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2347,7 +2310,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2373,7 +2335,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2399,7 +2360,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2425,7 +2385,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2452,7 +2411,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2479,7 +2437,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2506,7 +2463,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2533,7 +2489,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2560,7 +2515,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {
@@ -2587,7 +2541,6 @@ class Vector implements Tensor
         }
 
         var valueA;
-        
         array c = [];
 
         for valueA in this->a {

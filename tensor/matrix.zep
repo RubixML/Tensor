@@ -77,12 +77,12 @@ class Matrix implements Tensor
         }
  
         int i, j;
-
         array a = [];
+        array rowA = [];
  
         for i in range(0, n - 1) {
-            array rowA = [];
- 
+            let rowA = [];
+
             for j in range(0, n - 1) {
                 let rowA[] = i === j ? 1 : 0;
             }
@@ -147,11 +147,11 @@ class Matrix implements Tensor
         }
 
         int i, j;
- 
         array a = [];
+        array rowA = [];
  
         for i in range(0, n - 1) {
-             array rowA = [];
+            let rowA = [];
  
             for j in range(0, n - 1) {
                 let rowA[] = i === j ? elements[i] : 0;
@@ -203,15 +203,16 @@ class Matrix implements Tensor
                 . " greater than 0 for all axes.");
         }
 
-        var max = mt_getrandmax();
-
         array a = [];
+        array rowA = [];
+
+        var max = mt_getrandmax();
  
         while count(a) < m {
-            array rowA = [];
+            let rowA = [];
  
             while count(rowA) < n {
-                let rowA[] = mt_rand() / max;
+                let rowA[] = mt_rand(0, max) / max;
             }
  
             let a[] = rowA;
@@ -236,25 +237,24 @@ class Matrix implements Tensor
                 . " greater than 0 for all axes.");
         }
 
-        var max = mt_getrandmax();
-
+        var r, phi;
         array a = [];
+        array rowA = [];
         array extras = [];
+
+        var max = mt_getrandmax();
  
         while count(a) < m {
-            array rowA = [];
+            let rowA = [];
              
             if !empty(extras) {
                 let rowA[] = array_pop(extras);
             }
  
             while count(rowA) < n {
-                float r1 = mt_rand() / max;
-                float r2 = mt_rand() / max;
+                let r = sqrt(-2.0 * log(mt_rand(0, max) / max));
  
-                float r = sqrt(-2.0 * log(r1));
- 
-                float phi = r2 * self::TWO_PI;
+                let phi = mt_rand(0, max) / max * self::TWO_PI;
  
                 let rowA[] = r * sin(phi);
                 let rowA[] = r * cos(phi);
@@ -282,16 +282,16 @@ class Matrix implements Tensor
     public static function poisson(const int m, const int n, const float lambda = 1.0) -> <Matrix>
     {
         int k;
-        float p;
+        float l, p;
+        array a = [];
+        array rowA = [];
+
+        let l = (float) exp(-lambda);
 
         var max = mt_getrandmax();
 
-        float l = (float) exp(-lambda);
-
-        array a = [];
-
         while count(a) < m {
-            array rowA = [];
+            let rowA = [];
 
             while count(rowA) < n {
                 let k = 0;
@@ -300,7 +300,7 @@ class Matrix implements Tensor
                 while p > l {
                     let k++;
 
-                    let p *= mt_rand() / max;
+                    let p *= mt_rand(0, max) / max;
                 }
 
                 let rowA[] = k - 1;
@@ -327,10 +327,10 @@ class Matrix implements Tensor
                 . " greater than 0 for all axes.");
         }
 
-        var max = mt_getrandmax();
-
         array a = [];
         array rowA = [];
+
+        var max = mt_getrandmax();
     
         while count(a) < m {
             let rowA = [];
@@ -361,7 +361,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA;
-
         array c = [];
 
         for i, rowA in iterator(a) {
@@ -387,7 +386,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA;
-
         array c = [];
 
         for i, rowA in iterator(a) {
@@ -601,7 +599,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA;
-
         array b = [];
 
         for i, rowA in this->a {
@@ -639,7 +636,6 @@ class Matrix implements Tensor
     public function asColumnVectors() -> array
     {
         int i;
-
         array vectors = [];
 
         for i in range(0, this->n - 1) {
@@ -667,7 +663,6 @@ class Matrix implements Tensor
     public function argmin() -> <ColumnVector>
     {
         var rowA;
-
         array b = [];
 
         for rowA in this->a {
@@ -685,7 +680,6 @@ class Matrix implements Tensor
     public function argmax() -> <ColumnVector>
     {
         var rowA;
-
         array b = [];
 
         for rowA in this->a {
@@ -704,7 +698,6 @@ class Matrix implements Tensor
     public function map(const var callback) -> <Matrix>
     {
         var rowA;
-
         array b = [];
  
         for rowA in this->a {
@@ -731,7 +724,6 @@ class Matrix implements Tensor
         }
  
         var rowA, valueA;
-
         var carry = initial;
  
         for rowA in this->a {
@@ -751,7 +743,6 @@ class Matrix implements Tensor
     public function transpose() -> <Matrix>
     {
         int i;
-
         array b = [];
  
         for i in range(0, this->n - 1) {
@@ -768,13 +759,12 @@ class Matrix implements Tensor
      */
     public function inverse() -> <Matrix>
     {
+        array c = [];
         var rowB;
 
         var b = self::identity(this->m)
             ->augmentLeft(this)
             ->rref();
-
-        array c = [];
 
         for rowB in iterator(b) {
             let c[] = array_slice(rowB, this->n);
@@ -937,7 +927,6 @@ class Matrix implements Tensor
 
         float sigma;
         var k, rowA, valueA, columnB;
-
         array c = [];
         array rowC = [];
         array bT = [];
@@ -1007,14 +996,13 @@ class Matrix implements Tensor
         int i, j, x, y;
         float sigma;
         var k, l, rowB, valueB;
-
-        int p = (int) intdiv(m, 2);
-        int q = (int) intdiv(n, 2);
-
         array c = [];
         array rowC = [];
         array rowA = [];
         array bHat = [];
+
+        int p = (int) intdiv(m, 2);
+        int q = (int) intdiv(n, 2);
 
         let bHat = (array) b->asArray();
 
@@ -1088,7 +1076,11 @@ class Matrix implements Tensor
     {
         var lup = Lu::decompose(this);
         
-        return [lup->l(), lup->u(), lup->p()];
+        return [
+            lup->l(),
+            lup->u(),
+            lup->p()
+        ];
     }
 
     /**
@@ -1125,18 +1117,17 @@ class Matrix implements Tensor
     {
         int i, j;
         float sigma;
-
         array l = [];
         array u = [];
         array pb = [];
-
-        int k = (int) (this->m - 1);
 
         var lup = this->lu();
 
         let l = (array) lup[0]->asArray();
         let u = (array) lup[1]->asArray();
         let pb = (array) lup[2]->dot(b)->asArray();
+
+        int k = (int) (this->m - 1);
 
         array y = [0: pb[0] / (l[0][0] ?: self::EPSILON)];
 
@@ -1646,11 +1637,11 @@ class Matrix implements Tensor
     public function log(const float base = self::M_E) -> <Matrix>
     {
         var row, value;
-
         array b = [];
+        array rowB = [];
  
         for row in this->a {
-            array rowB = [];
+            let rowB = [];
  
             for value in row {
                 let rowB[] = log(value, base);
@@ -1822,7 +1813,6 @@ class Matrix implements Tensor
         }
 
         var rowA, median;
-
         array b = [];
 
         for rowA in this->a {
@@ -1862,20 +1852,19 @@ class Matrix implements Tensor
                 . " with less than 1 column.");
         }
 
-        var rowA;
-
+        var rowA, t;
         array b = [];
+
+        float x = (p / 100) * (this->n - 1) + 1;
+
+        int xHat = (int) x;
+    
+        float remainder = x - xHat;
 
         for rowA in this->a {
             sort(rowA);
-
-            float x = (p / 100) * (this->n - 1) + 1;
-
-            int xHat = (int) x;
     
-            float remainder = x - xHat;
-    
-            var t = rowA[xHat - 1];
+            let t = rowA[xHat - 1];
     
             let b[] = (float) t + remainder * (rowA[xHat] - t);
         }
@@ -1943,11 +1932,11 @@ class Matrix implements Tensor
         }
 
         var row, value;
-
         array b = [];
+        array rowB = [];
 
         for row in this->a {
-            array rowB = [];
+            let rowB = [];
 
             for value in row {
                 let rowB[] = round(value, precision);
@@ -1996,11 +1985,11 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array b = [];
+        array rowB = [];
 
         for rowA in this->a {
-            array rowB = [];
+            let rowB = [];
 
             for valueA in rowA {
                 if valueA > max {
@@ -2033,11 +2022,11 @@ class Matrix implements Tensor
     public function clipLower(const float min) -> <Matrix>
     {
         var rowA, valueA;
-
         array b = [];
+        array rowB = [];
 
         for rowA in this->a {
-            array rowB = [];
+            let rowB = [];
 
             for valueA in rowA {
                 if valueA < min {
@@ -2064,11 +2053,11 @@ class Matrix implements Tensor
     public function clipUpper(const float max) -> <Matrix>
     {
         var rowA, valueA;
-
         array b = [];
+        array rowB = [];
 
         for rowA in this->a {
-            array rowB = [];
+            let rowB = [];
 
             for valueA in rowA {
                 if valueA > max {
@@ -2094,11 +2083,11 @@ class Matrix implements Tensor
     public function sign() -> <Matrix>
     {
         var rowA, valueA;
-
         array b = [];
+        array rowB = [];
 
         for rowA in this->a {
-            array rowB = [];
+            let rowB = [];
 
             for valueA in rowA {
                 if valueA > 0 {
@@ -2124,11 +2113,11 @@ class Matrix implements Tensor
     public function negate() -> <Matrix>
     {
         var rowA, valueA;
-
         array b = [];
+        array rowB = [];
 
         for rowA in this->a {
-            array rowB = [];
+            let rowB = [];
 
             for valueA in rowA {
                 let rowB[] = -valueA;
@@ -2170,15 +2159,15 @@ class Matrix implements Tensor
 
         int i, j;
         var rowA;
+        array b = [];
+        array rowB = [];
 
         int k = this->n - n - 1;
-
-        array b = [];
 
         for i in range(offset, k) {
             let rowA = this->a[i];
 
-            array rowB = [];
+            let rowB = [];
 
             for j in range(offset, k) {
                 let rowB[] = rowA[j];
@@ -2275,8 +2264,9 @@ class Matrix implements Tensor
     {
         int j, k;
         var i, rowA;
+        array b = [];
 
-        var b = this->a;
+        let b = (array) this->a;
 
         if n > 0 {
             for i, rowA in this->a {
@@ -2310,7 +2300,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2344,7 +2333,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2378,7 +2366,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2412,7 +2399,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2447,7 +2433,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2482,7 +2467,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2517,7 +2501,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2552,7 +2535,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2587,7 +2569,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2622,7 +2603,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2657,7 +2637,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2692,7 +2671,6 @@ class Matrix implements Tensor
         }
 
         var i, j, rowA, rowB, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -2725,13 +2703,12 @@ class Matrix implements Tensor
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
         }
-    
+
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
     
         for rowA in this->a {
             let rowC = [];
@@ -2760,13 +2737,12 @@ class Matrix implements Tensor
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
         }
-    
+
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
     
         for rowA in this->a {
             let rowC = [];
@@ -2797,11 +2773,10 @@ class Matrix implements Tensor
         }
     
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
     
         for rowA in this->a {
             let rowC = [];
@@ -2832,11 +2807,10 @@ class Matrix implements Tensor
         }
     
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
     
         for rowA in this->a {
             let rowC = [];
@@ -2867,11 +2841,10 @@ class Matrix implements Tensor
         }
     
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
     
         for rowA in this->a {
             let rowC = [];
@@ -2902,11 +2875,10 @@ class Matrix implements Tensor
         }
     
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
     
         for rowA in this->a {
             let rowC = [];
@@ -2938,11 +2910,10 @@ class Matrix implements Tensor
         }
 
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
 
         for rowA in this->a {
             let rowC = [];
@@ -2974,11 +2945,10 @@ class Matrix implements Tensor
         }
 
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
 
         for rowA in this->a {
             let rowC = [];
@@ -3010,11 +2980,10 @@ class Matrix implements Tensor
         }
 
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
 
         for rowA in this->a {
             let rowC = [];
@@ -3046,11 +3015,10 @@ class Matrix implements Tensor
         }
 
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
 
         for rowA in this->a {
             let rowC = [];
@@ -3082,11 +3050,10 @@ class Matrix implements Tensor
         }
 
         var j, rowA, valueB;
-
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
 
         for rowA in this->a {
             let rowC = [];
@@ -3118,11 +3085,10 @@ class Matrix implements Tensor
         }
 
         var j, rowA, valueB;
-        
-        var bHat = b->asArray();
-
         array c = [];
         array rowC = [];
+
+        var bHat = b->asArray();
 
         for rowA in this->a {
             let rowC = [];
@@ -3153,7 +3119,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3188,7 +3153,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3223,7 +3187,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3258,7 +3221,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3293,7 +3255,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3328,7 +3289,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3364,7 +3324,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3400,7 +3359,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3436,7 +3394,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3472,7 +3429,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3508,7 +3464,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3544,7 +3499,6 @@ class Matrix implements Tensor
         }
 
         var i, rowA, valueA, valueB;
-
         array c = [];
         array rowC = [];
 
@@ -3578,7 +3532,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3610,7 +3563,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3642,7 +3594,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3674,7 +3625,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3707,7 +3657,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3739,7 +3688,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3772,7 +3720,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3805,7 +3752,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3838,7 +3784,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3871,7 +3816,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3904,7 +3848,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 
@@ -3937,7 +3880,6 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
-
         array c = [];
         array rowC = [];
 

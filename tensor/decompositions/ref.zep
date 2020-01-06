@@ -59,6 +59,8 @@ class Ref implements Decomposition
     public static function gaussianElimination(const <Matrix> a) -> <Ref>
     {
         int i, j, k, index;
+        array b = [];
+
         var temp, diag, scale;
 
         var m = a->m();
@@ -66,9 +68,9 @@ class Ref implements Decomposition
 
         var minDim = min(m, n);
 
-        var b = a->asArray();
+        let b = (array) a->asArray();
 
-        uint swaps = 0;
+        int swaps = 0;
 
         for k in range(0, minDim - 1) {
             let index = k;
@@ -106,9 +108,7 @@ class Ref implements Decomposition
             }
         }
 
-        let b = Matrix::quick(b);
-
-        return new self(b, swaps);
+        return new self(Matrix::quick(b), swaps);
     }
 
     /**

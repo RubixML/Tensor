@@ -89,7 +89,7 @@ class LU implements Decomposition
 
         for ($i = 0; $i < $n; ++$i) {
             for ($j = 0; $j <= $i; ++$j) {
-                $sigma = 0;
+                $sigma = 0.;
 
                 for ($k = 0; $k < $j; ++$k) {
                     $sigma += $u[$k][$i] * $l[$j][$k];
@@ -99,7 +99,7 @@ class LU implements Decomposition
             }
 
             for ($j = $i; $j < $n; ++$j) {
-                $sigma = 0;
+                $sigma = 0.;
 
                 for ($k = 0; $k < $i; ++$k) {
                     $sigma += $u[$k][$i] * $l[$j][$k];

@@ -4,14 +4,14 @@ namespace Tensor\Benchmarks;
 
 use Tensor\Matrix;
 
-class RandomUniformMatrixBench
+class UniformMatrixBench
 {
     /**
      * @Subject
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function uniform_matrix() : void
+    public function uniform() : void
     {
         Matrix::uniform(500, 500);
     }

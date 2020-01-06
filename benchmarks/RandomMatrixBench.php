@@ -4,15 +4,15 @@ namespace Tensor\Benchmarks;
 
 use Tensor\Matrix;
 
-class RandomGaussianMatrixBench
+class RandomMatrixBench
 {
     /**
      * @Subject
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function gaussian_matrix() : void
+    public function poisson() : void
     {
-        Matrix::gaussian(500, 500);
+        Matrix::rand(500, 500);
     }
 }

@@ -115,13 +115,13 @@ PHP_METHOD(Tensor_Decompositions_Ref, decompose) {
  */
 PHP_METHOD(Tensor_Decompositions_Ref, gaussianElimination) {
 
-	zval _16$$6;
-	zend_bool _0, _3$$3, _20$$3, _25$$8;
-	zend_ulong swaps;
+	zval _18$$6;
+	zend_bool _2, _5$$3, _22$$3, _27$$8;
+	zval b, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_9 = NULL, *_17 = NULL, *_36 = NULL;
-	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, k = 0, index = 0, _1, _2, _4$$3, _5$$3, _21$$3, _22$$3, _26$$8, _27$$8;
-	zval *a, a_sub, temp, diag, scale, m, n, minDim, b, _35, _37, _13$$3, _14$$3, _19$$3, _6$$4, _7$$4, _8$$4, _10$$4, _11$$4, _12$$4, _15$$6, _18$$7, _23$$8, _24$$8, _34$$8, _28$$9, _29$$9, _30$$9, _31$$9, _32$$9, _33$$9;
+	zephir_fcall_cache_entry *_11 = NULL, *_19 = NULL, *_38 = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, k = 0, index = 0, swaps, _3, _4, _6$$3, _7$$3, _23$$3, _24$$3, _28$$8, _29$$8;
+	zval *a, a_sub, temp, diag, scale, m, n, minDim, _0, _37, _39, _15$$3, _16$$3, _21$$3, _8$$4, _9$$4, _10$$4, _12$$4, _13$$4, _14$$4, _17$$6, _20$$7, _25$$8, _26$$8, _36$$8, _30$$9, _31$$9, _32$$9, _33$$9, _34$$9, _35$$9;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -131,172 +131,177 @@ PHP_METHOD(Tensor_Decompositions_Ref, gaussianElimination) {
 	ZVAL_UNDEF(&m);
 	ZVAL_UNDEF(&n);
 	ZVAL_UNDEF(&minDim);
-	ZVAL_UNDEF(&b);
-	ZVAL_UNDEF(&_35);
+	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_37);
-	ZVAL_UNDEF(&_13$$3);
-	ZVAL_UNDEF(&_14$$3);
-	ZVAL_UNDEF(&_19$$3);
-	ZVAL_UNDEF(&_6$$4);
-	ZVAL_UNDEF(&_7$$4);
+	ZVAL_UNDEF(&_39);
+	ZVAL_UNDEF(&_15$$3);
+	ZVAL_UNDEF(&_16$$3);
+	ZVAL_UNDEF(&_21$$3);
 	ZVAL_UNDEF(&_8$$4);
+	ZVAL_UNDEF(&_9$$4);
 	ZVAL_UNDEF(&_10$$4);
-	ZVAL_UNDEF(&_11$$4);
 	ZVAL_UNDEF(&_12$$4);
-	ZVAL_UNDEF(&_15$$6);
-	ZVAL_UNDEF(&_18$$7);
-	ZVAL_UNDEF(&_23$$8);
-	ZVAL_UNDEF(&_24$$8);
-	ZVAL_UNDEF(&_34$$8);
-	ZVAL_UNDEF(&_28$$9);
-	ZVAL_UNDEF(&_29$$9);
+	ZVAL_UNDEF(&_13$$4);
+	ZVAL_UNDEF(&_14$$4);
+	ZVAL_UNDEF(&_17$$6);
+	ZVAL_UNDEF(&_20$$7);
+	ZVAL_UNDEF(&_25$$8);
+	ZVAL_UNDEF(&_26$$8);
+	ZVAL_UNDEF(&_36$$8);
 	ZVAL_UNDEF(&_30$$9);
 	ZVAL_UNDEF(&_31$$9);
 	ZVAL_UNDEF(&_32$$9);
 	ZVAL_UNDEF(&_33$$9);
-	ZVAL_UNDEF(&_16$$6);
+	ZVAL_UNDEF(&_34$$9);
+	ZVAL_UNDEF(&_35$$9);
+	ZVAL_UNDEF(&b);
+	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_18$$6);
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
 
 
 
+	ZEPHIR_INIT_VAR(&b);
+	array_init(&b);
 	ZEPHIR_CALL_METHOD(&m, a, "m", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&n, a, "n", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_FUNCTION(&minDim, "min", NULL, 15, &m, &n);
+	ZEPHIR_CALL_FUNCTION(&minDim, "min", NULL, 14, &m, &n);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&b, a, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_0, a, "asarray", NULL, 0);
 	zephir_check_call_status();
+	zephir_get_arrval(&_1, &_0);
+	ZEPHIR_CPY_WRT(&b, &_1);
 	swaps = 0;
-	_2 = (zephir_get_numberval(&minDim) - 1);
-	_1 = 0;
-	_0 = 0;
-	if (_1 <= _2) {
+	_4 = (zephir_get_numberval(&minDim) - 1);
+	_3 = 0;
+	_2 = 0;
+	if (_3 <= _4) {
 		while (1) {
-			if (_0) {
-				_1++;
-				if (!(_1 <= _2)) {
+			if (_2) {
+				_3++;
+				if (!(_3 <= _4)) {
 					break;
 				}
 			} else {
-				_0 = 1;
+				_2 = 1;
 			}
-			k = _1;
+			k = _3;
 			index = k;
-			_5$$3 = (zephir_get_numberval(&m) - 1);
-			_4$$3 = k;
-			_3$$3 = 0;
-			if (_4$$3 <= _5$$3) {
+			_7$$3 = (zephir_get_numberval(&m) - 1);
+			_6$$3 = k;
+			_5$$3 = 0;
+			if (_6$$3 <= _7$$3) {
 				while (1) {
-					if (_3$$3) {
-						_4$$3++;
-						if (!(_4$$3 <= _5$$3)) {
+					if (_5$$3) {
+						_6$$3++;
+						if (!(_6$$3 <= _7$$3)) {
 							break;
 						}
 					} else {
-						_3$$3 = 1;
+						_5$$3 = 1;
 					}
-					i = _4$$3;
-					zephir_array_fetch_long(&_6$$4, &b, i, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 77);
-					zephir_array_fetch_long(&_7$$4, &_6$$4, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 77);
-					ZEPHIR_CALL_FUNCTION(&_8$$4, "abs", &_9, 12, &_7$$4);
+					i = _6$$3;
+					zephir_array_fetch_long(&_8$$4, &b, i, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 79);
+					zephir_array_fetch_long(&_9$$4, &_8$$4, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 79);
+					ZEPHIR_CALL_FUNCTION(&_10$$4, "abs", &_11, 11, &_9$$4);
 					zephir_check_call_status();
-					zephir_array_fetch_long(&_10$$4, &b, index, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 77);
-					zephir_array_fetch_long(&_11$$4, &_10$$4, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 77);
-					ZEPHIR_CALL_FUNCTION(&_12$$4, "abs", &_9, 12, &_11$$4);
+					zephir_array_fetch_long(&_12$$4, &b, index, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 79);
+					zephir_array_fetch_long(&_13$$4, &_12$$4, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 79);
+					ZEPHIR_CALL_FUNCTION(&_14$$4, "abs", &_11, 11, &_13$$4);
 					zephir_check_call_status();
-					if (ZEPHIR_GT(&_8$$4, &_12$$4)) {
+					if (ZEPHIR_GT(&_10$$4, &_14$$4)) {
 						index = i;
 					}
 				}
 			}
-			zephir_array_fetch_long(&_13$$3, &b, index, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 82);
-			zephir_array_fetch_long(&_14$$3, &_13$$3, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 82);
-			if (UNEXPECTED(ZEPHIR_IS_LONG(&_14$$3, 0))) {
-				ZEPHIR_INIT_NVAR(&_15$$6);
-				object_init_ex(&_15$$6, spl_ce_RuntimeException);
-				ZEPHIR_INIT_NVAR(&_16$$6);
-				ZEPHIR_CONCAT_SS(&_16$$6, "Cannot compute row echelon form", " of a singular matrix.");
-				ZEPHIR_CALL_METHOD(NULL, &_15$$6, "__construct", &_17, 21, &_16$$6);
+			zephir_array_fetch_long(&_15$$3, &b, index, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 84);
+			zephir_array_fetch_long(&_16$$3, &_15$$3, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 84);
+			if (UNEXPECTED(ZEPHIR_IS_LONG(&_16$$3, 0))) {
+				ZEPHIR_INIT_NVAR(&_17$$6);
+				object_init_ex(&_17$$6, spl_ce_RuntimeException);
+				ZEPHIR_INIT_NVAR(&_18$$6);
+				ZEPHIR_CONCAT_SS(&_18$$6, "Cannot compute row echelon form", " of a singular matrix.");
+				ZEPHIR_CALL_METHOD(NULL, &_17$$6, "__construct", &_19, 20, &_18$$6);
 				zephir_check_call_status();
-				zephir_throw_exception_debug(&_15$$6, "tensor/decompositions/ref.zep", 84);
+				zephir_throw_exception_debug(&_17$$6, "tensor/decompositions/ref.zep", 86);
 				ZEPHIR_MM_RESTORE();
 				return;
 			}
 			if (k != index) {
 				ZEPHIR_OBS_NVAR(&temp);
-				zephir_array_fetch_long(&temp, &b, k, PH_NOISY, "tensor/decompositions/ref.zep", 88);
-				zephir_array_fetch_long(&_18$$7, &b, index, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 90);
-				zephir_array_update_long(&b, k, &_18$$7, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
+				zephir_array_fetch_long(&temp, &b, k, PH_NOISY, "tensor/decompositions/ref.zep", 90);
+				zephir_array_fetch_long(&_20$$7, &b, index, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 92);
+				zephir_array_update_long(&b, k, &_20$$7, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
 				zephir_array_update_long(&b, index, &temp, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
 				swaps++;
 			}
-			zephir_array_fetch_long(&_19$$3, &b, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 96);
+			zephir_array_fetch_long(&_21$$3, &b, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 98);
 			ZEPHIR_OBS_NVAR(&diag);
-			zephir_array_fetch_long(&diag, &_19$$3, k, PH_NOISY, "tensor/decompositions/ref.zep", 96);
-			_22$$3 = (zephir_get_numberval(&m) - 1);
-			_21$$3 = (k + 1);
-			_20$$3 = 0;
-			if (_21$$3 <= _22$$3) {
+			zephir_array_fetch_long(&diag, &_21$$3, k, PH_NOISY, "tensor/decompositions/ref.zep", 98);
+			_24$$3 = (zephir_get_numberval(&m) - 1);
+			_23$$3 = (k + 1);
+			_22$$3 = 0;
+			if (_23$$3 <= _24$$3) {
 				while (1) {
-					if (_20$$3) {
-						_21$$3++;
-						if (!(_21$$3 <= _22$$3)) {
+					if (_22$$3) {
+						_23$$3++;
+						if (!(_23$$3 <= _24$$3)) {
 							break;
 						}
 					} else {
-						_20$$3 = 1;
+						_22$$3 = 1;
 					}
-					i = _21$$3;
+					i = _23$$3;
 					if (!ZEPHIR_IS_LONG(&diag, 0)) {
-						zephir_array_fetch_long(&_23$$8, &b, i, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 99);
-						zephir_array_fetch_long(&_24$$8, &_23$$8, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 99);
+						zephir_array_fetch_long(&_25$$8, &b, i, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 101);
+						zephir_array_fetch_long(&_26$$8, &_25$$8, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 101);
 						ZEPHIR_INIT_NVAR(&scale);
-						div_function(&scale, &_24$$8, &diag);
+						div_function(&scale, &_26$$8, &diag);
 					} else {
 						ZEPHIR_INIT_NVAR(&scale);
 						ZVAL_LONG(&scale, 1);
 					}
-					_27$$8 = (zephir_get_numberval(&n) - 1);
-					_26$$8 = (k + 1);
-					_25$$8 = 0;
-					if (_26$$8 <= _27$$8) {
+					_29$$8 = (zephir_get_numberval(&n) - 1);
+					_28$$8 = (k + 1);
+					_27$$8 = 0;
+					if (_28$$8 <= _29$$8) {
 						while (1) {
-							if (_25$$8) {
-								_26$$8++;
-								if (!(_26$$8 <= _27$$8)) {
+							if (_27$$8) {
+								_28$$8++;
+								if (!(_28$$8 <= _29$$8)) {
 									break;
 								}
 							} else {
-								_25$$8 = 1;
+								_27$$8 = 1;
 							}
-							j = _26$$8;
-							zephir_array_fetch_long(&_28$$9, &b, i, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 102);
-							zephir_array_fetch_long(&_29$$9, &_28$$9, j, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 102);
-							zephir_array_fetch_long(&_30$$9, &b, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 102);
-							zephir_array_fetch_long(&_31$$9, &_30$$9, j, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 102);
-							ZEPHIR_INIT_NVAR(&_32$$9);
-							mul_function(&_32$$9, &scale, &_31$$9);
-							ZEPHIR_INIT_NVAR(&_33$$9);
-							zephir_sub_function(&_33$$9, &_29$$9, &_32$$9);
-							zephir_array_update_multi(&b, &_33$$9, SL("ll"), 2, i, j);
+							j = _28$$8;
+							zephir_array_fetch_long(&_30$$9, &b, i, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 104);
+							zephir_array_fetch_long(&_31$$9, &_30$$9, j, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 104);
+							zephir_array_fetch_long(&_32$$9, &b, k, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 104);
+							zephir_array_fetch_long(&_33$$9, &_32$$9, j, PH_NOISY | PH_READONLY, "tensor/decompositions/ref.zep", 104);
+							ZEPHIR_INIT_NVAR(&_34$$9);
+							mul_function(&_34$$9, &scale, &_33$$9);
+							ZEPHIR_INIT_NVAR(&_35$$9);
+							zephir_sub_function(&_35$$9, &_31$$9, &_34$$9);
+							zephir_array_update_multi(&b, &_35$$9, SL("ll"), 2, i, j);
 						}
 					}
-					ZEPHIR_INIT_NVAR(&_34$$8);
-					ZVAL_LONG(&_34$$8, 0);
-					zephir_array_update_multi(&b, &_34$$8, SL("ll"), 2, i, k);
+					ZEPHIR_INIT_NVAR(&_36$$8);
+					ZVAL_LONG(&_36$$8, 0);
+					zephir_array_update_multi(&b, &_36$$8, SL("ll"), 2, i, k);
 				}
 			}
 		}
 	}
-	ZEPHIR_CALL_CE_STATIC(&_35, tensor_matrix_ce, "quick", &_36, 0, &b);
-	zephir_check_call_status();
-	ZEPHIR_CPY_WRT(&b, &_35);
 	object_init_ex(return_value, tensor_decompositions_ref_ce);
-	ZVAL_LONG(&_37, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 27, &b, &_37);
+	ZEPHIR_CALL_CE_STATIC(&_37, tensor_matrix_ce, "quick", &_38, 0, &b);
+	zephir_check_call_status();
+	ZVAL_LONG(&_39, swaps);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &_37, &_39);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -479,7 +484,7 @@ PHP_METHOD(Tensor_Decompositions_Ref, rowReductionMethod) {
 	ZEPHIR_CPY_WRT(&b, &_25);
 	object_init_ex(return_value, tensor_decompositions_ref_ce);
 	ZVAL_LONG(&_27, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 27, &b, &_27);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &b, &_27);
 	zephir_check_call_status();
 	RETURN_MM();
 

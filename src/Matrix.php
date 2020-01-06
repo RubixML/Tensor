@@ -249,12 +249,9 @@ class Matrix implements Tensor
             }
 
             while (count($rowA) < $n) {
-                $r1 = rand() / $max;
-                $r2 = rand() / $max;
+                $r = sqrt(-2. * log(rand() / $max));
 
-                $r = sqrt(-2. * log($r1));
-
-                $phi = $r2 * TWO_PI;
+                $phi = rand() / $max * TWO_PI;
 
                 $rowA[] = $r * sin($phi);
                 $rowA[] = $r * cos($phi);

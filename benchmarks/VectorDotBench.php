@@ -16,38 +16,20 @@ class VectorDotBench
      */
     protected $b;
 
-    public function setUpSmall() : void
+    public function setUp() : void
     {
-        $this->a = Vector::uniform(1000);
+        $this->a = Vector::uniform(250000);
 
-        $this->b = Vector::uniform(1000);
-    }
-
-    public function setUpLarge() : void
-    {
-        $this->a = Vector::uniform(10000);
-
-        $this->b = Vector::uniform(10000);
+        $this->b = Vector::uniform(250000);
     }
 
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUpSmall"})
-     * @OutputTimeUnit("milliseconds", precision=3)
+     * @BeforeMethods({"setUp"})
+     * @OutputTimeUnit("seconds", precision=3)
      */
-    public function dot_small() : void
-    {
-        $this->a->dot($this->b);
-    }
-
-    /**
-     * @Subject
-     * @Iterations(5)
-     * @BeforeMethods({"setUpLarge"})
-     * @OutputTimeUnit("milliseconds", precision=3)
-     */
-    public function dot_large() : void
+    public function dot() : void
     {
         $this->a->dot($this->b);
     }

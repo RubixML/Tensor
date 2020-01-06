@@ -17,14 +17,7 @@ class MatrixColumnVectorMultiplyBench
      */
     protected $b;
 
-    public function setUpSmall() : void
-    {
-        $this->a = Matrix::uniform(100, 100);
-
-        $this->b = ColumnVector::uniform(100);
-    }
-
-    public function setUpLarge() : void
+    public function setUp() : void
     {
         $this->a = Matrix::uniform(1000, 1000);
 
@@ -34,21 +27,10 @@ class MatrixColumnVectorMultiplyBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUpSmall"})
-     * @OutputTimeUnit("milliseconds", precision=3)
-     */
-    public function multiply_small() : void
-    {
-        $this->a->multiply($this->b);
-    }
-
-    /**
-     * @Subject
-     * @Iterations(5)
-     * @BeforeMethods({"setUpLarge"})
+     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function multiply_large() : void
+    public function multiply() : void
     {
         $this->a->multiply($this->b);
     }

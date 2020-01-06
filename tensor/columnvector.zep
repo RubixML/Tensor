@@ -16,7 +16,7 @@ class ColumnVector extends Vector
     /**
      * Factory method to build a new vector from an array.
      *
-     * @param array a
+     * @param (int|float)[] a
      * @return self
      */
     public static function build(const array a = [])
@@ -27,7 +27,7 @@ class ColumnVector extends Vector
     /**
      * Build a vector foregoing any validation for quicker instantiation.
      *
-     * @param array a
+     * @param (int|float)[] a
      * @return self
      */
     public static function quick(const array a = [])

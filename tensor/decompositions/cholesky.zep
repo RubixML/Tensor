@@ -1,7 +1,7 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
-use RuntimeException;
+use InvalidArgumentException;
 
 /**
  * Cholesky
@@ -26,21 +26,22 @@ class Cholesky implements Decomposition
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix a
+     * @throws \InvalidArgumentExeption
      * @return self
      */
     public static function decompose(const <Matrix> a) -> <Cholesky>
     {
         if !a->isSquare() {
-            throw new RuntimeException("Cannot Cholesky decompose a"
-                . " non square matrix.");
+            throw new InvalidArgumentException("Cannot decompose a non-square matrix.");
         }
 
         int i, j, k;
         float sigma;
+        array aHat = [];
 
+        let aHat = (array) a->asArray();
+        
         var m = a->m();
-
-        var aHat = a->asArray();
 
         var l = Matrix::zeros(m, m)->asArray();
 
@@ -58,9 +59,7 @@ class Cholesky implements Decomposition
             }
         }
 
-        let l = Matrix::quick(l);
-
-        return new self(l);
+        return new self(Matrix::quick(l));
     }
 
     /**

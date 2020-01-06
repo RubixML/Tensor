@@ -1,26 +1,19 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Decompositions;
 
 use Tensor\Matrix;
 
-class MatrixConvolveBench
+class RREFBench
 {
     /**
      * @var \Tensor\Matrix
      */
     protected $a;
 
-    /**
-     * @var \Tensor\Matrix
-     */
-    protected $kernel;
-
     public function setUp() : void
     {
         $this->a = Matrix::uniform(500, 500);
-
-        $this->kernel = Matrix::uniform(10, 10);
     }
 
     /**
@@ -29,8 +22,8 @@ class MatrixConvolveBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function convolve() : void
+    public function rref() : void
     {
-        $this->a->convolve($this->kernel);
+        $this->a->rref();
     }
 }

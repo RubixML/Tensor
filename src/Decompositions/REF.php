@@ -104,9 +104,7 @@ class REF implements Decomposition
             }
         }
 
-        $b = Matrix::quick($b);
-
-        return new self($b, $swaps);
+        return new self(Matrix::quick($b), $swaps);
     }
 
     /**
@@ -172,9 +170,7 @@ class REF implements Decomposition
             ++$col;
         }
 
-        $b = Matrix::quick($b);
-
-        return new self($b, $swaps);
+        return new self(Matrix::quick($b), $swaps);
     }
 
     /**

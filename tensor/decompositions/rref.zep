@@ -31,6 +31,8 @@ class Rref implements Decomposition
     public static function decompose(const <Matrix> a) -> <Rref>
     {
         int i, j;
+        array b = [];
+
         var t, scale, divisor;
 
         var m = a->m();
@@ -41,10 +43,7 @@ class Rref implements Decomposition
 
         var ref = a->ref();
 
-        var b = ref[0];
-        var swaps = ref[1];
-
-        let b = b->asArray();
+        let b = (array) ref[0]->asArray();
 
         while row < m && col < n {
             let t = b[row];

@@ -138,7 +138,8 @@ class Vector implements Tensor
     }
 
     /**
-     * Return a standard normally distributed (Gaussian) random vector.
+     * Return a standard normally distributed (Gaussian) random vector with mean 0
+     * and unit variance.
      *
      * @param int $n
      * @throws \InvalidArgumentException
@@ -156,12 +157,9 @@ class Vector implements Tensor
         $a = [];
 
         while (count($a) < $n) {
-            $r1 = rand() / $max;
-            $r2 = rand() / $max;
-            
-            $r = sqrt(-2. * log($r1));
+            $r = sqrt(-2. * log(rand() / $max));
 
-            $phi = $r2 * TWO_PI;
+            $phi = rand() / $max * TWO_PI;
 
             $a[] = $r * sin($phi);
             $a[] = $r * cos($phi);
