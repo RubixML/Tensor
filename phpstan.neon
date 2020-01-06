@@ -7,3 +7,4 @@ parameters:
     paths:
         - 'src'
         - 'tests'
+        - 'benchmarks'

@@ -3,25 +3,17 @@
 namespace Tensor\Benchmarks;
 
 use Tensor\Matrix;
-use Tensor\ColumnVector;
 
-class MatrixColumnVectorMultiplyBench
+class MatrixTransposeBench
 {
     /**
      * @var \Tensor\Matrix
      */
     protected $a;
 
-    /**
-     * @var \Tensor\Vector
-     */
-    protected $b;
-
     public function setUp() : void
     {
-        $this->a = Matrix::uniform(1000, 1000);
-
-        $this->b = ColumnVector::uniform(1000);
+        $this->a = Matrix::uniform(500, 500);
     }
 
     /**
@@ -32,6 +24,6 @@ class MatrixColumnVectorMultiplyBench
      */
     public function multiply() : void
     {
-        $this->a->multiply($this->b);
+        $this->a->transpose();
     }
 }
