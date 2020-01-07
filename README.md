@@ -40,13 +40,13 @@ $ composer compile
 ```
 
 ## Installing the Extension
-To compile and install the extension in one command simply call `composer install-ext`:
+To compile and install the extension in one command you may call `composer install-ext`:
 
 ```sh
 $ composer install-ext
 ```
 
-Then, add the follwing line to your `php.ini` configuration:
+Then, add the following line to your `php.ini` configuration:
 
 ```
 extension=tensor
