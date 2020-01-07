@@ -1,5 +1,6 @@
 - 2.0.2
     - Extension now uses Mersenne Twister RNG explicitly
+    - Optimized random number generation
 
 - 2.0.1
     - Added benchmarks
