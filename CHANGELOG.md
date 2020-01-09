@@ -1,10 +1,9 @@
 - 2.0.2
-    - Extension now uses Mersenne Twister RNG explicitly
     - Optimized random number generation
 
 - 2.0.1
     - Added benchmarks
-    - Matrix stacking now row or columnwise
+    - Matrix stacking now row or column-wise
     - Changed method signature and behavior of repeat matrix
 
 - 2.0.0
@@ -17,7 +16,7 @@
     - Removed Column/Row exclude methods from Matrix
     - Changed method signature of matrix determinant
     - Added return sub matrix
-    - Added positive definite and semidefinite methods to Matrix
+    - Added positive definite and semi-definite methods to Matrix
     - Added is symmetric method to Matrix
     - Added Statistical and Trigonometric interfaces
     - Added Arithmetic and Comparable interfaces
@@ -48,7 +47,7 @@
     - Added Column Vector
     - Implemented Eigenvalue decomposition
     - Added solve system of linear equations
-    - Integration with 3rd party JAMA libray
+    - Integration with 3rd party JAMA library
     - Fixed variance covariance calculation
     - Added percentile calculation for Vector and Matrix
 

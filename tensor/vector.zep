@@ -125,10 +125,10 @@ class Vector implements Tensor
 
         array a = [];
 
-        var max = mt_getrandmax();
+        var max = getrandmax();
 
         while count(a) < n {
-            let a[] = mt_rand(0, max) / max;
+            let a[] = rand() / max;
         }
 
         return static::quick(a);
@@ -152,12 +152,12 @@ class Vector implements Tensor
         var r, phi;
         array a = [];
 
-        var max = mt_getrandmax();
+        var max = getrandmax();
 
         while count(a) < n {
-            let r = sqrt(-2.0 * log(mt_rand(0, max) / max));
+            let r = sqrt(-2.0 * log(rand() / max));
 
-            let phi = mt_rand(0, max) / max * self::TWO_PI;
+            let phi = rand() / max * self::TWO_PI;
 
             let a[] = r * sin(phi);
             let a[] = r * cos(phi);
@@ -186,7 +186,7 @@ class Vector implements Tensor
 
         float l = (float) exp(-lambda);
 
-        var max = mt_getrandmax();
+        var max = getrandmax();
 
         while count(a) < n {
             let k = 0;
@@ -195,7 +195,7 @@ class Vector implements Tensor
             while p > l {
                 let k++;
                 
-                let p *= mt_rand(0, max) / max;
+                let p *= rand() / max;
             }
 
             let a[] = k - 1;
@@ -220,10 +220,10 @@ class Vector implements Tensor
         
         array a = [];
 
-        var max = mt_getrandmax();
+        var max = getrandmax();
 
         while count(a) < n {
-            let a[] = mt_rand(-max, max) / max;
+            let a[] = rand(-max, max) / max;
         }
 
         return static::quick(a);

@@ -206,13 +206,13 @@ class Matrix implements Tensor
         array a = [];
         array rowA = [];
 
-        var max = mt_getrandmax();
+        var max = getrandmax();
  
         while count(a) < m {
             let rowA = [];
  
             while count(rowA) < n {
-                let rowA[] = mt_rand(0, max) / max;
+                let rowA[] = rand() / max;
             }
  
             let a[] = rowA;
@@ -237,12 +237,12 @@ class Matrix implements Tensor
                 . " greater than 0 for all axes.");
         }
 
-        var r, phi;
+        float r, phi;
         array a = [];
         array rowA = [];
         array extras = [];
 
-        var max = mt_getrandmax();
+        var max = getrandmax();
  
         while count(a) < m {
             let rowA = [];
@@ -252,9 +252,9 @@ class Matrix implements Tensor
             }
  
             while count(rowA) < n {
-                let r = sqrt(-2.0 * log(mt_rand(0, max) / max));
+                let r = sqrt(-2.0 * log(rand() / max));
  
-                let phi = mt_rand(0, max) / max * self::TWO_PI;
+                let phi = rand() / max * self::TWO_PI;
  
                 let rowA[] = r * sin(phi);
                 let rowA[] = r * cos(phi);
@@ -288,7 +288,7 @@ class Matrix implements Tensor
 
         let l = (float) exp(-lambda);
 
-        var max = mt_getrandmax();
+        var max = getrandmax();
 
         while count(a) < m {
             let rowA = [];
@@ -300,7 +300,7 @@ class Matrix implements Tensor
                 while p > l {
                     let k++;
 
-                    let p *= mt_rand(0, max) / max;
+                    let p *= rand() / max;
                 }
 
                 let rowA[] = k - 1;
@@ -330,13 +330,13 @@ class Matrix implements Tensor
         array a = [];
         array rowA = [];
 
-        var max = mt_getrandmax();
+        var max = getrandmax();
     
         while count(a) < m {
             let rowA = [];
     
             while count(rowA) < n {
-                let rowA[] = mt_rand(-max, max) / max;
+                let rowA[] = rand(-max, max) / max;
             }
     
             let a[] = rowA;
