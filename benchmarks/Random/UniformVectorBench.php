@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Random;
 
-use Tensor\Matrix;
+use Tensor\Vector;
 
-class UniformMatrixBench
+class UniformVectorBench
 {
     /**
      * @Subject
@@ -13,6 +13,6 @@ class UniformMatrixBench
      */
     public function uniform() : void
     {
-        Matrix::uniform(500, 500);
+        Vector::uniform(250000);
     }
 }

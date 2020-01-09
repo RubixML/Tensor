@@ -1629,15 +1629,15 @@ class Matrix implements Tensor
      */
     public function log(const float base = self::M_E) -> <Matrix>
     {
-        var row, value;
+        var rowA, valueA;
         array b = [];
         array rowB = [];
  
-        for row in this->a {
+        for rowA in this->a {
             let rowB = [];
  
-            for value in row {
-                let rowB[] = log(value, base);
+            for valueA in rowA {
+                let rowB[] = log(valueA, base);
             }
  
             let b[] = rowB;
@@ -1808,12 +1808,14 @@ class Matrix implements Tensor
         var rowA, median;
         array b = [];
 
-        for rowA in this->a {
-            var mid = intdiv(this->n, 2);
+        var mid = intdiv(this->n, 2);
 
+        bool odd = this->n % 2 === 1;
+
+        for rowA in this->a {
             sort(rowA);
 
-            if this->n % 2 === 1 {
+            if odd {
                 let median = rowA[mid];
             } else {
                 let median = (rowA[mid - 1] + rowA[mid]) / 2.0;
@@ -1924,15 +1926,15 @@ class Matrix implements Tensor
                 . " be less than 0, ". strval(precision) . " given.");
         }
 
-        var row, value;
+        var rowA, valueA;
         array b = [];
         array rowB = [];
 
-        for row in this->a {
+        for rowA in this->a {
             let rowB = [];
 
-            for value in row {
-                let rowB[] = round(value, precision);
+            for valueA in rowA {
+                let rowB[] = round(valueA, precision);
             }
 
             let b[] = rowB;

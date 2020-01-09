@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\LinearAlgebra;
 
 use Tensor\Matrix;
 
-class AbsMatrixBench
+class MatrixInverseBench
 {
     /**
      * @var \Tensor\Matrix
@@ -22,8 +22,8 @@ class AbsMatrixBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function abs() : void
+    public function matmul() : void
     {
-        $this->a->abs();
+        $this->a->inverse();
     }
 }

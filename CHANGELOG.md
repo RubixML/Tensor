@@ -1,5 +1,6 @@
 - Unreleased
     - Matrix decomp methods now return decomp objects
+    - Optimized matrix statistical operations
 
 - 2.0.2
     - Optimized random number generation

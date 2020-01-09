@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Trigonometric;
 
 use Tensor\Matrix;
 
-class SquareMatrixBench
+class CosMatrixBench
 {
     /**
      * @var \Tensor\Matrix
@@ -22,8 +22,8 @@ class SquareMatrixBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function square() : void
+    public function cosine() : void
     {
-        $this->a->square();
+        $this->a->cos();
     }
 }

@@ -1754,14 +1754,16 @@ class Matrix implements Tensor
                 . ' matrices with less than 1 column.');
         }
 
+        $mid = intdiv($this->n, 2);
+
+        $odd = $this->n % 2 === 1;
+
         $b = [];
 
         foreach ($this->a as $rowA) {
-            $mid = intdiv($this->n, 2);
-
             sort($rowA);
 
-            if ($this->n % 2 === 1) {
+            if ($odd) {
                 $median = $rowA[$mid];
             } else {
                 $median = ($rowA[$mid - 1] + $rowA[$mid]) / 2.;
@@ -1793,16 +1795,16 @@ class Matrix implements Tensor
                 . ' with less than 1 column.');
         }
 
+        $x = ($p / 100) * ($this->n - 1) + 1;
+
+        $xHat = (int) $x;
+
+        $remainder = $x - $xHat;
+
         $b = [];
 
         foreach ($this->a as $rowA) {
             sort($rowA);
-
-            $x = ($p / 100) * ($this->n - 1) + 1;
-
-            $xHat = (int) $x;
-    
-            $remainder = $x - $xHat;
     
             $t = $rowA[$xHat - 1];
     

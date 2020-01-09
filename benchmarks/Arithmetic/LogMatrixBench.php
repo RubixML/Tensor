@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Arithmetic;
 
 use Tensor\Matrix;
 
-class ExpMatrixBench
+class LogMatrixBench
 {
     /**
      * @var \Tensor\Matrix
@@ -22,8 +22,8 @@ class ExpMatrixBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function exp() : void
+    public function log() : void
     {
-        $this->a->exp();
+        $this->a->log();
     }
 }

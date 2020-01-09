@@ -1,18 +1,18 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Random;
 
 use Tensor\Vector;
 
-class GaussianVectorBench
+class RandVectorBench
 {
     /**
      * @Subject
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function gaussian() : void
+    public function rand() : void
     {
-        Vector::gaussian(250000);
+        Vector::rand(250000);
     }
 }

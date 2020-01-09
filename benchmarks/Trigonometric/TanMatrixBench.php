@@ -1,24 +1,19 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Trigonometric;
 
 use Tensor\Matrix;
 
-class MatrixScalarMultiplyBench
+class TanMatrixBench
 {
     /**
      * @var \Tensor\Matrix
      */
     protected $a;
 
-    /**
-     * @var float
-     */
-    protected $b = M_E;
-
     public function setUp() : void
     {
-        $this->a = Matrix::uniform(1000, 1000);
+        $this->a = Matrix::uniform(500, 500);
     }
 
     /**
@@ -27,8 +22,8 @@ class MatrixScalarMultiplyBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function multiply() : void
+    public function tangent() : void
     {
-        $this->a->multiply($this->b);
+        $this->a->tan();
     }
 }

@@ -1,18 +1,18 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Random;
 
 use Tensor\Matrix;
 
-class PoissonMatrixBench
+class RandMatrixBench
 {
     /**
      * @Subject
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function poisson() : void
+    public function rand() : void
     {
-        Matrix::poisson(500, 500);
+        Matrix::rand(500, 500);
     }
 }

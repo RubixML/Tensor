@@ -1,18 +1,18 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Random;
 
 use Tensor\Vector;
 
-class UniformVectorBench
+class PoissonVectorBench
 {
     /**
      * @Subject
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function uniform() : void
+    public function poisson() : void
     {
-        Vector::uniform(250000);
+        Vector::poisson(250000);
     }
 }

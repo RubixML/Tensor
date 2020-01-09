@@ -1,6 +1,6 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Arithmetic;
 
 use Tensor\Matrix;
 

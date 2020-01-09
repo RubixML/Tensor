@@ -1,18 +1,18 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Random;
 
 use Tensor\Matrix;
 
-class RandomMatrixBench
+class GaussianMatrixBench
 {
     /**
      * @Subject
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function rand() : void
+    public function gaussian() : void
     {
-        Matrix::rand(500, 500);
+        Matrix::gaussian(500, 500);
     }
 }

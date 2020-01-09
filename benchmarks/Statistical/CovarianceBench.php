@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Statistical;
 
 use Tensor\Matrix;
 
-class TanMatrixBench
+class CovarianceBench
 {
     /**
      * @var \Tensor\Matrix
@@ -22,8 +22,8 @@ class TanMatrixBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function tangent() : void
+    public function covariance() : void
     {
-        $this->a->tan();
+        $this->a->covariance();
     }
 }

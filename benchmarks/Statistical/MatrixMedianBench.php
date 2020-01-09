@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Statistical;
 
 use Tensor\Matrix;
 
-class CosMatrixBench
+class MatrixMedianBench
 {
     /**
      * @var \Tensor\Matrix
@@ -22,8 +22,8 @@ class CosMatrixBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function cosine() : void
+    public function median() : void
     {
-        $this->a->cos();
+        $this->a->median();
     }
 }

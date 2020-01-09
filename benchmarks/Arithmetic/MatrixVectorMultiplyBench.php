@@ -1,11 +1,11 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Arithmetic;
 
 use Tensor\Matrix;
-use Tensor\ColumnVector;
+use Tensor\Vector;
 
-class MatrixColumnVectorMultiplyBench
+class MatrixVectorMultiplyBench
 {
     /**
      * @var \Tensor\Matrix
@@ -21,7 +21,7 @@ class MatrixColumnVectorMultiplyBench
     {
         $this->a = Matrix::uniform(1000, 1000);
 
-        $this->b = ColumnVector::uniform(1000);
+        $this->b = Vector::uniform(1000);
     }
 
     /**

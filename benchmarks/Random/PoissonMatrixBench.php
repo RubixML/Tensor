@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Random;
 
-use Tensor\Vector;
+use Tensor\Matrix;
 
-class PoissonVectorBench
+class PoissonMatrixBench
 {
     /**
      * @Subject
@@ -13,6 +13,6 @@ class PoissonVectorBench
      */
     public function poisson() : void
     {
-        Vector::poisson(250000);
+        Matrix::poisson(500, 500);
     }
 }
