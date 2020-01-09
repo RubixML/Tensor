@@ -14,8 +14,8 @@
 #include "kernel/main.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
-#include "kernel/array.h"
 #include "kernel/operators.h"
+#include "kernel/array.h"
 #include "kernel/object.h"
 
 
@@ -98,7 +98,8 @@ PHP_METHOD(Tensor_Decompositions_Rref, decompose) {
 	col = 0;
 	ZEPHIR_CALL_METHOD(&ref, a, "ref", NULL, 0);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_0, &ref, 0, PH_NOISY | PH_READONLY, "tensor/decompositions/rref.zep", 46);
+	ZEPHIR_CALL_METHOD(&_0, &ref, "a", NULL, 0);
+	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_1, &_0, "asarray", NULL, 0);
 	zephir_check_call_status();
 	zephir_get_arrval(&_2, &_1);

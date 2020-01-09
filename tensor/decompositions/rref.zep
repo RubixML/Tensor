@@ -43,7 +43,7 @@ class Rref implements Decomposition
 
         var ref = a->ref();
 
-        let b = (array) ref[0]->asArray();
+        let b = (array) ref->a()->asArray();
 
         while row < m && col < n {
             let t = b[row];

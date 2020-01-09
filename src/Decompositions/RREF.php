@@ -32,7 +32,9 @@ class RREF implements Decomposition
      */
     public static function decompose(Matrix $a) : self
     {
-        [$b, $swaps] = $a->ref();
+        $ref = $a->ref();
+
+        $b = $ref->a();
 
         [$m, $n] = $b->shape();
 

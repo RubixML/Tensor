@@ -746,17 +746,19 @@ class Matrix implements Tensor
      */
     public function inverse() : self
     {
-        $b = self::identity($this->m)
+        $a = self::identity($this->m)
             ->augmentLeft($this)
-            ->rref();
+            ->rref()
+            ->a()
+            ->asArray();
 
-        $c = [];
+        $b = [];
 
-        foreach ($b as $rowB) {
-            $c[] = array_slice($rowB, $this->n);
+        foreach ($a as $rowA) {
+            $b[] = array_slice($rowA, $this->n);
         }
 
-        return self::quick($c);
+        return self::quick($b);
     }
 
     /**
@@ -772,11 +774,11 @@ class Matrix implements Tensor
                 . ' for a non square matrix.');
         }
 
-        [$b, $swaps] = $this->ref();
+        $ref = $this->ref();
 
-        $pi = $b->diagonalAsVector()->product();
+        $pi = $ref->a()->diagonalAsVector()->product();
 
-        return $pi * (-1.) ** $swaps;
+        return $pi * (-1.) ** $ref->swaps();
     }
 
     /**
@@ -804,13 +806,13 @@ class Matrix implements Tensor
      */
     public function rank() : int
     {
-        $b = $this->rref();
+        $a = $this->rref()->a()->asArray();
 
         $pivots = 0;
 
-        foreach ($b as $rowB) {
-            foreach ($rowB as $valueB) {
-                if ($valueB != 0) {
+        foreach ($a as $rowA) {
+            foreach ($rowA as $valueA) {
+                if ($valueA != 0) {
                     ++$pivots;
 
                     continue 2;
@@ -1023,54 +1025,43 @@ class Matrix implements Tensor
      * Calculate the row echelon form (REF) of the matrix. Return the reduced
      * matrix and the number of swaps needed to compute the REF.
      *
-     * @return mixed[]
+     * @return \Tensor\Decompositions\REF
      */
-    public function ref() : array
+    public function ref() : REF
     {
-        $ref = REF::decompose($this);
-
-        return [
-            $ref->a(),
-            $ref->swaps(),
-        ];
+        return REF::decompose($this);
     }
 
     /**
      * Return the reduced row echelon (RREF) form of the matrix. Return the
      * reduced matrix and the number of swaps needed to compute the RREF.
      *
-     * @return self
+     * @return \Tensor\Decompositions\RREF
      */
-    public function rref() : self
+    public function rref() : RREF
     {
-        return RREF::decompose($this)->a();
+        return RREF::decompose($this);
     }
 
     /**
      * Return the LU decomposition of the matrix.
      *
      * @throws \RuntimeException
-     * @return self[]
+     * @return \Tensor\Decompositions\LU
      */
-    public function lu() : array
+    public function lu() : LU
     {
-        $lup = LU::decompose($this);
-
-        return [
-            $lup->l(),
-            $lup->u(),
-            $lup->p(),
-        ];
+        return LU::decompose($this);
     }
 
     /**
      * Return the lower triangular matrix of the Cholesky decomposition.
      *
-     * @return self
+     * @return \Tensor\Decompositions\Cholesky
      */
-    public function cholesky() : self
+    public function cholesky() : Cholesky
     {
-        return Cholesky::decompose($this)->l();
+        return Cholesky::decompose($this);
     }
 
     /**
@@ -1078,27 +1069,11 @@ class Matrix implements Tensor
      * them in a tuple.
      *
      * @param bool $normalize
-     * @return mixed[]
+     * @return \Tensor\Decompositions\Eigen
      */
-    public function eig(bool $normalize = true) : array
+    public function eig(bool $normalize = true) : Eigen
     {
-        $eig = Eigen::decompose($this);
-
-        $eigenvectors = $eig->eigenvectors();
-        $eigenvalues = $eig->eigenvalues();
-
-        if ($normalize) {
-            $norm = $eigenvectors
-                ->transpose()
-                ->square()
-                ->sum()
-                ->sqrt();
-        
-            $eigenvectors = $eigenvectors
-                ->divide($norm->transpose());
-        }
-
-        return [$eigenvalues, $eigenvectors];
+        return Eigen::decompose($this, $normalize);
     }
 
     /**
@@ -1111,16 +1086,18 @@ class Matrix implements Tensor
      */
     public function solve(Vector $b) : ColumnVector
     {
-        [$l, $u, $p] = $this->lu();
+        $lu = $this->lu();
+
+        $l = $lu->l()->asArray();
+        $u = $lu->u()->asArray();
+        $pb = $lu->p()->dot($b)->asArray();
 
         $k = $this->m - 1;
-
-        $pb = $p->dot($b)->asArray();
 
         $y = [$pb[0] / ($l[0][0] ?: EPSILON)];
 
         for ($i = 1; $i < $this->m; ++$i) {
-            $sigma = 0;
+            $sigma = 0.0;
 
             for ($j = 0; $j <= $i - 1; ++$j) {
                 $sigma += $l[$i][$j] * $y[$j];
@@ -1133,7 +1110,7 @@ class Matrix implements Tensor
         $x = [$k => $y[$k] / ($l[$k][$k] ?: EPSILON)];
 
         for ($i = $this->m - 2; $i >= 0; --$i) {
-            $sigma = 0;
+            $sigma = 0.0;
 
             for ($j = $i + 1; $j < $this->m; ++$j) {
                 $sigma += $u[$i][$j] * $x[$j];

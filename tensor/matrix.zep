@@ -759,18 +759,21 @@ class Matrix implements Tensor
      */
     public function inverse() -> <Matrix>
     {
-        array c = [];
-        var rowB;
+        array a = [];
+        array b = [];
+        var rowA;
 
-        var b = self::identity(this->m)
+        let a = (array) self::identity(this->m)
             ->augmentLeft(this)
-            ->rref();
+            ->rref()
+            ->a()
+            ->asArray();
 
-        for rowB in iterator(b) {
-            let c[] = array_slice(rowB, this->n);
+        for rowA in a {
+            let b[] = array_slice(rowA, this->n);
         }
 
-        return self::quick(c);
+        return self::quick(b);
     }
 
     /**
@@ -788,12 +791,9 @@ class Matrix implements Tensor
 
         var ref = this->ref();
 
-        var b = ref[0];
-        var swaps = ref[1];
+        var pi = ref->a()->diagonalAsVector()->product();
 
-        var pi = b->diagonalAsVector()->product();
-
-        return pi * pow(-1.0, swaps);
+        return pi * pow(-1.0, ref->swaps());
     }
 
     /**
@@ -804,15 +804,16 @@ class Matrix implements Tensor
      */
     public function rank() -> int
     {
-        var row, value;
-
-        var rref = this->rref();
+        var rowA, valueA;
+        array a = [];
 
         int pivots = 0;
 
-        for row in iterator(rref) {
-            for value in row {
-                if value != 0 {
+        let a = (array) this->rref()->a()->asArray();
+
+        for rowA in a {
+            for valueA in rowA {
+                if valueA != 0 {
                     let pivots++;
 
                     continue;
@@ -927,9 +928,9 @@ class Matrix implements Tensor
 
         float sigma;
         var k, rowA, valueA, columnB;
+        array bT = [];
         array c = [];
         array rowC = [];
-        array bT = [];
 
         let bT = (array) b->transpose()->asArray();
  
@@ -996,10 +997,10 @@ class Matrix implements Tensor
         int i, j, x, y;
         float sigma;
         var k, l, rowB, valueB;
-        array c = [];
-        array rowC = [];
         array rowA = [];
         array bHat = [];
+        array c = [];
+        array rowC = [];
 
         int p = (int) intdiv(m, 2);
         int q = (int) intdiv(n, 2);
@@ -1047,21 +1048,19 @@ class Matrix implements Tensor
      *
      * @return array
      */
-    public function ref() -> array
+    public function ref() -> <Ref>
     {
-        var ref = Ref::decompose(this);
-
-        return [ref->a(), ref->swaps()];
+        return Ref::decompose(this);
     }
 
     /**
      * Return the reduced row echelon (RREF) form of the matrix.
      *
-     * @return self
+     * @return \Tensor\Decompositions\RREF
      */
-    public function rref() -> <self>
+    public function rref() -> <Rref>
     {
-        return Rref::decompose(this)->a();
+        return Rref::decompose(this);
     }
 
     /**
@@ -1070,27 +1069,21 @@ class Matrix implements Tensor
      * and p is the permutation matrix.
      *
      * @throws \RuntimeException
-     * @return self[]
+     * @return \Tensor\Decompositions\Lu
      */
-    public function lu() -> array
+    public function lu() -> <Lu>
     {
-        var lup = Lu::decompose(this);
-        
-        return [
-            lup->l(),
-            lup->u(),
-            lup->p()
-        ];
+        return Lu::decompose(this);
     }
 
     /**
      * Return the lower triangular matrix of the Cholesky decomposition.
      * 
-     * @return self
+     * @return \Tensor\Decompositions\Cholesky;
      */
-    public function cholesky() -> <Matrix>
+    public function cholesky() -> <Cholesky>
     {
-        return Cholesky::decompose(this)->l();
+        return Cholesky::decompose(this);
     }
 
     /**
@@ -1099,9 +1092,9 @@ class Matrix implements Tensor
      *
      * @param bool normalize
      * @throws \RuntimeException
-     * @return array
+     * @return \Tensor\Decompositions\Eigen
      */
-    public function eig(bool normalize = true) -> array
+    public function eig(bool normalize = true) -> <Eigen>
     {
         throw new RuntimeException("Not implemented yet.");
     }
@@ -1121,11 +1114,11 @@ class Matrix implements Tensor
         array u = [];
         array pb = [];
 
-        var lup = this->lu();
+        var lu = this->lu();
 
-        let l = (array) lup[0]->asArray();
-        let u = (array) lup[1]->asArray();
-        let pb = (array) lup[2]->dot(b)->asArray();
+        let l = (array) lu->l()->asArray();
+        let u = (array) lu->u()->asArray();
+        let pb = (array) lu->p()->dot(b)->asArray();
 
         int k = (int) (this->m - 1);
 

@@ -11,6 +11,11 @@ use Tensor\Comparable;
 use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
+use Tensor\Decompositions\LU;
+use Tensor\Decompositions\REF;
+use Tensor\Decompositions\RREF;
+use Tensor\Decompositions\Eigen;
+use Tensor\Decompositions\Cholesky;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use IteratorAggregate;
@@ -541,7 +546,9 @@ class MatrixTest extends TestCase
 
     public function test_ref() : void
     {
-        [$z, $swaps] = $this->a->ref();
+        $ref = $this->a->ref();
+
+        $this->assertInstanceOf(REF::class, $ref);
 
         $expected = [
             [22, -17, 12],
@@ -549,13 +556,17 @@ class MatrixTest extends TestCase
             [0, 0, -17.10322580645161],
         ];
 
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertInstanceOf(Matrix::class, $ref->a());
+        $this->assertEquals($expected, $ref->a()->asArray());
+
+        $this->assertEquals(0, $ref->swaps());
     }
 
     public function test_rref() : void
     {
-        $z = $this->a->rref();
+        $rref = $this->a->rref();
+
+        $this->assertInstanceOf(RREF::class, $rref);
 
         $expected = [
             [1, 0, 0],
@@ -563,13 +574,15 @@ class MatrixTest extends TestCase
             [0, 0, 1],
         ];
 
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertInstanceOf(Matrix::class, $rref->a());
+        $this->assertEquals($expected, $rref->a()->asArray());
     }
 
-    public function test_lu_decomposition() : void
+    public function test_lu() : void
     {
-        [$l, $u] = $this->a->lu();
+        $lu = $this->a->lu();
+
+        $this->assertInstanceOf(LU::class, $lu);
 
         $lHat = [
             [1., 0, 0],
@@ -583,14 +596,14 @@ class MatrixTest extends TestCase
             [0, 0, -17.10322580645161],
         ];
 
-        $this->assertInstanceOf(Matrix::class, $l);
-        $this->assertInstanceOf(Matrix::class, $u);
+        $this->assertInstanceOf(Matrix::class, $lu->l());
+        $this->assertInstanceOf(Matrix::class, $lu->u());
 
-        $this->assertCount(9, $l);
-        $this->assertCount(9, $u);
+        $this->assertCount(9, $lu->l());
+        $this->assertCount(9, $lu->u());
 
-        $this->assertEquals($lHat, $l->asArray());
-        $this->assertEquals($uHat, $u->asArray());
+        $this->assertEquals($lHat, $lu->l()->asArray());
+        $this->assertEquals($uHat, $lu->u()->asArray());
     }
 
     public function test_cholesky() : void
@@ -601,7 +614,9 @@ class MatrixTest extends TestCase
             [0, -1, 2],
         ]);
 
-        $l = $a->cholesky();
+        $cholesky = $a->cholesky();
+
+        $this->assertInstanceOf(Cholesky::class, $cholesky);
 
         $expected = [
             [1.4142135623730951, 0, 0],
@@ -609,9 +624,9 @@ class MatrixTest extends TestCase
             [0, -0.8164965809277261, 1.1547005383792515],
         ];
 
-        $this->assertInstanceOf(Matrix::class, $l);
-        $this->assertCount(9, $l);
-        $this->assertEquals($expected, $l->asArray());
+        $this->assertInstanceOf(Matrix::class, $cholesky->l());
+        $this->assertCount(9, $cholesky->l());
+        $this->assertEquals($expected, $cholesky->l()->asArray());
     }
 
     public function test_eig() : void
@@ -620,7 +635,9 @@ class MatrixTest extends TestCase
             $this->markTestSkipped('Not implemented in extension yet.');
         }
 
-        [$eigvalues, $eigvectors] = $this->a->eig();
+        $eig = $this->a->eig();
+
+        $this->assertInstanceOf(Eigen::class, $eig);
 
         $values = [25.108706520450326, -15.096331148319537, 13.9876246278692];
 
@@ -630,10 +647,10 @@ class MatrixTest extends TestCase
             [0.8501650243704214, 0.987607178637524, 0.641631809310763],
         ];
 
-        $this->assertInstanceOf(Matrix::class, $eigvectors);
+        $this->assertInstanceOf(Matrix::class, $eig->eigenvectors());
 
-        $this->assertEquals($values, $eigvalues);
-        $this->assertEquals($vectors, $eigvectors->asArray());
+        $this->assertEquals($values, $eig->eigenvalues());
+        $this->assertEquals($vectors, $eig->eigenvectors()->asArray());
     }
 
     public function test_solve() : void

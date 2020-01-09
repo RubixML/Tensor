@@ -36,9 +36,10 @@ class Eigen implements Decomposition
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix $a
+     * @param bool $normalize
      * @return self
      */
-    public static function decompose(Matrix $a) : self
+    public static function decompose(Matrix $a, bool $normalize = true) : self
     {
         if (!$a->isSquare()) {
             throw new RuntimeException('Cannot eigendecompose a non'
@@ -54,6 +55,17 @@ class Eigen implements Decomposition
         $eigenvectors = $eig->getV()->getArray();
 
         $eigenvectors = Matrix::quick($eigenvectors)->transpose();
+
+        if ($normalize) {
+            $norm = $eigenvectors
+                ->transpose()
+                ->square()
+                ->sum()
+                ->sqrt();
+        
+            $eigenvectors = $eigenvectors
+                ->divide($norm->transpose());
+        }
 
         return new self($eigenvalues, $eigenvectors);
     }

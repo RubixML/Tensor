@@ -38,12 +38,13 @@ class Cholesky implements Decomposition
         int i, j, k;
         float sigma;
         array aHat = [];
+        array l = [];
 
-        let aHat = (array) a->asArray();
-        
         var m = a->m();
 
-        var l = Matrix::zeros(m, m)->asArray();
+        let aHat = (array) a->asArray();
+
+        let l = (array) Matrix::zeros(m, m)->asArray();
 
         for i in range(0, m - 1) {
             for j in range(0, i) {

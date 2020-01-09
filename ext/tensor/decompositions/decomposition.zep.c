@@ -14,17 +14,9 @@
 
 ZEPHIR_INIT_CLASS(Tensor_Decompositions_Decomposition) {
 
-	ZEPHIR_REGISTER_INTERFACE(Tensor\\Decompositions, Decomposition, tensor, decompositions_decomposition, tensor_decompositions_decomposition_method_entry);
+	ZEPHIR_REGISTER_INTERFACE(Tensor\\Decompositions, Decomposition, tensor, decompositions_decomposition, NULL);
 
 	return SUCCESS;
 
 }
-
-/**
- * Factory method to decompose a matrix.
- *
- * @param \Tensor\Matrix a
- * @return self
- */
-ZEPHIR_DOC_METHOD(Tensor_Decompositions_Decomposition, decompose);
 

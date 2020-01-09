@@ -51,7 +51,7 @@ class Lu implements Decomposition
         }
 
         int i, j, k, row;
-        float sigma;
+        var sigma;
         array aHat = [];
         array l = [];
         array u = [];
@@ -100,7 +100,7 @@ class Lu implements Decomposition
                     let sigma += u[k][i] * l[j][k];
                 }
 
-                let u[j][i] = (float) pa[j][i] - sigma;
+                let u[j][i] = pa[j][i] - sigma;
             }
 
             for j in range(i, n - 1) {
@@ -110,7 +110,7 @@ class Lu implements Decomposition
                     let sigma += u[k][i] * l[j][k];
                 }
 
-                let l[j][i] = ((float) pa[j][i] - sigma)
+                let l[j][i] = (pa[j][i] - sigma)
                     / (u[i][i] ?: self::EPSILON);
             }
         }
