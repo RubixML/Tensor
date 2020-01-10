@@ -1,19 +1,19 @@
 <?php
 
-namespace Tensor\Benchmarks\LinearAlgebra;
+namespace Tensor\Benchmarks\Structural;
 
-use Tensor\Matrix;
+use Tensor\Vector;
 
-class MatrixInverseBench
+class ReshapeVectorBench
 {
     /**
-     * @var \Tensor\Matrix
+     * @var \Tensor\Vector
      */
     protected $a;
 
     public function setUp() : void
     {
-        $this->a = Matrix::uniform(500, 500);
+        $this->a = Vector::uniform(250000);
     }
 
     /**
@@ -22,8 +22,8 @@ class MatrixInverseBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function inverse() : void
+    public function reshape() : void
     {
-        $this->a->inverse();
+        $this->a->reshape(500, 500);
     }
 }

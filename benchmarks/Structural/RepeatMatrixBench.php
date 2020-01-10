@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks\LinearAlgebra;
+namespace Tensor\Benchmarks\Structural;
 
 use Tensor\Matrix;
 
-class MatrixInverseBench
+class RepeatMatrixBench
 {
     /**
      * @var \Tensor\Matrix
@@ -13,7 +13,7 @@ class MatrixInverseBench
 
     public function setUp() : void
     {
-        $this->a = Matrix::uniform(500, 500);
+        $this->a = Matrix::uniform(50, 50);
     }
 
     /**
@@ -22,8 +22,8 @@ class MatrixInverseBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function inverse() : void
+    public function repeat() : void
     {
-        $this->a->inverse();
+        $this->a->repeat(9, 9);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Structural;
 
 use Tensor\Matrix;
 
-class MatrixConvolveBench
+class AugmentMatrixBelowBench
 {
     /**
      * @var \Tensor\Matrix
@@ -14,13 +14,13 @@ class MatrixConvolveBench
     /**
      * @var \Tensor\Matrix
      */
-    protected $kernel;
+    protected $b;
 
     public function setUp() : void
     {
         $this->a = Matrix::uniform(500, 500);
 
-        $this->kernel = Matrix::uniform(10, 10);
+        $this->b = Matrix::uniform(500, 500);
     }
 
     /**
@@ -29,8 +29,8 @@ class MatrixConvolveBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function convolve() : void
+    public function augment_below() : void
     {
-        $this->a->convolve($this->kernel);
+        $this->a->augmentBelow($this->b);
     }
 }

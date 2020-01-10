@@ -557,10 +557,12 @@ class Vector implements Tensor
     {
         $c = [];
 
+        $bHat = $b->asArray();
+
         foreach ($this->a as $valueA) {
             $rowC = [];
             
-            foreach ($b as $valueB) {
+            foreach ($bHat as $valueB) {
                 $rowC[] = $valueA * $valueB;
             }
 

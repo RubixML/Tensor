@@ -1,19 +1,26 @@
 <?php
 
-namespace Tensor\Benchmarks\LinearAlgebra;
+namespace Tensor\Benchmarks\Special;
 
 use Tensor\Matrix;
 
-class MatrixInverseBench
+class MatrixConvolveBench
 {
     /**
      * @var \Tensor\Matrix
      */
     protected $a;
 
+    /**
+     * @var \Tensor\Matrix
+     */
+    protected $kernel;
+
     public function setUp() : void
     {
         $this->a = Matrix::uniform(500, 500);
+
+        $this->kernel = Matrix::uniform(10, 10);
     }
 
     /**
@@ -22,8 +29,8 @@ class MatrixInverseBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function inverse() : void
+    public function convolve() : void
     {
-        $this->a->inverse();
+        $this->a->convolve($this->kernel);
     }
 }

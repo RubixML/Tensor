@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks;
+namespace Tensor\Benchmarks\Arithmetic;
 
 use Tensor\Matrix;
 
-class MatrixTransposeBench
+class MatrixSumBench
 {
     /**
      * @var \Tensor\Matrix
@@ -22,8 +22,8 @@ class MatrixTransposeBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function multiply() : void
+    public function sum() : void
     {
-        $this->a->transpose();
+        $this->a->sum();
     }
 }

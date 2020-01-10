@@ -4,7 +4,7 @@ namespace Tensor\Benchmarks\LinearAlgebra;
 
 use Tensor\Matrix;
 
-class MatrixInverseBench
+class MatrixL2NormBench
 {
     /**
      * @var \Tensor\Matrix
@@ -22,8 +22,8 @@ class MatrixInverseBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function inverse() : void
+    public function l2_norm() : void
     {
-        $this->a->inverse();
+        $this->a->l2Norm();
     }
 }

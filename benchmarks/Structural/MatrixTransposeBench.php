@@ -1,10 +1,10 @@
 <?php
 
-namespace Tensor\Benchmarks\LinearAlgebra;
+namespace Tensor\Benchmarks\Structural;
 
 use Tensor\Matrix;
 
-class MatrixInverseBench
+class MatrixTransposeBench
 {
     /**
      * @var \Tensor\Matrix
@@ -22,8 +22,8 @@ class MatrixInverseBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function inverse() : void
+    public function multiply() : void
     {
-        $this->a->inverse();
+        $this->a->transpose();
     }
 }

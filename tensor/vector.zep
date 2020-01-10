@@ -621,13 +621,16 @@ class Vector implements Tensor
         var n = b->n();
 
         var j, valueA, valueB;
+        array bHat = [];
         array c = [];
         array rowC = [];
+
+        let bHat = (array) b->asArray();
 
         for valueA in this->a {
             let rowC = [];
 
-            for j, valueB in iterator(b) {
+            for j, valueB in bHat {
                 let rowC[] = valueA * valueB;
             }
 

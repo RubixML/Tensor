@@ -2,25 +2,18 @@
 
 namespace Tensor\Benchmarks\LinearAlgebra;
 
-use Tensor\Vector;
+use Tensor\Matrix;
 
-class VectorDotBench
+class MatrixL1NormBench
 {
     /**
-     * @var \Tensor\Vector
+     * @var \Tensor\Matrix
      */
     protected $a;
 
-    /**
-     * @var \Tensor\Vector
-     */
-    protected $b;
-
     public function setUp() : void
     {
-        $this->a = Vector::uniform(250000);
-
-        $this->b = Vector::uniform(250000);
+        $this->a = Matrix::uniform(500, 500);
     }
 
     /**
@@ -29,8 +22,8 @@ class VectorDotBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function dot() : void
+    public function l1_norm() : void
     {
-        $this->a->dot($this->b);
+        $this->a->l1Norm();
     }
 }

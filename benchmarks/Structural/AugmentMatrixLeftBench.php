@@ -1,19 +1,26 @@
 <?php
 
-namespace Tensor\Benchmarks\LinearAlgebra;
+namespace Tensor\Benchmarks\Structural;
 
 use Tensor\Matrix;
 
-class MatrixInverseBench
+class AugmentMatrixLeftBench
 {
     /**
      * @var \Tensor\Matrix
      */
     protected $a;
 
+    /**
+     * @var \Tensor\Matrix
+     */
+    protected $b;
+
     public function setUp() : void
     {
         $this->a = Matrix::uniform(500, 500);
+
+        $this->b = Matrix::uniform(500, 500);
     }
 
     /**
@@ -22,8 +29,8 @@ class MatrixInverseBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function inverse() : void
+    public function augment_left() : void
     {
-        $this->a->inverse();
+        $this->a->augmentLeft($this->b);
     }
 }
