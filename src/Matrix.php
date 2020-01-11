@@ -644,7 +644,7 @@ class Matrix implements Tensor
      */
     public function flatten() : Vector
     {
-        return Vector::quick(array_reduce($this->a, 'array_merge', []));
+        return Vector::quick(array_merge(...$this->a));
     }
 
     /**

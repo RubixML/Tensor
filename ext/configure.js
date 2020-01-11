@@ -2679,7 +2679,7 @@ function generate_makefile()
 	}
 
 	MF.WriteBlankLines(1);
-	if (MODE_PHPIZE) {
+	if (false) {
 		var TF = FSO.OpenTextFile(PHP_DIR + "/script/Makefile.phpize", 1);
 	} else {
 		var TF = FSO.OpenTextFile("win32/build/Makefile", 1);

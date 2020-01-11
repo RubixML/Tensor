@@ -2,6 +2,7 @@
     - Matrix decomp methods now return decomp objects
     - Optimized matrix statistical operations
     - Optimized vector outer product
+    - Optimized Matrix flatten
 
 - 2.0.2
     - Optimized random number generation

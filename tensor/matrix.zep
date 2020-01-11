@@ -452,7 +452,7 @@ class Matrix implements Tensor
         var row, value;
 
         int m = count(a);
-        int n = is_array(current(a)) ? count(current(a)) : 1;
+        int n = count(current(a));
 
         let n = m === 0 ? 0 : n;
  
