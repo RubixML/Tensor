@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\Arithmetic;
 
 use Tensor\Matrix;
 
+/**
+ * @Groups({"Arithmetic"})
+ */
 class MatrixMatrixMultiplyBench
 {
     /**

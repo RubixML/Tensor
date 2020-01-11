@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\Structural;
 
 use Tensor\Matrix;
 
+/**
+ * @Groups({"Structural"})
+ */
 class FlattenMatrixBench
 {
     /**

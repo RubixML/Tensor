@@ -75,9 +75,7 @@ class RREF implements Decomposition
             ++$col;
         }
 
-        $b = Matrix::quick($b);
-
-        return new self($b);
+        return new self(Matrix::quick($b));
     }
 
     /**

@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\Random;
 
 use Tensor\Matrix;
 
+/**
+ * @Groups({"Random"})
+ */
 class RandMatrixBench
 {
     /**

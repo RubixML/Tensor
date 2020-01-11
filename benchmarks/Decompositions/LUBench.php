@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\Decompositions;
 
 use Tensor\Matrix;
 
+/**
+ * @Groups({"Decompositions"})
+ */
 class LUBench
 {
     /**

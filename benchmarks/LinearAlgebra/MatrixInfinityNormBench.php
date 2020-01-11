@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\LinearAlgebra;
 
 use Tensor\Matrix;
 
+/**
+ * @Groups({"LinearAlgebra"})
+ */
 class MatrixInfinityNormBench
 {
     /**

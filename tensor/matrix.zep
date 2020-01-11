@@ -449,12 +449,13 @@ class Matrix implements Tensor
      */
     public function __construct(array a = [], const bool validate = true)
     {
-        var row, value;
+        if (empty(a)) {
+            throw new InvalidArgumentException("Matrix must contain"
+                . " at least 1 element.");
+        }
 
         int m = count(a);
         int n = count(current(a));
-
-        let n = m === 0 ? 0 : n;
  
         if (validate) {
             let a = array_values(a);
@@ -464,14 +465,6 @@ class Matrix implements Tensor
                     throw new InvalidArgumentException("The number of columns"
                         . " must be equal for all rows, " . strval(n)  . " needed but "
                         . count(row) . " given.");
-                }
- 
-                for value in row {
-                    if unlikely !is_int(value) && !is_float(value) {
-                        throw new InvalidArgumentException("Matrix element must"
-                            . " be an integer or float, " . gettype(value)
-                            . " given.");
-                    }
                 }
             }
         }

@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\Structural;
 
 use Tensor\Vector;
 
+/**
+ * @Groups({"Structural"})
+ */
 class ReshapeVectorBench
 {
     /**

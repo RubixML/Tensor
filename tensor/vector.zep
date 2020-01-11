@@ -304,24 +304,19 @@ class Vector implements Tensor
     }
 
     /**
-     * @param mixed[] a
+     * @param (int|float)[] a
      * @param bool validate
      * @throws \InvalidArgumentException
      */
     public function __construct(array a = [], const bool validate = true)
     {
-        var value; 
+        if (empty(a)) {
+            throw new InvalidArgumentException("Vector must contain"
+                . " at least one element.");
+        }
 
         if validate {
             let a = array_values(a);
-
-            for value in a {
-                if unlikely !is_int(value) && !is_float(value) {
-                    throw new InvalidArgumentException("Element must be"
-                        . " an integer or floating point number, "
-                        . gettype(value) . " given.");
-                }
-            }
         }
 
         let this->a = a;

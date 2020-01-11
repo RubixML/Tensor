@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\Special;
 
 use Tensor\Vector;
 
+/**
+ * @Groups({"Special"})
+ */
 class VectorConvolveBench
 {
     /**

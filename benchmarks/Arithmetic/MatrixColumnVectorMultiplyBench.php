@@ -5,6 +5,9 @@ namespace Tensor\Benchmarks\Arithmetic;
 use Tensor\Matrix;
 use Tensor\ColumnVector;
 
+/**
+ * @Groups({"Arithmetic"})
+ */
 class MatrixColumnVectorMultiplyBench
 {
     /**

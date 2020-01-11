@@ -3,6 +3,7 @@
     - Optimized matrix statistical operations
     - Optimized vector outer product
     - Optimized Matrix flatten
+    - Cannot instantiate null/empty tensors
 
 - 2.0.2
     - Optimized random number generation

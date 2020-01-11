@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\Statistical;
 
 use Tensor\Matrix;
 
+/**
+ * @Groups({"Statistical"})
+ */
 class MatrixMeanBench
 {
     /**

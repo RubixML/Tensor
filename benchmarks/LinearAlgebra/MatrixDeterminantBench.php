@@ -1,13 +1,13 @@
 <?php
 
-namespace Tensor\Benchmarks\Decompositions;
+namespace Tensor\Benchmarks\LinearAlgebra;
 
 use Tensor\Matrix;
 
 /**
- * @Groups({"Decompositions"})
+ * @Groups({"LinearAlgebra"})
  */
-class REFBench
+class MatrixDeterminantBench
 {
     /**
      * @var \Tensor\Matrix
@@ -25,8 +25,8 @@ class REFBench
      * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function ref() : void
+    public function det() : void
     {
-        $this->a->ref();
+        $this->a->det();
     }
 }

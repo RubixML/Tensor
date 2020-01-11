@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\Trigonometric;
 
 use Tensor\Matrix;
 
+/**
+ * @Groups({"Trigonometric"})
+ */
 class SinMatrixBench
 {
     /**

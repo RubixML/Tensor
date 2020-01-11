@@ -4,6 +4,9 @@ namespace Tensor\Benchmarks\LinearAlgebra;
 
 use Tensor\Vector;
 
+/**
+ * @Groups({"LinearAlgebra"})
+ */
 class VectorDotProductBench
 {
     /**

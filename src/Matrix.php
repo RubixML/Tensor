@@ -14,6 +14,7 @@ use Exception;
 use Closure;
 
 use function count;
+use function array_slice;
 use function is_null;
 
 use const Tensor\EPSILON;
@@ -443,10 +444,13 @@ class Matrix implements Tensor
      */
     public function __construct(array $a = [], bool $validate = true)
     {
-        $m = count($a);
+        if (empty($a)) {
+            throw new InvalidArgumentException('Matrix must contain'
+                . ' at least 1 element.');
+        }
 
-        $n = is_array(current($a)) ? count(current($a)) : 1;
-        $n = $m === 0 ? 0 : $n;
+        $m = count($a);
+        $n = count(current($a));
 
         if ($validate) {
             $a = array_values($a);
@@ -456,16 +460,8 @@ class Matrix implements Tensor
 
                 if (count($row) !== $n) {
                     throw new InvalidArgumentException('The number of columns'
-                        . ' must be equal for all rows, $n needed but '
-                        . count($row) . ' found.');
-                }
-
-                foreach ($row as $value) {
-                    if (!is_int($value) and !is_float($value)) {
-                        throw new InvalidArgumentException('Matrix element must'
-                            . ' be an integer or float, ' . gettype($value)
-                            . ' found.');
-                    }
+                        . " must be equal for all rows, $n required but "
+                        . count($row) . ' given.');
                 }
             }
         }
@@ -1082,10 +1078,16 @@ class Matrix implements Tensor
      * the solution.
      *
      * @param \Tensor\Vector $b
+     * @throws \InvalidArgumentException
      * @return \Tensor\ColumnVector
      */
     public function solve(Vector $b) : ColumnVector
     {
+        if ($b->size() !== $this->n) {
+            throw new InvalidArgumentException('Solution vector'
+                . ' dimensionality mismatch.');
+        }
+
         $lu = $this->lu();
 
         $l = $lu->l()->asArray();

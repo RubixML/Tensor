@@ -86,15 +86,6 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(ArrayLike::class, $this->a);
     }
 
-    public function test_build_bad_element() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Matrix::build([
-            [0, 0.1, 'bad'],
-        ]);
-    }
-
     public function test_stack_row_vectors() : void
     {
         $z = Matrix::stack([

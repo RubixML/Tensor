@@ -8,6 +8,7 @@ use ArrayIterator;
 use Closure;
 
 use function count;
+use function array_slice;
 use function is_null;
 
 use const Tensor\EPSILON;
@@ -306,22 +307,19 @@ class Vector implements Tensor
     }
 
     /**
-     * @param mixed[] $a
+     * @param (int|float)[] $a
      * @param bool $validate
      * @throws \InvalidArgumentException
      */
-    final public function __construct(array $a = [], bool $validate = true)
+    final public function __construct(array $a, bool $validate = true)
     {
+        if (empty($a)) {
+            throw new InvalidArgumentException('Vector must contain'
+                . ' at least one element.');
+        }
+
         if ($validate) {
             $a = array_values($a);
-
-            foreach ($a as $value) {
-                if (!is_int($value) and !is_float($value)) {
-                    throw new InvalidArgumentException('Element must be'
-                        . ' an integer or floating point number, '
-                        . gettype($value) . ' given.');
-                }
-            }
         }
 
         $this->a = $a;

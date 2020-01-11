@@ -110,10 +110,11 @@ class LU implements Decomposition
             }
         }
 
-        $l = Matrix::quick($l);
-        $u = Matrix::quick($u);
-
-        return new self($l, $u, $p);
+        return new self(
+            Matrix::quick($l),
+            Matrix::quick($u),
+            $p
+        );
     }
 
     /**
