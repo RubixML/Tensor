@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Statistical"})
+ * @BeforeMethods({"setUp"})
  */
 class MatrixPercentileBench
 {
@@ -22,7 +23,6 @@ class MatrixPercentileBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function percentile() : void

@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"LinearAlgebra"})
+ * @BeforeMethods({"setUp"})
  */
 class MatrixInfinityNormBench
 {
@@ -22,10 +23,9 @@ class MatrixInfinityNormBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function infinity_norm() : void
+    public function infinityNorm() : void
     {
         $this->a->infinityNorm();
     }

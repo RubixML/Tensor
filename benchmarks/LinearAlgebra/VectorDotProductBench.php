@@ -6,6 +6,7 @@ use Tensor\Vector;
 
 /**
  * @Groups({"LinearAlgebra"})
+ * @BeforeMethods({"setUp"})
  */
 class VectorDotProductBench
 {
@@ -29,7 +30,6 @@ class VectorDotProductBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function dot() : void

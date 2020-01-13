@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Structural"})
+ * @BeforeMethods({"setUp"})
  */
 class AugmentMatrixBelowBench
 {
@@ -29,10 +30,9 @@ class AugmentMatrixBelowBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function augment_below() : void
+    public function augmentBelow() : void
     {
         $this->a->augmentBelow($this->b);
     }

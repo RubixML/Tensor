@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Trigonometric"})
+ * @BeforeMethods({"setUp"})
  */
 class CosMatrixBench
 {
@@ -22,7 +23,6 @@ class CosMatrixBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function cosine() : void

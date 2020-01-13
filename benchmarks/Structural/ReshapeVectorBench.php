@@ -6,6 +6,7 @@ use Tensor\Vector;
 
 /**
  * @Groups({"Structural"})
+ * @BeforeMethods({"setUp"})
  */
 class ReshapeVectorBench
 {
@@ -22,7 +23,6 @@ class ReshapeVectorBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function reshape() : void

@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Structural"})
+ * @BeforeMethods({"setUp"})
  */
 class RepeatMatrixBench
 {
@@ -22,7 +23,6 @@ class RepeatMatrixBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function repeat() : void

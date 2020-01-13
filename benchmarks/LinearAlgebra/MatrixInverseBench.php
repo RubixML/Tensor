@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"LinearAlgebra"})
+ * @BeforeMethods({"setUp"})
  */
 class MatrixInverseBench
 {
@@ -22,7 +23,6 @@ class MatrixInverseBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function inverse() : void

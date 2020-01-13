@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Arithmetic"})
+ * @BeforeMethods({"setUp"})
  */
 class MatrixMatrixMultiplyBench
 {
@@ -29,7 +30,6 @@ class MatrixMatrixMultiplyBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function multiply() : void

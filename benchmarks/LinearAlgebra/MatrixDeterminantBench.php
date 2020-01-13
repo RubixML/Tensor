@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"LinearAlgebra"})
+ * @BeforeMethods({"setUp"})
  */
 class MatrixDeterminantBench
 {
@@ -22,7 +23,6 @@ class MatrixDeterminantBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function det() : void

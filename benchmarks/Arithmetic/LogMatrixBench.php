@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Arithmetic"})
+ * @BeforeMethods({"setUp"})
  */
 class LogMatrixBench
 {
@@ -22,7 +23,6 @@ class LogMatrixBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function log() : void

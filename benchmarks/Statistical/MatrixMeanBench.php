@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Statistical"})
+ * @BeforeMethods({"setUp"})
  */
 class MatrixMeanBench
 {
@@ -22,7 +23,6 @@ class MatrixMeanBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function mean() : void

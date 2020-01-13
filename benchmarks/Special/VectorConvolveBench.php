@@ -6,6 +6,7 @@ use Tensor\Vector;
 
 /**
  * @Groups({"Special"})
+ * @BeforeMethods({"setUp"})
  */
 class VectorConvolveBench
 {
@@ -29,7 +30,6 @@ class VectorConvolveBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function convolve() : void

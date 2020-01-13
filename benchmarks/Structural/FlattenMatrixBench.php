@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Structural"})
+ * @BeforeMethods({"setUp"})
  */
 class FlattenMatrixBench
 {
@@ -22,7 +23,6 @@ class FlattenMatrixBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function flatten() : void

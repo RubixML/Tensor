@@ -7,6 +7,7 @@ use Tensor\Vector;
 
 /**
  * @Groups({"Arithmetic"})
+ * @BeforeMethods({"setUp"})
  */
 class MatrixVectorMultiplyBench
 {
@@ -30,7 +31,6 @@ class MatrixVectorMultiplyBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function multiply() : void

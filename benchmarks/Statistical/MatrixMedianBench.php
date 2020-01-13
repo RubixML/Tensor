@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Statistical"})
+ * @BeforeMethods({"setUp"})
  */
 class MatrixMedianBench
 {
@@ -22,7 +23,6 @@ class MatrixMedianBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function median() : void

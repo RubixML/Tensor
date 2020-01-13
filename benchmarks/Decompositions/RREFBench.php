@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Decompositions"})
+ * @BeforeMethods({"setUp"})
  */
 class RREFBench
 {
@@ -22,7 +23,6 @@ class RREFBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function rref() : void

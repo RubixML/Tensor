@@ -6,6 +6,7 @@ use Tensor\Vector;
 
 /**
  * @Groups({"LinearAlgebra"})
+ * @BeforeMethods({"setUp"})
  */
 class VectorOuterProductBench
 {
@@ -29,7 +30,6 @@ class VectorOuterProductBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function outer() : void

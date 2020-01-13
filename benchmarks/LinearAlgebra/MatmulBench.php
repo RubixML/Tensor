@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"LinearAlgebra"})
+ * @BeforeMethods({"setUp"})
  */
 class MatmulBench
 {
@@ -29,7 +30,6 @@ class MatmulBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
     public function matmul() : void

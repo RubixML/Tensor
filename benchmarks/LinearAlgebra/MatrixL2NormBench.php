@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"LinearAlgebra"})
+ * @BeforeMethods({"setUp"})
  */
 class MatrixL2NormBench
 {
@@ -22,10 +23,9 @@ class MatrixL2NormBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function l2_norm() : void
+    public function l2Norm() : void
     {
         $this->a->l2Norm();
     }

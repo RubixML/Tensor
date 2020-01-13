@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Structural"})
+ * @BeforeMethods({"setUp"})
  */
 class SubMatrixBench
 {
@@ -22,10 +23,9 @@ class SubMatrixBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function sub_matrix() : void
+    public function subMatrix() : void
     {
         $this->a->subMatrix(100, 250);
     }

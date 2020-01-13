@@ -6,6 +6,7 @@ use Tensor\Matrix;
 
 /**
  * @Groups({"Structural"})
+ * @BeforeMethods({"setUp"})
  */
 class AugmentMatrixLeftBench
 {
@@ -29,10 +30,9 @@ class AugmentMatrixLeftBench
     /**
      * @Subject
      * @Iterations(5)
-     * @BeforeMethods({"setUp"})
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function augment_left() : void
+    public function augmentLeft() : void
     {
         $this->a->augmentLeft($this->b);
     }
