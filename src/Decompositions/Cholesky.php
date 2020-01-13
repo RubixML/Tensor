@@ -5,8 +5,6 @@ namespace Tensor\Decompositions;
 use Tensor\Matrix;
 use RuntimeException;
 
-use const Tensor\EPSILON;
-
 /**
  * Cholesky
  *

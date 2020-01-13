@@ -3,8 +3,6 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
-use InvalidArgumentException;
-use RuntimeException;
 
 /**
  * RREF

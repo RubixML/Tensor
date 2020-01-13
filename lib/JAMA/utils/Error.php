@@ -1,12 +1,12 @@
 <?php
 
 /**
-* @package JAMA
-*
-*  Error handling
-* @author Michael Bommarito
-* @version 01292005
-*/
+ * @package JAMA
+ *
+ *  Error handling
+ * @author Michael Bommarito
+ * @version 01292005
+ */
  
 //Language constant
 define('LANG', 'EN');
@@ -69,12 +69,13 @@ define('RowLengthException', -10);
 $error['EN'][-10] = 'All rows must have the same length.';
  
 /**
-* Custom error handler
-* @param int $type Error type: {ERROR, WARNING, NOTICE}
-* @param int $num Error number
-* @param string $file File in which the error occured
-* @param int $line Line on which the error occured
-*/
+  * Custom error handler
+  * @param int $type Error type: {ERROR, WARNING, NOTICE}
+  * @param int $num Error number
+  * @param string $file File in which the error occured
+  * @param int $line Line on which the error occured
+  * @param null|mixed $context
+  */
 function JAMAError($type = null, $num = null, $file = null, $line = null, $context = null)
 {
     global $error;

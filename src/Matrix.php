@@ -10,15 +10,11 @@ use Tensor\Decompositions\Cholesky;
 use InvalidArgumentException;
 use RuntimeException;
 use ArrayIterator;
-use Exception;
 use Closure;
 
 use function count;
 use function array_slice;
 use function is_null;
-
-use const Tensor\EPSILON;
-use const Tensor\TWO_PI;
 
 /**
  * Matrix

@@ -43,7 +43,7 @@ class ColumnVectorTest extends TestCase
         ]);
     }
 
-    public function test_build_vector() : void
+    public function testBuildVector() : void
     {
         $this->assertInstanceOf(ColumnVector::class, $this->a);
         $this->assertInstanceOf(Vector::class, $this->a);
@@ -55,32 +55,32 @@ class ColumnVectorTest extends TestCase
         $this->assertInstanceOf(ArrayLike::class, $this->a);
     }
 
-    public function test_shape() : void
+    public function testShape() : void
     {
         $this->assertEquals([3], $this->a->shape());
     }
 
-    public function test_shape_string() : void
+    public function testShapeString() : void
     {
         $this->assertEquals('3', $this->a->shapeString());
     }
 
-    public function test_size() : void
+    public function testSize() : void
     {
         $this->assertEquals(3, $this->a->size());
     }
 
-    public function test_get_m() : void
+    public function testGetM() : void
     {
         $this->assertEquals(3, $this->a->m());
     }
 
-    public function test_get_n() : void
+    public function testGetN() : void
     {
         $this->assertEquals(1, $this->a->n());
     }
 
-    public function test_multiply_matrix() : void
+    public function testMultiplyMatrix() : void
     {
         $z = $this->a->multiply($this->c);
 
@@ -94,7 +94,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_divide_matrix() : void
+    public function testDivideMatrix() : void
     {
         $z = $this->a->divide($this->c);
 
@@ -108,7 +108,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_add_matrix() : void
+    public function testAddMatrix() : void
     {
         $z = $this->a->add($this->c);
 
@@ -122,7 +122,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_subtract_matrix() : void
+    public function testSubtractMatrix() : void
     {
         $z = $this->a->subtract($this->c);
 
@@ -136,7 +136,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_equal_matrix() : void
+    public function testEqualMatrix() : void
     {
         $z = $this->a->equal($this->c);
 
@@ -150,7 +150,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_not_equal_matrix() : void
+    public function testNotEqualMatrix() : void
     {
         $z = $this->a->notEqual($this->c);
 
@@ -164,7 +164,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_greater_matrix() : void
+    public function testGreaterMatrix() : void
     {
         $z = $this->a->greater($this->c);
 
@@ -178,7 +178,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_greater_equal_matrix() : void
+    public function testGreaterEqualMatrix() : void
     {
         $z = $this->a->greaterEqual($this->c);
 
@@ -192,7 +192,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_less_matrix() : void
+    public function testLessMatrix() : void
     {
         $z = $this->a->less($this->c);
 
@@ -206,7 +206,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_less_equal_matrix() : void
+    public function testLessEqualMatrix() : void
     {
         $z = $this->a->lessEqual($this->c);
 

@@ -9,45 +9,45 @@ require_once('utils/Maths.php');
 require_once('utils/Error.php');
 
 /**
-* @package JAMA
-*
-* Matrix class
-* @author Paul Meagher
-* @author Michael Bommarito
-* @author Lukasz Karapuda
-* @author Bartek Matosiuk
-* @version 1.8
-* @license PHP v3.0
-* @see http://math.nist.gov/javanumerics/jama/
-*/
+ * @package JAMA
+ *
+ * Matrix class
+ * @author Paul Meagher
+ * @author Michael Bommarito
+ * @author Lukasz Karapuda
+ * @author Bartek Matosiuk
+ * @version 1.8
+ * @license PHP v3.0
+ * @see http://math.nist.gov/javanumerics/jama/
+ */
 class Matrix
 {
     /**
-    * Matrix storage
-    * @var array
-    * @access private
-    */
+     * Matrix storage
+     * @var array
+     * @access private
+     */
     private $A = [];
  
     /**
-    * Matrix row dimension
-    * @var int
-    * @access private
-    */
+     * Matrix row dimension
+     * @var int
+     * @access private
+     */
     private $m;
  
     /**
-    * Matrix column dimension
-    * @var int
-    * @access private
-    */
+     * Matrix column dimension
+     * @var int
+     * @access private
+     */
     private $n;
  
     /**
-    * Polymorphic constructor
-    * As PHP has no support for polymorphic constructors, we hack our own sort of polymorphism using func_num_args, func_get_arg, and gettype.  In essence, we're just implementing a simple RTTI filter and calling the appropriate constructor.
-    * @return
-    */
+     * Polymorphic constructor
+     * As PHP has no support for polymorphic constructors, we hack our own sort of polymorphism using func_num_args, func_get_arg, and gettype.  In essence, we're just implementing a simple RTTI filter and calling the appropriate constructor.
+     * @return
+     */
     public function __construct()
     {
         if (func_num_args() > 0) {
@@ -129,27 +129,28 @@ class Matrix
     }
  
     /**
-    * getArray
-    * @return array Matrix array
-    */
+     * getArray
+     * @return array Matrix array
+     */
     public function &getArray()
     {
         return $this->A;
     }
  
     /**
-    * getArrayCopy
-    * @return array Matrix array copy
-    */
+     * getArrayCopy
+     * @return array Matrix array copy
+     */
     public function getArrayCopy()
     {
         return $this->A;
     }
  
     /** Construct a matrix from a copy of a 2-D array.
-    * @param float A[][]  Two-dimensional array of doubles.
-    * @exception  IllegalArgumentException All rows must have the same length
-    */
+     * @param float A[][]  Two-dimensional array of doubles.
+     * @param mixed $A
+     * @exception  IllegalArgumentException All rows must have the same length
+     */
     public function constructWithCopy($A)
     {
         $this->m = count($A);
@@ -167,10 +168,10 @@ class Matrix
     }
  
     /**
-    * getColumnPacked
-    * Get a column-packed array
-    * @return array Column-packed matrix array
-    */
+     * getColumnPacked
+     * Get a column-packed array
+     * @return array Column-packed matrix array
+     */
     public function getColumnPackedCopy()
     {
         $P = [];
@@ -183,10 +184,10 @@ class Matrix
     }
  
     /**
-    * getRowPacked
-    * Get a row-packed array
-    * @return array Row-packed matrix array
-    */
+     * getRowPacked
+     * Get a row-packed array
+     * @return array Row-packed matrix array
+     */
     public function getRowPackedCopy()
     {
         $P = [];
@@ -199,44 +200,44 @@ class Matrix
     }
  
     /**
-    * getRowDimension
-    * @return int Row dimension
-    */
+     * getRowDimension
+     * @return int Row dimension
+     */
     public function getRowDimension()
     {
         return $this->m;
     }
  
     /**
-    * getColumnDimension
-    * @return int Column dimension
-    */
+     * getColumnDimension
+     * @return int Column dimension
+     */
     public function getColumnDimension()
     {
         return $this->n;
     }
  
     /**
-    * get
-    * Get the i,j-th element of the matrix.
-    * @param int $i Row position
-    * @param int $j Column position
-    * @return mixed Element (int/float/double)
-    */
+     * get
+     * Get the i,j-th element of the matrix.
+     * @param int $i Row position
+     * @param int $j Column position
+     * @return mixed Element (int/float/double)
+     */
     public function get($i = null, $j = null)
     {
         return $this->A[$i][$j];
     }
  
     /**
-    * getMatrix
-    * Get a submatrix
-    * @param int $i0 Initial row index
-    * @param int $iF Final row index
-    * @param int $j0 Initial column index
-    * @param int $jF Final column index
-    * @return Matrix Submatrix
-    */
+     * getMatrix
+     * Get a submatrix
+     * @param int $i0 Initial row index
+     * @param int $iF Final row index
+     * @param int $j0 Initial column index
+     * @param int $jF Final column index
+     * @return Matrix Submatrix
+     */
     public function getMatrix()
     {
         if (func_num_args() > 0) {
@@ -246,7 +247,7 @@ class Matrix
  
       //A($i0...; $j0...)
       case 'integer,integer':
-        list($i0, $j0) = $args;
+        [$i0, $j0] = $args;
           $m = $i0 >= 0 ? $this->m - $i0 : trigger_error(ArgumentBoundsException, ERROR);
           $n = $j0 >= 0 ? $this->n - $j0 : trigger_error(ArgumentBoundsException, ERROR);
           $R = new Matrix($m, $n);
@@ -262,10 +263,10 @@ class Matrix
  
       //A($i0...$iF; $j0...$jF)
       case 'integer,integer,integer,integer':
-       list($i0, $iF, $j0, $jF) = $args;
+       [$i0, $iF, $j0, $jF] = $args;
         $m = (($iF > $i0) && ($this->m >= $iF) && ($i0 >= 0)) ? $iF - $i0 : trigger_error(ArgumentBoundsException, ERROR);
         $n = (($jF > $j0) && ($this->n >= $jF) && ($j0 >= 0)) ? $jF - $j0 : trigger_error(ArgumentBoundsException, ERROR);
-        $R = new Matrix($m+1, $n+1);
+        $R = new Matrix($m + 1, $n + 1);
  
         for ($i = $i0; $i <= $iF; $i++) {
             for ($j = $j0; $j <= $jF; $j++) {
@@ -278,7 +279,7 @@ class Matrix
  
       //$R = array of row indices; $C = array of column indices
       case 'array,array':
-        list($RL, $CL) = $args;
+        [$RL, $CL] = $args;
         $m = count($RL) > 0 ? count($RL) : trigger_error(ArgumentBoundsException, ERROR);
         $n = count($CL) > 0 ? count($CL) : trigger_error(ArgumentBoundsException, ERROR);
         $R = new Matrix($m, $n);
@@ -294,7 +295,7 @@ class Matrix
  
       //$RL = array of row indices; $CL = array of column indices
       case 'array,array':
-        list($RL, $CL) = $args;
+        [$RL, $CL] = $args;
         $m = count($RL) > 0 ? count($RL) : trigger_error(ArgumentBoundsException, ERROR);
         $n = count($CL) > 0 ? count($CL) : trigger_error(ArgumentBoundsException, ERROR);
         $R = new Matrix($m, $n);
@@ -310,7 +311,7 @@ class Matrix
  
       //A($i0...$iF); $CL = array of column indices
       case 'integer,integer,array':
-        list($i0, $iF, $CL) = $args;
+        [$i0, $iF, $CL] = $args;
         $m = (($iF > $i0) && ($this->m >= $iF) && ($i0 >= 0)) ? $iF - $i0 : trigger_error(ArgumentBoundsException, ERROR);
         $n = count($CL) > 0 ? count($CL) : trigger_error(ArgumentBoundsException, ERROR);
         $R = new Matrix($m, $n);
@@ -326,10 +327,10 @@ class Matrix
  
       //$RL = array of row indices
       case 'array,integer,integer':
-        list($RL, $j0, $jF) = $args;
+        [$RL, $j0, $jF] = $args;
         $m = count($RL) > 0 ? count($RL) : trigger_error(ArgumentBoundsException, ERROR);
         $n = (($jF >= $j0) && ($this->n >= $jF) && ($j0 >= 0)) ? $jF - $j0 : trigger_error(ArgumentBoundsException, ERROR);
-        $R = new Matrix($m, $n+1);
+        $R = new Matrix($m, $n + 1);
  
         for ($i = 0; $i < $m; $i++) {
             for ($j = $j0; $j <= $jF; $j++) {
@@ -349,14 +350,14 @@ class Matrix
     }
  
     /**
-    * setMatrix
-    * Set a submatrix
-    * @param int $i0 Initial row index
-    * @param int $j0 Initial column index
-    * @param mixed $S Matrix/Array submatrix
-    *  ($i0, $j0, $S) $S = Matrix
-    *  ($i0, $j0, $S) $S = Array
-    */
+     * setMatrix
+     * Set a submatrix
+     * @param int $i0 Initial row index
+     * @param int $j0 Initial column index
+     * @param mixed $S Matrix/Array submatrix
+     *  ($i0, $j0, $S) $S = Matrix
+     *  ($i0, $j0, $S) $S = Array
+     */
     public function setMatrix()
     {
         if (func_num_args() > 0) {
@@ -400,11 +401,11 @@ class Matrix
     }
  
     /**
-    * checkMatrixDimensions
-    * Is matrix B the same size?
-    * @param Matrix $B Matrix B
-    * @return bool
-    */
+     * checkMatrixDimensions
+     * Is matrix B the same size?
+     * @param Matrix $B Matrix B
+     * @return bool
+     */
     public function checkMatrixDimensions($B = null)
     {
         if (is_a($B, 'Matrix')) {
@@ -419,13 +420,13 @@ class Matrix
     }
  
     /**
-    * set
-    * Set the i,j-th element of the matrix.
-    * @param int $i Row position
-    * @param int $j Column position
-    * @param mixed $c Int/float/double value
-    * @return mixed Element (int/float/double)
-    */
+     * set
+     * Set the i,j-th element of the matrix.
+     * @param int $i Row position
+     * @param int $j Column position
+     * @param mixed $c Int/float/double value
+     * @return mixed Element (int/float/double)
+     */
     public function set($i = null, $j = null, $c = null)
     {
         // Optimized set version just has this
@@ -445,25 +446,25 @@ class Matrix
     }
  
     /**
-    * identity
-    * Generate an identity matrix.
-    * @param int $m Row dimension
-    * @param int $n Column dimension
-    * @return Matrix Identity matrix
-    */
+     * identity
+     * Generate an identity matrix.
+     * @param int $m Row dimension
+     * @param int $n Column dimension
+     * @return Matrix Identity matrix
+     */
     public function &identity($m = null, $n = null)
     {
         return Matrix::diagonal($m, $n, 1);
     }
  
     /**
-    * diagonal
-    * Generate a diagonal matrix
-    * @param int $m Row dimension
-    * @param int $n Column dimension
-    * @param mixed $c Diagonal value
-    * @return Matrix Diagonal matrix
-    */
+     * diagonal
+     * Generate a diagonal matrix
+     * @param int $m Row dimension
+     * @param int $n Column dimension
+     * @param mixed $c Diagonal value
+     * @return Matrix Diagonal matrix
+     */
     public function &diagonal($m = null, $n = null, $c = 1)
     {
         $R = new Matrix($m, $n);
@@ -474,13 +475,13 @@ class Matrix
     }
  
     /**
-    * filled
-    * Generate a filled matrix
-    * @param int $m Row dimension
-    * @param int $n Column dimension
-    * @param int $c Fill constant
-    * @return Matrix Filled matrix
-    */
+     * filled
+     * Generate a filled matrix
+     * @param int $m Row dimension
+     * @param int $n Column dimension
+     * @param int $c Fill constant
+     * @return Matrix Filled matrix
+     */
     public function &filled($m = null, $n = null, $c = 0)
     {
         if (is_int($m) && is_int($n) && is_numeric($c)) {
@@ -492,12 +493,14 @@ class Matrix
     }
  
     /**
-    * random
-    * Generate a random matrix
-    * @param int $m Row dimension
-    * @param int $n Column dimension
-    * @return Matrix Random matrix
-    */
+     * random
+     * Generate a random matrix
+     * @param int $m Row dimension
+     * @param int $n Column dimension
+     * @param mixed $a
+     * @param mixed $b
+     * @return Matrix Random matrix
+     */
     public function &random($m = null, $n = null, $a = RAND_MIN, $b = RAND_MAX)
     {
         if (is_int($m) && is_int($n) && is_numeric($a) && is_numeric($b)) {
@@ -516,22 +519,22 @@ class Matrix
     }
  
     /**
-    * packed
-    * Alias for getRowPacked
-    * @return array Packed array
-    */
+     * packed
+     * Alias for getRowPacked
+     * @return array Packed array
+     */
     public function &packed()
     {
         return $this->getRowPacked();
     }
  
     /**
-    * getMatrixByRow
-    * Get a submatrix by row index/range
-    * @param int $i0 Initial row index
-    * @param int $iF Final row index
-    * @return Matrix Submatrix
-    */
+     * getMatrixByRow
+     * Get a submatrix by row index/range
+     * @param int $i0 Initial row index
+     * @param int $iF Final row index
+     * @return Matrix Submatrix
+     */
     public function getMatrixByRow($i0 = null, $iF = null)
     {
         if (is_int($i0)) {
@@ -546,12 +549,14 @@ class Matrix
     }
  
     /**
-    * getMatrixByCol
-    * Get a submatrix by column index/range
-    * @param int $i0 Initial column index
-    * @param int $iF Final column index
-    * @return Matrix Submatrix
-    */
+     * getMatrixByCol
+     * Get a submatrix by column index/range
+     * @param int $i0 Initial column index
+     * @param int $iF Final column index
+     * @param null|mixed $j0
+     * @param null|mixed $jF
+     * @return Matrix Submatrix
+     */
     public function getMatrixByCol($j0 = null, $jF = null)
     {
         if (is_int($j0)) {
@@ -566,10 +571,10 @@ class Matrix
     }
  
     /**
-    * transpose
-    * Tranpose matrix
-    * @return Matrix Transposed matrix
-    */
+     * transpose
+     * Tranpose matrix
+     * @return Matrix Transposed matrix
+     */
     public function transpose()
     {
         $R = new Matrix($this->n, $this->m);
@@ -597,10 +602,10 @@ class Matrix
     */
  
     /**
-    * norm1
-    * One norm
-    * @return float Maximum column sum
-    */
+     * norm1
+     * One norm
+     * @return float Maximum column sum
+     */
     public function norm1()
     {
         $r = 0;
@@ -619,19 +624,19 @@ class Matrix
     }
  
     /**
-    * norm2
-    * Maximum singular value
-    * @return float Maximum singular value
-    */
+     * norm2
+     * Maximum singular value
+     * @return float Maximum singular value
+     */
     public function norm2()
     {
     }
  
     /**
-    * normInf
-    * Infinite norm
-    * @return float Maximum row sum
-    */
+     * normInf
+     * Infinite norm
+     * @return float Maximum row sum
+     */
     public function normInf()
     {
         $r = 0;
@@ -650,10 +655,10 @@ class Matrix
     }
  
     /**
-    * normF
-    * Frobenius norm
-    * @return float Square root of the sum of all elements squared
-    */
+     * normF
+     * Frobenius norm
+     * @return float Square root of the sum of all elements squared
+     */
     public function normF()
     {
         $f = 0;
@@ -666,9 +671,9 @@ class Matrix
     }
  
     /**
-    * Matrix rank
-    * @return effective numerical rank, obtained from SVD.
-    */
+     * Matrix rank
+     * @return effective numerical rank, obtained from SVD.
+     */
     public function rank()
     {
         $svd = new SingularValueDecomposition($this);
@@ -676,9 +681,9 @@ class Matrix
     }
  
     /**
-    * Matrix condition (2 norm)
-    * @return ratio of largest to smallest singular value.
-    */
+     * Matrix condition (2 norm)
+     * @return ratio of largest to smallest singular value.
+     */
     public function cond()
     {
         $svd = new SingularValueDecomposition($this);
@@ -686,10 +691,10 @@ class Matrix
     }
  
     /**
-    * trace
-    * Sum of diagonal elements
-    * @return float Sum of diagonal elements
-    */
+     * trace
+     * Sum of diagonal elements
+     * @return float Sum of diagonal elements
+     */
     public function trace()
     {
         $s = 0;
@@ -703,20 +708,20 @@ class Matrix
     }
  
     /**
-    * uminus
-    * Unary minus matrix -A
-    * @return Matrix Unary minus matrix
-    */
+     * uminus
+     * Unary minus matrix -A
+     * @return Matrix Unary minus matrix
+     */
     public function uminus()
     {
     }
  
     /**
-    * plus
-    * A + B
-    * @param mixed $B Matrix/Array
-    * @return Matrix Sum
-    */
+     * plus
+     * A + B
+     * @param mixed $B Matrix/Array
+     * @return Matrix Sum
+     */
     public function plus()
     {
         if (func_num_args() > 0) {
@@ -760,11 +765,11 @@ class Matrix
     }
  
     /**
-    * plusEquals
-    * A = A + B
-    * @param mixed $B Matrix/Array
-    * @return Matrix Sum
-    */
+     * plusEquals
+     * A = A + B
+     * @param mixed $B Matrix/Array
+     * @return Matrix Sum
+     */
     public function &plusEquals()
     {
         if (func_num_args() > 0) {
@@ -808,11 +813,11 @@ class Matrix
     }
  
     /**
-    * minus
-    * A - B
-    * @param mixed $B Matrix/Array
-    * @return Matrix Sum
-    */
+     * minus
+     * A - B
+     * @param mixed $B Matrix/Array
+     * @return Matrix Sum
+     */
     public function minus()
     {
         if (func_num_args() > 0) {
@@ -856,11 +861,11 @@ class Matrix
     }
  
     /**
-    * minusEquals
-    * A = A - B
-    * @param mixed $B Matrix/Array
-    * @return Matrix Sum
-    */
+     * minusEquals
+     * A = A - B
+     * @param mixed $B Matrix/Array
+     * @return Matrix Sum
+     */
     public function &minusEquals()
     {
         if (func_num_args() > 0) {
@@ -904,12 +909,12 @@ class Matrix
     }
  
     /**
-    * arrayTimes
-    * Element-by-element multiplication
-    * Cij = Aij * Bij
-    * @param mixed $B Matrix/Array
-    * @return Matrix Matrix Cij
-    */
+     * arrayTimes
+     * Element-by-element multiplication
+     * Cij = Aij * Bij
+     * @param mixed $B Matrix/Array
+     * @return Matrix Matrix Cij
+     */
     public function arrayTimes()
     {
         if (func_num_args() > 0) {
@@ -953,12 +958,12 @@ class Matrix
     }
  
     /**
-    * arrayTimesEquals
-    * Element-by-element multiplication
-    * Aij = Aij * Bij
-    * @param mixed $B Matrix/Array
-    * @return Matrix Matrix Aij
-    */
+     * arrayTimesEquals
+     * Element-by-element multiplication
+     * Aij = Aij * Bij
+     * @param mixed $B Matrix/Array
+     * @return Matrix Matrix Aij
+     */
     public function &arrayTimesEquals()
     {
         if (func_num_args() > 0) {
@@ -1002,12 +1007,12 @@ class Matrix
     }
  
     /**
-    * arrayRightDivide
-    * Element-by-element right division
-    * A / B
-    * @param Matrix $B Matrix B
-    * @return Matrix Division result
-    */
+     * arrayRightDivide
+     * Element-by-element right division
+     * A / B
+     * @param Matrix $B Matrix B
+     * @return Matrix Division result
+     */
     public function arrayRightDivide()
     {
         if (func_num_args() > 0) {
@@ -1051,12 +1056,12 @@ class Matrix
     }
  
     /**
-    * arrayRightDivideEquals
-    * Element-by-element right division
-    * Aij = Aij / Bij
-    * @param mixed $B Matrix/Array
-    * @return Matrix Matrix Aij
-    */
+     * arrayRightDivideEquals
+     * Element-by-element right division
+     * Aij = Aij / Bij
+     * @param mixed $B Matrix/Array
+     * @return Matrix Matrix Aij
+     */
     public function &arrayRightDivideEquals()
     {
         if (func_num_args() > 0) {
@@ -1100,12 +1105,12 @@ class Matrix
     }
  
     /**
-    * arrayLeftDivide
-    * Element-by-element Left division
-    * A / B
-    * @param Matrix $B Matrix B
-    * @return Matrix Division result
-    */
+     * arrayLeftDivide
+     * Element-by-element Left division
+     * A / B
+     * @param Matrix $B Matrix B
+     * @return Matrix Division result
+     */
     public function arrayLeftDivide()
     {
         if (func_num_args() > 0) {
@@ -1149,12 +1154,12 @@ class Matrix
     }
  
     /**
-    * arrayLeftDivideEquals
-    * Element-by-element Left division
-    * Aij = Aij / Bij
-    * @param mixed $B Matrix/Array
-    * @return Matrix Matrix Aij
-    */
+     * arrayLeftDivideEquals
+     * Element-by-element Left division
+     * Aij = Aij / Bij
+     * @param mixed $B Matrix/Array
+     * @return Matrix Matrix Aij
+     */
     public function &arrayLeftDivideEquals()
     {
         if (func_num_args() > 0) {
@@ -1198,15 +1203,15 @@ class Matrix
     }
  
     /**
-    * times
-    * Matrix multiplication
-    * @param mixed $n Matrix/Array/Scalar
-    * @return Matrix Product
-    */
+     * times
+     * Matrix multiplication
+     * @param mixed $n Matrix/Array/Scalar
+     * @return Matrix Product
+     */
     public function times()
     {
         if (func_num_args() > 0) {
-            $args  = func_get_args();
+            $args = func_get_args();
             $match = implode(',', array_map('gettype', $args));
             switch ($match) {
           case 'object':
@@ -1288,60 +1293,60 @@ class Matrix
     }
  
     /**
-    * chol
-    * Cholesky decomposition
-    * @return \JAMA\CholeskyDecomposition
-    */
+     * chol
+     * Cholesky decomposition
+     * @return \JAMA\CholeskyDecomposition
+     */
     public function chol()
     {
         return new CholeskyDecomposition($this);
     }
  
     /**
-    * lu
-    * LU decomposition
-    * @return \JAMA\LUDecomposition
-    */
+     * lu
+     * LU decomposition
+     * @return \JAMA\LUDecomposition
+     */
     public function lu()
     {
         return new LUDecomposition($this);
     }
  
     /**
-    * qr
-    * QR decomposition
-    * @return \JAMA\QRDecomposition
-    */
+     * qr
+     * QR decomposition
+     * @return \JAMA\QRDecomposition
+     */
     public function qr()
     {
         return new QRDecomposition($this);
     }
  
     /**
-    * eig
-    * Eigenvalue decomposition
-    * @return \JAMA\EigenvalueDecomposition
-    */
+     * eig
+     * Eigenvalue decomposition
+     * @return \JAMA\EigenvalueDecomposition
+     */
     public function eig()
     {
         return new EigenvalueDecomposition($this);
     }
  
     /**
-    * svd
-    * Singular value decomposition
-    * @return \JAMA\SingularValueDecomposition
-    */
+     * svd
+     * Singular value decomposition
+     * @return \JAMA\SingularValueDecomposition
+     */
     public function svd()
     {
         return new SingularValueDecomposition($this);
     }
  
     /**
-    * Solve A*X = B.
-    * @param Matrix $B Right hand side
-    * @return Matrix ... Solution if A is square, least squares solution otherwise
-    */
+     * Solve A*X = B.
+     * @param Matrix $B Right hand side
+     * @return Matrix ... Solution if A is square, least squares solution otherwise
+     */
     public function solve($B)
     {
         if ($this->m == $this->n) {
@@ -1354,19 +1359,19 @@ class Matrix
     }
  
     /**
-    * Matrix inverse or pseudoinverse.
-    * @return Matrix ... Inverse(A) if A is square, pseudoinverse otherwise.
-    */
+     * Matrix inverse or pseudoinverse.
+     * @return Matrix ... Inverse(A) if A is square, pseudoinverse otherwise.
+     */
     public function inverse()
     {
         return $this->solve($this->identity($this->m, $this->m));
     }
  
     /**
-    * det
-    * Calculate determinant
-    * @return float Determinant
-    */
+     * det
+     * Calculate determinant
+     * @return float Determinant
+     */
     public function det()
     {
         $L = new LUDecomposition($this);
@@ -1374,10 +1379,13 @@ class Matrix
     }
  
     /**
-  * Older debugging utility for backwards compatability.
-  * @return html version of matrix
-  */
-    public function mprint($A, $format='%01.2f', $width=2)
+     * Older debugging utility for backwards compatability.
+     * @param mixed $A
+     * @param mixed $format
+     * @param mixed $width
+     * @return html version of matrix
+     */
+    public function mprint($A, $format = '%01.2f', $width = 2)
     {
         $spacing = '';
         $m = count($A);
@@ -1395,10 +1403,11 @@ class Matrix
     }
  
     /**
-    * Debugging utility.
-    * @return Output HTML representation of matrix
-    */
-    public function toHTML($width=2)
+     * Debugging utility.
+     * @param mixed $width
+     * @return Output HTML representation of matrix
+     */
+    public function toHTML($width = 2)
     {
         print('<table style="background-color:#eee;">');
         for ($i = 0; $i < $this->m; $i++) {

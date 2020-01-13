@@ -5,12 +5,12 @@ namespace Tensor;
 interface Comparable
 {
     /**
-    * A universal function to compute the equality comparison of a tensor
-    * and another tensor element-wise.
-    *
-    * @param  mixed  $b
-    * @return mixed
-    */
+     * A universal function to compute the equality comparison of a tensor
+     * and another tensor element-wise.
+     *
+     * @param mixed $b
+     * @return mixed
+     */
     public function equal($b);
 
     /**

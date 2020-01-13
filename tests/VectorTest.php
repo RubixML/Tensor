@@ -12,11 +12,6 @@ use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
 use PHPUnit\Framework\TestCase;
-use InvalidArgumentException;
-use IteratorAggregate;
-use RuntimeException;
-use ArrayAccess;
-use Countable;
 
 class VectorTest extends TestCase
 {
@@ -55,7 +50,7 @@ class VectorTest extends TestCase
         ]);
     }
 
-    public function test_build_vector() : void
+    public function testBuildVector() : void
     {
         $this->assertInstanceOf(Vector::class, $this->a);
         $this->assertInstanceOf(Tensor::class, $this->a);
@@ -66,7 +61,7 @@ class VectorTest extends TestCase
         $this->assertInstanceOf(ArrayLike::class, $this->a);
     }
 
-    public function test_build_zeros() : void
+    public function testBuildZeros() : void
     {
         $z = Vector::zeros(4);
 
@@ -76,7 +71,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_build_ones() : void
+    public function testBuildOnes() : void
     {
         $z = Vector::ones(4);
 
@@ -86,7 +81,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
     
-    public function test_build_fill() : void
+    public function testBuildFill() : void
     {
         $z = Vector::fill(16, 4);
 
@@ -96,7 +91,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_build_rand() : void
+    public function testBuildRand() : void
     {
         $z = Vector::rand(4);
 
@@ -104,7 +99,7 @@ class VectorTest extends TestCase
         $this->assertCount(4, $z);
     }
 
-    public function test_build_gaussian() : void
+    public function testBuildGaussian() : void
     {
         $z = Vector::gaussian(4);
 
@@ -112,7 +107,7 @@ class VectorTest extends TestCase
         $this->assertCount(4, $z);
     }
 
-    public function test_build_poisson() : void
+    public function testBuildPoisson() : void
     {
         $z = Vector::poisson(10, 2.);
 
@@ -120,7 +115,7 @@ class VectorTest extends TestCase
         $this->assertCount(10, $z);
     }
 
-    public function test_build_uniform() : void
+    public function testBuildUniform() : void
     {
         $z = Vector::uniform(5);
 
@@ -128,7 +123,7 @@ class VectorTest extends TestCase
         $this->assertCount(5, $z);
     }
 
-    public function test_build_range() : void
+    public function testBuildRange() : void
     {
         $z = Vector::range(5., 12., 2.);
 
@@ -138,7 +133,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_build_linspace() : void
+    public function testBuildLinspace() : void
     {
         $z = Vector::linspace(-5, 5, 9);
 
@@ -152,7 +147,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_maximum() : void
+    public function testMaximum() : void
     {
         $z = Vector::maximum($this->a, $this->b);
 
@@ -162,7 +157,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_minimum() : void
+    public function testMinimum() : void
     {
         $z = Vector::minimum($this->a, $this->b);
 
@@ -172,42 +167,42 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_shape() : void
+    public function testShape() : void
     {
         $this->assertEquals([8], $this->a->shape());
         $this->assertEquals([8], $this->b->shape());
         $this->assertEquals([6], $this->c->shape());
     }
 
-    public function test_shape_string() : void
+    public function testShapeString() : void
     {
         $this->assertEquals('8', $this->a->shapeString());
         $this->assertEquals('8', $this->b->shapeString());
         $this->assertEquals('6', $this->c->shapeString());
     }
 
-    public function test_size() : void
+    public function testSize() : void
     {
         $this->assertEquals(8, $this->a->size());
         $this->assertEquals(8, $this->b->size());
         $this->assertEquals(6, $this->c->size());
     }
 
-    public function test_get_m() : void
+    public function testGetM() : void
     {
         $this->assertEquals(1, $this->a->m());
         $this->assertEquals(1, $this->b->m());
         $this->assertEquals(1, $this->c->m());
     }
 
-    public function test_get_n() : void
+    public function testGetN() : void
     {
         $this->assertEquals(8, $this->a->n());
         $this->assertEquals(8, $this->b->n());
         $this->assertEquals(6, $this->c->n());
     }
 
-    public function test_as_array() : void
+    public function testAsArray() : void
     {
         $z = $this->a->asArray();
 
@@ -216,7 +211,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z);
     }
 
-    public function test_as_row_matrix() : void
+    public function testAsRowMatrix() : void
     {
         $z = $this->a->asRowMatrix();
 
@@ -226,7 +221,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_as_column_matrix() : void
+    public function testAsColumnMatrix() : void
     {
         $z = $this->a->asColumnMatrix();
 
@@ -236,7 +231,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_reshape() : void
+    public function testReshape() : void
     {
         $z = $this->a->reshape(4, 2);
 
@@ -252,7 +247,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_transpose() : void
+    public function testTranspose() : void
     {
         $z = $this->a->transpose();
 
@@ -262,7 +257,7 @@ class VectorTest extends TestCase
         $this->assertEquals($outcome, $z->asArray());
     }
 
-    public function test_map() : void
+    public function testMap() : void
     {
         $z = $this->a->map(function ($value) {
             return $value > 0. ? 1 : 0;
@@ -274,7 +269,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_reduce() : void
+    public function testReduce() : void
     {
         $scalar = $this->a->reduce(function ($value, $carry) {
             return $carry + ($value / 2.);
@@ -283,7 +278,7 @@ class VectorTest extends TestCase
         $this->assertEquals(110.3671875, $scalar);
     }
 
-    public function test_reciprocal() : void
+    public function testReciprocal() : void
     {
         $z = $this->a->reciprocal();
 
@@ -296,31 +291,31 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_argmin() : void
+    public function testArgmin() : void
     {
         $this->assertEquals(4, $this->a->argmin());
         $this->assertEquals(5, $this->b->argmin());
         $this->assertEquals(4, $this->c->argmin());
     }
 
-    public function test_argmax() : void
+    public function testArgmax() : void
     {
         $this->assertEquals(6, $this->a->argmax());
         $this->assertEquals(6, $this->b->argmax());
         $this->assertEquals(3, $this->c->argmax());
     }
 
-    public function test_dot() : void
+    public function testDot() : void
     {
         $this->assertEquals(331.54999999999995, $this->a->dot($this->b));
     }
 
-    public function test_inner() : void
+    public function testInner() : void
     {
         $this->assertEquals(331.54999999999995, $this->a->inner($this->b));
     }
 
-    public function test_outer() : void
+    public function testOuter() : void
     {
         $z = $this->a->outer($this->b);
 
@@ -339,7 +334,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_cross() : void
+    public function testCross() : void
     {
         $a = new Vector([1., -0.5, 6.]);
 
@@ -353,7 +348,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_convolve() : void
+    public function testConvolve() : void
     {
         $z = $this->a->convolve($this->c, 1);
 
@@ -363,7 +358,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_project() : void
+    public function testProject() : void
     {
         $z = $this->a->project($this->b);
 
@@ -376,7 +371,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_multiply_matrix() : void
+    public function testMultiplyMatrix() : void
     {
         $z = $this->c->multiply($this->d);
 
@@ -390,7 +385,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_divide_matrix() : void
+    public function testDivideMatrix() : void
     {
         $z = $this->c->divide($this->d);
 
@@ -404,7 +399,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_add_matrix() : void
+    public function testAddMatrix() : void
     {
         $z = $this->c->add($this->d);
 
@@ -418,7 +413,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_subtract_matrix() : void
+    public function testSubtractMatrix() : void
     {
         $z = $this->c->subtract($this->d);
 
@@ -432,7 +427,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_pow_matrix() : void
+    public function testPowMatrix() : void
     {
         $z = $this->c->pow($this->d);
 
@@ -446,7 +441,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_equal_matrix() : void
+    public function testEqualMatrix() : void
     {
         $z = $this->c->equal($this->d);
 
@@ -460,7 +455,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_not_equal_matrix() : void
+    public function testNotEqualMatrix() : void
     {
         $z = $this->c->notEqual($this->d);
 
@@ -474,7 +469,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_greater_matrix() : void
+    public function testGreaterMatrix() : void
     {
         $z = $this->c->greater($this->d);
 
@@ -488,7 +483,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_greater_equal_matrix() : void
+    public function testGreaterEqualMatrix() : void
     {
         $z = $this->c->greaterEqual($this->d);
 
@@ -502,7 +497,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_less_matrix() : void
+    public function testLessMatrix() : void
     {
         $z = $this->c->less($this->d);
 
@@ -516,7 +511,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_less_equal_matrix() : void
+    public function testLessEqualMatrix() : void
     {
         $z = $this->c->lessEqual($this->d);
 
@@ -530,7 +525,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_multiply_vector() : void
+    public function testMultiplyVector() : void
     {
         $z = $this->a->multiply($this->b);
 
@@ -540,7 +535,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_divide_vector() : void
+    public function testDivideVector() : void
     {
         $z = $this->a->divide($this->b);
 
@@ -550,7 +545,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_add_vector() : void
+    public function testAddVector() : void
     {
         $z = $this->a->add($this->b);
 
@@ -560,7 +555,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_subtract_vector() : void
+    public function testSubtractVector() : void
     {
         $z = $this->a->subtract($this->b);
 
@@ -570,7 +565,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_pow_vector() : void
+    public function testPowVector() : void
     {
         $z = $this->b->pow($this->a);
 
@@ -583,7 +578,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_mod_vector() : void
+    public function testModVector() : void
     {
         $z = $this->b->mod($this->a);
 
@@ -593,7 +588,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_equal_vector() : void
+    public function testEqualVector() : void
     {
         $z = $this->b->equal($this->a);
 
@@ -603,7 +598,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_not_equal_vector() : void
+    public function testNotEqualVector() : void
     {
         $z = $this->b->notEqual($this->a);
 
@@ -613,7 +608,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_greater_vector() : void
+    public function testGreaterVector() : void
     {
         $z = $this->b->greater($this->a);
 
@@ -623,7 +618,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_greater_equal_vector() : void
+    public function testGreaterEqualVector() : void
     {
         $z = $this->b->greaterEqual($this->a);
 
@@ -633,7 +628,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_less_vector() : void
+    public function testLessVector() : void
     {
         $z = $this->b->less($this->a);
 
@@ -643,7 +638,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_less_equal_vector() : void
+    public function testLessEqualVector() : void
     {
         $z = $this->b->lessEqual($this->a);
 
@@ -653,7 +648,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_multiply_scalar() : void
+    public function testMultiplyScalar() : void
     {
         $z = $this->a->multiply(2);
         
@@ -663,7 +658,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_divide_scalar() : void
+    public function testDivideScalar() : void
     {
         $z = $this->a->divide(2);
 
@@ -673,7 +668,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_add_scalar() : void
+    public function testAddScalar() : void
     {
         $z = $this->a->add(10);
 
@@ -683,7 +678,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_subtract_scalar() : void
+    public function testSubtractScalar() : void
     {
         $z = $this->a->subtract(10);
 
@@ -693,7 +688,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_pow_scalar() : void
+    public function testPowScalar() : void
     {
         $z = $this->a->pow(4);
 
@@ -705,7 +700,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_mod_scalar() : void
+    public function testModScalar() : void
     {
         $z = $this->a->mod(4);
 
@@ -715,7 +710,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_equal_scalar() : void
+    public function testEqualScalar() : void
     {
         $z = $this->a->equal(25);
 
@@ -725,7 +720,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_not_equal_scalar() : void
+    public function testNotEqualScalar() : void
     {
         $z = $this->a->notEqual(25);
 
@@ -735,7 +730,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_greater_scalar() : void
+    public function testGreaterScalar() : void
     {
         $z = $this->b->greater(1);
 
@@ -745,7 +740,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_greater_equal_scalar() : void
+    public function testGreaterEqualScalar() : void
     {
         $z = $this->b->greaterEqual(1);
 
@@ -755,7 +750,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_less_scalar() : void
+    public function testLessScalar() : void
     {
         $z = $this->b->less(1);
 
@@ -765,7 +760,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_less_equal_scalar() : void
+    public function testLessEqualScalar() : void
     {
         $z = $this->b->lessEqual(1);
 
@@ -775,7 +770,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_abs() : void
+    public function testAbs() : void
     {
         $z = $this->a->abs();
 
@@ -785,7 +780,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_square() : void
+    public function testSquare() : void
     {
         $z = $this->a->square();
 
@@ -795,7 +790,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_pow() : void
+    public function testPow() : void
     {
         $z = $this->a->pow(3);
 
@@ -805,7 +800,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_sqrt() : void
+    public function testSqrt() : void
     {
         $z = $this->c->sqrt();
 
@@ -818,7 +813,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_exp() : void
+    public function testExp() : void
     {
         $z = $this->a->exp();
 
@@ -832,7 +827,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_log() : void
+    public function testLog() : void
     {
         $z = $this->c->log();
 
@@ -845,7 +840,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_sin() : void
+    public function testSin() : void
     {
         $z = $this->c->sin();
 
@@ -858,7 +853,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_asin() : void
+    public function testAsin() : void
     {
         $z = Vector::quick([0.1, 0.3, -0.5])->asin();
 
@@ -870,7 +865,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_cos() : void
+    public function testCos() : void
     {
         $z = $this->c->cos();
 
@@ -883,7 +878,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_acos() : void
+    public function testAcos() : void
     {
         $z = Vector::quick([0.1, 0.3, -0.5])->acos();
 
@@ -895,7 +890,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_tan() : void
+    public function testTan() : void
     {
         $z = $this->c->tan();
 
@@ -908,7 +903,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_atan() : void
+    public function testAtan() : void
     {
         $z = $this->c->atan();
 
@@ -921,7 +916,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_rad2deg() : void
+    public function testRad2deg() : void
     {
         $z = $this->c->rad2deg();
 
@@ -934,7 +929,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_deg2rad() : void
+    public function testDeg2rad() : void
     {
         $z = $this->c->deg2rad();
 
@@ -947,63 +942,63 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_sum() : void
+    public function testSum() : void
     {
         $this->assertEquals(177., $this->a->sum());
         $this->assertEquals(3.15, $this->b->sum());
         $this->assertEquals(47.9, $this->c->sum());
     }
 
-    public function test_product() : void
+    public function testProduct() : void
     {
         $this->assertEquals(-14442510600000.0, $this->a->product());
         $this->assertEquals(-0.49500000000000005, $this->b->product());
         $this->assertEquals(46657.52, $this->c->product());
     }
 
-    public function test_min() : void
+    public function testMin() : void
     {
         $this->assertEquals(-72, $this->a->min());
         $this->assertEquals(-3, $this->b->min());
         $this->assertEquals(2.6, $this->c->min());
     }
 
-    public function test_max() : void
+    public function testMax() : void
     {
         $this->assertEquals(106, $this->a->max());
         $this->assertEquals(3.3, $this->b->max());
         $this->assertEquals(20., $this->c->max());
     }
 
-    public function test_mean() : void
+    public function testMean() : void
     {
         $this->assertEquals(22.125, $this->a->mean());
         $this->assertEquals(0.39375, $this->b->mean());
         $this->assertEquals(7.983333333333333, $this->c->mean());
     }
 
-    public function test_median() : void
+    public function testMedian() : void
     {
         $this->assertEquals(30., $this->a->median());
         $this->assertEquals(0.175, $this->b->median());
         $this->assertEquals(5.25, $this->c->median());
     }
 
-    public function test_percentile() : void
+    public function testPercentile() : void
     {
         $this->assertEquals(30., $this->a->percentile(50));
         $this->assertEquals(-0.625, $this->b->percentile(25));
         $this->assertEquals(10.55, $this->c->percentile(75));
     }
 
-    public function test_variance() : void
+    public function testVariance() : void
     {
         $this->assertEquals(3227.609375, $this->a->variance());
         $this->assertEquals(3.4965234374999996, $this->b->variance());
         $this->assertEquals(38.77138888888888, $this->c->variance());
     }
 
-    public function test_round() : void
+    public function testRound() : void
     {
         $z = $this->c->round(2);
 
@@ -1013,7 +1008,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_floor() : void
+    public function testFloor() : void
     {
         $z = $this->c->floor();
 
@@ -1023,7 +1018,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_ceil() : void
+    public function testCeil() : void
     {
         $z = $this->c->ceil();
 
@@ -1033,35 +1028,35 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_l1_norm() : void
+    public function testL1Norm() : void
     {
         $this->assertEquals(423., $this->a->l1Norm());
         $this->assertEquals(12.149999999999999, $this->b->l1Norm());
         $this->assertEquals(47.9, $this->c->l1Norm());
     }
 
-    public function test_l2_norm() : void
+    public function testL2Norm() : void
     {
         $this->assertEquals(172.4441938715247, $this->a->l2Norm());
         $this->assertEquals(5.404858925078433, $this->b->l2Norm());
         $this->assertEquals(24.799798386277256, $this->c->l2Norm());
     }
 
-    public function test_p_norm() : void
+    public function testPNorm() : void
     {
         $this->assertEquals(135.15554088861361, $this->a->pNorm(3.));
         $this->assertEquals(3.7063242195906976, $this->b->pNorm(5.));
         $this->assertEquals(20.01112107057168, $this->c->pNorm(10.));
     }
 
-    public function test_max_norm() : void
+    public function testMaxNorm() : void
     {
         $this->assertEquals(106., $this->a->maxNorm());
         $this->assertEquals(3.3, $this->b->maxNorm());
         $this->assertEquals(20., $this->c->maxNorm());
     }
 
-    public function test_clip() : void
+    public function testClip() : void
     {
         $z = $this->a->clip(0., 100);
 
@@ -1071,7 +1066,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_clip_lower() : void
+    public function testClipLower() : void
     {
         $z = $this->a->clipLower(60.);
 
@@ -1081,7 +1076,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_clip_upper() : void
+    public function testClipUpper() : void
     {
         $z = $this->a->clipUpper(50.);
 
@@ -1091,7 +1086,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_sign() : void
+    public function testSign() : void
     {
         $z = $this->a->sign();
 
@@ -1101,7 +1096,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_negate() : void
+    public function testNegate() : void
     {
         $z = $this->a->negate();
 
@@ -1111,7 +1106,7 @@ class VectorTest extends TestCase
         $this->assertEquals($expected, $z->asArray());
     }
 
-    public function test_to_string() : void
+    public function testToString() : void
     {
         $outcome = '[ -15 25 35 -36 -72 89 106 45 ]' . PHP_EOL;
         
