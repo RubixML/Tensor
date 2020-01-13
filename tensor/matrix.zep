@@ -454,6 +454,8 @@ class Matrix implements Tensor
                 . " at least 1 element.");
         }
 
+        var row;
+
         int m = count(a);
         int n = count(current(a));
  
