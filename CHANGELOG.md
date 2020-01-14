@@ -1,4 +1,4 @@
-- Unreleased
+- 2.0.3
     - Matrix decomp methods now return decomp objects
     - Optimized matrix statistical operations
     - Optimized vector outer product
