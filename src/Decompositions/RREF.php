@@ -62,7 +62,7 @@ class RREF implements Decomposition
 
                 if ($scale != 0) {
                     for ($j = 0; $j < $n; ++$j) {
-                        $b[$i][$j] += -$scale * $t[$j];
+                        $b[$i][$j] -= $scale * $t[$j];
                     }
                 }
             }

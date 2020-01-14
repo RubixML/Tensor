@@ -1269,11 +1269,6 @@ class Vector implements Tensor
      */
     public function mean()
     {
-        if this->n < 1 {
-            throw new RuntimeException("Mean is not defined for"
-                . " an empty vector.");
-        }
-
         return this->sum() / this->n;
     }
 
@@ -1285,14 +1280,9 @@ class Vector implements Tensor
      */
     public function median()
     {
-        if this->n < 1 {
-            throw new RuntimeException("Median is not defined for"
-                . " an empty vector.");
-        }
-
         var median;
 
-        var mid = intdiv(this->n, 2);
+        int mid = (int) intdiv(this->n, 2);
 
         var a = this->a;
 
@@ -1320,11 +1310,6 @@ class Vector implements Tensor
         if p < 0.0 || p > 100.0 {
             throw new InvalidArgumentException("P must be between"
                 . " 0 and 100, " . strval(p) . " given.");
-        }
-
-        if this->n < 1 {
-            throw new RuntimeException("Percentile is not defined for"
-                . " an empty vector.");
         }
 
         var a = this->a;
@@ -1358,11 +1343,6 @@ class Vector implements Tensor
                     . " an integer or floating point number "
                     . gettype(mean) . " given.");
             }
-        }
-
-        if this->n < 1 {
-            throw new RuntimeException("Variance is not defined for"
-                . " an empty vector.");
         }
 
         if is_null(mean) {

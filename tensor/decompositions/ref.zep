@@ -58,21 +58,18 @@ class Ref implements Decomposition
      */
     public static function gaussianElimination(const <Matrix> a) -> <Ref>
     {
+        var temp, diag, scale;
         int i, j, k, index;
         array b = [];
 
-        var temp, diag, scale;
-
-        var m = a->m();
-        var n = a->n();
-
-        var minDim = min(m, n);
+        int m = (int) a->m();
+        int n = (int) a->n();
 
         let b = (array) a->asArray();
 
         int swaps = 0;
 
-        for k in range(0, minDim - 1) {
+        for k in range(0, min(m, n) - 1) {
             let index = k;
 
             for i in range(k, m - 1) {
@@ -121,21 +118,23 @@ class Ref implements Decomposition
      */
     public static function rowReductionMethod(const <Matrix> a) -> <Ref>
     {
+        var scale, divisor, temp;
         int i, j;
-        var t, scale, divisor, temp;
+        array b = [];
+        array t = [];
 
-        var m = a->m();
-        var n = a->n();
-
-        var b = a->asArray();
+        int m = (int) a->m();
+        int n = (int) a->n();
 
         int row = 0;
         int col = 0;
 
-        uint swaps = 0;
+        let b = (array) a->asArray();
+
+        int swaps = 0;
 
         while row < m && col < n {
-            let t = b[row];
+            let t = (array) b[row];
 
             if t[col] == 0 {
                 for i in range(row + 1, m - 1) {
@@ -182,9 +181,7 @@ class Ref implements Decomposition
             let col++;
         }
 
-        let b = Matrix::quick(b);
-
-        return new self(b, swaps);
+        return new self(Matrix::quick(b), swaps);
     }
 
     /**

@@ -30,23 +30,21 @@ class Rref implements Decomposition
      */
     public static function decompose(const <Matrix> a) -> <Rref>
     {
+        var scale, divisor;
         int i, j;
         array b = [];
+        array t = [];
 
-        var t, scale, divisor;
-
-        var m = a->m();
-        var n = a->n();
+        int m = (int) a->m();
+        int n = (int) a->n();
 
         int row = 0;
         int col = 0;
 
-        var ref = a->ref();
-
-        let b = (array) ref->a()->asArray();
+        let b = (array) a->ref()->a()->asArray();
 
         while row < m && col < n {
-            let t = b[row];
+            let t = (array) b[row];
 
             if abs(t[col]) == 0 {
                 let col++;
@@ -78,9 +76,7 @@ class Rref implements Decomposition
             let col++;
         }
 
-        let b = Matrix::quick(b);
-
-        return new self(b);
+        return new self(Matrix::quick(b));
     }
 
     /**

@@ -1791,11 +1791,6 @@ class Matrix implements Tensor
      */
     public function mean() -> <ColumnVector>
     {
-        if this->n < 1 {
-            throw new RuntimeException("Mean is not defined for"
-                . " matrices with less than 1 column.");
-        }
-
         return this->sum()->divide(this->n);
     }
 
@@ -1807,15 +1802,10 @@ class Matrix implements Tensor
      */
     public function median() -> <ColumnVector>
     {
-        if this->n < 1 {
-            throw new RuntimeException("Median is not defined for"
-                . " with less than 1 column.");
-        }
-
         var rowA, median;
         array b = [];
 
-        var mid = intdiv(this->n, 2);
+        int mid = (int) intdiv(this->n, 2);
 
         bool odd = this->n % 2 === 1;
 
@@ -1847,11 +1837,6 @@ class Matrix implements Tensor
         if p < 0.0 || p > 100.0 {
             throw new InvalidArgumentException("P must be between"
                 . " 0 and 100, " . strval(p) . " given.");
-        }
-
-        if this->n < 1 {
-            throw new RuntimeException("Percentile is not defined for"
-                . " with less than 1 column.");
         }
 
         var rowA, t;

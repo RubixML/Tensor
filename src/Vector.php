@@ -1214,11 +1214,6 @@ class Vector implements Tensor
      */
     public function mean()
     {
-        if ($this->n === 0) {
-            throw new RuntimeException('Mean is not defined for'
-                . ' an empty vector.');
-        }
-
         return $this->sum() / $this->n;
     }
 
@@ -1230,11 +1225,6 @@ class Vector implements Tensor
      */
     public function median()
     {
-        if (empty($this->a)) {
-            throw new RuntimeException('Median is not defined for'
-                . ' an empty vector.');
-        }
-
         $mid = intdiv($this->n, 2);
 
         $a = $this->a;
@@ -1263,11 +1253,6 @@ class Vector implements Tensor
         if ($p < 0. or $p > 100.) {
             throw new InvalidArgumentException('P must be between 0 and 100,'
                 . " $p given.");
-        }
-
-        if (empty($this->a)) {
-            throw new RuntimeException('Percentile is not defined for'
-                . ' an empty vector.');
         }
 
         $a = $this->a;
@@ -1299,11 +1284,6 @@ class Vector implements Tensor
             throw new InvalidArgumentException('Mean scalar must be'
                 . ' an integer or floating point number '
                 . gettype($mean) . ' given.');
-        }
-
-        if ($this->n === 0) {
-            throw new RuntimeException('Variance is not defined for'
-                . ' an empty vector.');
         }
 
         if (is_null($mean)) {

@@ -1739,11 +1739,6 @@ class Matrix implements Tensor
      */
     public function mean() : ColumnVector
     {
-        if ($this->n < 1) {
-            throw new RuntimeException('Mean is not defined for'
-                . ' matrices with less than 1 column.');
-        }
-
         return $this->sum()->divide($this->n);
     }
 
@@ -1755,11 +1750,6 @@ class Matrix implements Tensor
      */
     public function median() : ColumnVector
     {
-        if ($this->n < 1) {
-            throw new RuntimeException('Median is not defined for'
-                . ' matrices with less than 1 column.');
-        }
-
         $mid = intdiv($this->n, 2);
 
         $odd = $this->n % 2 === 1;
@@ -1794,11 +1784,6 @@ class Matrix implements Tensor
         if ($p < 0. or $p > 100.) {
             throw new InvalidArgumentException('P must be between 0 and 100,'
                 . " $p given.");
-        }
-
-        if ($this->n < 1) {
-            throw new RuntimeException('Percentile is not defined for matrices'
-                . ' with less than 1 column.');
         }
 
         $x = ($p / 100) * ($this->n - 1) + 1;
