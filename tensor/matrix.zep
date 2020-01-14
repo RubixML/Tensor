@@ -206,7 +206,7 @@ class Matrix implements Tensor
         array a = [];
         array rowA = [];
 
-        var max = getrandmax();
+        int max = (int) getrandmax();
  
         while count(a) < m {
             let rowA = [];
@@ -242,12 +242,12 @@ class Matrix implements Tensor
         array rowA = [];
         array extras = [];
 
-        var max = getrandmax();
+        int max = (int) getrandmax();
  
         while count(a) < m {
             let rowA = [];
              
-            if !empty(extras) {
+            if !empty extras {
                 let rowA[] = array_pop(extras);
             }
  
@@ -288,7 +288,7 @@ class Matrix implements Tensor
 
         let l = (float) exp(-lambda);
 
-        var max = getrandmax();
+        int max = (int) getrandmax();
 
         while count(a) < m {
             let rowA = [];
@@ -330,7 +330,7 @@ class Matrix implements Tensor
         array a = [];
         array rowA = [];
 
-        var max = getrandmax();
+        int max = (int) getrandmax();
     
         while count(a) < m {
             let rowA = [];
@@ -404,7 +404,7 @@ class Matrix implements Tensor
      */
     public static function stack(const array vectors) -> <Matrix>
     {
-        if empty(vectors) {
+        if empty vectors {
             return self::quick();
         }
 
@@ -449,7 +449,7 @@ class Matrix implements Tensor
      */
     public function __construct(array a = [], const bool validate = true)
     {
-        if (empty(a)) {
+        if empty a {
             throw new InvalidArgumentException("Matrix must contain"
                 . " at least 1 element.");
         }
@@ -459,14 +459,14 @@ class Matrix implements Tensor
         int m = count(a);
         int n = count(current(a));
  
-        if (validate) {
+        if validate {
             let a = array_values(a);
  
             for row in a {
                 if unlikely count(row) !== n {
                     throw new InvalidArgumentException("The number of columns"
-                        . " must be equal for all rows, " . strval(n)  . " needed but "
-                        . count(row) . " given.");
+                        . " must be equal for all rows, " . strval(n)
+                        . " needed but " . count(row) . " given.");
                 }
             }
         }
@@ -3912,7 +3912,7 @@ class Matrix implements Tensor
      */
     public function offsetExists(const var index) -> bool
     {
-        return isset(this->a[index]);
+        return isset this->a[index];
     }
 
     /**

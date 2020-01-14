@@ -310,7 +310,7 @@ class Vector implements Tensor
      */
     public function __construct(array a = [], const bool validate = true)
     {
-        if (empty(a)) {
+        if empty a {
             throw new InvalidArgumentException("Vector must contain"
                 . " at least one element.");
         }

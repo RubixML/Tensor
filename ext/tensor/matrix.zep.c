@@ -570,15 +570,15 @@ PHP_METHOD(Tensor_Matrix, rand) {
 	zval a, rowA;
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_4 = NULL;
-	zval *m_param = NULL, *n_param = NULL, max, _1$$3, _3$$5, _5$$5;
-	zend_long m, n, ZEPHIR_LAST_CALL_STATUS;
+	zephir_fcall_cache_entry *_5 = NULL;
+	zval *m_param = NULL, *n_param = NULL, _3, _1$$3, _4$$5, _6$$5;
+	zend_long m, n, ZEPHIR_LAST_CALL_STATUS, max;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&max);
+	ZVAL_UNDEF(&_3);
 	ZVAL_UNDEF(&_1$$3);
-	ZVAL_UNDEF(&_3$$5);
-	ZVAL_UNDEF(&_5$$5);
+	ZVAL_UNDEF(&_4$$5);
+	ZVAL_UNDEF(&_6$$5);
 	ZVAL_UNDEF(&a);
 	ZVAL_UNDEF(&rowA);
 	ZVAL_UNDEF(&_2$$3);
@@ -609,8 +609,9 @@ PHP_METHOD(Tensor_Matrix, rand) {
 	array_init(&a);
 	ZEPHIR_INIT_VAR(&rowA);
 	array_init(&rowA);
-	ZEPHIR_CALL_FUNCTION(&max, "getrandmax", NULL, 6);
+	ZEPHIR_CALL_FUNCTION(&_3, "getrandmax", NULL, 6);
 	zephir_check_call_status();
+	max = zephir_get_intval(&_3);
 	while (1) {
 		if (!(zephir_fast_count_int(&a) < m)) {
 			break;
@@ -621,11 +622,11 @@ PHP_METHOD(Tensor_Matrix, rand) {
 			if (!(zephir_fast_count_int(&rowA) < n)) {
 				break;
 			}
-			ZEPHIR_CALL_FUNCTION(&_3$$5, "rand", &_4, 7);
+			ZEPHIR_CALL_FUNCTION(&_4$$5, "rand", &_5, 7);
 			zephir_check_call_status();
-			ZEPHIR_INIT_NVAR(&_5$$5);
-			div_function(&_5$$5, &_3$$5, &max);
-			zephir_array_append(&rowA, &_5$$5, PH_SEPARATE, "tensor/matrix.zep", 215);
+			ZEPHIR_INIT_NVAR(&_6$$5);
+			ZVAL_DOUBLE(&_6$$5, zephir_safe_div_zval_long(&_4$$5, max));
+			zephir_array_append(&rowA, &_6$$5, PH_SEPARATE, "tensor/matrix.zep", 215);
 		}
 		zephir_array_append(&a, &rowA, PH_SEPARATE, "tensor/matrix.zep", 218);
 	}
@@ -651,18 +652,17 @@ PHP_METHOD(Tensor_Matrix, gaussian) {
 	double r = 0, phi = 0;
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_4 = NULL, *_6 = NULL, *_8 = NULL;
-	zval *m_param = NULL, *n_param = NULL, max, _1$$3, _3$$5, _5$$6, _7$$6, _9$$6, _10$$6, _11$$6, _12$$6, _13$$6, _14$$6, _15$$7;
-	zend_long m, n, ZEPHIR_LAST_CALL_STATUS;
+	zephir_fcall_cache_entry *_5 = NULL, *_7 = NULL, *_10 = NULL;
+	zval *m_param = NULL, *n_param = NULL, _3, _1$$3, _4$$5, _6$$6, _8$$6, _9$$6, _11$$6, _12$$6, _13$$6, _14$$6, _15$$7;
+	zend_long m, n, ZEPHIR_LAST_CALL_STATUS, max;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&max);
+	ZVAL_UNDEF(&_3);
 	ZVAL_UNDEF(&_1$$3);
-	ZVAL_UNDEF(&_3$$5);
-	ZVAL_UNDEF(&_5$$6);
-	ZVAL_UNDEF(&_7$$6);
+	ZVAL_UNDEF(&_4$$5);
+	ZVAL_UNDEF(&_6$$6);
+	ZVAL_UNDEF(&_8$$6);
 	ZVAL_UNDEF(&_9$$6);
-	ZVAL_UNDEF(&_10$$6);
 	ZVAL_UNDEF(&_11$$6);
 	ZVAL_UNDEF(&_12$$6);
 	ZVAL_UNDEF(&_13$$6);
@@ -701,8 +701,9 @@ PHP_METHOD(Tensor_Matrix, gaussian) {
 	array_init(&rowA);
 	ZEPHIR_INIT_VAR(&extras);
 	array_init(&extras);
-	ZEPHIR_CALL_FUNCTION(&max, "getrandmax", NULL, 6);
+	ZEPHIR_CALL_FUNCTION(&_3, "getrandmax", NULL, 6);
 	zephir_check_call_status();
+	max = zephir_get_intval(&_3);
 	while (1) {
 		if (!(zephir_fast_count_int(&a) < m)) {
 			break;
@@ -711,28 +712,25 @@ PHP_METHOD(Tensor_Matrix, gaussian) {
 		array_init(&rowA);
 		if (!(ZEPHIR_IS_EMPTY(&extras))) {
 			ZEPHIR_MAKE_REF(&extras);
-			ZEPHIR_CALL_FUNCTION(&_3$$5, "array_pop", &_4, 30, &extras);
+			ZEPHIR_CALL_FUNCTION(&_4$$5, "array_pop", &_5, 30, &extras);
 			ZEPHIR_UNREF(&extras);
 			zephir_check_call_status();
-			zephir_array_append(&rowA, &_3$$5, PH_SEPARATE, "tensor/matrix.zep", 251);
+			zephir_array_append(&rowA, &_4$$5, PH_SEPARATE, "tensor/matrix.zep", 251);
 		}
 		while (1) {
 			if (!(zephir_fast_count_int(&rowA) < n)) {
 				break;
 			}
-			ZEPHIR_CALL_FUNCTION(&_5$$6, "rand", &_6, 7);
+			ZEPHIR_CALL_FUNCTION(&_6$$6, "rand", &_7, 7);
 			zephir_check_call_status();
-			ZEPHIR_INIT_NVAR(&_7$$6);
-			div_function(&_7$$6, &_5$$6, &max);
-			ZEPHIR_CALL_FUNCTION(&_5$$6, "log", &_8, 8, &_7$$6);
+			ZVAL_DOUBLE(&_8$$6, zephir_safe_div_zval_long(&_6$$6, max));
+			ZEPHIR_CALL_FUNCTION(&_9$$6, "log", &_10, 8, &_8$$6);
 			zephir_check_call_status();
-			ZVAL_DOUBLE(&_9$$6, (-2.0 * zephir_get_numberval(&_5$$6)));
-			r = sqrt((-2.0 * zephir_get_numberval(&_5$$6)));
-			ZEPHIR_CALL_FUNCTION(&_10$$6, "rand", &_6, 7);
+			ZVAL_DOUBLE(&_8$$6, (-2.0 * zephir_get_numberval(&_9$$6)));
+			r = sqrt((-2.0 * zephir_get_numberval(&_9$$6)));
+			ZEPHIR_CALL_FUNCTION(&_11$$6, "rand", &_7, 7);
 			zephir_check_call_status();
-			ZEPHIR_INIT_NVAR(&_11$$6);
-			div_function(&_11$$6, &_10$$6, &max);
-			phi = (zephir_get_numberval(&_11$$6) * 6.28318530718);
+			phi = (zephir_safe_div_zval_long(&_11$$6, max) * 6.28318530718);
 			ZVAL_DOUBLE(&_12$$6, phi);
 			ZEPHIR_INIT_NVAR(&_13$$6);
 			ZVAL_DOUBLE(&_13$$6, (r * sin(phi)));
@@ -744,7 +742,7 @@ PHP_METHOD(Tensor_Matrix, gaussian) {
 		}
 		if (zephir_fast_count_int(&rowA) > n) {
 			ZEPHIR_MAKE_REF(&rowA);
-			ZEPHIR_CALL_FUNCTION(&_15$$7, "array_pop", &_4, 30, &rowA);
+			ZEPHIR_CALL_FUNCTION(&_15$$7, "array_pop", &_5, 30, &rowA);
 			ZEPHIR_UNREF(&rowA);
 			zephir_check_call_status();
 			zephir_array_append(&extras, &_15$$7, PH_SEPARATE, "tensor/matrix.zep", 264);
@@ -770,17 +768,16 @@ PHP_METHOD(Tensor_Matrix, poisson) {
 
 	zval a, rowA;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_3 = NULL;
+	zephir_fcall_cache_entry *_4 = NULL;
 	double lambda, l = 0, p = 0;
-	zval *m_param = NULL, *n_param = NULL, *lambda_param = NULL, _0, _1, max, _2$$5, _4$$5, _5$$4;
-	zend_long m, n, ZEPHIR_LAST_CALL_STATUS, k = 0;
+	zval *m_param = NULL, *n_param = NULL, *lambda_param = NULL, _0, _1, _2, _3$$5, _5$$4;
+	zend_long m, n, ZEPHIR_LAST_CALL_STATUS, k = 0, max;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
-	ZVAL_UNDEF(&max);
-	ZVAL_UNDEF(&_2$$5);
-	ZVAL_UNDEF(&_4$$5);
+	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_3$$5);
 	ZVAL_UNDEF(&_5$$4);
 	ZVAL_UNDEF(&a);
 	ZVAL_UNDEF(&rowA);
@@ -805,8 +802,9 @@ PHP_METHOD(Tensor_Matrix, poisson) {
 	ZEPHIR_CALL_FUNCTION(&_1, "exp", NULL, 10, &_0);
 	zephir_check_call_status();
 	l = zephir_get_doubleval(&_1);
-	ZEPHIR_CALL_FUNCTION(&max, "getrandmax", NULL, 6);
+	ZEPHIR_CALL_FUNCTION(&_2, "getrandmax", NULL, 6);
 	zephir_check_call_status();
+	max = zephir_get_intval(&_2);
 	while (1) {
 		if (!(zephir_fast_count_int(&a) < m)) {
 			break;
@@ -824,11 +822,9 @@ PHP_METHOD(Tensor_Matrix, poisson) {
 					break;
 				}
 				k++;
-				ZEPHIR_CALL_FUNCTION(&_2$$5, "rand", &_3, 7);
+				ZEPHIR_CALL_FUNCTION(&_3$$5, "rand", &_4, 7);
 				zephir_check_call_status();
-				ZEPHIR_INIT_NVAR(&_4$$5);
-				div_function(&_4$$5, &_2$$5, &max);
-				p *= zephir_get_numberval(&_4$$5);
+				p *= zephir_safe_div_zval_long(&_3$$5, max);
 			}
 			ZEPHIR_INIT_NVAR(&_5$$4);
 			ZVAL_LONG(&_5$$4, (k - 1));
@@ -856,15 +852,17 @@ PHP_METHOD(Tensor_Matrix, uniform) {
 	zval a, rowA;
 	zend_bool _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_4 = NULL;
-	zval *m_param = NULL, *n_param = NULL, max, _1$$3, _3$$5, _5$$5;
-	zend_long m, n, ZEPHIR_LAST_CALL_STATUS;
+	zephir_fcall_cache_entry *_7 = NULL;
+	zval *m_param = NULL, *n_param = NULL, _3, _1$$3, _4$$5, _5$$5, _6$$5, _8$$5;
+	zend_long m, n, ZEPHIR_LAST_CALL_STATUS, max;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&max);
+	ZVAL_UNDEF(&_3);
 	ZVAL_UNDEF(&_1$$3);
-	ZVAL_UNDEF(&_3$$5);
+	ZVAL_UNDEF(&_4$$5);
 	ZVAL_UNDEF(&_5$$5);
+	ZVAL_UNDEF(&_6$$5);
+	ZVAL_UNDEF(&_8$$5);
 	ZVAL_UNDEF(&a);
 	ZVAL_UNDEF(&rowA);
 	ZVAL_UNDEF(&_2$$3);
@@ -895,8 +893,9 @@ PHP_METHOD(Tensor_Matrix, uniform) {
 	array_init(&a);
 	ZEPHIR_INIT_VAR(&rowA);
 	array_init(&rowA);
-	ZEPHIR_CALL_FUNCTION(&max, "getrandmax", NULL, 6);
+	ZEPHIR_CALL_FUNCTION(&_3, "getrandmax", NULL, 6);
 	zephir_check_call_status();
+	max = zephir_get_intval(&_3);
 	while (1) {
 		if (!(zephir_fast_count_int(&a) < m)) {
 			break;
@@ -907,12 +906,13 @@ PHP_METHOD(Tensor_Matrix, uniform) {
 			if (!(zephir_fast_count_int(&rowA) < n)) {
 				break;
 			}
-			zephir_negate(&max);
-			ZEPHIR_CALL_FUNCTION(&_3$$5, "rand", &_4, 7, &max, &max);
+			ZVAL_LONG(&_4$$5, -max);
+			ZVAL_LONG(&_5$$5, max);
+			ZEPHIR_CALL_FUNCTION(&_6$$5, "rand", &_7, 7, &_4$$5, &_5$$5);
 			zephir_check_call_status();
-			ZEPHIR_INIT_NVAR(&_5$$5);
-			div_function(&_5$$5, &_3$$5, &max);
-			zephir_array_append(&rowA, &_5$$5, PH_SEPARATE, "tensor/matrix.zep", 339);
+			ZEPHIR_INIT_NVAR(&_8$$5);
+			ZVAL_DOUBLE(&_8$$5, zephir_safe_div_zval_long(&_6$$5, max));
+			zephir_array_append(&rowA, &_8$$5, PH_SEPARATE, "tensor/matrix.zep", 339);
 		}
 		zephir_array_append(&a, &rowA, PH_SEPARATE, "tensor/matrix.zep", 342);
 	}
