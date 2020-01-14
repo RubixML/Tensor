@@ -447,31 +447,43 @@ class Matrix implements Tensor
      * @param bool validate
      * @throws \InvalidArgumentException
      */
-    public function __construct(array a = [], const bool validate = true)
+    public function __construct(const array a = [], const bool validate = true)
     {
         if empty a {
             throw new InvalidArgumentException("Matrix must contain"
                 . " at least 1 element.");
         }
 
-        var row;
-
         int m = count(a);
         int n = count(current(a));
+
+        array aHat = [];
  
         if validate {
-            let a = array_values(a);
- 
-            for row in a {
-                if unlikely count(row) !== n {
+            var rowA, valueA;
+
+            for rowA in a {
+                if unlikely count(rowA) !== n {
                     throw new InvalidArgumentException("The number of columns"
                         . " must be equal for all rows, " . strval(n)
-                        . " needed but " . count(row) . " given.");
+                        . " needed but " . count(rowA) . " given.");
                 }
+
+                for valueA in rowA {
+                    if unlikely !is_int(valueA) && !is_float(valueA) {
+                        throw new InvalidArgumentException("Matrix element must"
+                            . " be an integer or floating point number, "
+                            . gettype(valueA) . " given.");
+                    }
+                }
+
+                let aHat[] = array_values(rowA);
             }
+        } else {
+            let aHat = a;
         }
  
-        let this->a = a;
+        let this->a = aHat;
         let this->m = m;
         let this->n = n;
     }

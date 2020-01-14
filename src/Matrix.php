@@ -451,13 +451,21 @@ class Matrix implements Tensor
         if ($validate) {
             $a = array_values($a);
 
-            foreach ($a as &$row) {
-                $row = array_values($row);
-
-                if (count($row) !== $n) {
+            foreach ($a as &$rowA) {
+                if (count($rowA) !== $n) {
                     throw new InvalidArgumentException('The number of columns'
                         . " must be equal for all rows, $n required but "
-                        . count($row) . ' given.');
+                        . count($rowA) . ' given.');
+                }
+
+                $rowA = array_values($rowA);
+
+                foreach ($rowA as $valueA) {
+                    if (!is_int($valueA) and !is_float($valueA)) {
+                        throw new InvalidArgumentException('Matrix element must'
+                            . ' be an integer or floating point number, '
+                            . gettype($valueA) . ' given.');
+                    }
                 }
             }
         }

@@ -125,7 +125,7 @@ class Vector implements Tensor
 
         array a = [];
 
-        var max = getrandmax();
+        int max = (int) getrandmax();
 
         while count(a) < n {
             let a[] = rand() / max;
@@ -152,7 +152,7 @@ class Vector implements Tensor
         var r, phi;
         array a = [];
 
-        var max = getrandmax();
+        int max = (int) getrandmax();
 
         while count(a) < n {
             let r = sqrt(-2.0 * log(rand() / max));
@@ -186,7 +186,7 @@ class Vector implements Tensor
 
         float l = (float) exp(-lambda);
 
-        var max = getrandmax();
+        int max = (int) getrandmax();
 
         while count(a) < n {
             let k = 0;
@@ -220,7 +220,7 @@ class Vector implements Tensor
         
         array a = [];
 
-        var max = getrandmax();
+        int max = (int) getrandmax();
 
         while count(a) < n {
             let a[] = rand(-max, max) / max;
