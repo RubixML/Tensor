@@ -27,6 +27,9 @@
         "phpstan/phpstan-phpunit": "0.12.*",
         "phpunit/phpunit": "8.5.*"
     },
+    "provide": {
+        "ext-tensor": "*"
+    },
     "autoload": {
         "psr-4": {
             "Tensor\\": "src/",
