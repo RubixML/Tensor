@@ -2176,23 +2176,29 @@ class Matrix implements Tensor
      */
     public function repeat(int $m, int $n) : self
     {
-        $b = $this->a;
+        $b = [];
 
         if ($n > 0) {
             foreach ($this->a as $i => $rowA) {
+                $temp = [];
+
                 for ($j = 0; $j < $n; ++$j) {
-                    $b[$i] = array_merge($b[$i], $rowA);
+                    $temp[] = $rowA;
                 }
+
+                $b[] = array_merge($rowA, ...$temp);
             }
         }
 
-        $c = $b;
+        $temp = [];
 
         for ($i = 0; $i < $m; ++$i) {
-            $c = array_merge($c, $b);
+            $temp[] = $b;
         }
 
-        return self::quick($c);
+        $b = array_merge($b, ...$temp);
+
+        return self::quick($b);
     }
 
     /**

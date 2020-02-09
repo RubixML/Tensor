@@ -17,7 +17,7 @@ class RepeatMatrixBench
 
     public function setUp() : void
     {
-        $this->a = Matrix::uniform(50, 50);
+        $this->a = Matrix::uniform(100, 100);
     }
 
     /**
@@ -27,6 +27,6 @@ class RepeatMatrixBench
      */
     public function repeat() : void
     {
-        $this->a->repeat(9, 9);
+        $this->a->repeat(100, 100);
     }
 }
