@@ -353,7 +353,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_stack, 0, 1, IS_OB
 	ZEND_ARG_ARRAY_INFO(0, vectors, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_matrix___construct, 0, 0, 0)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_matrix___construct, 0, 0, 1)
 	ZEND_ARG_ARRAY_INFO(0, a, 0)
 #if PHP_VERSION_ID >= 70200
 	ZEND_ARG_TYPE_INFO(0, validate, _IS_BOOL, 0)
@@ -956,19 +956,29 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_negate, 0, 0, IS_O
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_submatrix, 0, 0, Tensor\\Matrix, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_submatrix, 0, 4, Tensor\\Matrix, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_submatrix, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_submatrix, 0, 4, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
 #if PHP_VERSION_ID >= 70200
-	ZEND_ARG_TYPE_INFO(0, offset, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, startRow, IS_LONG, 0)
 #else
-	ZEND_ARG_INFO(0, offset)
+	ZEND_ARG_INFO(0, startRow)
 #endif
 #if PHP_VERSION_ID >= 70200
-	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, startColumn, IS_LONG, 0)
 #else
-	ZEND_ARG_INFO(0, n)
+	ZEND_ARG_INFO(0, startColumn)
+#endif
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, endRow, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, endRow)
+#endif
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, endColumn, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, endColumn)
 #endif
 ZEND_END_ARG_INFO()
 

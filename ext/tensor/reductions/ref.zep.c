@@ -383,7 +383,7 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 		if (_4) {
 			_4 = col < n;
 		}
-		if (!(_4)) {
+		if (!(EXPECTED(_4))) {
 			break;
 		}
 		ZEPHIR_OBS_NVAR(&_5$$3);

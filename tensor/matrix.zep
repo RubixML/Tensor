@@ -71,7 +71,7 @@ class Matrix implements Tensor
      */
     public static function identity(const int n) -> <Matrix>
     {
-        if n < 1 {
+        if unlikely n < 1 {
             throw new InvalidArgumentException("Dimensionality must be"
                 . " greater than 0 on all axes.");
         }
@@ -131,7 +131,7 @@ class Matrix implements Tensor
     {
         int n = count(elements);
  
-        if n < 1 {
+        if unlikely n < 1 {
             throw new InvalidArgumentException("Dimensionality must be"
                 . " greater than 0 on all axes.");
         }
@@ -174,13 +174,13 @@ class Matrix implements Tensor
      */
     public static function fill(const value, const int m, const int n) -> <Matrix>
     {
-        if !is_int(value) && !is_float(value) {
+        if unlikely !is_int(value) && !is_float(value) {
             throw new InvalidArgumentException("Value must be an"
                 . " integer or floating point number, "
                 . gettype(value) . " given.");
         }
  
-        if m < 1 || n < 1 {
+        if unlikely m < 1 || n < 1 {
             throw new InvalidArgumentException("Dimensionality must be"
                 . " greater than 0 for all axes.");
         }
@@ -198,7 +198,7 @@ class Matrix implements Tensor
       */
     public static function rand(const int m, const int n) -> <Matrix>
     {
-        if m < 1 || n < 1 {
+        if unlikely m < 1 || n < 1 {
             throw new InvalidArgumentException("Dimensionality must be"
                 . " greater than 0 for all axes.");
         }
@@ -232,7 +232,7 @@ class Matrix implements Tensor
      */
     public static function gaussian(const int m, const int n) -> <Matrix>
     {
-        if m < 1 || n < 1 {
+        if unlikely m < 1 || n < 1 {
             throw new InvalidArgumentException("Dimensionality must be"
                 . " greater than 0 for all axes.");
         }
@@ -281,6 +281,11 @@ class Matrix implements Tensor
      */
     public static function poisson(const int m, const int n, const float lambda = 1.0) -> <Matrix>
     {
+        if unlikely m < 1 || n < 1 {
+            throw new InvalidArgumentException("Dimensionality must be"
+                . " greater than 0 for all axes.");
+        }
+
         int k;
         float l, p;
         array a = [];
@@ -322,7 +327,7 @@ class Matrix implements Tensor
      */
     public static function uniform(const int m, const int n) -> <Matrix>
     {
-        if m < 1 || n < 1 {
+        if unlikely m < 1 || n < 1 {
             throw new InvalidArgumentException("Dimensionality must be"
                 . " greater than 0 for all axes.");
         }
@@ -355,7 +360,7 @@ class Matrix implements Tensor
      */
     public static function minimum(const <Matrix> a, const <Matrix> b) -> <Matrix>
     {
-        if a->shape() !== b->shape() {
+        if unlikely a->shape() !== b->shape() {
             throw new InvalidArgumentException("Matrix A is " . a->shapeString()
                 . " but Matrix B is " . b->shapeString() . ".");
         }
@@ -380,7 +385,7 @@ class Matrix implements Tensor
      */
     public static function maximum(const <Matrix> a, const <Matrix> b) -> <Matrix>
     {
-        if a->shape() !== b->shape() {
+        if unlikely a->shape() !== b->shape() {
             throw new InvalidArgumentException("Matrix A is " . a->shapeString()
                 . " but Matrix B is " . b->shapeString() . ".");
         }
@@ -404,7 +409,7 @@ class Matrix implements Tensor
      */
     public static function stack(const array vectors) -> <Matrix>
     {
-        if empty vectors {
+        if unlikely empty vectors {
             return self::quick();
         }
 
@@ -447,9 +452,9 @@ class Matrix implements Tensor
      * @param bool validate
      * @throws \InvalidArgumentException
      */
-    public function __construct(const array a = [], const bool validate = true)
+    public function __construct(const array a, const bool validate = true)
     {
-        if empty a {
+        if unlikely empty a {
             throw new InvalidArgumentException("Matrix must contain"
                 . " at least 1 element.");
         }
@@ -600,7 +605,7 @@ class Matrix implements Tensor
      */
     public function diagonalAsVector() -> <Vector>
     {
-        if !this->isSquare() {
+        if unlikely !this->isSquare() {
             throw new RuntimeException("Cannot trace diagonal of a"
                 . " non square matrix.");
         }
@@ -659,7 +664,7 @@ class Matrix implements Tensor
      */
     public function flatten() -> <Vector>
     {
-        return Vector::quick(array_reduce(this->a, "array_merge", []));
+        return Vector::quick(call_user_func_array("array_merge", this->a));
     }
 
     /**
@@ -724,7 +729,7 @@ class Matrix implements Tensor
      */
     public function reduce(const var callback, const var initial = 0)
     {
-        if !is_int(initial) && !is_float(initial) {
+        if unlikely !is_int(initial) && !is_float(initial) {
             throw new InvalidArgumentException("Initial value must"
                 . " be an integer or floating point number, "
                 . gettype(initial) . " given.");
@@ -791,7 +796,7 @@ class Matrix implements Tensor
      */
     public function det()
     {
-        if !this->isSquare() {
+        if unlikely !this->isSquare() {
             throw new RuntimeException("Determinant is undefined"
                 . " for non square matrices.");
         }
@@ -883,7 +888,7 @@ class Matrix implements Tensor
         int i;
 
         for i in range(1, this->n) {
-            var b = this->subMatrix(0, i);
+            var b = this->subMatrix(0, 0, i, i);
 
             if b->det() <= 0 {
                 return false;
@@ -908,7 +913,7 @@ class Matrix implements Tensor
         int i;
 
         for i in range(1, this->n) {
-            var b = this->subMatrix(0, i);
+            var b = this->subMatrix(0, 0, i, i);
 
             if b->det() < 0 {
                 return false;
@@ -927,7 +932,7 @@ class Matrix implements Tensor
      */
     public function matmul(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -969,7 +974,7 @@ class Matrix implements Tensor
      */
     public function dot(const <Vector> b) -> <ColumnVector>
     {
-        if this->n !== b->size() {
+        if unlikely this->n !== b->size() {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
@@ -991,12 +996,12 @@ class Matrix implements Tensor
         var m = b->m();
         var n = b->n();
 
-        if m > this->m || n > this->n {
+        if unlikely m > this->m || n > this->n {
             throw new InvalidArgumentException("Matrix B cannot be"
                 . " larger than Matrix A.");
         }
 
-        if stride < 1 {
+        if unlikely stride < 1 {
             throw new InvalidArgumentException("Stride cannot be"
                 . " less than 1, " . strval(stride) . " given.");
         }
@@ -1869,7 +1874,7 @@ class Matrix implements Tensor
      */
     public function percentile(const float p) -> <ColumnVector>
     {
-        if p < 0.0 || p > 100.0 {
+        if unlikely p < 0.0 || p > 100.0 {
             throw new InvalidArgumentException("P must be between"
                 . " 0 and 100, " . strval(p) . " given.");
         }
@@ -1904,12 +1909,12 @@ class Matrix implements Tensor
     public function variance(var mean = null) -> <ColumnVector>
     {
         if !is_null(mean) {
-            if !(mean instanceof ColumnVector) {
+            if unlikely !(mean instanceof ColumnVector) {
                 throw new InvalidArgumentException("Mean must be a"
                 . " column vector " . gettype(mean) . " given.");
             }
 
-            if mean->m() !== this->m {
+            if unlikely mean->m() !== this->m {
                 throw new InvalidArgumentException("Mean vector must"
                     . " have " . (string) this->m . " rows, "
                     . (string) mean->m() . " given.");
@@ -1948,7 +1953,7 @@ class Matrix implements Tensor
      */
     public function round(const int precision = 0) -> <Matrix>
     {
-        if precision < 0 {
+        if unlikely precision < 0 {
             throw new InvalidArgumentException("Decimal precision cannot"
                 . " be less than 0, ". strval(precision) . " given.");
         }
@@ -2001,7 +2006,7 @@ class Matrix implements Tensor
      */
     public function clip(const float min, const float max) -> <Matrix>
     {
-        if min > max {
+        if unlikely min > max {
             throw new InvalidArgumentException("Minimum cannot be"
                 . " greater than maximum.");
         }
@@ -2152,31 +2157,49 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the square submatrix starting at an offset on the diagonal
-     * and excluding the last n rows and columns.
-     * 
-     * @param int offset
-     * @param int n
-     * @throws InvalidArgumentExeption
+     * Return the sub matrix starting at row and column offset.
+     *
+     * @param int startRow
+     * @param int startColumn
+     * @param int endRow
+     * @param int endColumn
+     * @throws InvalidArgumentException
      * @return self
      */
-    public function subMatrix(const int offset = 0, const int n = 1) -> <Matrix>
-    {
-        if offset < 0 {
-            throw new InvalidArgumentException("Offset cannot be less"
-                . " than 0, " . strval(offset) . " given.");
+    public function subMatrix(
+        const int startRow,
+        const int startColumn,
+        const int endRow,
+        const int endColumn
+    ) -> <Matrix> {
+        if unlikely startRow < 0 {
+            throw new InvalidArgumentException("Start row must be"
+                . " greater than 0, " . strval(startRow) . " given.");
         }
 
-        if n < 0 {
-            throw new InvalidArgumentException("N cannot be less than"
-                . " 0, " . strval(n) . " given.");
+        if unlikely startColumn < 0 {
+            throw new InvalidArgumentException("Start column must be"
+                . " greater than 0, " . strval(startColumn) . " given.");
         }
 
-        int last = offset + n;
+        if unlikely endRow < startRow {
+            throw new InvalidArgumentException("End row must be"
+                . " greater than start row.");
+        }
 
-        if last > this->m || last > this->n {
-            throw new InvalidArgumentException("Sub matrix is out of"
-                . " bounds of matrix A.");
+        if unlikely endColumn < startColumn {
+            throw new InvalidArgumentException("End column must be"
+                . " greater than start column.");
+        }
+
+        if unlikely endRow > this->m {
+            throw new InvalidArgumentException("End row is out"
+                . " of bounds of matrix.");
+        }
+
+        if unlikely endColumn > this->n {
+            throw new InvalidArgumentException("End column is out"
+                . " of bounds of matrix.");
         }
 
         int i, j;
@@ -2184,14 +2207,15 @@ class Matrix implements Tensor
         array b = [];
         array rowB = [];
 
-        int k = this->n - n - 1;
+        int k = endRow - startRow;
+        int l = endColumn - startColumn;
 
-        for i in range(offset, k) {
+        for i in range(startRow, k) {
             let rowA = this->a[i];
 
             let rowB = [];
 
-            for j in range(offset, k) {
+            for j in range(startColumn, l) {
                 let rowB[] = rowA[j];
             }
 
@@ -2210,7 +2234,7 @@ class Matrix implements Tensor
      */
     public function augmentAbove(const <Matrix> b) -> <Matrix>
     {
-        if this->m > 0 && b->n() !== this->n {
+        if unlikely this->m > 0 && b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires"
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
@@ -2228,7 +2252,7 @@ class Matrix implements Tensor
      */
     public function augmentBelow(const <Matrix> b) -> <Matrix>
     {
-        if this->m > 0 && b->n() !== this->n {
+        if unlikely this->m > 0 && b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires"
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
@@ -2246,7 +2270,7 @@ class Matrix implements Tensor
      */
     public function augmentLeft(const <Matrix> b) -> <Matrix>
     {
-        if this->m > 0 && b->m() !== this->m {
+        if unlikely this->m > 0 && b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires"
                 . (string) this->m . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -2264,7 +2288,7 @@ class Matrix implements Tensor
      */
     public function augmentRight(const <Matrix> b) -> <Matrix>
     {
-        if this->m > 0 && b->m() !== this->m {
+        if unlikely this->m > 0 && b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires"
                 . (string) this->m . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -2284,27 +2308,29 @@ class Matrix implements Tensor
      */
     public function repeat(const int m, const int n) -> <Matrix>
     {
-        int j, k;
-        var i, rowA;
+        var rowA;
         array b = [];
-
-        let b = (array) this->a;
+        array temp = [];
 
         if n > 0 {
-            for i, rowA in this->a {
-                for j in range(0, n - 1) {
-                    let b[i] = array_merge(b[i], rowA);
+            for rowA in this->a {
+                let temp = [];
+
+                while count(temp) <= n {
+                    let temp[] = rowA;
                 }
+
+                let b[] = call_user_func_array("array_merge", temp);
             }
         }
 
-        var c = b;
+        let temp = [];
 
-        for k in range(0, m - 1) {
-            let c = array_merge(c, b);
+        while count(temp) <= m {
+            let temp[] = b;
         }
 
-        return self::quick(c);
+        return self::quick(call_user_func_array("array_merge", temp));
     }
 
     /**
@@ -2316,7 +2342,7 @@ class Matrix implements Tensor
      */
     public function multiplyMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2349,7 +2375,7 @@ class Matrix implements Tensor
      */
     public function divideMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2382,7 +2408,7 @@ class Matrix implements Tensor
      */
     public function addMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2415,7 +2441,7 @@ class Matrix implements Tensor
      */
     public function subtractMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2449,7 +2475,7 @@ class Matrix implements Tensor
      */
     public function powMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2483,7 +2509,7 @@ class Matrix implements Tensor
      */
     public function modMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2517,7 +2543,7 @@ class Matrix implements Tensor
      */
     public function equalMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2551,7 +2577,7 @@ class Matrix implements Tensor
      */
     public function notEqualMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2585,7 +2611,7 @@ class Matrix implements Tensor
      */
     public function greaterMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2619,7 +2645,7 @@ class Matrix implements Tensor
      */
     public function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2653,7 +2679,7 @@ class Matrix implements Tensor
      */
     public function lessMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2687,7 +2713,7 @@ class Matrix implements Tensor
      */
     public function lessEqualMatrix(const <Matrix> b) -> <Matrix>
     {
-        if b->shape() !== this->shape() {
+        if unlikely b->shape() !== this->shape() {
             throw new InvalidArgumentException(this->shapeString()
                 . " matrix needed but " . b->shapeString() . " given.");
         }
@@ -2720,7 +2746,7 @@ class Matrix implements Tensor
      */
     public function multiplyVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -2754,7 +2780,7 @@ class Matrix implements Tensor
      */
     public function divideVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -2788,7 +2814,7 @@ class Matrix implements Tensor
      */
     public function addVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -2822,7 +2848,7 @@ class Matrix implements Tensor
      */
     public function subtractVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -2856,7 +2882,7 @@ class Matrix implements Tensor
      */
     public function powVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -2890,7 +2916,7 @@ class Matrix implements Tensor
      */
     public function modVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -2925,7 +2951,7 @@ class Matrix implements Tensor
      */
     public function equalVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -2960,7 +2986,7 @@ class Matrix implements Tensor
      */
     public function notEqualVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -2995,7 +3021,7 @@ class Matrix implements Tensor
      */
     public function greaterVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -3030,7 +3056,7 @@ class Matrix implements Tensor
      */
     public function greaterEqualVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -3065,7 +3091,7 @@ class Matrix implements Tensor
      */
     public function lessVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -3100,7 +3126,7 @@ class Matrix implements Tensor
      */
     public function lessEqualVector(const <Vector> b) -> <Matrix>
     {
-        if b->n() !== this->n {
+        if unlikely b->n() !== this->n {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->n . " columns but Vector B has "
                 . (string) b->n() . ".");
@@ -3134,7 +3160,7 @@ class Matrix implements Tensor
      */
     public function multiplyColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3168,7 +3194,7 @@ class Matrix implements Tensor
      */
     public function divideColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3202,7 +3228,7 @@ class Matrix implements Tensor
      */
     public function addColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3236,7 +3262,7 @@ class Matrix implements Tensor
      */
     public function subtractColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3270,7 +3296,7 @@ class Matrix implements Tensor
      */
     public function powColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3304,7 +3330,7 @@ class Matrix implements Tensor
      */
     public function modColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3339,7 +3365,7 @@ class Matrix implements Tensor
      */
     public function equalColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3374,7 +3400,7 @@ class Matrix implements Tensor
      */
     public function notEqualColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3409,7 +3435,7 @@ class Matrix implements Tensor
      */
     public function greaterColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3444,7 +3470,7 @@ class Matrix implements Tensor
      */
     public function greaterEqualColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3479,7 +3505,7 @@ class Matrix implements Tensor
      */
     public function lessColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3514,7 +3540,7 @@ class Matrix implements Tensor
      */
     public function lessEqualColumnVector(const <ColumnVector> b) -> <Matrix>
     {
-        if b->m() !== this->m {
+        if unlikely b->m() !== this->m {
             throw new InvalidArgumentException("Matrix A requires "
                 . (string) this->m . " rows but Vector B has "
                 . (string) b->m() . ".");
@@ -3548,7 +3574,7 @@ class Matrix implements Tensor
      */
     public function multiplyScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3579,7 +3605,7 @@ class Matrix implements Tensor
      */
     public function divideScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3610,7 +3636,7 @@ class Matrix implements Tensor
      */
     public function addScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3641,7 +3667,7 @@ class Matrix implements Tensor
      */
     public function subtractScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3672,7 +3698,7 @@ class Matrix implements Tensor
      */
     public function powScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
                 . " integnr or floating point number, "
                 . gettype(b) . " given.");
@@ -3704,7 +3730,7 @@ class Matrix implements Tensor
      */
     public function modScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3736,7 +3762,7 @@ class Matrix implements Tensor
      */
     public function equalScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3768,7 +3794,7 @@ class Matrix implements Tensor
      */
     public function notEqualScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3800,7 +3826,7 @@ class Matrix implements Tensor
      */
     public function greaterScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3832,7 +3858,7 @@ class Matrix implements Tensor
      */
     public function greaterEqualScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3864,7 +3890,7 @@ class Matrix implements Tensor
      */
     public function lessScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3896,7 +3922,7 @@ class Matrix implements Tensor
      */
     public function lessEqualScalar(const var b) -> <Matrix>
     {
-        if !is_int(b) && !is_float(b) {
+        if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an integer or"
                 . " floating point number, " . gettype(b) . " given.");
         }
@@ -3967,7 +3993,7 @@ class Matrix implements Tensor
     {
         var value;
 
-        if fetch value, this->a[index] {
+        if likely fetch value, this->a[index] {
             return value;
         }
 

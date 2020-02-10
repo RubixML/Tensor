@@ -27,6 +27,6 @@ class SubMatrixBench
      */
     public function subMatrix() : void
     {
-        $this->a->subMatrix(100, 250);
+        $this->a->subMatrix(100, 100, 350, 350);
     }
 }

@@ -278,7 +278,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_minimum, 0, 2, IS_
 	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Vector, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector___construct, 0, 0, 0)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector___construct, 0, 0, 1)
 	ZEND_ARG_ARRAY_INFO(0, a, 0)
 #if PHP_VERSION_ID >= 70200
 	ZEND_ARG_TYPE_INFO(0, validate, _IS_BOOL, 0)

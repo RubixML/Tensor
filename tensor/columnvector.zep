@@ -85,7 +85,7 @@ class ColumnVector extends Vector
      */
     public function multiplyMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -120,7 +120,7 @@ class ColumnVector extends Vector
      */
     public function divideMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -155,7 +155,7 @@ class ColumnVector extends Vector
      */
     public function addMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -190,7 +190,7 @@ class ColumnVector extends Vector
      */
     public function subtractMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -225,7 +225,7 @@ class ColumnVector extends Vector
      */
     public function powMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -260,7 +260,7 @@ class ColumnVector extends Vector
      */
     public function modMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -296,7 +296,7 @@ class ColumnVector extends Vector
      */
     public function equalMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -332,7 +332,7 @@ class ColumnVector extends Vector
      */
     public function notEqualMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -368,7 +368,7 @@ class ColumnVector extends Vector
      */
     public function greaterMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -404,7 +404,7 @@ class ColumnVector extends Vector
      */
     public function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -440,7 +440,7 @@ class ColumnVector extends Vector
      */
     public function lessMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
@@ -476,7 +476,7 @@ class ColumnVector extends Vector
      */
     public function lessEqualMatrix(const <Matrix> b) -> <Matrix>
     {
-        if this->n !== b->m() {
+        if unlikely this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");

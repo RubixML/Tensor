@@ -245,7 +245,7 @@ PHP_METHOD(Tensor_ColumnVector, multiplyMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -429,7 +429,7 @@ PHP_METHOD(Tensor_ColumnVector, divideMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -613,7 +613,7 @@ PHP_METHOD(Tensor_ColumnVector, addMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -797,7 +797,7 @@ PHP_METHOD(Tensor_ColumnVector, subtractMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -981,7 +981,7 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -1165,7 +1165,7 @@ PHP_METHOD(Tensor_ColumnVector, modMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -1350,7 +1350,7 @@ PHP_METHOD(Tensor_ColumnVector, equalMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -1559,7 +1559,7 @@ PHP_METHOD(Tensor_ColumnVector, notEqualMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -1768,7 +1768,7 @@ PHP_METHOD(Tensor_ColumnVector, greaterMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -1977,7 +1977,7 @@ PHP_METHOD(Tensor_ColumnVector, greaterEqualMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -2186,7 +2186,7 @@ PHP_METHOD(Tensor_ColumnVector, lessMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);
@@ -2395,7 +2395,7 @@ PHP_METHOD(Tensor_ColumnVector, lessEqualMatrix) {
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_METHOD(&_1, b, "m", NULL, 0);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_IDENTICAL(&_0, &_1)) {
+	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
 		ZEPHIR_OBS_VAR(&_3$$3);

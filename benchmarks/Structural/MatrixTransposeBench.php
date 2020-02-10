@@ -25,7 +25,7 @@ class MatrixTransposeBench
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function multiply() : void
+    public function transpose() : void
     {
         $this->a->transpose();
     }

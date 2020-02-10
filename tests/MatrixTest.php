@@ -2228,7 +2228,7 @@ class MatrixTest extends TestCase
      */
     public function subMatrix() : void
     {
-        $z = $this->a->subMatrix(1, 0);
+        $z = $this->a->subMatrix(1, 1, 3, 3);
 
         $expected = [
             [11, -2],

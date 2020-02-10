@@ -1,7 +1,7 @@
 - Unreleased
     - Individual Arithmetic and Comparison methods now public
     - Matrix reductions have their own namespace
-    - Optimize repeat matrix
+    - Optimized Matrix structural operations
 
 - 2.0.3
     - Matrix decomp methods now return decomp objects

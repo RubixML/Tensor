@@ -439,7 +439,7 @@ class Matrix implements Tensor
      * @param bool $validate
      * @throws \InvalidArgumentException
      */
-    public function __construct(array $a = [], bool $validate = true)
+    public function __construct(array $a, bool $validate = true)
     {
         if (empty($a)) {
             throw new InvalidArgumentException('Matrix must contain'
@@ -870,8 +870,8 @@ class Matrix implements Tensor
             return false;
         }
 
-        for ($i = 1; $i <= $this->n; ++$i) {
-            $b = $this->subMatrix(0, $i);
+        for ($i = 1; $i < $this->n; ++$i) {
+            $b = $this->subMatrix(0, 0, $i, $i);
 
             if ($b->det() <= 0) {
                 return false;
@@ -893,8 +893,8 @@ class Matrix implements Tensor
             return false;
         }
 
-        for ($i = 1; $i <= $this->n; ++$i) {
-            $b = $this->subMatrix(0, $i);
+        for ($i = 1; $i < $this->n; ++$i) {
+            $b = $this->subMatrix(0, 0, $i, $i);
 
             if ($b->det() < 0) {
                 return false;
@@ -2107,43 +2107,59 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the square submatrix starting at an offset on the diagonal
-     * and excluding the last n rows and columns.
+     * Return the sub matrix starting at row and column offset.
      *
-     * @param int $offset
-     * @param int $n
+     * @param int $startRow
+     * @param int $startColumn
+     * @param int $endRow
+     * @param int $endColumn
      * @throws InvalidArgumentException
      * @return self
      */
-    public function subMatrix(int $offset = 0, int $n = 1) : self
-    {
-        if ($offset < 0) {
-            throw new InvalidArgumentException(' Offset cannot be less'
-                . " than 0, $offset given.");
+    public function subMatrix(
+        int $startRow,
+        int $startColumn,
+        int $endRow,
+        int $endColumn
+    ) : self {
+        if ($startRow < 0) {
+            throw new InvalidArgumentException('Start row must'
+                . " be greater than 0, $startRow given.");
         }
 
-        if ($n < 0) {
-            throw new InvalidArgumentException('N cannot be less than'
-                . " 0, $n given.");
+        if ($startColumn < 0) {
+            throw new InvalidArgumentException('Start column must'
+                . " be greater than 0, $startColumn given.");
         }
 
-        $last = $offset + $n;
-
-        if ($last > $this->m or $last > $this->n) {
-            throw new InvalidArgumentException('Sub matrix is out of'
-                . ' bounds of matrix A.');
+        if ($endRow < $startRow) {
+            throw new InvalidArgumentException('End row must be'
+                . ' greater than start row.');
         }
 
-        $k = $this->n - $n;
+        if ($endColumn < $startColumn) {
+            throw new InvalidArgumentException('End column must be'
+                . ' greater than start column.');
+        }
+
+        if ($endRow > $this->m) {
+            throw new InvalidArgumentException('End row is out of'
+                . ' bounds of matrix.');
+        }
+
+        if ($endColumn > $this->n) {
+            throw new InvalidArgumentException('End column is out of'
+                . ' bounds of matrix.');
+        }
 
         $b = [];
 
-        for ($i = $offset; $i < $k; ++$i) {
+        for ($i = $startRow; $i < $endRow; ++$i) {
             $rowA = $this->a[$i];
 
             $rowB = [];
 
-            for ($j = $offset; $j < $k; ++$j) {
+            for ($j = $startColumn; $j < $endColumn; ++$j) {
                 $rowB[] = $rowA[$j];
             }
 

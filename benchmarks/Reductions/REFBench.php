@@ -1,14 +1,14 @@
 <?php
 
-namespace Tensor\Benchmarks\Decompositions;
+namespace Tensor\Benchmarks\Reductions;
 
 use Tensor\Matrix;
 
 /**
- * @Groups({"Decompositions"})
+ * @Groups({"Reductions"})
  * @BeforeMethods({"setUp"})
  */
-class RREFBench
+class REFBench
 {
     /**
      * @var \Tensor\Matrix
@@ -25,8 +25,8 @@ class RREFBench
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function rref() : void
+    public function ref() : void
     {
-        $this->a->rref();
+        $this->a->ref();
     }
 }
