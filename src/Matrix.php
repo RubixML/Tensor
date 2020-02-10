@@ -14,6 +14,7 @@ use Closure;
 
 use function count;
 use function array_slice;
+use function gettype;
 use function is_null;
 
 /**
@@ -1170,8 +1171,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * A universal function to multiply this matrix with another tensor
-     * element-wise.
+     * A universal function to multiply this matrix with another tensor element-wise.
      *
      * @param mixed $b
      * @throws \InvalidArgumentException
@@ -1179,28 +1179,31 @@ class Matrix implements Tensor
      */
     public function multiply($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->multiplyMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->multiplyMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->multiplyColumnVector($b);
-            
-            case $b instanceof Vector:
-                return $this->multiplyVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->multiplyColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->multiplyVector($b);
+                }
 
-            case is_int($b) or is_float($b):
+                break 1;
+            case 'double':
+            case 'integer':
                 return $this->multiplyScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot multiply matrix'
-                    . ' by a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot multiply'
+            . ' matrix by the given input.');
     }
 
     /**
-     * A universal function to divide this matrix by another tensor
-     * element-wise.
+     * A universal function to divide this matrix by another tensor element-wise.
      *
      * @param mixed $b
      * @throws \InvalidArgumentException
@@ -1208,28 +1211,32 @@ class Matrix implements Tensor
      */
     public function divide($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->divideMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->divideMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->divideColumnVector($b);
-            
-            case $b instanceof Vector:
-                return $this->divideVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->divideColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->divideVector($b);
+                }
 
-            case is_int($b) or is_float($b):
+                break 1;
+
+            case 'double':
+            case 'integer':
                 return $this->divideScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot divide matrix'
-                    . ' with a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot divide'
+            . ' matrix by the given input.');
     }
 
     /**
-     * A universal function to add this matrix with another tensor
-     * element-wise.
+     * A universal function to add this matrix with another tensor element-wise.
      *
      * @param mixed $b
      * @throws \InvalidArgumentException
@@ -1237,28 +1244,32 @@ class Matrix implements Tensor
      */
     public function add($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->addMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->addMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->addColumnVector($b);
-            
-            case $b instanceof Vector:
-                return $this->addVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->addColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->addVector($b);
+                }
 
-            case is_int($b) or is_float($b):
+                break 1;
+
+            case 'double':
+            case 'integer':
                 return $this->addScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot add matrix'
-                    . ' with a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot add'
+            . ' matrix to the given input.');
     }
 
     /**
-     * A universal function to subtract this matrix from another tensor
-     * element-wise.
+     * A universal function to subtract this matrix from another tensor element-wise.
      *
      * @param mixed $b
      * @throws \InvalidArgumentException
@@ -1266,23 +1277,28 @@ class Matrix implements Tensor
      */
     public function subtract($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->subtractMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->subtractMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->subtractColumnVector($b);
-                
-            case $b instanceof Vector:
-                return $this->subtractVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->subtractColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->subtractVector($b);
+                }
 
-            case is_int($b) or is_float($b):
+                break 1;
+
+            case 'double':
+            case 'integer':
                 return $this->subtractScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot subtract a '
-                    . gettype($b) . ' from a matrix.');
         }
+
+        throw new InvalidArgumentException('Cannot subtract'
+            . ' the given input from matrix.');
     }
 
     /**
@@ -1295,23 +1311,28 @@ class Matrix implements Tensor
      */
     public function pow($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->powMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->powMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->powColumnVector($b);
-            
-            case $b instanceof Vector:
-                return $this->powVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->powColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->powVector($b);
+                }
 
-            case is_int($b) or is_float($b):
+                break 1;
+
+            case 'double':
+            case 'integer':
                 return $this->powScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot raise matrix'
-                    . ' to the power of a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot raise'
+            . ' matrix to the given power.');
     }
 
     /**
@@ -1324,23 +1345,28 @@ class Matrix implements Tensor
      */
     public function mod($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->modMatrix($b);
-            
-            case $b instanceof ColumnVector:
-                return $this->modColumnVector($b);
-            
-            case $b instanceof Vector:
-                return $this->modVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->modMatrix($b);
 
-            case is_int($b) or is_float($b):
+                    case $b instanceof ColumnVector:
+                        return $this->modColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->modVector($b);
+                }
+
+                break 1;
+
+            case 'double':
+            case 'integer':
                 return $this->modScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot mod matrix'
-                    . ' with a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot mod'
+            . ' matrix with the given input.');
     }
 
     /**
@@ -1353,23 +1379,28 @@ class Matrix implements Tensor
      */
     public function equal($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->equalMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->equalMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->equalColumnVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->equalColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->equalVector($b);
+                }
 
-            case $b instanceof Vector:
-                return $this->equalVector($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->equalScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare matrix'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' matrix to the given input.');
     }
 
     /**
@@ -1382,23 +1413,28 @@ class Matrix implements Tensor
      */
     public function notEqual($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->notEqualMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->notEqualMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->notEqualColumnVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->notEqualColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->notEqualVector($b);
+                }
 
-            case $b instanceof Vector:
-                return $this->notEqualVector($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->notEqualScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare matrix'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' matrix to the given input.');
     }
 
     /**
@@ -1411,23 +1447,28 @@ class Matrix implements Tensor
      */
     public function greater($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->greaterMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->greaterMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->greaterColumnVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->greaterColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->greaterVector($b);
+                }
 
-            case $b instanceof Vector:
-                return $this->greaterVector($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->greaterScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare matrix'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' matrix to the given input.');
     }
 
     /**
@@ -1440,23 +1481,28 @@ class Matrix implements Tensor
      */
     public function greaterEqual($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->greaterEqualMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->greaterEqualMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->greaterEqualColumnVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->greaterEqualColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->greaterEqualVector($b);
+                }
 
-            case $b instanceof Vector:
-                return $this->greaterEqualVector($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->greaterEqualScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare matrix'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' matrix to the given input.');
     }
 
     /**
@@ -1469,23 +1515,28 @@ class Matrix implements Tensor
      */
     public function less($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->lessMatrix($b);
-            
-            case $b instanceof ColumnVector:
-                return $this->lessColumnVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->lessMatrix($b);
 
-            case $b instanceof Vector:
-                return $this->lessVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->lessColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->lessVector($b);
+                }
 
-            case is_int($b) or is_float($b):
+                break 1;
+
+            case 'double':
+            case 'integer':
                 return $this->lessScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare matrix'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' matrix to the given input.');
     }
 
     /**
@@ -1498,23 +1549,28 @@ class Matrix implements Tensor
      */
     public function lessEqual($b)
     {
-        switch (true) {
-            case $b instanceof Matrix:
-                return $this->lessEqualMatrix($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Matrix:
+                        return $this->lessEqualMatrix($b);
 
-            case $b instanceof ColumnVector:
-                return $this->lessEqualColumnVector($b);
-            
-            case $b instanceof Vector:
-                return $this->lessEqualVector($b);
+                    case $b instanceof ColumnVector:
+                        return $this->lessEqualColumnVector($b);
+                    
+                    case $b instanceof Vector:
+                        return $this->lessEqualVector($b);
+                }
 
-            case is_int($b) or is_float($b):
+                break 1;
+
+            case 'double':
+            case 'integer':
                 return $this->lessEqualScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare matrix'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' matrix to the given input.');
     }
 
     /**
@@ -1545,7 +1601,7 @@ class Matrix implements Tensor
      */
     public function square() : self
     {
-        return $this->multiply($this);
+        return $this->multiplyMatrix($this);
     }
 
     /**
@@ -1739,7 +1795,7 @@ class Matrix implements Tensor
      */
     public function mean() : ColumnVector
     {
-        return $this->sum()->divide($this->n);
+        return $this->sum()->divideScalar($this->n);
     }
 
     /**
@@ -1762,7 +1818,7 @@ class Matrix implements Tensor
             if ($odd) {
                 $median = $rowA[$mid];
             } else {
-                $median = ($rowA[$mid - 1] + $rowA[$mid]) / 2.;
+                $median = ($rowA[$mid - 1] + $rowA[$mid]) / 2.0;
             }
 
             $b[] = $median;
@@ -1781,7 +1837,7 @@ class Matrix implements Tensor
      */
     public function percentile(float $p) : ColumnVector
     {
-        if ($p < 0. or $p > 100.) {
+        if ($p < 0.0 or $p > 100.0) {
             throw new InvalidArgumentException('P must be between 0 and 100,'
                 . " $p given.");
         }
@@ -1844,10 +1900,10 @@ class Matrix implements Tensor
      */
     public function covariance() : self
     {
-        $b = $this->subtract($this->mean());
+        $b = $this->subtractColumnVector($this->mean());
 
         return $b->matmul($b->transpose())
-            ->divide($this->m);
+            ->divideScalar($this->m);
     }
 
     /**
@@ -2208,7 +2264,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyMatrix(Matrix $b) : self
+    public function multiplyMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2241,7 +2297,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideMatrix(Matrix $b) : self
+    public function divideMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2274,7 +2330,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addMatrix(Matrix $b) : self
+    public function addMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2307,7 +2363,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractMatrix(Matrix $b) : self
+    public function subtractMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2341,7 +2397,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powMatrix(Matrix $b) : self
+    public function powMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2375,7 +2431,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modMatrix(Matrix $b) : self
+    public function modMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2409,7 +2465,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalMatrix(Matrix $b) : self
+    public function equalMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2443,7 +2499,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualMatrix(Matrix $b) : self
+    public function notEqualMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2477,7 +2533,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterMatrix(Matrix $b) : self
+    public function greaterMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2511,7 +2567,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualMatrix(Matrix $b) : self
+    public function greaterEqualMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2545,7 +2601,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessMatrix(Matrix $b) : self
+    public function lessMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2579,7 +2635,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualMatrix(Matrix $b) : self
+    public function lessEqualMatrix(Matrix $b) : self
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
@@ -2612,7 +2668,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyVector(Vector $b) : self
+    public function multiplyVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -2643,7 +2699,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideVector(Vector $b) : self
+    public function divideVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -2674,7 +2730,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addVector(Vector $b) : self
+    public function addVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -2705,7 +2761,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractVector(Vector $b) : self
+    public function subtractVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -2736,7 +2792,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powVector(Vector $b) : self
+    public function powVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -2767,7 +2823,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modVector(Vector $b) : self
+    public function modVector(Vector $b) : self
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -2990,7 +3046,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyColumnVector(ColumnVector $b) : self
+    public function multiplyColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3021,7 +3077,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideColumnVector(ColumnVector $b) : self
+    public function divideColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3052,7 +3108,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addColumnVector(ColumnVector $b) : self
+    public function addColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3083,7 +3139,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractColumnVector(ColumnVector $b) : self
+    public function subtractColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3114,7 +3170,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powColumnVector(ColumnVector $b) : self
+    public function powColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3145,7 +3201,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modColumnVector(ColumnVector $b) : self
+    public function modColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3177,7 +3233,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalColumnVector(ColumnVector $b) : self
+    public function equalColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3209,7 +3265,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualColumnVector(ColumnVector $b) : self
+    public function notEqualColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3241,7 +3297,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterColumnVector(ColumnVector $b) : self
+    public function greaterColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3273,7 +3329,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualColumnVector(ColumnVector $b) : self
+    public function greaterEqualColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3305,7 +3361,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessColumnVector(ColumnVector $b) : self
+    public function lessColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3337,7 +3393,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualColumnVector(ColumnVector $b) : self
+    public function lessEqualColumnVector(ColumnVector $b) : self
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
@@ -3368,7 +3424,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyScalar($b) : self
+    public function multiplyScalar($b) : self
     {
         $c = [];
 
@@ -3392,7 +3448,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideScalar($b) : self
+    public function divideScalar($b) : self
     {
         $c = [];
 
@@ -3416,7 +3472,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addScalar($b) : self
+    public function addScalar($b) : self
     {
         $c = [];
 
@@ -3440,7 +3496,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractScalar($b) : self
+    public function subtractScalar($b) : self
     {
         $c = [];
 
@@ -3464,7 +3520,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powScalar($b) : self
+    public function powScalar($b) : self
     {
         $c = [];
 
@@ -3488,7 +3544,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modScalar($b) : self
+    public function modScalar($b) : self
     {
         $c = [];
 
@@ -3513,7 +3569,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalScalar($b) : self
+    public function equalScalar($b) : self
     {
         $c = [];
 
@@ -3538,7 +3594,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualScalar($b) : self
+    public function notEqualScalar($b) : self
     {
         $c = [];
 
@@ -3563,7 +3619,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterScalar($b) : self
+    public function greaterScalar($b) : self
     {
         $c = [];
 
@@ -3588,7 +3644,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualScalar($b) : self
+    public function greaterEqualScalar($b) : self
     {
         $c = [];
 
@@ -3613,7 +3669,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessScalar($b) : self
+    public function lessScalar($b) : self
     {
         $c = [];
 
@@ -3638,7 +3694,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualScalar($b) : self
+    public function lessEqualScalar($b) : self
     {
         $c = [];
 

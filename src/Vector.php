@@ -9,6 +9,7 @@ use Closure;
 
 use function count;
 use function array_slice;
+use function gettype;
 use function is_null;
 
 /**
@@ -635,7 +636,7 @@ class Vector implements Tensor
      */
     public function project(Vector $b) : self
     {
-        return $b->multiply($this->dot($b)
+        return $b->multiplyScalar($this->dot($b)
             / ($b->l2Norm() ** 2));
     }
 
@@ -666,14 +667,14 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return int|float
      */
-    public function pNorm(float $p = 3.)
+    public function pNorm(float $p = 3.0)
     {
-        if ($p <= 0.) {
+        if ($p <= 0.0) {
             throw new InvalidArgumentException('P must be greater'
                 . " than 0, $p given.");
         }
 
-        return $this->abs()->powScalar($p)->sum() ** (1. / $p);
+        return $this->abs()->powScalar($p)->sum() ** (1.0 / $p);
     }
 
     /**
@@ -687,8 +688,7 @@ class Vector implements Tensor
     }
 
     /**
-     * A universal function to multiply this vector with another tensor
-     * element-wise.
+     * A universal function to multiply this vector with another tensor element-wise.
      *
      * @param mixed $b
      * @throws \InvalidArgumentException
@@ -696,25 +696,29 @@ class Vector implements Tensor
      */
     public function multiply($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->multiplyVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->multiplyVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->multiplyMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->multiplyMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->multiplyScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot multiply vector'
-                    . ' by a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot multiply'
+            . ' vector to the given input.');
     }
 
     /**
-     * A universal function to divide this vector by another tensor
-     * element-wise.
+     * A universal function to divide this vector by another tensor element-wise.
      *
      * @param mixed $b
      * @throws \InvalidArgumentException
@@ -722,25 +726,29 @@ class Vector implements Tensor
      */
     public function divide($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->divideVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->divideVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->divideMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->divideMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->divideScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot divide vector'
-                    . ' by a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot divide'
+            . ' vector by the given input.');
     }
 
     /**
-     * A universal function to add this vector with another tensor
-     * element-wise.
+     * A universal function to add this vector with another tensor element-wise.
      *
      * @param mixed $b
      * @throws \InvalidArgumentException
@@ -748,25 +756,29 @@ class Vector implements Tensor
      */
     public function add($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->addVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->addVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->addMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->addMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->addScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot add vector'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot add'
+            . ' vector to the given input.');
     }
 
     /**
-     * A universal function to subtract this vector from another tensor
-     * element-wise.
+     * A universal function to subtract this vector from another tensor element-wise.
      *
      * @param mixed $b
      * @throws \InvalidArgumentException
@@ -774,20 +786,25 @@ class Vector implements Tensor
      */
     public function subtract($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->subtractVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->subtractVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->subtractMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->subtractMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->subtractScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot subtract a '
-                    . gettype($b) . ' from vector.');
         }
+
+        throw new InvalidArgumentException('Cannot subtract'
+            . ' vector from the given input.');
     }
 
     /**
@@ -800,20 +817,25 @@ class Vector implements Tensor
      */
     public function pow($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->powVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->powVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->powMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->powMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->powScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot raise vector'
-                    . ' to a power of a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot raise'
+            . ' vector to the power of the given input.');
     }
 
     /**
@@ -826,20 +848,25 @@ class Vector implements Tensor
      */
     public function mod($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->modVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->modVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->modMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->modMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->modScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot mod vector'
-                    . ' with a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot mod'
+            . ' vector with the given input.');
     }
 
     /**
@@ -852,20 +879,25 @@ class Vector implements Tensor
      */
     public function equal($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->equalVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->equalVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->equalMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->equalMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->equalScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare vector'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' vector with the given input.');
     }
 
     /**
@@ -878,20 +910,25 @@ class Vector implements Tensor
      */
     public function notEqual($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->notEqualVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->notEqualVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->notEqualMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->notEqualMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->notEqualScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare vector'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' vector with the given input.');
     }
 
     /**
@@ -904,20 +941,25 @@ class Vector implements Tensor
      */
     public function greater($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->greaterVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->greaterVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->greaterMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->greaterMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->greaterScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare vector'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' vector with the given input.');
     }
 
     /**
@@ -930,20 +972,25 @@ class Vector implements Tensor
      */
     public function greaterEqual($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->greaterEqualVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->greaterEqualVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->greaterEqualMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->greaterEqualMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->greaterEqualScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare vector'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' vector with the given input.');
     }
 
     /**
@@ -956,20 +1003,25 @@ class Vector implements Tensor
      */
     public function less($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->lessVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->lessVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->lessMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->lessMatrix($b);
+                break 1;
 
-            case is_int($b) or is_float($b):
+            case 'double':
+            case 'integer':
                 return $this->lessScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare vector'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' vector with the given input.');
     }
 
     /**
@@ -982,20 +1034,25 @@ class Vector implements Tensor
      */
     public function lessEqual($b)
     {
-        switch (true) {
-            case $b instanceof Vector:
-                return $this->lessEqualVector($b);
+        switch (gettype($b)) {
+            case 'object':
+                switch (true) {
+                    case $b instanceof Vector:
+                        return $this->lessEqualVector($b);
+        
+                    case $b instanceof Matrix:
+                        return $this->lessEqualMatrix($b);
+                }
 
-            case $b instanceof Matrix:
-                return $this->lessEqualMatrix($b);
-
-            case is_int($b) or is_float($b):
+                break 1;
+                
+            case 'double':
+            case 'integer':
                 return $this->lessEqualScalar($b);
-
-            default:
-                throw new InvalidArgumentException('Cannot compare vector'
-                    . ' to a ' . gettype($b) . '.');
         }
+
+        throw new InvalidArgumentException('Cannot compare'
+            . ' vector with the given input.');
     }
 
     /**
@@ -1026,7 +1083,7 @@ class Vector implements Tensor
      */
     public function square() : self
     {
-        return $this->multiply($this);
+        return $this->multiplyVector($this);
     }
 
     /**
@@ -1468,7 +1525,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function multiplyMatrix(Matrix $b) : Matrix
+    public function multiplyMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1497,7 +1554,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function divideMatrix(Matrix $b) : Matrix
+    public function divideMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1526,7 +1583,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function addMatrix(Matrix $b) : Matrix
+    public function addMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1555,7 +1612,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function subtractMatrix(Matrix $b) : Matrix
+    public function subtractMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1584,7 +1641,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function powMatrix(Matrix $b) : Matrix
+    public function powMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1613,7 +1670,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function modMatrix(Matrix $b) : Matrix
+    public function modMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1643,7 +1700,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function equalMatrix(Matrix $b) : Matrix
+    public function equalMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1673,7 +1730,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function notEqualMatrix(Matrix $b) : Matrix
+    public function notEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1703,7 +1760,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterMatrix(Matrix $b) : Matrix
+    public function greaterMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1733,7 +1790,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterEqualMatrix(Matrix $b) : Matrix
+    public function greaterEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1763,7 +1820,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessMatrix(Matrix $b) : Matrix
+    public function lessMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1793,7 +1850,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessEqualMatrix(Matrix $b) : Matrix
+    public function lessEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->n()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1820,9 +1877,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function multiplyVector(Vector $b) : self
+    public function multiplyVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1843,9 +1900,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function divideVector(Vector $b) : self
+    public function divideVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1866,9 +1923,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function addVector(Vector $b) : self
+    public function addVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1889,9 +1946,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function subtractVector(Vector $b) : self
+    public function subtractVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1912,9 +1969,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function powVector(Vector $b) : self
+    public function powVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1935,9 +1992,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function modVector(Vector $b) : self
+    public function modVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1959,9 +2016,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function equalVector(Vector $b) : self
+    public function equalVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -1983,9 +2040,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function notEqualVector(Vector $b) : self
+    public function notEqualVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -2009,7 +2066,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterVector(Vector $b) : self
+    public function greaterVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -2031,9 +2088,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function greaterEqualVector(Vector $b) : self
+    public function greaterEqualVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -2055,9 +2112,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function lessVector(Vector $b) : self
+    public function lessVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -2079,9 +2136,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function lessEqualVector(Vector $b) : self
+    public function lessEqualVector(Vector $b) : self
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -2102,9 +2159,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function multiplyScalar($b) : self
+    public function multiplyScalar($b) : self
     {
         $c = [];
 
@@ -2120,9 +2177,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function divideScalar($b) : self
+    public function divideScalar($b) : self
     {
         $c = [];
 
@@ -2138,9 +2195,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function addScalar($b) : self
+    public function addScalar($b) : self
     {
         $c = [];
 
@@ -2156,9 +2213,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function subtractScalar($b) : self
+    public function subtractScalar($b) : self
     {
         $c = [];
 
@@ -2174,9 +2231,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function powScalar($b) : self
+    public function powScalar($b) : self
     {
         $c = [];
 
@@ -2192,9 +2249,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function modScalar($b) : self
+    public function modScalar($b) : self
     {
         $c = [];
 
@@ -2211,9 +2268,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function equalScalar($b) : self
+    public function equalScalar($b) : self
     {
         $c = [];
 
@@ -2230,9 +2287,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function notEqualScalar($b) : self
+    public function notEqualScalar($b) : self
     {
         $c = [];
 
@@ -2249,9 +2306,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function greaterScalar($b) : self
+    public function greaterScalar($b) : self
     {
         $c = [];
 
@@ -2268,9 +2325,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function greaterEqualScalar($b) : self
+    public function greaterEqualScalar($b) : self
     {
         $c = [];
 
@@ -2287,9 +2344,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function lessScalar($b) : self
+    public function lessScalar($b) : self
     {
         $c = [];
 
@@ -2306,9 +2363,9 @@ class Vector implements Tensor
      *
      * @param int|float $b
      * @throws \InvalidArgumentException
-     * @return self
+     * @return static
      */
-    protected function lessEqualScalar($b) : self
+    public function lessEqualScalar($b) : self
     {
         $c = [];
 

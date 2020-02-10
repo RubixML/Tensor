@@ -717,8 +717,7 @@ class Vector implements Tensor
     }
 
     /**
-     * A universal function to multiply this vector with another tensor
-     * element-wise.
+     * A universal function to multiply this vector with another tensor element-wise.
      *
      * @param mixed b
      * @throws \InvalidArgumentException
@@ -726,27 +725,29 @@ class Vector implements Tensor
      */
     public function multiply(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->multiplyVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->multiplyMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->multiplyVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->multiplyMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->multiplyScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->multiplyScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot multiply vector"
-            . " by a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot multiply"
+            . " vector by the given input.");
     }
 
     /**
-     * A universal function to divide this vector by another tensor
-     * element-wise.
+     * A universal function to divide this vector by another tensor element-wise.
      *
      * @param mixed b
      * @throws \InvalidArgumentException
@@ -754,22 +755,25 @@ class Vector implements Tensor
      */
     public function divide(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->divideVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->divideMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->divideVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->divideMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->divideScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->divideScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot divide vector"
-            . " by a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot divide"
+            . " vector by the given input.");
     }
 
     /**
@@ -782,22 +786,25 @@ class Vector implements Tensor
      */
     public function add(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->addVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->addMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->addVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->addMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->addScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->addScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot add vector"
-            . " to a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot add"
+            . " vector by the given input.");
     }
 
     /**
@@ -810,22 +817,25 @@ class Vector implements Tensor
      */
     public function subtract(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->subtractVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->subtractMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->subtractVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->subtractMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->subtractScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->subtractScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot subtract a "
-            . gettype(b) . " from vector.");
+        throw new InvalidArgumentException("Cannot subtract"
+            . " vector from the given input.");
     }
 
     /**
@@ -838,22 +848,25 @@ class Vector implements Tensor
      */
     public function pow(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->powVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->powMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->powVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->powMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->powScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->powScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot raise vector"
-            . " to a power of a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot raise"
+            . " vector to the power of the given input.");
     }
 
     /**
@@ -866,22 +879,25 @@ class Vector implements Tensor
      */
     public function mod(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->modVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->modMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->modVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->modMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->modScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->modScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot mod vector"
-            . " with a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot mod"
+            . " vector with the given input.");
     }
 
     /**
@@ -894,22 +910,25 @@ class Vector implements Tensor
      */
     public function equal(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->equalVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->equalMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->equalVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->equalMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->equalScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->equalScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot compare vector"
-            . " to a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot compare"
+            . " vector to the given input.");
     }
 
     /**
@@ -922,22 +941,25 @@ class Vector implements Tensor
      */
     public function notEqual(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->notEqualVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->notEqualMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->notEqualVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->notEqualMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->notEqualScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->notEqualScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot compare vector"
-            . " to a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot compare"
+            . " vector to the given input.");
     }
 
     /**
@@ -950,22 +972,25 @@ class Vector implements Tensor
      */
     public function greater(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->greaterVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->greaterMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->greaterVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->greaterMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->greaterScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->greaterScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot compare vector"
-            . " to a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot compare"
+            . " vector to the given input.");
     }
 
     /**
@@ -978,22 +1003,25 @@ class Vector implements Tensor
      */
     public function greaterEqual(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->greaterEqualVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->greaterEqualMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->greaterEqualVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->greaterEqualMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->greaterEqualScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->greaterEqualScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot compare vector"
-            . " to a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot compare"
+            . " vector to the given input.");
     }
 
     /**
@@ -1006,22 +1034,25 @@ class Vector implements Tensor
      */
     public function less(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->lessVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->lessMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->lessVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->lessMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->lessScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->lessScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot compare vector"
-            . " to a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot compare"
+            . " vector to the given input.");
     }
 
     /**
@@ -1034,22 +1065,25 @@ class Vector implements Tensor
      */
     public function lessEqual(const var b)
     {
-        if is_object(b) {
-            switch (true) {
-                case b instanceof Vector:
-                    return this->lessEqualVector(b);
+        switch (gettype(b)) {
+            case "object":
+                switch true {
+                    case b instanceof Matrix:
+                        return this->lessEqualMatrix(b);
+                    
+                    case b instanceof Vector:
+                        return this->lessEqualVector(b);
+                }
 
-                case b instanceof Matrix:
-                    return this->lessEqualMatrix(b);
-            }
-        }
-        
-        if is_int(b) || is_float(b) {
-            return this->lessEqualScalar(b);
+                break;
+
+            case "double":
+            case "integer":
+                return this->lessEqualScalar(b);
         }
 
-        throw new InvalidArgumentException("Cannot compare vector"
-            . " to a " . gettype(b) . ".");
+        throw new InvalidArgumentException("Cannot compare"
+            . " vector to the given input.");
     }
 
     /**
@@ -1533,7 +1567,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function multiplyMatrix(const <Matrix> b) -> <Matrix>
+    public function multiplyMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1565,7 +1599,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function divideMatrix(const <Matrix> b) -> <Matrix>
+    public function divideMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1597,7 +1631,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function addMatrix(const <Matrix> b) -> <Matrix>
+    public function addMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1629,7 +1663,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function subtractMatrix(const <Matrix> b) -> <Matrix>
+    public function subtractMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1661,7 +1695,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function powMatrix(const <Matrix> b) -> <Matrix>
+    public function powMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1693,7 +1727,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function modMatrix(const <Matrix> b) -> <Matrix>
+    public function modMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1726,7 +1760,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function equalMatrix(const <Matrix> b) -> <Matrix>
+    public function equalMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1759,7 +1793,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function notEqualMatrix(const <Matrix> b) -> <Matrix>
+    public function notEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1792,7 +1826,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterMatrix(const <Matrix> b) -> <Matrix>
+    public function greaterMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1825,7 +1859,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
+    public function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1858,7 +1892,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessMatrix(const <Matrix> b) -> <Matrix>
+    public function lessMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1891,7 +1925,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessEqualMatrix(const <Matrix> b) -> <Matrix>
+    public function lessEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->n() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1923,7 +1957,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function multiplyVector(const <Vector> b) -> <Vector>
+    public function multiplyVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1948,7 +1982,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideVector(const <Vector> b) -> <Vector>
+    public function divideVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1973,7 +2007,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addVector(const <Vector> b) -> <Vector>
+    public function addVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -1998,7 +2032,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractVector(const <Vector> b) -> <Vector>
+    public function subtractVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2023,7 +2057,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function powVector(const <Vector> b) -> <Vector>
+    public function powVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2048,7 +2082,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modVector(const <Vector> b) -> <Vector>
+    public function modVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2074,7 +2108,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalVector(const <Vector> b) -> <Vector>
+    public function equalVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2100,7 +2134,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualVector(const <Vector> b) -> <Vector>
+    public function notEqualVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2126,7 +2160,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterVector(const <Vector> b) -> <Vector>
+    public function greaterVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2152,7 +2186,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualVector(const <Vector> b) -> <Vector>
+    public function greaterEqualVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2178,7 +2212,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessVector(const <Vector> b) -> <Vector>
+    public function lessVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2204,7 +2238,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualVector(const <Vector> b) -> <Vector>
+    public function lessEqualVector(const <Vector> b) -> <Vector>
     {
         if this->n !== b->size() {
             throw new InvalidArgumentException("Vector A requires "
@@ -2229,7 +2263,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-     protected function multiplyScalar(const var b) -> <Vector>
+     public function multiplyScalar(const var b) -> <Vector>
      {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2254,7 +2288,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function divideScalar(const var b) -> <Vector>
+    public function divideScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2279,7 +2313,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function addScalar(const var b) -> <Vector>
+    public function addScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2304,7 +2338,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function subtractScalar(const var b) -> <Vector>
+    public function subtractScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2329,7 +2363,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-     protected function powScalar(const var b) -> <Vector>
+     public function powScalar(const var b) -> <Vector>
      {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2354,7 +2388,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function modScalar(const var b) -> <Vector>
+    public function modScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2380,7 +2414,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function equalScalar(const var b) -> <Vector>
+    public function equalScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2406,7 +2440,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function notEqualScalar(const var b) -> <Vector>
+    public function notEqualScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2432,7 +2466,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterScalar(const var b) -> <Vector>
+    public function greaterScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2458,7 +2492,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function greaterEqualScalar(const var b) -> <Vector>
+    public function greaterEqualScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2484,7 +2518,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessScalar(const var b) -> <Vector>
+    public function lessScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
@@ -2510,7 +2544,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    protected function lessEqualScalar(const var b) -> <Vector>
+    public function lessEqualScalar(const var b) -> <Vector>
     {
         if !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"

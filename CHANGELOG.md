@@ -1,4 +1,5 @@
 - Unreleased
+    - Individual Arithmetic and Comparison methods now public
     - Matrix reductions have their own namespace
     - Optimize repeat matrix
 

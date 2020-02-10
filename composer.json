@@ -46,8 +46,8 @@
         "build": [
             "@composer install",
             "@analyze",
-            "@check",
-            "@test"
+            "@test",
+            "@check"
         ],
         "analyze": "phpstan analyse -c phpstan.neon",
         "benchmark": "phpbench run --report=env --report=aggregate",

@@ -83,7 +83,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function multiplyMatrix(const <Matrix> b) -> <Matrix>
+    public function multiplyMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -118,7 +118,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function divideMatrix(const <Matrix> b) -> <Matrix>
+    public function divideMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -153,7 +153,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function addMatrix(const <Matrix> b) -> <Matrix>
+    public function addMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -188,7 +188,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function subtractMatrix(const <Matrix> b) -> <Matrix>
+    public function subtractMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -223,7 +223,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function powMatrix(const <Matrix> b) -> <Matrix>
+    public function powMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -258,7 +258,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function modMatrix(const <Matrix> b) -> <Matrix>
+    public function modMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -294,7 +294,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function equalMatrix(const <Matrix> b) -> <Matrix>
+    public function equalMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -330,7 +330,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function notEqualMatrix(const <Matrix> b) -> <Matrix>
+    public function notEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -366,7 +366,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterMatrix(const <Matrix> b) -> <Matrix>
+    public function greaterMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -402,7 +402,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
+    public function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -438,7 +438,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessMatrix(const <Matrix> b) -> <Matrix>
+    public function lessMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "
@@ -474,7 +474,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessEqualMatrix(const <Matrix> b) -> <Matrix>
+    public function lessEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if this->n !== b->m() {
             throw new InvalidArgumentException("Vector A requires "

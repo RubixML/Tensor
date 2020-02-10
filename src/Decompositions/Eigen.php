@@ -57,14 +57,13 @@ class Eigen
         $eigenvectors = Matrix::quick($eigenvectors)->transpose();
 
         if ($normalize) {
-            $norm = $eigenvectors
-                ->transpose()
+            $norm = $eigenvectors->transpose()
                 ->square()
                 ->sum()
-                ->sqrt();
+                ->sqrt()
+                ->transpose();
         
-            $eigenvectors = $eigenvectors
-                ->divide($norm->transpose());
+            $eigenvectors = $eigenvectors->divideVector($norm);
         }
 
         return new self($eigenvalues, $eigenvectors);

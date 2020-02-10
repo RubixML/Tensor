@@ -63,7 +63,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function multiplyMatrix(Matrix $b) : Matrix
+    public function multiplyMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -94,7 +94,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function divideMatrix(Matrix $b) : Matrix
+    public function divideMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -125,7 +125,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function addMatrix(Matrix $b) : Matrix
+    public function addMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -156,7 +156,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function subtractMatrix(Matrix $b) : Matrix
+    public function subtractMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -187,7 +187,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function powMatrix(Matrix $b) : Matrix
+    public function powMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -218,7 +218,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function modMatrix(Matrix $b) : Matrix
+    public function modMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -250,7 +250,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function equalMatrix(Matrix $b) : Matrix
+    public function equalMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -282,7 +282,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function notEqualMatrix(Matrix $b) : Matrix
+    public function notEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -314,7 +314,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterMatrix(Matrix $b) : Matrix
+    public function greaterMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -346,7 +346,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function greaterEqualMatrix(Matrix $b) : Matrix
+    public function greaterEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -378,7 +378,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessMatrix(Matrix $b) : Matrix
+    public function lessMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
@@ -410,7 +410,7 @@ class ColumnVector extends Vector
      * @throws \InvalidArgumentException
      * @return \Tensor\Matrix
      */
-    protected function lessEqualMatrix(Matrix $b) : Matrix
+    public function lessEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Vector A requires'
