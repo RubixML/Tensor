@@ -1,4 +1,4 @@
-namespace Tensor\Decompositions;
+namespace Tensor\Reductions;
 
 use Tensor\Matrix;
 use InvalidArgumentException;
@@ -13,7 +13,7 @@ use RuntimeException;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Rref implements Decomposition
+class Rref
 {
     /**
      * The reduced matrix in reduced row echelon form.
@@ -28,7 +28,7 @@ class Rref implements Decomposition
      * @param \Tensor\Matrix a
      * @return self
      */
-    public static function decompose(const <Matrix> a) -> <Rref>
+    public static function reduce(const <Matrix> a) -> <Rref>
     {
         var scale, divisor;
         int i, j;

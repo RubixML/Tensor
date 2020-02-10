@@ -7,7 +7,6 @@
 #include "tensor/arithmetic.zep.h"
 #include "tensor/arraylike.zep.h"
 #include "tensor/comparable.zep.h"
-#include "tensor/decompositions/decomposition.zep.h"
 #include "tensor/statistical.zep.h"
 #include "tensor/trigonometric.zep.h"
 #include "tensor/tensor.zep.h"
@@ -15,8 +14,8 @@
 #include "tensor/columnvector.zep.h"
 #include "tensor/decompositions/cholesky.zep.h"
 #include "tensor/decompositions/lu.zep.h"
-#include "tensor/decompositions/ref.zep.h"
-#include "tensor/decompositions/rref.zep.h"
 #include "tensor/matrix.zep.h"
+#include "tensor/reductions/ref.zep.h"
+#include "tensor/reductions/rref.zep.h"
 
 #endif

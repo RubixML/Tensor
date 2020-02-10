@@ -593,16 +593,16 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_convolve, 0, 1, IS
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_ref, 0, 0, Tensor\\Decompositions\\Ref, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_ref, 0, 0, Tensor\\Reductions\\Ref, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_ref, 0, 0, IS_OBJECT, "Tensor\\Decompositions\\Ref", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_ref, 0, 0, IS_OBJECT, "Tensor\\Reductions\\Ref", 0)
 #endif
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_rref, 0, 0, Tensor\\Decompositions\\Rref, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_rref, 0, 0, Tensor\\Reductions\\Rref, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_rref, 0, 0, IS_OBJECT, "Tensor\\Decompositions\\Rref", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_rref, 0, 0, IS_OBJECT, "Tensor\\Reductions\\Rref", 0)
 #endif
 ZEND_END_ARG_INFO()
 

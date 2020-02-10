@@ -16,7 +16,7 @@ use RuntimeException;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Eigen implements Decomposition
+class Eigen
 {
     /**
      * The computed eigenvalues.

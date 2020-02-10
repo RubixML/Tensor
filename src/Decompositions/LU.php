@@ -17,7 +17,7 @@ use const Tensor\EPSILON;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class LU implements Decomposition
+class LU
 {
     /**
      * The lower triangular matrix.

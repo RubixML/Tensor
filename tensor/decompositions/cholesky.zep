@@ -13,7 +13,7 @@ use InvalidArgumentException;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Cholesky implements Decomposition
+class Cholesky
 {
     /**
      * The lower triangular matrix.

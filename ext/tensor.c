@@ -26,7 +26,6 @@
 zend_class_entry *tensor_arithmetic_ce;
 zend_class_entry *tensor_arraylike_ce;
 zend_class_entry *tensor_comparable_ce;
-zend_class_entry *tensor_decompositions_decomposition_ce;
 zend_class_entry *tensor_statistical_ce;
 zend_class_entry *tensor_trigonometric_ce;
 zend_class_entry *tensor_tensor_ce;
@@ -34,9 +33,9 @@ zend_class_entry *tensor_vector_ce;
 zend_class_entry *tensor_columnvector_ce;
 zend_class_entry *tensor_decompositions_cholesky_ce;
 zend_class_entry *tensor_decompositions_lu_ce;
-zend_class_entry *tensor_decompositions_ref_ce;
-zend_class_entry *tensor_decompositions_rref_ce;
 zend_class_entry *tensor_matrix_ce;
+zend_class_entry *tensor_reductions_ref_ce;
+zend_class_entry *tensor_reductions_rref_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(tensor)
 
@@ -51,7 +50,6 @@ static PHP_MINIT_FUNCTION(tensor)
 	ZEPHIR_INIT(Tensor_Arithmetic);
 	ZEPHIR_INIT(Tensor_ArrayLike);
 	ZEPHIR_INIT(Tensor_Comparable);
-	ZEPHIR_INIT(Tensor_Decompositions_Decomposition);
 	ZEPHIR_INIT(Tensor_Statistical);
 	ZEPHIR_INIT(Tensor_Trigonometric);
 	ZEPHIR_INIT(Tensor_Tensor);
@@ -59,9 +57,9 @@ static PHP_MINIT_FUNCTION(tensor)
 	ZEPHIR_INIT(Tensor_ColumnVector);
 	ZEPHIR_INIT(Tensor_Decompositions_Cholesky);
 	ZEPHIR_INIT(Tensor_Decompositions_Lu);
-	ZEPHIR_INIT(Tensor_Decompositions_Ref);
-	ZEPHIR_INIT(Tensor_Decompositions_Rref);
 	ZEPHIR_INIT(Tensor_Matrix);
+	ZEPHIR_INIT(Tensor_Reductions_Ref);
+	ZEPHIR_INIT(Tensor_Reductions_Rref);
 	
 	return SUCCESS;
 }

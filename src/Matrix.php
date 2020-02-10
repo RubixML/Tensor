@@ -2,9 +2,9 @@
 
 namespace Tensor;
 
+use Tensor\Reductions\REF;
+use Tensor\Reductions\RREF;
 use Tensor\Decompositions\LU;
-use Tensor\Decompositions\REF;
-use Tensor\Decompositions\RREF;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
 use InvalidArgumentException;
@@ -246,7 +246,7 @@ class Matrix implements Tensor
             }
 
             while (count($rowA) < $n) {
-                $r = sqrt(-2. * log(rand() / $max));
+                $r = sqrt(-2.0 * log(rand() / $max));
 
                 $phi = rand() / $max * TWO_PI;
 
@@ -273,7 +273,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function poisson(int $m, int $n, float $lambda = 1.) : self
+    public static function poisson(int $m, int $n, float $lambda = 1.0) : self
     {
         $max = getrandmax();
 
@@ -286,7 +286,7 @@ class Matrix implements Tensor
 
             while (count($rowA) < $n) {
                 $k = 0;
-                $p = 1.;
+                $p = 1.0;
 
                 while ($p > $l) {
                     ++$k;
@@ -1025,22 +1025,22 @@ class Matrix implements Tensor
      * Calculate the row echelon form (REF) of the matrix. Return the reduced
      * matrix and the number of swaps needed to compute the REF.
      *
-     * @return \Tensor\Decompositions\REF
+     * @return \Tensor\Reductions\REF
      */
     public function ref() : REF
     {
-        return REF::decompose($this);
+        return REF::reduce($this);
     }
 
     /**
      * Return the reduced row echelon (RREF) form of the matrix. Return the
      * reduced matrix and the number of swaps needed to compute the RREF.
      *
-     * @return \Tensor\Decompositions\RREF
+     * @return \Tensor\Reductions\RREF
      */
     public function rref() : RREF
     {
-        return RREF::decompose($this);
+        return RREF::reduce($this);
     }
 
     /**

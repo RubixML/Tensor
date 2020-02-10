@@ -12,7 +12,6 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor_sources="tensor.c kernel/main.c kernel/memory.c kernel/exception.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c tensor/arithmetic.zep.c
 	tensor/arraylike.zep.c
 	tensor/comparable.zep.c
-	tensor/decompositions/decomposition.zep.c
 	tensor/statistical.zep.c
 	tensor/trigonometric.zep.c
 	tensor/tensor.zep.c
@@ -20,9 +19,9 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/columnvector.zep.c
 	tensor/decompositions/cholesky.zep.c
 	tensor/decompositions/lu.zep.c
-	tensor/decompositions/ref.zep.c
-	tensor/decompositions/rref.zep.c
-	tensor/matrix.zep.c "
+	tensor/matrix.zep.c
+	tensor/reductions/ref.zep.c
+	tensor/reductions/rref.zep.c "
 	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, )
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
@@ -65,6 +64,6 @@ if test "$PHP_TENSOR" = "yes"; then
 
 	CPPFLAGS=$old_CPPFLAGS
 
-	PHP_INSTALL_HEADERS([ext/tensor], [tensor/arithmetic.zep.h tensor/arraylike.zep.h tensor/comparable.zep.h tensor/decompositions/decomposition.zep.h tensor/statistical.zep.h tensor/trigonometric.zep.h tensor/tensor.zep.h tensor/vector.zep.h tensor/columnvector.zep.h tensor/decompositions/cholesky.zep.h tensor/decompositions/lu.zep.h tensor/decompositions/ref.zep.h tensor/decompositions/rref.zep.h tensor/matrix.zep.h])
+	PHP_INSTALL_HEADERS([ext/tensor], [tensor/arithmetic.zep.h tensor/arraylike.zep.h tensor/comparable.zep.h tensor/statistical.zep.h tensor/trigonometric.zep.h tensor/tensor.zep.h tensor/vector.zep.h tensor/columnvector.zep.h tensor/decompositions/cholesky.zep.h tensor/decompositions/lu.zep.h tensor/matrix.zep.h tensor/reductions/ref.zep.h tensor/reductions/rref.zep.h])
 
 fi

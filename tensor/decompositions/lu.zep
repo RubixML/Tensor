@@ -13,7 +13,7 @@ use RuntimeException;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class Lu implements Decomposition
+class Lu
 {
     const EPSILON = 0.00000001;
 

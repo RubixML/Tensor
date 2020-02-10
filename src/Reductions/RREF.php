@@ -1,6 +1,6 @@
 <?php
 
-namespace Tensor\Decompositions;
+namespace Tensor\Reductions;
 
 use Tensor\Matrix;
 
@@ -13,7 +13,7 @@ use Tensor\Matrix;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class RREF implements Decomposition
+class RREF
 {
     /**
      * The reduced matrix in reduced row echelon form.
@@ -23,12 +23,12 @@ class RREF implements Decomposition
     protected $a;
 
     /**
-     * Factory method to decompose a matrix.
+     * Factory method to reduce a matrix.
      *
      * @param \Tensor\Matrix $a
      * @return self
      */
-    public static function decompose(Matrix $a) : self
+    public static function reduce(Matrix $a) : self
     {
         $ref = $a->ref();
 

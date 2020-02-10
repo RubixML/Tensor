@@ -1,4 +1,5 @@
 - Unreleased
+    - Matrix reductions have their own namespace
     - Optimize repeat matrix
 
 - 2.0.3

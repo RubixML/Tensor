@@ -1,8 +1,8 @@
 namespace Tensor;
 
+use Tensor\Reductions\Ref;
+use Tensor\Reductions\Rref;
 use Tensor\Decompositions\Lu;
-use Tensor\Decompositions\Ref;
-use Tensor\Decompositions\Rref;
 use Tensor\Decompositions\Cholesky;
 use InvalidArgumentException;
 use RuntimeException;
@@ -1053,21 +1053,21 @@ class Matrix implements Tensor
      * Calculate the row echelon form (REF) of the matrix. Return the reduced
      * matrix and the number of swaps needed to compute the REF.
      *
-     * @return array
+     * @return \Tensor\Reductions\Ref
      */
     public function ref() -> <Ref>
     {
-        return Ref::decompose(this);
+        return Ref::reduce(this);
     }
 
     /**
      * Return the reduced row echelon (RREF) form of the matrix.
      *
-     * @return \Tensor\Decompositions\RREF
+     * @return \Tensor\Reductions\Rref
      */
     public function rref() -> <Rref>
     {
-        return Rref::decompose(this);
+        return Rref::reduce(this);
     }
 
     /**
@@ -1075,7 +1075,6 @@ class Matrix implements Tensor
      * the lower triangular matrix, u is the upper triangular matrix,
      * and p is the permutation matrix.
      *
-     * @throws \RuntimeException
      * @return \Tensor\Decompositions\Lu
      */
     public function lu() -> <Lu>

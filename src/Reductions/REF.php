@@ -1,6 +1,6 @@
 <?php
 
-namespace Tensor\Decompositions;
+namespace Tensor\Reductions;
 
 use Tensor\Matrix;
 use InvalidArgumentException;
@@ -19,7 +19,7 @@ use RuntimeException;
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-class REF implements Decomposition
+class REF
 {
     /**
      * The reduced matrix in row echelon form.
@@ -41,7 +41,7 @@ class REF implements Decomposition
      * @param \Tensor\Matrix $a
      * @return self
      */
-    public static function decompose(Matrix $a)
+    public static function reduce(Matrix $a)
     {
         try {
             return self::gaussianElimination($a);
