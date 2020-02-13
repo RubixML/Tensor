@@ -58,8 +58,9 @@ class Ref
      */
     public static function gaussianElimination(const <Matrix> a) -> <Ref>
     {
-        var temp, diag, scale;
         int i, j, k, index;
+        float diag, scale;
+        var temp;
         array b = [];
 
         int m = (int) a->m();
@@ -92,13 +93,13 @@ class Ref
                 let swaps++;
             }
 
-            let diag = b[k][k];
+            let diag = (float) b[k][k];
 
             for i in range(k + 1, m - 1) {
-                let scale = diag != 0 ? b[i][k] / diag : 1;
+                let scale = diag !== 0.0 ? (float) b[i][k] / diag : 1.0;
 
                 for j in range(k + 1, n - 1) {
-                    let b[i][j] = b[i][j] - scale * b[k][j];
+                    let b[i][j] = (float) b[i][j] - scale * (float) b[k][j];
                 }
 
                 let b[i][k] = 0;
@@ -118,8 +119,9 @@ class Ref
      */
     public static function rowReductionMethod(const <Matrix> a) -> <Ref>
     {
-        var scale, divisor, temp;
         int i, j;
+        float scale, divisor;
+        var temp;
         array b = [];
         array t = [];
 
@@ -133,7 +135,7 @@ class Ref
 
         int swaps = 0;
 
-        while row < m && col < n {
+        while likely row < m && col < n {
             let t = (array) b[row];
 
             if t[col] == 0 {
@@ -157,20 +159,20 @@ class Ref
                 continue;
             }
 
-            let divisor = t[col];
+            let divisor = (float) t[col];
 
-            if divisor != 1 {
+            if divisor !== 1.0 {
                 for i in range(0, n - 1) {
-                    let t[i] = t[i] / divisor;
+                    let t[i] = (float) t[i] / divisor;
                 }
             }
 
             for i in range(row + 1, m - 1) {
-                let scale = b[i][col];
+                let scale = (float) b[i][col];
 
-                if scale != 0 {
+                if scale !== 0.0 {
                     for j in range(0, n - 1) {
-                        let b[i][j] = b[i][j] - scale * t[j];
+                        let b[i][j] = (float) b[i][j] - scale * (float) t[j];
                     }
                 }
             }
@@ -191,7 +193,7 @@ class Ref
      */
     public function __construct(const <Matrix> a, const int swaps)
     {
-        if swaps < 0 {
+        if unlikely swaps < 0 {
             throw new InvalidArgumentException("The number of swaps must"
                 . " be greater than or equal to 0, " . strval(swaps)
                 . " given.");

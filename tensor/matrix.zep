@@ -993,8 +993,8 @@ class Matrix implements Tensor
      */
     public function convolve(const <Matrix> b, const int stride = 1) -> <Matrix>
     {
-        var m = b->m();
-        var n = b->n();
+        int m = (int) b->m();
+        int n = (int) b->n();
 
         if unlikely m > this->m || n > this->n {
             throw new InvalidArgumentException("Matrix B cannot be"
@@ -1879,7 +1879,8 @@ class Matrix implements Tensor
                 . " 0 and 100, " . strval(p) . " given.");
         }
 
-        var rowA, t;
+        float t;
+        var rowA;
         array b = [];
 
         float x = (p / 100) * (this->n - 1) + 1;
@@ -1891,9 +1892,9 @@ class Matrix implements Tensor
         for rowA in this->a {
             sort(rowA);
     
-            let t = rowA[xHat - 1];
+            let t = (float) rowA[xHat - 1];
     
-            let b[] = (float) t + remainder * (rowA[xHat] - t);
+            let b[] = t + remainder * (rowA[xHat] - t);
         }
 
         return ColumnVector::quick(b);

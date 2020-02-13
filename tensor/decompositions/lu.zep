@@ -46,21 +46,21 @@ class Lu
      */
     public static function decompose(const <Matrix> a) -> <Lu>
     {
-        if !a->isSquare() {
+        if unlikely !a->isSquare() {
             throw new RuntimeException("Cannot decompose a non-square matrix.");
         }
 
         int i, j, k, row;
-        var sigma;
+        float max, sigma;
         array aHat = [];
         array l = [];
         array u = [];
         array p = [];
         array pa = [];
 
-        var max, temp, valueA;
+        var temp, valueA;
 
-        var n = a->n();
+        int n = (int) a->n();
 
         let aHat = (array) a->asArray();
 
@@ -69,7 +69,7 @@ class Lu
         let p = (array) Matrix::identity(n)->asArray();
 
         for i in range(0, n - 1) {
-            let max = aHat[i][i];
+            let max = (float) aHat[i][i];
 
             let row = i;
 

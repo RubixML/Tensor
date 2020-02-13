@@ -30,8 +30,8 @@ class Rref
      */
     public static function reduce(const <Matrix> a) -> <Rref>
     {
-        var scale, divisor;
         int i, j;
+        float scale, divisor;
         array b = [];
         array t = [];
 
@@ -43,7 +43,7 @@ class Rref
 
         let b = (array) a->ref()->a()->asArray();
 
-        while row < m && col < n {
+        while likely row < m && col < n {
             let t = (array) b[row];
 
             if abs(t[col]) == 0 {
@@ -52,20 +52,20 @@ class Rref
                 continue;
             }
 
-            let divisor = t[col];
+            let divisor = (float) t[col];
 
-            if divisor != 1 {
+            if divisor !== 1.0 {
                 for i in range(0, n - 1) {
-                    let t[i] = t[i] / divisor;
+                    let t[i] = (float) t[i] / divisor;
                 }
             }
 
             for i in reverse range(0, row - 1) {
-                let scale = b[i][col];
+                let scale = (float) b[i][col];
 
-                if scale != 0 {
+                if scale !== 0.0 {
                     for j in range(0, n - 1) {
-                        let b[i][j] = b[i][j] - scale * t[j];
+                        let b[i][j] = (float) b[i][j] - scale * (float) t[j];
                     }
                 }
             }

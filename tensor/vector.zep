@@ -149,7 +149,7 @@ class Vector implements Tensor
                 . " must be greater than 0, " . strval(n) . " given.");
         }
 
-        var r, phi;
+        float r, phi;
         array a = [];
 
         int max = (int) getrandmax();
@@ -567,9 +567,10 @@ class Vector implements Tensor
         int i;
         float sigma;
         var j, valueA, valueB;
+        array bHat = [];
         array c = [];
 
-        var bHat = b->asArray();
+        let bHat = (array) b->asArray();
 
         for i in range(0, this->n - 1, stride) {
             let sigma = 0.0;
@@ -618,8 +619,6 @@ class Vector implements Tensor
      */
     public function outer(const <Vector> b) -> <Matrix>
     {
-        var n = b->n();
-
         var j, valueA, valueB;
         array bHat = [];
         array c = [];
@@ -1361,9 +1360,9 @@ class Vector implements Tensor
 
         float remainder = x - xHat;
 
-        var t = a[xHat - 1];
+        float t = (float) a[xHat - 1];
 
-        return (float) t + remainder * (a[xHat] - t);
+        return t + remainder * (a[xHat] - t);
     }
 
     /**
