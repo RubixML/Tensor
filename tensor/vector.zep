@@ -507,7 +507,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return int|float
      */
-    public function reduce(const var callback, const var initial = 0)
+    public function reduce(const var callback, const var initial = 0) -> int|float
     {
         if unlikely !is_int(initial) && !is_float(initial) {
             throw new InvalidArgumentException("Initial value must"
@@ -606,7 +606,7 @@ class Vector implements Tensor
      * @param \Tensor\Vector b
      * @return int|float
      */
-    public function inner(const <Vector> b)
+    public function inner(const <Vector> b) -> int|float
     {
         return this->dot(b);
     }
@@ -678,7 +678,7 @@ class Vector implements Tensor
      *
      * @return int|float
      */
-    public function l1Norm()
+    public function l1Norm() -> int|float
     {
         return this->abs()->sum();
     }
@@ -688,7 +688,7 @@ class Vector implements Tensor
      *
      * @return int|float
      */
-    public function l2Norm()
+    public function l2Norm() -> int|float
     {
         return sqrt(this->square()->sum());
     }
@@ -700,7 +700,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return int|float
      */
-    public function pNorm(const float p = 3.0)
+    public function pNorm(const float p = 3.0) -> int|float
     {
         if unlikely p <= 0.0 {
             throw new InvalidArgumentException("P must be greater"
@@ -715,7 +715,7 @@ class Vector implements Tensor
      *
      * @return int|float
      */
-    public function maxNorm()
+    public function maxNorm() -> int|float
     {
         return this->abs()->max();
     }
@@ -1264,7 +1264,7 @@ class Vector implements Tensor
      *
      * @return int|float
      */
-    public function sum()
+    public function sum() -> int|float
     {
         return array_sum(this->a);
     }
@@ -1274,7 +1274,7 @@ class Vector implements Tensor
      *
      * @return int|float
      */
-    public function product()
+    public function product() -> int|float
     {
         return array_product(this->a);
     }
@@ -1284,7 +1284,7 @@ class Vector implements Tensor
      *
      * @return int|float
      */
-    public function min()
+    public function min() -> int|float
     {
         return min(this->a);
     }
@@ -1294,7 +1294,7 @@ class Vector implements Tensor
      *
      * @return int|float
      */
-    public function max()
+    public function max() -> int|float
     {
         return max(this->a);
     }
@@ -1305,7 +1305,7 @@ class Vector implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function mean()
+    public function mean() -> int|float
     {
         return this->sum() / this->n;
     }
@@ -1316,7 +1316,7 @@ class Vector implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function median()
+    public function median() -> int|float
     {
         var median;
 
@@ -1343,7 +1343,7 @@ class Vector implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function percentile(const float p)
+    public function percentile(const float p) -> int|float
     {
         if unlikely p < 0.0 || p > 100.0 {
             throw new InvalidArgumentException("P must be between"
@@ -1373,7 +1373,7 @@ class Vector implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function variance(var mean = null)
+    public function variance(var mean = null) -> int|float
     {
         if !is_null(mean) {
             if unlikely !is_int(mean) && !is_float(mean) {
@@ -2613,7 +2613,7 @@ class Vector implements Tensor
      * @throws \InvalidArgumentException
      * @return int|float
      */
-    public function offsetGet(const var index)
+    public function offsetGet(const var index) -> int|float
     {
         var value;
 

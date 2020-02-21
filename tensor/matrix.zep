@@ -727,7 +727,7 @@ class Matrix implements Tensor
      * @throws \InvalidArgumentException
      * @return int|float
      */
-    public function reduce(const var callback, const var initial = 0)
+    public function reduce(const var callback, const var initial = 0) -> int|float
     {
         if unlikely !is_int(initial) && !is_float(initial) {
             throw new InvalidArgumentException("Initial value must"
@@ -794,7 +794,7 @@ class Matrix implements Tensor
      * @throws \RuntimeException
      * @return int|float
      */
-    public function det()
+    public function det() -> int|float
     {
         if unlikely !this->isSquare() {
             throw new RuntimeException("Determinant is undefined"
@@ -1165,7 +1165,7 @@ class Matrix implements Tensor
      *
      * @return int|float
      */
-    public function l1Norm()
+    public function l1Norm() -> int|float
     {
         return this->transpose()->abs()->sum()->max();
     }
@@ -1175,7 +1175,7 @@ class Matrix implements Tensor
      *    
      * @return int|float
      */
-    public function l2Norm()
+    public function l2Norm() -> int|float
     {
         return sqrt(this->square()->sum()->sum());
     }
@@ -1185,7 +1185,7 @@ class Matrix implements Tensor
      *
      * @return int|float
      */
-    public function infinityNorm()
+    public function infinityNorm() -> int|float
     {
         return this->abs()->sum()->max();
     }
@@ -1195,7 +1195,7 @@ class Matrix implements Tensor
      *
      * @return int|float
      */
-    public function maxNorm()
+    public function maxNorm() -> int|float
     {
         return this->abs()->max()->max();
     }

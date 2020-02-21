@@ -51,34 +51,34 @@ ZEPHIR_INIT_CLASS(Tensor_Reductions_Rref) {
  */
 PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 
-	zend_bool _6, _18$$3, _13$$5, _23$$8;
+	zend_bool _6, _17$$3, _12$$5, _21$$8;
 	zval b, t, _5, _8$$3;
-	double scale = 0, divisor = 0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_11 = NULL, *_31 = NULL;
-	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, m, n, row, col, _19$$3, _20$$3, _14$$5, _15$$5, _24$$8, _25$$8;
-	zval *a, a_sub, _0, _1, _2, _3, _4, _30, _7$$3, _9$$3, _10$$3, _12$$3, _16$$6, _17$$6, _21$$7, _22$$7, _26$$9, _27$$9, _28$$9, _29$$9;
+	zephir_fcall_cache_entry *_11 = NULL, *_30 = NULL;
+	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, m, n, row, col, _18$$3, _19$$3, _13$$5, _14$$5, _22$$8, _23$$8;
+	zval *a, a_sub, scale, divisor, _0, _1, _2, _3, _4, _29, _7$$3, _9$$3, _10$$3, _15$$6, _16$$6, _20$$7, _24$$9, _25$$9, _26$$9, _27$$9, _28$$9;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
+	ZVAL_UNDEF(&scale);
+	ZVAL_UNDEF(&divisor);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
 	ZVAL_UNDEF(&_4);
-	ZVAL_UNDEF(&_30);
+	ZVAL_UNDEF(&_29);
 	ZVAL_UNDEF(&_7$$3);
 	ZVAL_UNDEF(&_9$$3);
 	ZVAL_UNDEF(&_10$$3);
-	ZVAL_UNDEF(&_12$$3);
+	ZVAL_UNDEF(&_15$$6);
 	ZVAL_UNDEF(&_16$$6);
-	ZVAL_UNDEF(&_17$$6);
-	ZVAL_UNDEF(&_21$$7);
-	ZVAL_UNDEF(&_22$$7);
+	ZVAL_UNDEF(&_20$$7);
+	ZVAL_UNDEF(&_24$$9);
+	ZVAL_UNDEF(&_25$$9);
 	ZVAL_UNDEF(&_26$$9);
 	ZVAL_UNDEF(&_27$$9);
 	ZVAL_UNDEF(&_28$$9);
-	ZVAL_UNDEF(&_29$$9);
 	ZVAL_UNDEF(&b);
 	ZVAL_UNDEF(&t);
 	ZVAL_UNDEF(&_5);
@@ -128,73 +128,70 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 			col++;
 			continue;
 		}
-		ZEPHIR_OBS_NVAR(&_12$$3);
-		zephir_array_fetch_long(&_12$$3, &t, col, PH_NOISY, "tensor/reductions/rref.zep", 55);
-		divisor = zephir_get_doubleval(&_12$$3);
-		if (divisor != 1.0) {
-			_15$$5 = (n - 1);
-			_14$$5 = 0;
+		ZEPHIR_OBS_NVAR(&divisor);
+		zephir_array_fetch_long(&divisor, &t, col, PH_NOISY, "tensor/reductions/rref.zep", 55);
+		if (!ZEPHIR_IS_LONG(&divisor, 1)) {
+			_14$$5 = (n - 1);
 			_13$$5 = 0;
-			if (_14$$5 <= _15$$5) {
+			_12$$5 = 0;
+			if (_13$$5 <= _14$$5) {
 				while (1) {
-					if (_13$$5) {
-						_14$$5++;
-						if (!(_14$$5 <= _15$$5)) {
+					if (_12$$5) {
+						_13$$5++;
+						if (!(_13$$5 <= _14$$5)) {
 							break;
 						}
 					} else {
-						_13$$5 = 1;
+						_12$$5 = 1;
 					}
-					i = _14$$5;
-					ZEPHIR_OBS_NVAR(&_16$$6);
-					zephir_array_fetch_long(&_16$$6, &t, i, PH_NOISY, "tensor/reductions/rref.zep", 59);
-					ZEPHIR_INIT_NVAR(&_17$$6);
-					ZVAL_DOUBLE(&_17$$6, zephir_safe_div_double_double(zephir_get_doubleval(&_16$$6), divisor));
-					zephir_array_update_long(&t, i, &_17$$6, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
+					i = _13$$5;
+					zephir_array_fetch_long(&_15$$6, &t, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 59);
+					ZEPHIR_INIT_NVAR(&_16$$6);
+					div_function(&_16$$6, &_15$$6, &divisor);
+					zephir_array_update_long(&t, i, &_16$$6, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
 				}
 			}
 		}
-		_20$$3 = (row - 1);
-		_19$$3 = _20$$3;
-		_18$$3 = 0;
-		if (_19$$3 >= 0) {
+		_19$$3 = (row - 1);
+		_18$$3 = _19$$3;
+		_17$$3 = 0;
+		if (_18$$3 >= 0) {
 			while (1) {
-				if (_18$$3) {
-					_19$$3--;
-					if (!(_19$$3 >= 0)) {
+				if (_17$$3) {
+					_18$$3--;
+					if (!(_18$$3 >= 0)) {
 						break;
 					}
 				} else {
-					_18$$3 = 1;
+					_17$$3 = 1;
 				}
-				i = _19$$3;
-				zephir_array_fetch_long(&_21$$7, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 64);
-				ZEPHIR_OBS_NVAR(&_22$$7);
-				zephir_array_fetch_long(&_22$$7, &_21$$7, col, PH_NOISY, "tensor/reductions/rref.zep", 64);
-				scale = zephir_get_doubleval(&_22$$7);
-				if (scale != 0.0) {
-					_25$$8 = (n - 1);
-					_24$$8 = 0;
-					_23$$8 = 0;
-					if (_24$$8 <= _25$$8) {
+				i = _18$$3;
+				zephir_array_fetch_long(&_20$$7, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 64);
+				ZEPHIR_OBS_NVAR(&scale);
+				zephir_array_fetch_long(&scale, &_20$$7, col, PH_NOISY, "tensor/reductions/rref.zep", 64);
+				if (!ZEPHIR_IS_LONG(&scale, 0)) {
+					_23$$8 = (n - 1);
+					_22$$8 = 0;
+					_21$$8 = 0;
+					if (_22$$8 <= _23$$8) {
 						while (1) {
-							if (_23$$8) {
-								_24$$8++;
-								if (!(_24$$8 <= _25$$8)) {
+							if (_21$$8) {
+								_22$$8++;
+								if (!(_22$$8 <= _23$$8)) {
 									break;
 								}
 							} else {
-								_23$$8 = 1;
+								_21$$8 = 1;
 							}
-							j = _24$$8;
-							zephir_array_fetch_long(&_26$$9, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 68);
-							ZEPHIR_OBS_NVAR(&_27$$9);
-							zephir_array_fetch_long(&_27$$9, &_26$$9, j, PH_NOISY, "tensor/reductions/rref.zep", 68);
-							ZEPHIR_OBS_NVAR(&_28$$9);
-							zephir_array_fetch_long(&_28$$9, &t, j, PH_NOISY, "tensor/reductions/rref.zep", 68);
-							ZEPHIR_INIT_NVAR(&_29$$9);
-							ZVAL_DOUBLE(&_29$$9, (zephir_get_doubleval(&_27$$9) - (scale * zephir_get_doubleval(&_28$$9))));
-							zephir_array_update_multi(&b, &_29$$9, SL("ll"), 2, i, j);
+							j = _22$$8;
+							zephir_array_fetch_long(&_24$$9, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 68);
+							zephir_array_fetch_long(&_25$$9, &_24$$9, j, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 68);
+							zephir_array_fetch_long(&_26$$9, &t, j, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 68);
+							ZEPHIR_INIT_NVAR(&_27$$9);
+							mul_function(&_27$$9, &scale, &_26$$9);
+							ZEPHIR_INIT_NVAR(&_28$$9);
+							zephir_sub_function(&_28$$9, &_25$$9, &_27$$9);
+							zephir_array_update_multi(&b, &_28$$9, SL("ll"), 2, i, j);
 						}
 					}
 				}
@@ -205,9 +202,9 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 		col++;
 	}
 	object_init_ex(return_value, tensor_reductions_rref_ce);
-	ZEPHIR_CALL_CE_STATIC(&_30, tensor_matrix_ce, "quick", &_31, 0, &b);
+	ZEPHIR_CALL_CE_STATIC(&_29, tensor_matrix_ce, "quick", &_30, 0, &b);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 34, &_30);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 34, &_29);
 	zephir_check_call_status();
 	RETURN_MM();
 

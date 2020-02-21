@@ -512,7 +512,7 @@ class Vector implements Tensor
                 . " requires $this->n elements but B has {$b->size()}.");
         }
 
-        $sigma = 0.;
+        $sigma = 0.0;
 
         foreach ($b as $i => $valueB) {
             $sigma += $this->a[$i] * $valueB;
@@ -616,7 +616,7 @@ class Vector implements Tensor
         $c = [];
 
         for ($i = 0; $i < $this->n; $i += $stride) {
-            $sigma = 0;
+            $sigma = 0.0;
 
             foreach ($b as $j => $valueB) {
                 $sigma += ($this->a[$i - (int) $j] ?? 0) * $valueB;
@@ -636,8 +636,7 @@ class Vector implements Tensor
      */
     public function project(Vector $b) : self
     {
-        return $b->multiplyScalar($this->dot($b)
-            / ($b->l2Norm() ** 2));
+        return $b->multiplyScalar($this->dot($b) / $b->l2Norm() ** 2);
     }
 
     /**

@@ -33,7 +33,7 @@
         "unused-variable": true,
         "unused-variable-external": false,
         "possible-wrong-parameter": true,
-        "possible-wrong-parameter-undefined": false,
+        "possible-wrong-parameter-undefined": true,
         "nonexistent-function": true,
         "nonexistent-class": true,
         "non-valid-isset": true,
