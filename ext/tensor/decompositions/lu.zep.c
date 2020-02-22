@@ -367,7 +367,7 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
 	zephir_check_call_status();
 	ZEPHIR_CALL_CE_STATIC(&_69, tensor_matrix_ce, "quick", &_28, 0, &p);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 25, &_67, &_68, &_69);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 24, &_67, &_68, &_69);
 	zephir_check_call_status();
 	RETURN_MM();
 

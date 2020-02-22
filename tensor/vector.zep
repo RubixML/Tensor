@@ -474,7 +474,7 @@ class Vector implements Tensor
      */
     public function argmin() -> int
     {
-        return (int) array_search(min(this->a), this->a);
+        return (int) argmin(this->a);
     }
 
     /**
@@ -484,7 +484,7 @@ class Vector implements Tensor
      */
     public function argmax() -> int
     {
-        return (int) array_search(max(this->a), this->a);
+        return (int) argmax(this->a);
     }
 
     /**

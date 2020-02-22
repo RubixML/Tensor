@@ -23,6 +23,7 @@
 #include "math.h"
 #include "kernel/math.h"
 #include "kernel/string.h"
+#include "include/indexing.h"
 
 
 /**
@@ -1247,25 +1248,19 @@ PHP_METHOD(Tensor_Vector, transpose) {
  */
 PHP_METHOD(Tensor_Vector, argmin) {
 
-	zval _0, _1, _2, _3;
+	zval _0, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
-	ZVAL_UNDEF(&_2);
-	ZVAL_UNDEF(&_3);
 
 	ZEPHIR_MM_GROW();
 
-	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_FUNCTION(&_1, "min", NULL, 15, &_0);
-	zephir_check_call_status();
-	zephir_read_property(&_2, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_FUNCTION(&_3, "array_search", NULL, 16, &_1, &_2);
-	zephir_check_call_status();
-	RETURN_MM_LONG(zephir_get_intval(&_3));
+	ZEPHIR_INIT_VAR(&_0);
+	zephir_read_property(&_1, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
+	tensor_argmin(&_0, &_1);
+	RETURN_MM_LONG(zephir_get_intval(&_0));
 
 }
 
@@ -1276,25 +1271,19 @@ PHP_METHOD(Tensor_Vector, argmin) {
  */
 PHP_METHOD(Tensor_Vector, argmax) {
 
-	zval _0, _1, _2, _3;
+	zval _0, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
-	ZVAL_UNDEF(&_2);
-	ZVAL_UNDEF(&_3);
 
 	ZEPHIR_MM_GROW();
 
-	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_FUNCTION(&_1, "max", NULL, 17, &_0);
-	zephir_check_call_status();
-	zephir_read_property(&_2, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_FUNCTION(&_3, "array_search", NULL, 16, &_1, &_2);
-	zephir_check_call_status();
-	RETURN_MM_LONG(zephir_get_intval(&_3));
+	ZEPHIR_INIT_VAR(&_0);
+	zephir_read_property(&_1, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
+	tensor_argmax(&_0, &_1);
+	RETURN_MM_LONG(zephir_get_intval(&_0));
 
 }
 
@@ -1384,7 +1373,7 @@ PHP_METHOD(Tensor_Vector, reduce) {
 		return;
 	}
 	zephir_read_property(&_5, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_FUNCTION("array_reduce", NULL, 18, &_5, callback, initial);
+	ZEPHIR_RETURN_CALL_FUNCTION("array_reduce", NULL, 15, &_5, callback, initial);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -3409,7 +3398,7 @@ PHP_METHOD(Tensor_Vector, sum) {
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_FUNCTION("array_sum", NULL, 19, &_0);
+	ZEPHIR_RETURN_CALL_FUNCTION("array_sum", NULL, 16, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -3432,7 +3421,7 @@ PHP_METHOD(Tensor_Vector, product) {
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_FUNCTION("array_product", NULL, 20, &_0);
+	ZEPHIR_RETURN_CALL_FUNCTION("array_product", NULL, 17, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -3455,7 +3444,7 @@ PHP_METHOD(Tensor_Vector, min) {
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_FUNCTION("min", NULL, 15, &_0);
+	ZEPHIR_RETURN_CALL_FUNCTION("min", NULL, 18, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -3478,7 +3467,7 @@ PHP_METHOD(Tensor_Vector, max) {
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_FUNCTION("max", NULL, 17, &_0);
+	ZEPHIR_RETURN_CALL_FUNCTION("max", NULL, 19, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -3536,13 +3525,13 @@ PHP_METHOD(Tensor_Vector, median) {
 
 	zephir_read_property(&_0, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
 	ZVAL_LONG(&_1, 2);
-	ZEPHIR_CALL_FUNCTION(&_2, "intdiv", NULL, 21, &_0, &_1);
+	ZEPHIR_CALL_FUNCTION(&_2, "intdiv", NULL, 20, &_0, &_1);
 	zephir_check_call_status();
 	mid = zephir_get_intval(&_2);
 	zephir_read_property(&_1, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CPY_WRT(&a, &_1);
 	ZEPHIR_MAKE_REF(&a);
-	ZEPHIR_CALL_FUNCTION(NULL, "sort", NULL, 22, &a);
+	ZEPHIR_CALL_FUNCTION(NULL, "sort", NULL, 21, &a);
 	ZEPHIR_UNREF(&a);
 	zephir_check_call_status();
 	zephir_read_property(&_1, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
@@ -3614,7 +3603,7 @@ PHP_METHOD(Tensor_Vector, percentile) {
 	zephir_read_property(&_5, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CPY_WRT(&a, &_5);
 	ZEPHIR_MAKE_REF(&a);
-	ZEPHIR_CALL_FUNCTION(NULL, "sort", NULL, 22, &a);
+	ZEPHIR_CALL_FUNCTION(NULL, "sort", NULL, 21, &a);
 	ZEPHIR_UNREF(&a);
 	zephir_check_call_status();
 	zephir_read_property(&_5, this_ptr, SL("n"), PH_NOISY_CC | PH_READONLY);
@@ -9510,7 +9499,7 @@ PHP_METHOD(Tensor_Vector, getIterator) {
 
 	object_init_ex(return_value, zephir_get_internal_ce(SL("arrayiterator")));
 	zephir_read_property(&_0, this_ptr, SL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 23, &_0);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 22, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
 

@@ -21,7 +21,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/decompositions/lu.zep.c
 	tensor/matrix.zep.c
 	tensor/reductions/ref.zep.c
-	tensor/reductions/rref.zep.c "
+	tensor/reductions/rref.zep.c include/indexing.c"
 	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, )
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 

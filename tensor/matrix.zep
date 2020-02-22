@@ -678,7 +678,7 @@ class Matrix implements Tensor
         array b = [];
 
         for rowA in this->a {
-            let b[] = (int) array_search(min(rowA), rowA);
+            let b[] = (int) argmin(rowA);
         }
 
         return ColumnVector::quick(b);
@@ -695,7 +695,7 @@ class Matrix implements Tensor
         array b = [];
 
         for rowA in this->a {
-            let b[] = (int) array_search(max(rowA), rowA);
+            let b[] = (int) argmax(rowA);
         }
 
         return ColumnVector::quick(b);

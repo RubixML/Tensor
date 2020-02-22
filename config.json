@@ -14,7 +14,7 @@
         "stubs-run-after-generate": false
     },
     "extra-sources": [
-        
+        "include/indexing.c"
     ],
     "optimizer-dirs": [
         "optimizers"
