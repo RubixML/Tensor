@@ -2226,6 +2226,26 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
+    public function insert() : void
+    {
+        $z = $this->a->insert(Matrix::quick([
+            [6, 9],
+            [6, 9],
+        ]), 1, 0);
+
+        $expected = [
+            [22, -17, 12],
+            [6, 9, -2],
+            [6, 9, -9],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
+    /**
+     * @test
+     */
     public function subMatrix() : void
     {
         $z = $this->a->subMatrix(1, 1, 3, 3);

@@ -2158,6 +2158,47 @@ class Matrix implements Tensor
     }
 
     /**
+     * Insert a smaller matrix b into this matrix.
+     * 
+     * @param \Tensor\Matrix b
+     * @param int rowOffset
+     * @param int columnOffset
+     * @return self
+     */
+    public function insert(const <Matrix> b, const int rowOffset, const int columnOffset) -> <Matrix>
+    {
+        if (b->m() + rowOffset > this->m) {
+            throw new InvalidArgumentException("Matrix b does not fit"
+                . " into matrix a with row offset "
+                . strval(rowOffset) . ".");
+        }
+
+        if (b->n() + columnOffset > this->n) {
+            throw new InvalidArgumentException("Matrix b does not fit"
+                . " into matrix a with column offset "
+                . strval(columnOffset) . ".");
+        }
+
+        int ii, jj;
+        var i, j, rowB, valueB;
+        array c = [];
+
+        let c = (array) this->a;
+
+        for i, rowB in b->asArray() {
+            let ii = rowOffset + i;
+
+            for j, valueB in rowB {
+                let jj = columnOffset + j;
+
+                let c[ii][jj] = valueB;
+            }
+        }
+
+        return self::quick(c);
+    }
+
+    /**
      * Return the sub matrix starting at row and column offset.
      *
      * @param int startRow

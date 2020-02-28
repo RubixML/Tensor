@@ -3,6 +3,7 @@
     - Matrix reductions have their own namespace
     - Optimized Matrix structural operations
     - Added argmin and argmax custom optimizers
+    - Added matrix/sub matrix insertion
 
 - 2.0.3
     - Matrix decomp methods now return decomp objects

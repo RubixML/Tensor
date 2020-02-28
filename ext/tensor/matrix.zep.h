@@ -103,6 +103,7 @@ PHP_METHOD(Tensor_Matrix, clipLower);
 PHP_METHOD(Tensor_Matrix, clipUpper);
 PHP_METHOD(Tensor_Matrix, sign);
 PHP_METHOD(Tensor_Matrix, negate);
+PHP_METHOD(Tensor_Matrix, insert);
 PHP_METHOD(Tensor_Matrix, subMatrix);
 PHP_METHOD(Tensor_Matrix, augmentAbove);
 PHP_METHOD(Tensor_Matrix, augmentBelow);
@@ -956,6 +957,24 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_negate, 0, 0, IS_O
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_insert, 0, 3, Tensor\\Matrix, 0)
+#else
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_insert, 0, 3, IS_OBJECT, "Tensor\\Matrix", 0)
+#endif
+	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, rowOffset, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, rowOffset)
+#endif
+#if PHP_VERSION_ID >= 70200
+	ZEND_ARG_TYPE_INFO(0, columnOffset, IS_LONG, 0)
+#else
+	ZEND_ARG_INFO(0, columnOffset)
+#endif
+ZEND_END_ARG_INFO()
+
+#if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_submatrix, 0, 4, Tensor\\Matrix, 0)
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_submatrix, 0, 4, IS_OBJECT, "Tensor\\Matrix", 0)
@@ -1588,6 +1607,7 @@ ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
 	PHP_ME(Tensor_Matrix, clipUpper, arginfo_tensor_matrix_clipupper, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, sign, arginfo_tensor_matrix_sign, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, negate, arginfo_tensor_matrix_negate, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Matrix, insert, arginfo_tensor_matrix_insert, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, subMatrix, arginfo_tensor_matrix_submatrix, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, augmentAbove, arginfo_tensor_matrix_augmentabove, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, augmentBelow, arginfo_tensor_matrix_augmentbelow, ZEND_ACC_PUBLIC)
