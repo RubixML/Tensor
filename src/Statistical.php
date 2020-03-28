@@ -12,6 +12,14 @@ interface Statistical
     public function mean();
 
     /**
+     * Compute the variance of the tensor.
+     *
+     * @param mixed $mean
+     * @return mixed
+     */
+    public function variance($mean = null);
+
+    /**
      * Return the median of the tensor.
      *
      * @return mixed
@@ -19,18 +27,10 @@ interface Statistical
     public function median();
 
     /**
-     * Return the pth percentile of the tensor.
+     * Return the q'th quantile of the tensor.
      *
-     * @param float $p
+     * @param float $q
      * @return mixed
      */
-    public function percentile(float $p);
-
-    /**
-     * Compute the variance of the tensor.
-     *
-     * @param mixed $mean
-     * @return mixed
-     */
-    public function variance($mean = null);
+    public function quantile(float $q);
 }

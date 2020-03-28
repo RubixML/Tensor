@@ -1,3 +1,6 @@
+- Unreleased
+    - Changed percentile method changed to quantile
+
 - 2.0.4
     - Individual Arithmetic and Comparison methods now public
     - Matrix reductions have their own namespace

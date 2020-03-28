@@ -156,7 +156,7 @@ class Vector implements Tensor
         $a = [];
 
         while (count($a) < $n) {
-            $r = sqrt(-2. * log(rand() / $max));
+            $r = sqrt(-2.0 * log(rand() / $max));
 
             $phi = rand() / $max * TWO_PI;
 
@@ -189,7 +189,7 @@ class Vector implements Tensor
 
         while (count($a) < $n) {
             $k = 0;
-            $p = 1.;
+            $p = 1.0;
 
             while ($p > $l) {
                 ++$k;
@@ -1276,7 +1276,6 @@ class Vector implements Tensor
     /**
      * Return the median of the vector.
      *
-     * @throws \RuntimeException
      * @return int|float
      */
     public function median()
@@ -1297,25 +1296,24 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the pth percentile of the vector.
+     * Return the q'th quantile of the vector.
      *
-     * @param float $p
+     * @param float $q
      * @throws \InvalidArgumentException
-     * @throws \RuntimeException
      * @return int|float
      */
-    public function percentile(float $p)
+    public function quantile(float $q)
     {
-        if ($p < 0. or $p > 100.) {
-            throw new InvalidArgumentException('P must be between 0 and 100,'
-                . " $p given.");
+        if ($q < 0.0 or $q > 1.0) {
+            throw new InvalidArgumentException('Q must be between'
+                . " 0 and 100, $q given.");
         }
 
         $a = $this->a;
 
         sort($a);
 
-        $x = ($p / 100) * ($this->n - 1) + 1;
+        $x = $q * ($this->n - 1) + 1;
 
         $xHat = (int) $x;
 
@@ -1329,24 +1327,16 @@ class Vector implements Tensor
     /**
      * Return the variance of the vector.
      *
-     * @param mixed $mean
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
+     * @param int|float $mean
      * @return int|float
      */
     public function variance($mean = null)
     {
-        if (isset($mean) and !is_int($mean) and !is_float($mean)) {
-            throw new InvalidArgumentException('Mean scalar must be'
-                . ' an integer or floating point number '
-                . gettype($mean) . ' given.');
-        }
-
         if (is_null($mean)) {
             $mean = $this->mean();
         }
 
-        $ssd = $this->subtract($mean)
+        $ssd = $this->subtractScalar($mean)
             ->square()
             ->sum();
 

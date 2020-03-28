@@ -1257,11 +1257,11 @@ class VectorTest extends TestCase
     /**
      * @test
      */
-    public function percentile() : void
+    public function quantile() : void
     {
-        $this->assertEquals(30.0, $this->a->percentile(50));
-        $this->assertEquals(-0.625, $this->b->percentile(25));
-        $this->assertEquals(10.55, $this->c->percentile(75));
+        $this->assertEquals(30.0, $this->a->quantile(0.5));
+        $this->assertEquals(-0.625, $this->b->quantile(0.25));
+        $this->assertEquals(10.55, $this->c->quantile(0.75));
     }
 
     /**

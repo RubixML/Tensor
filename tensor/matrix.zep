@@ -847,7 +847,7 @@ class Matrix implements Tensor
      }
 
     /**
-     * Is the matrix symmetric i.e. is it equal to its own transpose?
+     * Is the matrix symmetric i.e. is it equal to its own transpose
      * 
      * @return bool
      */
@@ -1837,7 +1837,6 @@ class Matrix implements Tensor
     /**
      * Return the median vector of this matrix.
      *
-     * @throws \RuntimeException
      * @return \Tensor\ColumnVector
      */
     public function median() -> <ColumnVector>
@@ -1865,25 +1864,24 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the pth percentile vector of this matrix.
+     * Return the q'th quantile of this matrix.
      *
-     * @param float p
+     * @param float q
      * @throws \InvalidArgumentException
-     * @throws \RuntimeException
      * @return \Tensor\ColumnVector
      */
-    public function percentile(const float p) -> <ColumnVector>
+    public function quantile(const float q) -> <ColumnVector>
     {
-        if unlikely p < 0.0 || p > 100.0 {
-            throw new InvalidArgumentException("P must be between"
-                . " 0 and 100, " . strval(p) . " given.");
+        if unlikely q < 0.0 || q > 1.0 {
+            throw new InvalidArgumentException("Q must be between"
+                . " 0 and 1, " . strval(q) . " given.");
         }
 
         float t;
         var rowA;
         array b = [];
 
-        float x = (p / 100) * (this->n - 1) + 1;
+        float x = q * (this->n - 1) + 1;
 
         int xHat = (int) x;
     
@@ -1903,7 +1901,7 @@ class Matrix implements Tensor
     /**
      * Compute the row variance of the matrix.
      *
-     * @param mixed mean
+     * @param \Tensor\ColumnVector|null mean
      * @throws \InvalidArgumentException
      * @return \Tensor\ColumnVector
      */
@@ -1920,9 +1918,7 @@ class Matrix implements Tensor
                     . " have " . (string) this->m . " rows, "
                     . (string) mean->m() . " given.");
             }
-        }
-
-        if is_null(mean) {
+        } else {
             let mean = this->mean();
         }
 
@@ -1933,14 +1929,24 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the covariance of this matrix and return it in a tuple along with
-     * the computed mean.
+     * Compute the covariance of the matrix.
      *
+     * @param \Tensor\ColumnVector mean
      * @return self
      */
-    public function covariance() -> <Matrix>
-    {
-        var b = this->subtractColumnVector(this->mean());
+    public function covariance(<ColumnVector> mean = null) -> <Matrix>
+    {   
+        if !is_null(mean) {
+            if mean->m() !== this->m {
+                throw new InvalidArgumentException("Mean vector must"
+                    . " have " . (string) this->m . " rows, "
+                    . (string) mean->m() . " given.");
+            }
+        } else {
+            let mean = this->mean();
+        }
+
+        var b = this->subtractColumnVector(mean);
 
         return b->matmul(b->transpose())
             ->divideScalar(this->m);

@@ -2007,9 +2007,9 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function percentile() : void
+    public function quantile() : void
     {
-        $z = $this->a->percentile(40);
+        $z = $this->a->quantile(0.4);
 
         $expected = [6.200000000000003, 2.8000000000000007, -6.6];
 

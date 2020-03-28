@@ -92,7 +92,7 @@ PHP_METHOD(Tensor_Matrix, min);
 PHP_METHOD(Tensor_Matrix, max);
 PHP_METHOD(Tensor_Matrix, mean);
 PHP_METHOD(Tensor_Matrix, median);
-PHP_METHOD(Tensor_Matrix, percentile);
+PHP_METHOD(Tensor_Matrix, quantile);
 PHP_METHOD(Tensor_Matrix, variance);
 PHP_METHOD(Tensor_Matrix, covariance);
 PHP_METHOD(Tensor_Matrix, round);
@@ -849,14 +849,14 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_median, 0, 0, IS_O
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_percentile, 0, 1, Tensor\\ColumnVector, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_quantile, 0, 1, Tensor\\ColumnVector, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_percentile, 0, 1, IS_OBJECT, "Tensor\\ColumnVector", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_quantile, 0, 1, IS_OBJECT, "Tensor\\ColumnVector", 0)
 #endif
 #if PHP_VERSION_ID >= 70200
-	ZEND_ARG_TYPE_INFO(0, p, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO(0, q, IS_DOUBLE, 0)
 #else
-	ZEND_ARG_INFO(0, p)
+	ZEND_ARG_INFO(0, q)
 #endif
 ZEND_END_ARG_INFO()
 
@@ -873,6 +873,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_covariance, 0, 0, T
 #else
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_covariance, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
 #endif
+	ZEND_ARG_OBJ_INFO(0, mean, Tensor\\ColumnVector, 1)
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
@@ -1596,7 +1597,7 @@ ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
 	PHP_ME(Tensor_Matrix, max, arginfo_tensor_matrix_max, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, mean, arginfo_tensor_matrix_mean, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, median, arginfo_tensor_matrix_median, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Matrix, percentile, arginfo_tensor_matrix_percentile, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Matrix, quantile, arginfo_tensor_matrix_quantile, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, variance, arginfo_tensor_matrix_variance, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, covariance, arginfo_tensor_matrix_covariance, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, round, arginfo_tensor_matrix_round, ZEND_ACC_PUBLIC)

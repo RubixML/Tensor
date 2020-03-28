@@ -15,7 +15,6 @@ use Closure;
 use function count;
 use function array_slice;
 use function gettype;
-use function is_null;
 
 /**
  * Matrix
@@ -1799,6 +1798,35 @@ class Matrix implements Tensor
     }
 
     /**
+     * Compute the row variance of the matrix.
+     *
+     * @param \Tensor\ColumnVector|null $mean
+     * @throws \InvalidArgumentException
+     * @return \Tensor\ColumnVector
+     */
+    public function variance($mean = null) : ColumnVector
+    {
+        if (isset($mean)) {
+            if (!$mean instanceof ColumnVector) {
+                throw new InvalidArgumentException('Mean must be a'
+                . ' Column Vector. ');
+            }
+
+            if ($mean->m() !== $this->m) {
+                throw new InvalidArgumentException('Mean vector must'
+                    . " have $this->m rows, {$mean->m()} given.");
+            }
+        } else {
+            $mean = $this->mean();
+        }
+
+        return $this->subtractColumnVector($mean)
+            ->square()
+            ->sum()
+            ->divide($this->m);
+    }
+
+    /**
      * Return the median vector of this matrix.
      *
      * @throws \RuntimeException
@@ -1828,21 +1856,21 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return a percentile vector of this matrix.
+     * Compute the q'th quantile of the matrix.
      *
-     * @param float $p
+     * @param float $q
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      * @return \Tensor\ColumnVector
      */
-    public function percentile(float $p) : ColumnVector
+    public function quantile(float $q) : ColumnVector
     {
-        if ($p < 0.0 or $p > 100.0) {
-            throw new InvalidArgumentException('P must be between 0 and 100,'
-                . " $p given.");
+        if ($q < 0.0 or $q > 1.0) {
+            throw new InvalidArgumentException('Q must be between'
+                . " 0 and 1, $q given.");
         }
 
-        $x = ($p / 100) * ($this->n - 1) + 1;
+        $x = $q * ($this->n - 1) + 1;
 
         $xHat = (int) $x;
 
@@ -1862,45 +1890,23 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the row variance of the matrix.
+     * Compute the covariance matrix.
      *
-     * @param mixed $mean
-     * @throws \InvalidArgumentException
-     * @return \Tensor\ColumnVector
+     * @param \Tensor\ColumnVector|null $mean
+     * @return self
      */
-    public function variance($mean = null) : ColumnVector
+    public function covariance(?ColumnVector $mean = null) : self
     {
         if (isset($mean)) {
-            if (!$mean instanceof ColumnVector) {
-                throw new InvalidArgumentException('Mean must be a'
-                . ' column vector ' . gettype($mean) . ' given.');
-            }
-
             if ($mean->m() !== $this->m) {
                 throw new InvalidArgumentException('Mean vector must'
                     . " have $this->m rows, {$mean->m()} given.");
             }
-        }
-
-        if (is_null($mean)) {
+        } else {
             $mean = $this->mean();
         }
 
-        return $this->subtract($mean)
-            ->square()
-            ->sum()
-            ->divide($this->m);
-    }
-
-    /**
-     * Compute the empirical covariance of this matrix and return it in a tuple
-     * along with the computed mean.
-     *
-     * @return self
-     */
-    public function covariance() : self
-    {
-        $b = $this->subtractColumnVector($this->mean());
+        $b = $this->subtractColumnVector($mean);
 
         return $b->matmul($b->transpose())
             ->divideScalar($this->m);

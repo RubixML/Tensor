@@ -8,7 +8,7 @@ use Tensor\Matrix;
  * @Groups({"Statistical"})
  * @BeforeMethods({"setUp"})
  */
-class MatrixPercentileBench
+class MatrixQuantileBench
 {
     /**
      * @var \Tensor\Matrix
@@ -25,8 +25,8 @@ class MatrixPercentileBench
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function percentile() : void
+    public function quantile() : void
     {
-        $this->a->percentile(50.0);
+        $this->a->quantile(0.5);
     }
 }

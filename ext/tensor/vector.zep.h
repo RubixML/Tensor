@@ -76,7 +76,7 @@ PHP_METHOD(Tensor_Vector, min);
 PHP_METHOD(Tensor_Vector, max);
 PHP_METHOD(Tensor_Vector, mean);
 PHP_METHOD(Tensor_Vector, median);
-PHP_METHOD(Tensor_Vector, percentile);
+PHP_METHOD(Tensor_Vector, quantile);
 PHP_METHOD(Tensor_Vector, variance);
 PHP_METHOD(Tensor_Vector, round);
 PHP_METHOD(Tensor_Vector, floor);
@@ -617,11 +617,11 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_deg2rad, 0, 0, IS_
 #endif
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_percentile, 0, 0, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_quantile, 0, 0, 1)
 #if PHP_VERSION_ID >= 70200
-	ZEND_ARG_TYPE_INFO(0, p, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO(0, q, IS_DOUBLE, 0)
 #else
-	ZEND_ARG_INFO(0, p)
+	ZEND_ARG_INFO(0, q)
 #endif
 ZEND_END_ARG_INFO()
 
@@ -1127,7 +1127,7 @@ ZEPHIR_INIT_FUNCS(tensor_vector_method_entry) {
 	PHP_ME(Tensor_Vector, max, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, mean, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, median, NULL, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Vector, percentile, arginfo_tensor_vector_percentile, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Vector, quantile, arginfo_tensor_vector_quantile, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, variance, arginfo_tensor_vector_variance, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, round, arginfo_tensor_vector_round, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Vector, floor, arginfo_tensor_vector_floor, ZEND_ACC_PUBLIC)

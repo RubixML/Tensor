@@ -1313,7 +1313,6 @@ class Vector implements Tensor
     /**
      * Return the median of the vector.
      *
-     * @throws \RuntimeException
      * @return int|float
      */
     public function median() -> int|float
@@ -1336,25 +1335,24 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the pth percentile of the vector.
+     * Return the q'th quantile of the vector.
      *
-     * @param float p
+     * @param float q
      * @throws \InvalidArgumentException
-     * @throws \RuntimeException
      * @return int|float
      */
-    public function percentile(const float p) -> int|float
+    public function quantile(const float q) -> int|float
     {
-        if unlikely p < 0.0 || p > 100.0 {
-            throw new InvalidArgumentException("P must be between"
-                . " 0 and 100, " . strval(p) . " given.");
+        if unlikely q < 0.0 || q > 1.0 {
+            throw new InvalidArgumentException("Q must be"
+                . " between 0 and 1, " . strval(q) . " given.");
         }
 
         var a = this->a;
 
         sort(a);
 
-        float x = (p / 100) * (this->n - 1) + 1;
+        float x = q * (this->n - 1) + 1;
 
         int xHat = (int) x;
 
@@ -1370,7 +1368,6 @@ class Vector implements Tensor
      *
      * @param mixed mean
      * @throws \InvalidArgumentException
-     * @throws \RuntimeException
      * @return int|float
      */
     public function variance(var mean = null) -> int|float
@@ -1381,13 +1378,11 @@ class Vector implements Tensor
                     . " an integer or floating point number "
                     . gettype(mean) . " given.");
             }
-        }
-
-        if is_null(mean) {
+        } else {
             let mean = this->mean();
         }
 
-        var ssd = this->subtract(mean)
+        var ssd = this->subtractScalar(mean)
             ->square()
             ->sum();
 

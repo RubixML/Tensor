@@ -28,6 +28,14 @@ ZEPHIR_INIT_CLASS(Tensor_Statistical) {
 ZEPHIR_DOC_METHOD(Tensor_Statistical, mean);
 
 /**
+ * Compute the variance of the tensor.
+ *
+ * @param mixed mean
+ * @return mixed
+ */
+ZEPHIR_DOC_METHOD(Tensor_Statistical, variance);
+
+/**
  * Return the median of the tensor.
  *
  * @return mixed
@@ -35,18 +43,10 @@ ZEPHIR_DOC_METHOD(Tensor_Statistical, mean);
 ZEPHIR_DOC_METHOD(Tensor_Statistical, median);
 
 /**
- * Return the pth percentile of the tensor.
+ * Return the q'th quantile of the tensor.
  *
- * @param float p
+ * @param float q
  * @return mixed
  */
-ZEPHIR_DOC_METHOD(Tensor_Statistical, percentile);
-
-/**
- * Compute the variance of the tensor.
- *
- * @param mixed mean
- * @return mixed
- */
-ZEPHIR_DOC_METHOD(Tensor_Statistical, variance);
+ZEPHIR_DOC_METHOD(Tensor_Statistical, quantile);
 
