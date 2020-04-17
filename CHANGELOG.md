@@ -1,5 +1,6 @@
-- Unreleased
-    - Changed percentile method changed to quantile
+- 2.0.5
+    - Percentile method changed to quantile
+    - Fixed Vector linspace precision
 
 - 2.0.4
     - Individual Arithmetic and Comparison methods now public

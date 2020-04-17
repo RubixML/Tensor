@@ -158,9 +158,9 @@ class VectorTest extends TestCase
      */
     public function range() : void
     {
-        $z = Vector::range(5.0, 12.0, 2.);
+        $z = Vector::range(5.0, 12.0, 2.0);
 
-        $expected = [5.0, 7.0, 9.0, 11.];
+        $expected = [5.0, 7.0, 9.0, 11.0];
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($expected, $z->asArray());
@@ -171,15 +171,15 @@ class VectorTest extends TestCase
      */
     public function linspace() : void
     {
-        $z = Vector::linspace(-5, 5, 9);
+        $z = Vector::linspace(-5, 5, 10);
 
         $expected = [
-            -5.0, -3.7500001000000003, -2.5000002, -1.2500003, -4.0000000023354687E-7,
-            1.2499994999999995, 2.4999994, 3.749999299999999, 4.9999991999999995,
+            -5.0, -3.888888888888889, -2.7777777777777777, -1.6666666666666665, -0.5555555555555554,
+            0.5555555555555558, 1.666666666666667, 2.777777777777778, 3.8888888888888893, 5.0,
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertCount(9, $z);
+        $this->assertCount(10, $z);
         $this->assertEquals($expected, $z->asArray());
     }
 

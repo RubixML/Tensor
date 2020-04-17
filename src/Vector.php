@@ -242,26 +242,34 @@ class Vector implements Tensor
     }
 
     /**
-     * Return evenly spaced numbers over a specified interval.
+     * Return n evenly spaced numbers between minimum and maximum.
      *
-     * @param float $start
-     * @param float $end
+     * @param float $min
+     * @param float $max
      * @param int $n
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function linspace(float $start, float $end, int $n) : self
+    public static function linspace(float $min, float $max, int $n) : self
     {
-        if ($n < 1) {
-            throw new InvalidArgumentException('The number of elements'
-                . " must be greater than 0, $n given.");
+        if ($n < 2) {
+            throw new InvalidArgumentException('Number of elements'
+                . " must be greater than 1, $n given.");
         }
 
-        $range = abs($end - $start);
+        $k = $n - 1;
 
-        $interval = ($range / ($n - 1)) - (EPSILON * $range);
+        $interval = abs($max - $min) / $k;
 
-        return static::range($start, $end, $interval);
+        $a = [$min];
+
+        while (count($a) < $k) {
+            $a[] = end($a) + $interval;
+        }
+
+        $a[] = $max;
+
+        return self::quick($a);
     }
 
     /**
