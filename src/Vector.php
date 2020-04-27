@@ -242,7 +242,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Return n evenly spaced numbers between minimum and maximum.
+     * Return a vector of n evenly spaced numbers between minimum and maximum.
      *
      * @param float $min
      * @param float $max
@@ -252,6 +252,11 @@ class Vector implements Tensor
      */
     public static function linspace(float $min, float $max, int $n) : self
     {
+        if ($min > $max) {
+            throw new InvalidArgumentException('Minimum must be'
+                . ' less than maximum.');
+        }
+
         if ($n < 2) {
             throw new InvalidArgumentException('Number of elements'
                 . " must be greater than 1, $n given.");

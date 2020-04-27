@@ -244,14 +244,14 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_linspace, 0, 3, Ten
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_linspace, 0, 3, IS_OBJECT, "Tensor\\Vector", 0)
 #endif
 #if PHP_VERSION_ID >= 70200
-	ZEND_ARG_TYPE_INFO(0, start, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO(0, min, IS_DOUBLE, 0)
 #else
-	ZEND_ARG_INFO(0, start)
+	ZEND_ARG_INFO(0, min)
 #endif
 #if PHP_VERSION_ID >= 70200
-	ZEND_ARG_TYPE_INFO(0, end, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO(0, max, IS_DOUBLE, 0)
 #else
-	ZEND_ARG_INFO(0, end)
+	ZEND_ARG_INFO(0, max)
 #endif
 #if PHP_VERSION_ID >= 70200
 	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
