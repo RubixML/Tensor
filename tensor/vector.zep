@@ -248,26 +248,39 @@ class Vector implements Tensor
     }
 
     /**
-     * Return evenly spaced numbers over a specified interval.
+     * Return a vector of n evenly spaced numbers between minimum and maximum.
      *
-     * @param float start
-     * @param float end
+     * @param float min
+     * @param float max
      * @param int n
      * @throws \InvalidArgumentException
      * @return self
      */
-    public static function linspace(const float start, const float end, const int n) -> <Vector>
+    public static function linspace(const float min, const float max, const int n) -> <Vector>
     {
-        if unlikely n < 1 {
-            throw new InvalidArgumentException("The number of elements"
-                . " must be greater than 0, " . strval(n) . " given.");
+        if unlikely min > max {
+            throw new InvalidArgumentException("Minimum must be"
+                . " less than maximum.");
         }
 
-        var range = abs(end - start);
+        if unlikely n < 2 {
+            throw new InvalidArgumentException("Number of elements"
+                . " must be greater than 1, " . strval(n) . " given.");
+        }
 
-        float interval = (range / (n - 1)) - (self::EPSILON * range);
+        int k = n - 1;
 
-        return static::range(start, end, interval);
+        float interval = abs(max - min) / k;
+
+        array a = [min];
+
+        while count(a) < k {
+            let a[] = end(a) + interval;
+        }
+
+        let a[] = max;
+
+        return self::quick(a);
     }
 
     /**

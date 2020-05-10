@@ -178,7 +178,7 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 	swaps = 0;
 	ZVAL_LONG(&_4, m);
 	ZVAL_LONG(&_5, n);
-	ZEPHIR_CALL_FUNCTION(&_6, "min", NULL, 18, &_4, &_5);
+	ZEPHIR_CALL_FUNCTION(&_6, "min", NULL, 19, &_4, &_5);
 	zephir_check_call_status();
 	_9 = (zephir_get_numberval(&_6) - 1);
 	_8 = 0;
@@ -209,12 +209,12 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 						_10$$3 = 1;
 					}
 					i = _11$$3;
-					zephir_array_fetch_long(&_13$$4, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 77);
-					zephir_array_fetch_long(&_14$$4, &_13$$4, k, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 77);
+					zephir_array_fetch_long(&_13$$4, &b, i, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 77);
+					zephir_array_fetch_long(&_14$$4, &_13$$4, k, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 77);
 					ZEPHIR_CALL_FUNCTION(&_15$$4, "abs", &_16, 12, &_14$$4);
 					zephir_check_call_status();
-					zephir_array_fetch_long(&_17$$4, &b, index, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 77);
-					zephir_array_fetch_long(&_18$$4, &_17$$4, k, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 77);
+					zephir_array_fetch_long(&_17$$4, &b, index, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 77);
+					zephir_array_fetch_long(&_18$$4, &_17$$4, k, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 77);
 					ZEPHIR_CALL_FUNCTION(&_19$$4, "abs", &_16, 12, &_18$$4);
 					zephir_check_call_status();
 					if (ZEPHIR_GT(&_15$$4, &_19$$4)) {
@@ -222,30 +222,30 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 					}
 				}
 			}
-			zephir_array_fetch_long(&_20$$3, &b, index, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 82);
-			zephir_array_fetch_long(&_21$$3, &_20$$3, k, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 82);
+			zephir_array_fetch_long(&_20$$3, &b, index, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 82);
+			zephir_array_fetch_long(&_21$$3, &_20$$3, k, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 82);
 			if (UNEXPECTED(ZEPHIR_IS_LONG(&_21$$3, 0))) {
 				ZEPHIR_INIT_NVAR(&_22$$6);
 				object_init_ex(&_22$$6, spl_ce_RuntimeException);
 				ZEPHIR_INIT_NVAR(&_23$$6);
 				ZEPHIR_CONCAT_SS(&_23$$6, "Cannot compute row echelon form", " of a singular matrix.");
-				ZEPHIR_CALL_METHOD(NULL, &_22$$6, "__construct", &_24, 30, &_23$$6);
+				ZEPHIR_CALL_METHOD(NULL, &_22$$6, "__construct", &_24, 31, &_23$$6);
 				zephir_check_call_status();
-				zephir_throw_exception_debug(&_22$$6, "tensor/reductions/ref.zep", 84);
+				zephir_throw_exception_debug(&_22$$6, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 84);
 				ZEPHIR_MM_RESTORE();
 				return;
 			}
 			if (k != index) {
 				ZEPHIR_OBS_NVAR(&temp);
-				zephir_array_fetch_long(&temp, &b, k, PH_NOISY, "tensor/reductions/ref.zep", 88);
-				zephir_array_fetch_long(&_25$$7, &b, index, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 90);
+				zephir_array_fetch_long(&temp, &b, k, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 88);
+				zephir_array_fetch_long(&_25$$7, &b, index, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 90);
 				zephir_array_update_long(&b, k, &_25$$7, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
 				zephir_array_update_long(&b, index, &temp, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
 				swaps++;
 			}
-			zephir_array_fetch_long(&_26$$3, &b, k, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 96);
+			zephir_array_fetch_long(&_26$$3, &b, k, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 96);
 			ZEPHIR_OBS_NVAR(&_27$$3);
-			zephir_array_fetch_long(&_27$$3, &_26$$3, k, PH_NOISY, "tensor/reductions/ref.zep", 96);
+			zephir_array_fetch_long(&_27$$3, &_26$$3, k, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 96);
 			diag = zephir_get_doubleval(&_27$$3);
 			_30$$3 = (m - 1);
 			_29$$3 = (k + 1);
@@ -263,9 +263,9 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 					i = _29$$3;
 					ZEPHIR_INIT_NVAR(&_31$$8);
 					if (diag != 0.0) {
-						zephir_array_fetch_long(&_32$$8, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 99);
+						zephir_array_fetch_long(&_32$$8, &b, i, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 99);
 						ZEPHIR_OBS_NVAR(&_33$$8);
-						zephir_array_fetch_long(&_33$$8, &_32$$8, k, PH_NOISY, "tensor/reductions/ref.zep", 99);
+						zephir_array_fetch_long(&_33$$8, &_32$$8, k, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 99);
 						ZEPHIR_INIT_NVAR(&_31$$8);
 						ZVAL_DOUBLE(&_31$$8, zephir_safe_div_double_double(zephir_get_doubleval(&_33$$8), diag));
 					} else {
@@ -287,12 +287,12 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 								_34$$8 = 1;
 							}
 							j = _35$$8;
-							zephir_array_fetch_long(&_37$$9, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 102);
+							zephir_array_fetch_long(&_37$$9, &b, i, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 102);
 							ZEPHIR_OBS_NVAR(&_38$$9);
-							zephir_array_fetch_long(&_38$$9, &_37$$9, j, PH_NOISY, "tensor/reductions/ref.zep", 102);
-							zephir_array_fetch_long(&_39$$9, &b, k, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 102);
+							zephir_array_fetch_long(&_38$$9, &_37$$9, j, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 102);
+							zephir_array_fetch_long(&_39$$9, &b, k, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 102);
 							ZEPHIR_OBS_NVAR(&_40$$9);
-							zephir_array_fetch_long(&_40$$9, &_39$$9, j, PH_NOISY, "tensor/reductions/ref.zep", 102);
+							zephir_array_fetch_long(&_40$$9, &_39$$9, j, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 102);
 							ZEPHIR_INIT_NVAR(&_41$$9);
 							ZVAL_DOUBLE(&_41$$9, (zephir_get_doubleval(&_38$$9) - (scale * zephir_get_doubleval(&_40$$9))));
 							zephir_array_update_multi(&b, &_41$$9, SL("ll"), 2, i, j);
@@ -309,7 +309,7 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 	ZEPHIR_CALL_CE_STATIC(&_43, tensor_matrix_ce, "quick", &_44, 0, &b);
 	zephir_check_call_status();
 	ZVAL_LONG(&_4, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 32, &_43, &_4);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 33, &_43, &_4);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -391,10 +391,10 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 			break;
 		}
 		ZEPHIR_OBS_NVAR(&_5$$3);
-		zephir_array_fetch_long(&_5$$3, &b, row, PH_NOISY, "tensor/reductions/ref.zep", 139);
+		zephir_array_fetch_long(&_5$$3, &b, row, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 139);
 		zephir_get_arrval(&_6$$3, &_5$$3);
 		ZEPHIR_CPY_WRT(&t, &_6$$3);
-		zephir_array_fetch_long(&_7$$3, &t, col, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 141);
+		zephir_array_fetch_long(&_7$$3, &t, col, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 141);
 		if (ZEPHIR_IS_LONG(&_7$$3, 0)) {
 			_10$$4 = (m - 1);
 			_9$$4 = (row + 1);
@@ -410,11 +410,11 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 						_8$$4 = 1;
 					}
 					i = _9$$4;
-					zephir_array_fetch_long(&_11$$5, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 143);
-					zephir_array_fetch_long(&_12$$5, &_11$$5, col, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 143);
+					zephir_array_fetch_long(&_11$$5, &b, i, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 143);
+					zephir_array_fetch_long(&_12$$5, &_11$$5, col, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 143);
 					if (!ZEPHIR_IS_LONG(&_12$$5, 0)) {
 						ZEPHIR_OBS_NVAR(&temp);
-						zephir_array_fetch_long(&temp, &b, i, PH_NOISY, "tensor/reductions/ref.zep", 144);
+						zephir_array_fetch_long(&temp, &b, i, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 144);
 						zephir_array_update_long(&b, i, &t, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
 						ZEPHIR_CPY_WRT(&t, &temp);
 						swaps++;
@@ -423,13 +423,13 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 				}
 			}
 		}
-		zephir_array_fetch_long(&_13$$3, &t, col, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 156);
+		zephir_array_fetch_long(&_13$$3, &t, col, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 156);
 		if (ZEPHIR_IS_LONG(&_13$$3, 0)) {
 			col++;
 			continue;
 		}
 		ZEPHIR_OBS_NVAR(&_14$$3);
-		zephir_array_fetch_long(&_14$$3, &t, col, PH_NOISY, "tensor/reductions/ref.zep", 162);
+		zephir_array_fetch_long(&_14$$3, &t, col, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 162);
 		divisor = zephir_get_doubleval(&_14$$3);
 		if (divisor != 1.0) {
 			_17$$8 = (n - 1);
@@ -447,7 +447,7 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 					}
 					i = _16$$8;
 					ZEPHIR_OBS_NVAR(&_18$$9);
-					zephir_array_fetch_long(&_18$$9, &t, i, PH_NOISY, "tensor/reductions/ref.zep", 166);
+					zephir_array_fetch_long(&_18$$9, &t, i, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 166);
 					ZEPHIR_INIT_NVAR(&_19$$9);
 					ZVAL_DOUBLE(&_19$$9, zephir_safe_div_double_double(zephir_get_doubleval(&_18$$9), divisor));
 					zephir_array_update_long(&t, i, &_19$$9, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
@@ -468,9 +468,9 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 					_20$$3 = 1;
 				}
 				i = _21$$3;
-				zephir_array_fetch_long(&_23$$10, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 171);
+				zephir_array_fetch_long(&_23$$10, &b, i, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 171);
 				ZEPHIR_OBS_NVAR(&_24$$10);
-				zephir_array_fetch_long(&_24$$10, &_23$$10, col, PH_NOISY, "tensor/reductions/ref.zep", 171);
+				zephir_array_fetch_long(&_24$$10, &_23$$10, col, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 171);
 				scale = zephir_get_doubleval(&_24$$10);
 				if (scale != 0.0) {
 					_27$$11 = (n - 1);
@@ -487,11 +487,11 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 								_25$$11 = 1;
 							}
 							j = _26$$11;
-							zephir_array_fetch_long(&_28$$12, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 175);
+							zephir_array_fetch_long(&_28$$12, &b, i, PH_NOISY | PH_READONLY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 175);
 							ZEPHIR_OBS_NVAR(&_29$$12);
-							zephir_array_fetch_long(&_29$$12, &_28$$12, j, PH_NOISY, "tensor/reductions/ref.zep", 175);
+							zephir_array_fetch_long(&_29$$12, &_28$$12, j, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 175);
 							ZEPHIR_OBS_NVAR(&_30$$12);
-							zephir_array_fetch_long(&_30$$12, &t, j, PH_NOISY, "tensor/reductions/ref.zep", 175);
+							zephir_array_fetch_long(&_30$$12, &t, j, PH_NOISY, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 175);
 							ZEPHIR_INIT_NVAR(&_31$$12);
 							ZVAL_DOUBLE(&_31$$12, (zephir_get_doubleval(&_29$$12) - (scale * zephir_get_doubleval(&_30$$12))));
 							zephir_array_update_multi(&b, &_31$$12, SL("ll"), 2, i, j);
@@ -508,7 +508,7 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 	ZEPHIR_CALL_CE_STATIC(&_32, tensor_matrix_ce, "quick", &_33, 0, &b);
 	zephir_check_call_status();
 	ZVAL_LONG(&_34, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 32, &_32, &_34);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 33, &_32, &_34);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -549,7 +549,7 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 		ZEPHIR_CONCAT_SSVS(&_3$$3, "The number of swaps must", " be greater than or equal to 0, ", &_2$$3, " given.");
 		ZEPHIR_CALL_METHOD(NULL, &_0$$3, "__construct", NULL, 3, &_3$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(&_0$$3, "tensor/reductions/ref.zep", 199);
+		zephir_throw_exception_debug(&_0$$3, "/mnt/c/Users/User/Workspace/Rubix/Tensor/tensor/reductions/ref.zep", 199);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
