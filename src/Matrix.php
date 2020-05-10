@@ -726,17 +726,22 @@ class Matrix implements Tensor
      */
     public function transpose() : self
     {
-        if ($this->m > 1) {
-            return self::quick(array_map(null, ...$this->a));
-        }
-        
-        $b = [];
+        switch ($this->m) {
+            case 0:
+                return $this;
 
-        for ($i = 0; $i < $this->n; ++$i) {
-            $b[] = array_column($this->a, $i);
-        }
+            case 1:
+                $b = [];
 
-        return self::quick($b);
+                foreach (current($this->a) as $row) {
+                    $b[] = [$row];
+                }
+
+                return self::quick($b);
+            
+            default:
+                return self::quick(array_map(null, ...$this->a));
+        }
     }
 
     /**
