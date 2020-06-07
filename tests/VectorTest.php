@@ -95,7 +95,7 @@ class VectorTest extends TestCase
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($expected, $z->asArray());
     }
-    
+
     /**
      * @test
      */
@@ -484,7 +484,7 @@ class VectorTest extends TestCase
         $z = $this->c->multiply($this->d);
 
         $expected = [
-            [24.92, -6.5, 0.087, -0.2,-1.3, 23.8],
+            [24.92, -6.5, 0.087, -0.2, -1.3, 23.8],
             [0.04, 13.064999999999998, 2.9, 0.4, 0.13, -11.9],
             [4.4, 32.5, -14.5, 600.0, -0.013000000000000001, -0.0119],
         ];
@@ -828,7 +828,7 @@ class VectorTest extends TestCase
     public function multiplyScalar() : void
     {
         $z = $this->a->multiply(2);
-        
+
         $expected = [-30, 50, 70, -72, -144, 178, 212, 90];
 
         $this->assertInstanceOf(Vector::class, $z);
@@ -896,7 +896,7 @@ class VectorTest extends TestCase
     {
         $z = $this->a->mod(4);
 
-        $expected = [-3, 1, 3,0, 0, 1, 2, 1];
+        $expected = [-3, 1, 3, 0, 0, 1, 2, 1];
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($expected, $z->asArray());
@@ -1424,7 +1424,7 @@ class VectorTest extends TestCase
     public function testToString() : void
     {
         $outcome = '[ -15 25 35 -36 -72 89 106 45 ]' . PHP_EOL;
-        
+
         $this->assertEquals($outcome, (string) $this->a);
     }
 }

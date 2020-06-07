@@ -62,7 +62,7 @@ class Eigen
                 ->sum()
                 ->sqrt()
                 ->transpose();
-        
+
             $eigenvectors = $eigenvectors->divideVector($norm);
         }
 

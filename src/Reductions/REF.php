@@ -27,7 +27,7 @@ class REF
      * @var \Tensor\Matrix
      */
     protected $a;
-    
+
     /**
      * The number of swaps made to compute the row echelon form of the matrix.
      *
@@ -95,11 +95,11 @@ class REF
 
             for ($j = $i + 1; $j < $m; ++$j) {
                 $scale = $diag != 0 ? $b[$j][$i] / $diag : 1;
-                
+
                 for ($k = $i + 1; $k < $n; ++$k) {
                     $b[$j][$k] -= $scale * $b[$i][$k];
                 }
-                
+
                 $b[$j][$i] = 0;
             }
         }
@@ -132,7 +132,7 @@ class REF
 
                         $b[$i] = $t;
                         $t = $temp;
-        
+
                         ++$swaps;
 
                         break 1;

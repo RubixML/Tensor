@@ -207,10 +207,10 @@ class ColumnVector extends Vector
 
             $c[] = $rowC;
         }
-        
+
         return Matrix::quick($c);
     }
- 
+
     /**
      * Mod this column vector with a matrix.
      *

@@ -131,7 +131,7 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Dimensionality must be'
                 . ' greater than 0 on all axes.');
         }
-    
+
         return self::fill(1, $m, $n);
     }
 
@@ -240,7 +240,7 @@ class Matrix implements Tensor
 
         while (count($a) < $m) {
             $rowA = [];
-            
+
             if ($extras) {
                 $rowA[] = array_pop($extras);
             }
@@ -290,7 +290,7 @@ class Matrix implements Tensor
 
                 while ($p > $l) {
                     ++$k;
-                    
+
                     $p *= rand() / $max;
                 }
 
@@ -431,6 +431,18 @@ class Matrix implements Tensor
         $a = self::quick($a);
 
         return $columnwise ? $a->transpose() : $a;
+    }
+
+    /**
+     * Implode a row of the matrix and return the output.
+     *
+     * @param string $carry
+     * @param (int|float)[] $row
+     * @return string
+     */
+    protected static function implodeRow(string $carry, array $row) : string
+    {
+        return $carry . PHP_EOL . '[ ' . implode(' ', $row) . ' ]';
     }
 
     /**
@@ -738,7 +750,7 @@ class Matrix implements Tensor
                 }
 
                 return self::quick($b);
-            
+
             default:
                 return self::quick(array_map(null, ...$this->a));
         }
@@ -923,7 +935,7 @@ class Matrix implements Tensor
         }
 
         $bT = $b->transpose()->asArray();
-        
+
         $c = [];
 
         foreach ($this->a as $rowA) {
@@ -941,7 +953,7 @@ class Matrix implements Tensor
 
             $c[] = $rowC;
         }
-        
+
         return self::quick($c);
     }
 
@@ -1191,7 +1203,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->multiplyColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->multiplyVector($b);
                 }
@@ -1223,7 +1235,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->divideColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->divideVector($b);
                 }
@@ -1256,7 +1268,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->addColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->addVector($b);
                 }
@@ -1289,7 +1301,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->subtractColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->subtractVector($b);
                 }
@@ -1323,7 +1335,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->powColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->powVector($b);
                 }
@@ -1357,7 +1369,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->modColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->modVector($b);
                 }
@@ -1391,7 +1403,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->equalColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->equalVector($b);
                 }
@@ -1425,7 +1437,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->notEqualColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->notEqualVector($b);
                 }
@@ -1459,7 +1471,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->greaterColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->greaterVector($b);
                 }
@@ -1493,7 +1505,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->greaterEqualColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->greaterEqualVector($b);
                 }
@@ -1527,7 +1539,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->lessColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->lessVector($b);
                 }
@@ -1561,7 +1573,7 @@ class Matrix implements Tensor
 
                     case $b instanceof ColumnVector:
                         return $this->lessEqualColumnVector($b);
-                    
+
                     case $b instanceof Vector:
                         return $this->lessEqualVector($b);
                 }
@@ -1885,9 +1897,9 @@ class Matrix implements Tensor
 
         foreach ($this->a as $rowA) {
             sort($rowA);
-    
+
             $t = $rowA[$xHat - 1];
-    
+
             $b[] = $t + $remainder * ($rowA[$xHat] - $t);
         }
 
@@ -2279,7 +2291,7 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Matrix A requires'
                 . " $this->m rows but Matrix B has {$b->m()}.");
         }
-        
+
         return self::quick(array_map('array_merge', $this->a, $b->asArray()));
     }
 
@@ -3119,7 +3131,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3150,7 +3162,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3181,7 +3193,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3212,7 +3224,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3243,7 +3255,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3274,7 +3286,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3306,7 +3318,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3338,7 +3350,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3370,7 +3382,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3402,7 +3414,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3434,7 +3446,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3466,7 +3478,7 @@ class Matrix implements Tensor
 
         foreach ($b->asArray() as $i => $valueB) {
             $rowA = $this->a[$i];
-            
+
             $rowC = [];
 
             foreach ($rowA as $valueA) {
@@ -3846,17 +3858,5 @@ class Matrix implements Tensor
     public function __toString() : string
     {
         return array_reduce($this->a, [self::class, 'implodeRow'], '') . PHP_EOL;
-    }
-
-    /**
-     * Implode a row of the matrix and return the output.
-     *
-     * @param string $carry
-     * @param (int|float)[] $row
-     * @return string
-     */
-    protected static function implodeRow(string $carry, array $row) : string
-    {
-        return $carry . PHP_EOL . '[ ' . implode(' ', $row) . ' ]';
     }
 }

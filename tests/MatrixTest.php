@@ -125,7 +125,7 @@ class MatrixTest extends TestCase
         $expected = [
             [2.5, 2.5, 2.5],
             [-1, -1, -1],
-            [4.8,4.8, 4.8],
+            [4.8, 4.8, 4.8],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
@@ -289,7 +289,7 @@ class MatrixTest extends TestCase
         $z = Matrix::minimum($this->a, $this->c);
 
         $expected = [
-            [4,-17, -12],
+            [4, -17, -12],
             [1, 3, -2],
             [-10, -6, -9],
         ];
@@ -1788,7 +1788,7 @@ class MatrixTest extends TestCase
     public function sin() : void
     {
         $z = $this->b->sin();
-        
+
         $expected = [
             [0.4201670368266409],
             [-0.9999902065507035],
@@ -1809,7 +1809,7 @@ class MatrixTest extends TestCase
             [-0.5],
             [0.01],
         ])->asin();
-        
+
         $expected = [
             [0.3257294872946302],
             [-0.5235987755982989],

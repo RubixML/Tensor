@@ -193,7 +193,7 @@ class Vector implements Tensor
 
             while ($p > $l) {
                 ++$k;
-                
+
                 $p *= rand() / $max;
             }
 
@@ -570,7 +570,7 @@ class Vector implements Tensor
 
         foreach ($this->a as $valueA) {
             $rowC = [];
-            
+
             foreach ($bHat as $valueB) {
                 $rowC[] = $valueA * $valueB;
             }
@@ -713,7 +713,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->multiplyVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->multiplyMatrix($b);
                 }
@@ -743,7 +743,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->divideVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->divideMatrix($b);
                 }
@@ -773,7 +773,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->addVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->addMatrix($b);
                 }
@@ -803,7 +803,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->subtractVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->subtractMatrix($b);
                 }
@@ -834,7 +834,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->powVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->powMatrix($b);
                 }
@@ -865,7 +865,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->modVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->modMatrix($b);
                 }
@@ -896,7 +896,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->equalVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->equalMatrix($b);
                 }
@@ -927,7 +927,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->notEqualVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->notEqualMatrix($b);
                 }
@@ -958,7 +958,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->greaterVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->greaterMatrix($b);
                 }
@@ -989,7 +989,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->greaterEqualVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->greaterEqualMatrix($b);
                 }
@@ -1020,7 +1020,7 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->lessVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->lessMatrix($b);
                 }
@@ -1051,13 +1051,13 @@ class Vector implements Tensor
                 switch (true) {
                     case $b instanceof Vector:
                         return $this->lessEqualVector($b);
-        
+
                     case $b instanceof Matrix:
                         return $this->lessEqualMatrix($b);
                 }
 
                 break 1;
-                
+
             case 'double':
             case 'integer':
                 return $this->lessEqualScalar($b);

@@ -5,7 +5,7 @@ namespace Tensor;
 interface Trigonometric
 {
     const TWO_PI = 2 * M_PI;
-    
+
     /**
      * Return the sine of the tensor.
      *

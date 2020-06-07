@@ -45,7 +45,7 @@ class ColumnVectorTest extends TestCase
         $this->c = Matrix::quick([
             [6.23, -1, 0.03],
             [0.01, 2.01, 1],
-            [1.1, 5, -5,],
+            [1.1, 5, -5],
         ]);
     }
 

@@ -74,7 +74,7 @@ class LU
                     $row = $j;
                 }
             }
-            
+
             if ($i !== $row) {
                 $temp = $p[$i];
 
