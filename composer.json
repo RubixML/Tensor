@@ -1,12 +1,13 @@
 {
     "name": "rubix/tensor",
     "type": "library",
-    "description": "Tensor is a library and extension that provides objects for scientific computing in PHP.",
+    "description": "A library and extension that provides objects for scientific computing in PHP.",
     "homepage": "https://github.com/RubixML/Tensor",
     "license": "MIT",
     "keywords": [
-        "math", "linear-algebra", "matrix", "vector", "tensor", "statistics", "php",
-        "scientific-computing", "computation", "trigonometry", "arithmetic"
+        "arithmetic", "computation", "computing", "decomposition", "engineering", "extension",
+        "linear algebra", "math", "matrix", "norms", "php", "random number generation", "reduction",
+        "scientific computing", "statistics", "tensor", "vector", "trigonometry"
     ],
     "authors": [
         { 
@@ -14,6 +15,10 @@
             "email": "me@andrewdalpino.com",
             "homepage": "https://andrewdalpino.com",
             "role": "Lead Engineer"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/RubixML/Tensor/graphs/contributors"
         }
     ],
     "require": {
@@ -66,7 +71,6 @@
         "process-timeout": 3000
     },
     "support": {
-        "email": "contact@rubixml.com",
         "issues": "https://github.com/RubixML/Tensor/issues",
         "source": "https://github.com/RubixML/Tensor"
     }
