@@ -1348,9 +1348,9 @@ class MatrixTest extends TestCase
         $z = $this->a->mod($this->e);
 
         $expected = [
-            [ 2. ,  0.5,  2. ],
-            [-0. , -0. , -0. ],
-            [ 0.8,  3.6,  0.6]
+            [2.,  0.5,  2.],
+            [-0., -0., -0.],
+            [0.8,  3.6,  0.6]
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
