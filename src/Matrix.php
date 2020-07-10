@@ -3290,7 +3290,7 @@ class Matrix implements Tensor
             $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowC[] = $valueA % $valueB;
+                $rowC[] = ($valueA / $valueB - floor($valueA / $valueB)) * $valueB;
             }
 
             $c[] = $rowC;
