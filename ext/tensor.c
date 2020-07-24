@@ -105,9 +105,6 @@ static void php_zephir_init_module_globals(zend_tensor_globals *tensor_globals T
 static PHP_RINIT_FUNCTION(tensor)
 {
 	zend_tensor_globals *tensor_globals_ptr;
-#ifdef ZTS
-	tsrm_ls = ts_resource(0);
-#endif
 	tensor_globals_ptr = ZEPHIR_VGLOBAL;
 
 	php_zephir_init_globals(tensor_globals_ptr);
@@ -145,6 +142,10 @@ static PHP_MINFO_FUNCTION(tensor)
 
 static PHP_GINIT_FUNCTION(tensor)
 {
+#if defined(COMPILE_DL_TENSOR) && defined(ZTS)
+	ZEND_TSRMLS_CACHE_UPDATE();
+#endif
+
 	php_zephir_init_globals(tensor_globals);
 	php_zephir_init_module_globals(tensor_globals);
 }
@@ -192,6 +193,10 @@ zend_module_entry tensor_module_entry = {
 	STANDARD_MODULE_PROPERTIES_EX
 };
 
+/* implement standard "stub" routine to introduce ourselves to Zend */
 #ifdef COMPILE_DL_TENSOR
+# ifdef ZTS
+ZEND_TSRMLS_CACHE_DEFINE()
+# endif
 ZEND_GET_MODULE(tensor)
 #endif

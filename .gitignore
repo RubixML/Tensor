@@ -38,11 +38,13 @@ ext/modules/
 ext/run-tests.php
 
 /vendor
-test.php
 composer.lock
 .phpunit.result.cache
 .php_cs.cache
+Thumbs.db
+.DS_Store
 .zephir
 .libs/
-.vscode
-.vs
+/.idea
+/.vscode
+/.vs

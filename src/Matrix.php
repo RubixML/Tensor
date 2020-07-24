@@ -1149,7 +1149,7 @@ class Matrix implements Tensor
     /**
      * Return the L1 norm of the matrix.
      *
-     * @return int|float
+     * @return int|float|false
      */
     public function l1Norm()
     {
@@ -1169,7 +1169,7 @@ class Matrix implements Tensor
     /**
      * Return the infinity norm of the matrix.
      *
-     * @return int|float
+     * @return int|float|false
      */
     public function infinityNorm()
     {
@@ -1179,7 +1179,7 @@ class Matrix implements Tensor
     /**
      * Return the max norm of the matrix.
      *
-     * @return int|float
+     * @return int|float|false
      */
     public function maxNorm()
     {
@@ -1209,6 +1209,7 @@ class Matrix implements Tensor
                 }
 
                 break 1;
+
             case 'double':
             case 'integer':
                 return $this->multiplyScalar($b);
