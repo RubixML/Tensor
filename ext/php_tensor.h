@@ -14,7 +14,7 @@
 #define PHP_TENSOR_VERSION     "2.0.4-alpha"
 #define PHP_TENSOR_EXTNAME     "tensor"
 #define PHP_TENSOR_AUTHOR      "Andrew DalPino"
-#define PHP_TENSOR_ZEPVERSION  "0.12.16-$Id$"
+#define PHP_TENSOR_ZEPVERSION  "0.12.19-$Id$"
 #define PHP_TENSOR_DESCRIPTION "Tensor is a library and extension that provides objects for scientific computing in PHP."
 
 
@@ -50,7 +50,7 @@ ZEND_EXTERN_MODULE_GLOBALS(tensor)
 #endif
 
 #ifdef ZTS
-	void ***tsrm_ls;
+	ZEND_TSRMLS_CACHE_EXTERN()
 	#define ZEPHIR_VGLOBAL ((zend_tensor_globals *) (*((void ***) tsrm_get_ls_cache()))[TSRM_UNSHUFFLE_RSRC_ID(tensor_globals_id)])
 #else
 	#define ZEPHIR_VGLOBAL &(tensor_globals)

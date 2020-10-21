@@ -692,7 +692,7 @@ class Vector implements Tensor
     /**
      * Calculate the max norm of the vector.
      *
-     * @return int|float
+     * @return int|float|false
      */
     public function maxNorm()
     {
@@ -1258,7 +1258,7 @@ class Vector implements Tensor
     /**
      * Return the minimum element in the vector.
      *
-     * @return int|float
+     * @return int|float|false
      */
     public function min()
     {
@@ -1268,7 +1268,7 @@ class Vector implements Tensor
     /**
      * Return the maximum element in the vector.
      *
-     * @return int|float
+     * @return int|float|false
      */
     public function max()
     {
