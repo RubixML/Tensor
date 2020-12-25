@@ -992,8 +992,8 @@ class Matrix implements Tensor
             $c = $aM->matmulStrassen($bM);
 
             $c1 = [];
-            for($i = 0; $i < $this->n; ++$i) {
-                for($j = 0; $j < $this->n; ++$j) {
+            for ($i = 0; $i < $this->n; ++$i) {
+                for ($j = 0; $j < $this->n; ++$j) {
                     $c1[$i][$j] = $c->a[$i][$j];
                 }
             }
@@ -1001,6 +1001,7 @@ class Matrix implements Tensor
             return self::quick($c1);
         }
 
+        /** @var int $size */
         $size = $this->n / 2;
         $a11 = $a12 = $a21 = $a22 = $b11 = $b12 = $b21 = $b22 = [];
 
