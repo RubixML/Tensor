@@ -819,6 +819,21 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
+    public function matmulStrassen() : void
+    {
+        $z = $this->a->matmulStrassen($this->c);
+
+        $expected = [
+            [-49, 69, -181], [47, 59, -21], [164, 111, -396],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
+    /**
+     * @test
+     */
     public function convolve() : void
     {
         $input = Matrix::quick([

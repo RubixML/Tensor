@@ -958,6 +958,109 @@ class Matrix implements Tensor
     }
 
     /**
+     * Multiply this matrix with another matrix using the Strassen algorithm (matrix-matrix product).
+     *
+     * @param \Tensor\Matrix $b
+     * @throws \InvalidArgumentException
+     * @return self
+     */
+    public function matmulStrassen(Matrix $b) : self
+    {
+        if ($this->n !== $b->m()) {
+            throw new InvalidArgumentException('Matrix A requires'
+                . " $this->n rows but Matrix B has {$b->m}.");
+        }
+
+        if ($this->n === 1) {
+            return self::quick([[$this->a[0][0] * $b->a[0][0]]]);
+        }
+
+        if ($this->n % 2 !== 0) {
+            $a1 = $this->a;
+            $b1 = $b->a;
+
+            for ($i = 0; $i < $this->n + 1; ++$i) {
+                for ($j = 0; $j < $this->n + 1; ++$j) {
+                    $a1[$i][$j] = $a1[$i][$j] ?? 0;
+                    $b1[$i][$j] = $b1[$i][$j] ?? 0;
+                }
+            }
+
+            $aM = self::quick($a1);
+            $bM = self::quick($b1);
+
+            $c = $aM->matmulStrassen($bM);
+
+            $c1 = [];
+            for($i = 0; $i < $this->n; ++$i) {
+                for($j = 0; $j < $this->n; ++$j) {
+                    $c1[$i][$j] = $c->a[$i][$j];
+                }
+            }
+
+            return self::quick($c1);
+        }
+
+        $size = $this->n / 2;
+        $a11 = $a12 = $a21 = $a22 = $b11 = $b12 = $b21 = $b22 = [];
+
+        for ($i = 0; $i < $size; ++$i) {
+            for ($j = 0; $j < $size; ++$j) {
+                $a11[$i][$j] = $this->a[$i][$j];
+                $a12[$i][$j] = $this->a[$i][$j + $size];
+                $a21[$i][$j] = $this->a[$i + $size][$j];
+                $a22[$i][$j] = $this->a[$i + $size][$j + $size];
+
+                $b11[$i][$j] = $b->a[$i][$j];
+                $b12[$i][$j] = $b->a[$i][$j + $size];
+                $b21[$i][$j] = $b->a[$i + $size][$j];
+                $b22[$i][$j] = $b->a[$i + $size][$j + $size];
+            }
+        }
+
+        $a11 = self::quick($a11);
+        $a12 = self::quick($a12);
+        $a21 = self::quick($a21);
+        $a22 = self::quick($a22);
+        $b11 = self::quick($b11);
+        $b12 = self::quick($b12);
+        $b21 = self::quick($b21);
+        $b22 = self::quick($b22);
+
+        $s1 = $b12->subtractMatrix($b22);
+        $s2 = $a11->addMatrix($a12);
+        $s3 = $a21->addMatrix($a22);
+        $s4 = $b21->subtractMatrix($b11);
+        $s5 = $a11->addMatrix($a22);
+        $s6 = $b11->addMatrix($b22);
+        $s7 = $a12->subtractMatrix($a22);
+        $s8 = $b21->addMatrix($b22);
+        $s9 = $a11->subtractMatrix($a21);
+        $s10 = $b11->addMatrix($b12);
+
+        $p1 = $a11->matmulStrassen($s1);
+        $p2 = $s2->matmulStrassen($b22);
+        $p3 = $s3->matmulStrassen($b11);
+        $p4 = $a22->matmulStrassen($s4);
+        $p5 = $s5->matmulStrassen($s6);
+        $p6 = $s7->matmulStrassen($s8);
+        $p7 = $s9->matmulStrassen($s10);
+
+        $c11 = $p4->addMatrix($p5)->addMatrix($p6)->subtractMatrix($p2);
+        $c12 = $p1->addMatrix($p2);
+        $c21 = $p3->addMatrix($p4);
+        $c22 = $p1->addMatrix($p5)->subtractMatrix($p3)->subtractMatrix($p7);
+
+        $c = self::zeros($this->n, $this->n);
+        $c->copyElements($c11, 0, 0);
+        $c->copyElements($c12, 0, $size);
+        $c->copyElements($c21, $size, 0);
+        $c->copyElements($c22, $size, $size);
+
+        return $c;
+    }
+
+    /**
      * Compute the dot product of this matrix and a vector.
      *
      * @param \Tensor\Vector $b
@@ -3859,5 +3962,22 @@ class Matrix implements Tensor
     public function __toString() : string
     {
         return array_reduce($this->a, [self::class, 'implodeRow'], '') . PHP_EOL;
+    }
+
+    /**
+     * Copies elements from a given matrix
+     *
+     * @param \Tensor\Matrix $b
+     * @param int $i
+     * @param int $j
+     * @return void
+     */
+    protected function copyElements(Matrix $b, int $i, int $j): void
+    {
+        for($i1 = 0, $i2 = $i; $i1 < $b->n; ++$i1, ++$i2) {
+            for ($j1 = 0, $j2 = $j; $j1 < $b->m; ++$j1, ++$j2) {
+                $this->a[$i2][$j2] = $b->a[$i1][$j1];
+            }
+        }
     }
 }
