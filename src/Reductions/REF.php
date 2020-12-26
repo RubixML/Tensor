@@ -135,7 +135,7 @@ class REF
 
                         ++$swaps;
 
-                        break 1;
+                        break;
                     }
                 }
             }
@@ -143,7 +143,7 @@ class REF
             if ($t[$col] == 0) {
                 ++$col;
 
-                continue 1;
+                continue;
             }
 
             $divisor = $t[$col];
