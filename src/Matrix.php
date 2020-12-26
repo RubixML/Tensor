@@ -745,7 +745,7 @@ class Matrix implements Tensor
             case 1:
                 $b = [];
 
-                foreach (current($this->a) as $row) {
+                foreach (current($this->a) ?: [] as $row) {
                     $b[] = [$row];
                 }
 
