@@ -718,7 +718,7 @@ class Vector implements Tensor
                         return $this->multiplyMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -748,7 +748,7 @@ class Vector implements Tensor
                         return $this->divideMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -778,7 +778,7 @@ class Vector implements Tensor
                         return $this->addMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -808,7 +808,7 @@ class Vector implements Tensor
                         return $this->subtractMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -839,7 +839,7 @@ class Vector implements Tensor
                         return $this->powMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -870,7 +870,7 @@ class Vector implements Tensor
                         return $this->modMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -901,7 +901,7 @@ class Vector implements Tensor
                         return $this->equalMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -932,7 +932,7 @@ class Vector implements Tensor
                         return $this->notEqualMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -963,7 +963,7 @@ class Vector implements Tensor
                         return $this->greaterMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -994,7 +994,7 @@ class Vector implements Tensor
                         return $this->greaterEqualMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1025,7 +1025,7 @@ class Vector implements Tensor
                         return $this->lessMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1056,7 +1056,7 @@ class Vector implements Tensor
                         return $this->lessEqualMatrix($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1421,13 +1421,13 @@ class Vector implements Tensor
             if ($valueA > $max) {
                 $b[] = $max;
 
-                continue 1;
+                continue;
             }
 
             if ($valueA < $min) {
                 $b[] = $min;
 
-                continue 1;
+                continue;
             }
 
             $b[] = $valueA;
@@ -1450,7 +1450,7 @@ class Vector implements Tensor
             if ($valueA < $min) {
                 $b[] = $min;
 
-                continue 1;
+                continue;
             }
 
             $b[] = $valueA;
@@ -1473,7 +1473,7 @@ class Vector implements Tensor
             if ($valueA > $max) {
                 $b[] = $max;
 
-                continue 1;
+                continue;
             }
 
             $b[] = $valueA;

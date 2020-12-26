@@ -1013,7 +1013,7 @@ class Matrix implements Tensor
                     $x = $i + $p - (int) $k;
 
                     if ($x < 0 or $x >= $this->m) {
-                        continue 1;
+                        continue;
                     }
 
                     $rowA = $this->a[$x];
@@ -1022,7 +1022,7 @@ class Matrix implements Tensor
                         $y = $j + $q - (int) $l;
 
                         if ($y < 0 or $y >= $this->n) {
-                            continue 1;
+                            continue;
                         }
 
                         $sigma += $rowA[$y] * $valueB;
@@ -1208,7 +1208,7 @@ class Matrix implements Tensor
                         return $this->multiplyVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1241,7 +1241,7 @@ class Matrix implements Tensor
                         return $this->divideVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1274,7 +1274,7 @@ class Matrix implements Tensor
                         return $this->addVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1307,7 +1307,7 @@ class Matrix implements Tensor
                         return $this->subtractVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1341,7 +1341,7 @@ class Matrix implements Tensor
                         return $this->powVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1375,7 +1375,7 @@ class Matrix implements Tensor
                         return $this->modVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1409,7 +1409,7 @@ class Matrix implements Tensor
                         return $this->equalVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1443,7 +1443,7 @@ class Matrix implements Tensor
                         return $this->notEqualVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1477,7 +1477,7 @@ class Matrix implements Tensor
                         return $this->greaterVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1511,7 +1511,7 @@ class Matrix implements Tensor
                         return $this->greaterEqualVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1545,7 +1545,7 @@ class Matrix implements Tensor
                         return $this->lessVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -1579,7 +1579,7 @@ class Matrix implements Tensor
                         return $this->lessEqualVector($b);
                 }
 
-                break 1;
+                break;
 
             case 'double':
             case 'integer':
@@ -2004,13 +2004,13 @@ class Matrix implements Tensor
                 if ($valueA > $max) {
                     $rowB[] = $max;
 
-                    continue 1;
+                    continue;
                 }
 
                 if ($valueA < $min) {
                     $rowB[] = $min;
 
-                    continue 1;
+                    continue;
                 }
 
                 $rowB[] = $valueA;
@@ -2039,7 +2039,7 @@ class Matrix implements Tensor
                 if ($valueA < $min) {
                     $rowB[] = $min;
 
-                    continue 1;
+                    continue;
                 }
 
                 $rowB[] = $valueA;
@@ -2068,7 +2068,7 @@ class Matrix implements Tensor
                 if ($valueA > $max) {
                     $rowB[] = $max;
 
-                    continue 1;
+                    continue;
                 }
 
                 $rowB[] = $valueA;
