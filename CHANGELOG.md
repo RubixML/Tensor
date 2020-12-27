@@ -1,5 +1,3 @@
-- Unreleased
-
 - 2.0.5
     - Percentile method changed to quantile
     - Fixed Vector linspace precision
