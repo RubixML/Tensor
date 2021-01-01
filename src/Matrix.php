@@ -795,7 +795,7 @@ class Matrix implements Tensor
 
         $pi = $ref->a()->diagonalAsVector()->product();
 
-        return $pi * (-1.) ** $ref->swaps();
+        return $pi * (-1.0) ** $ref->swaps();
     }
 
     /**

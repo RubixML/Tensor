@@ -24,9 +24,9 @@
         "php": ">=7.2"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "2.16.*",
+        "friendsofphp/php-cs-fixer": "2.17.*",
         "phalcon/zephir": "0.12.*",
-        "phpbench/phpbench": "0.16.*",
+        "phpbench/phpbench": "1.0.0-alpha4",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "0.12.*",
         "phpstan/phpstan-phpunit": "0.12.*",
@@ -57,7 +57,10 @@
         "analyze": "phpstan analyse -c phpstan.neon",
         "benchmark": "phpbench run --report=env --report=aggregate",
         "build-ext": "zephir build",
-        "check": "php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no",
+        "check": [
+            "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+            "php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no"
+        ],
         "compile": "zephir compile",
         "fix": "php-cs-fixer fix --config=.php_cs.dist",
         "generate": "zephir generate",
