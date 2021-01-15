@@ -25,7 +25,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "2.17.*",
-        "phpbench/phpbench": "0.16.*",
+        "phpbench/phpbench": "1.0.0-alpha4",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "0.12.*",
         "phpstan/phpstan-phpunit": "0.12.*",
@@ -68,6 +68,7 @@
         "process-timeout": 3000
     },
     "support": {
+        "email": "support@rubixml.com",
         "issues": "https://github.com/RubixML/Tensor/issues",
         "source": "https://github.com/RubixML/Tensor"
     }
