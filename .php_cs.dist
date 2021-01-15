@@ -5,8 +5,7 @@ use PhpCsFixer\Config;
 
 $finder = Finder::create()->in(__DIR__)
     ->exclude('lib')
-    ->exclude('ext')
-    ->exclude('tensor');
+    ->exclude('ext');
 
 return Config::create()->setRules([
     '@PSR2' => true,
