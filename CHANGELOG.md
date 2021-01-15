@@ -1,4 +1,6 @@
-- 3.0.0
+- 2.0.6
+    - Remove Zephir code
+    - Update instructions for extension compilation
 
 - 2.0.5
     - Percentile method changed to quantile
