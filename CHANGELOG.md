@@ -1,3 +1,8 @@
+- 2.0.6
+    - Extension now compiles directly from C source code
+    - Remove Zephir extension code
+    - Update instructions for extension compilation using PHPize
+
 - 2.0.5
     - Percentile method changed to quantile
     - Fixed Vector linspace precision
