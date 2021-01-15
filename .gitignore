@@ -43,7 +43,6 @@ composer.lock
 .php_cs.cache
 Thumbs.db
 .DS_Store
-.zephir
 .libs/
 /.idea
 /.vscode
