@@ -1,4 +1,4 @@
-- 2.0.6
+- 2.1.0
     - Extension now compiles directly from C source code
     - Remove Zephir extension code
     - Update instructions for extension compilation using PHPize
