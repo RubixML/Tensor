@@ -38,9 +38,11 @@ ext/modules/
 ext/run-tests.php
 
 /vendor
+zephir.phar
 composer.lock
 .phpunit.result.cache
 .php_cs.cache
+.zephir
 Thumbs.db
 .DS_Store
 .libs/
