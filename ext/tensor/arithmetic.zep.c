@@ -23,8 +23,7 @@ ZEPHIR_INIT_CLASS(Tensor_Arithmetic) {
 }
 
 /**
- * A universal function to multiply this tensor with another tensor
- * element-wise.
+ * A universal function to multiply this tensor with another tensor element-wise.
  *
  * @param mixed b
  * @return mixed
@@ -32,8 +31,7 @@ ZEPHIR_INIT_CLASS(Tensor_Arithmetic) {
 ZEPHIR_DOC_METHOD(Tensor_Arithmetic, multiply);
 
 /**
- * A universal function to divide this tensor by another tensor
- * element-wise.
+ * A universal function to divide this tensor by another tensor element-wise.
  *
  * @param mixed b
  * @return mixed
@@ -41,8 +39,7 @@ ZEPHIR_DOC_METHOD(Tensor_Arithmetic, multiply);
 ZEPHIR_DOC_METHOD(Tensor_Arithmetic, divide);
 
 /**
- * A universal function to add this tensor with another tensor
- * element-wise.
+ * A universal function to add this tensor with another tensor element-wise.
  *
  * @param mixed b
  * @return mixed
@@ -50,8 +47,7 @@ ZEPHIR_DOC_METHOD(Tensor_Arithmetic, divide);
 ZEPHIR_DOC_METHOD(Tensor_Arithmetic, add);
 
 /**
- * A universal function to subtract this tensor from another tensor
- * element-wise.
+ * A universal function to subtract this tensor from another tensor element-wise.
  *
  * @param mixed b
  * @return mixed
@@ -59,8 +55,7 @@ ZEPHIR_DOC_METHOD(Tensor_Arithmetic, add);
 ZEPHIR_DOC_METHOD(Tensor_Arithmetic, subtract);
 
 /**
- * A universal function to raise this tensor to the power of another
- * tensor element-wise.
+ * A universal function to raise this tensor to the power of another tensor element-wise.
  *
  * @param mixed b
  * @return mixed
@@ -68,8 +63,7 @@ ZEPHIR_DOC_METHOD(Tensor_Arithmetic, subtract);
 ZEPHIR_DOC_METHOD(Tensor_Arithmetic, pow);
 
 /**
- * A universal function to compute the integer modulus of this tensor
- * and another tensor element-wise.
+ * A universal function to compute the integer modulus of this tensor and another tensor element-wise.
  *
  * @param mixed b
  * @return mixed

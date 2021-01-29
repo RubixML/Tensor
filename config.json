@@ -9,11 +9,8 @@
     "requires": {
         "extensions": []
     },
-    "stubs": {
-        "path": "ide\/%version%\/%namespace%\/",
-        "stubs-run-after-generate": false
-    },
     "extra-sources": [
+        "include/array_arithmetic.c",
         "include/indexing.c"
     ],
     "optimizer-dirs": [

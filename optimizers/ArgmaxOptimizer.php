@@ -5,18 +5,18 @@ namespace Zephir\Optimizers\FunctionCall;
 use Zephir\Call;
 use Zephir\CompilationContext;
 use Zephir\CompiledExpression;
-use Zephir\CompilerException;
 use Zephir\HeadersManager;
+use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
 class ArgmaxOptimizer extends OptimizerAbstract
 {
     /**
-     * @param array $expression
-     * @param Call $call
-     * @param CompilationContext $context
-     * @throws CompilerException
-     * @return bool|CompiledExpression
+     * @param mixed[] $expression
+     * @param \Zephir\Call $call
+     * @param \Zephir\CompilationContext $context
+     * @throws \Zephir\Exception\CompilerException
+     * @return \Zephir\CompiledExpression|bool
      */
     public function optimize(array $expression, Call $call, CompilationContext $context)
     {

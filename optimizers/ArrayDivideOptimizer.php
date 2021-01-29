@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class ArgminOptimizer extends OptimizerAbstract
+class ArrayDivideOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -24,9 +24,9 @@ class ArgminOptimizer extends OptimizerAbstract
             return false;
         }
 
-        if (count($expression['parameters']) !== 1) {
+        if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'Argmin accepts one and only one argument.',
+                'ArrayDivide only accepts two argument.',
                 $expression
             );
         }
@@ -47,7 +47,7 @@ class ArgminOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/indexing',
+            'include/array_arithmetic',
             HeadersManager::POSITION_LAST
         );
 
@@ -60,7 +60,7 @@ class ArgminOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_argmin(' . $symbol . ', ' . $resolvedParams[0] . ');'
+            'tensor_array_divide(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
         );
 
         return new CompiledExpression(
