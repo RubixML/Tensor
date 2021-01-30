@@ -144,3 +144,31 @@ void tensor_array_pow(zval * return_value, zval * a, zval * b)
     RETVAL_ARR(Z_ARR(c));
     ZEPHIR_MM_RESTORE();
 }
+
+void tensor_array_mod(zval * return_value, zval * a, zval * b)
+{
+	zval *valueA, *valueB;
+	zend_ulong offset;
+    zval modulus;
+	zval c;
+
+    zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+
+    ZEPHIR_MM_GROW();
+
+    zend_array * aHat = Z_ARR_P(a);
+    zend_array * bHat = Z_ARR_P(b);
+
+	array_init_size(&c, zend_array_count(aHat));
+
+    ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
+        valueB = zend_hash_index_find(bHat, offset);
+
+        mod_function(&modulus, valueA, valueB);
+
+	    add_next_index_zval(&c, &modulus);
+    } ZEND_HASH_FOREACH_END();
+
+    RETVAL_ARR(Z_ARR(c));
+    ZEPHIR_MM_RESTORE();
+}

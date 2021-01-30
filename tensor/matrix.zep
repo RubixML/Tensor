@@ -2520,20 +2520,13 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        var i, j, rowA, rowB, valueA;
+        var i, rowA, rowB;
         array c = [];
-        array rowC = [];
 
         for i, rowB in b->asArray() {
             let rowA = this->a[i];
 
-            let rowC = [];
-
-            for j, valueA in rowA {
-                let rowC[] = valueA % rowB[j];
-            }
-
-            let c[] = rowC;
+            let c[] = array_mod(rowA, rowB);
         }
 
         return self::quick(c);
@@ -2893,20 +2886,13 @@ class Matrix implements Tensor
                 . (string) b->n() . ".");
         }
     
-        var j, rowA, valueB;
+        var rowA;
         array c = [];
-        array rowC = [];
 
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let rowC = [];
-    
-            for j, valueB in bHat {
-                let rowC[] = rowA[j] % valueB;
-            }
-    
-            let c[] = rowC;
+            let c[] = array_mod(rowA, bHat);
         }
     
         return self::quick(c);

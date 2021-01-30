@@ -26,7 +26,7 @@ class ArrayDivideOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'ArrayDivide only accepts two argument.',
+                'ArrayDivide only accepts two arguments.',
                 $expression
             );
         }
@@ -47,7 +47,7 @@ class ArrayDivideOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/array_math',
+            'include/array_arithmetic',
             HeadersManager::POSITION_LAST
         );
 

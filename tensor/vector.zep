@@ -1704,20 +1704,13 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueA;
+        var rowB;
         array c = [];
-        array rowC = [];
-
+ 
         for rowB in b->asArray() {
-            let rowC = [];
-
-            for j, valueA in this->a {
-                let rowC[] = valueA % rowB[j];
-            }
-
-            let c[] = rowC;
+            let c[] = array_mod(this->a, rowB);
         }
-
+ 
         return Matrix::quick(c);
     }
 
@@ -2024,14 +2017,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueB;
-        array c = [];
-
-        for i, valueB in b->asArray() {
-            let c[] = this->a[i] % valueB;
-        }
-
-        return static::quick(c);
+        return static::quick(array_mod(this->a, b->asArray()));
     }
 
     /**
