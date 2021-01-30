@@ -25,10 +25,14 @@ void tensor_array_equal(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
-            ZVAL_LONG(&comparison, 1);
+        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
+	        tensor_array_equal(&comparison, valueA, valueB);
         } else {
-            ZVAL_LONG(&comparison, 0);
+            if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -57,10 +61,14 @@ void tensor_array_not_equal(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
-            ZVAL_LONG(&comparison, 0);
+        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
+	        tensor_array_not_equal(&comparison, valueA, valueB);
         } else {
-            ZVAL_LONG(&comparison, 1);
+            if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 0);
+            } else {
+                ZVAL_LONG(&comparison, 1);
+            }
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -89,10 +97,14 @@ void tensor_array_greater(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (ZEPHIR_GT(valueA, valueB)) {
-            ZVAL_LONG(&comparison, 1);
+        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
+	        tensor_array_greater(&comparison, valueA, valueB);
         } else {
-            ZVAL_LONG(&comparison, 0);
+            if (ZEPHIR_GT(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -121,10 +133,14 @@ void tensor_array_greater_equal(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (ZEPHIR_GE(valueA, valueB)) {
-            ZVAL_LONG(&comparison, 1);
+        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
+	        tensor_array_greater_equal(&comparison, valueA, valueB);
         } else {
-            ZVAL_LONG(&comparison, 0);
+            if (ZEPHIR_GE(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -153,10 +169,14 @@ void tensor_array_less(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (ZEPHIR_LT(valueA, valueB)) {
-            ZVAL_LONG(&comparison, 1);
+        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
+	        tensor_array_less(&comparison, valueA, valueB);
         } else {
-            ZVAL_LONG(&comparison, 0);
+            if (ZEPHIR_LT(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -185,10 +205,14 @@ void tensor_array_less_equal(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (ZEPHIR_LE(valueA, valueB)) {
-            ZVAL_LONG(&comparison, 1);
+        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
+	        tensor_array_less_equal(&comparison, valueA, valueB);
         } else {
-            ZVAL_LONG(&comparison, 0);
+            if (ZEPHIR_LE(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
 	    add_next_index_zval(&c, &comparison);
