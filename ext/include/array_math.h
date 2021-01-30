@@ -1,5 +1,5 @@
-#ifndef TENSOR_ARRAY_ARITHMETIC_H
-#define TENSOR_ARRAY_ARITHMETIC_H
+#ifndef TENSOR_ARRAY_MATH_H
+#define TENSOR_ARRAY_MATH_H
 
 #include <Zend/zend.h>
 

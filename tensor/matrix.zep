@@ -938,8 +938,7 @@ class Matrix implements Tensor
                 . (string) b->m() . ".");
         }
 
-        float sigma;
-        var k, rowA, valueA, columnB;
+        var rowA, columnB;
         array bT = [];
         array c = [];
         array rowC = [];
@@ -950,13 +949,7 @@ class Matrix implements Tensor
             let rowC = [];
  
             for columnB in bT {
-                let sigma = 0.0;
- 
-                for k, valueA in rowA {
-                    let sigma += valueA * columnB[k];
-                }
- 
-                let rowC[] = sigma;
+                let rowC[] = array_dot(rowA, columnB);
             }
  
             let c[] = rowC;

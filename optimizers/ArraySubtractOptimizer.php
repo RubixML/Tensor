@@ -47,7 +47,7 @@ class ArraySubtractOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/array_arithmetic',
+            'include/array_math',
             HeadersManager::POSITION_LAST
         );
 

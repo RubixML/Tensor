@@ -546,15 +546,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueB;
-
-        float sigma = 0.0;
-
-        for i, valueB in b->asArray() {
-            let sigma += this->a[i] * valueB;
-        }
-
-        return sigma;
+        return array_dot(this->a, b->asArray());
     }
 
     /**

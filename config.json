@@ -10,7 +10,7 @@
         "extensions": []
     },
     "extra-sources": [
-        "include/array_arithmetic.c",
+        "include/array_math.c",
         "include/indexing.c"
     ],
     "optimizer-dirs": [
