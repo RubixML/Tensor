@@ -31,4 +31,5 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_DOUBLE(sigma);
+    ZEPHIR_MM_RESTORE();
 }

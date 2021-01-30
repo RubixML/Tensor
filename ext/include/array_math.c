@@ -30,6 +30,7 @@ void tensor_array_multiply(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_array_divide(zval * return_value, zval * a, zval * b)
@@ -57,6 +58,7 @@ void tensor_array_divide(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_array_add(zval * return_value, zval * a, zval * b)
@@ -84,6 +86,7 @@ void tensor_array_add(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_array_subtract(zval * return_value, zval * a, zval * b)
@@ -111,6 +114,7 @@ void tensor_array_subtract(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_array_pow(zval * return_value, zval * a, zval * b)
@@ -138,4 +142,5 @@ void tensor_array_pow(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+    ZEPHIR_MM_RESTORE();
 }

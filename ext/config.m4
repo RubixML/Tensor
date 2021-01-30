@@ -24,7 +24,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/reductions/rref.zep.c include/array_math.c
 	include/linear_algebra.c
 	include/indexing.c"
-	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -Ofast)
+	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, )
 	PHP_ADD_BUILD_DIR([$ext_builddir/kernel/])
 	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/])
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
