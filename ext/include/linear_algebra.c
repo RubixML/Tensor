@@ -10,7 +10,6 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
 {
     zval * valueA, * valueB;
 	zend_ulong offset;
-    double sigma;
 
     zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 
@@ -19,7 +18,7 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
 
-    sigma = 0.0;
+    double sigma = 0.0;
 
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);

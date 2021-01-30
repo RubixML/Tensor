@@ -1730,20 +1730,13 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueA;
+        var rowB;
         array c = [];
-        array rowC = [];
-
+ 
         for rowB in b->asArray() {
-            let rowC = [];
-
-            for j, valueA in this->a {
-                let rowC[] = valueA == rowB[j] ? 1 : 0;
-            }
-
-            let c[] = rowC;
+            let c[] = array_equal(this->a, rowB);
         }
-
+ 
         return Matrix::quick(c);
     }
 
@@ -1763,20 +1756,13 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueA;
+        var rowB;
         array c = [];
-        array rowC = [];
-
+ 
         for rowB in b->asArray() {
-            let rowC = [];
-
-            for j, valueA in this->a {
-                let rowC[] = valueA != rowB[j] ? 1 : 0;
-            }
-
-            let c[] = rowC;
+            let c[] = array_not_equal(this->a, rowB);
         }
-
+ 
         return Matrix::quick(c);
     }
 
@@ -1796,20 +1782,13 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueA;
+        var rowB;
         array c = [];
-        array rowC = [];
-
+ 
         for rowB in b->asArray() {
-            let rowC = [];
-
-            for j, valueA in this->a {
-                let rowC[] = valueA > rowB[j] ? 1 : 0;
-            }
-
-            let c[] = rowC;
+            let c[] = array_greater(this->a, rowB);
         }
-
+ 
         return Matrix::quick(c);
     }
 
@@ -1829,20 +1808,13 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueA;
+        var rowB;
         array c = [];
-        array rowC = [];
-
+ 
         for rowB in b->asArray() {
-            let rowC = [];
-
-            for j, valueA in this->a {
-                let rowC[] = valueA >= rowB[j] ? 1 : 0;
-            }
-
-            let c[] = rowC;
+            let c[] = array_greater_equal(this->a, rowB);
         }
-
+ 
         return Matrix::quick(c);
     }
 
@@ -1862,20 +1834,13 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueA;
+        var rowB;
         array c = [];
-        array rowC = [];
-
+ 
         for rowB in b->asArray() {
-            let rowC = [];
-
-            for j, valueA in this->a {
-                let rowC[] = valueA < rowB[j] ? 1 : 0;
-            }
-
-            let c[] = rowC;
+            let c[] = array_less(this->a, rowB);
         }
-
+ 
         return Matrix::quick(c);
     }
 
@@ -1895,20 +1860,13 @@ class Vector implements Tensor
                 . (string) b->n() . ".");
         }
 
-        var j, rowB, valueA;
+        var rowB;
         array c = [];
-        array rowC = [];
-
+ 
         for rowB in b->asArray() {
-            let rowC = [];
-
-            for j, valueA in this->a {
-                let rowC[] = valueA <= rowB[j] ? 1 : 0;
-            }
-
-            let c[] = rowC;
+            let c[] = array_less_equal(this->a, rowB);
         }
-
+ 
         return Matrix::quick(c);
     }
 
@@ -2036,14 +1994,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueB;
-        array c = [];
-
-        for i, valueB in b->asArray() {
-            let c[] = this->a[i] == valueB ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(array_equal(this->a, b->asArray()));
     }
 
     /**
@@ -2062,14 +2013,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueB;
-        array c = [];
-
-        for i, valueB in b->asArray() {
-            let c[] = this->a[i] != valueB ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(array_not_equal(this->a, b->asArray()));
     }
 
     /**
@@ -2088,14 +2032,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueB;
-        array c = [];
-
-        for i, valueB in b->asArray() {
-            let c[] = this->a[i] > valueB ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(array_greater(this->a, b->asArray()));
     }
 
     /**
@@ -2114,14 +2051,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueB;
-        array c = [];
-
-        for i, valueB in b->asArray() {
-            let c[] = this->a[i] >= valueB ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(array_greater_equal(this->a, b->asArray()));
     }
 
     /**
@@ -2140,14 +2070,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueB;
-        array c = [];
-
-        for i, valueB in b->asArray() {
-            let c[] = this->a[i] < valueB ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(array_less(this->a, b->asArray()));
     }
 
     /**
@@ -2166,14 +2089,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        var i, valueB;
-        array c = [];
-
-        for i, valueB in b->asArray() {
-            let c[] = this->a[i] <= valueB ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(array_less_equal(this->a, b->asArray()));
     }
 
     /**
@@ -2187,7 +2103,7 @@ class Vector implements Tensor
      {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2212,7 +2128,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2237,7 +2153,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2262,7 +2178,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2287,7 +2203,7 @@ class Vector implements Tensor
      {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2312,7 +2228,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2338,7 +2254,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2364,7 +2280,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2390,7 +2306,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2416,7 +2332,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2442,7 +2358,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 
@@ -2468,7 +2384,7 @@ class Vector implements Tensor
     {
         if unlikely !is_int(b) && !is_float(b) {
             throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
+                . " integer or floating point number, "
                 . gettype(b) . " given.");
         }
 

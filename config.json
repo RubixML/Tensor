@@ -9,9 +9,11 @@
     "requires": {
         "extensions": []
     },
+    "extra-cflags": "-Ofast -mavx -mfma",
     "extra-sources": [
         "include/linear_algebra.c",
         "include/array_arithmetic.c",
+        "include/array_comparison.c",
         "include/indexing.c"
     ],
     "optimizer-dirs": [
