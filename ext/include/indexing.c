@@ -11,9 +11,9 @@ void tensor_argmin(zval *return_value, zval *values)
 	zend_ulong index;
 
     ZVAL_DOUBLE(&min, INFINITY);
-    RETVAL_LONG(0);
+    RETVAL_NULL();
 
-    ZEND_HASH_FOREACH_NUM_KEY_VAL(Z_ARRVAL_P(values), index, current) {
+    ZEND_HASH_FOREACH_NUM_KEY_VAL(Z_ARR_P(values), index, current) {
         ZVAL_DEREF(current);
 
         if (ZEPHIR_LT(current, &min)) {
@@ -30,9 +30,9 @@ void tensor_argmax(zval *return_value, zval *values)
 	zend_ulong index;
 
     ZVAL_DOUBLE(&max, -INFINITY);
-    RETVAL_LONG(0);
+    RETVAL_NULL();
 
-    ZEND_HASH_FOREACH_NUM_KEY_VAL(Z_ARRVAL_P(values), index, current) {
+    ZEND_HASH_FOREACH_NUM_KEY_VAL(Z_ARR_P(values), index, current) {
         ZVAL_DEREF(current);
 
         if (ZEPHIR_GT(current, &max)) {
