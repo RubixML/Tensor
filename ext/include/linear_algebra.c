@@ -43,19 +43,21 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
 
 void tensor_dot(zval * return_value, zval * a, zval * b)
 {
-    zval * valueA, * valueB;
-	zend_ulong offset;
-
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
 
+    Bucket * va = aHat->arData;
+    Bucket * vb = bHat->arData;
+
+    int i;
+
+    int n = zend_array_count(aHat);
+
     double sigma = 0.0;
 
-    ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
-        valueB = zend_hash_index_find(bHat, offset);
-        
-        sigma += zephir_get_numberval(valueA) * zephir_get_numberval(valueB);
-    } ZEND_HASH_FOREACH_END();
+    for (i = 0; i < n; i++) {
+        sigma += zephir_get_numberval(&va[i].val) * zephir_get_numberval(&vb[i].val);
+    }
 
     RETVAL_DOUBLE(sigma);
 }
