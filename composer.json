@@ -61,6 +61,8 @@
             "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
             "php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no"
         ],
+        "clean": "zephir fullclean",
+        "compile": "zephir build --no-dev",
         "fix": "php-cs-fixer fix --config=.php_cs.dist",
         "test": "phpunit"
     },
