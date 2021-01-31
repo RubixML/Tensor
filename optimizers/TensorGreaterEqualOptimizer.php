@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class ArrayDivideOptimizer extends OptimizerAbstract
+class TensorGreaterEqualOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -26,7 +26,7 @@ class ArrayDivideOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'ArrayDivide only accepts two arguments.',
+                'Tensor greater equal accepts exactly two arguments, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }
@@ -47,7 +47,7 @@ class ArrayDivideOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/array_arithmetic',
+            'include/tensor_comparison',
             HeadersManager::POSITION_LAST
         );
 
@@ -60,7 +60,7 @@ class ArrayDivideOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_array_divide(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
+            'tensor_greater_equal(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
         );
 
         return new CompiledExpression(

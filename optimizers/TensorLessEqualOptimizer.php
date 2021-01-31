@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class ArrayLessEqualOptimizer extends OptimizerAbstract
+class TensorLessEqualOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -26,7 +26,7 @@ class ArrayLessEqualOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'ArrayLessEqual only accepts two arguments.',
+                'Tensor less equal accepts exactly two arguments, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }
@@ -47,7 +47,7 @@ class ArrayLessEqualOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/array_comparison',
+            'include/tensor_comparison',
             HeadersManager::POSITION_LAST
         );
 
@@ -60,7 +60,7 @@ class ArrayLessEqualOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_array_less_equal(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
+            'tensor_less_equal(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
         );
 
         return new CompiledExpression(

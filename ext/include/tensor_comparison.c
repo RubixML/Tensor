@@ -3,13 +3,14 @@
 #endif
 
 #include "php.h"
+#include "kernel/operators.h"
 #include "kernel/memory.h"
 
-void tensor_array_multiply(zval * return_value, zval * a, zval * b)
+void tensor_equal(zval * return_value, zval * a, zval * b)
 {
 	zval *valueA, *valueB;
 	zend_ulong offset;
-    zval product;
+    zval comparison;
 	zval c;
 
     zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
@@ -25,23 +26,28 @@ void tensor_array_multiply(zval * return_value, zval * a, zval * b)
         valueB = zend_hash_index_find(bHat, offset);
 
         if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_array_multiply(&product, valueA, valueB);
+	        tensor_equal(&comparison, valueA, valueB);
         } else {
-            mul_function(&product, valueA, valueB);
+            if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
-	    add_next_index_zval(&c, &product);
+	    add_next_index_zval(&c, &comparison);
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+    
     ZEPHIR_MM_RESTORE();
 }
 
-void tensor_array_divide(zval * return_value, zval * a, zval * b)
+void tensor_not_equal(zval * return_value, zval * a, zval * b)
 {
 	zval *valueA, *valueB;
 	zend_ulong offset;
-    zval quotient;
+    zval comparison;
 	zval c;
 
     zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
@@ -57,23 +63,28 @@ void tensor_array_divide(zval * return_value, zval * a, zval * b)
         valueB = zend_hash_index_find(bHat, offset);
 
         if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_array_divide(&quotient, valueA, valueB);
+	        tensor_not_equal(&comparison, valueA, valueB);
         } else {
-            div_function(&quotient, valueA, valueB);
+            if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 0);
+            } else {
+                ZVAL_LONG(&comparison, 1);
+            }
         }
 
-	    add_next_index_zval(&c, &quotient);
+	    add_next_index_zval(&c, &comparison);
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+
     ZEPHIR_MM_RESTORE();
 }
 
-void tensor_array_add(zval * return_value, zval * a, zval * b)
+void tensor_greater(zval * return_value, zval * a, zval * b)
 {
 	zval *valueA, *valueB;
 	zend_ulong offset;
-    zval sum;
+    zval comparison;
 	zval c;
 
     zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
@@ -89,23 +100,28 @@ void tensor_array_add(zval * return_value, zval * a, zval * b)
         valueB = zend_hash_index_find(bHat, offset);
 
         if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_array_add(&sum, valueA, valueB);
+	        tensor_greater(&comparison, valueA, valueB);
         } else {
-            fast_add_function(&sum, valueA, valueB);
+            if (ZEPHIR_GT(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
-	    add_next_index_zval(&c, &sum);
+	    add_next_index_zval(&c, &comparison);
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+
     ZEPHIR_MM_RESTORE();
 }
 
-void tensor_array_subtract(zval * return_value, zval * a, zval * b)
+void tensor_greater_equal(zval * return_value, zval * a, zval * b)
 {
 	zval *valueA, *valueB;
 	zend_ulong offset;
-    zval difference;
+    zval comparison;
 	zval c;
 
     zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
@@ -121,23 +137,28 @@ void tensor_array_subtract(zval * return_value, zval * a, zval * b)
         valueB = zend_hash_index_find(bHat, offset);
 
         if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_array_subtract(&difference, valueA, valueB);
+	        tensor_greater_equal(&comparison, valueA, valueB);
         } else {
-            sub_function(&difference, valueA, valueB);
+            if (ZEPHIR_GE(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
-	    add_next_index_zval(&c, &difference);
+	    add_next_index_zval(&c, &comparison);
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+
     ZEPHIR_MM_RESTORE();
 }
 
-void tensor_array_pow(zval * return_value, zval * a, zval * b)
+void tensor_less(zval * return_value, zval * a, zval * b)
 {
 	zval *valueA, *valueB;
 	zend_ulong offset;
-    zval power;
+    zval comparison;
 	zval c;
 
     zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
@@ -153,23 +174,28 @@ void tensor_array_pow(zval * return_value, zval * a, zval * b)
         valueB = zend_hash_index_find(bHat, offset);
 
         if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_array_pow(&power, valueA, valueB);
+	        tensor_less(&comparison, valueA, valueB);
         } else {
-            pow_function(&power, valueA, valueB);
+            if (ZEPHIR_LT(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
-	    add_next_index_zval(&c, &power);
+	    add_next_index_zval(&c, &comparison);
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+
     ZEPHIR_MM_RESTORE();
 }
 
-void tensor_array_mod(zval * return_value, zval * a, zval * b)
+void tensor_less_equal(zval * return_value, zval * a, zval * b)
 {
 	zval *valueA, *valueB;
 	zend_ulong offset;
-    zval modulus;
+    zval comparison;
 	zval c;
 
     zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
@@ -185,14 +211,19 @@ void tensor_array_mod(zval * return_value, zval * a, zval * b)
         valueB = zend_hash_index_find(bHat, offset);
 
         if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_array_mod(&modulus, valueA, valueB);
+	        tensor_less_equal(&comparison, valueA, valueB);
         } else {
-            mod_function(&modulus, valueA, valueB);
+            if (ZEPHIR_LE(valueA, valueB)) {
+                ZVAL_LONG(&comparison, 1);
+            } else {
+                ZVAL_LONG(&comparison, 0);
+            }
         }
 
-	    add_next_index_zval(&c, &modulus);
+	    add_next_index_zval(&c, &comparison);
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+
     ZEPHIR_MM_RESTORE();
 }

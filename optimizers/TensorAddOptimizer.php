@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class ArrayAddOptimizer extends OptimizerAbstract
+class TensorAddOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -26,7 +26,7 @@ class ArrayAddOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'ArrayAdd only accepts two arguments.',
+                'Tensor add accepts exactly two arguments, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }
@@ -47,7 +47,7 @@ class ArrayAddOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/array_arithmetic',
+            'include/tensor_arithmetic',
             HeadersManager::POSITION_LAST
         );
 
@@ -60,7 +60,7 @@ class ArrayAddOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_array_add(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
+            'tensor_add(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
         );
 
         return new CompiledExpression(

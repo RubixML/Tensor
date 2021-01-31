@@ -1583,7 +1583,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_multiply(this->a, rowB);
+            let c[] = tensor_multiply(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1608,7 +1608,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_divide(this->a, rowB);
+            let c[] = tensor_divide(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1633,7 +1633,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_add(this->a, rowB);
+            let c[] = tensor_add(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1658,7 +1658,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_subtract(this->a, rowB);
+            let c[] = tensor_subtract(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1683,7 +1683,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_pow(this->a, rowB);
+            let c[] = tensor_pow(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1708,7 +1708,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_mod(this->a, rowB);
+            let c[] = tensor_mod(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1734,7 +1734,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_equal(this->a, rowB);
+            let c[] = tensor_equal(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1760,7 +1760,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_not_equal(this->a, rowB);
+            let c[] = tensor_not_equal(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1786,7 +1786,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_greater(this->a, rowB);
+            let c[] = tensor_greater(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1812,7 +1812,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_greater_equal(this->a, rowB);
+            let c[] = tensor_greater_equal(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1838,7 +1838,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_less(this->a, rowB);
+            let c[] = tensor_less(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1864,7 +1864,7 @@ class Vector implements Tensor
         array c = [];
  
         for rowB in b->asArray() {
-            let c[] = array_less_equal(this->a, rowB);
+            let c[] = tensor_less_equal(this->a, rowB);
         }
  
         return Matrix::quick(c);
@@ -1885,7 +1885,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_multiply(this->a, b->asArray()));
+        return static::quick(tensor_multiply(this->a, b->asArray()));
     }
 
     /**
@@ -1903,7 +1903,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_divide(this->a, b->asArray()));
+        return static::quick(tensor_divide(this->a, b->asArray()));
     }
 
     /**
@@ -1921,7 +1921,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_add(this->a, b->asArray()));
+        return static::quick(tensor_add(this->a, b->asArray()));
     }
 
     /**
@@ -1939,7 +1939,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_subtract(this->a, b->asArray()));
+        return static::quick(tensor_subtract(this->a, b->asArray()));
     }
 
     /**
@@ -1957,7 +1957,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_pow(this->a, b->asArray()));
+        return static::quick(tensor_pow(this->a, b->asArray()));
     }
 
     /**
@@ -1975,7 +1975,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_mod(this->a, b->asArray()));
+        return static::quick(tensor_mod(this->a, b->asArray()));
     }
 
     /**
@@ -1994,7 +1994,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_equal(this->a, b->asArray()));
+        return static::quick(tensor_equal(this->a, b->asArray()));
     }
 
     /**
@@ -2013,7 +2013,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_not_equal(this->a, b->asArray()));
+        return static::quick(tensor_not_equal(this->a, b->asArray()));
     }
 
     /**
@@ -2032,7 +2032,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_greater(this->a, b->asArray()));
+        return static::quick(tensor_greater(this->a, b->asArray()));
     }
 
     /**
@@ -2051,7 +2051,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_greater_equal(this->a, b->asArray()));
+        return static::quick(tensor_greater_equal(this->a, b->asArray()));
     }
 
     /**
@@ -2070,7 +2070,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_less(this->a, b->asArray()));
+        return static::quick(tensor_less(this->a, b->asArray()));
     }
 
     /**
@@ -2089,7 +2089,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return static::quick(array_less_equal(this->a, b->asArray()));
+        return static::quick(tensor_less_equal(this->a, b->asArray()));
     }
 
     /**

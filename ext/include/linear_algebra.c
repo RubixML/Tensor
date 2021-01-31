@@ -37,6 +37,7 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
+
     ZEPHIR_MM_RESTORE();
 }
 
@@ -44,10 +45,6 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
 {
     zval * valueA, * valueB;
 	zend_ulong offset;
-
-    zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-
-    ZEPHIR_MM_GROW();
 
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
@@ -61,5 +58,4 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_DOUBLE(sigma);
-    ZEPHIR_MM_RESTORE();
 }

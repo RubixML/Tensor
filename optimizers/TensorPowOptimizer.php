@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class ArrayGreaterOptimizer extends OptimizerAbstract
+class TensorPowOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -26,7 +26,7 @@ class ArrayGreaterOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'ArrayGreater only accepts two arguments.',
+                'Tensor pow accepts exactly two arguments, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }
@@ -47,7 +47,7 @@ class ArrayGreaterOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/array_comparison',
+            'include/tensor_arithmetic',
             HeadersManager::POSITION_LAST
         );
 
@@ -60,7 +60,7 @@ class ArrayGreaterOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_array_greater(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
+            'tensor_pow(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
         );
 
         return new CompiledExpression(

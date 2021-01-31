@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class ArrayNotEqualOptimizer extends OptimizerAbstract
+class TensorMultiplyOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -26,7 +26,7 @@ class ArrayNotEqualOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'ArrayNotEqual only accepts two arguments.',
+                'Tensor multiply accepts exactly two arguments, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }
@@ -47,7 +47,7 @@ class ArrayNotEqualOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/array_comparison',
+            'include/tensor_arithmetic',
             HeadersManager::POSITION_LAST
         );
 
@@ -60,7 +60,7 @@ class ArrayNotEqualOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_array_not_equal(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
+            'tensor_multiply(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
         );
 
         return new CompiledExpression(

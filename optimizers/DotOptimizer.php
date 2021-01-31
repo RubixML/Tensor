@@ -26,7 +26,7 @@ class DotOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'Dot only accepts two argument.',
+                'Dot accepts exactly two arguments, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }
@@ -47,7 +47,7 @@ class DotOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/array_arithmetic',
+            'include/tensor_arithmetic',
             HeadersManager::POSITION_LAST
         );
 

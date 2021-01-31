@@ -26,7 +26,7 @@ class MatmulOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'Matmul only accepts two arguments.',
+                'Matmul accepts exactly two arguments, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }

@@ -2374,7 +2374,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_multiply(this->a, b->asarray()));
+        return self::quick(tensor_multiply(this->a, b->asarray()));
     }
 
     /**
@@ -2391,7 +2391,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_divide(this->a, b->asarray()));
+        return self::quick(tensor_divide(this->a, b->asarray()));
     }
 
     /**
@@ -2408,7 +2408,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_add(this->a, b->asarray()));
+        return self::quick(tensor_add(this->a, b->asarray()));
     }
 
     /**
@@ -2425,7 +2425,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_subtract(this->a, b->asarray()));
+        return self::quick(tensor_subtract(this->a, b->asarray()));
     }
 
     /**
@@ -2443,7 +2443,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_pow(this->a, b->asarray()));
+        return self::quick(tensor_pow(this->a, b->asarray()));
     }
 
     /**
@@ -2461,7 +2461,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_mod(this->a, b->asarray()));
+        return self::quick(tensor_mod(this->a, b->asarray()));
     }
 
     /**
@@ -2479,7 +2479,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_equal(this->a, b->asarray()));
+        return self::quick(tensor_equal(this->a, b->asarray()));
     }
 
     /**
@@ -2497,7 +2497,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_not_equal(this->a, b->asarray()));
+        return self::quick(tensor_not_equal(this->a, b->asarray()));
     }
 
     /**
@@ -2515,7 +2515,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_greater(this->a, b->asarray()));
+        return self::quick(tensor_greater(this->a, b->asarray()));
     }
 
     /**
@@ -2533,7 +2533,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_greater_equal(this->a, b->asarray()));
+        return self::quick(tensor_greater_equal(this->a, b->asarray()));
     }
 
     /**
@@ -2551,7 +2551,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_less(this->a, b->asarray()));
+        return self::quick(tensor_less(this->a, b->asarray()));
     }
 
     /**
@@ -2569,7 +2569,7 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(array_less_equal(this->a, b->asarray()));
+        return self::quick(tensor_less_equal(this->a, b->asarray()));
     }
 
     /**
@@ -2593,7 +2593,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_multiply(rowA, bHat);
+            let c[] = tensor_multiply(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2620,7 +2620,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_divide(rowA, bHat);
+            let c[] = tensor_divide(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2647,7 +2647,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_add(rowA, bHat);
+            let c[] = tensor_add(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2674,7 +2674,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_subtract(rowA, bHat);
+            let c[] = tensor_subtract(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2701,7 +2701,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_pow(rowA, bHat);
+            let c[] = tensor_pow(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2728,7 +2728,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_mod(rowA, bHat);
+            let c[] = tensor_mod(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2756,7 +2756,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_equal(rowA, bHat);
+            let c[] = tensor_equal(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2784,7 +2784,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_not_equal(rowA, bHat);
+            let c[] = tensor_not_equal(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2812,7 +2812,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_greater(rowA, bHat);
+            let c[] = tensor_greater(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2840,7 +2840,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_greater_equal(rowA, bHat);
+            let c[] = tensor_greater_equal(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2868,7 +2868,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_less(rowA, bHat);
+            let c[] = tensor_less(rowA, bHat);
         }
     
         return self::quick(c);
@@ -2896,7 +2896,7 @@ class Matrix implements Tensor
         var bHat = b->asArray();
     
         for rowA in this->a {
-            let c[] = array_less_equal(rowA, bHat);
+            let c[] = tensor_less_equal(rowA, bHat);
         }
     
         return self::quick(c);

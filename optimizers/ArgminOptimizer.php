@@ -26,7 +26,7 @@ class ArgminOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 1) {
             throw new CompilerException(
-                'Argmin accepts one and only one argument.',
+                'Argmin accepts exactly one argument, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }

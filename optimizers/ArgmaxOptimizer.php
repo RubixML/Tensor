@@ -26,7 +26,7 @@ class ArgmaxOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 1) {
             throw new CompilerException(
-                'Argmax accepts one and only one argument.',
+                'Argmax accepts exactly one argument, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }
