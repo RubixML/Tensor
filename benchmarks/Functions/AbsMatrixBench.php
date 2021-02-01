@@ -1,14 +1,14 @@
 <?php
 
-namespace Tensor\Benchmarks\Arithmetic;
+namespace Tensor\Benchmarks\Functions;
 
 use Tensor\Matrix;
 
 /**
- * @Groups({"Arithmetic"})
+ * @Groups({"Functions"})
  * @BeforeMethods({"setUp"})
  */
-class SquareMatrixBench
+class AbsMatrixBench
 {
     /**
      * @var \Tensor\Matrix
@@ -25,8 +25,8 @@ class SquareMatrixBench
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function square() : void
+    public function abs() : void
     {
-        $this->a->square();
+        $this->a->abs();
     }
 }

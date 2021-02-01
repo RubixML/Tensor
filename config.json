@@ -1,0 +1,46 @@
+{
+    "namespace": "tensor",
+    "name": "tensor",
+    "extension-name": "tensor",
+    "description": "Tensor is a library and extension that provides objects for scientific computing in PHP.",
+    "author": "Andrew DalPino",
+    "version": "2.1.0",
+    "verbose": true,
+    "requires": {
+        "extensions": []
+    },
+    "extra-cflags": "-O3 -march=haswell -ffast-math -mavx2",
+    "extra-sources": [
+        "include/linear_algebra.c",
+        "include/tensor_arithmetic.c",
+        "include/tensor_comparison.c",
+        "include/indexing.c"
+    ],
+    "optimizer-dirs": [
+        "optimizers"
+    ],
+    "optimizations": {
+        "static-type-inference": true,
+        "static-type-inference-second-pass": true,
+        "local-context-pass": true,
+        "constant-folding": true,
+        "static-constant-class-folding": true,
+        "call-gatherer-pass": true,
+        "check-invalid-reads": true,
+        "private-internal-methods": true,
+        "public-internal-methods": true,
+        "public-internal-functions": true
+    },
+    "warnings": {
+        "unused-variable": true,
+        "unused-variable-external": false,
+        "possible-wrong-parameter": true,
+        "possible-wrong-parameter-undefined": false,
+        "nonexistent-function": true,
+        "nonexistent-class": true
+    },
+    "extra": {
+        "export-classes": true,
+        "indent": "spaces"
+    }
+}

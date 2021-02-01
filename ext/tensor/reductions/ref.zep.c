@@ -67,7 +67,7 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a, a_sub, _0, _1;
+	zval *a = NULL, a_sub, _0, _1;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -121,7 +121,7 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_16 = NULL, *_24 = NULL, *_44 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, k = 0, index = 0, m, n, swaps, _8, _9, _11$$3, _12$$3, _29$$3, _30$$3, _35$$8, _36$$8;
-	zval *a, a_sub, temp, _0, _1, _2, _4, _5, _6, _43, _20$$3, _21$$3, _26$$3, _27$$3, _13$$4, _14$$4, _15$$4, _17$$4, _18$$4, _19$$4, _22$$6, _25$$7, _31$$8, _32$$8, _33$$8, _42$$8, _37$$9, _38$$9, _39$$9, _40$$9, _41$$9;
+	zval *a = NULL, a_sub, temp, _0, _1, _2, _4, _5, _6, _43, _20$$3, _21$$3, _26$$3, _27$$3, _13$$4, _14$$4, _15$$4, _17$$4, _18$$4, _19$$4, _22$$6, _25$$7, _31$$8, _32$$8, _33$$8, _42$$8, _37$$9, _38$$9, _39$$9, _40$$9, _41$$9;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -331,7 +331,7 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_33 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, m, n, row, col, swaps, _21$$3, _22$$3, _9$$4, _10$$4, _16$$8, _17$$8, _26$$11, _27$$11;
-	zval *a, a_sub, temp, _0, _1, _2, _32, _34, _5$$3, _7$$3, _13$$3, _14$$3, _11$$5, _12$$5, _18$$9, _19$$9, _23$$10, _24$$10, _28$$12, _29$$12, _30$$12, _31$$12;
+	zval *a = NULL, a_sub, temp, _0, _1, _2, _32, _34, _5$$3, _7$$3, _13$$3, _14$$3, _11$$5, _12$$5, _18$$9, _19$$9, _23$$10, _24$$10, _28$$12, _29$$12, _30$$12, _31$$12;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -523,7 +523,7 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long swaps, ZEPHIR_LAST_CALL_STATUS;
-	zval *a, a_sub, *swaps_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, _4;
+	zval *a = NULL, a_sub, *swaps_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, _4;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);

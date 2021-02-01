@@ -11,10 +11,10 @@
 #include "kernel/globals.h"
 
 #define PHP_TENSOR_NAME        "tensor"
-#define PHP_TENSOR_VERSION     "2.0.4-alpha"
+#define PHP_TENSOR_VERSION     "2.1.0"
 #define PHP_TENSOR_EXTNAME     "tensor"
 #define PHP_TENSOR_AUTHOR      "Andrew DalPino"
-#define PHP_TENSOR_ZEPVERSION  "0.12.19-$Id$"
+#define PHP_TENSOR_ZEPVERSION  "0.12.20-$Id$"
 #define PHP_TENSOR_DESCRIPTION "Tensor is a library and extension that provides objects for scientific computing in PHP."
 
 

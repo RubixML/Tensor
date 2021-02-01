@@ -6,8 +6,8 @@
     "license": "MIT",
     "keywords": [
         "arithmetic", "computation", "computing", "decomposition", "engineering", "extension",
-        "linear algebra", "math", "matrix", "norms", "php", "random number generation", "reduction",
-        "scientific computing", "statistics", "tensor", "vector", "trigonometry"
+        "linear algebra", "math", "matrix", "norms", "php", "random number generation", "rng",
+        "reduction", "scientific computing", "statistics", "tensor", "vector", "trigonometry"
     ],
     "authors": [
         { 
@@ -25,7 +25,8 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "2.18.*",
-        "phpbench/phpbench": "1.0.0-alpha4",
+        "phalcon/zephir": "^0.12.20",
+        "phpbench/phpbench": "0.16.*",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "0.12.*",
         "phpstan/phpstan-phpunit": "0.12.*",
@@ -34,7 +35,8 @@
     "autoload": {
         "psr-4": {
             "Tensor\\": "src/",
-            "JAMA\\": "lib/JAMA"
+            "JAMA\\": "lib/JAMA",
+            "Zephir\\Optimizers\\FunctionCall\\": "optimizers/"
         },
         "files": [
             "src/constants.php"
@@ -59,6 +61,8 @@
             "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
             "php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no"
         ],
+        "clean": "zephir fullclean",
+        "compile": "zephir build --no-dev",
         "fix": "php-cs-fixer fix --config=.php_cs.dist",
         "test": "phpunit"
     },

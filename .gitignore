@@ -11,6 +11,7 @@
 *.dSYM
 *.deps
 
+zephir.phar
 autom4te.cache/
 
 ext/ltmain.sh
@@ -41,6 +42,7 @@ ext/run-tests.php
 composer.lock
 .phpunit.result.cache
 .php_cs.cache
+.zephir
 Thumbs.db
 .DS_Store
 .libs/

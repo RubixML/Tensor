@@ -1,14 +1,14 @@
 <?php
 
-namespace Tensor\Benchmarks\Arithmetic;
+namespace Tensor\Benchmarks\Functions;
 
 use Tensor\Matrix;
 
 /**
- * @Groups({"Arithmetic"})
+ * @Groups({"Functions"})
  * @BeforeMethods({"setUp"})
  */
-class AbsMatrixBench
+class SqrtMatrixBench
 {
     /**
      * @var \Tensor\Matrix
@@ -25,8 +25,8 @@ class AbsMatrixBench
      * @Iterations(5)
      * @OutputTimeUnit("seconds", precision=3)
      */
-    public function abs() : void
+    public function sqrt() : void
     {
-        $this->a->abs();
+        $this->a->sqrt();
     }
 }

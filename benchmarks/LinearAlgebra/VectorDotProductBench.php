@@ -22,15 +22,15 @@ class VectorDotProductBench
 
     public function setUp() : void
     {
-        $this->a = Vector::uniform(250000);
+        $this->a = Vector::uniform(100000);
 
-        $this->b = Vector::uniform(250000);
+        $this->b = Vector::uniform(100000);
     }
 
     /**
      * @Subject
      * @Iterations(5)
-     * @OutputTimeUnit("seconds", precision=3)
+     * @OutputTimeUnit("milliseconds", precision=3)
      */
     public function dot() : void
     {

@@ -17,13 +17,13 @@ class MatrixMeanBench
 
     public function setUp() : void
     {
-        $this->a = Matrix::uniform(500, 500);
+        $this->a = Matrix::uniform(1000, 1000);
     }
 
     /**
      * @Subject
      * @Iterations(5)
-     * @OutputTimeUnit("seconds", precision=3)
+     * @OutputTimeUnit("milliseconds", precision=3)
      */
     public function mean() : void
     {

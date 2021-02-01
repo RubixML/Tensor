@@ -56,7 +56,7 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_11 = NULL, *_30 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, m, n, row, col, _18$$3, _19$$3, _13$$5, _14$$5, _22$$8, _23$$8;
-	zval *a, a_sub, scale, divisor, _0, _1, _2, _3, _4, _29, _7$$3, _9$$3, _10$$3, _15$$6, _16$$6, _20$$7, _24$$9, _25$$9, _26$$9, _27$$9, _28$$9;
+	zval *a = NULL, a_sub, scale, divisor, _0, _1, _2, _3, _4, _29, _7$$3, _9$$3, _10$$3, _15$$6, _16$$6, _20$$7, _24$$9, _25$$9, _26$$9, _27$$9, _28$$9;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -216,7 +216,7 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
  */
 PHP_METHOD(Tensor_Reductions_Rref, __construct) {
 
-	zval *a, a_sub;
+	zval *a = NULL, a_sub;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
