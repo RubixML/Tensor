@@ -42,7 +42,7 @@ $ cd ./ext
 $ phpize
 $ ./configure
 $ make
-$ make install
+$ sudo make install
 ```
 
 ## Installing the Extension
