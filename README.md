@@ -13,8 +13,15 @@ $ composer require rubix/tensor
 ## Requirements
 - [PHP](https://php.net) 7.2 or above
 
-### Optional
-- A C compiler such as [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/), or [Visual C++](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads) to compile the extension
+### Optional To Compile Extension
+- A C compiler such as [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/), or [Visual C++](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
+- The PHP development package (source code and tooling)
+- [re2c](https://re2c.org/) 0.13.6 or later
+- [GNU make](https://www.gnu.org/software/make/) 3.81 or later
+- [autoconf](https://www.gnu.org/software/autoconf/autoconf.html) 2.31 or later
+- [automake](https://www.gnu.org/software/automake/) 1.14 or later
+- libpcre3
+- Ubuntu build-essentials
 
 ## Compiling the Extension
 Clone the repository locally using [Git](https://git-scm.com/):
@@ -22,7 +29,15 @@ Clone the repository locally using [Git](https://git-scm.com/):
 $ git clone https://github.com/RubixML/Tensor
 ```
 
-Make sure you have the PHP development package installed, change into the `ext` directory, and run the following commands from the terminal. See [this guide](https://www.php.net/manual/en/install.pecl.phpize.php) for more information on compiling PHP extensions with PHPize.
+Make sure you have all the necessary build tools installed such as a C compiler and make tools. For example, on an Ubuntu linux system you can enter the following on the command line to install the necessary packages.
+
+```sh
+$ sudo apt-get update
+
+$ sudo apt-get install gcc make re2c php-dev libpcre3-dev build-essential
+```
+
+Then, change into the `ext` directory from the project root and run the following commands from the terminal. See [this guide](https://www.php.net/manual/en/install.pecl.phpize.php) for more information on compiling PHP extensions with PHPize.
 
 ```sh
 $ cd ./ext
