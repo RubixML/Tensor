@@ -32,8 +32,6 @@ $ git clone https://github.com/RubixML/Tensor
 Make sure you have all the necessary build tools installed such as a C compiler and make tools. For example, on an Ubuntu linux system you can enter the following on the command line to install the necessary packages.
 
 ```sh
-$ sudo apt-get update
-
 $ sudo apt-get install gcc make re2c php-dev libpcre3-dev build-essential
 ```
 
@@ -48,12 +46,12 @@ $ make install
 ```
 
 ## Installing the Extension
-Then, you can add the following line to your `php.ini` configuration to install the extension.
+Add the following line to your `php.ini` configuration to install the extension.
 ```
 extension=tensor.so
 ```
 
-To confirm that the extension is loaded in PHP, run the following command.
+To confirm that the extension is loaded in PHP, you can run the following command.
 
 ```sh
 php -m | grep tensor
