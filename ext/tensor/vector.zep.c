@@ -24,6 +24,7 @@
 #include "kernel/math.h"
 #include "kernel/string.h"
 #include "include/indexing.h"
+#include "include/linear_algebra.h"
 #include "include/tensor_arithmetic.h"
 #include "include/tensor_comparison.h"
 

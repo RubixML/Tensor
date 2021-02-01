@@ -9,7 +9,7 @@
     "requires": {
         "extensions": []
     },
-    "extra-cflags": "-O3 -march=haswell -ffast-math -mavx2",
+    "extra-cflags": "-O3 -msse2 -ffast-math",
     "extra-sources": [
         "include/linear_algebra.c",
         "include/tensor_arithmetic.c",

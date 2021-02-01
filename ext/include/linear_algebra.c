@@ -2,7 +2,8 @@
 #include "config.h"
 #endif
 
-#include "php.h"
+#include <php.h>
+
 #include "kernel/operators.h"
 #include "kernel/memory.h"
 

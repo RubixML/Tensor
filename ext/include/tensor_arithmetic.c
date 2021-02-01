@@ -2,7 +2,8 @@
 #include "config.h"
 #endif
 
-#include "php.h"
+#include <php.h>
+
 #include "kernel/memory.h"
 
 void tensor_multiply(zval * return_value, zval * a, zval * b)

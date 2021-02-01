@@ -66,7 +66,7 @@ $ composer benchmark
 ```
 
 ## Extension Development
-Every part of Tensor's object oriented API is duplicated in the accompanying PHP extension. This allows users to easily adopt the library and then add the extension later when they need the extra performance. The extension API code is written in Zephir and the underlying optimizations are written in C. This allows us to take advantage of high-level language features while at the same time delivering high performance. We set up two Composer commands for your development environment that handle compiling both the Zephir and C code for you. For a more detailed setup you can consult the Zephir [documentation](https://docs.zephir-lang.com/0.12/en/installation).
+Every part of Tensor's object oriented API is duplicated in the accompanying PHP extension. This allows users to easily adopt the library and then add the extension later when they need the extra performance. The extension API code is written in [Zephir](https://zephir-lang.com) and the underlying optimizations are written in C. This allows us to take advantage of high-level language features while at the same time delivering high performance. We set up two Composer commands for your development environment that handle compiling both the Zephir and C code for you. For a more detailed setup you can consult the Zephir [documentation](https://docs.zephir-lang.com/0.12/en/installation).
 
 To compile the extension:
 ```sh
