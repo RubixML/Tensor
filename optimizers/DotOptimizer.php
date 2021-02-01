@@ -47,7 +47,7 @@ class DotOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/tensor_arithmetic',
+            'include/linear_algebra',
             HeadersManager::POSITION_LAST
         );
 
