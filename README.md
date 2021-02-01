@@ -59,5 +59,13 @@ To confirm that the extension is loaded in PHP, run the following command.
 php -m | grep tensor
 ```
 
+## Funding
+Rubix ML is funded by donations from the community. You can become a sponsor by making a contribution to one of our funding sources below.
+
+- [Github Sponsors](https://github.com/sponsors/RubixML)
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
 ## License
 The code is licensed [MIT](LICENSE) and the documentation is licensed [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
