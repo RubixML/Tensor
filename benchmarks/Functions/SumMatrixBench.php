@@ -1,14 +1,14 @@
 <?php
 
-namespace Tensor\Benchmarks\Arithmetic;
+namespace Tensor\Benchmarks\Functions;
 
 use Tensor\Matrix;
 
 /**
- * @Groups({"Arithmetic"})
+ * @Groups({"Functions"})
  * @BeforeMethods({"setUp"})
  */
-class LogMatrixBench
+class SumMatrixBench
 {
     /**
      * @var \Tensor\Matrix
@@ -23,10 +23,10 @@ class LogMatrixBench
     /**
      * @Subject
      * @Iterations(5)
-     * @OutputTimeUnit("seconds", precision=3)
+     * @OutputTimeUnit("milliseconds", precision=3)
      */
-    public function log() : void
+    public function sum() : void
     {
-        $this->a->log();
+        $this->a->sum();
     }
 }

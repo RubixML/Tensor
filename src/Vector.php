@@ -682,8 +682,7 @@ class Vector implements Tensor
     public function pNorm(float $p = 3.0)
     {
         if ($p <= 0.0) {
-            throw new InvalidArgumentException('P must be greater'
-                . " than 0, $p given.");
+            throw new InvalidArgumentException("P must be greater than 0, $p given.");
         }
 
         return $this->abs()->powScalar($p)->sum() ** (1.0 / $p);

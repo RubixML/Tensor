@@ -21,8 +21,13 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/decompositions/lu.zep.c
 	tensor/matrix.zep.c
 	tensor/reductions/ref.zep.c
-	tensor/reductions/rref.zep.c include/indexing.c"
-	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, )
+	tensor/reductions/rref.zep.c include/linear_algebra.c
+	include/tensor_arithmetic.c
+	include/tensor_comparison.c
+	include/indexing.c"
+	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -O3 -march=haswell -ffast-math -mavx2)
+	PHP_ADD_BUILD_DIR([$ext_builddir/kernel/])
+	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/])
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
 	old_CPPFLAGS=$CPPFLAGS

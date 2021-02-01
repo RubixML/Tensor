@@ -76,7 +76,7 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_5 = NULL, *_10 = NULL, *_28 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, k = 0, row = 0, n, _18, _19, _33, _34, _23$$4, _24$$4, _36$$8, _37$$8, _50$$8, _51$$8, _39$$9, _40$$9, _53$$11, _54$$11;
-	zval *a, a_sub, _0, temp, valueA, _1, _2, _4, _6, _7, _9, _11, _12, _14, _15, _27, _29, _30, _67, _68, _69, _20$$4, _21$$4, _25$$5, _26$$7, _46$$9, _47$$9, _48$$9, _41$$10, _42$$10, _43$$10, _44$$10, _45$$10, _60$$11, _61$$11, _62$$11, _63$$11, _64$$11, _66$$11, _55$$12, _56$$12, _57$$12, _58$$12, _59$$12, _65$$14;
+	zval *a = NULL, a_sub, _0, temp, valueA, _1, _2, _4, _6, _7, _9, _11, _12, _14, _15, _27, _29, _30, _67, _68, _69, _20$$4, _21$$4, _25$$5, _26$$7, _46$$9, _47$$9, _48$$9, _41$$10, _42$$10, _43$$10, _44$$10, _45$$10, _60$$11, _61$$11, _62$$11, _63$$11, _64$$11, _66$$11, _55$$12, _56$$12, _57$$12, _58$$12, _59$$12, _65$$14;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -380,7 +380,7 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
  */
 PHP_METHOD(Tensor_Decompositions_Lu, __construct) {
 
-	zval *l, l_sub, *u, u_sub, *p, p_sub;
+	zval *l = NULL, l_sub, *u = NULL, u_sub, *p = NULL, p_sub;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&l_sub);

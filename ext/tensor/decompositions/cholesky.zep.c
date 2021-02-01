@@ -62,7 +62,7 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_4 = NULL, *_30 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS, i = 0, j = 0, k = 0, _8, _9, _11$$4, _12$$4, _14$$5, _15$$5;
-	zval *a, a_sub, _0, m, _1, _3, _5, _29, _21$$5, _22$$5, _23$$5, _24$$5, _25$$5, _26$$5, _27$$5, _28$$5, _16$$6, _17$$6, _18$$6, _19$$6, _20$$6;
+	zval *a = NULL, a_sub, _0, m, _1, _3, _5, _29, _21$$5, _22$$5, _23$$5, _24$$5, _25$$5, _26$$5, _27$$5, _28$$5, _16$$6, _17$$6, _18$$6, _19$$6, _20$$6;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -203,7 +203,7 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
  */
 PHP_METHOD(Tensor_Decompositions_Cholesky, __construct) {
 
-	zval *l, l_sub;
+	zval *l = NULL, l_sub;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&l_sub);
