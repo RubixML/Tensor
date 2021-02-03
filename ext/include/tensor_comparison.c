@@ -4,12 +4,12 @@
 
 #include <php.h>
 
-#include "kernel/operators.h"
 #include "kernel/memory.h"
+#include "kernel/operators.h"
 
 void tensor_equal(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval comparison;
 	zval c;
@@ -26,14 +26,10 @@ void tensor_equal(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_equal(&comparison, valueA, valueB);
+        if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
+            ZVAL_LONG(&comparison, 1);
         } else {
-            if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
-                ZVAL_LONG(&comparison, 1);
-            } else {
-                ZVAL_LONG(&comparison, 0);
-            }
+            ZVAL_LONG(&comparison, 0);
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -46,7 +42,7 @@ void tensor_equal(zval * return_value, zval * a, zval * b)
 
 void tensor_not_equal(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval comparison;
 	zval c;
@@ -63,14 +59,10 @@ void tensor_not_equal(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_not_equal(&comparison, valueA, valueB);
+        if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
+            ZVAL_LONG(&comparison, 0);
         } else {
-            if (ZEPHIR_IS_EQUAL(valueA, valueB)) {
-                ZVAL_LONG(&comparison, 0);
-            } else {
-                ZVAL_LONG(&comparison, 1);
-            }
+            ZVAL_LONG(&comparison, 1);
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -83,7 +75,7 @@ void tensor_not_equal(zval * return_value, zval * a, zval * b)
 
 void tensor_greater(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval comparison;
 	zval c;
@@ -100,14 +92,10 @@ void tensor_greater(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_greater(&comparison, valueA, valueB);
+        if (ZEPHIR_GT(valueA, valueB)) {
+            ZVAL_LONG(&comparison, 1);
         } else {
-            if (ZEPHIR_GT(valueA, valueB)) {
-                ZVAL_LONG(&comparison, 1);
-            } else {
-                ZVAL_LONG(&comparison, 0);
-            }
+            ZVAL_LONG(&comparison, 0);
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -120,7 +108,7 @@ void tensor_greater(zval * return_value, zval * a, zval * b)
 
 void tensor_greater_equal(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval comparison;
 	zval c;
@@ -137,14 +125,10 @@ void tensor_greater_equal(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_greater_equal(&comparison, valueA, valueB);
+        if (ZEPHIR_GE(valueA, valueB)) {
+            ZVAL_LONG(&comparison, 1);
         } else {
-            if (ZEPHIR_GE(valueA, valueB)) {
-                ZVAL_LONG(&comparison, 1);
-            } else {
-                ZVAL_LONG(&comparison, 0);
-            }
+            ZVAL_LONG(&comparison, 0);
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -157,7 +141,7 @@ void tensor_greater_equal(zval * return_value, zval * a, zval * b)
 
 void tensor_less(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval comparison;
 	zval c;
@@ -174,14 +158,10 @@ void tensor_less(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_less(&comparison, valueA, valueB);
+        if (ZEPHIR_LT(valueA, valueB)) {
+            ZVAL_LONG(&comparison, 1);
         } else {
-            if (ZEPHIR_LT(valueA, valueB)) {
-                ZVAL_LONG(&comparison, 1);
-            } else {
-                ZVAL_LONG(&comparison, 0);
-            }
+            ZVAL_LONG(&comparison, 0);
         }
 
 	    add_next_index_zval(&c, &comparison);
@@ -194,7 +174,7 @@ void tensor_less(zval * return_value, zval * a, zval * b)
 
 void tensor_less_equal(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval comparison;
 	zval c;
@@ -210,15 +190,11 @@ void tensor_less_equal(zval * return_value, zval * a, zval * b)
 
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
-
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_less_equal(&comparison, valueA, valueB);
+        
+        if (ZEPHIR_LE(valueA, valueB)) {
+            ZVAL_LONG(&comparison, 1);
         } else {
-            if (ZEPHIR_LE(valueA, valueB)) {
-                ZVAL_LONG(&comparison, 1);
-            } else {
-                ZVAL_LONG(&comparison, 0);
-            }
+            ZVAL_LONG(&comparison, 0);
         }
 
 	    add_next_index_zval(&c, &comparison);

@@ -5,7 +5,7 @@
 #include "php.h"
 #include "kernel/operators.h"
 
-void tensor_argmin(zval *return_value, zval *values)
+void tensor_argmin(zval * return_value, zval * values)
 {
 	zval *current, min;
 	zend_ulong index;
@@ -14,8 +14,6 @@ void tensor_argmin(zval *return_value, zval *values)
     RETVAL_NULL();
 
     ZEND_HASH_FOREACH_NUM_KEY_VAL(Z_ARR_P(values), index, current) {
-        ZVAL_DEREF(current);
-
         if (ZEPHIR_LT(current, &min)) {
 			ZVAL_COPY(&min, current);
 
@@ -24,7 +22,7 @@ void tensor_argmin(zval *return_value, zval *values)
     } ZEND_HASH_FOREACH_END();
 }
 
-void tensor_argmax(zval *return_value, zval *values)
+void tensor_argmax(zval * return_value, zval * values)
 {
 	zval *current, max;
 	zend_ulong index;
@@ -33,8 +31,6 @@ void tensor_argmax(zval *return_value, zval *values)
     RETVAL_NULL();
 
     ZEND_HASH_FOREACH_NUM_KEY_VAL(Z_ARR_P(values), index, current) {
-        ZVAL_DEREF(current);
-
         if (ZEPHIR_GT(current, &max)) {
 			ZVAL_COPY(&max, current);
 

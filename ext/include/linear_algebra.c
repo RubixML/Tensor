@@ -4,8 +4,8 @@
 
 #include <php.h>
 
-#include "kernel/operators.h"
 #include "kernel/memory.h"
+#include "kernel/operators.h"
 
 void tensor_matmul(zval * return_value, zval * a, zval * bT)
 {
@@ -57,7 +57,7 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
     double sigma = 0.0;
 
     for (i = 0; i < n; i++) {
-        sigma += zephir_get_numberval(&va[i].val) * zephir_get_numberval(&vb[i].val);
+        sigma += zephir_get_doubleval(&va[i].val) * zephir_get_doubleval(&vb[i].val);
     }
 
     RETVAL_DOUBLE(sigma);

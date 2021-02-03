@@ -625,6 +625,7 @@ class Vector implements Tensor
     public function outer(const <Vector> b) -> <Matrix>
     {
         var j, valueA, valueB;
+        
         array bHat = [];
         array c = [];
         array rowC = [];
@@ -1164,7 +1165,12 @@ class Vector implements Tensor
      */
     public function log(const float base = self::M_E) -> <Vector>
     {
+        if (base === self::M_E) {
+            return this->map("log");
+        }
+
         var valueA;
+
         array b = [];
 
         for valueA in this->a {

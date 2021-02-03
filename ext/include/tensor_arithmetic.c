@@ -8,7 +8,7 @@
 
 void tensor_multiply(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval product;
 	zval c;
@@ -25,11 +25,7 @@ void tensor_multiply(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_multiply(&product, valueA, valueB);
-        } else {
-            mul_function(&product, valueA, valueB);
-        }
+        mul_function(&product, valueA, valueB);
 
 	    add_next_index_zval(&c, &product);
     } ZEND_HASH_FOREACH_END();
@@ -41,7 +37,7 @@ void tensor_multiply(zval * return_value, zval * a, zval * b)
 
 void tensor_divide(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval quotient;
 	zval c;
@@ -58,11 +54,7 @@ void tensor_divide(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_divide(&quotient, valueA, valueB);
-        } else {
-            div_function(&quotient, valueA, valueB);
-        }
+        div_function(&quotient, valueA, valueB);
 
 	    add_next_index_zval(&c, &quotient);
     } ZEND_HASH_FOREACH_END();
@@ -74,7 +66,7 @@ void tensor_divide(zval * return_value, zval * a, zval * b)
 
 void tensor_add(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval sum;
 	zval c;
@@ -91,11 +83,7 @@ void tensor_add(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_add(&sum, valueA, valueB);
-        } else {
-            fast_add_function(&sum, valueA, valueB);
-        }
+        add_function(&sum, valueA, valueB);
 
 	    add_next_index_zval(&c, &sum);
     } ZEND_HASH_FOREACH_END();
@@ -107,7 +95,7 @@ void tensor_add(zval * return_value, zval * a, zval * b)
 
 void tensor_subtract(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval difference;
 	zval c;
@@ -124,11 +112,7 @@ void tensor_subtract(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_subtract(&difference, valueA, valueB);
-        } else {
-            sub_function(&difference, valueA, valueB);
-        }
+        sub_function(&difference, valueA, valueB);
 
 	    add_next_index_zval(&c, &difference);
     } ZEND_HASH_FOREACH_END();
@@ -140,7 +124,7 @@ void tensor_subtract(zval * return_value, zval * a, zval * b)
 
 void tensor_pow(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval power;
 	zval c;
@@ -157,11 +141,7 @@ void tensor_pow(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_pow(&power, valueA, valueB);
-        } else {
-            pow_function(&power, valueA, valueB);
-        }
+        pow_function(&power, valueA, valueB);
 
 	    add_next_index_zval(&c, &power);
     } ZEND_HASH_FOREACH_END();
@@ -173,7 +153,7 @@ void tensor_pow(zval * return_value, zval * a, zval * b)
 
 void tensor_mod(zval * return_value, zval * a, zval * b)
 {
-	zval *valueA, *valueB;
+	zval * valueA, * valueB;
 	zend_ulong offset;
     zval modulus;
 	zval c;
@@ -190,11 +170,7 @@ void tensor_mod(zval * return_value, zval * a, zval * b)
     ZEND_HASH_FOREACH_NUM_KEY_VAL(aHat, offset, valueA) {
         valueB = zend_hash_index_find(bHat, offset);
 
-        if (Z_TYPE_P(valueA) == IS_ARRAY && Z_TYPE_P(valueB) == IS_ARRAY) {
-	        tensor_mod(&modulus, valueA, valueB);
-        } else {
-            mod_function(&modulus, valueA, valueB);
-        }
+        mod_function(&modulus, valueA, valueB);
 
 	    add_next_index_zval(&c, &modulus);
     } ZEND_HASH_FOREACH_END();

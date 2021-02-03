@@ -675,6 +675,7 @@ class Matrix implements Tensor
     public function argmin() -> <ColumnVector>
     {
         var rowA;
+
         array b = [];
 
         for rowA in this->a {
@@ -692,6 +693,7 @@ class Matrix implements Tensor
     public function argmax() -> <ColumnVector>
     {
         var rowA;
+
         array b = [];
 
         for rowA in this->a {
@@ -710,6 +712,7 @@ class Matrix implements Tensor
     public function map(const var callback) -> <Matrix>
     {
         var rowA;
+
         array b = [];
  
         for rowA in this->a {
@@ -771,9 +774,10 @@ class Matrix implements Tensor
      */
     public function inverse() -> <Matrix>
     {
+        var rowA;
+
         array a = [];
         array b = [];
-        var rowA;
 
         let a = (array) self::identity(this->m)
             ->augmentLeft(this)
@@ -817,6 +821,7 @@ class Matrix implements Tensor
     public function rank() -> int
     {
         var rowA, valueA;
+        
         array a = [];
 
         int pivots = 0;
@@ -1655,9 +1660,14 @@ class Matrix implements Tensor
      */
     public function log(const float base = self::M_E) -> <Matrix>
     {
+        if (base === self::M_E) {
+            return this->map("log");
+        }
+
         var rowA, valueA;
-        array b = [];
+
         array rowB = [];
+        array b = [];
  
         for rowA in this->a {
             let rowB = [];
@@ -2374,7 +2384,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_multiply(this->a, b->asarray()));
+        var i, rowB;
+
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_multiply(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2391,7 +2409,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_divide(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_divide(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2408,7 +2434,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_add(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_add(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2425,7 +2459,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_subtract(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_subtract(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2443,7 +2485,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_pow(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_pow(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2461,7 +2511,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_mod(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_mod(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2479,7 +2537,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_equal(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_equal(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2497,7 +2563,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_not_equal(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_not_equal(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2515,7 +2589,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_greater(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_greater(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2533,7 +2615,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_greater_equal(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_greater_equal(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2551,7 +2641,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_less(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_less(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
@@ -2569,7 +2667,15 @@ class Matrix implements Tensor
                 . " matrix needed but " . b->shapeString() . " given.");
         }
 
-        return self::quick(tensor_less_equal(this->a, b->asarray()));
+        var i, rowB;
+        
+        array c = [];
+
+        for i, rowB in b->asArray() {
+            let c[] = tensor_less_equal(this->a[i], rowB);
+        }
+
+        return self::quick(c);
     }
 
     /**
