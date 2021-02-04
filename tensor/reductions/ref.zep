@@ -59,50 +59,52 @@ class Ref
     public static function gaussianElimination(const <Matrix> a) -> <Ref>
     {
         int i, j, k, index;
-        float diag, scale;
-        var temp;
+        var diag, scale, temp;
+
         array b = [];
 
         int m = (int) a->m();
         int n = (int) a->n();
 
+        int minDim = (int) min(m, n);
+
         let b = (array) a->asArray();
 
         int swaps = 0;
 
-        for k in range(0, min(m, n) - 1) {
-            let index = k;
+        for i in range(0, minDim - 1) {
+            let index = i;
 
-            for i in range(k, m - 1) {
-                if abs(b[i][k]) > abs(b[index][k]) {
-                    let index = i;
+            for j in range(i, m - 1) {
+                if abs(b[j][i]) > abs(b[index][i]) {
+                    let index = j;
                 }
             }
 
-            if unlikely b[index][k] == 0 {
+            if unlikely b[index][i] == 0 {
                 throw new RuntimeException("Cannot compute row echelon form"
                     . " of a singular matrix.");
             }
 
-            if k !== index {
-                let temp = b[k];
+            if i !== index {
+                let temp = b[i];
 
-                let b[k] = b[index];
+                let b[i] = b[index];
                 let b[index] = temp;
 
                 let swaps++;
             }
 
-            let diag = (float) b[k][k];
+            let diag = b[i][i];
 
-            for i in range(k + 1, m - 1) {
-                let scale = diag !== 0.0 ? (float) b[i][k] / diag : 1.0;
+            for j in range(i + 1, m - 1) {
+                let scale = diag != 0.0 ? b[j][i] / diag : 1.0;
 
-                for j in range(k + 1, n - 1) {
-                    let b[i][j] = (float) b[i][j] - scale * (float) b[k][j];
+                for k in range(i + 1, n - 1) {
+                    let b[j][k] = b[j][k] - scale * b[i][k];
                 }
 
-                let b[i][k] = 0;
+                let b[j][i] = 0.0;
             }
         }
 
@@ -120,8 +122,9 @@ class Ref
     public static function rowReductionMethod(const <Matrix> a) -> <Ref>
     {
         int i, j;
-        float scale, divisor;
+        var scale, divisor;
         var temp;
+        
         array b = [];
         array t = [];
 
@@ -159,20 +162,20 @@ class Ref
                 continue;
             }
 
-            let divisor = (float) t[col];
+            let divisor = t[col];
 
-            if divisor !== 1.0 {
+            if divisor != 1 {
                 for i in range(0, n - 1) {
-                    let t[i] = (float) t[i] / divisor;
+                    let t[i] = t[i] / divisor;
                 }
             }
 
             for i in range(row + 1, m - 1) {
-                let scale = (float) b[i][col];
+                let scale = b[i][col];
 
-                if scale !== 0.0 {
+                if scale != 0 {
                     for j in range(0, n - 1) {
-                        let b[i][j] = (float) b[i][j] - scale * (float) t[j];
+                        let b[i][j] = b[i][j] - scale * t[j];
                     }
                 }
             }

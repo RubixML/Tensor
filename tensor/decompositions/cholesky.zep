@@ -37,6 +37,7 @@ class Cholesky
 
         int i, j, k;
         float sigma;
+        
         array aHat = [];
         array l = [];
 
@@ -56,7 +57,7 @@ class Cholesky
 
                 let l[i][j] = i === j
                     ? sqrt(aHat[i][i] - sigma)
-                    : 1 / l[j][j] * (aHat[i][j] - sigma);
+                    : 1.0 / l[j][j] * (aHat[i][j] - sigma);
             }
         }
 

@@ -32,6 +32,7 @@ class Rref
     {
         int i, j;
         var scale, divisor;
+        
         array b = [];
         array t = [];
 
@@ -54,7 +55,7 @@ class Rref
 
             let divisor = t[col];
 
-            if divisor != 1 {
+            if likely divisor != 1 {
                 for i in range(0, n - 1) {
                     let t[i] = t[i] / divisor;
                 }
@@ -63,7 +64,7 @@ class Rref
             for i in reverse range(0, row - 1) {
                 let scale = b[i][col];
 
-                if scale != 0 {
+                if likely scale != 0 {
                     for j in range(0, n - 1) {
                         let b[i][j] = b[i][j] - scale * t[j];
                     }

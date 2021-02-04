@@ -51,14 +51,14 @@ class Lu
         }
 
         int i, j, k, row;
-        float max, sigma;
+        float sigma;
+        var max, temp, valueA;
+
         array aHat = [];
         array l = [];
         array u = [];
         array p = [];
         array pa = [];
-
-        var temp, valueA;
 
         int n = (int) a->n();
 
@@ -69,7 +69,7 @@ class Lu
         let p = (array) Matrix::identity(n)->asArray();
 
         for i in range(0, n - 1) {
-            let max = (float) aHat[i][i];
+            let max = aHat[i][i];
 
             let row = i;
 

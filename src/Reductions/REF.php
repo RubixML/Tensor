@@ -94,13 +94,13 @@ class REF
             $diag = $b[$i][$i];
 
             for ($j = $i + 1; $j < $m; ++$j) {
-                $scale = $diag != 0 ? $b[$j][$i] / $diag : 1;
+                $scale = $diag != 0.0 ? $b[$j][$i] / $diag : 1.0;
 
                 for ($k = $i + 1; $k < $n; ++$k) {
                     $b[$j][$k] -= $scale * $b[$i][$k];
                 }
 
-                $b[$j][$i] = 0;
+                $b[$j][$i] = 0.0;
             }
         }
 
