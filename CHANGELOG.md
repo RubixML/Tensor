@@ -1,3 +1,6 @@
+- 2.1.2
+    - Blanket extension optimizations
+
 - 2.1.1
     - Zephir redux
     - Blanket extension optimizations

@@ -1168,7 +1168,7 @@ class Vector implements Tensor
      */
     public function log(const float base = self::M_E) -> <Vector>
     {
-        if (base === self::M_E) {
+        if base === self::M_E {
             return this->map("log");
         }
 
