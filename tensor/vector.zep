@@ -150,6 +150,7 @@ class Vector implements Tensor
         }
 
         float r, phi;
+
         array a = [];
 
         int max = (int) getrandmax();
@@ -164,7 +165,7 @@ class Vector implements Tensor
         }
 
         if count(a) > n {
-            let a = array_slice(a, 0, n);
+            array_pop(a);
         }
 
         return static::quick(a);
@@ -187,6 +188,7 @@ class Vector implements Tensor
 
         int k;
         float p;
+
         array a = [];
 
         float l = (float) exp(-lambda);
@@ -451,7 +453,8 @@ class Vector implements Tensor
                 . " are needed but vector only has " . this->n . ".");
         }
 
-        int k = 0;
+        int i = 0;
+
         array b = [];
         array rowB = [];
 
@@ -459,9 +462,9 @@ class Vector implements Tensor
             let rowB = [];
 
             while count(rowB) < n {
-                let rowB[] = this->a[k];
+                let rowB[] = this->a[i];
 
-                let k++;
+                let i++;
             }
 
             let b[] = rowB;
@@ -1409,12 +1412,17 @@ class Vector implements Tensor
      */
     public function round(const int precision = 0) -> <Vector>
     {
+        if precision === 0 {
+            return this->map("round");
+        }
+
         if unlikely precision < 0 {
             throw new InvalidArgumentException("Decimal precision cannot"
                 . " be less than 0, " . strval(precision)  . " given.");
         }
 
         var valueA;
+
         array b = [];
 
         for valueA in this->a {
@@ -1461,6 +1469,7 @@ class Vector implements Tensor
         }
 
         var valueA;
+
         array b = [];
 
         for valueA in this->a {
@@ -1491,6 +1500,7 @@ class Vector implements Tensor
     public function clipLower(const float min) -> <Vector>
     {
         var valueA;
+
         array b = [];
         
         for valueA in this->a {
@@ -1515,6 +1525,7 @@ class Vector implements Tensor
     public function clipUpper(const float max) -> <Vector>
     {
         var valueA;
+
         array b = [];
 
         for valueA in this->a {
@@ -1538,6 +1549,7 @@ class Vector implements Tensor
     public function sign() -> <Vector>
     {
         var valueA;
+
         array b = [];
 
         for valueA in this->a {
@@ -1561,6 +1573,7 @@ class Vector implements Tensor
     public function negate() -> <Vector>
     {
         var valueA;
+        
         array b = [];
 
         for valueA in this->a {

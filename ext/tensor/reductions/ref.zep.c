@@ -230,7 +230,7 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 				object_init_ex(&_22$$6, spl_ce_RuntimeException);
 				ZEPHIR_INIT_NVAR(&_23$$6);
 				ZEPHIR_CONCAT_SS(&_23$$6, "Cannot compute row echelon form", " of a singular matrix.");
-				ZEPHIR_CALL_METHOD(NULL, &_22$$6, "__construct", &_24, 31, &_23$$6);
+				ZEPHIR_CALL_METHOD(NULL, &_22$$6, "__construct", &_24, 30, &_23$$6);
 				zephir_check_call_status();
 				zephir_throw_exception_debug(&_22$$6, "tensor/reductions/ref.zep", 86);
 				ZEPHIR_MM_RESTORE();

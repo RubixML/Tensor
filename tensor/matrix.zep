@@ -238,6 +238,7 @@ class Matrix implements Tensor
         }
 
         float r, phi;
+        
         array a = [];
         array rowA = [];
         array extras = [];
@@ -944,10 +945,13 @@ class Matrix implements Tensor
         }
 
         array bT = [];
+        array c = [];
 
         let bT = (array) b->transpose()->asArray();
+
+        let c = (array) matmul(this->a, bT);
          
-        return self::quick(matmul(this->a, bT));
+        return self::quick(c);
     }
 
     /**
@@ -1660,7 +1664,7 @@ class Matrix implements Tensor
      */
     public function log(const float base = self::M_E) -> <Matrix>
     {
-        if (base === self::M_E) {
+        if base === self::M_E {
             return this->map("log");
         }
 
@@ -1949,12 +1953,17 @@ class Matrix implements Tensor
      */
     public function round(const int precision = 0) -> <Matrix>
     {
+        if precision === 0 {
+            return this->map("round");
+        }
+
         if unlikely precision < 0 {
             throw new InvalidArgumentException("Decimal precision cannot"
                 . " be less than 0, ". strval(precision) . " given.");
         }
 
         var rowA, valueA;
+
         array b = [];
         array rowB = [];
 
@@ -2008,6 +2017,7 @@ class Matrix implements Tensor
         }
 
         var rowA, valueA;
+
         array b = [];
         array rowB = [];
 
@@ -2045,6 +2055,7 @@ class Matrix implements Tensor
     public function clipLower(const float min) -> <Matrix>
     {
         var rowA, valueA;
+
         array b = [];
         array rowB = [];
 
@@ -2076,6 +2087,7 @@ class Matrix implements Tensor
     public function clipUpper(const float max) -> <Matrix>
     {
         var rowA, valueA;
+
         array b = [];
         array rowB = [];
 
@@ -2106,6 +2118,7 @@ class Matrix implements Tensor
     public function sign() -> <Matrix>
     {
         var rowA, valueA;
+        
         array b = [];
         array rowB = [];
 
@@ -2136,6 +2149,7 @@ class Matrix implements Tensor
     public function negate() -> <Matrix>
     {
         var rowA, valueA;
+
         array b = [];
         array rowB = [];
 

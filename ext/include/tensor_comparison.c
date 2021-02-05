@@ -4,7 +4,6 @@
 
 #include <php.h>
 
-#include "kernel/memory.h"
 #include "kernel/operators.h"
 
 void tensor_equal(zval * return_value, zval * a, zval * b)
@@ -14,10 +13,6 @@ void tensor_equal(zval * return_value, zval * a, zval * b)
     zval comparison;
 	zval c;
 
-    zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-
-    ZEPHIR_MM_GROW();
-
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
 
@@ -36,8 +31,6 @@ void tensor_equal(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
-    
-    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_not_equal(zval * return_value, zval * a, zval * b)
@@ -47,10 +40,6 @@ void tensor_not_equal(zval * return_value, zval * a, zval * b)
     zval comparison;
 	zval c;
 
-    zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-
-    ZEPHIR_MM_GROW();
-
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
 
@@ -69,8 +58,6 @@ void tensor_not_equal(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
-
-    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_greater(zval * return_value, zval * a, zval * b)
@@ -79,10 +66,6 @@ void tensor_greater(zval * return_value, zval * a, zval * b)
 	zend_ulong offset;
     zval comparison;
 	zval c;
-
-    zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-
-    ZEPHIR_MM_GROW();
 
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
@@ -102,8 +85,6 @@ void tensor_greater(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
-
-    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_greater_equal(zval * return_value, zval * a, zval * b)
@@ -112,10 +93,6 @@ void tensor_greater_equal(zval * return_value, zval * a, zval * b)
 	zend_ulong offset;
     zval comparison;
 	zval c;
-
-    zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-
-    ZEPHIR_MM_GROW();
 
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
@@ -135,8 +112,6 @@ void tensor_greater_equal(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
-
-    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_less(zval * return_value, zval * a, zval * b)
@@ -145,10 +120,6 @@ void tensor_less(zval * return_value, zval * a, zval * b)
 	zend_ulong offset;
     zval comparison;
 	zval c;
-
-    zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-
-    ZEPHIR_MM_GROW();
 
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
@@ -168,8 +139,6 @@ void tensor_less(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
-
-    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_less_equal(zval * return_value, zval * a, zval * b)
@@ -178,10 +147,6 @@ void tensor_less_equal(zval * return_value, zval * a, zval * b)
 	zend_ulong offset;
     zval comparison;
 	zval c;
-
-    zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-
-    ZEPHIR_MM_GROW();
 
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
@@ -201,6 +166,4 @@ void tensor_less_equal(zval * return_value, zval * a, zval * b)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
-
-    ZEPHIR_MM_RESTORE();
 }

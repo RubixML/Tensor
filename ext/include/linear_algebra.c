@@ -4,7 +4,6 @@
 
 #include <php.h>
 
-#include "kernel/memory.h"
 #include "kernel/operators.h"
 
 void tensor_matmul(zval * return_value, zval * a, zval * bT)
@@ -12,10 +11,6 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
     zval * rowA, * columnB;
     zval rowC, c;
     zval sigma;
-
-    zephir_method_globals * ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-
-    ZEPHIR_MM_GROW();
 
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bTHat = Z_ARR_P(bT);
@@ -38,8 +33,6 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
     } ZEND_HASH_FOREACH_END();
 
     RETVAL_ARR(Z_ARR(c));
-
-    ZEPHIR_MM_RESTORE();
 }
 
 void tensor_dot(zval * return_value, zval * a, zval * b)

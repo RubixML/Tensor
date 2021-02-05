@@ -2,12 +2,13 @@
 #include "config.h"
 #endif
 
-#include "php.h"
+#include <php.h>
+
 #include "kernel/operators.h"
 
 void tensor_argmin(zval * return_value, zval * values)
 {
-	zval *current, min;
+	zval * current, min;
 	zend_ulong index;
 
     ZVAL_DOUBLE(&min, INFINITY);
@@ -24,7 +25,7 @@ void tensor_argmin(zval * return_value, zval * values)
 
 void tensor_argmax(zval * return_value, zval * values)
 {
-	zval *current, max;
+	zval * current, max;
 	zend_ulong index;
 
     ZVAL_DOUBLE(&max, -INFINITY);
