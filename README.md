@@ -57,6 +57,10 @@ To confirm that the extension is loaded in PHP, you can run the following comman
 php -m | grep tensor
 ```
 
+## Performance
+
+![Tensor Performance](https://raw.githubusercontent.com/RubixML/Tensor/master/docs/images/tensor-performance-mnist.png)
+
 ## Funding
 Rubix ML is funded by donations from the community. You can become a sponsor by making a contribution to one of our funding sources below.
 
