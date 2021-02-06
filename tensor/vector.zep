@@ -2126,14 +2126,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA * b;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_multiply_scalar(this->a, b));
     }
 
     /**
@@ -2151,14 +2144,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA / b;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_divide_scalar(this->a, b));
     }
 
     /**
@@ -2176,14 +2162,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA + b;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_add_scalar(this->a, b));
     }
 
     /**
@@ -2201,14 +2180,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA - b;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_subtract_scalar(this->a, b));
     }
 
     /**
@@ -2226,14 +2198,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = pow(valueA, b);
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_pow_scalar(this->a, b));
      }
 
     /**
@@ -2251,14 +2216,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA % b;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_mod_scalar(this->a, b));
     }
 
     /**

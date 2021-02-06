@@ -1,5 +1,5 @@
 - 2.1.2
-    - Blanket extension optimizations
+    - Optimize scalar arithmetic and comparisons
 
 - 2.1.1
     - Zephir redux

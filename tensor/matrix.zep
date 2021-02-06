@@ -3037,20 +3037,12 @@ class Matrix implements Tensor
                 . (string) b->m() . ".");
         }
 
-        var i, rowA, valueA, valueB;
+        var i, valueB;
+
         array c = [];
-        array rowC = [];
 
         for i, valueB in b->asArray() {
-            let rowA = this->a[i];
-            
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA * valueB;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_multiply_scalar(this->a[i], valueB);
         }
 
         return self::quick(c);
@@ -3071,20 +3063,12 @@ class Matrix implements Tensor
                 . (string) b->m() . ".");
         }
 
-        var i, rowA, valueA, valueB;
+        var i, valueB;
+
         array c = [];
-        array rowC = [];
 
         for i, valueB in b->asArray() {
-            let rowA = this->a[i];
-            
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA / valueB;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_divide_scalar(this->a[i], valueB);
         }
 
         return self::quick(c);
@@ -3105,20 +3089,12 @@ class Matrix implements Tensor
                 . (string) b->m() . ".");
         }
 
-        var i, rowA, valueA, valueB;
+        var i, valueB;
+
         array c = [];
-        array rowC = [];
 
         for i, valueB in b->asArray() {
-            let rowA = this->a[i];
-            
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA + valueB;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_add_scalar(this->a[i], valueB);
         }
 
         return self::quick(c);
@@ -3139,20 +3115,12 @@ class Matrix implements Tensor
                 . (string) b->m() . ".");
         }
 
-        var i, rowA, valueA, valueB;
+        var i, valueB;
+
         array c = [];
-        array rowC = [];
 
         for i, valueB in b->asArray() {
-            let rowA = this->a[i];
-            
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA - valueB;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_subtract_scalar(this->a[i], valueB);
         }
 
         return self::quick(c);
@@ -3173,20 +3141,12 @@ class Matrix implements Tensor
                 . (string) b->m() . ".");
         }
 
-        var i, rowA, valueA, valueB;
+        var i, valueB;
+
         array c = [];
-        array rowC = [];
 
         for i, valueB in b->asArray() {
-            let rowA = this->a[i];
-            
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = pow(valueA, valueB);
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_pow_scalar(this->a[i], valueB);
         }
 
         return self::quick(c);
@@ -3207,20 +3167,12 @@ class Matrix implements Tensor
                 . (string) b->m() . ".");
         }
 
-        var i, rowA, valueA, valueB;
+        var i, valueB;
+
         array c = [];
-        array rowC = [];
 
         for i, valueB in b->asArray() {
-            let rowA = this->a[i];
-            
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA % valueB;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_mod_scalar(this->a[i], valueB);
         }
 
         return self::quick(c);
@@ -3450,18 +3402,12 @@ class Matrix implements Tensor
                 . " floating point number, " . gettype(b) . " given.");
         }
 
-        var rowA, valueA;
+        var rowA;
+
         array c = [];
-        array rowC = [];
 
         for rowA in this->a {
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA * b;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_multiply_scalar(rowA, b);
         }
 
         return self::quick(c);
@@ -3481,18 +3427,12 @@ class Matrix implements Tensor
                 . " floating point number, " . gettype(b) . " given.");
         }
 
-        var rowA, valueA;
+        var rowA;
+
         array c = [];
-        array rowC = [];
 
         for rowA in this->a {
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA / b;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_divide_scalar(rowA, b);
         }
 
         return self::quick(c);
@@ -3512,18 +3452,12 @@ class Matrix implements Tensor
                 . " floating point number, " . gettype(b) . " given.");
         }
 
-        var rowA, valueA;
+        var rowA;
+
         array c = [];
-        array rowC = [];
 
         for rowA in this->a {
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA + b;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_add_scalar(rowA, b);
         }
 
         return self::quick(c);
@@ -3543,18 +3477,12 @@ class Matrix implements Tensor
                 . " floating point number, " . gettype(b) . " given.");
         }
 
-        var rowA, valueA;
+        var rowA;
+
         array c = [];
-        array rowC = [];
 
         for rowA in this->a {
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA - b;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_subtract_scalar(rowA, b);
         }
 
         return self::quick(c);
@@ -3575,18 +3503,12 @@ class Matrix implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var rowA, valueA;
+        var rowA;
+
         array c = [];
-        array rowC = [];
 
         for rowA in this->a {
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = pow(valueA, b);
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_pow_scalar(rowA, b);
         }
 
         return self::quick(c);
@@ -3606,18 +3528,12 @@ class Matrix implements Tensor
                 . " floating point number, " . gettype(b) . " given.");
         }
 
-        var rowA, valueA;
+        var rowA;
+
         array c = [];
-        array rowC = [];
 
         for rowA in this->a {
-            let rowC = [];
-
-            for valueA in rowA {
-                let rowC[] = valueA % b;
-            }
-
-            let c[] = rowC;
+            let c[] = tensor_mod_scalar(rowA, b);
         }
 
         return self::quick(c);
