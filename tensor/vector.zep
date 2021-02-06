@@ -2235,14 +2235,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA == b ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_equal_scalar(this->a, b));
     }
 
     /**
@@ -2261,14 +2254,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA != b ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_not_equal_scalar(this->a, b));
     }
 
     /**
@@ -2287,14 +2273,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA > b ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_greater_scalar(this->a, b));
     }
 
     /**
@@ -2313,14 +2292,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA >= b ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_greater_equal_scalar(this->a, b));
     }
 
     /**
@@ -2339,14 +2311,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA < b ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_less_scalar(this->a, b));
     }
 
     /**
@@ -2365,14 +2330,7 @@ class Vector implements Tensor
                 . gettype(b) . " given.");
         }
 
-        var valueA;
-        array c = [];
-
-        for valueA in this->a {
-            let c[] = valueA <= b ? 1 : 0;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_less_equal_scalar(this->a, b));
     }
 
     /**
