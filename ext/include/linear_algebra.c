@@ -8,29 +8,32 @@
 
 void tensor_matmul(zval * return_value, zval * a, zval * bT)
 {
-    zval * rowA, * columnB;
+    int i, j;
     zval rowC, c;
     zval sigma;
 
     zend_array * aHat = Z_ARR_P(a);
-    zend_array * bTHat = Z_ARR_P(bT);
+    zend_array * bHat = Z_ARR_P(bT);
+
+    Bucket * va = aHat->arData;
+    Bucket * vb = bHat->arData;
 
     int m = zend_array_count(aHat);
-    int n = zend_array_count(bTHat);
+    int n = zend_array_count(bHat);
 
     array_init_size(&c, m);
 
-    ZEND_HASH_FOREACH_VAL(aHat, rowA) {
+    for (i = 0; i < m; i++) {
         array_init_size(&rowC, n);
 
-        ZEND_HASH_FOREACH_VAL(bTHat, columnB) {
-            tensor_dot(&sigma, rowA, columnB);
+        for (j = 0; j < n; j++) {
+            tensor_dot(&sigma, &va[i].val, &vb[j].val);
             
             add_next_index_zval(&rowC, &sigma);
-        } ZEND_HASH_FOREACH_END();
+        }
 
         add_next_index_zval(&c, &rowC);
-    } ZEND_HASH_FOREACH_END();
+    }
 
     RETVAL_ARR(Z_ARR(c));
 }
