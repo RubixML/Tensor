@@ -8,18 +8,38 @@
 
 void tensor_matmul(zval * return_value, zval * a, zval * bT)
 {
-    int i, j;
+    int i, j, k;
+    double sigma;
     zval rowC, c;
-    zval sigma;
 
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(bT);
 
-    Bucket * va = aHat->arData;
-    Bucket * vb = bHat->arData;
+    Bucket * ba = aHat->arData;
+    Bucket * bb = bHat->arData;
 
     int m = zend_array_count(aHat);
     int n = zend_array_count(bHat);
+    int p = zend_array_count(Z_ARR(ba[0].val));
+
+    double va[m * p];
+    double vb[n * p];
+
+    for (i = 0; i < m; i++) {
+        Bucket * bba = Z_ARR(ba[i].val)->arData;
+
+        for (j = 0; j < p; j++) {
+            va[i * p + j] = zephir_get_doubleval(&bba[j].val);
+        }
+    }
+
+    for (i = 0; i < n; i++) {
+        Bucket * bbb = Z_ARR(bb[i].val)->arData;
+
+        for (j = 0; j < p; j++) {
+            vb[i * p + j] = zephir_get_doubleval(&bbb[j].val);
+        }
+    }
 
     array_init_size(&c, m);
 
@@ -27,9 +47,13 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
         array_init_size(&rowC, n);
 
         for (j = 0; j < n; j++) {
-            tensor_dot(&sigma, &va[i].val, &vb[j].val);
-            
-            add_next_index_zval(&rowC, &sigma);
+            sigma = 0.0;
+
+            for (k = 0; k < p; k++) {
+                sigma += va[i * p + k] * vb[j * p + k];
+            }
+                    
+            add_next_index_double(&rowC, sigma);
         }
 
         add_next_index_zval(&c, &rowC);
