@@ -22,8 +22,8 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
     int n = zend_array_count(bHat);
     int p = zend_array_count(Z_ARR(ba[0].val));
 
-    double va[m * p];
-    double vb[n * p];
+    double * va = emalloc(m * p * sizeof(double));
+    double * vb = emalloc(n * p * sizeof(double));
 
     for (i = 0; i < m; i++) {
         Bucket * bba = Z_ARR(ba[i].val)->arData;
@@ -58,6 +58,9 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
 
         add_next_index_zval(&c, &rowC);
     }
+
+    efree(va);
+    efree(vb);
 
     RETVAL_ARR(Z_ARR(c));
 }
