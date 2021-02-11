@@ -1,8 +1,8 @@
-# Tensor: Scientific Computing for PHP
+# Tensor
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/rubix/tensor.svg?style=flat&colorB=8892BF)](https://www.php.net/) [![Latest Stable Version](https://img.shields.io/packagist/v/rubix/tensor.svg?style=flat&colorB=orange)](https://packagist.org/packages/rubix/tensor) [![Build](https://github.com/RubixML/Tensor/workflows/Build/badge.svg)](https://github.com/RubixML/Tensor/actions) [![Downloads from Packagist](https://img.shields.io/packagist/dt/rubix/tensor.svg?style=flat&colorB=red)](https://packagist.org/packages/rubix/tensor) [![GitHub](https://img.shields.io/github/license/RubixML/Tensor)](https://github.com/RubixML/Tensor/blob/master/LICENSE.md)
 
-Tensor is a library and extension that provides objects for computing large sets of numbers in [PHP](https://php.net). It is used by libraries such as [Rubix ML](https://rubixml.com) to build and accelerate machine learning algorithms such as neural networks.
+Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net). It is used by libraries such as [Rubix ML](https://rubixml.com) to build and accelerate machine learning algorithms such as neural networks.
 
 ## Installation
 Install Tensor into your project with [Composer](https://getcomposer.org/):
@@ -33,7 +33,7 @@ $ git clone https://github.com/RubixML/Tensor
 Make sure you have all the necessary build tools installed such as a C compiler and make tools. For example, on an Ubuntu linux system you can enter the following on the command line to install the necessary packages.
 
 ```sh
-$ sudo apt-get install gcc make re2c php-dev libpcre3-dev build-essential
+$ sudo apt-get install gcc make php-dev libopenblas-dev re2c libpcre3-dev build-essential
 ```
 
 Then, change into the `ext` directory from the project root and run the following commands from the terminal. See [this guide](https://www.php.net/manual/en/install.pecl.phpize.php) for more information on compiling PHP extensions with PHPize.
@@ -58,7 +58,7 @@ To confirm that the extension is loaded in PHP, you can run the following comman
 php -m | grep tensor
 ```
 
-## Performance
+## Performance Comparison
 
 ![Tensor Performance](https://raw.githubusercontent.com/RubixML/Tensor/master/docs/images/tensor-performance-mnist.png)
 
