@@ -14,9 +14,9 @@ void tensor_matmul(zval * return_value, zval * a, zval * b)
     Bucket * row;
     zval rowC, c;
 
-    zend_zephir_globals_def * zephir_globals_ptr = ZEPHIR_VGLOBAL;
+    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
 
-    openblas_set_num_threads(zephir_globals_ptr->num_threads);
+    openblas_set_num_threads(zephir_globals->num_threads);
 
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
@@ -62,29 +62,29 @@ void tensor_matmul(zval * return_value, zval * a, zval * b)
         add_next_index_zval(&c, &rowC);
     }
 
+    RETVAL_ARR(Z_ARR(c));
+
     efree(va);
     efree(vb);
     efree(vc);
-
-    RETVAL_ARR(Z_ARR(c));
 }
 
 void tensor_dot(zval * return_value, zval * a, zval * b)
 {
+    unsigned int i;
+
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
 
-    Bucket * va = aHat->arData;
-    Bucket * vb = bHat->arData;
+    Bucket * ba = aHat->arData;
+    Bucket * bb = bHat->arData;
 
-    int i;
-
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
     double sigma = 0.0;
 
     for (i = 0; i < n; i++) {
-        sigma += zephir_get_doubleval(&va[i].val) * zephir_get_doubleval(&vb[i].val);
+        sigma += zephir_get_doubleval(&ba[i].val) * zephir_get_doubleval(&bb[i].val);
     }
 
     RETVAL_DOUBLE(sigma);
