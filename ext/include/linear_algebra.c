@@ -43,7 +43,7 @@ void tensor_matmul(zval * return_value, zval * a, zval * b)
         }
     }
 
-    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, p, 1, va, m, vb, n, 1, vc, n);
+    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, p, 1, va, p, vb, n, 1, vc, n);
 
     array_init_size(&c, m);
 
