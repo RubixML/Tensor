@@ -814,6 +814,17 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $z);
         $this->assertEquals($expected, $z->asArray());
+
+        $z = $this->a->matmul($this->c);
+
+        $expected = [
+            [-49.0, 69.0, -181.0],
+            [47.0, 59.0, -21.0],
+            [164.0, 111.0, -396.0],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
     }
 
     /**
