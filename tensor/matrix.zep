@@ -943,15 +943,8 @@ class Matrix implements Tensor
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
-
-        array bT = [];
-        array c = [];
-
-        let bT = (array) b->transpose()->asArray();
-
-        let c = (array) matmul(this->a, bT);
          
-        return self::quick(c);
+        return self::quick(matmul(this->a, b->asArray()));
     }
 
     /**

@@ -3,23 +3,52 @@
 #endif
 
 #include <php.h>
+#include <cblas.h>
 
+#include "php_ext.h"
 #include "kernel/operators.h"
 
-void tensor_matmul(zval * return_value, zval * a, zval * bT)
+void tensor_matmul(zval * return_value, zval * a, zval * b)
 {
-    int i, j;
+    unsigned int i, j;
+    Bucket * row;
     zval rowC, c;
-    zval sigma;
+
+    zend_zephir_globals_def * zephir_globals_ptr = ZEPHIR_VGLOBAL;
+
+    openblas_set_num_threads(zephir_globals_ptr->num_threads);
 
     zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(bT);
+    zend_array * bHat = Z_ARR_P(b);
 
-    Bucket * va = aHat->arData;
-    Bucket * vb = bHat->arData;
+    Bucket * ba = aHat->arData;
+    Bucket * bb = bHat->arData;
 
-    int m = zend_array_count(aHat);
-    int n = zend_array_count(bHat);
+    unsigned int m = zend_array_count(aHat);
+    unsigned int p = zend_array_count(bHat);
+    unsigned int n = zend_array_count(Z_ARR(bb[0].val));
+
+    double * va = emalloc(m * p * sizeof(double));
+    double * vb = emalloc(n * p * sizeof(double));
+    double * vc = emalloc(m * n * sizeof(double));
+
+    for (i = 0; i < m; i++) {
+        row = Z_ARR(ba[i].val)->arData;
+
+        for (j = 0; j < p; j++) {
+            va[i * p + j] = zephir_get_doubleval(&row[j].val);
+        }
+    }
+
+    for (i = 0; i < p; i++) {
+        row = Z_ARR(bb[i].val)->arData;
+
+        for (j = 0; j < n; j++) {
+            vb[i * n + j] = zephir_get_doubleval(&row[j].val);
+        }
+    }
+
+    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, p, 1.0, va, p, vb, n, 0.0, vc, n);
 
     array_init_size(&c, m);
 
@@ -27,13 +56,15 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
         array_init_size(&rowC, n);
 
         for (j = 0; j < n; j++) {
-            tensor_dot(&sigma, &va[i].val, &vb[j].val);
-            
-            add_next_index_zval(&rowC, &sigma);
+            add_next_index_double(&rowC, vc[i * n + j]);
         }
 
         add_next_index_zval(&c, &rowC);
     }
+
+    efree(va);
+    efree(vb);
+    efree(vc);
 
     RETVAL_ARR(Z_ARR(c));
 }

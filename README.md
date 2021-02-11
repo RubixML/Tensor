@@ -16,6 +16,7 @@ $ composer require rubix/tensor
 ### Optional To Compile Extension
 - A C compiler such as [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/), or [Visual C++](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
 - The PHP development package (source code and tooling)
+- [OpenBLAS](https://www.openblas.net/) development package (libopenblas-dev)
 - [re2c](https://re2c.org/) 0.13.6 or later
 - [GNU make](https://www.gnu.org/software/make/) 3.81 or later
 - [autoconf](https://www.gnu.org/software/autoconf/autoconf.html) 2.31 or later
