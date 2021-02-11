@@ -11,7 +11,7 @@
 #include "kernel/globals.h"
 
 #define PHP_TENSOR_NAME        "tensor"
-#define PHP_TENSOR_VERSION     "2.1.2"
+#define PHP_TENSOR_VERSION     "2.1.3"
 #define PHP_TENSOR_EXTNAME     "tensor"
 #define PHP_TENSOR_AUTHOR      "Andrew DalPino"
 #define PHP_TENSOR_ZEPVERSION  "0.12.20-$Id$"
@@ -35,6 +35,9 @@ ZEND_BEGIN_MODULE_GLOBALS(tensor)
 	unsigned int recursive_lock;
 
 	
+	int num_threads;
+
+
 ZEND_END_MODULE_GLOBALS(tensor)
 
 #ifdef ZTS

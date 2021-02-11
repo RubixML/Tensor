@@ -5,6 +5,7 @@
 #include <php.h>
 #include <cblas.h>
 
+#include "php_ext.h"
 #include "kernel/operators.h"
 
 void tensor_matmul(zval * return_value, zval * a, zval * b)
@@ -12,6 +13,10 @@ void tensor_matmul(zval * return_value, zval * a, zval * b)
     unsigned int i, j;
     Bucket * row;
     zval rowC, c;
+
+    zend_zephir_globals_def * zephir_globals_ptr = ZEPHIR_VGLOBAL;
+
+    openblas_set_num_threads(zephir_globals_ptr->num_threads);
 
     zend_array * aHat = Z_ARR_P(a);
     zend_array * bHat = Z_ARR_P(b);
