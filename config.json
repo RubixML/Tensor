@@ -16,6 +16,7 @@
         "include/tensor_comparison.c",
         "include/indexing.c"
     ],
+    "extra-libs": "-lopenblas",
     "optimizer-dirs": [
         "optimizers"
     ],

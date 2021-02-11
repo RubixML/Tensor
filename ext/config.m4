@@ -4,8 +4,8 @@ if test "$PHP_TENSOR" = "yes"; then
 
 	
 
-	if ! test "x" = "x"; then
-		PHP_EVAL_LIBLINE(, TENSOR_SHARED_LIBADD)
+	if ! test "x-lopenblas" = "x"; then
+		PHP_EVAL_LIBLINE(-lopenblas, TENSOR_SHARED_LIBADD)
 	fi
 
 	AC_DEFINE(HAVE_TENSOR, 1, [Whether you have Tensor])

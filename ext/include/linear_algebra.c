@@ -3,43 +3,47 @@
 #endif
 
 #include <php.h>
+#include <cblas.h>
 
 #include "kernel/operators.h"
 
-void tensor_matmul(zval * return_value, zval * a, zval * bT)
+void tensor_matmul(zval * return_value, zval * a, zval * b)
 {
-    int i, j, k;
-    double sigma;
+    unsigned int i, j;
+    Bucket * row;
     zval rowC, c;
 
     zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(bT);
+    zend_array * bHat = Z_ARR_P(b);
 
     Bucket * ba = aHat->arData;
     Bucket * bb = bHat->arData;
 
-    int m = zend_array_count(aHat);
-    int n = zend_array_count(bHat);
-    int p = zend_array_count(Z_ARR(ba[0].val));
+    unsigned int m = zend_array_count(aHat);
+    unsigned int p = zend_array_count(bHat);
+    unsigned int n = zend_array_count(Z_ARR(bb[0].val));
 
     double * va = emalloc(m * p * sizeof(double));
     double * vb = emalloc(n * p * sizeof(double));
+    double * vc = emalloc(m * n * sizeof(double));
 
     for (i = 0; i < m; i++) {
-        Bucket * bba = Z_ARR(ba[i].val)->arData;
+        row = Z_ARR(ba[i].val)->arData;
 
         for (j = 0; j < p; j++) {
-            va[i * p + j] = zephir_get_doubleval(&bba[j].val);
+            va[i * p + j] = zephir_get_doubleval(&row[j].val);
         }
     }
 
-    for (i = 0; i < n; i++) {
-        Bucket * bbb = Z_ARR(bb[i].val)->arData;
+    for (i = 0; i < p; i++) {
+        row = Z_ARR(bb[i].val)->arData;
 
-        for (j = 0; j < p; j++) {
-            vb[i * p + j] = zephir_get_doubleval(&bbb[j].val);
+        for (j = 0; j < n; j++) {
+            vb[i * n + j] = zephir_get_doubleval(&row[j].val);
         }
     }
+
+    cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, p, 1, va, m, vb, n, 1, vc, n);
 
     array_init_size(&c, m);
 
@@ -47,13 +51,7 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
         array_init_size(&rowC, n);
 
         for (j = 0; j < n; j++) {
-            sigma = 0.0;
-
-            for (k = 0; k < p; k++) {
-                sigma += va[i * p + k] * vb[j * p + k];
-            }
-                    
-            add_next_index_double(&rowC, sigma);
+            add_next_index_double(&rowC, vc[i * n + j]);
         }
 
         add_next_index_zval(&c, &rowC);
@@ -61,6 +59,7 @@ void tensor_matmul(zval * return_value, zval * a, zval * bT)
 
     efree(va);
     efree(vb);
+    efree(vc);
 
     RETVAL_ARR(Z_ARR(c));
 }
