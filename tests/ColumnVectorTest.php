@@ -8,6 +8,7 @@ use Tensor\Matrix;
 use Tensor\ArrayLike;
 use Tensor\Arithmetic;
 use Tensor\Comparable;
+use Tensor\Functional;
 use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
@@ -59,6 +60,7 @@ class ColumnVectorTest extends TestCase
         $this->assertInstanceOf(Tensor::class, $this->a);
         $this->assertInstanceOf(Arithmetic::class, $this->a);
         $this->assertInstanceOf(Comparable::class, $this->a);
+        $this->assertInstanceOf(Functional::class, $this->a);
         $this->assertInstanceOf(Trigonometric::class, $this->a);
         $this->assertInstanceOf(Statistical::class, $this->a);
         $this->assertInstanceOf(ArrayLike::class, $this->a);

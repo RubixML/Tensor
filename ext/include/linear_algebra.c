@@ -32,18 +32,18 @@ void tensor_matmul(zval * return_value, zval * a, zval * b)
     double * vb = emalloc(n * p * sizeof(double));
     double * vc = emalloc(m * n * sizeof(double));
 
-    for (i = 0; i < m; i++) {
+    for (i = 0; i < m; ++i) {
         row = Z_ARR(ba[i].val)->arData;
 
-        for (j = 0; j < p; j++) {
+        for (j = 0; j < p; ++j) {
             va[i * p + j] = zephir_get_doubleval(&row[j].val);
         }
     }
 
-    for (i = 0; i < p; i++) {
+    for (i = 0; i < p; ++i) {
         row = Z_ARR(bb[i].val)->arData;
 
-        for (j = 0; j < n; j++) {
+        for (j = 0; j < n; ++j) {
             vb[i * n + j] = zephir_get_doubleval(&row[j].val);
         }
     }
@@ -52,10 +52,10 @@ void tensor_matmul(zval * return_value, zval * a, zval * b)
 
     array_init_size(&c, m);
 
-    for (i = 0; i < m; i++) {
+    for (i = 0; i < m; ++i) {
         array_init_size(&rowC, n);
 
-        for (j = 0; j < n; j++) {
+        for (j = 0; j < n; ++j) {
             add_next_index_double(&rowC, vc[i * n + j]);
         }
 
@@ -83,7 +83,7 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
 
     double sigma = 0.0;
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         sigma += zephir_get_doubleval(&ba[i].val) * zephir_get_doubleval(&bb[i].val);
     }
 

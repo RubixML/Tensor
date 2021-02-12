@@ -944,7 +944,7 @@ class Matrix implements Tensor
                 . (string) b->m() . ".");
         }
          
-        return self::quick(matmul(this->a, b->asArray()));
+        return self::quick(tensor_matmul(this->a, b->asArray()));
     }
 
     /**

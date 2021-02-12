@@ -7,6 +7,7 @@
 #include "tensor/arithmetic.zep.h"
 #include "tensor/arraylike.zep.h"
 #include "tensor/comparable.zep.h"
+#include "tensor/functional.zep.h"
 #include "tensor/statistical.zep.h"
 #include "tensor/trigonometric.zep.h"
 #include "tensor/tensor.zep.h"

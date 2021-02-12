@@ -8,7 +8,7 @@
 
 void tensor_equal(zval * return_value, zval * a, zval * b)
 {
-    int i;
+    unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -17,11 +17,11 @@ void tensor_equal(zval * return_value, zval * a, zval * b)
     Bucket * va = aHat->arData;
     Bucket * vb = bHat->arData;
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) == zephir_get_doubleval(&vb[i].val)) {
             add_next_index_long(&c, 1);
         } else {
@@ -34,7 +34,7 @@ void tensor_equal(zval * return_value, zval * a, zval * b)
 
 void tensor_not_equal(zval * return_value, zval * a, zval * b)
 {
-    int i;
+    unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -43,11 +43,11 @@ void tensor_not_equal(zval * return_value, zval * a, zval * b)
     Bucket * va = aHat->arData;
     Bucket * vb = bHat->arData;
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) != zephir_get_doubleval(&vb[i].val)) {
             add_next_index_long(&c, 1);
         } else {
@@ -60,7 +60,7 @@ void tensor_not_equal(zval * return_value, zval * a, zval * b)
 
 void tensor_greater(zval * return_value, zval * a, zval * b)
 {
-    int i;
+    unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -69,11 +69,11 @@ void tensor_greater(zval * return_value, zval * a, zval * b)
     Bucket * va = aHat->arData;
     Bucket * vb = bHat->arData;
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) > zephir_get_doubleval(&vb[i].val)) {
             add_next_index_long(&c, 1);
         } else {
@@ -86,7 +86,7 @@ void tensor_greater(zval * return_value, zval * a, zval * b)
 
 void tensor_greater_equal(zval * return_value, zval * a, zval * b)
 {
-    int i;
+    unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -95,11 +95,11 @@ void tensor_greater_equal(zval * return_value, zval * a, zval * b)
     Bucket * va = aHat->arData;
     Bucket * vb = bHat->arData;
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) >= zephir_get_doubleval(&vb[i].val)) {
             add_next_index_long(&c, 1);
         } else {
@@ -112,7 +112,7 @@ void tensor_greater_equal(zval * return_value, zval * a, zval * b)
 
 void tensor_less(zval * return_value, zval * a, zval * b)
 {
-    int i;
+    unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -121,11 +121,11 @@ void tensor_less(zval * return_value, zval * a, zval * b)
     Bucket * va = aHat->arData;
     Bucket * vb = bHat->arData;
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) < zephir_get_doubleval(&vb[i].val)) {
             add_next_index_long(&c, 1);
         } else {
@@ -138,7 +138,7 @@ void tensor_less(zval * return_value, zval * a, zval * b)
 
 void tensor_less_equal(zval * return_value, zval * a, zval * b)
 {
-    int i;
+    unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -147,11 +147,11 @@ void tensor_less_equal(zval * return_value, zval * a, zval * b)
     Bucket * va = aHat->arData;
     Bucket * vb = bHat->arData;
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) <= zephir_get_doubleval(&vb[i].val)) {
             add_next_index_long(&c, 1);
         } else {
@@ -164,7 +164,7 @@ void tensor_less_equal(zval * return_value, zval * a, zval * b)
 
 void tensor_equal_scalar(zval * return_value, zval * a, zval * b)
 {
-	int i;
+	unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -173,11 +173,11 @@ void tensor_equal_scalar(zval * return_value, zval * a, zval * b)
 
     double bHat = zephir_get_doubleval(b);
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) == bHat) {
             add_next_index_long(&c, 1);
         } else {
@@ -190,7 +190,7 @@ void tensor_equal_scalar(zval * return_value, zval * a, zval * b)
 
 void tensor_not_equal_scalar(zval * return_value, zval * a, zval * b)
 {
-	int i;
+	unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -199,11 +199,11 @@ void tensor_not_equal_scalar(zval * return_value, zval * a, zval * b)
 
     double bHat = zephir_get_doubleval(b);
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) != bHat) {
             add_next_index_long(&c, 1);
         } else {
@@ -216,7 +216,7 @@ void tensor_not_equal_scalar(zval * return_value, zval * a, zval * b)
 
 void tensor_greater_scalar(zval * return_value, zval * a, zval * b)
 {
-	int i;
+	unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -225,11 +225,11 @@ void tensor_greater_scalar(zval * return_value, zval * a, zval * b)
 
     double bHat = zephir_get_doubleval(b);
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) > bHat) {
             add_next_index_long(&c, 1);
         } else {
@@ -242,7 +242,7 @@ void tensor_greater_scalar(zval * return_value, zval * a, zval * b)
 
 void tensor_greater_equal_scalar(zval * return_value, zval * a, zval * b)
 {
-	int i;
+	unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -251,11 +251,11 @@ void tensor_greater_equal_scalar(zval * return_value, zval * a, zval * b)
 
     double bHat = zephir_get_doubleval(b);
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) >= bHat) {
             add_next_index_long(&c, 1);
         } else {
@@ -268,7 +268,7 @@ void tensor_greater_equal_scalar(zval * return_value, zval * a, zval * b)
 
 void tensor_less_scalar(zval * return_value, zval * a, zval * b)
 {
-	int i;
+	unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -277,11 +277,11 @@ void tensor_less_scalar(zval * return_value, zval * a, zval * b)
 
     double bHat = zephir_get_doubleval(b);
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) < bHat) {
             add_next_index_long(&c, 1);
         } else {
@@ -294,7 +294,7 @@ void tensor_less_scalar(zval * return_value, zval * a, zval * b)
 
 void tensor_less_equal_scalar(zval * return_value, zval * a, zval * b)
 {
-	int i;
+	unsigned int i;
 	zval c;
 
     zend_array * aHat = Z_ARR_P(a);
@@ -303,11 +303,11 @@ void tensor_less_equal_scalar(zval * return_value, zval * a, zval * b)
 
     double bHat = zephir_get_doubleval(b);
 
-    int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aHat);
 
 	array_init_size(&c, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         if (zephir_get_doubleval(&va[i].val) <= bHat) {
             add_next_index_long(&c, 1);
         } else {

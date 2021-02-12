@@ -549,7 +549,7 @@ class Vector implements Tensor
                 . (string) b->size() . ".");
         }
 
-        return dot(this->a, b->asArray());
+        return tensor_dot(this->a, b->asArray());
     }
 
     /**

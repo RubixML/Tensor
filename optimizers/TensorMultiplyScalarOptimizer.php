@@ -37,7 +37,7 @@ class TensorMultiplyScalarOptimizer extends OptimizerAbstract
 
         if ($symbolVariable->getType() !== 'variable') {
             throw new CompilerException(
-                'Returned values by functions can only be assigned to variant variables.',
+                'Return value must only be assigned to a dynamic variable.',
                 $expression
             );
         }
@@ -47,7 +47,7 @@ class TensorMultiplyScalarOptimizer extends OptimizerAbstract
         }
 
         $context->headersManager->add(
-            'include/tensor_arithmetic',
+            'include/arithmetic',
             HeadersManager::POSITION_LAST
         );
 
@@ -60,7 +60,7 @@ class TensorMultiplyScalarOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_multiply_scalar(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
+            "tensor_multiply_scalar($symbol, {$resolvedParams[0]}, {$resolvedParams[1]});"
         );
 
         return new CompiledExpression(

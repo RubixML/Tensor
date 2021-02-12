@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class DotOptimizer extends OptimizerAbstract
+class TensorDotOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -37,7 +37,7 @@ class DotOptimizer extends OptimizerAbstract
 
         if ($symbolVariable->getType() !== 'variable') {
             throw new CompilerException(
-                'Returned values by functions can only be assigned to variant variables.',
+                'Return value must only be assigned to a dynamic variable.',
                 $expression
             );
         }
@@ -60,7 +60,7 @@ class DotOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_dot(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
+            "tensor_dot($symbol, {$resolvedParams[0]}, {$resolvedParams[1]});"
         );
 
         return new CompiledExpression(

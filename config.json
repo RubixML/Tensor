@@ -8,10 +8,10 @@
     "verbose": true,
     "extra-cflags": "-O3 -ffast-math",
     "extra-sources": [
-        "include/linear_algebra.c",
-        "include/tensor_arithmetic.c",
-        "include/tensor_comparison.c",
-        "include/indexing.c"
+        "include/indexing.c",
+        "include/arithmetic.c",
+        "include/comparison.c",
+        "include/linear_algebra.c"
     ],
     "extra-libs": "-lopenblas -lpthread",
     "globals": {

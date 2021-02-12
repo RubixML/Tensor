@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class MatmulOptimizer extends OptimizerAbstract
+class TensorMatmulOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -26,7 +26,7 @@ class MatmulOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 2) {
             throw new CompilerException(
-                'Matmul accepts exactly two arguments, ' . count($expression['parameters']) . 'given.',
+                'Dot accepts exactly two arguments, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }
@@ -37,7 +37,7 @@ class MatmulOptimizer extends OptimizerAbstract
 
         if ($symbolVariable->getType() !== 'variable') {
             throw new CompilerException(
-                'Returned values by functions can only be assigned to variant variables.',
+                'Return value must only be assigned to a dynamic variable.',
                 $expression
             );
         }
@@ -60,7 +60,7 @@ class MatmulOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_matmul(' . $symbol . ', ' . $resolvedParams[0] . ', ' . $resolvedParams[1] . ');'
+            "tensor_matmul($symbol, {$resolvedParams[0]}, {$resolvedParams[1]});"
         );
 
         return new CompiledExpression(

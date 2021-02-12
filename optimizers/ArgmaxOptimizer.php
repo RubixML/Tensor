@@ -37,7 +37,7 @@ class ArgmaxOptimizer extends OptimizerAbstract
 
         if ($symbolVariable->getType() !== 'variable') {
             throw new CompilerException(
-                'Returned values by functions can only be assigned to variant variables.',
+                'Return value must only be assigned to a dynamic variable.',
                 $expression
             );
         }
@@ -60,7 +60,7 @@ class ArgmaxOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            'tensor_argmax(' . $symbol . ', ' . $resolvedParams[0] . ');'
+            "tensor_argmax($symbol, {$resolvedParams[0]});"
         );
 
         return new CompiledExpression(

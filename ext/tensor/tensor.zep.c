@@ -21,6 +21,7 @@ ZEPHIR_INIT_CLASS(Tensor_Tensor) {
 	zend_class_implements(tensor_tensor_ce, 1, tensor_arraylike_ce);
 	zend_class_implements(tensor_tensor_ce, 1, tensor_arithmetic_ce);
 	zend_class_implements(tensor_tensor_ce, 1, tensor_comparable_ce);
+	zend_class_implements(tensor_tensor_ce, 1, tensor_functional_ce);
 	zend_class_implements(tensor_tensor_ce, 1, tensor_trigonometric_ce);
 	zend_class_implements(tensor_tensor_ce, 1, tensor_statistical_ce);
 	return SUCCESS;
