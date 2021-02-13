@@ -1,4 +1,4 @@
-# Tensor
+# Tensor: Scientific Computing for PHP
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/rubix/tensor.svg?style=flat&colorB=8892BF)](https://www.php.net/) [![Latest Stable Version](https://img.shields.io/packagist/v/rubix/tensor.svg?style=flat&colorB=orange)](https://packagist.org/packages/rubix/tensor) [![Build](https://github.com/RubixML/Tensor/workflows/Build/badge.svg)](https://github.com/RubixML/Tensor/actions) [![Downloads from Packagist](https://img.shields.io/packagist/dt/rubix/tensor.svg?style=flat&colorB=red)](https://packagist.org/packages/rubix/tensor) [![GitHub](https://img.shields.io/github/license/RubixML/Tensor)](https://github.com/RubixML/Tensor/blob/master/LICENSE.md)
 
@@ -15,13 +15,14 @@ $ composer require rubix/tensor
 
 ### Optional To Compile Extension
 - A C compiler such as [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/), or [Visual C++](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
+- The [GFortran](https://gcc.gnu.org/wiki/GFortran) compiler
 - The PHP development package (source code and tooling)
-- [OpenBLAS](https://www.openblas.net/) development package (libopenblas-dev)
+- [OpenBLAS](https://www.openblas.net/) development package
+- [LAPACKE](https://www.netlib.org/lapack/lapacke.html) C interface to [LAPACK](http://www.netlib.org/lapack/)
 - [re2c](https://re2c.org/) 0.13.6 or later
 - [GNU make](https://www.gnu.org/software/make/) 3.81 or later
 - [autoconf](https://www.gnu.org/software/autoconf/autoconf.html) 2.31 or later
 - [automake](https://www.gnu.org/software/automake/) 1.14 or later
-- libpcre3
 - Ubuntu build-essentials
 
 ## Compiling the Extension
@@ -30,10 +31,10 @@ Clone the repository locally using [Git](https://git-scm.com/):
 $ git clone https://github.com/RubixML/Tensor
 ```
 
-Make sure you have all the necessary build tools installed such as a C compiler and make tools. For example, on an Ubuntu linux system you can enter the following on the command line to install the necessary packages.
+Make sure you have all the necessary build tools installed such as a C compiler and make tools. For example, on an Ubuntu linux system you can enter the following on the command line to install the necessary dependencies.
 
 ```sh
-$ sudo apt-get install gcc make php-dev libopenblas-dev re2c libpcre3-dev build-essential
+$ sudo apt-get install gcc gfortran make php-dev libopenblas-dev liblapacke-dev re2c build-essential
 ```
 
 Then, change into the `ext` directory from the project root and run the following commands from the terminal. See [this guide](https://www.php.net/manual/en/install.pecl.phpize.php) for more information on compiling PHP extensions with PHPize.
