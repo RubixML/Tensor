@@ -1,5 +1,6 @@
 - 2.1.3
     - Use BLAS DGEMM for matrix multiplication
+    - Optimize matrix inverse
 
 - 2.1.2
     - Optimize scalar arithmetic and comparisons

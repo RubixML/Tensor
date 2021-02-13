@@ -13,7 +13,7 @@
         "include/comparison.c",
         "include/linear_algebra.c"
     ],
-    "extra-libs": "-lopenblas -lpthread",
+    "extra-libs": "-lopenblas -lgfortran -llapacke",
     "globals": {
         "num_threads": {
             "type": "int",

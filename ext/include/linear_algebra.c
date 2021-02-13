@@ -4,6 +4,7 @@
 
 #include <php.h>
 #include <cblas.h>
+#include <lapacke.h>
 
 #include "php_ext.h"
 #include "kernel/operators.h"
@@ -88,4 +89,62 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
     }
 
     RETVAL_DOUBLE(sigma);
+}
+
+void tensor_inverse(zval * return_value, zval * a)
+{
+    unsigned int i, j;
+    Bucket * row;
+    zval rowB, b;
+    lapack_int status;
+
+    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
+
+    openblas_set_num_threads(zephir_globals->num_threads);
+
+    zend_array * aHat = Z_ARR_P(a);
+
+    Bucket * ba = aHat->arData;
+
+    unsigned int n = zend_array_count(aHat);
+
+    double * va = emalloc(n * n * sizeof(double));
+
+    for (i = 0; i < n; i++) {
+        row = Z_ARR(ba[i].val)->arData;
+
+        for (j = 0; j < n; j++) {
+            va[i * n + j] = zephir_get_doubleval(&row[j].val);
+        }
+    }
+
+    int pivots[n + 1];
+
+    status = LAPACKE_dgetrf(LAPACK_ROW_MAJOR, n, n, va, n, pivots);
+
+    if (status != 0) {
+        RETURN_NULL();
+    }
+    
+    status = LAPACKE_dgetri(LAPACK_ROW_MAJOR, n, va, n, pivots);
+
+    if (status != 0) {
+        RETURN_NULL();
+    }
+
+    array_init_size(&b, n);
+
+    for (i = 0; i < n; i++) {
+        array_init_size(&rowB, n);
+
+        for (j = 0; j < n; j++) {
+            add_next_index_double(&rowB, va[i * n + j]);
+        }
+
+        add_next_index_zval(&b, &rowB);
+    }
+
+    RETVAL_ARR(Z_ARR(b));
+
+    efree(va);
 }

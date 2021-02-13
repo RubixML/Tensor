@@ -775,22 +775,11 @@ class Matrix implements Tensor
      */
     public function inverse() -> <Matrix>
     {
-        var rowA;
-
-        array a = [];
-        array b = [];
-
-        let a = (array) self::identity(this->m)
-            ->augmentLeft(this)
-            ->rref()
-            ->a()
-            ->asArray();
-
-        for rowA in a {
-            let b[] = array_slice(rowA, this->n);
+        if unlikely !this->isSquare() {
+            throw new RuntimeException("Cannot invert a non-square matrix.");
         }
 
-        return self::quick(b);
+        return self::quick(tensor_inverse(this->a));
     }
 
     /**

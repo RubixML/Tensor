@@ -5,5 +5,6 @@
 
 void tensor_matmul(zval * return_value, zval * a, zval * b);
 void tensor_dot(zval * return_value, zval * a, zval * b);
+void tensor_inverse(zval * return_value, zval * a);
 
 #endif

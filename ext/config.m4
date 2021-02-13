@@ -4,8 +4,8 @@ if test "$PHP_TENSOR" = "yes"; then
 
 	
 
-	if ! test "x-lopenblas -lpthread" = "x"; then
-		PHP_EVAL_LIBLINE(-lopenblas -lpthread, TENSOR_SHARED_LIBADD)
+	if ! test "x-lopenblas -lgfortran -llapacke" = "x"; then
+		PHP_EVAL_LIBLINE(-lopenblas -lgfortran -llapacke, TENSOR_SHARED_LIBADD)
 	fi
 
 	AC_DEFINE(HAVE_TENSOR, 1, [Whether you have Tensor])
