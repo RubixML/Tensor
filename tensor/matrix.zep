@@ -612,6 +612,7 @@ class Matrix implements Tensor
         }
 
         var i, rowA;
+
         array b = [];
 
         for i, rowA in this->a {
@@ -649,6 +650,7 @@ class Matrix implements Tensor
     public function asColumnVectors() -> array
     {
         int i;
+
         array vectors = [];
 
         for i in range(0, this->n - 1) {
@@ -740,6 +742,7 @@ class Matrix implements Tensor
         }
  
         var rowA, valueA;
+
         var carry = initial;
  
         for rowA in this->a {
@@ -759,6 +762,7 @@ class Matrix implements Tensor
     public function transpose() -> <Matrix>
     {
         int i;
+        
         array b = [];
  
         for i in range(0, this->n - 1) {

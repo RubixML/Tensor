@@ -15,7 +15,7 @@ $ composer require rubix/tensor
 
 ### Optional To Compile Extension
 - A C compiler such as [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/), or [Visual C++](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
-- The [GFortran](https://gcc.gnu.org/wiki/GFortran) compiler
+- A Fortran compiler such as [GFortran](https://gcc.gnu.org/wiki/GFortran)
 - The PHP development package (source code and tooling)
 - [OpenBLAS](https://www.openblas.net/) development package
 - [LAPACKE](https://www.netlib.org/lapack/lapacke.html) C interface to [LAPACK](http://www.netlib.org/lapack/)

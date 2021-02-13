@@ -1,5 +1,5 @@
 
-extern ZEPHIR_API zend_class_entry *tensor_reductions_rref_ce;
+extern zend_class_entry *tensor_reductions_rref_ce;
 
 ZEPHIR_INIT_CLASS(Tensor_Reductions_Rref);
 

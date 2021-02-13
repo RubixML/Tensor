@@ -4,8 +4,8 @@ if test "$PHP_TENSOR" = "yes"; then
 
 	
 
-	if ! test "x-lopenblas -lgfortran -llapacke" = "x"; then
-		PHP_EVAL_LIBLINE(-lopenblas -lgfortran -llapacke, TENSOR_SHARED_LIBADD)
+	if ! test "x-lopenblas -llapacke -lgfortran" = "x"; then
+		PHP_EVAL_LIBLINE(-lopenblas -llapacke -lgfortran, TENSOR_SHARED_LIBADD)
 	fi
 
 	AC_DEFINE(HAVE_TENSOR, 1, [Whether you have Tensor])
@@ -70,6 +70,6 @@ if test "$PHP_TENSOR" = "yes"; then
 
 	CPPFLAGS=$old_CPPFLAGS
 
-	PHP_INSTALL_HEADERS([ext/tensor], [tensor/arithmetic.zep.h tensor/arraylike.zep.h tensor/comparable.zep.h tensor/functional.zep.h tensor/statistical.zep.h tensor/trigonometric.zep.h tensor/tensor.zep.h tensor/vector.zep.h tensor/columnvector.zep.h tensor/decompositions/cholesky.zep.h tensor/decompositions/lu.zep.h tensor/matrix.zep.h tensor/reductions/ref.zep.h tensor/reductions/rref.zep.h])
+	PHP_INSTALL_HEADERS([ext/tensor], [php_TENSOR.h])
 
 fi

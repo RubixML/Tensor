@@ -13,7 +13,7 @@
         "include/comparison.c",
         "include/linear_algebra.c"
     ],
-    "extra-libs": "-lopenblas -lgfortran -llapacke",
+    "extra-libs": "-lopenblas -llapacke -lgfortran",
     "globals": {
         "num_threads": {
             "type": "int",
@@ -45,7 +45,7 @@
         "nonexistent-class": true
     },
     "extra": {
-        "export-classes": true,
+        "export-classes": false,
         "indent": "spaces"
     }
 }

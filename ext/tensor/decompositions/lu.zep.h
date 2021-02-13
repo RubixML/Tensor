@@ -1,5 +1,5 @@
 
-extern ZEPHIR_API zend_class_entry *tensor_decompositions_lu_ce;
+extern zend_class_entry *tensor_decompositions_lu_ce;
 
 ZEPHIR_INIT_CLASS(Tensor_Decompositions_Lu);
 
