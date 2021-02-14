@@ -22,15 +22,15 @@ class MatmulBench
 
     public function setUp() : void
     {
-        $this->a = Matrix::uniform(1000, 1000);
+        $this->a = Matrix::uniform(500, 500);
 
-        $this->b = Matrix::uniform(1000, 1000);
+        $this->b = Matrix::uniform(500, 500);
     }
 
     /**
      * @Subject
      * @Iterations(5)
-     * @OutputTimeUnit("milliseconds", precision=3)
+     * @OutputTimeUnit("seconds", precision=3)
      */
     public function matmul() : void
     {

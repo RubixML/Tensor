@@ -37,6 +37,7 @@ zend_class_entry *tensor_decompositions_lu_ce;
 zend_class_entry *tensor_matrix_ce;
 zend_class_entry *tensor_reductions_ref_ce;
 zend_class_entry *tensor_reductions_rref_ce;
+zend_class_entry *tensor_settings_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(tensor)
 
@@ -62,6 +63,7 @@ static PHP_MINIT_FUNCTION(tensor)
 	ZEPHIR_INIT(Tensor_Matrix);
 	ZEPHIR_INIT(Tensor_Reductions_Ref);
 	ZEPHIR_INIT(Tensor_Reductions_Rref);
+	ZEPHIR_INIT(Tensor_Settings);
 	
 	return SUCCESS;
 }

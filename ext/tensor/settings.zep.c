@@ -1,0 +1,99 @@
+
+#ifdef HAVE_CONFIG_H
+#include "../ext_config.h"
+#endif
+
+#include <php.h>
+#include "../php_ext.h"
+#include "../ext.h"
+
+#include <Zend/zend_operators.h>
+#include <Zend/zend_exceptions.h>
+#include <Zend/zend_interfaces.h>
+
+#include "kernel/main.h"
+#include "kernel/exception.h"
+#include "kernel/memory.h"
+#include "ext/spl/spl_exceptions.h"
+#include "kernel/fcall.h"
+#include "kernel/concat.h"
+#include "kernel/operators.h"
+#include "kernel/object.h"
+
+
+/**
+ * Settings
+ *
+ * @internal
+ *
+ * @category    Scientific Computing
+ * @package     Rubix/Tensor
+ * @author      Andrew DalPino
+ */
+ZEPHIR_INIT_CLASS(Tensor_Settings) {
+
+	ZEPHIR_REGISTER_CLASS(Tensor, Settings, tensor, settings, tensor_settings_method_entry, 0);
+
+	return SUCCESS;
+
+}
+
+/**
+ * Set the number of CPU threads to use when multiprocessing.
+ *
+ * @param int threads
+ * @return void
+ */
+PHP_METHOD(Tensor_Settings, setNumThreads) {
+
+	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval *threads_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, _4;
+	zend_long threads, ZEPHIR_LAST_CALL_STATUS;
+	zval *this_ptr = getThis();
+
+	ZVAL_UNDEF(&_0$$3);
+	ZVAL_UNDEF(&_1$$3);
+	ZVAL_UNDEF(&_2$$3);
+	ZVAL_UNDEF(&_3$$3);
+	ZVAL_UNDEF(&_4);
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &threads_param);
+
+	threads = zephir_get_intval(threads_param);
+
+
+	if (UNEXPECTED(threads < 1)) {
+		ZEPHIR_INIT_VAR(&_0$$3);
+		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		ZVAL_LONG(&_1$$3, threads);
+		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 2, &_1$$3);
+		zephir_check_call_status();
+		ZEPHIR_INIT_VAR(&_3$$3);
+		ZEPHIR_CONCAT_SSVS(&_3$$3, "The number of threads", " must be greater than 0, ", &_2$$3, " given.");
+		ZEPHIR_CALL_METHOD(NULL, &_0$$3, "__construct", NULL, 3, &_3$$3);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(&_0$$3, "tensor/settings.zep", 26);
+		ZEPHIR_MM_RESTORE();
+		return;
+	}
+	ZVAL_LONG(&_4, threads);
+	ZEPHIR_GLOBAL(num_threads) = Z_LVAL_P(&_4);
+	ZEPHIR_MM_RESTORE();
+
+}
+
+/**
+ * Return the number of CPU threads used for multiprocessing.
+ *
+ * @return int
+ */
+PHP_METHOD(Tensor_Settings, numThreads) {
+
+	zval *this_ptr = getThis();
+
+
+	RETURN_LONG(ZEPHIR_GLOBAL(num_threads));
+
+}
+

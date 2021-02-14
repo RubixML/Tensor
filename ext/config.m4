@@ -4,8 +4,8 @@ if test "$PHP_TENSOR" = "yes"; then
 
 	
 
-	if ! test "x-lopenblas -llapacke -lgfortran" = "x"; then
-		PHP_EVAL_LIBLINE(-lopenblas -llapacke -lgfortran, TENSOR_SHARED_LIBADD)
+	if ! test "x-lopenblas -llapacke -lgfortran -lpthread" = "x"; then
+		PHP_EVAL_LIBLINE(-lopenblas -llapacke -lgfortran -lpthread, TENSOR_SHARED_LIBADD)
 	fi
 
 	AC_DEFINE(HAVE_TENSOR, 1, [Whether you have Tensor])
@@ -22,7 +22,8 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/decompositions/lu.zep.c
 	tensor/matrix.zep.c
 	tensor/reductions/ref.zep.c
-	tensor/reductions/rref.zep.c include/indexing.c
+	tensor/reductions/rref.zep.c
+	tensor/settings.zep.c include/indexing.c
 	include/arithmetic.c
 	include/comparison.c
 	include/linear_algebra.c"

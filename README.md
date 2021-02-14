@@ -2,7 +2,7 @@
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/rubix/tensor.svg?style=flat&colorB=8892BF)](https://www.php.net/) [![Latest Stable Version](https://img.shields.io/packagist/v/rubix/tensor.svg?style=flat&colorB=orange)](https://packagist.org/packages/rubix/tensor) [![Build](https://github.com/RubixML/Tensor/workflows/Build/badge.svg)](https://github.com/RubixML/Tensor/actions) [![Downloads from Packagist](https://img.shields.io/packagist/dt/rubix/tensor.svg?style=flat&colorB=red)](https://packagist.org/packages/rubix/tensor) [![GitHub](https://img.shields.io/github/license/RubixML/Tensor)](https://github.com/RubixML/Tensor/blob/master/LICENSE.md)
 
-Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net). It is used by libraries such as [Rubix ML](https://rubixml.com) to build and accelerate machine learning algorithms such as neural networks.
+Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net). The multithreaded extension is especially suited for applications where efficient computing of large sets of numbers is required. In some cases, the extension is 340X faster than the same operation in PHPland. Tensor is used by libraries such as [Rubix ML](https://rubixml.com) to build and accelerate machine learning algorithms such as neural networks and linear regressions.
 
 ## Installation
 Install Tensor into your project with [Composer](https://getcomposer.org/):
@@ -61,7 +61,9 @@ php -m | grep tensor
 
 ## Performance Comparison
 
-![Tensor Performance](https://raw.githubusercontent.com/RubixML/Tensor/master/docs/images/tensor-performance-mnist.png)
+![Tensor Performance MNIST](https://raw.githubusercontent.com/RubixML/Tensor/master/docs/images/tensor-performance-mnist.png)
+
+![Tensor Performance Benchmarks](https://raw.githubusercontent.com/RubixML/Tensor/master/docs/images/tensor-performance-benchmarks.png)
 
 ## Funding
 Rubix ML is funded by donations from the community. You can become a sponsor by making a contribution to one of our funding sources below.

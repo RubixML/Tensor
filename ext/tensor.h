@@ -18,5 +18,6 @@
 #include "tensor/matrix.zep.h"
 #include "tensor/reductions/ref.zep.h"
 #include "tensor/reductions/rref.zep.h"
+#include "tensor/settings.zep.h"
 
 #endif

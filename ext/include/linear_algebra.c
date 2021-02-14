@@ -96,7 +96,6 @@ void tensor_inverse(zval * return_value, zval * a)
     unsigned int i, j;
     Bucket * row;
     zval rowB, b;
-    lapack_int status;
 
     zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
 
@@ -110,15 +109,17 @@ void tensor_inverse(zval * return_value, zval * a)
 
     double * va = emalloc(n * n * sizeof(double));
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         row = Z_ARR(ba[i].val)->arData;
 
-        for (j = 0; j < n; j++) {
+        for (j = 0; j < n; ++j) {
             va[i * n + j] = zephir_get_doubleval(&row[j].val);
         }
     }
 
-    int pivots[n + 1];
+    lapack_int status;
+
+    int pivots[n];
 
     status = LAPACKE_dgetrf(LAPACK_ROW_MAJOR, n, n, va, n, pivots);
 
@@ -134,10 +135,10 @@ void tensor_inverse(zval * return_value, zval * a)
 
     array_init_size(&b, n);
 
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < n; ++i) {
         array_init_size(&rowB, n);
 
-        for (j = 0; j < n; j++) {
+        for (j = 0; j < n; ++j) {
             add_next_index_double(&rowB, va[i * n + j]);
         }
 

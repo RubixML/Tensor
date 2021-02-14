@@ -1,5 +1,5 @@
-#ifndef TENSOR_ARRAY_COMPARISON_H
-#define TENSOR_ARRAY_COMPARISON_H
+#ifndef TENSOR_COMPARISON_H
+#define TENSOR_COMPARISON_H
 
 #include <Zend/zend.h>
 
