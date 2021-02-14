@@ -5,9 +5,18 @@
 Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net). The multithreaded extension is especially suited for applications where efficient computing of large sets of numbers is required. In some cases, the extension is 340X faster than the same operation in PHPland. Tensor is used by libraries such as [Rubix ML](https://rubixml.com) to build and accelerate machine learning algorithms such as neural networks and linear regressions.
 
 ## Installation
-Install Tensor into your project with [Composer](https://getcomposer.org/):
+Follow the instructions below to install either Tensor PHP or the Tensor extension.
+
+### Tensor PHP
+Install Tensor PHP into your project with [Composer](https://getcomposer.org/):
 ```sh
 $ composer require rubix/tensor
+```
+
+### Tensor Extension
+Install the Tensor extension via [PECL](https://pecl.php.net/package/Tensor):
+```sh
+$ pecl install tensor
 ```
 
 ## Requirements
@@ -25,7 +34,7 @@ $ composer require rubix/tensor
 - [automake](https://www.gnu.org/software/automake/) 1.14 or later
 - Ubuntu build-essentials
 
-## Compiling the Extension
+## Manually Compiling the Extension
 Clone the repository locally using [Git](https://git-scm.com/):
 ```sh
 $ git clone https://github.com/RubixML/Tensor
@@ -47,8 +56,7 @@ $ make
 $ sudo make install
 ```
 
-## Installing the Extension
-Add the following line to your `php.ini` configuration to install the extension.
+Finally, add the following line to your `php.ini` configuration to install the extension.
 ```
 extension=tensor.so
 ```

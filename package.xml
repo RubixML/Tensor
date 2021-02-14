@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.7" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+	<name>tensor</name>
+	<channel>pecl.php.net</channel>
+	<summary>Tensor is a library and extension that provides objects for scientific computing in PHP.</summary>
+    <description>Tensor is a library and extension that provides objects for scientific computing in PHP.</description>
+	<lead>
+		<name>Andrew DalPino</name>
+		<user>andrewdalpino</user>
+        <email></email>
+		<active>yes</active>
+	</lead>
+	<date>2021-02-13</date>
+	<version>
+		<release>2.1.03</release>
+		<api>2.1.3</api>
+	</version>
+	<stability>
+		<release>stable</release>
+		<api>stable</api>
+	</stability>
+	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
+    <notes>
+        No notes
+    </notes>
+	<contents>
+        <dir name="/">
+            <dir name="ext">
+                <dir name="include">
+                    <file name="arithmetic.c" role="src" />
+                    <file name="arithmetic.h" role="src" />
+                    <file name="comparison.c" role="src" />
+                    <file name="comparison.h" role="src" />
+                    <file name="indexing.c" role="src" />
+                    <file name="indexing.h" role="src" />
+                    <file name="linear_algebra.c" role="src" />
+                    <file name="linear_algebra.h" role="src" />
+                </dir>
+                <dir name="kernel">
+                    <file name="array.c" role="src" />
+                    <file name="array.h" role="src" />
+                    <file name="backtrace.c" role="src" />
+                    <file name="backtrace.h" role="src" />
+                    <file name="concat.c" role="src" />
+                    <file name="concat.h" role="src" />
+                    <file name="debug.c" role="src" />
+                    <file name="debug.h" role="src" />
+                    <file name="exception.c" role="src" />
+                    <file name="exception.h" role="src" />
+                    <file name="exit.c" role="src" />
+                    <file name="exit.h" role="src" />
+                    <file name="fcall_internal.h" role="src" />
+                    <file name="fcall.c" role="src" />
+                    <file name="fcall.h" role="src" />
+                    <file name="file.c" role="src" />
+                    <file name="file.h" role="src" />
+                    <file name="filter.c" role="src" />
+                    <file name="filter.h" role="src" />
+                    <file name="globals.h" role="src" />
+                    <file name="iterator.c" role="src" />
+                    <file name="iterator.h" role="src" />
+                    <file name="main.c" role="src" />
+                    <file name="main.h" role="src" />
+                    <file name="math.c" role="src" />
+                    <file name="math.h" role="src" />
+                    <file name="memory.c" role="src" />
+                    <file name="memory.h" role="src" />
+                    <file name="object.c" role="src" />
+                    <file name="object.h" role="src" />
+                    <file name="operators.c" role="src" />
+                    <file name="operators.h" role="src" />
+                    <file name="require.c" role="src" />
+                    <file name="require.h" role="src" />
+                    <file name="string.c" role="src" />
+                    <file name="string.h" role="src" />
+                    <file name="time.c" role="src" />
+                    <file name="time.h" role="src" />
+                    <file name="variables.c" role="src" />
+                    <file name="variables.h" role="src" />
+                </dir>
+                <dir name="tensor">
+                    <dir name="decompositions">
+                        <file name="cholesky.zep.c" role="src" />
+                        <file name="cholesky.zep.h" role="src" />
+                        <file name="lu.zep.c" role="src" />
+                        <file name="lu.zep.h" role="src" />
+                    </dir>
+                    <dir name="reductions">
+                        <file name="ref.zep.c" role="src" />
+                        <file name="ref.zep.h" role="src" />
+                        <file name="rref.zep.c" role="src" />
+                        <file name="rref.zep.h" role="src" />
+                    </dir>
+                    <file name="arithmetic.zep.c" role="src" />
+                    <file name="arithmetic.zep.h" role="src" />
+                    <file name="arraylike.zep.c" role="src" />
+                    <file name="arraylike.zep.h" role="src" />
+                    <file name="columnvector.zep.c" role="src" />
+                    <file name="columnvector.zep.h" role="src" />
+                    <file name="comparable.zep.c" role="src" />
+                    <file name="comparable.zep.h" role="src" />
+                    <file name="functional.zep.c" role="src" />
+                    <file name="functional.zep.h" role="src" />
+                    <file name="matrix.zep.c" role="src" />
+                    <file name="matrix.zep.h" role="src" />
+                    <file name="settings.zep.c" role="src" />
+                    <file name="settings.zep.h" role="src" />
+                    <file name="statistical.zep.c" role="src" />
+                    <file name="statistical.zep.h" role="src" />
+                    <file name="tensor.zep.c" role="src" />
+                    <file name="tensor.zep.h" role="src" />
+                    <file name="trigonometric.zep.c" role="src" />
+                    <file name="trigonometric.zep.h" role="src" />
+                    <file name="vector.zep.c" role="src" />
+                    <file name="vector.zep.h" role="src" />
+                </dir>
+                <file name="clean" role="src" />
+                <file name="config.m4" role="src" />
+                <file name="config.w32" role="src" />
+                <file name="ext_config.h" role="src" />
+                <file name="ext.h" role="src" />
+                <file name="install" role="src" />
+                <file name="php_ext.h" role="src" />
+                <file name="php_tensor.h" role="src" />
+                <file name="tensor.c" role="src" />
+                <file name="tensor.h" role="src" />
+            </dir>
+            <file name="LICENSE" role="doc" />
+            <file name="CHANGELOG.md" role="doc" />
+        </dir>
+    </contents>
+	<dependencies>
+		<required>
+            <php>
+                <min>7.2.0</min>
+                <max>7.4.99</max>
+            </php>
+			<pearinstaller>
+				<min>1.4.0</min>
+			</pearinstaller>
+		</required>
+	</dependencies>
+	<providesextension>tensor</providesextension>
+    <extsrcrelease></extsrcrelease>
+</package>
