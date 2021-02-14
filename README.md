@@ -19,6 +19,8 @@ Install the Tensor extension via [PECL](https://pecl.php.net/package/Tensor):
 $ pecl install tensor
 ```
 
+> **Note:** If both the library and extension are installed, the extension will take precedence.
+
 ## Requirements
 - [PHP](https://php.net) 7.2 or above
 
