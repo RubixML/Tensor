@@ -230,7 +230,7 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 				object_init_ex(&_22$$6, spl_ce_RuntimeException);
 				ZEPHIR_INIT_NVAR(&_23$$6);
 				ZEPHIR_CONCAT_SS(&_23$$6, "Cannot compute row echelon form", " of a singular matrix.");
-				ZEPHIR_CALL_METHOD(NULL, &_22$$6, "__construct", &_24, 30, &_23$$6);
+				ZEPHIR_CALL_METHOD(NULL, &_22$$6, "__construct", &_24, 31, &_23$$6);
 				zephir_check_call_status();
 				zephir_throw_exception_debug(&_22$$6, "tensor/reductions/ref.zep", 86);
 				ZEPHIR_MM_RESTORE();
@@ -306,7 +306,7 @@ PHP_METHOD(Tensor_Reductions_Ref, gaussianElimination) {
 	ZEPHIR_CALL_CE_STATIC(&_42, tensor_matrix_ce, "quick", &_43, 0, &b);
 	zephir_check_call_status();
 	ZVAL_LONG(&_2, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 32, &_42, &_2);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 33, &_42, &_2);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -502,7 +502,7 @@ PHP_METHOD(Tensor_Reductions_Ref, rowReductionMethod) {
 	ZEPHIR_CALL_CE_STATIC(&_31, tensor_matrix_ce, "quick", &_32, 0, &b);
 	zephir_check_call_status();
 	ZVAL_LONG(&_33, swaps);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 32, &_31, &_33);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 33, &_31, &_33);
 	zephir_check_call_status();
 	RETURN_MM();
 

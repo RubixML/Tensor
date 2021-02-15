@@ -82,6 +82,8 @@
                     <dir name="decompositions">
                         <file name="cholesky.zep.c" role="src" />
                         <file name="cholesky.zep.h" role="src" />
+                        <file name="eigen.zep.c" role="src" />
+                        <file name="eigen.zep.h" role="src" />
                         <file name="lu.zep.c" role="src" />
                         <file name="lu.zep.h" role="src" />
                     </dir>

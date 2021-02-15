@@ -325,8 +325,7 @@ class Vector implements Tensor
     final public function __construct(array $a, bool $validate = true)
     {
         if (empty($a)) {
-            throw new InvalidArgumentException('Vector must contain'
-                . ' at least one element.');
+            throw new InvalidArgumentException('Vector must contain at least one element.');
         }
 
         if ($validate) {

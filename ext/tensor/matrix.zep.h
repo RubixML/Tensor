@@ -622,9 +622,9 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_cholesky, 0, 0, IS
 ZEND_END_ARG_INFO()
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_eig, 0, 0, Tensor\\Eigen, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_eig, 0, 0, Tensor\\Decompositions\\Eigen, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_eig, 0, 0, IS_OBJECT, "Tensor\\Eigen", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_eig, 0, 0, IS_OBJECT, "Tensor\\Decompositions\\Eigen", 0)
 #endif
 #if PHP_VERSION_ID >= 70200
 	ZEND_ARG_TYPE_INFO(0, normalize, _IS_BOOL, 0)

@@ -1,3 +1,6 @@
+- 2.1.4
+    - Implemented Eigen decomposition in extension
+
 - 2.1.3
     - Use BLAS DGEMM for matrix multiplication
     - Optimize matrix inverse

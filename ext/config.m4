@@ -19,6 +19,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/vector.zep.c
 	tensor/columnvector.zep.c
 	tensor/decompositions/cholesky.zep.c
+	tensor/decompositions/eigen.zep.c
 	tensor/decompositions/lu.zep.c
 	tensor/matrix.zep.c
 	tensor/reductions/ref.zep.c

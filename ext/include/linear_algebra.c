@@ -149,3 +149,68 @@ void tensor_inverse(zval * return_value, zval * a)
 
     efree(va);
 }
+
+void tensor_eig(zval * return_value, zval * a)
+{
+    unsigned int i, j;
+    Bucket * row;
+    zval eigenvalues;
+    zval rowB, b;
+    zval tuple;
+
+    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
+
+    openblas_set_num_threads(zephir_globals->num_threads);
+
+    zend_array * aHat = Z_ARR_P(a);
+
+    Bucket * ba = aHat->arData;
+
+    unsigned int n = zend_array_count(aHat);
+
+    double * va = emalloc(n * n * sizeof(double));
+    double * wr = emalloc(n * sizeof(double));
+    double * wi = emalloc(n * sizeof(double));
+    double * vr = emalloc(n * n * sizeof(double));
+
+    for (i = 0; i < n; i++) {
+        row = Z_ARR(ba[i].val)->arData;
+
+        for (j = 0; j < n; j++) {
+            va[i * n + j] = zephir_get_doubleval(&row[j].val);
+        }
+    }
+
+    lapack_int status = LAPACKE_dgeev(LAPACK_ROW_MAJOR, 'N', 'V', n, va, n, wr, wi, NULL, n, vr, n);
+
+    if (status != 0) {
+        RETURN_NULL();
+    }
+
+    array_init_size(&eigenvalues, n);
+    array_init_size(&b, n);
+
+    for (i = 0; i < n; i++) {
+        array_init_size(&rowB, n);
+
+        for (j = 0; j < n; j++) {
+            add_next_index_double(&rowB, vr[i * n + j]);
+        }
+
+        add_next_index_zval(&b, &rowB);
+        
+        add_next_index_double(&eigenvalues, wr[i]);
+    }
+
+    array_init_size(&tuple, 2);
+    
+    add_next_index_zval(&tuple, &eigenvalues);
+    add_next_index_zval(&tuple, &b);
+
+    RETVAL_ARR(Z_ARR(tuple));
+
+    efree(va);
+    efree(wr);
+    efree(wi);
+    efree(vr);
+}

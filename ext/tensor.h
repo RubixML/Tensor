@@ -14,6 +14,7 @@
 #include "tensor/vector.zep.h"
 #include "tensor/columnvector.zep.h"
 #include "tensor/decompositions/cholesky.zep.h"
+#include "tensor/decompositions/eigen.zep.h"
 #include "tensor/decompositions/lu.zep.h"
 #include "tensor/matrix.zep.h"
 #include "tensor/reductions/ref.zep.h"

@@ -3,6 +3,7 @@ namespace Tensor;
 use Tensor\Reductions\Ref;
 use Tensor\Reductions\Rref;
 use Tensor\Decompositions\Lu;
+use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
 use InvalidArgumentException;
 use RuntimeException;
@@ -453,26 +454,26 @@ class Matrix implements Tensor
      * @param bool validate
      * @throws \InvalidArgumentException
      */
-    public function __construct(const array a, const bool validate = true)
+    public function __construct(array a, const bool validate = true)
     {
         if unlikely empty a {
-            throw new InvalidArgumentException("Matrix must contain"
-                . " at least 1 element.");
+            throw new InvalidArgumentException("Matrix must contain at least 1 element.");
         }
+
+        var i, rowA, valueA;
 
         int m = count(a);
         int n = count(current(a));
-
-        array aHat = [];
  
         if validate {
-            var rowA, valueA;
+            let a = array_values(a);
 
-            for rowA in a {
+            for i, rowA in a {
                 if unlikely count(rowA) !== n {
                     throw new InvalidArgumentException("The number of columns"
                         . " must be equal for all rows, " . strval(n)
-                        . " needed but " . count(rowA) . " given.");
+                        . " needed but " . count(rowA) . " given"
+                        . " at row offset " . i . ".");
                 }
 
                 for valueA in rowA {
@@ -483,13 +484,11 @@ class Matrix implements Tensor
                     }
                 }
 
-                let aHat[] = array_values(rowA);
+                let rowA[] = array_values(rowA);
             }
-        } else {
-            let aHat = a;
         }
  
-        let this->a = aHat;
+        let this->a = a;
         let this->m = m;
         let this->n = n;
     }
@@ -1073,8 +1072,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the eigenvalues and eigenvectors of the matrix and return
-     * them in a tuple.
+     * Compute the eigenvalues and eigenvectors of the matrix and return them in a tuple.
      *
      * @param bool normalize
      * @throws \RuntimeException
@@ -1082,7 +1080,7 @@ class Matrix implements Tensor
      */
     public function eig(bool normalize = true) -> <Eigen>
     {
-        throw new RuntimeException("Not implemented yet.");
+        return Eigen::decompose(this, normalize);
     }
 
     /**

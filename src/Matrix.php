@@ -463,11 +463,11 @@ class Matrix implements Tensor
         if ($validate) {
             $a = array_values($a);
 
-            foreach ($a as &$rowA) {
+            foreach ($a as $i => &$rowA) {
                 if (count($rowA) !== $n) {
                     throw new InvalidArgumentException('The number of columns'
                         . " must be equal for all rows, $n required but "
-                        . count($rowA) . ' given.');
+                        . count($rowA) . " given at row offset $i.");
                 }
 
                 $rowA = array_values($rowA);
@@ -1082,8 +1082,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the eigenvalues and eigenvectors of the matrix and return
-     * them in a tuple.
+     * Compute the eigenvalues and eigenvectors of the matrix and return them in a tuple.
      *
      * @param bool $normalize
      * @return \Tensor\Decompositions\Eigen
