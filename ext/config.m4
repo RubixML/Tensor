@@ -1,8 +1,24 @@
 PHP_ARG_ENABLE(tensor, whether to enable tensor, [ --enable-tensor   Enable Tensor])
 
+PHP_ARG_WITH(openblas, libopenblas directory,
+[  --with-openblas=DIR     libopenblas directory], no, no)
+
 if test "$PHP_TENSOR" = "yes"; then
 
-	
+	AC_MSG_CHECKING([Check openblas headers])
+	for i in $PHP_OPENBLAS /usr/local/include /usr/include/openblas /usr/include; do
+		if test -r $i/cblas.h; then
+			OPENBLAS_DIR=$i
+			AC_MSG_RESULT([found in $i])
+			break
+		fi
+	done
+
+	if test -z "$OPENBLAS_DIR"; then
+		AC_MSG_ERROR([openblas headers not found])
+	else
+		PHP_ADD_INCLUDE($OPENBLAS_DIR)
+	fi
 
 	if ! test "x-lopenblas -llapacke -lgfortran -lpthread" = "x"; then
 		PHP_EVAL_LIBLINE(-lopenblas -llapacke -lgfortran -lpthread, TENSOR_SHARED_LIBADD)
