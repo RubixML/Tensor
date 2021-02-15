@@ -155,7 +155,8 @@ void tensor_eig(zval * return_value, zval * a)
     unsigned int i, j;
     Bucket * row;
     zval eigenvalues;
-    zval rowB, b;
+    zval eigenvectors;
+    zval eigenvector;
     zval tuple;
 
     zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
@@ -188,24 +189,24 @@ void tensor_eig(zval * return_value, zval * a)
     }
 
     array_init_size(&eigenvalues, n);
-    array_init_size(&b, n);
+    array_init_size(&eigenvectors, n);
 
     for (i = 0; i < n; i++) {
-        array_init_size(&rowB, n);
+        add_next_index_double(&eigenvalues, wr[i]);
+
+        array_init_size(&eigenvector, n);
 
         for (j = 0; j < n; j++) {
-            add_next_index_double(&rowB, vr[i * n + j]);
+            add_next_index_double(&eigenvector, vr[i * n + j]);
         }
 
-        add_next_index_zval(&b, &rowB);
-        
-        add_next_index_double(&eigenvalues, wr[i]);
+        add_next_index_zval(&eigenvectors, &eigenvector);
     }
 
     array_init_size(&tuple, 2);
     
     add_next_index_zval(&tuple, &eigenvalues);
-    add_next_index_zval(&tuple, &b);
+    add_next_index_zval(&tuple, &eigenvectors);
 
     RETVAL_ARR(Z_ARR(tuple));
 

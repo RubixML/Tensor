@@ -94,7 +94,7 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 		Z_ADDREF_P(&_0);
 		ZEPHIR_INIT_VAR(&_1);
 		if (zephir_instance_of_ev(&_0, spl_ce_RuntimeException)) {
-			zend_clear_exception(TSRMLS_C);
+			zend_clear_exception();
 			ZEPHIR_CPY_WRT(&_1, &_0);
 			ZEPHIR_RETURN_CALL_SELF("rowreductionmethod", NULL, 0, a);
 			zephir_check_call_status();
