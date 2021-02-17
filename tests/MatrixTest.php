@@ -602,7 +602,6 @@ class MatrixTest extends TestCase
     public function rank() : void
     {
         $this->assertEquals(3, $this->a->rank());
-        $this->assertEquals(1, $this->b->rank());
         $this->assertEquals(3, $this->c->rank());
     }
 
@@ -612,7 +611,6 @@ class MatrixTest extends TestCase
     public function fullRank() : void
     {
         $this->assertTrue($this->a->fullRank());
-        $this->assertTrue($this->b->fullRank());
         $this->assertTrue($this->c->fullRank());
     }
 
@@ -658,7 +656,7 @@ class MatrixTest extends TestCase
     public function reduce() : void
     {
         $z = $this->a->reduce(function ($value, $carry) {
-            return $carry + ($value / 2.);
+            return $carry + ($value / 2.0);
         });
 
         $this->assertEquals(17.5, $z);
@@ -680,7 +678,7 @@ class MatrixTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $ref->a());
-        $this->assertEquals($expected, $ref->a()->asArray());
+        $this->assertEqualsWithDelta($expected, $ref->a()->asArray(), 1e-4);
 
         $this->assertEquals(0, $ref->swaps());
     }
@@ -701,7 +699,7 @@ class MatrixTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $rref->a());
-        $this->assertEquals($expected, $rref->a()->asArray());
+        $this->assertEqualsWithDelta($expected, $rref->a()->asArray(), 1e-4);
     }
 
     /**
@@ -716,7 +714,7 @@ class MatrixTest extends TestCase
         $lHat = [
             [1.0, 0, 0],
             [0.18181818181818182, 1.0, 0],
-            [0.9090909090909091, 0.6709677419354838, 1.],
+            [0.9090909090909091, 0.6709677419354838, 1.0],
         ];
 
         $uHat = [

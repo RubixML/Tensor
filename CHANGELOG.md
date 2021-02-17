@@ -1,5 +1,7 @@
 - 2.1.4
     - Implemented Eigen decomposition in extension
+    - Optimize row echelon form (REF)
+    - Optimize Cholesky decomposition
 
 - 2.1.3
     - Use BLAS DGEMM for matrix multiplication

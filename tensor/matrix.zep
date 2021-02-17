@@ -806,8 +806,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Calculate the rank of the matrix i.e the number of pivots in its reduced row
-     * echelon form.
+     * Calculate the rank of the matrix i.e the number of pivots in its reduced row echelon form.
      *
      * @return int
      */
@@ -817,9 +816,9 @@ class Matrix implements Tensor
         
         array a = [];
 
-        int pivots = 0;
-
         let a = (array) this->rref()->a()->asArray();
+
+        int pivots = 0;
 
         for rowA in a {
             for valueA in rowA {
@@ -872,8 +871,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Is the matrix positive definite i.e. do all of its principal
-     * minor matrices have a determinant greater than 0.
+     * Is the matrix positive definite i.e. do all of its principal minor matrices have a determinant greater than 0.
      * 
      * @return bool
      */
@@ -897,8 +895,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Is the matrix positive semidefinite i.e. do all of its principal
-     * minor matrices have a determinant greater or equal to 0.
+     * Is the matrix positive semidefinite i.e. do all of its principal minor matrices have a determinant greater or equal to 0.
      * 
      * @return bool
      */

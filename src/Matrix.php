@@ -799,8 +799,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the trace of the matrix i.e the sum of all diagonal
-     * elements of a square matrix.
+     * Return the trace of the matrix i.e the sum of all diagonal elements of a square matrix.
      *
      * @throws \InvalidArgumentException
      * @return int|float
@@ -816,8 +815,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Calculate the rank of the matrix i.e the number of pivots
-     * in its reduced row echelon form.
+     * Calculate the rank of the matrix i.e the number of pivots in its reduced row echelon form.
      *
      * @return int
      */

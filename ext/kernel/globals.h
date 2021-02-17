@@ -94,8 +94,4 @@ typedef zend_function zephir_fcall_cache_entry;
 #define likely(x)   EXPECTED(x)
 #define unlikely(x) UNEXPECTED(x)
 
-#ifndef ZEND_ACC_DTOR
- #define ZEND_ACC_DTOR 0
-#endif
-
 #endif
