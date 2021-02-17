@@ -5,7 +5,6 @@
 #include <php.h>
 #include <cblas.h>
 #include <lapacke.h>
-#include <stdlib.h>
 
 #include "php_ext.h"
 #include "kernel/operators.h"

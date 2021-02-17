@@ -44,7 +44,7 @@ class Rref
 
         let b = (array) a->ref()->a()->asArray();
 
-        while likely row < m && col < n {
+        while row < m && col < n {
             let t = (array) b[row];
 
             if abs(t[col]) == 0 {
@@ -55,7 +55,7 @@ class Rref
 
             let divisor = t[col];
 
-            if likely divisor != 1 {
+            if divisor != 1 {
                 for i in range(0, n - 1) {
                     let t[i] = t[i] / divisor;
                 }
@@ -64,7 +64,7 @@ class Rref
             for i in reverse range(0, row - 1) {
                 let scale = b[i][col];
 
-                if likely scale != 0 {
+                if scale != 0 {
                     for j in range(0, n - 1) {
                         let b[i][j] = b[i][j] - scale * t[j];
                     }
