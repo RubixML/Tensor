@@ -1127,7 +1127,7 @@ class Vector implements Tensor
      */
     public function square() -> <Vector>
     {
-        return this->powScalar(2);
+        return this->multiplyVector(this);
     }
 
     /**

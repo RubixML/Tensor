@@ -405,6 +405,18 @@ class VectorTest extends TestCase
     /**
      * @test
      */
+    public function matmul() : void
+    {
+        $expected = [
+            [40.807, 4.634999999999993, 622.3751],
+        ];
+
+        $this->assertEquals($expected, $this->c->matmul($this->d->transpose())->asArray());
+    }
+
+    /**
+     * @test
+     */
     public function inner() : void
     {
         $this->assertEquals(331.54999999999995, $this->a->inner($this->b));

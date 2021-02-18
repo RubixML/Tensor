@@ -147,6 +147,7 @@ void tensor_inverse(zval * return_value, zval * a)
     RETVAL_ARR(Z_ARR(b));
 
     efree(va);
+    efree(pivots);
 }
 
 void tensor_ref(zval * return_value, zval * a)

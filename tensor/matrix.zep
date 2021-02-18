@@ -1604,7 +1604,7 @@ class Matrix implements Tensor
      */
     public function square() -> <Matrix>
     {
-        return this->powScalar(2);
+        return this->multiplyMatrix(this);
     }
  
     /**

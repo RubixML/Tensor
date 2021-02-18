@@ -765,7 +765,7 @@ class MatrixTest extends TestCase
     public function eig() : void
     {
         if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Not implemented in extension yet.');
+            $this->markTestSkipped('Different algorithm used in extension.');
         }
 
         $eig = $this->a->eig();

@@ -4768,17 +4768,14 @@ PHP_METHOD(Tensor_Matrix, abs) {
  */
 PHP_METHOD(Tensor_Matrix, square) {
 
-	zval _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
 
-	ZVAL_UNDEF(&_0);
 
 	ZEPHIR_MM_GROW();
 
-	ZVAL_LONG(&_0, 2);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "powscalar", NULL, 0, &_0);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplymatrix", NULL, 0, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 
