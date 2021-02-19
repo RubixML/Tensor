@@ -14,7 +14,7 @@
 - 2.1.1
     - Zephir redux
     - Blanket extension optimizations
-    - Added n-d array arithmetic and comparison functions
+    - Added array arithmetic and comparison functions
 
 - 2.1.0
     - Extension now compiles directly from C source code

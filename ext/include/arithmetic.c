@@ -12,18 +12,18 @@ void tensor_multiply(zval * return_value, zval * a, zval * b)
     double product;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(b);
+    zend_array * aa = Z_ARR_P(a);
+    zend_array * ab = Z_ARR_P(b);
 
-    Bucket * va = aHat->arData;
-    Bucket * vb = bHat->arData;
+    Bucket * ba = aa->arData;
+    Bucket * bb = ab->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        product = zephir_get_doubleval(&va[i].val) * zephir_get_doubleval(&vb[i].val);
+        product = zephir_get_doubleval(&ba[i].val) * zephir_get_doubleval(&bb[i].val);
 
 	    add_next_index_double(&c, product);
     }
@@ -37,18 +37,18 @@ void tensor_divide(zval * return_value, zval * a, zval * b)
     double quotient;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(b);
+    zend_array * aa = Z_ARR_P(a);
+    zend_array * ab = Z_ARR_P(b);
 
-    Bucket * va = aHat->arData;
-    Bucket * vb = bHat->arData;
+    Bucket * ba = aa->arData;
+    Bucket * bb = ab->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        quotient = zephir_get_doubleval(&va[i].val) / zephir_get_doubleval(&vb[i].val);
+        quotient = zephir_get_doubleval(&ba[i].val) / zephir_get_doubleval(&bb[i].val);
 
 	    add_next_index_double(&c, quotient);
     }
@@ -62,18 +62,18 @@ void tensor_add(zval * return_value, zval * a, zval * b)
     double sum;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(b);
+    zend_array * aa = Z_ARR_P(a);
+    zend_array * ab = Z_ARR_P(b);
 
-    Bucket * va = aHat->arData;
-    Bucket * vb = bHat->arData;
+    Bucket * ba = aa->arData;
+    Bucket * bb = ab->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        sum = zephir_get_doubleval(&va[i].val) + zephir_get_doubleval(&vb[i].val);
+        sum = zephir_get_doubleval(&ba[i].val) + zephir_get_doubleval(&bb[i].val);
 
 	    add_next_index_double(&c, sum);
     }
@@ -87,18 +87,18 @@ void tensor_subtract(zval * return_value, zval * a, zval * b)
     double difference;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(b);
+    zend_array * aa = Z_ARR_P(a);
+    zend_array * ab = Z_ARR_P(b);
 
-    Bucket * va = aHat->arData;
-    Bucket * vb = bHat->arData;
+    Bucket * ba = aa->arData;
+    Bucket * bb = ab->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        difference = zephir_get_doubleval(&va[i].val) - zephir_get_doubleval(&vb[i].val);
+        difference = zephir_get_doubleval(&ba[i].val) - zephir_get_doubleval(&bb[i].val);
 
 	    add_next_index_double(&c, difference);
     }
@@ -112,18 +112,18 @@ void tensor_pow(zval * return_value, zval * a, zval * b)
     double power;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(b);
+    zend_array * aa = Z_ARR_P(a);
+    zend_array * ab = Z_ARR_P(b);
 
-    Bucket * va = aHat->arData;
-    Bucket * vb = bHat->arData;
+    Bucket * ba = aa->arData;
+    Bucket * bb = ab->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        power = pow(zephir_get_doubleval(&va[i].val), zephir_get_doubleval(&vb[i].val));
+        power = pow(zephir_get_doubleval(&ba[i].val), zephir_get_doubleval(&bb[i].val));
 
 	    add_next_index_double(&c, power);
     }
@@ -137,18 +137,18 @@ void tensor_mod(zval * return_value, zval * a, zval * b)
     zval modulus;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(b);
+    zend_array * aa = Z_ARR_P(a);
+    zend_array * ab = Z_ARR_P(b);
 
-    Bucket * va = aHat->arData;
-    Bucket * vb = bHat->arData;
+    Bucket * ba = aa->arData;
+    Bucket * bb = ab->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        mod_function(&modulus, &va[i].val, &vb[i].val);
+        mod_function(&modulus, &ba[i].val, &bb[i].val);
 
 	    add_next_index_zval(&c, &modulus);
     }
@@ -162,18 +162,18 @@ void tensor_multiply_scalar(zval * return_value, zval * a, zval * b)
     double product;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * va = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    double bHat = zephir_get_doubleval(b);
+    double ab = zephir_get_doubleval(b);
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        product = zephir_get_doubleval(&va[i].val) * bHat;
+        product = zephir_get_doubleval(&ba[i].val) * ab;
 
 	    add_next_index_double(&c, product);
     }
@@ -187,18 +187,18 @@ void tensor_divide_scalar(zval * return_value, zval * a, zval * b)
     double quotient;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * va = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    double bHat = zephir_get_doubleval(b);
+    double ab = zephir_get_doubleval(b);
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        quotient = zephir_get_doubleval(&va[i].val) / bHat;
+        quotient = zephir_get_doubleval(&ba[i].val) / ab;
 
 	    add_next_index_double(&c, quotient);
     }
@@ -212,18 +212,18 @@ void tensor_add_scalar(zval * return_value, zval * a, zval * b)
     double sum;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * va = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    double bHat = zephir_get_doubleval(b);
+    double ab = zephir_get_doubleval(b);
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        sum = zephir_get_doubleval(&va[i].val) + bHat;
+        sum = zephir_get_doubleval(&ba[i].val) + ab;
 
 	    add_next_index_double(&c, sum);
     }
@@ -237,18 +237,18 @@ void tensor_subtract_scalar(zval * return_value, zval * a, zval * b)
     double difference;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * va = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    double bHat = zephir_get_doubleval(b);
+    double ab = zephir_get_doubleval(b);
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        difference = zephir_get_doubleval(&va[i].val) - bHat;
+        difference = zephir_get_doubleval(&ba[i].val) - ab;
 
 	    add_next_index_double(&c, difference);
     }
@@ -262,18 +262,18 @@ void tensor_pow_scalar(zval * return_value, zval * a, zval * b)
     double power;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * va = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    double bHat = zephir_get_doubleval(b);
+    double ab = zephir_get_doubleval(b);
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        power = pow(zephir_get_doubleval(&va[i].val), bHat);
+        power = pow(zephir_get_doubleval(&ba[i].val), ab);
 
 	    add_next_index_double(&c, power);
     }
@@ -287,16 +287,16 @@ void tensor_mod_scalar(zval * return_value, zval * a, zval * b)
     zval modulus;
 	zval c;
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * va = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        mod_function(&modulus, &va[i].val, b);
+        mod_function(&modulus, &ba[i].val, b);
 
 	    add_next_index_zval(&c, &modulus);
     }
