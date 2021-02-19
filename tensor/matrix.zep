@@ -78,6 +78,7 @@ class Matrix implements Tensor
         }
  
         int i, j;
+
         array a = [];
         array rowA = [];
  
@@ -148,6 +149,7 @@ class Matrix implements Tensor
         }
 
         int i, j;
+
         array a = [];
         array rowA = [];
  
@@ -290,6 +292,7 @@ class Matrix implements Tensor
 
         int k;
         float l, p;
+
         array a = [];
         array rowA = [];
 
@@ -368,9 +371,10 @@ class Matrix implements Tensor
         }
 
         var i, rowA;
+
         array c = [];
 
-        for i, rowA in iterator(a) {
+        for i, rowA in a->asArray() {
             let c[] = array_map("min", rowA, b[i]);
         }
 
@@ -393,9 +397,10 @@ class Matrix implements Tensor
         }
 
         var i, rowA;
+
         array c = [];
 
-        for i, rowA in iterator(a) {
+        for i, rowA in a->asArray() {
             let c[] = array_map("max", rowA, b[i]);
         }
 
@@ -1091,6 +1096,7 @@ class Matrix implements Tensor
     {
         int i, j;
         float sigma;
+        
         array l = [];
         array u = [];
         array pb = [];

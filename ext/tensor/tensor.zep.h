@@ -12,9 +12,6 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_tensor_reduce, 0, 0, 1)
 	ZEND_ARG_INFO(0, initial)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_tensor_transpose, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_tensor_clip, 0, 0, 2)
 #if PHP_VERSION_ID >= 70200
 	ZEND_ARG_TYPE_INFO(0, min, IS_DOUBLE, 0)
@@ -61,7 +58,7 @@ ZEND_END_ARG_INFO()
 ZEPHIR_INIT_FUNCS(tensor_tensor_method_entry) {
 	PHP_ABSTRACT_ME(Tensor_Tensor, map, arginfo_tensor_tensor_map)
 	PHP_ABSTRACT_ME(Tensor_Tensor, reduce, arginfo_tensor_tensor_reduce)
-	PHP_ABSTRACT_ME(Tensor_Tensor, transpose, arginfo_tensor_tensor_transpose)
+	PHP_ABSTRACT_ME(Tensor_Tensor, transpose, NULL)
 	PHP_ABSTRACT_ME(Tensor_Tensor, clip, arginfo_tensor_tensor_clip)
 	PHP_ABSTRACT_ME(Tensor_Tensor, clipLower, arginfo_tensor_tensor_cliplower)
 	PHP_ABSTRACT_ME(Tensor_Tensor, clipUpper, arginfo_tensor_tensor_clipupper)

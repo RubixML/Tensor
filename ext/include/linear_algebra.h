@@ -8,6 +8,7 @@ void tensor_dot(zval * return_value, zval * a, zval * b);
 void tensor_inverse(zval * return_value, zval * a);
 void tensor_ref(zval * return_value, zval * a);
 void tensor_cholesky(zval * return_value, zval * a);
+void tensor_lu(zval * return_value, zval * a);
 void tensor_eig(zval * return_value, zval * a);
 
 #endif

@@ -74,7 +74,7 @@ static PHP_MINIT_FUNCTION(tensor)
 static PHP_MSHUTDOWN_FUNCTION(tensor)
 {
 	
-	zephir_deinitialize_memory();
+	zephir_deinitialize_memory(TSRMLS_C);
 	UNREGISTER_INI_ENTRIES();
 	return SUCCESS;
 }
@@ -83,7 +83,7 @@ static PHP_MSHUTDOWN_FUNCTION(tensor)
 /**
  * Initialize globals on each request or each thread started
  */
-static void php_zephir_init_globals(zend_tensor_globals *tensor_globals)
+static void php_zephir_init_globals(zend_tensor_globals *tensor_globals TSRMLS_DC)
 {
 	tensor_globals->initialized = 0;
 
@@ -103,7 +103,7 @@ static void php_zephir_init_globals(zend_tensor_globals *tensor_globals)
 /**
  * Initialize globals only on each thread started
  */
-static void php_zephir_init_module_globals(zend_tensor_globals *tensor_globals)
+static void php_zephir_init_module_globals(zend_tensor_globals *tensor_globals TSRMLS_DC)
 {
 		tensor_globals->num_threads = 1;
 
@@ -124,7 +124,7 @@ static PHP_RINIT_FUNCTION(tensor)
 static PHP_RSHUTDOWN_FUNCTION(tensor)
 {
 	
-	zephir_deinitialize_memory();
+	zephir_deinitialize_memory(TSRMLS_C);
 	return SUCCESS;
 }
 

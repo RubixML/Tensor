@@ -15,8 +15,6 @@ use RuntimeException;
  */
 class Lu
 {
-    const EPSILON = 0.00000001;
-
     /**
      * The lower triangular matrix.
      *
@@ -50,75 +48,14 @@ class Lu
             throw new RuntimeException("Cannot decompose a non-square matrix.");
         }
 
-        int i, j, k, row;
-        float sigma;
-        var max, temp, valueA;
+        array lup = [];
 
-        array aHat = [];
-        array l = [];
-        array u = [];
-        array p = [];
-        array pa = [];
-
-        int n = (int) a->n();
-
-        let aHat = (array) a->asArray();
-
-        let l = (array) Matrix::identity(n)->asArray();
-        let u = (array) Matrix::zeros(n, n)->asArray();
-        let p = (array) Matrix::identity(n)->asArray();
-
-        for i in range(0, n - 1) {
-            let max = aHat[i][i];
-
-            let row = i;
-
-            for j in range(i, n - 1) {
-                let valueA = aHat[j][i];
-
-                if valueA > max {
-                    let max = valueA;
-                    let row = j;
-                }
-            }
-
-            if i !== row {
-                let temp = p[i];
-
-                let p[i] = p[row];
-                let p[row] = temp;
-            }
-        }
-
-        let pa = (array) Matrix::quick(p)->matmul(a)->asArray();
-
-        for i in range(0, n - 1) {
-            for j in range(0, i) {
-               let sigma = 0.0;
-
-                for k in range(0, j - 1) {
-                    let sigma += u[k][i] * l[j][k];
-                }
-
-                let u[j][i] = pa[j][i] - sigma;
-            }
-
-            for j in range(i, n - 1) {
-                let sigma = 0.0;
-
-                for k in range(0, i - 1) {
-                    let sigma += u[k][i] * l[j][k];
-                }
-
-                let l[j][i] = (pa[j][i] - sigma)
-                    / (u[i][i] ?: self::EPSILON);
-            }
-        }
+        let lup = (array) tensor_lu(a->asArray());
 
         return new self(
-            Matrix::quick(l),
-            Matrix::quick(u),
-            Matrix::quick(p)
+            Matrix::quick(lup[0]),
+            Matrix::quick(lup[1]),
+            Matrix::quick(lup[2])
         );
     }
 

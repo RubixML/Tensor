@@ -44,9 +44,6 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_columnvector_n, 0, 0, IS_
 #endif
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_columnvector_transpose, 0, 0, 0)
-ZEND_END_ARG_INFO()
-
 #if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_columnvector_matmul, 0, 1, Tensor\\Matrix, 0)
 #else

@@ -271,6 +271,100 @@ void tensor_cholesky(zval * return_value, zval * a)
     efree(va);
 }
 
+void tensor_lu(zval * return_value, zval * a)
+{
+    unsigned int i, j;
+    Bucket * row;
+    zval rowL, l, rowU, u, rowP, p;
+    zval tuple;
+
+    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
+
+    openblas_set_num_threads(zephir_globals->num_threads);
+
+    zend_array * aHat = Z_ARR_P(a);
+
+    Bucket * ba = aHat->arData;
+
+    unsigned int n = zend_array_count(aHat);
+
+    double * va = emalloc(n * n * sizeof(double));
+    int * pivots = emalloc(n * sizeof(int));
+
+    for (i = 0; i < n; ++i) {
+        row = Z_ARR(ba[i].val)->arData;
+
+        for (j = 0; j < n; ++j) {
+            va[i * n + j] = zephir_get_doubleval(&row[j].val);
+        }
+    }
+
+    lapack_int status = LAPACKE_dgetrf(LAPACK_ROW_MAJOR, n, n, va, n, pivots);
+
+    if (status != 0) {
+        RETURN_NULL();
+    }
+    
+    array_init_size(&l, n);
+    array_init_size(&u, n);
+    array_init_size(&p, n);
+
+    for (i = 0; i < n; ++i) {
+        array_init_size(&rowL, n);
+
+        for (j = 0; j < i; ++j) {
+            add_next_index_double(&rowL, va[i * n + j]);
+        }
+
+        add_next_index_double(&rowL, 1.0);
+
+        for (j = i + 1; j < n; ++j) {
+            add_next_index_double(&rowL, 0.0);
+        }
+
+        add_next_index_zval(&l, &rowL);
+    }
+
+    for (i = 0; i < n; ++i) {
+        array_init_size(&rowU, n);
+
+        for (j = 0; j < i; ++j) {
+            add_next_index_double(&rowU, 0.0);
+        }
+
+        for (j = i; j < n; ++j) {
+            add_next_index_double(&rowU, va[i * n + j]);
+        }
+
+        add_next_index_zval(&u, &rowU);
+    }
+
+    for (i = 0; i < n; ++i) {
+        array_init_size(&rowP, n);
+
+        for (j = 0; j < n; ++j) {
+            if (j == pivots[i] - 1) {
+                add_next_index_long(&rowP, 1);
+            } else {
+                add_next_index_long(&rowP, 0);
+            }
+        }
+
+        add_next_index_zval(&p, &rowP);
+    }
+
+    array_init_size(&tuple, 3);
+    
+    add_next_index_zval(&tuple, &l);
+    add_next_index_zval(&tuple, &u);
+    add_next_index_zval(&tuple, &p);
+
+    RETVAL_ARR(Z_ARR(tuple));
+
+    efree(va);
+    efree(pivots); 
+}
+
 void tensor_eig(zval * return_value, zval * a)
 {
     unsigned int i, j;
