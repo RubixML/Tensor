@@ -15,7 +15,6 @@ use Tensor\Trigonometric;
 use Tensor\Reductions\REF;
 use Tensor\Reductions\RREF;
 use Tensor\Decompositions\LU;
-use Tensor\Decompositions\SVD;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
 use PHPUnit\Framework\TestCase;
@@ -798,8 +797,6 @@ class MatrixTest extends TestCase
 
         /** @var mixed $this->a */
         $svd = $this->a->svd();
-
-        $this->assertInstanceOf(Svd::class, $svd);
 
         $uHat = [
             [-0.8436018806559158, 0.4252547343454771, -0.3278631999333884],
