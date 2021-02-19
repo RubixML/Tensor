@@ -21,14 +21,14 @@ void tensor_matmul(zval * return_value, zval * a, zval * b)
 
     openblas_set_num_threads(zephir_globals->num_threads);
 
-    zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(b);
+    zend_array * aa = Z_ARR_P(a);
+    zend_array * ab = Z_ARR_P(b);
 
-    Bucket * ba = aHat->arData;
-    Bucket * bb = bHat->arData;
+    Bucket * ba = aa->arData;
+    Bucket * bb = ab->arData;
 
-    unsigned int m = zend_array_count(aHat);
-    unsigned int p = zend_array_count(bHat);
+    unsigned int m = zend_array_count(aa);
+    unsigned int p = zend_array_count(ab);
     unsigned int n = zend_array_count(Z_ARR(bb[0].val));
 
     double * va = emalloc(m * p * sizeof(double));
@@ -76,13 +76,13 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
 {
     unsigned int i;
 
-    zend_array * aHat = Z_ARR_P(a);
-    zend_array * bHat = Z_ARR_P(b);
+    zend_array * aa = Z_ARR_P(a);
+    zend_array * ab = Z_ARR_P(b);
 
-    Bucket * ba = aHat->arData;
-    Bucket * bb = bHat->arData;
+    Bucket * ba = aa->arData;
+    Bucket * bb = ab->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
     double sigma = 0.0;
 
@@ -103,11 +103,11 @@ void tensor_inverse(zval * return_value, zval * a)
 
     openblas_set_num_threads(zephir_globals->num_threads);
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * ba = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
     double * va = emalloc(n * n * sizeof(double));
     int * pivots = emalloc(n * sizeof(int));
@@ -163,11 +163,11 @@ void tensor_ref(zval * return_value, zval * a)
 
     openblas_set_num_threads(zephir_globals->num_threads);
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * ba = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    unsigned int m = zend_array_count(aHat);
+    unsigned int m = zend_array_count(aa);
     unsigned int n = zend_array_count(Z_ARR(ba[0].val));
 
     double * va = emalloc(m * n * sizeof(double));
@@ -230,11 +230,11 @@ void tensor_cholesky(zval * return_value, zval * a)
 
     openblas_set_num_threads(zephir_globals->num_threads);
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * ba = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
     double * va = emalloc(n * n * sizeof(double));
 
@@ -284,11 +284,11 @@ void tensor_lu(zval * return_value, zval * a)
 
     openblas_set_num_threads(zephir_globals->num_threads);
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * ba = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
     double * va = emalloc(n * n * sizeof(double));
     int * pivots = emalloc(n * sizeof(int));
@@ -380,11 +380,11 @@ void tensor_eig(zval * return_value, zval * a)
 
     openblas_set_num_threads(zephir_globals->num_threads);
 
-    zend_array * aHat = Z_ARR_P(a);
+    zend_array * aa = Z_ARR_P(a);
 
-    Bucket * ba = aHat->arData;
+    Bucket * ba = aa->arData;
 
-    unsigned int n = zend_array_count(aHat);
+    unsigned int n = zend_array_count(aa);
 
     double * va = emalloc(n * n * sizeof(double));
     double * wr = emalloc(n * sizeof(double));
