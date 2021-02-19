@@ -35,6 +35,7 @@ zend_class_entry *tensor_columnvector_ce;
 zend_class_entry *tensor_decompositions_cholesky_ce;
 zend_class_entry *tensor_decompositions_eigen_ce;
 zend_class_entry *tensor_decompositions_lu_ce;
+zend_class_entry *tensor_decompositions_svd_ce;
 zend_class_entry *tensor_matrix_ce;
 zend_class_entry *tensor_reductions_ref_ce;
 zend_class_entry *tensor_reductions_rref_ce;
@@ -62,6 +63,7 @@ static PHP_MINIT_FUNCTION(tensor)
 	ZEPHIR_INIT(Tensor_Decompositions_Cholesky);
 	ZEPHIR_INIT(Tensor_Decompositions_Eigen);
 	ZEPHIR_INIT(Tensor_Decompositions_Lu);
+	ZEPHIR_INIT(Tensor_Decompositions_Svd);
 	ZEPHIR_INIT(Tensor_Matrix);
 	ZEPHIR_INIT(Tensor_Reductions_Ref);
 	ZEPHIR_INIT(Tensor_Reductions_Rref);

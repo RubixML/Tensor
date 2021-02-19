@@ -98,10 +98,10 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 	ZEPHIR_INIT_VAR(&_3);
 	object_init_ex(&_3, tensor_matrix_ce);
 	zephir_array_fetch_long(&_4, &ref, 0, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 47);
-	ZEPHIR_CALL_METHOD(NULL, &_3, "__construct", NULL, 27, &_4);
+	ZEPHIR_CALL_METHOD(NULL, &_3, "__construct", NULL, 28, &_4);
 	zephir_check_call_status();
 	zephir_array_fetch_long(&_5, &ref, 1, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 47);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 33, &_3, &_5);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 34, &_3, &_5);
 	zephir_check_call_status();
 	RETURN_MM();
 

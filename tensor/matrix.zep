@@ -3,6 +3,7 @@ namespace Tensor;
 use Tensor\Reductions\Ref;
 use Tensor\Reductions\Rref;
 use Tensor\Decompositions\Lu;
+use Tensor\Decompositions\Svd;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
 use InvalidArgumentException;
@@ -225,8 +226,7 @@ class Matrix implements Tensor
     }
  
     /**
-     * Return a standard normally (Gaussian( distributed random matrix of
-     * specified dimensionality.
+     * Return a standard normally (Gaussian( distributed random matrix of specified dimensionality.
      *
      * @param int m
      * @param int n
@@ -985,6 +985,7 @@ class Matrix implements Tensor
         int i, j, x, y;
         float sigma;
         var k, l, rowB, valueB;
+
         array rowA = [];
         array bHat = [];
         array c = [];
@@ -1083,6 +1084,16 @@ class Matrix implements Tensor
     public function eig(bool normalize = true) -> <Eigen>
     {
         return Eigen::decompose(this, normalize);
+    }
+
+    /**
+     * Compute the singluar value decomposition of this matrix.
+     *
+     * @return \Tensor\Decompositions\Svd
+     */
+    public function svd() -> <Svd>
+    {
+        return Svd::decompose(this);
     }
 
     /**
@@ -1859,6 +1870,7 @@ class Matrix implements Tensor
 
         float t;
         var rowA;
+        
         array b = [];
 
         float x = q * (this->n - 1) + 1;

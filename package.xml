@@ -7,13 +7,13 @@
 	<lead>
 		<name>Andrew DalPino</name>
 		<user>andrewdalpino</user>
-        <email></email>
+        <email>support@rubixml.com</email>
 		<active>yes</active>
 	</lead>
 	<date>2021-02-13</date>
 	<version>
-		<release>2.1.03</release>
-		<api>2.1.3</api>
+		<release>2.2.0</release>
+		<api>2.2.0</api>
 	</version>
 	<stability>
 		<release>stable</release>
@@ -86,6 +86,8 @@
                         <file name="eigen.zep.h" role="src" />
                         <file name="lu.zep.c" role="src" />
                         <file name="lu.zep.h" role="src" />
+                        <file name="svd.zep.c" role="src" />
+                        <file name="svd.zep.h" role="src" />
                     </dir>
                     <dir name="reductions">
                         <file name="ref.zep.c" role="src" />

@@ -1,3 +1,6 @@
+- 2.2.0
+    - Implemented Singular Value Decomposition (SVD)
+
 - 2.1.4
     - Implemented Eigen decomposition in extension
     - Optimize row echelon form (REF) of matrix

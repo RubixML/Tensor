@@ -10,5 +10,6 @@ void tensor_ref(zval * return_value, zval * a);
 void tensor_cholesky(zval * return_value, zval * a);
 void tensor_lu(zval * return_value, zval * a);
 void tensor_eig(zval * return_value, zval * a);
+void tensor_svd(zval * return_value, zval * a);
 
 #endif

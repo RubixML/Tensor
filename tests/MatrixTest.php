@@ -15,6 +15,7 @@ use Tensor\Trigonometric;
 use Tensor\Reductions\REF;
 use Tensor\Reductions\RREF;
 use Tensor\Decompositions\LU;
+use Tensor\Decompositions\SVD;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
 use PHPUnit\Framework\TestCase;
@@ -784,6 +785,42 @@ class MatrixTest extends TestCase
 
         $this->assertEquals($values, $eig->eigenvalues());
         $this->assertEquals($vectors, $eig->eigenvectors()->asArray());
+    }
+
+    /**
+     * @test
+     */
+    public function svd() : void
+    {
+        if (!extension_loaded('tensor')) {
+            $this->markTestSkipped('Not implemented in Tensor PHP.');
+        }
+
+        /** @var mixed $this->a */
+        $svd = $this->a->svd();
+
+        $this->assertInstanceOf(Svd::class, $svd);
+
+        $uHat = [
+            [-0.8436018806559158, 0.4252547343454771, -0.3278631999333884],
+            [0.08179499775610413, -0.5016868397437385, -0.8611735557772425],
+            [-0.5307027843302525, -0.7533052009276842, 0.38844025146657923],
+        ];
+
+        $values = [34.66917512262571, 17.12630582468919, 8.929610580306822];
+
+        $vtHat = [
+            [-0.8320393250771425, 0.531457514846513, -0.15894486917903863],
+            [-0.4506078135544562, -0.48043370238236727, 0.7524201326246152],
+            [-0.3235168618307952, -0.6976649392999047, -0.6392186422366096],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $svd->u());
+        $this->assertInstanceOf(Matrix::class, $svd->vt());
+
+        $this->assertEquals($uHat, $svd->u()->asArray());
+        $this->assertEquals($values, $svd->s());
+        $this->assertEquals($vtHat, $svd->vt()->asArray());
     }
 
     /**

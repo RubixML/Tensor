@@ -83,7 +83,7 @@ class Eigen
      *
      * @return list<int|float>
      */
-    public function eigenvalues() -> <Matrix>
+    public function eigenvalues() -> array
     {
         return this->eigenvalues;
     }

@@ -53,6 +53,7 @@ PHP_METHOD(Tensor_Matrix, rref);
 PHP_METHOD(Tensor_Matrix, lu);
 PHP_METHOD(Tensor_Matrix, cholesky);
 PHP_METHOD(Tensor_Matrix, eig);
+PHP_METHOD(Tensor_Matrix, svd);
 PHP_METHOD(Tensor_Matrix, solve);
 PHP_METHOD(Tensor_Matrix, l1Norm);
 PHP_METHOD(Tensor_Matrix, l2Norm);
@@ -630,6 +631,13 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_eig, 0, 0, IS_OBJE
 	ZEND_ARG_TYPE_INFO(0, normalize, _IS_BOOL, 0)
 #else
 	ZEND_ARG_INFO(0, normalize)
+#endif
+ZEND_END_ARG_INFO()
+
+#if PHP_VERSION_ID >= 70200
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_svd, 0, 0, Tensor\\Decompositions\\Svd, 0)
+#else
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_svd, 0, 0, IS_OBJECT, "Tensor\\Decompositions\\Svd", 0)
 #endif
 ZEND_END_ARG_INFO()
 
@@ -1558,6 +1566,7 @@ ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
 	PHP_ME(Tensor_Matrix, lu, arginfo_tensor_matrix_lu, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, cholesky, arginfo_tensor_matrix_cholesky, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, eig, arginfo_tensor_matrix_eig, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Matrix, svd, arginfo_tensor_matrix_svd, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, solve, arginfo_tensor_matrix_solve, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, l1Norm, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, l2Norm, NULL, ZEND_ACC_PUBLIC)
