@@ -575,6 +575,7 @@ class Vector implements Tensor
         int i;
         float sigma;
         var j, valueA, valueB;
+        
         array bHat = [];
         array c = [];
 

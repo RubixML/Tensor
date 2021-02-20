@@ -28,10 +28,6 @@
  *
  * The row echelon form (REF) of a matrix.
  *
- * References:
- * [1] M. Rogoyski. (2019). Math PHP: Powerful modern math library for PHP.
- * http://github.com/markrogoyski/math-php.
- *
  * @category    Scientific Computing
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
@@ -97,10 +93,10 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 	object_init_ex(return_value, tensor_reductions_ref_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	object_init_ex(&_3, tensor_matrix_ce);
-	zephir_array_fetch_long(&_4, &ref, 0, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 47);
+	zephir_array_fetch_long(&_4, &ref, 0, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 43);
 	ZEPHIR_CALL_METHOD(NULL, &_3, "__construct", NULL, 27, &_4);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_5, &ref, 1, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 47);
+	zephir_array_fetch_long(&_5, &ref, 1, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 43);
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 33, &_3, &_5);
 	zephir_check_call_status();
 	RETURN_MM();
@@ -142,7 +138,7 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 		ZEPHIR_CONCAT_SSVS(&_3$$3, "The number of swaps must", " be greater than or equal to 0, ", &_2$$3, " given.");
 		ZEPHIR_CALL_METHOD(NULL, &_0$$3, "__construct", NULL, 3, &_3$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(&_0$$3, "tensor/reductions/ref.zep", 60);
+		zephir_throw_exception_debug(&_0$$3, "tensor/reductions/ref.zep", 56);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

@@ -8,10 +8,6 @@ use InvalidArgumentException;
  *
  * The row echelon form (REF) of a matrix.
  *
- * References:
- * [1] M. Rogoyski. (2019). Math PHP: Powerful modern math library for PHP.
- * http://github.com/markrogoyski/math-php.
- *
  * @category    Scientific Computing
  * @package     Rubix/Tensor
  * @author      Andrew DalPino

@@ -68,18 +68,18 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose) {
 	zephir_fcall_cache_entry *_5 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool normalize;
-	zval *a = NULL, a_sub, *normalize_param = NULL, _0, eigenvalues, eigenvectors, norm, _1, _2, _4, _6, _7$$4, _8$$4, _9$$4, _10$$4, _11$$4;
+	zval *a = NULL, a_sub, *normalize_param = NULL, _0, eigenvalues, eigenvectors, _1, _2, _4, _6, norm$$4, _7$$4, _8$$4, _9$$4, _10$$4, _11$$4;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&eigenvalues);
 	ZVAL_UNDEF(&eigenvectors);
-	ZVAL_UNDEF(&norm);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_4);
 	ZVAL_UNDEF(&_6);
+	ZVAL_UNDEF(&norm$$4);
 	ZVAL_UNDEF(&_7$$4);
 	ZVAL_UNDEF(&_8$$4);
 	ZVAL_UNDEF(&_9$$4);
@@ -109,8 +109,8 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose) {
 	zephir_get_arrval(&_3, &_1);
 	ZEPHIR_CPY_WRT(&eig, &_3);
 	ZEPHIR_OBS_VAR(&eigenvalues);
-	zephir_array_fetch_long(&eigenvalues, &eig, 0, PH_NOISY, "tensor/decompositions/eigen.zep", 55);
-	zephir_array_fetch_long(&_6, &eig, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/eigen.zep", 56);
+	zephir_array_fetch_long(&eigenvalues, &eig, 0, PH_NOISY, "tensor/decompositions/eigen.zep", 54);
+	zephir_array_fetch_long(&_6, &eig, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/eigen.zep", 55);
 	ZEPHIR_CALL_CE_STATIC(&_4, tensor_matrix_ce, "quick", &_5, 0, &_6);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&eigenvectors, &_4, "transpose", NULL, 0);
@@ -124,9 +124,9 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose) {
 		zephir_check_call_status();
 		ZEPHIR_CALL_METHOD(&_10$$4, &_9$$4, "sqrt", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&norm, &_10$$4, "transpose", NULL, 0);
+		ZEPHIR_CALL_METHOD(&norm$$4, &_10$$4, "transpose", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_11$$4, &eigenvectors, "dividevector", NULL, 0, &norm);
+		ZEPHIR_CALL_METHOD(&_11$$4, &eigenvectors, "dividevector", NULL, 0, &norm$$4);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(&eigenvectors, &_11$$4);
 	}

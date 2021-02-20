@@ -46,7 +46,6 @@ class Eigen
 
         var eigenvalues;
         var eigenvectors;
-        var norm;
 
         array eig = [];
 
@@ -56,6 +55,8 @@ class Eigen
         let eigenvectors = Matrix::quick(eig[1])->transpose();
 
         if (normalize) {
+            var norm;
+            
             let norm = eigenvectors->transpose()
                 ->square()
                 ->sum()
