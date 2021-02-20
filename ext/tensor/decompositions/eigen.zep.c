@@ -16,7 +16,6 @@
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/array.h"
 #include "kernel/object.h"
 #include "include/linear_algebra.h"
@@ -97,7 +96,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose) {
 	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot decompose a non-square matrix.", "tensor/decompositions/eigen.zep", 44);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Cannot decompose a non-square matrix.", "tensor/decompositions/eigen.zep", 44);
 		return;
 	}
 	ZEPHIR_INIT_VAR(&eig);

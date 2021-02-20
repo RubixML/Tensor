@@ -18,7 +18,6 @@
 #include "kernel/array.h"
 #include "kernel/object.h"
 #include "kernel/exception.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/concat.h"
 #include "include/linear_algebra.h"
 
@@ -110,7 +109,7 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 /**
  * @param \Tensor\Matrix a
  * @param int swaps
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  */
 PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 
@@ -134,7 +133,7 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 
 	if (UNEXPECTED(swaps < 0)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_1$$3, swaps);
 		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 2, &_1$$3);
 		zephir_check_call_status();

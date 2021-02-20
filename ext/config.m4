@@ -16,12 +16,15 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/statistical.zep.c
 	tensor/trigonometric.zep.c
 	tensor/tensor.zep.c
+	tensor/exceptions/tensorexception.zep.c
 	tensor/vector.zep.c
 	tensor/columnvector.zep.c
 	tensor/decompositions/cholesky.zep.c
 	tensor/decompositions/eigen.zep.c
 	tensor/decompositions/lu.zep.c
 	tensor/decompositions/svd.zep.c
+	tensor/exceptions/invalidargumentexception.zep.c
+	tensor/exceptions/runtimeexception.zep.c
 	tensor/matrix.zep.c
 	tensor/reductions/ref.zep.c
 	tensor/reductions/rref.zep.c

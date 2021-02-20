@@ -1,7 +1,7 @@
 namespace Tensor;
 
-use InvalidArgumentException;
-use RuntimeException;
+use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\RuntimeException;
 use ArrayIterator;
 
 /**
@@ -55,7 +55,7 @@ class Vector implements Tensor
      * Build a vector of zeros with n elements.
      *
      * @param int n
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function zeros(const int n) -> <Vector>
@@ -72,7 +72,7 @@ class Vector implements Tensor
      * Build a vector of ones with n elements.
      *
      * @param int n
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function ones(const int n) -> <Vector>
@@ -90,7 +90,7 @@ class Vector implements Tensor
      *
      * @param int|float value
      * @param int n
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function fill(const value, const int n) -> <Vector>
@@ -113,7 +113,7 @@ class Vector implements Tensor
      * Return a random uniform vector with values between 0 and 1.
      *
      * @param int n
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function rand(const int n) -> <Vector>
@@ -139,7 +139,7 @@ class Vector implements Tensor
      * and unit variance.
      *
      * @param int n
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function gaussian(const int n) -> <Vector>
@@ -176,7 +176,7 @@ class Vector implements Tensor
      *
      * @param int n
      * @param float lambda
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function poisson(const int n, const float lambda = 1.0) -> <Vector>
@@ -215,7 +215,7 @@ class Vector implements Tensor
      * Return a random uniformly distributed vector with values between -1 and 1.
      *
      * @param int n
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function uniform(const int n) -> <Vector>
@@ -255,7 +255,7 @@ class Vector implements Tensor
      * @param float min
      * @param float max
      * @param int n
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function linspace(const float min, const float max, const int n) -> <Vector>
@@ -290,7 +290,7 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector a
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function maximum(const <Vector> a, const <Vector> b) -> <Vector>
@@ -309,7 +309,7 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector a
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function minimum(const <Vector> a, const <Vector> b) -> <Vector>
@@ -326,7 +326,7 @@ class Vector implements Tensor
     /**
      * @param (int|float)[] a
      * @param bool validate
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     public function __construct(array a, const bool validate = true)
     {
@@ -436,7 +436,7 @@ class Vector implements Tensor
      *
      * @param int m
      * @param int n
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function reshape(const int m, const int n) -> <Matrix>
@@ -520,7 +520,7 @@ class Vector implements Tensor
      *
      * @param callable callback
      * @param int|float initial
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return int|float
      */
     public function reduce(const var callback, const var initial = 0) -> int|float
@@ -538,7 +538,7 @@ class Vector implements Tensor
      * Compute the dot product of this vector and another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return float
      */
     public function dot(const <Vector> b) -> float
@@ -557,7 +557,7 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector b
      * @param int stride
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function convolve(const <Vector> b, const int stride = 1) -> <Vector>
@@ -652,7 +652,7 @@ class Vector implements Tensor
      * Calculate the cross product between two 3 dimensional vectors.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function cross(const <Vector> b) -> <Vector>
@@ -706,7 +706,7 @@ class Vector implements Tensor
      * Calculate the p-norm of the vector.
      *
      * @param float p
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return int|float
      */
     public function pNorm(const float p = 3.0) -> int|float
@@ -733,7 +733,7 @@ class Vector implements Tensor
      * A universal function to multiply this vector with another tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function multiply(const var b)
@@ -763,7 +763,7 @@ class Vector implements Tensor
      * A universal function to divide this vector by another tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function divide(const var b)
@@ -794,7 +794,7 @@ class Vector implements Tensor
      * element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function add(const var b)
@@ -825,7 +825,7 @@ class Vector implements Tensor
      * element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function subtract(const var b)
@@ -856,7 +856,7 @@ class Vector implements Tensor
      * tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function pow(const var b)
@@ -887,7 +887,7 @@ class Vector implements Tensor
      * another tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function mod(const var b)
@@ -918,7 +918,7 @@ class Vector implements Tensor
      * this vector and another tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function equal(const var b)
@@ -949,7 +949,7 @@ class Vector implements Tensor
      * this vector and another tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function notEqual(const var b)
@@ -980,7 +980,7 @@ class Vector implements Tensor
      * this vector and another tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function greater(const var b)
@@ -1011,7 +1011,7 @@ class Vector implements Tensor
      * comparison of this vector and another tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function greaterEqual(const var b)
@@ -1042,7 +1042,7 @@ class Vector implements Tensor
      * this vector and another tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function less(const var b)
@@ -1073,7 +1073,7 @@ class Vector implements Tensor
      * comparison of this vector and another tensor element-wise.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return mixed
      */
     public function lessEqual(const var b)
@@ -1316,7 +1316,7 @@ class Vector implements Tensor
     /**
      * Return the mean of the vector.
      *
-     * @throws \RuntimeException
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return int|float
      */
     public function mean() -> int|float
@@ -1352,7 +1352,7 @@ class Vector implements Tensor
      * Return the q'th quantile of the vector.
      *
      * @param float q
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return int|float
      */
     public function quantile(const float q) -> int|float
@@ -1381,7 +1381,7 @@ class Vector implements Tensor
      * Return the variance of the vector.
      *
      * @param mixed mean
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return int|float
      */
     public function variance(var mean = null) -> int|float
@@ -1407,7 +1407,7 @@ class Vector implements Tensor
      * Round the elements in the matrix to a given decimal place.
      *
      * @param int precision
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function round(const int precision = 0) -> <Vector>
@@ -1458,7 +1458,7 @@ class Vector implements Tensor
      *
      * @param float min
      * @param float max
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function clip(const float min, const float max) -> <Vector>
@@ -1587,7 +1587,7 @@ class Vector implements Tensor
      * Multiply this vector with a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function multiplyMatrix(const <Matrix> b) -> <Matrix>
@@ -1612,7 +1612,7 @@ class Vector implements Tensor
      * Divide this vector with a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function divideMatrix(const <Matrix> b) -> <Matrix>
@@ -1637,7 +1637,7 @@ class Vector implements Tensor
      * Add this vector to a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function addMatrix(const <Matrix> b) -> <Matrix>
@@ -1662,7 +1662,7 @@ class Vector implements Tensor
      * Subtract a matrix from this vector.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function subtractMatrix(const <Matrix> b) -> <Matrix>
@@ -1687,7 +1687,7 @@ class Vector implements Tensor
      * Raise this vector to the power of a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function powMatrix(const <Matrix> b) -> <Matrix>
@@ -1712,7 +1712,7 @@ class Vector implements Tensor
      * Mod this vector with a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function modMatrix(const <Matrix> b) -> <Matrix>
@@ -1738,7 +1738,7 @@ class Vector implements Tensor
      * matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function equalMatrix(const <Matrix> b) -> <Matrix>
@@ -1764,7 +1764,7 @@ class Vector implements Tensor
      * matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function notEqualMatrix(const <Matrix> b) -> <Matrix>
@@ -1790,7 +1790,7 @@ class Vector implements Tensor
      * and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function greaterMatrix(const <Matrix> b) -> <Matrix>
@@ -1816,7 +1816,7 @@ class Vector implements Tensor
      * this vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
@@ -1842,7 +1842,7 @@ class Vector implements Tensor
      * and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function lessMatrix(const <Matrix> b) -> <Matrix>
@@ -1868,7 +1868,7 @@ class Vector implements Tensor
      * this vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return \Tensor\Matrix
      */
     public function lessEqualMatrix(const <Matrix> b) -> <Matrix>
@@ -1893,7 +1893,7 @@ class Vector implements Tensor
      * Multiply this vector with another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function multiplyVector(const <Vector> b) -> <Vector>
@@ -1911,7 +1911,7 @@ class Vector implements Tensor
      * Divide this vector by another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function divideVector(const <Vector> b) -> <Vector>
@@ -1929,7 +1929,7 @@ class Vector implements Tensor
      * Add this vector to another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function addVector(const <Vector> b) -> <Vector>
@@ -1947,7 +1947,7 @@ class Vector implements Tensor
      * Subtract a vector from this vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function subtractVector(const <Vector> b) -> <Vector>
@@ -1965,7 +1965,7 @@ class Vector implements Tensor
      * Raise this vector to a power of another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function powVector(const <Vector> b) -> <Vector>
@@ -1983,7 +1983,7 @@ class Vector implements Tensor
      * Calculate the modulus of this vector with another vector elementwise.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function modVector(const <Vector> b) -> <Vector>
@@ -2002,7 +2002,7 @@ class Vector implements Tensor
      * another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function equalVector(const <Vector> b) -> <Vector>
@@ -2021,7 +2021,7 @@ class Vector implements Tensor
      * another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function notEqualVector(const <Vector> b) -> <Vector>
@@ -2040,7 +2040,7 @@ class Vector implements Tensor
      * and a another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function greaterVector(const <Vector> b) -> <Vector>
@@ -2059,7 +2059,7 @@ class Vector implements Tensor
      * this vector and a another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function greaterEqualVector(const <Vector> b) -> <Vector>
@@ -2078,7 +2078,7 @@ class Vector implements Tensor
      * and a another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function lessVector(const <Vector> b) -> <Vector>
@@ -2097,7 +2097,7 @@ class Vector implements Tensor
      * this vector and a another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function lessEqualVector(const <Vector> b) -> <Vector>
@@ -2115,7 +2115,7 @@ class Vector implements Tensor
      * Multiply this vector by a scalar.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
      public function multiplyScalar(const var b) -> <Vector>
@@ -2133,7 +2133,7 @@ class Vector implements Tensor
      * Divide this vector by a scalar.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function divideScalar(const var b) -> <Vector>
@@ -2151,7 +2151,7 @@ class Vector implements Tensor
      * Add a scalar to this vector.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function addScalar(const var b) -> <Vector>
@@ -2169,7 +2169,7 @@ class Vector implements Tensor
      * Subtract a scalar from this vector.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function subtractScalar(const var b) -> <Vector>
@@ -2187,7 +2187,7 @@ class Vector implements Tensor
      * Raise the vector to a the power of a scalar value.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
      public function powScalar(const var b) -> <Vector>
@@ -2205,7 +2205,7 @@ class Vector implements Tensor
      * Calculate the modulus of this vector with a scalar.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function modScalar(const var b) -> <Vector>
@@ -2224,7 +2224,7 @@ class Vector implements Tensor
      * scalar.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function equalScalar(const var b) -> <Vector>
@@ -2243,7 +2243,7 @@ class Vector implements Tensor
      * scalar.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function notEqualScalar(const var b) -> <Vector>
@@ -2262,7 +2262,7 @@ class Vector implements Tensor
      * and a scalar.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function greaterScalar(const var b) -> <Vector>
@@ -2281,7 +2281,7 @@ class Vector implements Tensor
      * this vector and a scalar.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function greaterEqualScalar(const var b) -> <Vector>
@@ -2300,7 +2300,7 @@ class Vector implements Tensor
      * and a scalar.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function lessScalar(const var b) -> <Vector>
@@ -2319,7 +2319,7 @@ class Vector implements Tensor
      * this vector and a scalar.
      *
      * @param mixed b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public function lessEqualScalar(const var b) -> <Vector>
@@ -2346,7 +2346,7 @@ class Vector implements Tensor
     /**
      * @param mixed index
      * @param array values
-     * @throws \RuntimeException
+     * @throws \Tensor\Exceptions\RuntimeException
      */
     public function offsetSet(const var index, const var values) -> void
     {
@@ -2366,7 +2366,7 @@ class Vector implements Tensor
 
     /**
      * @param mixed index
-     * @throws \RuntimeException
+     * @throws \Tensor\Exceptions\RuntimeException
      */
     public function offsetUnset(const var index) -> void
     {
@@ -2377,7 +2377,7 @@ class Vector implements Tensor
      * Return a row from the matrix at the given index.
      *
      * @param mixed index
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return int|float
      */
     public function offsetGet(const var index) -> int|float

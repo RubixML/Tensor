@@ -3,7 +3,7 @@ namespace Tensor\Decompositions;
 use Tensor\Matrix;
 use Tensor\Vector;
 use Tensor\ColumnVector;
-use RuntimeException;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * Eigen

@@ -1,7 +1,7 @@
 namespace Tensor\Reductions;
 
 use Tensor\Matrix;
-use InvalidArgumentException;
+use Tensor\Exceptions\InvalidArgumentException;
 
 /**
  * REF
@@ -50,7 +50,7 @@ class Ref
     /**
      * @param \Tensor\Matrix a
      * @param int swaps
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     public function __construct(const <Matrix> a, const int swaps)
     {

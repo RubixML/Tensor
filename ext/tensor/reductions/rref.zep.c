@@ -118,10 +118,10 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 			break;
 		}
 		ZEPHIR_OBS_NVAR(&_7$$3);
-		zephir_array_fetch_long(&_7$$3, &b, row, PH_NOISY, "tensor/reductions/rref.zep", 48);
+		zephir_array_fetch_long(&_7$$3, &b, row, PH_NOISY, "tensor/reductions/rref.zep", 46);
 		zephir_get_arrval(&_8$$3, &_7$$3);
 		ZEPHIR_CPY_WRT(&t, &_8$$3);
-		zephir_array_fetch_long(&_9$$3, &t, col, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 50);
+		zephir_array_fetch_long(&_9$$3, &t, col, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 48);
 		ZEPHIR_CALL_FUNCTION(&_10$$3, "abs", &_11, 12, &_9$$3);
 		zephir_check_call_status();
 		if (ZEPHIR_IS_LONG(&_10$$3, 0)) {
@@ -129,7 +129,7 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 			continue;
 		}
 		ZEPHIR_OBS_NVAR(&divisor);
-		zephir_array_fetch_long(&divisor, &t, col, PH_NOISY, "tensor/reductions/rref.zep", 56);
+		zephir_array_fetch_long(&divisor, &t, col, PH_NOISY, "tensor/reductions/rref.zep", 54);
 		if (!ZEPHIR_IS_LONG(&divisor, 1)) {
 			_14$$5 = (n - 1);
 			_13$$5 = 0;
@@ -145,7 +145,7 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 						_12$$5 = 1;
 					}
 					i = _13$$5;
-					zephir_array_fetch_long(&_15$$6, &t, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 60);
+					zephir_array_fetch_long(&_15$$6, &t, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 58);
 					ZEPHIR_INIT_NVAR(&_16$$6);
 					div_function(&_16$$6, &_15$$6, &divisor);
 					zephir_array_update_long(&t, i, &_16$$6, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
@@ -166,9 +166,9 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 					_17$$3 = 1;
 				}
 				i = _18$$3;
-				zephir_array_fetch_long(&_20$$7, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 65);
+				zephir_array_fetch_long(&_20$$7, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 63);
 				ZEPHIR_OBS_NVAR(&scale);
-				zephir_array_fetch_long(&scale, &_20$$7, col, PH_NOISY, "tensor/reductions/rref.zep", 65);
+				zephir_array_fetch_long(&scale, &_20$$7, col, PH_NOISY, "tensor/reductions/rref.zep", 63);
 				if (!ZEPHIR_IS_LONG(&scale, 0)) {
 					_23$$8 = (n - 1);
 					_22$$8 = 0;
@@ -184,9 +184,9 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 								_21$$8 = 1;
 							}
 							j = _22$$8;
-							zephir_array_fetch_long(&_24$$9, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 69);
-							zephir_array_fetch_long(&_25$$9, &_24$$9, j, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 69);
-							zephir_array_fetch_long(&_26$$9, &t, j, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 69);
+							zephir_array_fetch_long(&_24$$9, &b, i, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 67);
+							zephir_array_fetch_long(&_25$$9, &_24$$9, j, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 67);
+							zephir_array_fetch_long(&_26$$9, &t, j, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 67);
 							ZEPHIR_INIT_NVAR(&_27$$9);
 							mul_function(&_27$$9, &scale, &_26$$9);
 							ZEPHIR_INIT_NVAR(&_28$$9);
@@ -212,7 +212,7 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 
 /**
  * @param \Tensor\Matrix a
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  */
 PHP_METHOD(Tensor_Reductions_Rref, __construct) {
 

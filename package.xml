@@ -89,6 +89,14 @@
                         <file name="svd.zep.c" role="src" />
                         <file name="svd.zep.h" role="src" />
                     </dir>
+                    <dir name="exceptions">
+                        <file name="invalidargumentexception.zep.c" role="src" />
+                        <file name="invalidargumentexception.zep.h" role="src" />
+                        <file name="runtimeexception.zep.c" role="src" />
+                        <file name="runtimeexception.zep.h" role="src" />
+                        <file name="tensorexception.zep.c" role="src" />
+                        <file name="tensorexception.zep.h" role="src" />
+                    </dir>
                     <dir name="reductions">
                         <file name="ref.zep.c" role="src" />
                         <file name="ref.zep.h" role="src" />

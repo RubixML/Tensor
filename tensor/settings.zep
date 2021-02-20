@@ -1,6 +1,6 @@
 namespace Tensor;
 
-use InvalidArgumentException;
+use Tensor\Exceptions\InvalidArgumentException;
 
 /**
  * Settings

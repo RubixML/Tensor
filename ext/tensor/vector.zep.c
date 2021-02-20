@@ -17,7 +17,6 @@
 #include "kernel/operators.h"
 #include "kernel/object.h"
 #include "kernel/exception.h"
-#include "ext/spl/spl_exceptions.h"
 #include "kernel/concat.h"
 #include "kernel/array.h"
 #include "math.h"
@@ -137,7 +136,7 @@ PHP_METHOD(Tensor_Vector, quick) {
  * Build a vector of zeros with n elements.
  *
  * @param int n
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, zeros) {
@@ -162,7 +161,7 @@ PHP_METHOD(Tensor_Vector, zeros) {
 
 	if (UNEXPECTED(n < 1)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_1$$3, n);
 		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 2, &_1$$3);
 		zephir_check_call_status();
@@ -186,7 +185,7 @@ PHP_METHOD(Tensor_Vector, zeros) {
  * Build a vector of ones with n elements.
  *
  * @param int n
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, ones) {
@@ -211,7 +210,7 @@ PHP_METHOD(Tensor_Vector, ones) {
 
 	if (UNEXPECTED(n < 1)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_1$$3, n);
 		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 2, &_1$$3);
 		zephir_check_call_status();
@@ -236,7 +235,7 @@ PHP_METHOD(Tensor_Vector, ones) {
  *
  * @param int|float value
  * @param int n
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, fill) {
@@ -274,7 +273,7 @@ PHP_METHOD(Tensor_Vector, fill) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, value);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -287,7 +286,7 @@ PHP_METHOD(Tensor_Vector, fill) {
 	}
 	if (UNEXPECTED(n < 1)) {
 		ZEPHIR_INIT_VAR(&_5$$4);
-		object_init_ex(&_5$$4, spl_ce_InvalidArgumentException);
+		object_init_ex(&_5$$4, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_6$$4, n);
 		ZEPHIR_CALL_FUNCTION(&_7$$4, "strval", NULL, 2, &_6$$4);
 		zephir_check_call_status();
@@ -313,7 +312,7 @@ PHP_METHOD(Tensor_Vector, fill) {
  * Return a random uniform vector with values between 0 and 1.
  *
  * @param int n
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, rand) {
@@ -342,7 +341,7 @@ PHP_METHOD(Tensor_Vector, rand) {
 
 	if (UNEXPECTED(n < 1)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_1$$3, n);
 		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 2, &_1$$3);
 		zephir_check_call_status();
@@ -380,7 +379,7 @@ PHP_METHOD(Tensor_Vector, rand) {
  * and unit variance.
  *
  * @param int n
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, gaussian) {
@@ -415,7 +414,7 @@ PHP_METHOD(Tensor_Vector, gaussian) {
 
 	if (UNEXPECTED(n < 1)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_1$$3, n);
 		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 2, &_1$$3);
 		zephir_check_call_status();
@@ -472,7 +471,7 @@ PHP_METHOD(Tensor_Vector, gaussian) {
  *
  * @param int n
  * @param float lambda
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, poisson) {
@@ -509,7 +508,7 @@ PHP_METHOD(Tensor_Vector, poisson) {
 
 	if (UNEXPECTED(n < 1)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_1$$3, n);
 		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 2, &_1$$3);
 		zephir_check_call_status();
@@ -559,7 +558,7 @@ PHP_METHOD(Tensor_Vector, poisson) {
  * Return a random uniformly distributed vector with values between -1 and 1.
  *
  * @param int n
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, uniform) {
@@ -590,7 +589,7 @@ PHP_METHOD(Tensor_Vector, uniform) {
 
 	if (UNEXPECTED(n < 1)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_1$$3, n);
 		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 2, &_1$$3);
 		zephir_check_call_status();
@@ -669,7 +668,7 @@ PHP_METHOD(Tensor_Vector, range) {
  * @param float min
  * @param float max
  * @param int n
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, linspace) {
@@ -706,7 +705,7 @@ PHP_METHOD(Tensor_Vector, linspace) {
 
 	if (UNEXPECTED(min > max)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_1$$3);
 		ZEPHIR_CONCAT_SS(&_1$$3, "Minimum must be", " less than maximum.");
 		ZEPHIR_CALL_METHOD(NULL, &_0$$3, "__construct", NULL, 3, &_1$$3);
@@ -717,7 +716,7 @@ PHP_METHOD(Tensor_Vector, linspace) {
 	}
 	if (UNEXPECTED(n < 2)) {
 		ZEPHIR_INIT_VAR(&_2$$4);
-		object_init_ex(&_2$$4, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$4, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_3$$4, n);
 		ZEPHIR_CALL_FUNCTION(&_4$$4, "strval", NULL, 2, &_3$$4);
 		zephir_check_call_status();
@@ -765,7 +764,7 @@ PHP_METHOD(Tensor_Vector, linspace) {
  *
  * @param \Tensor\Vector a
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, maximum) {
@@ -802,7 +801,7 @@ PHP_METHOD(Tensor_Vector, maximum) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_CALL_METHOD(&_3$$3, a, "n", NULL, 0);
 		zephir_check_call_status();
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -836,7 +835,7 @@ PHP_METHOD(Tensor_Vector, maximum) {
  *
  * @param \Tensor\Vector a
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, minimum) {
@@ -873,7 +872,7 @@ PHP_METHOD(Tensor_Vector, minimum) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_CALL_METHOD(&_3$$3, a, "n", NULL, 0);
 		zephir_check_call_status();
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -905,7 +904,7 @@ PHP_METHOD(Tensor_Vector, minimum) {
 /**
  * @param (int|float)[] a
  * @param bool validate
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  */
 PHP_METHOD(Tensor_Vector, __construct) {
 
@@ -936,7 +935,7 @@ PHP_METHOD(Tensor_Vector, __construct) {
 
 	if (UNEXPECTED(ZEPHIR_IS_EMPTY(&a))) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_1$$3);
 		ZEPHIR_CONCAT_SS(&_1$$3, "Vector must contain", " at least one element.");
 		ZEPHIR_CALL_METHOD(NULL, &_0$$3, "__construct", NULL, 3, &_1$$3);
@@ -1159,7 +1158,7 @@ PHP_METHOD(Tensor_Vector, asColumnMatrix) {
  *
  * @param int m
  * @param int n
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, reshape) {
@@ -1198,7 +1197,7 @@ PHP_METHOD(Tensor_Vector, reshape) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_1$$3);
-		object_init_ex(&_1$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_1$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_2$$3);
 		ZEPHIR_CONCAT_SS(&_2$$3, "The number of rows", " and/or columns cannot be less than 0.");
 		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 3, &_2$$3);
@@ -1211,7 +1210,7 @@ PHP_METHOD(Tensor_Vector, reshape) {
 	zephir_read_property(&_3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
 	if (UNEXPECTED(!ZEPHIR_IS_LONG_IDENTICAL(&_3, nHat))) {
 		ZEPHIR_INIT_VAR(&_4$$4);
-		object_init_ex(&_4$$4, spl_ce_InvalidArgumentException);
+		object_init_ex(&_4$$4, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_5$$4, nHat);
 		ZEPHIR_CALL_FUNCTION(&_6$$4, "strval", NULL, 2, &_5$$4);
 		zephir_check_call_status();
@@ -1359,7 +1358,7 @@ PHP_METHOD(Tensor_Vector, map) {
  *
  * @param callable callback
  * @param int|float initial
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return int|float
  */
 PHP_METHOD(Tensor_Vector, reduce) {
@@ -1396,7 +1395,7 @@ PHP_METHOD(Tensor_Vector, reduce) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, initial);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -1418,7 +1417,7 @@ PHP_METHOD(Tensor_Vector, reduce) {
  * Compute the dot product of this vector and another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return float
  */
 PHP_METHOD(Tensor_Vector, dot) {
@@ -1451,7 +1450,7 @@ PHP_METHOD(Tensor_Vector, dot) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -1479,7 +1478,7 @@ PHP_METHOD(Tensor_Vector, dot) {
  *
  * @param \Tensor\Vector b
  * @param int stride
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, convolve) {
@@ -1534,7 +1533,7 @@ PHP_METHOD(Tensor_Vector, convolve) {
 	zephir_read_property(&_1, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
 	if (UNEXPECTED(ZEPHIR_GT(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		ZEPHIR_CONCAT_SS(&_3$$3, "Vector B cannot be", " larger than Vector A.");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_3$$3);
@@ -1545,7 +1544,7 @@ PHP_METHOD(Tensor_Vector, convolve) {
 	}
 	if (UNEXPECTED(stride < 1)) {
 		ZEPHIR_INIT_VAR(&_4$$4);
-		object_init_ex(&_4$$4, spl_ce_InvalidArgumentException);
+		object_init_ex(&_4$$4, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_5$$4, stride);
 		ZEPHIR_CALL_FUNCTION(&_6$$4, "strval", NULL, 2, &_5$$4);
 		zephir_check_call_status();
@@ -1861,7 +1860,7 @@ PHP_METHOD(Tensor_Vector, outer) {
  * Calculate the cross product between two 3 dimensional vectors.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, cross) {
@@ -1908,7 +1907,7 @@ PHP_METHOD(Tensor_Vector, cross) {
 	}
 	if (UNEXPECTED(_1)) {
 		ZEPHIR_INIT_VAR(&_3$$3);
-		object_init_ex(&_3$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_3$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_4$$3);
 		ZEPHIR_CONCAT_SS(&_4$$3, "Cross product is", " only defined for vectors of 3 dimensions.");
 		ZEPHIR_CALL_METHOD(NULL, &_3$$3, "__construct", NULL, 3, &_4$$3);
@@ -2057,7 +2056,7 @@ PHP_METHOD(Tensor_Vector, l2Norm) {
  * Calculate the p-norm of the vector.
  *
  * @param float p
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return int|float
  */
 PHP_METHOD(Tensor_Vector, pNorm) {
@@ -2089,7 +2088,7 @@ PHP_METHOD(Tensor_Vector, pNorm) {
 
 	if (UNEXPECTED(p <= 0.0)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_DOUBLE(&_1$$3, p);
 		ZEPHIR_CALL_FUNCTION(&_2$$3, "strval", NULL, 2, &_1$$3);
 		zephir_check_call_status();
@@ -2142,7 +2141,7 @@ PHP_METHOD(Tensor_Vector, maxNorm) {
  * A universal function to multiply this vector with another tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, multiply) {
@@ -2192,7 +2191,7 @@ PHP_METHOD(Tensor_Vector, multiply) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot multiply", " vector by the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2207,7 +2206,7 @@ PHP_METHOD(Tensor_Vector, multiply) {
  * A universal function to divide this vector by another tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, divide) {
@@ -2257,7 +2256,7 @@ PHP_METHOD(Tensor_Vector, divide) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot divide", " vector by the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2273,7 +2272,7 @@ PHP_METHOD(Tensor_Vector, divide) {
  * element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, add) {
@@ -2323,7 +2322,7 @@ PHP_METHOD(Tensor_Vector, add) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot add", " vector by the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2339,7 +2338,7 @@ PHP_METHOD(Tensor_Vector, add) {
  * element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, subtract) {
@@ -2389,7 +2388,7 @@ PHP_METHOD(Tensor_Vector, subtract) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot subtract", " vector from the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2405,7 +2404,7 @@ PHP_METHOD(Tensor_Vector, subtract) {
  * tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, pow) {
@@ -2455,7 +2454,7 @@ PHP_METHOD(Tensor_Vector, pow) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot raise", " vector to the power of the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2471,7 +2470,7 @@ PHP_METHOD(Tensor_Vector, pow) {
  * another tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, mod) {
@@ -2521,7 +2520,7 @@ PHP_METHOD(Tensor_Vector, mod) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot mod", " vector with the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2537,7 +2536,7 @@ PHP_METHOD(Tensor_Vector, mod) {
  * this vector and another tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, equal) {
@@ -2587,7 +2586,7 @@ PHP_METHOD(Tensor_Vector, equal) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot compare", " vector to the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2603,7 +2602,7 @@ PHP_METHOD(Tensor_Vector, equal) {
  * this vector and another tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, notEqual) {
@@ -2653,7 +2652,7 @@ PHP_METHOD(Tensor_Vector, notEqual) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot compare", " vector to the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2669,7 +2668,7 @@ PHP_METHOD(Tensor_Vector, notEqual) {
  * this vector and another tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, greater) {
@@ -2719,7 +2718,7 @@ PHP_METHOD(Tensor_Vector, greater) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot compare", " vector to the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2735,7 +2734,7 @@ PHP_METHOD(Tensor_Vector, greater) {
  * comparison of this vector and another tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, greaterEqual) {
@@ -2785,7 +2784,7 @@ PHP_METHOD(Tensor_Vector, greaterEqual) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot compare", " vector to the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2801,7 +2800,7 @@ PHP_METHOD(Tensor_Vector, greaterEqual) {
  * this vector and another tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, less) {
@@ -2851,7 +2850,7 @@ PHP_METHOD(Tensor_Vector, less) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot compare", " vector to the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -2867,7 +2866,7 @@ PHP_METHOD(Tensor_Vector, less) {
  * comparison of this vector and another tensor element-wise.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return mixed
  */
 PHP_METHOD(Tensor_Vector, lessEqual) {
@@ -2917,7 +2916,7 @@ PHP_METHOD(Tensor_Vector, lessEqual) {
 	} while(0);
 
 	ZEPHIR_INIT_VAR(&_2);
-	object_init_ex(&_2, spl_ce_InvalidArgumentException);
+	object_init_ex(&_2, tensor_exceptions_invalidargumentexception_ce);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SS(&_3, "Cannot compare", " vector to the given input.");
 	ZEPHIR_CALL_METHOD(NULL, &_2, "__construct", NULL, 3, &_3);
@@ -3464,7 +3463,7 @@ PHP_METHOD(Tensor_Vector, max) {
 /**
  * Return the mean of the vector.
  *
- * @throws \RuntimeException
+ * @throws \Tensor\Exceptions\RuntimeException
  * @return int|float
  */
 PHP_METHOD(Tensor_Vector, mean) {
@@ -3541,7 +3540,7 @@ PHP_METHOD(Tensor_Vector, median) {
  * Return the q'th quantile of the vector.
  *
  * @param float q
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return int|float
  */
 PHP_METHOD(Tensor_Vector, quantile) {
@@ -3574,7 +3573,7 @@ PHP_METHOD(Tensor_Vector, quantile) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_1$$3);
-		object_init_ex(&_1$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_1$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_DOUBLE(&_2$$3, q);
 		ZEPHIR_CALL_FUNCTION(&_3$$3, "strval", NULL, 2, &_2$$3);
 		zephir_check_call_status();
@@ -3608,7 +3607,7 @@ PHP_METHOD(Tensor_Vector, quantile) {
  * Return the variance of the vector.
  *
  * @param mixed mean
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return int|float
  */
 PHP_METHOD(Tensor_Vector, variance) {
@@ -3650,7 +3649,7 @@ PHP_METHOD(Tensor_Vector, variance) {
 		}
 		if (UNEXPECTED(_0$$3)) {
 			ZEPHIR_INIT_VAR(&_2$$4);
-			object_init_ex(&_2$$4, spl_ce_InvalidArgumentException);
+			object_init_ex(&_2$$4, tensor_exceptions_invalidargumentexception_ce);
 			ZEPHIR_INIT_VAR(&_3$$4);
 			zephir_gettype(&_3$$4, mean);
 			ZEPHIR_INIT_VAR(&_4$$4);
@@ -3681,7 +3680,7 @@ PHP_METHOD(Tensor_Vector, variance) {
  * Round the elements in the matrix to a given decimal place.
  *
  * @param int precision
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, round) {
@@ -3725,7 +3724,7 @@ PHP_METHOD(Tensor_Vector, round) {
 	}
 	if (UNEXPECTED(precision < 0)) {
 		ZEPHIR_INIT_VAR(&_1$$4);
-		object_init_ex(&_1$$4, spl_ce_InvalidArgumentException);
+		object_init_ex(&_1$$4, tensor_exceptions_invalidargumentexception_ce);
 		ZVAL_LONG(&_2$$4, precision);
 		ZEPHIR_CALL_FUNCTION(&_3$$4, "strval", NULL, 2, &_2$$4);
 		zephir_check_call_status();
@@ -3831,7 +3830,7 @@ PHP_METHOD(Tensor_Vector, ceil) {
  *
  * @param float min
  * @param float max
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, clip) {
@@ -3864,7 +3863,7 @@ PHP_METHOD(Tensor_Vector, clip) {
 
 	if (UNEXPECTED(min > max)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
-		object_init_ex(&_0$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_1$$3);
 		ZEPHIR_CONCAT_SS(&_1$$3, "Minimum cannot be", " greater than maximum.");
 		ZEPHIR_CALL_METHOD(NULL, &_0$$3, "__construct", NULL, 3, &_1$$3);
@@ -4223,7 +4222,7 @@ PHP_METHOD(Tensor_Vector, negate) {
  * Multiply this vector with a matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, multiplyMatrix) {
@@ -4264,7 +4263,7 @@ PHP_METHOD(Tensor_Vector, multiplyMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -4324,7 +4323,7 @@ PHP_METHOD(Tensor_Vector, multiplyMatrix) {
  * Divide this vector with a matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, divideMatrix) {
@@ -4365,7 +4364,7 @@ PHP_METHOD(Tensor_Vector, divideMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -4425,7 +4424,7 @@ PHP_METHOD(Tensor_Vector, divideMatrix) {
  * Add this vector to a matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, addMatrix) {
@@ -4466,7 +4465,7 @@ PHP_METHOD(Tensor_Vector, addMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -4526,7 +4525,7 @@ PHP_METHOD(Tensor_Vector, addMatrix) {
  * Subtract a matrix from this vector.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, subtractMatrix) {
@@ -4567,7 +4566,7 @@ PHP_METHOD(Tensor_Vector, subtractMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -4627,7 +4626,7 @@ PHP_METHOD(Tensor_Vector, subtractMatrix) {
  * Raise this vector to the power of a matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, powMatrix) {
@@ -4668,7 +4667,7 @@ PHP_METHOD(Tensor_Vector, powMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -4728,7 +4727,7 @@ PHP_METHOD(Tensor_Vector, powMatrix) {
  * Mod this vector with a matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, modMatrix) {
@@ -4769,7 +4768,7 @@ PHP_METHOD(Tensor_Vector, modMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -4830,7 +4829,7 @@ PHP_METHOD(Tensor_Vector, modMatrix) {
  * matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, equalMatrix) {
@@ -4871,7 +4870,7 @@ PHP_METHOD(Tensor_Vector, equalMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -4932,7 +4931,7 @@ PHP_METHOD(Tensor_Vector, equalMatrix) {
  * matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, notEqualMatrix) {
@@ -4973,7 +4972,7 @@ PHP_METHOD(Tensor_Vector, notEqualMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5034,7 +5033,7 @@ PHP_METHOD(Tensor_Vector, notEqualMatrix) {
  * and a matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, greaterMatrix) {
@@ -5075,7 +5074,7 @@ PHP_METHOD(Tensor_Vector, greaterMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5136,7 +5135,7 @@ PHP_METHOD(Tensor_Vector, greaterMatrix) {
  * this vector and a matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, greaterEqualMatrix) {
@@ -5177,7 +5176,7 @@ PHP_METHOD(Tensor_Vector, greaterEqualMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5238,7 +5237,7 @@ PHP_METHOD(Tensor_Vector, greaterEqualMatrix) {
  * and a matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, lessMatrix) {
@@ -5279,7 +5278,7 @@ PHP_METHOD(Tensor_Vector, lessMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5340,7 +5339,7 @@ PHP_METHOD(Tensor_Vector, lessMatrix) {
  * this vector and a matrix.
  *
  * @param \Tensor\Matrix b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return \Tensor\Matrix
  */
 PHP_METHOD(Tensor_Vector, lessEqualMatrix) {
@@ -5381,7 +5380,7 @@ PHP_METHOD(Tensor_Vector, lessEqualMatrix) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5441,7 +5440,7 @@ PHP_METHOD(Tensor_Vector, lessEqualMatrix) {
  * Multiply this vector with another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, multiplyVector) {
@@ -5475,7 +5474,7 @@ PHP_METHOD(Tensor_Vector, multiplyVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5505,7 +5504,7 @@ PHP_METHOD(Tensor_Vector, multiplyVector) {
  * Divide this vector by another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, divideVector) {
@@ -5539,7 +5538,7 @@ PHP_METHOD(Tensor_Vector, divideVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5569,7 +5568,7 @@ PHP_METHOD(Tensor_Vector, divideVector) {
  * Add this vector to another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, addVector) {
@@ -5603,7 +5602,7 @@ PHP_METHOD(Tensor_Vector, addVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5633,7 +5632,7 @@ PHP_METHOD(Tensor_Vector, addVector) {
  * Subtract a vector from this vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, subtractVector) {
@@ -5667,7 +5666,7 @@ PHP_METHOD(Tensor_Vector, subtractVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5697,7 +5696,7 @@ PHP_METHOD(Tensor_Vector, subtractVector) {
  * Raise this vector to a power of another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, powVector) {
@@ -5731,7 +5730,7 @@ PHP_METHOD(Tensor_Vector, powVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5761,7 +5760,7 @@ PHP_METHOD(Tensor_Vector, powVector) {
  * Calculate the modulus of this vector with another vector elementwise.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, modVector) {
@@ -5795,7 +5794,7 @@ PHP_METHOD(Tensor_Vector, modVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5826,7 +5825,7 @@ PHP_METHOD(Tensor_Vector, modVector) {
  * another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, equalVector) {
@@ -5860,7 +5859,7 @@ PHP_METHOD(Tensor_Vector, equalVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5891,7 +5890,7 @@ PHP_METHOD(Tensor_Vector, equalVector) {
  * another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, notEqualVector) {
@@ -5925,7 +5924,7 @@ PHP_METHOD(Tensor_Vector, notEqualVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -5956,7 +5955,7 @@ PHP_METHOD(Tensor_Vector, notEqualVector) {
  * and a another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, greaterVector) {
@@ -5990,7 +5989,7 @@ PHP_METHOD(Tensor_Vector, greaterVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -6021,7 +6020,7 @@ PHP_METHOD(Tensor_Vector, greaterVector) {
  * this vector and a another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, greaterEqualVector) {
@@ -6055,7 +6054,7 @@ PHP_METHOD(Tensor_Vector, greaterEqualVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -6086,7 +6085,7 @@ PHP_METHOD(Tensor_Vector, greaterEqualVector) {
  * and a another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, lessVector) {
@@ -6120,7 +6119,7 @@ PHP_METHOD(Tensor_Vector, lessVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -6151,7 +6150,7 @@ PHP_METHOD(Tensor_Vector, lessVector) {
  * this vector and a another vector.
  *
  * @param \Tensor\Vector b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, lessEqualVector) {
@@ -6185,7 +6184,7 @@ PHP_METHOD(Tensor_Vector, lessEqualVector) {
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_get_strval(&_4$$3, &_3$$3);
@@ -6215,7 +6214,7 @@ PHP_METHOD(Tensor_Vector, lessEqualVector) {
  * Multiply this vector by a scalar.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, multiplyScalar) {
@@ -6247,7 +6246,7 @@ PHP_METHOD(Tensor_Vector, multiplyScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6271,7 +6270,7 @@ PHP_METHOD(Tensor_Vector, multiplyScalar) {
  * Divide this vector by a scalar.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, divideScalar) {
@@ -6303,7 +6302,7 @@ PHP_METHOD(Tensor_Vector, divideScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6327,7 +6326,7 @@ PHP_METHOD(Tensor_Vector, divideScalar) {
  * Add a scalar to this vector.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, addScalar) {
@@ -6359,7 +6358,7 @@ PHP_METHOD(Tensor_Vector, addScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6383,7 +6382,7 @@ PHP_METHOD(Tensor_Vector, addScalar) {
  * Subtract a scalar from this vector.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, subtractScalar) {
@@ -6415,7 +6414,7 @@ PHP_METHOD(Tensor_Vector, subtractScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6439,7 +6438,7 @@ PHP_METHOD(Tensor_Vector, subtractScalar) {
  * Raise the vector to a the power of a scalar value.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, powScalar) {
@@ -6471,7 +6470,7 @@ PHP_METHOD(Tensor_Vector, powScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6495,7 +6494,7 @@ PHP_METHOD(Tensor_Vector, powScalar) {
  * Calculate the modulus of this vector with a scalar.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, modScalar) {
@@ -6527,7 +6526,7 @@ PHP_METHOD(Tensor_Vector, modScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6552,7 +6551,7 @@ PHP_METHOD(Tensor_Vector, modScalar) {
  * scalar.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, equalScalar) {
@@ -6584,7 +6583,7 @@ PHP_METHOD(Tensor_Vector, equalScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6609,7 +6608,7 @@ PHP_METHOD(Tensor_Vector, equalScalar) {
  * scalar.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, notEqualScalar) {
@@ -6641,7 +6640,7 @@ PHP_METHOD(Tensor_Vector, notEqualScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6666,7 +6665,7 @@ PHP_METHOD(Tensor_Vector, notEqualScalar) {
  * and a scalar.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, greaterScalar) {
@@ -6698,7 +6697,7 @@ PHP_METHOD(Tensor_Vector, greaterScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6723,7 +6722,7 @@ PHP_METHOD(Tensor_Vector, greaterScalar) {
  * this vector and a scalar.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, greaterEqualScalar) {
@@ -6755,7 +6754,7 @@ PHP_METHOD(Tensor_Vector, greaterEqualScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6780,7 +6779,7 @@ PHP_METHOD(Tensor_Vector, greaterEqualScalar) {
  * and a scalar.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, lessScalar) {
@@ -6812,7 +6811,7 @@ PHP_METHOD(Tensor_Vector, lessScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6837,7 +6836,7 @@ PHP_METHOD(Tensor_Vector, lessScalar) {
  * this vector and a scalar.
  *
  * @param mixed b
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return self
  */
 PHP_METHOD(Tensor_Vector, lessEqualScalar) {
@@ -6869,7 +6868,7 @@ PHP_METHOD(Tensor_Vector, lessEqualScalar) {
 	}
 	if (UNEXPECTED(_0)) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, spl_ce_InvalidArgumentException);
+		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
 		ZEPHIR_INIT_VAR(&_3$$3);
 		zephir_gettype(&_3$$3, b);
 		ZEPHIR_INIT_VAR(&_4$$3);
@@ -6906,7 +6905,7 @@ PHP_METHOD(Tensor_Vector, count) {
 /**
  * @param mixed index
  * @param array values
- * @throws \RuntimeException
+ * @throws \Tensor\Exceptions\RuntimeException
  */
 PHP_METHOD(Tensor_Vector, offsetSet) {
 
@@ -6920,7 +6919,7 @@ PHP_METHOD(Tensor_Vector, offsetSet) {
 
 
 
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_RuntimeException, "Vector cannot be mutated directly.", "tensor/vector.zep", 2353);
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(tensor_exceptions_runtimeexception_ce, "Vector cannot be mutated directly.", "tensor/vector.zep", 2353);
 	return;
 
 }
@@ -6950,7 +6949,7 @@ PHP_METHOD(Tensor_Vector, offsetExists) {
 
 /**
  * @param mixed index
- * @throws \RuntimeException
+ * @throws \Tensor\Exceptions\RuntimeException
  */
 PHP_METHOD(Tensor_Vector, offsetUnset) {
 
@@ -6963,7 +6962,7 @@ PHP_METHOD(Tensor_Vector, offsetUnset) {
 
 
 
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_RuntimeException, "Vector cannot be mutated directly.", "tensor/vector.zep", 2373);
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(tensor_exceptions_runtimeexception_ce, "Vector cannot be mutated directly.", "tensor/vector.zep", 2373);
 	return;
 
 }
@@ -6972,7 +6971,7 @@ PHP_METHOD(Tensor_Vector, offsetUnset) {
  * Return a row from the matrix at the given index.
  *
  * @param mixed index
- * @throws \InvalidArgumentException
+ * @throws \Tensor\Exceptions\InvalidArgumentException
  * @return int|float
  */
 PHP_METHOD(Tensor_Vector, offsetGet) {
@@ -7001,7 +7000,7 @@ PHP_METHOD(Tensor_Vector, offsetGet) {
 		RETURN_CCTOR(&value);
 	}
 	ZEPHIR_INIT_VAR(&_1);
-	object_init_ex(&_1, spl_ce_InvalidArgumentException);
+	object_init_ex(&_1, tensor_exceptions_invalidargumentexception_ce);
 	zephir_get_strval(&_2, index);
 	ZEPHIR_INIT_VAR(&_3);
 	ZEPHIR_CONCAT_SSVS(&_3, "Element not found at", " offset ", &_2, ".");

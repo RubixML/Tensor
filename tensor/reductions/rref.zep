@@ -1,8 +1,6 @@
 namespace Tensor\Reductions;
 
 use Tensor\Matrix;
-use InvalidArgumentException;
-use RuntimeException;
 
 /**
  * RREF
@@ -82,7 +80,7 @@ class Rref
 
     /**
      * @param \Tensor\Matrix a
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     public function __construct(const <Matrix> a)
     {
