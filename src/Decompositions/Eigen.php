@@ -4,7 +4,7 @@ namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
 use JAMA\Matrix as JAMA;
-use RuntimeException;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * Eigen

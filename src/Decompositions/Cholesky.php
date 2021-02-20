@@ -3,7 +3,7 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
-use RuntimeException;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * Cholesky

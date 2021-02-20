@@ -27,7 +27,6 @@ class SVDBench
      */
     public function eig() : void
     {
-        /** @var mixed $this->a */
         $this->a->svd();
     }
 }

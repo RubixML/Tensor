@@ -3,8 +3,8 @@
 namespace Tensor\Reductions;
 
 use Tensor\Matrix;
-use InvalidArgumentException;
-use RuntimeException;
+use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * REF
@@ -55,7 +55,7 @@ class REF
      * elimination.
      *
      * @param \Tensor\Matrix $a
-     * @throws \RuntimeException
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
     public static function gaussianElimination(Matrix $a) : self
@@ -176,7 +176,7 @@ class REF
     /**
      * @param \Tensor\Matrix $a
      * @param int $swaps
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     public function __construct(Matrix $a, int $swaps)
     {

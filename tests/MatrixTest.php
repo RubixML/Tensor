@@ -788,14 +788,10 @@ class MatrixTest extends TestCase
 
     /**
      * @test
+     * @requires extension tensor
      */
     public function svd() : void
     {
-        if (!extension_loaded('tensor')) {
-            $this->markTestSkipped('Not implemented in Tensor PHP.');
-        }
-
-        /** @var mixed $this->a */
         $svd = $this->a->svd();
 
         $uHat = [
@@ -804,7 +800,9 @@ class MatrixTest extends TestCase
             [-0.5307027843302525, -0.7533052009276842, 0.38844025146657923],
         ];
 
-        $values = [34.66917512262571, 17.12630582468919, 8.929610580306822];
+        $singularValues = [
+            34.66917512262571, 17.12630582468919, 8.929610580306822,
+        ];
 
         $vtHat = [
             [-0.8320393250771425, 0.531457514846513, -0.15894486917903863],
@@ -813,11 +811,11 @@ class MatrixTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $svd->u());
-        $this->assertInstanceOf(Matrix::class, $svd->vt());
+        $this->assertInstanceOf(Matrix::class, $svd->vT());
 
         $this->assertEquals($uHat, $svd->u()->asArray());
-        $this->assertEquals($values, $svd->s());
-        $this->assertEquals($vtHat, $svd->vt()->asArray());
+        $this->assertEquals($singularValues, $svd->singularValues());
+        $this->assertEquals($vtHat, $svd->vT()->asArray());
     }
 
     /**
