@@ -74,8 +74,8 @@ class Matrix implements Tensor
     public static function identity(const int n) -> <Matrix>
     {
         if unlikely n < 1 {
-            throw new InvalidArgumentException("Dimensionality must be"
-                . " greater than 0 on all axes.");
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
  
         int i, j;
@@ -135,8 +135,8 @@ class Matrix implements Tensor
         int n = count(elements);
  
         if unlikely n < 1 {
-            throw new InvalidArgumentException("Dimensionality must be"
-                . " greater than 0 on all axes.");
+            throw new InvalidArgumentException("Number of elements must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
 
         var element;
@@ -184,9 +184,14 @@ class Matrix implements Tensor
                 . gettype(value) . " given.");
         }
  
-        if unlikely m < 1 || n < 1 {
-            throw new InvalidArgumentException("Dimensionality must be"
-                . " greater than 0 for all axes.");
+        if unlikely m < 1 {
+            throw new InvalidArgumentException("M must be"
+                . " greater than 0, " . strval(m) . " given.");
+        }
+
+        if unlikely n < 1 {
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
  
         return self::quick(array_fill(0, m, array_fill(0, n, value)));
@@ -202,9 +207,14 @@ class Matrix implements Tensor
       */
     public static function rand(const int m, const int n) -> <Matrix>
     {
-        if unlikely m < 1 || n < 1 {
-            throw new InvalidArgumentException("Dimensionality must be"
-                . " greater than 0 for all axes.");
+        if unlikely m < 1 {
+            throw new InvalidArgumentException("M must be"
+                . " greater than 0, " . strval(m) . " given.");
+        }
+
+        if unlikely n < 1 {
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
 
         array a = [];
@@ -235,9 +245,14 @@ class Matrix implements Tensor
      */
     public static function gaussian(const int m, const int n) -> <Matrix>
     {
-        if unlikely m < 1 || n < 1 {
-            throw new InvalidArgumentException("Dimensionality must be"
-                . " greater than 0 for all axes.");
+        if unlikely m < 1 {
+            throw new InvalidArgumentException("M must be"
+                . " greater than 0, " . strval(m) . " given.");
+        }
+
+        if unlikely n < 1 {
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
 
         float r, phi;
@@ -285,9 +300,14 @@ class Matrix implements Tensor
      */
     public static function poisson(const int m, const int n, const float lambda = 1.0) -> <Matrix>
     {
-        if unlikely m < 1 || n < 1 {
-            throw new InvalidArgumentException("Dimensionality must be"
-                . " greater than 0 for all axes.");
+        if unlikely m < 1 {
+            throw new InvalidArgumentException("M must be"
+                . " greater than 0, " . strval(m) . " given.");
+        }
+
+        if unlikely n < 1 {
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
 
         int k;
@@ -332,9 +352,14 @@ class Matrix implements Tensor
      */
     public static function uniform(const int m, const int n) -> <Matrix>
     {
-        if unlikely m < 1 || n < 1 {
-            throw new InvalidArgumentException("Dimensionality must be"
-                . " greater than 0 for all axes.");
+        if unlikely m < 1 {
+            throw new InvalidArgumentException("M must be"
+                . " greater than 0, " . strval(m) . " given.");
+        }
+
+        if unlikely n < 1 {
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
 
         array a = [];

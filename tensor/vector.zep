@@ -60,11 +60,6 @@ class Vector implements Tensor
      */
     public static function zeros(const int n) -> <Vector>
     {
-        if unlikely n < 1 {
-            throw new InvalidArgumentException("The number of elements"
-                . " must be greater than 0, " . strval(n) . " given.");
-        }
-
         return static::fill(0, n);
     }
 
@@ -77,11 +72,6 @@ class Vector implements Tensor
      */
     public static function ones(const int n) -> <Vector>
     {
-        if unlikely n < 1 {
-            throw new InvalidArgumentException("The number of elements"
-                . " must be greater than 0, " . strval(n) . " given.");
-        }
-
         return static::fill(1, n);
     }
 
@@ -102,8 +92,8 @@ class Vector implements Tensor
         }
 
         if unlikely n < 1 {
-            throw new InvalidArgumentException("The number of elements"
-                . " must be greater than 0, " . strval(n) . " given.");
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
 
         return static::quick(array_fill(0, n, value));
@@ -119,8 +109,8 @@ class Vector implements Tensor
     public static function rand(const int n) -> <Vector>
     {
         if unlikely n < 1 {
-            throw new InvalidArgumentException("The number of elements"
-                . " must be greater than 0, " . strval(n) . " given.");
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
 
         array a = [];
@@ -145,8 +135,8 @@ class Vector implements Tensor
     public static function gaussian(const int n) -> <Vector>
     {
         if unlikely n < 1 {
-            throw new InvalidArgumentException("The number of elements"
-                . " must be greater than 0, " . strval(n) . " given.");
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
 
         float r, phi;
@@ -182,8 +172,8 @@ class Vector implements Tensor
     public static function poisson(const int n, const float lambda = 1.0) -> <Vector>
     {
         if unlikely n < 1 {
-            throw new InvalidArgumentException("The number of elements"
-                . " must be greater than 0, " . strval(n) . " given.");
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
 
         int k;
@@ -221,8 +211,8 @@ class Vector implements Tensor
     public static function uniform(const int n) -> <Vector>
     {
         if unlikely n < 1 {
-            throw new InvalidArgumentException("The number of elements"
-                . " must be greater than 0, " . strval(n) . " given.");
+            throw new InvalidArgumentException("N must be"
+                . " greater than 0, " . strval(n) . " given.");
         }
         
         array a = [];
