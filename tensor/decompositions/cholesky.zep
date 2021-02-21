@@ -2,6 +2,7 @@ namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
 use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * Cholesky
@@ -34,9 +35,11 @@ class Cholesky
             throw new InvalidArgumentException("Cannot decompose a non-square matrix.");
         }
 
-        array l = [];
+        var l = tensor_cholesky(a->asArray());
 
-        let l = (array) tensor_cholesky(a->asArray());
+        if is_null(l) {
+            throw new RuntimeException("Failed to decompose matrix.");
+        }
 
         return new self(Matrix::quick(l));
     }

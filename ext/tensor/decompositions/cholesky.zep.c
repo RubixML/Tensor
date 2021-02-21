@@ -53,20 +53,17 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Cholesky) {
  */
 PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 
-	zval l, _3;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_5 = NULL;
+	zephir_fcall_cache_entry *_3 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a = NULL, a_sub, _0, _1, _2, _4;
+	zval *a = NULL, a_sub, _0, l, _1, _2;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
 	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&l);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
-	ZVAL_UNDEF(&_4);
-	ZVAL_UNDEF(&l);
-	ZVAL_UNDEF(&_3);
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
@@ -76,21 +73,21 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
 	zephir_check_call_status();
 	if (!(zephir_is_true(&_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_invalidargumentexception_ce, "Cannot decompose a non-square matrix.", "tensor/decompositions/cholesky.zep", 34);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_invalidargumentexception_ce, "Cannot decompose a non-square matrix.", "tensor/decompositions/cholesky.zep", 35);
 		return;
 	}
 	ZEPHIR_INIT_VAR(&l);
-	array_init(&l);
-	ZEPHIR_INIT_VAR(&_1);
-	ZEPHIR_CALL_METHOD(&_2, a, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_1, a, "asarray", NULL, 0);
 	zephir_check_call_status();
-	tensor_cholesky(&_1, &_2);
-	zephir_get_arrval(&_3, &_1);
-	ZEPHIR_CPY_WRT(&l, &_3);
+	tensor_cholesky(&l, &_1);
+	if (Z_TYPE_P(&l) == IS_NULL) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Failed to decompose matrix.", "tensor/decompositions/cholesky.zep", 41);
+		return;
+	}
 	object_init_ex(return_value, tensor_decompositions_cholesky_ce);
-	ZEPHIR_CALL_CE_STATIC(&_4, tensor_matrix_ce, "quick", &_5, 0, &l);
+	ZEPHIR_CALL_CE_STATIC(&_2, tensor_matrix_ce, "quick", &_3, 0, &l);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 24, &_4);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 24, &_2);
 	zephir_check_call_status();
 	RETURN_MM();
 

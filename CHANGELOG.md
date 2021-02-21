@@ -1,6 +1,7 @@
 - 2.2.0
     - Implemented Singular Value Decomposition (SVD)
     - Tensor objects now throw namespaced exceptions
+    - Optimized Reduced Row Echelon Form (RREF)
 
 - 2.1.4
     - Implemented Eigen decomposition in extension

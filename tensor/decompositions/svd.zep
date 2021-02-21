@@ -1,6 +1,7 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * SVD
@@ -26,7 +27,7 @@ class Svd
     protected singularValues;
 
     /**
-     * The V transposed matrix.
+     * The transposed V matrix.
      *
      * @var \Tensor\Matrix
      */
@@ -40,15 +41,21 @@ class Svd
      */
     public static function decompose(const <Matrix> a) -> <Svd>
     {
+        var result = tensor_svd(a->asArray());
+
+        if is_null(result) {
+            throw new RuntimeException("Failed to decompose matrix.");
+        }
+
         array usvT = [];
 
-        let usvT = (array) tensor_svd(a->asArray());
+        let usvT = (array) result;
 
-        return new self(
-            Matrix::quick(usvT[0]),
-            usvT[1],
-            Matrix::quick(usvT[2])
-        );
+        var u = Matrix::quick(usvT[0]);
+        var singularValues = usvT[1];
+        var vT = Matrix::quick(usvT[2]);
+
+        return new self(u, singularValues, vT);
     }
 
     /**

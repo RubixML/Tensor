@@ -2,15 +2,12 @@ namespace Tensor\Reductions;
 
 use Tensor\Matrix;
 use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * REF
  *
  * The row echelon form (REF) of a matrix.
- *
- * References:
- * [1] M. Rogoyski. (2019). Math PHP: Powerful modern math library for PHP.
- * http://github.com/markrogoyski/math-php.
  *
  * @category    Scientific Computing
  * @package     Rubix/Tensor
@@ -40,11 +37,20 @@ class Ref
      */
     public static function reduce(const <Matrix> a) -> <Ref>
     {
+        var result = tensor_ref(a->asArray());
+
+        if is_null(result) {
+            throw new RuntimeException("Failed to decompose matrix.");
+        }
+
         array ref = [];
 
-        let ref = (array) tensor_ref(a->asArray());
+        let ref = (array) result;
 
-        return new self(new Matrix(ref[0]), ref[1]);
+        var b = Matrix::quick(ref[0]);
+        var swaps = ref[1];
+
+        return new self(b, swaps);
     }
 
     /**

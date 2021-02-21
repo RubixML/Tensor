@@ -14,10 +14,10 @@
 #include "kernel/main.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
+#include "kernel/exception.h"
 #include "kernel/operators.h"
 #include "kernel/array.h"
 #include "kernel/object.h"
-#include "kernel/exception.h"
 #include "kernel/concat.h"
 #include "include/linear_algebra.h"
 
@@ -26,10 +26,6 @@
  * REF
  *
  * The row echelon form (REF) of a matrix.
- *
- * References:
- * [1] M. Rogoyski. (2019). Math PHP: Powerful modern math library for PHP.
- * http://github.com/markrogoyski/math-php.
  *
  * @category    Scientific Computing
  * @package     Rubix/Tensor
@@ -65,42 +61,46 @@ ZEPHIR_INIT_CLASS(Tensor_Reductions_Ref) {
  */
 PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 
-	zval ref, _2;
+	zval ref, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zephir_fcall_cache_entry *_2 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a = NULL, a_sub, _0, _1, _3, _4, _5;
+	zval *a = NULL, a_sub, result, _0, b, _3, swaps;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
+	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&b);
 	ZVAL_UNDEF(&_3);
-	ZVAL_UNDEF(&_4);
-	ZVAL_UNDEF(&_5);
+	ZVAL_UNDEF(&swaps);
 	ZVAL_UNDEF(&ref);
-	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_1);
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
 
 
 
+	ZEPHIR_INIT_VAR(&result);
+	ZEPHIR_CALL_METHOD(&_0, a, "asarray", NULL, 0);
+	zephir_check_call_status();
+	tensor_ref(&result, &_0);
+	if (Z_TYPE_P(&result) == IS_NULL) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Failed to decompose matrix.", "tensor/reductions/ref.zep", 43);
+		return;
+	}
 	ZEPHIR_INIT_VAR(&ref);
 	array_init(&ref);
-	ZEPHIR_INIT_VAR(&_0);
-	ZEPHIR_CALL_METHOD(&_1, a, "asarray", NULL, 0);
+	zephir_get_arrval(&_1, &result);
+	ZEPHIR_CPY_WRT(&ref, &_1);
+	zephir_array_fetch_long(&_3, &ref, 0, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 50);
+	ZEPHIR_CALL_CE_STATIC(&b, tensor_matrix_ce, "quick", &_2, 0, &_3);
 	zephir_check_call_status();
-	tensor_ref(&_0, &_1);
-	zephir_get_arrval(&_2, &_0);
-	ZEPHIR_CPY_WRT(&ref, &_2);
+	ZEPHIR_OBS_VAR(&swaps);
+	zephir_array_fetch_long(&swaps, &ref, 1, PH_NOISY, "tensor/reductions/ref.zep", 51);
 	object_init_ex(return_value, tensor_reductions_ref_ce);
-	ZEPHIR_INIT_VAR(&_3);
-	object_init_ex(&_3, tensor_matrix_ce);
-	zephir_array_fetch_long(&_4, &ref, 0, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 47);
-	ZEPHIR_CALL_METHOD(NULL, &_3, "__construct", NULL, 28, &_4);
-	zephir_check_call_status();
-	zephir_array_fetch_long(&_5, &ref, 1, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 47);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 34, &_3, &_5);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 34, &b, &swaps);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -141,7 +141,7 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 		ZEPHIR_CONCAT_SSVS(&_3$$3, "The number of swaps must", " be greater than or equal to 0, ", &_2$$3, " given.");
 		ZEPHIR_CALL_METHOD(NULL, &_0$$3, "__construct", NULL, 3, &_3$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(&_0$$3, "tensor/reductions/ref.zep", 60);
+		zephir_throw_exception_debug(&_0$$3, "tensor/reductions/ref.zep", 66);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

@@ -3,6 +3,7 @@ namespace Tensor\Decompositions;
 use Tensor\Matrix;
 use Tensor\Vector;
 use Tensor\ColumnVector;
+use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\RuntimeException;
 
 /**
@@ -41,22 +42,27 @@ class Eigen
     public static function decompose(const <Matrix> a, const bool normalize) -> <Eigen>
     {
         if unlikely !a->isSquare() {
-            throw new RuntimeException("Cannot decompose a non-square matrix.");
+            throw new InvalidArgumentException("Cannot decompose a non-square matrix.");
         }
 
         var eigenvalues;
         var eigenvectors;
-        var norm;
+
+        var result = tensor_eig(a->asArray());
+
+        if is_null(result) {
+            throw new RuntimeException("Failed to decompose matrix.");
+        }
 
         array eig = [];
 
-        let eig = (array) tensor_eig(a->asArray());
+        let eig = (array) result;
 
         let eigenvalues = eig[0];
         let eigenvectors = Matrix::quick(eig[1])->transpose();
 
         if (normalize) {
-            let norm = eigenvectors->transpose()
+            var norm = eigenvectors->transpose()
                 ->square()
                 ->sum()
                 ->sqrt()
