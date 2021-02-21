@@ -985,7 +985,7 @@ class Matrix implements Tensor
         int i, j, x, y;
         float sigma;
         var k, l, rowB, valueB;
-
+        
         array rowA = [];
         array bHat = [];
         array c = [];

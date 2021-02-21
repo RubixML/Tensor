@@ -10,7 +10,7 @@
         <email>support@rubixml.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2021-02-13</date>
+	<date>2021-02-20</date>
 	<version>
 		<release>2.2.0</release>
 		<api>2.2.0</api>
@@ -21,7 +21,11 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        No notes
+        - Implemented Eigen decomposition in extension
+        - Optimize row echelon form (REF) of matrix
+        - Optimize Cholesky decomposition
+        - Fix memory leak in matrix inverse
+        - Optimize LU decomposition
     </notes>
 	<contents>
         <dir name="/">
@@ -139,6 +143,7 @@
             </dir>
             <file name="LICENSE" role="doc" />
             <file name="CHANGELOG.md" role="doc" />
+            <file name="README.md" role="doc" />
         </dir>
     </contents>
 	<dependencies>
