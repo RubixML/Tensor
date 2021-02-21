@@ -80,8 +80,8 @@ class Matrix implements Tensor
     public static function identity(int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 on all axes.');
+            throw new InvalidArgumentException('N must be'
+                . " greater than 0, $n given.");
         }
 
         $a = [];
@@ -104,16 +104,10 @@ class Matrix implements Tensor
      *
      * @param int $m
      * @param int $n
-     * @throws \InvalidArgumentException
      * @return self
      */
     public static function zeros(int $m, int $n) : self
     {
-        if ($m < 1 or $n < 1) {
-            throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 on all axes.');
-        }
-
         return self::fill(0, $m, $n);
     }
 
@@ -122,16 +116,10 @@ class Matrix implements Tensor
      *
      * @param int $m
      * @param int $n
-     * @throws \InvalidArgumentException
      * @return self
      */
     public static function ones(int $m, int $n) : self
     {
-        if ($m < 1 or $n < 1) {
-            throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 on all axes.');
-        }
-
         return self::fill(1, $m, $n);
     }
 
@@ -148,8 +136,8 @@ class Matrix implements Tensor
         $n = count($elements);
 
         if ($n < 1) {
-            throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 on all axes.');
+            throw new InvalidArgumentException('Number of elements'
+                . " must be greater than 0, $n given.");
         }
 
         $a = [];
@@ -178,9 +166,14 @@ class Matrix implements Tensor
      */
     public static function fill($value, int $m, int $n) : self
     {
-        if ($m < 1 or $n < 1) {
-            throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 on all axes.');
+        if ($m < 1) {
+            throw new InvalidArgumentException('M must be'
+                . " greater than 0, $m given.");
+        }
+
+        if ($n < 1) {
+            throw new InvalidArgumentException('N must be'
+                . " greater than 0, $n given.");
         }
 
         return self::quick(array_fill(0, $m, array_fill(0, $n, $value)));
@@ -196,9 +189,14 @@ class Matrix implements Tensor
      */
     public static function rand(int $m, int $n) : self
     {
-        if ($m < 1 or $n < 1) {
-            throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 on all axes.');
+        if ($m < 1) {
+            throw new InvalidArgumentException('M must be'
+                . " greater than 0, $m given.");
+        }
+
+        if ($n < 1) {
+            throw new InvalidArgumentException('N must be'
+                . " greater than 0, $n given.");
         }
 
         $max = getrandmax();
@@ -229,9 +227,14 @@ class Matrix implements Tensor
      */
     public static function gaussian(int $m, int $n) : self
     {
-        if ($m < 1 or $n < 1) {
-            throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 on all axes.');
+        if ($m < 1) {
+            throw new InvalidArgumentException('M must be'
+                . " greater than 0, $m given.");
+        }
+
+        if ($n < 1) {
+            throw new InvalidArgumentException('N must be'
+                . " greater than 0, $n given.");
         }
 
         $max = getrandmax();
@@ -275,6 +278,16 @@ class Matrix implements Tensor
      */
     public static function poisson(int $m, int $n, float $lambda = 1.0) : self
     {
+        if ($m < 1) {
+            throw new InvalidArgumentException('M must be'
+                . " greater than 0, $m given.");
+        }
+
+        if ($n < 1) {
+            throw new InvalidArgumentException('N must be'
+                . " greater than 0, $n given.");
+        }
+
         $max = getrandmax();
 
         $l = exp(-$lambda);
@@ -313,9 +326,14 @@ class Matrix implements Tensor
      */
     public static function uniform(int $m, int $n) : self
     {
-        if ($m < 1 or $n < 1) {
-            throw new InvalidArgumentException('Dimensionality must be'
-                . ' greater than 0 on all axes.');
+        if ($m < 1) {
+            throw new InvalidArgumentException('M must be'
+                . " greater than 0, $m given.");
+        }
+
+        if ($n < 1) {
+            throw new InvalidArgumentException('N must be'
+                . " greater than 0, $n given.");
         }
 
         $max = getrandmax();

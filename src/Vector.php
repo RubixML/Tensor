@@ -63,16 +63,10 @@ class Vector implements Tensor
      * Build a vector of zeros with n elements.
      *
      * @param int $n
-     * @throws \InvalidArgumentException
      * @return self
      */
     public static function zeros(int $n) : self
     {
-        if ($n < 1) {
-            throw new InvalidArgumentException('The number of elements'
-                . " must be greater than 0, $n given.");
-        }
-
         return static::quick(array_fill(0, $n, 0));
     }
 
@@ -80,16 +74,10 @@ class Vector implements Tensor
      * Build a vector of ones with n elements.
      *
      * @param int $n
-     * @throws \InvalidArgumentException
      * @return self
      */
     public static function ones(int $n) : self
     {
-        if ($n < 1) {
-            throw new InvalidArgumentException('The number of elements'
-                . " must be greater than 0, $n given.");
-        }
-
         return static::quick(array_fill(0, $n, 1));
     }
 
@@ -104,7 +92,7 @@ class Vector implements Tensor
     public static function fill($value, int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException('The number of elements'
+            throw new InvalidArgumentException('Number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -121,7 +109,7 @@ class Vector implements Tensor
     public static function rand(int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException('The number of elements'
+            throw new InvalidArgumentException('Number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -147,7 +135,7 @@ class Vector implements Tensor
     public static function gaussian(int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException('The number of elements'
+            throw new InvalidArgumentException('Number of elements'
                 . " must be greater than 0, $n given.");
         }
 
@@ -181,6 +169,11 @@ class Vector implements Tensor
      */
     public static function poisson(int $n, float $lambda = 1.) : self
     {
+        if ($n < 1) {
+            throw new InvalidArgumentException('Number of elements'
+                . " must be greater than 0, $n given.");
+        }
+
         $max = getrandmax();
 
         $l = exp(-$lambda);
@@ -213,7 +206,7 @@ class Vector implements Tensor
     public static function uniform(int $n) : self
     {
         if ($n < 1) {
-            throw new InvalidArgumentException('The number of elements'
+            throw new InvalidArgumentException('Number of elements'
                 . " must be greater than 0, $n given.");
         }
 
