@@ -3,7 +3,7 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
-use Tensor\Exceptions\RuntimeException;
+use Tensor\Exceptions\InvalidArgumentException;
 
 use const Tensor\EPSILON;
 
@@ -44,13 +44,14 @@ class LU
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix $a
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public static function decompose(Matrix $a) : self
     {
         if (!$a->isSquare()) {
-            throw new RuntimeException('Cannot LU decompose a'
-                . ' non square matrix.');
+            throw new InvalidArgumentException('Matrix must be'
+                . " square, {$a->shapeString()} given.");
         }
 
         $n = $a->n();
