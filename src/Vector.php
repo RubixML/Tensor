@@ -11,8 +11,6 @@ use function count;
 use function array_slice;
 use function array_fill;
 use function is_null;
-use function is_int;
-use function is_float;
 use function gettype;
 
 /**
