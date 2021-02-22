@@ -15,6 +15,9 @@ use Closure;
 
 use function count;
 use function array_slice;
+use function array_fill;
+use function is_int;
+use function is_float;
 use function gettype;
 
 /**
@@ -734,7 +737,6 @@ class Matrix implements Tensor
      *
      * @param callable $callback
      * @param int|float $initial
-     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return int|float
      */
     public function reduce(callable $callback, $initial = 0)
@@ -948,7 +950,7 @@ class Matrix implements Tensor
     {
         if ($this->n !== $b->m()) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $bT = $b->transpose()->asArray();
@@ -985,7 +987,7 @@ class Matrix implements Tensor
     {
         if ($this->n !== $b->size()) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n elements but Vector B has {$b->size()}.");
+                . " {$this->n} elements but Vector B has {$b->size()}.");
         }
 
         return $this->matmul($b->asColumnMatrix())->columnAsVector(0);
@@ -1131,8 +1133,7 @@ class Matrix implements Tensor
     public function solve(Vector $b) : ColumnVector
     {
         if ($b->size() !== $this->n) {
-            throw new InvalidArgumentException('Solution vector'
-                . ' dimensionality mismatch.');
+            throw new InvalidArgumentException('Solution vector dimensionality mismatch.');
         }
 
         $lu = $this->lu();
@@ -1852,13 +1853,12 @@ class Matrix implements Tensor
     {
         if (isset($mean)) {
             if (!$mean instanceof ColumnVector) {
-                throw new InvalidArgumentException('Mean must be a'
-                . ' Column Vector. ');
+                throw new InvalidArgumentException('Mean must be a Column Vector.');
             }
 
             if ($mean->m() !== $this->m) {
                 throw new InvalidArgumentException('Mean vector must'
-                    . " have $this->m rows, {$mean->m()} given.");
+                    . " have {$this->m} rows, {$mean->m()} given.");
             }
         } else {
             $mean = $this->mean();
@@ -1944,7 +1944,7 @@ class Matrix implements Tensor
         if (isset($mean)) {
             if ($mean->m() !== $this->m) {
                 throw new InvalidArgumentException('Mean vector must'
-                    . " have $this->m rows, {$mean->m()} given.");
+                    . " have {$this->m} rows, {$mean->m()} given.");
             }
         } else {
             $mean = $this->mean();
@@ -2017,8 +2017,7 @@ class Matrix implements Tensor
     public function clip(float $min, float $max) : self
     {
         if ($min > $max) {
-            throw new InvalidArgumentException('Minimum cannot be'
-                . ' greater than maximum.');
+            throw new InvalidArgumentException('Minimum cannot be greater than maximum.');
         }
 
         $b = [];
@@ -2265,7 +2264,7 @@ class Matrix implements Tensor
     {
         if ($this->m > 0 and $b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+                . " {$this->n} columns but Matrix B has {$b->n()}.");
         }
 
         return self::quick(array_merge($b->asArray(), $this->a));
@@ -2282,7 +2281,7 @@ class Matrix implements Tensor
     {
         if ($this->m > 0 and $b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Matrix B has {$b->n()}.");
+                . " {$this->n} columns but Matrix B has {$b->n()}.");
         }
 
         return self::quick(array_merge($this->a, $b->asArray()));
@@ -2299,7 +2298,7 @@ class Matrix implements Tensor
     {
         if ($this->m > 0 and $b->m() !== $this->m()) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
+                . " {$this->m} rows but Matrix B has {$b->m()}.");
         }
 
         return self::quick(array_map('array_merge', $b->asArray(), $this->a));
@@ -2316,7 +2315,7 @@ class Matrix implements Tensor
     {
         if ($this->m > 0 and $b->m() !== $this->m()) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m rows but Matrix B has {$b->m()}.");
+                . " {$this->m} rows but Matrix B has {$b->m()}.");
         }
 
         return self::quick(array_map('array_merge', $this->a, $b->asArray()));
@@ -2369,8 +2368,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2402,8 +2400,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2435,8 +2432,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2468,8 +2464,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2502,8 +2497,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2536,8 +2530,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2570,8 +2563,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2604,8 +2596,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2638,8 +2629,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2672,8 +2662,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2706,8 +2695,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2740,8 +2728,7 @@ class Matrix implements Tensor
     {
         if ($b->shape() !== $this->shape()) {
             throw new InvalidArgumentException(
-                "{$this->shapeString()}"
-                . " matrix needed but {$b->shapeString()} given."
+                "{$this->shapeString()} matrix needed but {$b->shapeString()} given."
             );
         }
 
@@ -2773,7 +2760,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -2804,7 +2791,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -2835,7 +2822,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -2866,7 +2853,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -2897,7 +2884,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -2928,7 +2915,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -2949,8 +2936,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise equality comparison of this matrix and a
-     * vector.
+     * Return the element-wise equality comparison of this matrix and a vector.
      *
      * @param \Tensor\Vector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -2960,7 +2946,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -2981,8 +2967,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise not equal comparison of this matrix and a
-     * vector.
+     * Return the element-wise not equal comparison of this matrix and a vector.
      *
      * @param \Tensor\Vector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -2992,7 +2977,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -3013,8 +2998,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise greater than comparison of this matrix
-     * and a vector.
+     * Return the element-wise greater than comparison of this matrix and a vector.
      *
      * @param \Tensor\Vector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3024,7 +3008,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -3045,8 +3029,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise greater than or equal to comparison of
-     * this matrix and a vector.
+     * Return the element-wise greater than or equal to comparison of this matrix and a vector.
      *
      * @param \Tensor\Vector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3056,7 +3039,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -3077,8 +3060,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise less than comparison of this matrix
-     * and a vector.
+     * Return the element-wise less than comparison of this matrix and a vector.
      *
      * @param \Tensor\Vector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3088,7 +3070,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -3109,8 +3091,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise less than or equal to comparison of
-     * this matrix and a vector.
+     * Return the element-wise less than or equal to comparison of this matrix and a vector.
      *
      * @param \Tensor\Vector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3120,7 +3101,7 @@ class Matrix implements Tensor
     {
         if ($b->n() !== $this->n) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->n columns but Vector B has {$b->n()}.");
+                . " {$this->n} columns but Vector B has {$b->n()}.");
         }
 
         $b = $b->asArray();
@@ -3151,7 +3132,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m rows but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3182,7 +3163,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3213,7 +3194,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3244,7 +3225,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3275,7 +3256,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3306,7 +3287,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3327,8 +3308,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise equality comparison of this matrix and
-     * a column vector.
+     * Return the element-wise equality comparison of this matrix and a column vector.
      *
      * @param \Tensor\ColumnVector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3338,7 +3318,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3359,8 +3339,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise not equal comparison of this matrix and
-     * a column vector.
+     * Return the element-wise not equal comparison of this matrix and a column vector.
      *
      * @param \Tensor\ColumnVector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3370,7 +3349,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3391,8 +3370,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise greater than comparison of this matrix and
-     * a column vector.
+     * Return the element-wise greater than comparison of this matrix and a column vector.
      *
      * @param \Tensor\ColumnVector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3402,7 +3380,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3423,8 +3401,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise greater than or equal to comparison of
-     * this matrix and a column vector.
+     * Return the element-wise greater than or equal to comparison of this matrix and a column vector.
      *
      * @param \Tensor\ColumnVector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3434,7 +3411,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3455,8 +3432,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise less than comparison of this matrix and
-     * a column vector.
+     * Return the element-wise less than comparison of this matrix and a column vector.
      *
      * @param \Tensor\ColumnVector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3466,7 +3442,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3487,8 +3463,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise less than or equal to comparison of
-     * this matrix and a column vector.
+     * Return the element-wise less than or equal to comparison of this matrix and a column vector.
      *
      * @param \Tensor\ColumnVector $b
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -3498,7 +3473,7 @@ class Matrix implements Tensor
     {
         if ($b->m() !== $this->m) {
             throw new InvalidArgumentException('Matrix A requires'
-                . " $this->m row but Vector B has {$b->m()}.");
+                . " {$this->m} rows but Vector B has {$b->m()}.");
         }
 
         $c = [];
@@ -3522,7 +3497,12 @@ class Matrix implements Tensor
      * Multiply this matrix by a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function multiplyScalar($b) : self
@@ -3546,7 +3526,12 @@ class Matrix implements Tensor
      * Divide this matrix by a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function divideScalar($b) : self
@@ -3570,7 +3555,12 @@ class Matrix implements Tensor
      * Add this matrix by a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function addScalar($b) : self
@@ -3594,7 +3584,12 @@ class Matrix implements Tensor
      * Subtract a scalar from this matrix.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function subtractScalar($b) : self
@@ -3618,7 +3613,12 @@ class Matrix implements Tensor
      * Raise the matrix to a given scalar power.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function powScalar($b) : self
@@ -3642,7 +3642,12 @@ class Matrix implements Tensor
      * Calculate the modulus of this matrix with a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function modScalar($b) : self
@@ -3663,11 +3668,15 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise equality comparison of this matrix and a
-     * scalar.
+     * Return the element-wise equality comparison of this matrix and a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function equalScalar($b) : self
@@ -3688,11 +3697,15 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise not equal comparison of this matrix and a
-     * scalar.
+     * Return the element-wise not equal comparison of this matrix and a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function notEqualScalar($b) : self
@@ -3713,11 +3726,15 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise greater than comparison of this matrix and a
-     * scalar.
+     * Return the element-wise greater than comparison of this matrix and a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function greaterScalar($b) : self
@@ -3738,11 +3755,15 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise greater than or equal to comparison of
-     * this matrix and a scalar.
+     * Return the element-wise greater than or equal to comparison of this matrix and a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function greaterEqualScalar($b) : self
@@ -3763,11 +3784,15 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise less than comparison of this matrix and a
-     * scalar.
+     * Return the element-wise less than comparison of this matrix and a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function lessScalar($b) : self
@@ -3788,11 +3813,15 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise less than or equal to comparison of
-     * this matrix and a scalar.
+     * Return the element-wise less than or equal to comparison of this matrix and a scalar.
      *
      * @param int|float $b
+<<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
+||||||| merged common ancestors
+     * @throws \InvalidArgumentException
+=======
+>>>>>>> master
      * @return self
      */
     public function lessEqualScalar($b) : self
