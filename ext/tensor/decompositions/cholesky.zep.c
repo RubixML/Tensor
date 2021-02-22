@@ -16,6 +16,7 @@
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
+#include "kernel/concat.h"
 #include "kernel/object.h"
 #include "include/linear_algebra.h"
 
@@ -48,22 +49,26 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Cholesky) {
  * Factory method to decompose a matrix.
  *
  * @param \Tensor\Matrix a
- * @throws \InvalidArgumentExeption
+ * @throws \Tensor\Exceptions\InvalidArgumentException
+ * @throws \Tensor\Exceptions\RuntimeException
  * @return self
  */
 PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_3 = NULL;
+	zephir_fcall_cache_entry *_6 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a = NULL, a_sub, _0, l, _1, _2;
+	zval *a = NULL, a_sub, _0, l, _4, _5, _1$$3, _2$$3, _3$$3;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&l);
-	ZVAL_UNDEF(&_1);
-	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_4);
+	ZVAL_UNDEF(&_5);
+	ZVAL_UNDEF(&_1$$3);
+	ZVAL_UNDEF(&_2$$3);
+	ZVAL_UNDEF(&_3$$3);
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
@@ -73,21 +78,30 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
 	zephir_check_call_status();
 	if (!(zephir_is_true(&_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_invalidargumentexception_ce, "Cannot decompose a non-square matrix.", "tensor/decompositions/cholesky.zep", 35);
+		ZEPHIR_INIT_VAR(&_1$$3);
+		object_init_ex(&_1$$3, tensor_exceptions_invalidargumentexception_ce);
+		ZEPHIR_CALL_METHOD(&_2$$3, a, "shapestring", NULL, 0);
+		zephir_check_call_status();
+		ZEPHIR_INIT_VAR(&_3$$3);
+		ZEPHIR_CONCAT_SSVS(&_3$$3, "Matrix must be", " square, ", &_2$$3, " given.");
+		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 3, &_3$$3);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(&_1$$3, "tensor/decompositions/cholesky.zep", 37);
+		ZEPHIR_MM_RESTORE();
 		return;
 	}
 	ZEPHIR_INIT_VAR(&l);
-	ZEPHIR_CALL_METHOD(&_1, a, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_4, a, "asarray", NULL, 0);
 	zephir_check_call_status();
-	tensor_cholesky(&l, &_1);
+	tensor_cholesky(&l, &_4);
 	if (Z_TYPE_P(&l) == IS_NULL) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Failed to decompose matrix.", "tensor/decompositions/cholesky.zep", 41);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Failed to decompose matrix.", "tensor/decompositions/cholesky.zep", 43);
 		return;
 	}
 	object_init_ex(return_value, tensor_decompositions_cholesky_ce);
-	ZEPHIR_CALL_CE_STATIC(&_2, tensor_matrix_ce, "quick", &_3, 0, &l);
+	ZEPHIR_CALL_CE_STATIC(&_5, tensor_matrix_ce, "quick", &_6, 0, &l);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 24, &_2);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 24, &_5);
 	zephir_check_call_status();
 	RETURN_MM();
 

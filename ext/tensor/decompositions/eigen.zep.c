@@ -16,6 +16,7 @@
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
+#include "kernel/concat.h"
 #include "kernel/array.h"
 #include "kernel/object.h"
 #include "include/linear_algebra.h"
@@ -58,16 +59,18 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Eigen) {
  *
  * @param \Tensor\Matrix a
  * @param bool normalize
+ * @throws \Tensor\Exceptions\InvalidArgumentException
+ * @throws \Tensor\Exceptions\RuntimeException
  * @return self
  */
 PHP_METHOD(Tensor_Decompositions_Eigen, decompose) {
 
-	zval eig, _2;
+	zval eig, _5;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_4 = NULL;
+	zephir_fcall_cache_entry *_7 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool normalize;
-	zval *a = NULL, a_sub, *normalize_param = NULL, _0, eigenvalues, eigenvectors, result, _1, _3, _5, norm$$5, _6$$5, _7$$5, _8$$5, _9$$5, _10$$5;
+	zval *a = NULL, a_sub, *normalize_param = NULL, _0, eigenvalues, eigenvectors, result, _4, _6, _8, _1$$3, _2$$3, _3$$3, norm$$5, _9$$5, _10$$5, _11$$5, _12$$5, _13$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -75,17 +78,20 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose) {
 	ZVAL_UNDEF(&eigenvalues);
 	ZVAL_UNDEF(&eigenvectors);
 	ZVAL_UNDEF(&result);
-	ZVAL_UNDEF(&_1);
-	ZVAL_UNDEF(&_3);
-	ZVAL_UNDEF(&_5);
+	ZVAL_UNDEF(&_4);
+	ZVAL_UNDEF(&_6);
+	ZVAL_UNDEF(&_8);
+	ZVAL_UNDEF(&_1$$3);
+	ZVAL_UNDEF(&_2$$3);
+	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&norm$$5);
-	ZVAL_UNDEF(&_6$$5);
-	ZVAL_UNDEF(&_7$$5);
-	ZVAL_UNDEF(&_8$$5);
 	ZVAL_UNDEF(&_9$$5);
 	ZVAL_UNDEF(&_10$$5);
+	ZVAL_UNDEF(&_11$$5);
+	ZVAL_UNDEF(&_12$$5);
+	ZVAL_UNDEF(&_13$$5);
 	ZVAL_UNDEF(&eig);
-	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_5);
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 0, &a, &normalize_param);
@@ -96,42 +102,51 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose) {
 	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_invalidargumentexception_ce, "Cannot decompose a non-square matrix.", "tensor/decompositions/eigen.zep", 45);
+		ZEPHIR_INIT_VAR(&_1$$3);
+		object_init_ex(&_1$$3, tensor_exceptions_invalidargumentexception_ce);
+		ZEPHIR_CALL_METHOD(&_2$$3, a, "shapestring", NULL, 0);
+		zephir_check_call_status();
+		ZEPHIR_INIT_VAR(&_3$$3);
+		ZEPHIR_CONCAT_SSVS(&_3$$3, "Matrix must be", " square, ", &_2$$3, " given.");
+		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 3, &_3$$3);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(&_1$$3, "tensor/decompositions/eigen.zep", 48);
+		ZEPHIR_MM_RESTORE();
 		return;
 	}
 	ZEPHIR_INIT_VAR(&result);
-	ZEPHIR_CALL_METHOD(&_1, a, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_4, a, "asarray", NULL, 0);
 	zephir_check_call_status();
-	tensor_eig(&result, &_1);
+	tensor_eig(&result, &_4);
 	if (Z_TYPE_P(&result) == IS_NULL) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Failed to decompose matrix.", "tensor/decompositions/eigen.zep", 54);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Failed to decompose matrix.", "tensor/decompositions/eigen.zep", 57);
 		return;
 	}
 	ZEPHIR_INIT_VAR(&eig);
 	array_init(&eig);
-	zephir_get_arrval(&_2, &result);
-	ZEPHIR_CPY_WRT(&eig, &_2);
+	zephir_get_arrval(&_5, &result);
+	ZEPHIR_CPY_WRT(&eig, &_5);
 	ZEPHIR_OBS_VAR(&eigenvalues);
-	zephir_array_fetch_long(&eigenvalues, &eig, 0, PH_NOISY, "tensor/decompositions/eigen.zep", 61);
-	zephir_array_fetch_long(&_5, &eig, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/eigen.zep", 62);
-	ZEPHIR_CALL_CE_STATIC(&_3, tensor_matrix_ce, "quick", &_4, 0, &_5);
+	zephir_array_fetch_long(&eigenvalues, &eig, 0, PH_NOISY, "tensor/decompositions/eigen.zep", 64);
+	zephir_array_fetch_long(&_8, &eig, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/eigen.zep", 65);
+	ZEPHIR_CALL_CE_STATIC(&_6, tensor_matrix_ce, "quick", &_7, 0, &_8);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&eigenvectors, &_3, "transpose", NULL, 0);
+	ZEPHIR_CALL_METHOD(&eigenvectors, &_6, "transpose", NULL, 0);
 	zephir_check_call_status();
 	if (normalize) {
-		ZEPHIR_CALL_METHOD(&_6$$5, &eigenvectors, "transpose", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_9$$5, &eigenvectors, "transpose", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_7$$5, &_6$$5, "square", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_10$$5, &_9$$5, "square", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_8$$5, &_7$$5, "sum", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_11$$5, &_10$$5, "sum", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_9$$5, &_8$$5, "sqrt", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_12$$5, &_11$$5, "sqrt", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&norm$$5, &_9$$5, "transpose", NULL, 0);
+		ZEPHIR_CALL_METHOD(&norm$$5, &_12$$5, "transpose", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_10$$5, &eigenvectors, "dividevector", NULL, 0, &norm$$5);
+		ZEPHIR_CALL_METHOD(&_13$$5, &eigenvectors, "dividevector", NULL, 0, &norm$$5);
 		zephir_check_call_status();
-		ZEPHIR_CPY_WRT(&eigenvectors, &_10$$5);
+		ZEPHIR_CPY_WRT(&eigenvectors, &_13$$5);
 	}
 	object_init_ex(return_value, tensor_decompositions_eigen_ce);
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 25, &eigenvalues, &eigenvectors);

@@ -57,6 +57,7 @@ ZEPHIR_INIT_CLASS(Tensor_Reductions_Ref) {
  * Factory method to decompose a matrix.
  *
  * @param \Tensor\Matrix a
+ * @throws \Tensor\Exceptions\RuntimeException
  * @return self
  */
 PHP_METHOD(Tensor_Reductions_Ref, reduce) {
@@ -87,20 +88,20 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 	zephir_check_call_status();
 	tensor_ref(&result, &_0);
 	if (Z_TYPE_P(&result) == IS_NULL) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Failed to decompose matrix.", "tensor/reductions/ref.zep", 43);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Failed to decompose matrix.", "tensor/reductions/ref.zep", 44);
 		return;
 	}
 	ZEPHIR_INIT_VAR(&ref);
 	array_init(&ref);
 	zephir_get_arrval(&_1, &result);
 	ZEPHIR_CPY_WRT(&ref, &_1);
-	zephir_array_fetch_long(&_3, &ref, 0, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 50);
+	zephir_array_fetch_long(&_3, &ref, 0, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 51);
 	ZEPHIR_CALL_CE_STATIC(&b, tensor_matrix_ce, "quick", &_2, 0, &_3);
 	zephir_check_call_status();
 	ZEPHIR_OBS_VAR(&swaps);
-	zephir_array_fetch_long(&swaps, &ref, 1, PH_NOISY, "tensor/reductions/ref.zep", 51);
+	zephir_array_fetch_long(&swaps, &ref, 1, PH_NOISY, "tensor/reductions/ref.zep", 52);
 	object_init_ex(return_value, tensor_reductions_ref_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 34, &b, &swaps);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 33, &b, &swaps);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -141,7 +142,7 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 		ZEPHIR_CONCAT_SSVS(&_3$$3, "The number of swaps must", " be greater than or equal to 0, ", &_2$$3, " given.");
 		ZEPHIR_CALL_METHOD(NULL, &_0$$3, "__construct", NULL, 3, &_3$$3);
 		zephir_check_call_status();
-		zephir_throw_exception_debug(&_0$$3, "tensor/reductions/ref.zep", 66);
+		zephir_throw_exception_debug(&_0$$3, "tensor/reductions/ref.zep", 67);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}

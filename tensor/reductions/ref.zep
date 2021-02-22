@@ -33,6 +33,7 @@ class Ref
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix a
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
     public static function reduce(const <Matrix> a) -> <Ref>

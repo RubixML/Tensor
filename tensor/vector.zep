@@ -1,6 +1,7 @@
 namespace Tensor;
 
 use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\RuntimeException;
 use ArrayIterator;
 
@@ -251,8 +252,7 @@ class Vector implements Tensor
     public static function linspace(const float min, const float max, const int n) -> <Vector>
     {
         if unlikely min > max {
-            throw new InvalidArgumentException("Minimum must be"
-                . " less than maximum.");
+            throw new InvalidArgumentException("Minimum must be less than maximum.");
         }
 
         if unlikely n < 2 {
@@ -280,13 +280,13 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector a
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public static function maximum(const <Vector> a, const <Vector> b) -> <Vector>
     {
         if unlikely a->n() !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) a->n() . " elements but Vector B has "
                 . (string) b->n() . ".");
         }
@@ -299,13 +299,13 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector a
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public static function minimum(const <Vector> a, const <Vector> b) -> <Vector>
     {
         if unlikely a->n() !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) a->n() . " elements but Vector B has "
                 . (string) b->n() . ".");
         }
@@ -528,13 +528,13 @@ class Vector implements Tensor
      * Compute the dot product of this vector and another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return float
      */
     public function dot(const <Vector> b) -> float
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires"
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " elements but vector B has "
                 . (string) b->size() . ".");
         }
@@ -1307,7 +1307,6 @@ class Vector implements Tensor
     /**
      * Return the mean of the vector.
      *
-     * @throws \Tensor\Exceptions\RuntimeException
      * @return int|float
      */
     public function mean() -> int|float
@@ -1578,13 +1577,13 @@ class Vector implements Tensor
      * Multiply this vector with a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function multiplyMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1603,13 +1602,13 @@ class Vector implements Tensor
      * Divide this vector with a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function divideMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1628,13 +1627,13 @@ class Vector implements Tensor
      * Add this vector to a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function addMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1653,13 +1652,13 @@ class Vector implements Tensor
      * Subtract a matrix from this vector.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function subtractMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1678,13 +1677,13 @@ class Vector implements Tensor
      * Raise this vector to the power of a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function powMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1703,13 +1702,13 @@ class Vector implements Tensor
      * Mod this vector with a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function modMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1725,17 +1724,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise equality comparison of this vector and a
-     * matrix.
+     * Return the element-wise equality comparison of this vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function equalMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1751,11 +1749,10 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise not equal comparison of this vector and a
-     * matrix.
+     * Return the element-wise not equal comparison of this vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function notEqualMatrix(const <Matrix> b) -> <Matrix>
@@ -1777,17 +1774,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise greater than comparison of this vector
-     * and a matrix.
+     * Return the element-wise greater than comparison of this vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function greaterMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1803,17 +1799,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise greater than or equal to comparison of
-     * this vector and a matrix.
+     * Return the element-wise greater than or equal to comparison of this vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1829,17 +1824,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise less than comparison of this vector
-     * and a matrix.
+     * Return the element-wise less than comparison of this vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function lessMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1855,17 +1849,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise less than or equal to comparison of
-     * this vector and a matrix.
+     * Return the element-wise less than or equal to comparison of this vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function lessEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }
@@ -1884,13 +1877,13 @@ class Vector implements Tensor
      * Multiply this vector with another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function multiplyVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -1902,13 +1895,13 @@ class Vector implements Tensor
      * Divide this vector by another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function divideVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -1920,13 +1913,13 @@ class Vector implements Tensor
      * Add this vector to another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function addVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -1938,13 +1931,13 @@ class Vector implements Tensor
      * Subtract a vector from this vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function subtractVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -1956,13 +1949,13 @@ class Vector implements Tensor
      * Raise this vector to a power of another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function powVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -1974,13 +1967,13 @@ class Vector implements Tensor
      * Calculate the modulus of this vector with another vector elementwise.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function modVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -1993,13 +1986,13 @@ class Vector implements Tensor
      * another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function equalVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -2008,17 +2001,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise not equal comparison of this vector and a
-     * another vector.
+     * Return the element-wise not equal comparison of this vector and a another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function notEqualVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -2027,17 +2019,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise greater than comparison of this vector
-     * and a another vector.
+     * Return the element-wise greater than comparison of this vector and a another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function greaterVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -2046,17 +2037,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise greater than or equal to comparison of
-     * this vector and a another vector.
+     * Return the element-wise greater than or equal to comparison of this vector and a another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function greaterEqualVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -2065,17 +2055,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise less than comparison of this vector
-     * and a another vector.
+     * Return the element-wise less than comparison of this vector and a another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function lessVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }
@@ -2084,17 +2073,16 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise less than or equal to comparison of
-     * this vector and a another vector.
+     * Return the element-wise less than or equal to comparison of this vector and a another vector.
      *
      * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
     public function lessEqualVector(const <Vector> b) -> <Vector>
     {
         if unlikely this->n !== b->size() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A requires "
                 . (string) this->n . " elements but Vector B has "
                 . (string) b->size() . ".");
         }

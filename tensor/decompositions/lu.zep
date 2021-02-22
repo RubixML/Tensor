@@ -41,12 +41,15 @@ class Lu
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix a
+     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
     public static function decompose(const <Matrix> a) -> <Lu>
     {
         if unlikely !a->isSquare() {
-            throw new InvalidArgumentException("Cannot decompose a non-square matrix.");
+            throw new InvalidArgumentException("Matrix must be"
+                . " square, " . $a->shapeString() . " given.");
         }
 
         var result = tensor_lu(a->asArray());

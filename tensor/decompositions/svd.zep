@@ -37,6 +37,7 @@ class Svd
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix a
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
     public static function decompose(const <Matrix> a) -> <Svd>

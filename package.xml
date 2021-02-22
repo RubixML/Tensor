@@ -94,6 +94,8 @@
                         <file name="svd.zep.h" role="src" />
                     </dir>
                     <dir name="exceptions">
+                        <file name="dimensionalitymismatch.zep.c" role="src" />
+                        <file name="dimensionalitymismatch.zep.h" role="src" />
                         <file name="invalidargumentexception.zep.c" role="src" />
                         <file name="invalidargumentexception.zep.h" role="src" />
                         <file name="runtimeexception.zep.c" role="src" />

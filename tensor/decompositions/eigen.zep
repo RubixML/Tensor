@@ -37,12 +37,15 @@ class Eigen
      *
      * @param \Tensor\Matrix a
      * @param bool normalize
+     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
     public static function decompose(const <Matrix> a, const bool normalize) -> <Eigen>
     {
         if unlikely !a->isSquare() {
-            throw new InvalidArgumentException("Cannot decompose a non-square matrix.");
+            throw new InvalidArgumentException("Matrix must be"
+                . " square, " . $a->shapeString() . " given.");
         }
 
         var eigenvalues;

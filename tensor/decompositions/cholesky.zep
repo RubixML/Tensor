@@ -26,13 +26,15 @@ class Cholesky
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix a
-     * @throws \InvalidArgumentExeption
+     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
     public static function decompose(const <Matrix> a) -> <Cholesky>
     {
         if !a->isSquare() {
-            throw new InvalidArgumentException("Cannot decompose a non-square matrix.");
+            throw new InvalidArgumentException("Matrix must be"
+                . " square, " . $a->shapeString() . " given.");
         }
 
         var l = tensor_cholesky(a->asArray());
