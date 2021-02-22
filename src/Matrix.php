@@ -3497,12 +3497,12 @@ class Matrix implements Tensor
      * Multiply this matrix by a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function multiplyScalar($b) : self
@@ -3526,12 +3526,12 @@ class Matrix implements Tensor
      * Divide this matrix by a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function divideScalar($b) : self
@@ -3555,12 +3555,12 @@ class Matrix implements Tensor
      * Add this matrix by a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function addScalar($b) : self
@@ -3584,12 +3584,12 @@ class Matrix implements Tensor
      * Subtract a scalar from this matrix.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function subtractScalar($b) : self
@@ -3613,12 +3613,12 @@ class Matrix implements Tensor
      * Raise the matrix to a given scalar power.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function powScalar($b) : self
@@ -3642,12 +3642,12 @@ class Matrix implements Tensor
      * Calculate the modulus of this matrix with a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function modScalar($b) : self
@@ -3671,12 +3671,12 @@ class Matrix implements Tensor
      * Return the element-wise equality comparison of this matrix and a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function equalScalar($b) : self
@@ -3700,12 +3700,12 @@ class Matrix implements Tensor
      * Return the element-wise not equal comparison of this matrix and a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function notEqualScalar($b) : self
@@ -3729,12 +3729,12 @@ class Matrix implements Tensor
      * Return the element-wise greater than comparison of this matrix and a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function greaterScalar($b) : self
@@ -3758,12 +3758,12 @@ class Matrix implements Tensor
      * Return the element-wise greater than or equal to comparison of this matrix and a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function greaterEqualScalar($b) : self
@@ -3787,12 +3787,12 @@ class Matrix implements Tensor
      * Return the element-wise less than comparison of this matrix and a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function lessScalar($b) : self
@@ -3816,12 +3816,12 @@ class Matrix implements Tensor
      * Return the element-wise less than or equal to comparison of this matrix and a scalar.
      *
      * @param int|float $b
-<<<<<<< HEAD
+     *                     <<<<<<< HEAD
      * @throws \Tensor\Exceptions\InvalidArgumentException
-||||||| merged common ancestors
+     *                                                     ||||||| merged common ancestors
      * @throws \InvalidArgumentException
-=======
->>>>>>> master
+     *                                   =======
+     *                                   >>>>>>> master
      * @return self
      */
     public function lessEqualScalar($b) : self
