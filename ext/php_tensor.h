@@ -35,9 +35,6 @@ ZEND_BEGIN_MODULE_GLOBALS(tensor)
 	unsigned int recursive_lock;
 
 	
-	int num_threads;
-
-
 ZEND_END_MODULE_GLOBALS(tensor)
 
 #ifdef ZTS

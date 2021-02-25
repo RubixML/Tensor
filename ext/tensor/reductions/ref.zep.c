@@ -66,7 +66,7 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_2 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a = NULL, a_sub, result, _0, b, _3, swaps;
+	zval *a, a_sub, result, _0, b, _3, swaps;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -116,7 +116,7 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long swaps, ZEPHIR_LAST_CALL_STATUS;
-	zval *a = NULL, a_sub, *swaps_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, _4;
+	zval *a, a_sub, *swaps_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, _4;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);

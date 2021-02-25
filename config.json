@@ -11,16 +11,10 @@
         "include/indexing.c",
         "include/arithmetic.c",
         "include/comparison.c",
-        "include/linear_algebra.c"
+        "include/linear_algebra.c",
+        "include/settings.c"
     ],
     "extra-libs": "-lopenblas -llapacke -lgfortran -lpthread",
-    "globals": {
-        "num_threads": {
-            "type": "int",
-            "default": 1,
-            "module": true
-        }
-    },
     "optimizer-dirs": [
         "optimizers"
     ],
@@ -31,9 +25,9 @@
         "constant-folding": true,
         "static-constant-class-folding": true,
         "call-gatherer-pass": true,
-        "check-invalid-reads": true,
-        "private-internal-methods": true,
-        "public-internal-methods": true,
+        "check-invalid-reads": false,
+        "private-internal-methods": false,
+        "public-internal-methods": false,
         "public-internal-functions": true
     },
     "warnings": {

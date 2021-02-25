@@ -70,7 +70,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose) {
 	zephir_fcall_cache_entry *_7 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool normalize;
-	zval *a = NULL, a_sub, *normalize_param = NULL, _0, eigenvalues, eigenvectors, result, _4, _6, _8, _1$$3, _2$$3, _3$$3, norm$$5, _9$$5, _10$$5, _11$$5, _12$$5, _13$$5;
+	zval *a, a_sub, *normalize_param = NULL, _0, eigenvalues, eigenvectors, result, _4, _6, _8, _1$$3, _2$$3, _3$$3, norm$$5, _9$$5, _10$$5, _11$$5, _12$$5, _13$$5;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -162,7 +162,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose) {
 PHP_METHOD(Tensor_Decompositions_Eigen, __construct) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *eigenvalues_param = NULL, *eigenvectors = NULL, eigenvectors_sub;
+	zval *eigenvalues_param = NULL, *eigenvectors, eigenvectors_sub;
 	zval eigenvalues;
 	zval *this_ptr = getThis();
 

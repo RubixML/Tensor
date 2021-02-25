@@ -18,6 +18,7 @@
 #include "kernel/concat.h"
 #include "kernel/operators.h"
 #include "kernel/object.h"
+#include "include/settings.h"
 
 
 /**
@@ -46,7 +47,7 @@ ZEPHIR_INIT_CLASS(Tensor_Settings) {
 PHP_METHOD(Tensor_Settings, setNumThreads) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zval *threads_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, _4;
+	zval *threads_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, status, _4;
 	zend_long threads, ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
 
@@ -54,6 +55,7 @@ PHP_METHOD(Tensor_Settings, setNumThreads) {
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
+	ZVAL_UNDEF(&status);
 	ZVAL_UNDEF(&_4);
 
 	ZEPHIR_MM_GROW();
@@ -76,8 +78,9 @@ PHP_METHOD(Tensor_Settings, setNumThreads) {
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
+	ZEPHIR_INIT_VAR(&status);
 	ZVAL_LONG(&_4, threads);
-	ZEPHIR_GLOBAL(num_threads) = Z_LVAL_P(&_4);
+	tensor_set_num_threads(&status, &_4);
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -92,7 +95,8 @@ PHP_METHOD(Tensor_Settings, numThreads) {
 	zval *this_ptr = getThis();
 
 
-	RETURN_LONG(ZEPHIR_GLOBAL(num_threads));
+	tensor_get_num_threads(return_value);
+	return;
 
 }
 

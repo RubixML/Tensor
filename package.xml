@@ -21,11 +21,9 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Implemented Eigen decomposition in extension
-        - Optimize row echelon form (REF) of matrix
-        - Optimize Cholesky decomposition
-        - Fix memory leak in matrix inverse
-        - Optimize LU decomposition
+        - Implemented Singular Value Decomposition (SVD)
+        - Tensor objects now throw namespaced exceptions
+        - Optimized Reduced Row Echelon Form (RREF)
     </notes>
 	<contents>
         <dir name="/">
@@ -39,6 +37,8 @@
                     <file name="indexing.h" role="src" />
                     <file name="linear_algebra.c" role="src" />
                     <file name="linear_algebra.h" role="src" />
+                    <file name="settings.c" role="src" />
+                    <file name="settings.h" role="src" />
                 </dir>
                 <dir name="kernel">
                     <file name="array.c" role="src" />

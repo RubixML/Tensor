@@ -70,7 +70,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, decompose) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_2 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a = NULL, a_sub, result, _0, u, _3, singularValues, vT, _4;
+	zval *a, a_sub, result, _0, u, _3, singularValues, vT, _4;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
@@ -125,7 +125,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, __construct) {
 
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval singularValues;
-	zval *u = NULL, u_sub, *singularValues_param = NULL, *vT = NULL, vT_sub;
+	zval *u, u_sub, *singularValues_param = NULL, *vT, vT_sub;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&u_sub);

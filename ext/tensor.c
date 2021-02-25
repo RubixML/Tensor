@@ -115,8 +115,7 @@ static void php_zephir_init_globals(zend_tensor_globals *tensor_globals TSRMLS_D
  */
 static void php_zephir_init_module_globals(zend_tensor_globals *tensor_globals TSRMLS_DC)
 {
-		tensor_globals->num_threads = 1;
-
+	
 }
 
 static PHP_RINIT_FUNCTION(tensor)
