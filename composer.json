@@ -64,7 +64,10 @@
             "php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no"
         ],
         "clean": "zephir fullclean",
-        "compile": "zephir build --no-dev",
+        "compile": [
+            "zephir build --no-dev",
+            "@php extension-config-patch.php"
+        ],
         "fix": "php-cs-fixer fix --config=.php_cs.dist",
         "test": "phpunit"
     },
