@@ -1,0 +1,38 @@
+name: Compile extension
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/ci-ext.*"
+      - "ext/**"
+      - package.xml
+  push:
+    paths:
+      - ".github/workflows/ci-ext.*"
+      - "ext/**"
+      - package.xml
+    tags-ignore:
+      - "**"
+
+jobs:
+  compile:
+    strategy:
+      matrix:
+        image:
+          - php:7.2-cli
+          - php:7.2-cli-alpine
+          - php:7.3-cli
+          - php:7.3-cli-alpine
+          - php:7.4-cli
+          - php:7.4-cli-alpine
+    name: Image ${{ matrix.image }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull docker image
+        run: docker pull ${{ matrix.image }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Compile
+        run: docker run --rm -v "$GITHUB_WORKSPACE:/app" ${{ matrix.image }} /app/.github/workflows/ci-ext.sh
