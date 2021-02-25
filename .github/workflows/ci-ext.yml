@@ -4,18 +4,12 @@ on:
   pull_request:
     paths:
       - ".github/workflows/ci-ext.*"
-      - "ext/*"
-      - "ext/*/*"
-      - "ext/*/*/*"
-      - "ext/*/*/*/*"
+      - "ext/**"
       - package.xml
   push:
     paths:
       - ".github/workflows/ci-ext.*"
-      - "ext/*"
-      - "ext/*/*"
-      - "ext/*/*/*"
-      - "ext/*/*/*/*"
+      - "ext/**"
       - package.xml
     tags-ignore:
       - "**"
