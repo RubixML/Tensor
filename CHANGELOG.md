@@ -1,5 +1,5 @@
 - 2.1.5
-    - Patch broken Zephir-generated config file after compilation
+    - Patch Zephir-generated config file for Docker
 
 - 2.1.4
     - Implemented Eigen decomposition in extension
