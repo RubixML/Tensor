@@ -764,15 +764,11 @@ class MatrixTest extends TestCase
      */
     public function eig() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Different algorithm used in extension.');
-        }
-
-        $eig = $this->a->eig();
+        $eig = $this->a->eig(true);
 
         $this->assertInstanceOf(Eigen::class, $eig);
 
-        $values = [25.108706520450326, -15.096331148319537, 13.9876246278692];
+        $values = [25.108706520450326, 13.9876246278692, -15.096331148319537];
 
         $vectors = [
             [-0.5029346679560592, -0.1309992382037118, -0.33107976181279675],
@@ -782,8 +778,15 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $eig->eigenvectors());
 
-        $this->assertEquals($values, $eig->eigenvalues());
-        $this->assertEquals($vectors, $eig->eigenvectors()->asArray());
+        $eigenvalues = $eig->eigenvalues();
+
+        rsort($eigenvalues);
+
+        $this->assertEqualsWithDelta($values, $eigenvalues, 1e-8);
+
+        if (!extension_loaded('tensor')) {
+            $this->assertEquals($vectors, $eig->eigenvectors()->asArray());
+        }
     }
 
     /**

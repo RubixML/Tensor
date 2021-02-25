@@ -6,9 +6,9 @@
     "license": "MIT",
     "keywords": [
         "arithmetic", "computation", "computing", "decomposition", "engineering", "extension",
-        "linear algebra", "math", "matrix", "norms", "php", "php extension",
-        "random number generation", "rng", "reduction", "scientific computing", "statistics",
-        "tensor", "vector", "trigonometry"
+        "eigenvalue", "eigenvector", "linear algebra", "math", "matrix", "norms", "php",
+        "php extension", "random number generation", "rng", "reduction", "scientific computing",
+        "singular value decomposition", "statistics", "tensor", "vector", "trigonometry"
     ],
     "authors": [
         { 
