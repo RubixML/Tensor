@@ -7,6 +7,8 @@ on:
       - "ext/**"
       - package.xml
   push:
+    branches:
+      - "**"
     paths:
       - ".github/workflows/ci-ext.*"
       - "ext/**"
