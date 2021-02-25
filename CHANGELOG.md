@@ -3,6 +3,9 @@
     - Tensor objects now throw namespaced exceptions
     - Optimized Reduced Row Echelon Form (RREF)
 
+- 2.1.5
+    - Patch broken Zephir-generated config file after compilation
+
 - 2.1.4
     - Implemented Eigen decomposition in extension
     - Optimize row echelon form (REF) of matrix
