@@ -817,7 +817,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the inverse of the matrix.
+     * Compute the inverse of the square matrix.
      *
      * @return self
      */
@@ -829,6 +829,16 @@ class Matrix implements Tensor
         }
 
         return self::quick(tensor_inverse(this->a));
+    }
+
+    /**
+     * Compute the pseudo (Moore-Penrose) inverse of the general matrix.
+     *
+     * @return self
+     */
+     public function pseudoInverse() -> <Matrix>
+    {
+        return self::quick(tensor_pseudo_inverse(this->a));
     }
 
     /**
@@ -901,6 +911,7 @@ class Matrix implements Tensor
         }
 
         int i, j;
+        
         var rowA;
 
         for i in range(0, this->m - 2) {

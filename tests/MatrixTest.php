@@ -545,6 +545,24 @@ class MatrixTest extends TestCase
 
     /**
      * @test
+     * @requires extension tensor
+     */
+    public function pseudoInverse() : void
+    {
+        $z = $this->a->pseudoInverse();
+
+        $expected = [
+            [0.02093549603923048, 0.042436816295737464, 0.018483591097698978],
+            [0.0007544322897019996, 0.08261033572236892, -0.017351942663145988],
+            [0.04602036967182196, 0.03923047906450396, -0.05846850245190495],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $z);
+        $this->assertEquals($expected, $z->asArray());
+    }
+
+    /**
+     * @test
      */
     public function det() : void
     {

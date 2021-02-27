@@ -11,6 +11,7 @@ use Tensor\Decompositions\Cholesky;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\RuntimeException;
+use Tensor\Exceptions\NotImplemented;
 use ArrayIterator;
 use Closure;
 
@@ -797,6 +798,16 @@ class Matrix implements Tensor
         }
 
         return self::quick($b);
+    }
+
+    /**
+     * Compute the pseudo (Moore-Penrose) inverse of the general matrix.
+     *
+     * @return self
+     */
+    public function pseudoInverse() : self
+    {
+        throw new NotImplemented('Pseudo inverse is not implemented in Tensor PHP.');
     }
 
     /**

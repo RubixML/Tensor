@@ -38,6 +38,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	PHP_ADD_BUILD_DIR([$ext_builddir/kernel/])
 	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/])
     PHP_ADD_BUILD_DIR([$ext_builddir/tensor/decompositions/])
+    PHP_ADD_BUILD_DIR([$ext_builddir/tensor/exceptions/])
     PHP_ADD_BUILD_DIR([$ext_builddir/tensor/reductions/])
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
