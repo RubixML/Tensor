@@ -5,9 +5,6 @@
     - Optimized Reduced Row Echelon Form (RREF)
     - Optimize eigendecomposition for symmetric matrices
 
-- 2.1.5
-    - Patch Zephir-generated config file for Docker
-
 - 2.1.4
     - Implemented Eigen decomposition in extension
     - Optimize row echelon form (REF) of matrix
