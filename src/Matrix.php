@@ -801,13 +801,13 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the pseudo (Moore-Penrose) inverse of the general matrix.
+     * Compute the (Moore-Penrose) pseudo inverse of the general matrix.
      *
      * @return self
      */
-    public function pseudoInverse() : self
+    public function pseudoinverse() : self
     {
-        throw new NotImplemented('Pseudo inverse is not implemented in Tensor PHP.');
+        throw new NotImplemented('Pseudoinverse is not implemented in Tensor PHP.');
     }
 
     /**
