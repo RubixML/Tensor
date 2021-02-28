@@ -15,6 +15,14 @@
         "include/settings.c"
     ],
     "extra-libs": "-lopenblas -llapacke -lgfortran -lpthread",
+    "initializers": {
+        "module": [
+            {
+                "include": "cblas.h",
+                "code": "openblas_set_num_threads(1)"
+            }
+        ]
+    },
     "optimizer-dirs": [
         "optimizers"
     ],

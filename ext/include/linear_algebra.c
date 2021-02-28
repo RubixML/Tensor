@@ -5,7 +5,6 @@
 #include <php.h>
 #include <cblas.h>
 #include <lapacke.h>
-#include <stdio.h>
 #include "kernel/operators.h"
 
 void tensor_matmul(zval * return_value, zval * a, zval * b)

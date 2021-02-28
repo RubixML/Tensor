@@ -1108,7 +1108,7 @@ class Matrix implements Tensor
      * @param bool $symmetric
      * @return \Tensor\Decompositions\Eigen
      */
-    public function eig(bool $symmetric = true) : Eigen
+    public function eig(bool $symmetric = false) : Eigen
     {
         return Eigen::decompose($this, $symmetric);
     }

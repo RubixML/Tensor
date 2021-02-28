@@ -22,6 +22,7 @@
 #include "kernel/memory.h"
 
 
+#include "cblas.h"
 
 zend_class_entry *tensor_arithmetic_ce;
 zend_class_entry *tensor_arraylike_ce;
@@ -76,7 +77,7 @@ static PHP_MINIT_FUNCTION(tensor)
 	ZEPHIR_INIT(Tensor_Reductions_Ref);
 	ZEPHIR_INIT(Tensor_Reductions_Rref);
 	ZEPHIR_INIT(Tensor_Settings);
-	
+	openblas_set_num_threads(1);
 	return SUCCESS;
 }
 
