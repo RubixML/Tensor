@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class ArgmaxOptimizer extends OptimizerAbstract
+class TensorArgminOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -26,7 +26,7 @@ class ArgmaxOptimizer extends OptimizerAbstract
 
         if (count($expression['parameters']) !== 1) {
             throw new CompilerException(
-                'Argmax accepts exactly one argument, ' . count($expression['parameters']) . 'given.',
+                'Argmin accepts exactly one argument, ' . count($expression['parameters']) . 'given.',
                 $expression
             );
         }
@@ -60,7 +60,7 @@ class ArgmaxOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            "tensor_argmax($symbol, {$resolvedParams[0]});"
+            "tensor_argmin($symbol, {$resolvedParams[0]});"
         );
 
         return new CompiledExpression(

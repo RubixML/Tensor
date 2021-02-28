@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class TensorPseudoInverseOptimizer extends OptimizerAbstract
+class TensorPseudoinverseOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
@@ -60,7 +60,7 @@ class TensorPseudoInverseOptimizer extends OptimizerAbstract
         $symbol = $context->backend->getVariableCode($symbolVariable);
 
         $context->codePrinter->output(
-            "tensor_pseudo_inverse($symbol, {$resolvedParams[0]});"
+            "tensor_pseudoinverse($symbol, {$resolvedParams[0]});"
         );
 
         return new CompiledExpression(

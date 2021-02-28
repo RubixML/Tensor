@@ -547,14 +547,19 @@ class MatrixTest extends TestCase
      * @test
      * @requires extension tensor
      */
-    public function pseudoInverse() : void
+    public function pseudoinverse() : void
     {
-        $z = $this->a->pseudoInverse();
+        $a = Matrix::build([
+            [22, -17, 12],
+            [4, 11, -2],
+        ]);
+
+        $z = $a->pseudoinverse();
 
         $expected = [
-            [0.02093549603923048, 0.042436816295737464, 0.018483591097698978],
-            [0.0007544322897019996, 0.08261033572236892, -0.017351942663145988],
-            [0.04602036967182196, 0.03923047906450396, -0.05846850245190495],
+            [0.03147992432205172, 0.05583000490505223],
+            [-0.009144418751313844, 0.0700371382524],
+            [0.012665545511877228, -0.00313572980169575],
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);

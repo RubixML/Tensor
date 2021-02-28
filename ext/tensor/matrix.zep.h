@@ -39,7 +39,7 @@ PHP_METHOD(Tensor_Matrix, map);
 PHP_METHOD(Tensor_Matrix, reduce);
 PHP_METHOD(Tensor_Matrix, transpose);
 PHP_METHOD(Tensor_Matrix, inverse);
-PHP_METHOD(Tensor_Matrix, pseudoInverse);
+PHP_METHOD(Tensor_Matrix, pseudoinverse);
 PHP_METHOD(Tensor_Matrix, det);
 PHP_METHOD(Tensor_Matrix, rank);
 PHP_METHOD(Tensor_Matrix, fullRank);
@@ -1560,7 +1560,7 @@ ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
 	PHP_ME(Tensor_Matrix, reduce, arginfo_tensor_matrix_reduce, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, transpose, arginfo_tensor_matrix_transpose, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, inverse, arginfo_tensor_matrix_inverse, ZEND_ACC_PUBLIC)
-	PHP_ME(Tensor_Matrix, pseudoInverse, arginfo_tensor_matrix_pseudoinverse, ZEND_ACC_PUBLIC)
+	PHP_ME(Tensor_Matrix, pseudoinverse, arginfo_tensor_matrix_pseudoinverse, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, det, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, rank, arginfo_tensor_matrix_rank, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, fullRank, arginfo_tensor_matrix_fullrank, ZEND_ACC_PUBLIC)

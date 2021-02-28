@@ -726,7 +726,7 @@ class Matrix implements Tensor
         array b = [];
 
         for rowA in this->a {
-            let b[] = (int) argmin(rowA);
+            let b[] = tensor_argmin(rowA);
         }
 
         return ColumnVector::quick(b);
@@ -744,7 +744,7 @@ class Matrix implements Tensor
         array b = [];
 
         for rowA in this->a {
-            let b[] = (int) argmax(rowA);
+            let b[] = tensor_argmax(rowA);
         }
 
         return ColumnVector::quick(b);
@@ -832,13 +832,13 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the pseudo (Moore-Penrose) inverse of the general matrix.
+     * Compute the (Moore-Penrose) pseudoinverse of the general matrix.
      *
      * @return self
      */
-     public function pseudoInverse() -> <Matrix>
+     public function pseudoinverse() -> <Matrix>
     {
-        return self::quick(tensor_pseudo_inverse(this->a));
+        return self::quick(tensor_pseudoinverse(this->a));
     }
 
     /**

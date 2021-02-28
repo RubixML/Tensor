@@ -1236,19 +1236,15 @@ PHP_METHOD(Tensor_Vector, transpose) {
  */
 PHP_METHOD(Tensor_Vector, argmin) {
 
-	zval _0, _1;
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval _0;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_1);
 
-	ZEPHIR_MM_GROW();
 
-	ZEPHIR_INIT_VAR(&_0);
-	zephir_read_property(&_1, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
-	tensor_argmin(&_0, &_1);
-	RETURN_MM_LONG(zephir_get_intval(&_0));
+	zephir_read_property(&_0, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
+	tensor_argmin(return_value, &_0);
+	return;
 
 }
 
@@ -1259,19 +1255,15 @@ PHP_METHOD(Tensor_Vector, argmin) {
  */
 PHP_METHOD(Tensor_Vector, argmax) {
 
-	zval _0, _1;
-	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
+	zval _0;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_1);
 
-	ZEPHIR_MM_GROW();
 
-	ZEPHIR_INIT_VAR(&_0);
-	zephir_read_property(&_1, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
-	tensor_argmax(&_0, &_1);
-	RETURN_MM_LONG(zephir_get_intval(&_0));
+	zephir_read_property(&_0, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
+	tensor_argmax(return_value, &_0);
+	return;
 
 }
 

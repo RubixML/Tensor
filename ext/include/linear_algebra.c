@@ -5,6 +5,7 @@
 #include <php.h>
 #include <cblas.h>
 #include <lapacke.h>
+#include <stdio.h>
 #include "kernel/operators.h"
 
 void tensor_matmul(zval * return_value, zval * a, zval * b)
@@ -140,7 +141,7 @@ void tensor_inverse(zval * return_value, zval * a)
     efree(pivots);
 }
 
-void tensor_pseudo_inverse(zval * return_value, zval * a)
+void tensor_pseudoinverse(zval * return_value, zval * a)
 {
     unsigned int i, j;
     Bucket * row;
@@ -158,7 +159,7 @@ void tensor_pseudo_inverse(zval * return_value, zval * a)
     double * vu = emalloc(m * m * sizeof(double));
     double * vs = emalloc(k * sizeof(double));
     double * vvt = emalloc(n * n * sizeof(double));
-    double * vb = emalloc(n * n * sizeof(double));
+    double * vb = emalloc(n * m * sizeof(double));
 
     for (i = 0; i < m; ++i) {
         row = Z_ARR(ba[i].val)->arData;
@@ -175,18 +176,18 @@ void tensor_pseudo_inverse(zval * return_value, zval * a)
     }
 
     for (i = 0; i < k; ++i) {
-        cblas_dscal(n, 1.0 / vs[i], &vu[i], m);
+        cblas_dscal(m, 1.0 / vs[i], &vu[i], m);
     }
 
-    cblas_dgemm(CblasRowMajor, CblasTrans, CblasTrans, m, n, k, 1.0, vvt, n, vu, m, 0.0, vb, n);
+    cblas_dgemm(CblasRowMajor, CblasTrans, CblasTrans, n, m, m, 1.0, vvt, n, vu, m, 0.0, vb, m);
 
-    array_init_size(&b, m);
+    array_init_size(&b, n);
 
-    for (i = 0; i < m; ++i) {
-        array_init_size(&rowB, n);
+    for (i = 0; i < n; ++i) {
+        array_init_size(&rowB, m);
 
-        for (j = 0; j < n; ++j) {
-            add_next_index_double(&rowB, vb[i * n + j]);
+        for (j = 0; j < m; ++j) {
+            add_next_index_double(&rowB, vb[i * m + j]);
         }
 
         add_next_index_zval(&b, &rowB);

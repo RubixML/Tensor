@@ -8,7 +8,7 @@ use Tensor\Matrix;
  * @Groups({"LinearAlgebra"})
  * @BeforeMethods({"setUp"})
  */
-class MatrixPseudoInverseBench
+class MatrixPseudoinverseBench
 {
     /**
      * @var \Tensor\Matrix
@@ -27,6 +27,6 @@ class MatrixPseudoInverseBench
      */
     public function inverse() : void
     {
-        $this->a->pseudoInverse();
+        $this->a->pseudoinverse();
     }
 }

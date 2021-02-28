@@ -480,7 +480,7 @@ class Vector implements Tensor
      */
     public function argmin() -> int
     {
-        return (int) argmin(this->a);
+        return tensor_argmin(this->a);
     }
 
     /**
@@ -490,7 +490,7 @@ class Vector implements Tensor
      */
     public function argmax() -> int
     {
-        return (int) argmax(this->a);
+        return tensor_argmax(this->a);
     }
 
     /**
