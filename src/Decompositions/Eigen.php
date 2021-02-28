@@ -36,11 +36,11 @@ class Eigen
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix $a
-     * @param bool $normalize
+     * @param bool $symmetric
      * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
-    public static function decompose(Matrix $a, bool $normalize = true) : self
+    public static function decompose(Matrix $a, bool $symmetric = false) : self
     {
         if (!$a->isSquare()) {
             throw new InvalidArgumentException('Matrix must be'
@@ -55,16 +55,6 @@ class Eigen
         $eigenvectors = $eig->getV()->getArray();
 
         $eigenvectors = Matrix::quick($eigenvectors)->transpose();
-
-        if ($normalize) {
-            $norm = $eigenvectors->transpose()
-                ->square()
-                ->sum()
-                ->sqrt()
-                ->transpose();
-
-            $eigenvectors = $eigenvectors->divideVector($norm);
-        }
 
         return new self($eigenvalues, $eigenvectors);
     }

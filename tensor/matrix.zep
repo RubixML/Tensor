@@ -895,12 +895,12 @@ class Matrix implements Tensor
      * @return bool
      */
      public function fullRank() -> bool
-     {
-         return this->rank() === min(this->shape());
-     }
+    {
+        return this->rank() === min(this->shape());
+    }
 
     /**
-     * Is the matrix symmetric i.e. is it equal to its own transpose
+     * Is the matrix symmetric i.e. is it equal to its transpose.
      * 
      * @return bool
      */
@@ -1129,12 +1129,12 @@ class Matrix implements Tensor
     /**
      * Compute the eigenvalues and eigenvectors of the matrix and return them in a tuple.
      *
-     * @param bool normalize
+     * @param bool symmetric
      * @return \Tensor\Decompositions\Eigen
      */
-    public function eig(bool normalize = true) -> <Eigen>
+    public function eig(bool symmetric = false) -> <Eigen>
     {
-        return Eigen::decompose(this, normalize);
+        return Eigen::decompose(this, symmetric);
     }
 
     /**

@@ -636,9 +636,9 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_eig, 0, 0, Tensor\\
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_eig, 0, 0, IS_OBJECT, "Tensor\\Decompositions\\Eigen", 0)
 #endif
 #if PHP_VERSION_ID >= 70200
-	ZEND_ARG_TYPE_INFO(0, normalize, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, symmetric, _IS_BOOL, 0)
 #else
-	ZEND_ARG_INFO(0, normalize)
+	ZEND_ARG_INFO(0, symmetric)
 #endif
 ZEND_END_ARG_INFO()
 

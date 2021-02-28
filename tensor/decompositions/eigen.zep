@@ -36,22 +36,25 @@ class Eigen
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix a
-     * @param bool normalize
+     * @param bool symmetric
      * @throws \Tensor\Exceptions\InvalidArgumentException
      * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
-    public static function decompose(const <Matrix> a, const bool normalize) -> <Eigen>
+    public static function decompose(const <Matrix> a, const bool symmetric = false) -> <Eigen>
     {
         if unlikely !a->isSquare() {
             throw new InvalidArgumentException("Matrix must be"
                 . " square, " . $a->shapeString() . " given.");
         }
 
-        var eigenvalues;
-        var eigenvectors;
+        var result;
 
-        var result = tensor_eig(a->asArray());
+        if symmetric {
+            let result = tensor_eig_symmetric(a->asArray());
+        } else {
+            let result = tensor_eig(a->asArray());
+        }
 
         if is_null(result) {
             throw new RuntimeException("Failed to decompose matrix.");
@@ -61,18 +64,8 @@ class Eigen
 
         let eig = (array) result;
 
-        let eigenvalues = eig[0];
-        let eigenvectors = Matrix::quick(eig[1])->transpose();
-
-        if (normalize) {
-            var norm = eigenvectors->transpose()
-                ->square()
-                ->sum()
-                ->sqrt()
-                ->transpose();
-
-            let eigenvectors = eigenvectors->divideVector(norm);
-        }
+        var eigenvalues = eig[0];
+        var eigenvectors = Matrix::quick(eig[1])->transpose();
 
         return new self(eigenvalues, eigenvectors);
     }

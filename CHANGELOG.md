@@ -3,6 +3,7 @@
     - Implemented matrix pseudo (Moore-Penrose) inverse
     - Tensor objects now throw namespaced exceptions
     - Optimized Reduced Row Echelon Form (RREF)
+    - Optimize eigendecomposition for symmetric matrices
 
 - 2.1.5
     - Patch Zephir-generated config file for Docker

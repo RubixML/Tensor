@@ -2959,7 +2959,7 @@ PHP_METHOD(Tensor_Matrix, fullRank) {
 }
 
 /**
- * Is the matrix symmetric i.e. is it equal to its own transpose
+ * Is the matrix symmetric i.e. is it equal to its transpose.
  * 
  * @return bool
  */
@@ -3744,7 +3744,7 @@ PHP_METHOD(Tensor_Matrix, cholesky) {
 /**
  * Compute the eigenvalues and eigenvectors of the matrix and return them in a tuple.
  *
- * @param bool normalize
+ * @param bool symmetric
  * @return \Tensor\Decompositions\Eigen
  */
 PHP_METHOD(Tensor_Matrix, eig) {
@@ -3752,23 +3752,23 @@ PHP_METHOD(Tensor_Matrix, eig) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zephir_fcall_cache_entry *_0 = NULL;
-	zval *normalize_param = NULL, _1;
-	zend_bool normalize;
+	zval *symmetric_param = NULL, _1;
+	zend_bool symmetric;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_1);
 
 	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 0, 1, &normalize_param);
+	zephir_fetch_params(1, 0, 1, &symmetric_param);
 
-	if (!normalize_param) {
-		normalize = 1;
+	if (!symmetric_param) {
+		symmetric = 0;
 	} else {
-		normalize = zephir_get_boolval(normalize_param);
+		symmetric = zephir_get_boolval(symmetric_param);
 	}
 
 
-	if (normalize) {
+	if (symmetric) {
 		ZVAL_BOOL(&_1, 1);
 	} else {
 		ZVAL_BOOL(&_1, 0);

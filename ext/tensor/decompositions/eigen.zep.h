@@ -9,15 +9,15 @@ PHP_METHOD(Tensor_Decompositions_Eigen, eigenvalues);
 PHP_METHOD(Tensor_Decompositions_Eigen, eigenvectors);
 
 #if PHP_VERSION_ID >= 70200
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_decompositions_eigen_decompose, 0, 2, Tensor\\Decompositions\\Eigen, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_decompositions_eigen_decompose, 0, 1, Tensor\\Decompositions\\Eigen, 0)
 #else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_decompositions_eigen_decompose, 0, 2, IS_OBJECT, "Tensor\\Decompositions\\Eigen", 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_decompositions_eigen_decompose, 0, 1, IS_OBJECT, "Tensor\\Decompositions\\Eigen", 0)
 #endif
 	ZEND_ARG_OBJ_INFO(0, a, Tensor\\Matrix, 0)
 #if PHP_VERSION_ID >= 70200
-	ZEND_ARG_TYPE_INFO(0, normalize, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, symmetric, _IS_BOOL, 0)
 #else
-	ZEND_ARG_INFO(0, normalize)
+	ZEND_ARG_INFO(0, symmetric)
 #endif
 ZEND_END_ARG_INFO()
 

@@ -784,32 +784,54 @@ class MatrixTest extends TestCase
 
     /**
      * @test
+     * @requires extension tensor
      */
     public function eig() : void
     {
-        $eig = $this->a->eig(true);
+        $eig = $this->a->eig(false);
 
         $this->assertInstanceOf(Eigen::class, $eig);
 
-        $values = [25.108706520450326, 13.9876246278692, -15.096331148319537];
+        $values = [-15.096331148319537, 25.108706520450326, 13.9876246278692];
 
         $vectors = [
-            [-0.5029346679560592, -0.1309992382037118, -0.33107976181279675],
-            [0.15580805853732102, -0.08643645234319261, -0.6918777439682378],
-            [0.8501650243704214, 0.987607178637524, 0.641631809310763],
+            [0.25848694820886425, -0.11314537870318066, -0.9593657388523845],
+            [-0.8622719261400653, -0.17721179605718698, -0.47442924101375483],
+            [-0.6684472200177011, -0.6126879076802705, -0.42165369894378907],
         ];
 
         $this->assertInstanceOf(Matrix::class, $eig->eigenvectors());
 
         $eigenvalues = $eig->eigenvalues();
 
-        rsort($eigenvalues);
+        $this->assertEqualsWithDelta($values, $eigenvalues, 1e-12);
+        $this->assertEquals($vectors, $eig->eigenvectors()->asArray());
+    }
 
-        $this->assertEqualsWithDelta($values, $eigenvalues, 1e-8);
+    /**
+     * @test
+     * @requires extension tensor
+     */
+    public function eigSymmetric() : void
+    {
+        $eig = $this->a->matmul($this->a)->eig(true);
 
-        if (!extension_loaded('tensor')) {
-            $this->assertEquals($vectors, $eig->eigenvectors()->asArray());
-        }
+        $this->assertInstanceOf(Eigen::class, $eig);
+
+        $values = [-366.30071669298195, 335.92000012383926, 1084.3807165691428];
+
+        $vectors = [
+            [0.5423765325213931, 0.8162941265260665, -0.19872492538460218],
+            [-0.046672925777410314, 0.26544998308386847, 0.9629942598375911],
+            [-0.8388380862654284, 0.5130304137961217, -0.1820726765627782],
+        ];
+
+        $this->assertInstanceOf(Matrix::class, $eig->eigenvectors());
+
+        $eigenvalues = $eig->eigenvalues();
+
+        $this->assertEqualsWithDelta($values, $eigenvalues, 1e-12);
+        $this->assertEquals($vectors, $eig->eigenvectors()->asArray());
     }
 
     /**

@@ -467,6 +467,64 @@ void tensor_eig(zval * return_value, zval * a)
     efree(vr);
 }
 
+void tensor_eig_symmetric(zval * return_value, zval * a)
+{
+    unsigned int i, j;
+    Bucket * row;
+    zval eigenvalues;
+    zval eigenvectors;
+    zval eigenvector;
+    zval tuple;
+
+    zend_array * aa = Z_ARR_P(a);
+
+    Bucket * ba = aa->arData;
+
+    unsigned int n = zend_array_count(aa);
+
+    double * va = emalloc(n * n * sizeof(double));
+    double * wr = emalloc(n * sizeof(double));
+
+    for (i = 0; i < n; ++i) {
+        row = Z_ARR(ba[i].val)->arData;
+
+        for (j = 0; j < n; ++j) {
+            va[i * n + j] = zephir_get_doubleval(&row[j].val);
+        }
+    }
+
+    lapack_int status = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', n, va, n, wr);
+
+    if (status != 0) {
+        RETURN_NULL();
+    }
+
+    array_init_size(&eigenvalues, n);
+    array_init_size(&eigenvectors, n);
+
+    for (i = 0; i < n; ++i) {
+        add_next_index_double(&eigenvalues, wr[i]);
+
+        array_init_size(&eigenvector, n);
+
+        for (j = 0; j < n; ++j) {
+            add_next_index_double(&eigenvector, va[i * n + j]);
+        }
+
+        add_next_index_zval(&eigenvectors, &eigenvector);
+    }
+
+    array_init_size(&tuple, 2);
+    
+    add_next_index_zval(&tuple, &eigenvalues);
+    add_next_index_zval(&tuple, &eigenvectors);
+
+    RETVAL_ARR(Z_ARR(tuple));
+
+    efree(va);
+    efree(wr);
+}
+
 void tensor_svd(zval * return_value, zval * a)
 {
     unsigned int i, j;

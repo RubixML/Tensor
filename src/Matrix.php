@@ -1103,14 +1103,14 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the eigenvalues and eigenvectors of the matrix and return them in a tuple.
+     * Compute the eigenvalues and eigenvectors of the matrix.
      *
-     * @param bool $normalize
+     * @param bool $symmetric
      * @return \Tensor\Decompositions\Eigen
      */
-    public function eig(bool $normalize = true) : Eigen
+    public function eig(bool $symmetric = true) : Eigen
     {
-        return Eigen::decompose($this, $normalize);
+        return Eigen::decompose($this, $symmetric);
     }
 
     /**
