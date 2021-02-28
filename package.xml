@@ -10,7 +10,7 @@
         <email>support@rubixml.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2021-02-20</date>
+	<date>2021-02-28</date>
 	<version>
 		<release>2.2.0</release>
 		<api>2.2.0</api>
@@ -22,8 +22,10 @@
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
         - Implemented Singular Value Decomposition (SVD)
+        - Implemented matrix (Moore-Penrose) pseudoinverse
         - Tensor objects now throw namespaced exceptions
         - Optimized Reduced Row Echelon Form (RREF)
+        - Optimize eigendecomposition for symmetric matrices
     </notes>
 	<contents>
         <dir name="/">

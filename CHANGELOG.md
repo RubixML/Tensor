@@ -1,6 +1,6 @@
 - 2.2.0
     - Implemented Singular Value Decomposition (SVD)
-    - Implemented matrix pseudo (Moore-Penrose) inverse
+    - Implemented matrix (Moore-Penrose) pseudoinverse
     - Tensor objects now throw namespaced exceptions
     - Optimized Reduced Row Echelon Form (RREF)
     - Optimize eigendecomposition for symmetric matrices

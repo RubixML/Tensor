@@ -7,6 +7,13 @@
 #include <lapacke.h>
 #include "kernel/operators.h"
 
+/**
+ * Matrix-matrix multiplication i.e. linear transformation of matrices A and B.
+ * 
+ * @param return_value
+ * @param a
+ * @param b
+ */
 void tensor_matmul(zval * return_value, zval * a, zval * b)
 {
     unsigned int i, j;
@@ -64,6 +71,13 @@ void tensor_matmul(zval * return_value, zval * a, zval * b)
     efree(vc);
 }
 
+/**
+ * Dot product between vectors A and B.
+ * 
+ * @param return_value
+ * @param a
+ * @param b
+ */
 void tensor_dot(zval * return_value, zval * a, zval * b)
 {
     unsigned int i;
@@ -85,6 +99,12 @@ void tensor_dot(zval * return_value, zval * a, zval * b)
     RETVAL_DOUBLE(sigma);
 }
 
+/**
+ * Return the multiplicative inverse of a square matrix A.
+ * 
+ * @param return_value
+ * @param a
+ */
 void tensor_inverse(zval * return_value, zval * a)
 {
     unsigned int i, j;
@@ -140,6 +160,12 @@ void tensor_inverse(zval * return_value, zval * a)
     efree(pivots);
 }
 
+/**
+ * Return the (Moore-Penrose) pseudoinverse of a general matrix A.
+ * 
+ * @param return_value
+ * @param a
+ */
 void tensor_pseudoinverse(zval * return_value, zval * a)
 {
     unsigned int i, j;
@@ -201,6 +227,12 @@ void tensor_pseudoinverse(zval * return_value, zval * a)
     efree(vb);
 }
 
+/**
+ * Return the row echelon form of matrix A.
+ * 
+ * @param return_value
+ * @param a
+ */
 void tensor_ref(zval * return_value, zval * a)
 {
     unsigned int i, j;
@@ -265,6 +297,12 @@ void tensor_ref(zval * return_value, zval * a)
     efree(pivots);
 }
 
+/**
+ * Compute the Cholesky decomposition of matrix A and return the lower triangular matrix.
+ * 
+ * @param return_value
+ * @param a
+ */
 void tensor_cholesky(zval * return_value, zval * a)
 {
     unsigned int i, j;
@@ -314,6 +352,12 @@ void tensor_cholesky(zval * return_value, zval * a)
     efree(va);
 }
 
+/**
+ * Compute the LU factorization of matrix A and return a tuple with lower, upper, and permutation matrices.
+ * 
+ * @param return_value
+ * @param a
+ */
 void tensor_lu(zval * return_value, zval * a)
 {
     unsigned int i, j;
@@ -404,6 +448,12 @@ void tensor_lu(zval * return_value, zval * a)
     efree(pivots); 
 }
 
+/**
+ * Compute the eigendecomposition of a general matrix A and return the eigenvalues and eigenvectors in a tuple.
+ * 
+ * @param return_value
+ * @param a
+ */
 void tensor_eig(zval * return_value, zval * a)
 {
     unsigned int i, j;
@@ -466,6 +516,12 @@ void tensor_eig(zval * return_value, zval * a)
     efree(vr);
 }
 
+/**
+ * Compute the eigendecomposition of a symmetric matrix A and return the eigenvalues and eigenvectors in a tuple.
+ * 
+ * @param return_value
+ * @param a
+ */
 void tensor_eig_symmetric(zval * return_value, zval * a)
 {
     unsigned int i, j;
@@ -524,6 +580,12 @@ void tensor_eig_symmetric(zval * return_value, zval * a)
     efree(wr);
 }
 
+/**
+ * Compute the singular value decomposition of a matrix A and return the singular values, and unitary matrices U and VT in a tuple.
+ * 
+ * @param return_value
+ * @param a
+ */
 void tensor_svd(zval * return_value, zval * a)
 {
     unsigned int i, j;
