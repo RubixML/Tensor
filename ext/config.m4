@@ -15,23 +15,30 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/functional.zep.c
 	tensor/statistical.zep.c
 	tensor/trigonometric.zep.c
+	tensor/exceptions/tensorexception.zep.c
 	tensor/tensor.zep.c
+	tensor/exceptions/invalidargumentexception.zep.c
 	tensor/vector.zep.c
 	tensor/columnvector.zep.c
 	tensor/decompositions/cholesky.zep.c
 	tensor/decompositions/eigen.zep.c
 	tensor/decompositions/lu.zep.c
+	tensor/decompositions/svd.zep.c
+	tensor/exceptions/dimensionalitymismatch.zep.c
+	tensor/exceptions/runtimeexception.zep.c
 	tensor/matrix.zep.c
 	tensor/reductions/ref.zep.c
 	tensor/reductions/rref.zep.c
 	tensor/settings.zep.c include/indexing.c
 	include/arithmetic.c
 	include/comparison.c
-	include/linear_algebra.c"
+	include/linear_algebra.c
+	include/settings.c"
 	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -O3 -ffast-math)
 	PHP_ADD_BUILD_DIR([$ext_builddir/kernel/])
 	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/])
     PHP_ADD_BUILD_DIR([$ext_builddir/tensor/decompositions/])
+    PHP_ADD_BUILD_DIR([$ext_builddir/tensor/exceptions/])
     PHP_ADD_BUILD_DIR([$ext_builddir/tensor/reductions/])
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 

@@ -58,13 +58,17 @@ class RREF
             }
 
             for ($i = $row - 1; $i >= 0; --$i) {
-                $scale = $b[$i][$col];
+                $rowB = $b[$i];
+
+                $scale = $rowB[$col];
 
                 if ($scale != 0) {
                     for ($j = 0; $j < $n; ++$j) {
-                        $b[$i][$j] -= $scale * $t[$j];
+                        $rowB[$j] -= $scale * $t[$j];
                     }
                 }
+
+                $b[$i] = $rowB;
             }
 
             $b[$row] = $t;
@@ -78,7 +82,7 @@ class RREF
 
     /**
      * @param \Tensor\Matrix $a
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     public function __construct(Matrix $a)
     {

@@ -7,13 +7,13 @@
 	<lead>
 		<name>Andrew DalPino</name>
 		<user>andrewdalpino</user>
-        <email></email>
+        <email>support@rubixml.com</email>
 		<active>yes</active>
 	</lead>
 	<date>2021-02-20</date>
 	<version>
-		<release>2.1.4</release>
-		<api>2.1.4</api>
+		<release>2.2.0</release>
+		<api>2.2.0</api>
 	</version>
 	<stability>
 		<release>stable</release>
@@ -21,11 +21,9 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Implemented Eigen decomposition in extension
-        - Optimize row echelon form (REF) of matrix
-        - Optimize Cholesky decomposition
-        - Fix memory leak in matrix inverse
-        - Optimize LU decomposition
+        - Implemented Singular Value Decomposition (SVD)
+        - Tensor objects now throw namespaced exceptions
+        - Optimized Reduced Row Echelon Form (RREF)
     </notes>
 	<contents>
         <dir name="/">
@@ -39,6 +37,8 @@
                     <file name="indexing.h" role="src" />
                     <file name="linear_algebra.c" role="src" />
                     <file name="linear_algebra.h" role="src" />
+                    <file name="settings.c" role="src" />
+                    <file name="settings.h" role="src" />
                 </dir>
                 <dir name="kernel">
                     <file name="array.c" role="src" />
@@ -90,6 +90,18 @@
                         <file name="eigen.zep.h" role="src" />
                         <file name="lu.zep.c" role="src" />
                         <file name="lu.zep.h" role="src" />
+                        <file name="svd.zep.c" role="src" />
+                        <file name="svd.zep.h" role="src" />
+                    </dir>
+                    <dir name="exceptions">
+                        <file name="dimensionalitymismatch.zep.c" role="src" />
+                        <file name="dimensionalitymismatch.zep.h" role="src" />
+                        <file name="invalidargumentexception.zep.c" role="src" />
+                        <file name="invalidargumentexception.zep.h" role="src" />
+                        <file name="runtimeexception.zep.c" role="src" />
+                        <file name="runtimeexception.zep.h" role="src" />
+                        <file name="tensorexception.zep.c" role="src" />
+                        <file name="tensorexception.zep.h" role="src" />
                     </dir>
                     <dir name="reductions">
                         <file name="ref.zep.c" role="src" />

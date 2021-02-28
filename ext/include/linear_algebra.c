@@ -5,8 +5,6 @@
 #include <php.h>
 #include <cblas.h>
 #include <lapacke.h>
-
-#include "php_ext.h"
 #include "kernel/operators.h"
 
 void tensor_matmul(zval * return_value, zval * a, zval * b)
@@ -14,10 +12,6 @@ void tensor_matmul(zval * return_value, zval * a, zval * b)
     unsigned int i, j;
     Bucket * row;
     zval rowC, c;
-
-    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
-
-    openblas_set_num_threads(zephir_globals->num_threads);
 
     zend_array * aa = Z_ARR_P(a);
     zend_array * ab = Z_ARR_P(b);
@@ -97,10 +91,6 @@ void tensor_inverse(zval * return_value, zval * a)
     Bucket * row;
     zval rowB, b;
 
-    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
-
-    openblas_set_num_threads(zephir_globals->num_threads);
-
     zend_array * aa = Z_ARR_P(a);
 
     Bucket * ba = aa->arData;
@@ -150,16 +140,73 @@ void tensor_inverse(zval * return_value, zval * a)
     efree(pivots);
 }
 
+void tensor_pseudoinverse(zval * return_value, zval * a)
+{
+    unsigned int i, j;
+    Bucket * row;
+    zval b, rowB;
+
+    zend_array * aa = Z_ARR_P(a);
+
+    Bucket * ba = aa->arData;
+
+    unsigned int m = zend_array_count(aa);
+    unsigned int n = zend_array_count(Z_ARR(ba[0].val));
+    unsigned int k = MIN(m, n);
+
+    double * va = emalloc(m * n * sizeof(double));
+    double * vu = emalloc(m * m * sizeof(double));
+    double * vs = emalloc(k * sizeof(double));
+    double * vvt = emalloc(n * n * sizeof(double));
+    double * vb = emalloc(n * m * sizeof(double));
+
+    for (i = 0; i < m; ++i) {
+        row = Z_ARR(ba[i].val)->arData;
+
+        for (j = 0; j < n; ++j) {
+            va[i * n + j] = zephir_get_doubleval(&row[j].val);
+        }
+    }
+
+    lapack_int status = LAPACKE_dgesdd(LAPACK_ROW_MAJOR, 'A', m, n, va, n, vs, vu, m, vvt, n);
+
+    if (status != 0) {
+        RETURN_NULL();
+    }
+
+    for (i = 0; i < k; ++i) {
+        cblas_dscal(m, 1.0 / vs[i], &vu[i], m);
+    }
+
+    cblas_dgemm(CblasRowMajor, CblasTrans, CblasTrans, n, m, m, 1.0, vvt, n, vu, m, 0.0, vb, m);
+
+    array_init_size(&b, n);
+
+    for (i = 0; i < n; ++i) {
+        array_init_size(&rowB, m);
+
+        for (j = 0; j < m; ++j) {
+            add_next_index_double(&rowB, vb[i * m + j]);
+        }
+
+        add_next_index_zval(&b, &rowB);
+    }
+
+    RETVAL_ARR(Z_ARR(b));
+
+    efree(va);
+    efree(vu);
+    efree(vs);
+    efree(vvt);
+    efree(vb);
+}
+
 void tensor_ref(zval * return_value, zval * a)
 {
     unsigned int i, j;
     Bucket * row;
     zval rowB, b;
     zval tuple;
-
-    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
-
-    openblas_set_num_threads(zephir_globals->num_threads);
 
     zend_array * aa = Z_ARR_P(a);
 
@@ -224,10 +271,6 @@ void tensor_cholesky(zval * return_value, zval * a)
     Bucket * row;
     zval rowB, b;
 
-    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
-
-    openblas_set_num_threads(zephir_globals->num_threads);
-
     zend_array * aa = Z_ARR_P(a);
 
     Bucket * ba = aa->arData;
@@ -277,10 +320,6 @@ void tensor_lu(zval * return_value, zval * a)
     Bucket * row;
     zval rowL, l, rowU, u, rowP, p;
     zval tuple;
-
-    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
-
-    openblas_set_num_threads(zephir_globals->num_threads);
 
     zend_array * aa = Z_ARR_P(a);
 
@@ -374,10 +413,6 @@ void tensor_eig(zval * return_value, zval * a)
     zval eigenvector;
     zval tuple;
 
-    zend_zephir_globals_def * zephir_globals = ZEPHIR_VGLOBAL;
-
-    openblas_set_num_threads(zephir_globals->num_threads);
-
     zend_array * aa = Z_ARR_P(a);
 
     Bucket * ba = aa->arData;
@@ -429,4 +464,140 @@ void tensor_eig(zval * return_value, zval * a)
     efree(wr);
     efree(wi);
     efree(vr);
+}
+
+void tensor_eig_symmetric(zval * return_value, zval * a)
+{
+    unsigned int i, j;
+    Bucket * row;
+    zval eigenvalues;
+    zval eigenvectors;
+    zval eigenvector;
+    zval tuple;
+
+    zend_array * aa = Z_ARR_P(a);
+
+    Bucket * ba = aa->arData;
+
+    unsigned int n = zend_array_count(aa);
+
+    double * va = emalloc(n * n * sizeof(double));
+    double * wr = emalloc(n * sizeof(double));
+
+    for (i = 0; i < n; ++i) {
+        row = Z_ARR(ba[i].val)->arData;
+
+        for (j = 0; j < n; ++j) {
+            va[i * n + j] = zephir_get_doubleval(&row[j].val);
+        }
+    }
+
+    lapack_int status = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', n, va, n, wr);
+
+    if (status != 0) {
+        RETURN_NULL();
+    }
+
+    array_init_size(&eigenvalues, n);
+    array_init_size(&eigenvectors, n);
+
+    for (i = 0; i < n; ++i) {
+        add_next_index_double(&eigenvalues, wr[i]);
+
+        array_init_size(&eigenvector, n);
+
+        for (j = 0; j < n; ++j) {
+            add_next_index_double(&eigenvector, va[i * n + j]);
+        }
+
+        add_next_index_zval(&eigenvectors, &eigenvector);
+    }
+
+    array_init_size(&tuple, 2);
+    
+    add_next_index_zval(&tuple, &eigenvalues);
+    add_next_index_zval(&tuple, &eigenvectors);
+
+    RETVAL_ARR(Z_ARR(tuple));
+
+    efree(va);
+    efree(wr);
+}
+
+void tensor_svd(zval * return_value, zval * a)
+{
+    unsigned int i, j;
+    Bucket * row;
+    zval u, rowU;
+    zval s;
+    zval vt, rowVt;
+    zval tuple;
+
+    zend_array * aa = Z_ARR_P(a);
+
+    Bucket * ba = aa->arData;
+
+    unsigned int m = zend_array_count(aa);
+    unsigned int n = zend_array_count(Z_ARR(ba[0].val));
+    unsigned int k = MIN(m, n);
+
+    double * va = emalloc(m * n * sizeof(double));
+    double * vu = emalloc(m * m * sizeof(double));
+    double * vs = emalloc(k * sizeof(double));
+    double * vvt = emalloc(n * n * sizeof(double));
+
+    for (i = 0; i < m; ++i) {
+        row = Z_ARR(ba[i].val)->arData;
+
+        for (j = 0; j < n; ++j) {
+            va[i * n + j] = zephir_get_doubleval(&row[j].val);
+        }
+    }
+
+    lapack_int status = LAPACKE_dgesdd(LAPACK_ROW_MAJOR, 'A', m, n, va, n, vs, vu, m, vvt, n);
+
+    if (status != 0) {
+        RETURN_NULL();
+    }
+
+    array_init_size(&u, m);
+    array_init_size(&s, k);
+    array_init_size(&vt, n);
+
+    for (i = 0; i < m; ++i) {
+        array_init_size(&rowU, m);
+
+        for (j = 0; j < m; ++j) {
+            add_next_index_double(&rowU, vu[i * m + j]);
+        }
+
+        add_next_index_zval(&u, &rowU);
+    }
+    
+    for (i = 0; i < k; ++i) {
+        add_next_index_double(&s, vs[i]);
+    }
+
+    for (i = 0; i < n; ++i) {
+        array_init_size(&rowVt, n);
+
+        for (j = 0; j < n; ++j) {
+            add_next_index_double(&rowVt, vvt[i * n + j]);
+        }
+
+        add_next_index_zval(&vt, &rowVt);
+    }
+
+    array_init_size(&tuple, 3);
+    
+    add_next_index_zval(&tuple, &u);
+    add_next_index_zval(&tuple, &s);
+    add_next_index_zval(&tuple, &vt);
+
+    RETVAL_ARR(Z_ARR(tuple));
+
+    efree(va);
+    efree(vu);
+    efree(vs);
+    efree(vvt);
 }

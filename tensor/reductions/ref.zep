@@ -1,7 +1,8 @@
 namespace Tensor\Reductions;
 
 use Tensor\Matrix;
-use InvalidArgumentException;
+use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * REF
@@ -32,21 +33,31 @@ class Ref
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix a
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
     public static function reduce(const <Matrix> a) -> <Ref>
     {
+        var result = tensor_ref(a->asArray());
+
+        if is_null(result) {
+            throw new RuntimeException("Failed to decompose matrix.");
+        }
+
         array ref = [];
 
-        let ref = (array) tensor_ref(a->asArray());
+        let ref = (array) result;
 
-        return new self(new Matrix(ref[0]), ref[1]);
+        var b = Matrix::quick(ref[0]);
+        var swaps = ref[1];
+
+        return new self(b, swaps);
     }
 
     /**
      * @param \Tensor\Matrix a
      * @param int swaps
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     public function __construct(const <Matrix> a, const int swaps)
     {

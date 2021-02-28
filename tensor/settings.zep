@@ -1,6 +1,6 @@
 namespace Tensor;
 
-use InvalidArgumentException;
+use Tensor\Exceptions\InvalidArgumentException;
 
 /**
  * Settings
@@ -26,7 +26,7 @@ class Settings
                 . " must be greater than 0, " . strval(threads) . " given.");
         }
 
-        globals_set("num_threads", threads);
+        var status = tensor_set_num_threads(threads);
     }
 
     /**
@@ -34,8 +34,8 @@ class Settings
      *
      * @return int
      */
-     public static function numThreads() -> int
-     {
-        return globals_get("num_threads");
-     }
+    public static function numThreads() -> int
+    {
+        return tensor_get_num_threads();
+    }
 }

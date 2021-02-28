@@ -16,7 +16,7 @@
 #include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/exception.h"
-#include "ext/spl/spl_exceptions.h"
+#include "kernel/concat.h"
 #include "kernel/array.h"
 #include "kernel/object.h"
 #include "include/linear_algebra.h"
@@ -65,29 +65,34 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Lu) {
  * Factory method to decompose a matrix.
  *
  * @param \Tensor\Matrix a
+ * @throws \Tensor\Exceptions\InvalidArgumentException
+ * @throws \Tensor\Exceptions\RuntimeException
  * @return self
  */
 PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
 
-	zval lup, _3;
+	zval lup, _5;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_5 = NULL;
+	zephir_fcall_cache_entry *_6 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a = NULL, a_sub, _0, _1, _2, _4, _6, _7, _8, _9, _10;
+	zval *a, a_sub, _0, result, _4, l, _7, u, _8, p, _9, _1$$3, _2$$3, _3$$3;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&a_sub);
 	ZVAL_UNDEF(&_0);
-	ZVAL_UNDEF(&_1);
-	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_4);
-	ZVAL_UNDEF(&_6);
+	ZVAL_UNDEF(&l);
 	ZVAL_UNDEF(&_7);
+	ZVAL_UNDEF(&u);
 	ZVAL_UNDEF(&_8);
+	ZVAL_UNDEF(&p);
 	ZVAL_UNDEF(&_9);
-	ZVAL_UNDEF(&_10);
+	ZVAL_UNDEF(&_1$$3);
+	ZVAL_UNDEF(&_2$$3);
+	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&lup);
-	ZVAL_UNDEF(&_3);
+	ZVAL_UNDEF(&_5);
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
@@ -97,28 +102,41 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
 	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_0))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot decompose a non-square matrix.", "tensor/decompositions/lu.zep", 48);
+		ZEPHIR_INIT_VAR(&_1$$3);
+		object_init_ex(&_1$$3, tensor_exceptions_invalidargumentexception_ce);
+		ZEPHIR_CALL_METHOD(&_2$$3, a, "shapestring", NULL, 0);
+		zephir_check_call_status();
+		ZEPHIR_INIT_VAR(&_3$$3);
+		ZEPHIR_CONCAT_SSVS(&_3$$3, "Matrix must be", " square, ", &_2$$3, " given.");
+		ZEPHIR_CALL_METHOD(NULL, &_1$$3, "__construct", NULL, 3, &_3$$3);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(&_1$$3, "tensor/decompositions/lu.zep", 52);
+		ZEPHIR_MM_RESTORE();
+		return;
+	}
+	ZEPHIR_INIT_VAR(&result);
+	ZEPHIR_CALL_METHOD(&_4, a, "asarray", NULL, 0);
+	zephir_check_call_status();
+	tensor_lu(&result, &_4);
+	if (Z_TYPE_P(&result) == IS_NULL) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(tensor_exceptions_runtimeexception_ce, "Failed to decompose matrix.", "tensor/decompositions/lu.zep", 58);
 		return;
 	}
 	ZEPHIR_INIT_VAR(&lup);
 	array_init(&lup);
-	ZEPHIR_INIT_VAR(&_1);
-	ZEPHIR_CALL_METHOD(&_2, a, "asarray", NULL, 0);
+	zephir_get_arrval(&_5, &result);
+	ZEPHIR_CPY_WRT(&lup, &_5);
+	zephir_array_fetch_long(&_7, &lup, 0, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 65);
+	ZEPHIR_CALL_CE_STATIC(&l, tensor_matrix_ce, "quick", &_6, 0, &_7);
 	zephir_check_call_status();
-	tensor_lu(&_1, &_2);
-	zephir_get_arrval(&_3, &_1);
-	ZEPHIR_CPY_WRT(&lup, &_3);
+	zephir_array_fetch_long(&_8, &lup, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 66);
+	ZEPHIR_CALL_CE_STATIC(&u, tensor_matrix_ce, "quick", &_6, 0, &_8);
+	zephir_check_call_status();
+	zephir_array_fetch_long(&_9, &lup, 2, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 67);
+	ZEPHIR_CALL_CE_STATIC(&p, tensor_matrix_ce, "quick", &_6, 0, &_9);
+	zephir_check_call_status();
 	object_init_ex(return_value, tensor_decompositions_lu_ce);
-	zephir_array_fetch_long(&_6, &lup, 0, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 56);
-	ZEPHIR_CALL_CE_STATIC(&_4, tensor_matrix_ce, "quick", &_5, 0, &_6);
-	zephir_check_call_status();
-	zephir_array_fetch_long(&_8, &lup, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 57);
-	ZEPHIR_CALL_CE_STATIC(&_7, tensor_matrix_ce, "quick", &_5, 0, &_8);
-	zephir_check_call_status();
-	zephir_array_fetch_long(&_10, &lup, 2, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 58);
-	ZEPHIR_CALL_CE_STATIC(&_9, tensor_matrix_ce, "quick", &_5, 0, &_10);
-	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &_4, &_7, &_9);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &l, &u, &p);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -131,7 +149,7 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
  */
 PHP_METHOD(Tensor_Decompositions_Lu, __construct) {
 
-	zval *l = NULL, l_sub, *u = NULL, u_sub, *p = NULL, p_sub;
+	zval *l, l_sub, *u, u_sub, *p, p_sub;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&l_sub);

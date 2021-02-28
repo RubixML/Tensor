@@ -3,7 +3,6 @@
 #endif
 
 #include <php.h>
-
 #include "kernel/operators.h"
 
 void tensor_equal(zval * return_value, zval * a, zval * b)

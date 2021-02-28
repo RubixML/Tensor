@@ -3,7 +3,6 @@
 #endif
 
 #include <php.h>
-
 #include "kernel/operators.h"
 
 void tensor_argmin(zval * return_value, zval * values)

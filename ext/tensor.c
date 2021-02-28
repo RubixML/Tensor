@@ -22,6 +22,7 @@
 #include "kernel/memory.h"
 
 
+#include "cblas.h"
 
 zend_class_entry *tensor_arithmetic_ce;
 zend_class_entry *tensor_arraylike_ce;
@@ -29,12 +30,17 @@ zend_class_entry *tensor_comparable_ce;
 zend_class_entry *tensor_functional_ce;
 zend_class_entry *tensor_statistical_ce;
 zend_class_entry *tensor_trigonometric_ce;
+zend_class_entry *tensor_exceptions_tensorexception_ce;
 zend_class_entry *tensor_tensor_ce;
+zend_class_entry *tensor_exceptions_invalidargumentexception_ce;
 zend_class_entry *tensor_vector_ce;
 zend_class_entry *tensor_columnvector_ce;
 zend_class_entry *tensor_decompositions_cholesky_ce;
 zend_class_entry *tensor_decompositions_eigen_ce;
 zend_class_entry *tensor_decompositions_lu_ce;
+zend_class_entry *tensor_decompositions_svd_ce;
+zend_class_entry *tensor_exceptions_dimensionalitymismatch_ce;
+zend_class_entry *tensor_exceptions_runtimeexception_ce;
 zend_class_entry *tensor_matrix_ce;
 zend_class_entry *tensor_reductions_ref_ce;
 zend_class_entry *tensor_reductions_rref_ce;
@@ -56,17 +62,22 @@ static PHP_MINIT_FUNCTION(tensor)
 	ZEPHIR_INIT(Tensor_Functional);
 	ZEPHIR_INIT(Tensor_Statistical);
 	ZEPHIR_INIT(Tensor_Trigonometric);
+	ZEPHIR_INIT(Tensor_Exceptions_TensorException);
 	ZEPHIR_INIT(Tensor_Tensor);
+	ZEPHIR_INIT(Tensor_Exceptions_InvalidArgumentException);
 	ZEPHIR_INIT(Tensor_Vector);
 	ZEPHIR_INIT(Tensor_ColumnVector);
 	ZEPHIR_INIT(Tensor_Decompositions_Cholesky);
 	ZEPHIR_INIT(Tensor_Decompositions_Eigen);
 	ZEPHIR_INIT(Tensor_Decompositions_Lu);
+	ZEPHIR_INIT(Tensor_Decompositions_Svd);
+	ZEPHIR_INIT(Tensor_Exceptions_DimensionalityMismatch);
+	ZEPHIR_INIT(Tensor_Exceptions_RuntimeException);
 	ZEPHIR_INIT(Tensor_Matrix);
 	ZEPHIR_INIT(Tensor_Reductions_Ref);
 	ZEPHIR_INIT(Tensor_Reductions_Rref);
 	ZEPHIR_INIT(Tensor_Settings);
-	
+	openblas_set_num_threads(1);
 	return SUCCESS;
 }
 
@@ -105,8 +116,7 @@ static void php_zephir_init_globals(zend_tensor_globals *tensor_globals TSRMLS_D
  */
 static void php_zephir_init_module_globals(zend_tensor_globals *tensor_globals TSRMLS_DC)
 {
-		tensor_globals->num_threads = 1;
-
+	
 }
 
 static PHP_RINIT_FUNCTION(tensor)

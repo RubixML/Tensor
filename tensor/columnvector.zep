@@ -1,6 +1,7 @@
 namespace Tensor;
 
-use InvalidArgumentException;
+use Tensor\Vector;
+use Tensor\Exceptions\DimensionalityMismatch;
 
 /**
  * Column Vector
@@ -80,13 +81,13 @@ class ColumnVector extends Vector
      * Multiply this column vector with a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function multiplyMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -115,13 +116,13 @@ class ColumnVector extends Vector
      * Divide this column vector with a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function divideMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -150,13 +151,13 @@ class ColumnVector extends Vector
      * Add this column vector to a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function addMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -185,13 +186,13 @@ class ColumnVector extends Vector
      * Subtract a matrix from this column vector.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function subtractMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -220,13 +221,13 @@ class ColumnVector extends Vector
      * Raise this column vector to the power of a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function powMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -255,13 +256,13 @@ class ColumnVector extends Vector
      * Mod this column vector with a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function modMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -287,17 +288,16 @@ class ColumnVector extends Vector
     }
 
     /**
-     * Return the element-wise equality comparison of this column vector
-     * and a matrix.
+     * Return the element-wise equality comparison of this column vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function equalMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -323,17 +323,16 @@ class ColumnVector extends Vector
     }
 
     /**
-     * Return the element-wise not equal comparison of this column vector
-     * and a matrix.
+     * Return the element-wise not equal comparison of this column vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function notEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -359,17 +358,16 @@ class ColumnVector extends Vector
     }
 
     /**
-     * Return the element-wise greater than comparison of this column
-     * vector and a matrix.
+     * Return the element-wise greater than comparison of this column vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function greaterMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -395,17 +393,16 @@ class ColumnVector extends Vector
     }
 
     /**
-     * Return the element-wise greater than or equal to comparison of
-     * this column vector and a matrix.
+     * Return the element-wise greater than or equal to comparison of this column vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function greaterEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -431,17 +428,16 @@ class ColumnVector extends Vector
     }
 
     /**
-     * Return the element-wise less than comparison of this column
-     * vector and a matrix.
+     * Return the element-wise less than comparison of this column vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function lessMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }
@@ -467,17 +463,16 @@ class ColumnVector extends Vector
     }
 
     /**
-     * Return the element-wise less than or equal to comparison of
-     * this column vector and a matrix.
+     * Return the element-wise less than or equal to comparison of this column vector and a matrix.
      *
      * @param \Tensor\Matrix b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function lessEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->m() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " rows but Matrix B has "
                 . (string) b->m() . ".");
         }

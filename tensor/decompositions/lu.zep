@@ -1,7 +1,8 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
-use RuntimeException;
+use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * LU
@@ -40,23 +41,32 @@ class Lu
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix a
+     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
     public static function decompose(const <Matrix> a) -> <Lu>
     {
         if unlikely !a->isSquare() {
-            throw new RuntimeException("Cannot decompose a non-square matrix.");
+            throw new InvalidArgumentException("Matrix must be"
+                . " square, " . $a->shapeString() . " given.");
+        }
+
+        var result = tensor_lu(a->asArray());
+
+        if is_null(result) {
+            throw new RuntimeException("Failed to decompose matrix.");
         }
 
         array lup = [];
 
-        let lup = (array) tensor_lu(a->asArray());
+        let lup = (array) result;
 
-        return new self(
-            Matrix::quick(lup[0]),
-            Matrix::quick(lup[1]),
-            Matrix::quick(lup[2])
-        );
+        var l = Matrix::quick(lup[0]);
+        var u = Matrix::quick(lup[1]);
+        var p = Matrix::quick(lup[2]);
+
+        return new self(l, u, p);
     }
 
     /**

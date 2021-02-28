@@ -2,7 +2,7 @@
 
 namespace Tensor;
 
-use InvalidArgumentException;
+use Tensor\Exceptions\DimensionalityMismatch;
 
 /**
  * Column Vector
@@ -60,14 +60,14 @@ class ColumnVector extends Vector
      * Multiply this column vector with a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function multiplyMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -91,14 +91,14 @@ class ColumnVector extends Vector
      * Divide this column vector with a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function divideMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -122,14 +122,14 @@ class ColumnVector extends Vector
      * Add this column vector to a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function addMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -153,14 +153,14 @@ class ColumnVector extends Vector
      * Subtract a matrix from this column vector.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function subtractMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -184,14 +184,14 @@ class ColumnVector extends Vector
      * Raise this column vector to the power of a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function powMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -215,14 +215,14 @@ class ColumnVector extends Vector
      * Mod this column vector with a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function modMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -247,14 +247,14 @@ class ColumnVector extends Vector
      * and a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function equalMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -279,14 +279,14 @@ class ColumnVector extends Vector
      * and a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function notEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -311,14 +311,14 @@ class ColumnVector extends Vector
      * vector and a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function greaterMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -343,14 +343,14 @@ class ColumnVector extends Vector
      * this column vector and a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function greaterEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -375,14 +375,14 @@ class ColumnVector extends Vector
      * vector and a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function lessMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];
@@ -407,14 +407,14 @@ class ColumnVector extends Vector
      * this column vector and a matrix.
      *
      * @param \Tensor\Matrix $b
-     * @throws \InvalidArgumentException
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return \Tensor\Matrix
      */
     public function lessEqualMatrix(Matrix $b) : Matrix
     {
         if ($this->n !== $b->m()) {
-            throw new InvalidArgumentException('Vector A requires'
-                . " $this->n rows but Matrix B has {$b->m()}.");
+            throw new DimensionalityMismatch('Vector A requires'
+                . " {$this->n} rows but Matrix B has {$b->m()}.");
         }
 
         $c = [];

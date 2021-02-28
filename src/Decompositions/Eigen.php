@@ -3,14 +3,14 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
+use Tensor\Exceptions\InvalidArgumentException;
 use JAMA\Matrix as JAMA;
-use RuntimeException;
 
 /**
  * Eigen
  *
- * The Eigendecompositon or (Spectral decomposition) is a matrix factorization
- * resulting in a matrix of eigenvectors and a corresponding array of eigenvalues.
+ * The Eigendecompositon or (Spectral decomposition) is a matrix factorization resulting in a matrix of eigenvectors and a
+ * corresponding array of eigenvalues.
  *
  * @category    Scientific Computing
  * @package     Rubix/Tensor
@@ -36,15 +36,15 @@ class Eigen
      * Factory method to decompose a matrix.
      *
      * @param \Tensor\Matrix $a
-     * @param bool $normalize
+     * @param bool $symmetric
+     * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
-    public static function decompose(Matrix $a, bool $normalize = true) : self
+    public static function decompose(Matrix $a, bool $symmetric = false) : self
     {
         if (!$a->isSquare()) {
-            throw new RuntimeException('Cannot eigendecompose a non'
-                . ' square matrix, ' . implode(' x ', $a->shape())
-                . ' matrix given.');
+            throw new InvalidArgumentException('Matrix must be'
+                . " square, {$a->shapeString()} given.");
         }
 
         $jama = new JAMA($a->asArray());
@@ -55,16 +55,6 @@ class Eigen
         $eigenvectors = $eig->getV()->getArray();
 
         $eigenvectors = Matrix::quick($eigenvectors)->transpose();
-
-        if ($normalize) {
-            $norm = $eigenvectors->transpose()
-                ->square()
-                ->sum()
-                ->sqrt()
-                ->transpose();
-
-            $eigenvectors = $eigenvectors->divideVector($norm);
-        }
 
         return new self($eigenvalues, $eigenvectors);
     }

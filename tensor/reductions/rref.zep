@@ -31,9 +31,10 @@ class Rref
     public static function reduce(const <Matrix> a) -> <Rref>
     {
         int i, j;
-        var scale, divisor;
+        float scale, divisor;
         
         array b = [];
+        array rowB = [];
         array t = [];
 
         int m = (int) a->m();
@@ -53,22 +54,26 @@ class Rref
                 continue;
             }
 
-            let divisor = t[col];
+            let divisor = (float) t[col];
 
-            if divisor != 1 {
+            if divisor !== 1.0 {
                 for i in range(0, n - 1) {
                     let t[i] = t[i] / divisor;
                 }
             }
 
             for i in reverse range(0, row - 1) {
-                let scale = b[i][col];
+                let rowB = (array) b[i];
 
-                if scale != 0 {
+                let scale = (float) rowB[col];
+
+                if scale !== 0.0 {
                     for j in range(0, n - 1) {
-                        let b[i][j] = b[i][j] - scale * t[j];
+                        let rowB[j] = rowB[j] - scale * t[j];
                     }
                 }
+
+                let b[i] = rowB;
             }
 
             let b[row] = t;

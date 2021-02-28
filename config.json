@@ -4,22 +4,24 @@
     "extension-name": "tensor",
     "description": "Tensor is a library and extension that provides objects for scientific computing in PHP.",
     "author": "Andrew DalPino",
-    "version": "2.1.4",
+    "version": "2.2.0",
     "verbose": true,
     "extra-cflags": "-O3 -ffast-math",
     "extra-sources": [
         "include/indexing.c",
         "include/arithmetic.c",
         "include/comparison.c",
-        "include/linear_algebra.c"
+        "include/linear_algebra.c",
+        "include/settings.c"
     ],
     "extra-libs": "-lopenblas -llapacke -lgfortran -lpthread",
-    "globals": {
-        "num_threads": {
-            "type": "int",
-            "default": 1,
-            "module": true
-        }
+    "initializers": {
+        "module": [
+            {
+                "include": "cblas.h",
+                "code": "openblas_set_num_threads(1)"
+            }
+        ]
     },
     "optimizer-dirs": [
         "optimizers"
@@ -31,9 +33,9 @@
         "constant-folding": true,
         "static-constant-class-folding": true,
         "call-gatherer-pass": true,
-        "check-invalid-reads": true,
-        "private-internal-methods": true,
-        "public-internal-methods": true,
+        "check-invalid-reads": false,
+        "private-internal-methods": false,
+        "public-internal-methods": false,
         "public-internal-functions": true
     },
     "warnings": {
