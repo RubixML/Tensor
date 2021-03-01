@@ -610,7 +610,9 @@ class Vector implements Tensor
      */
     public function convolve(Vector $b, int $stride = 1) : self
     {
-        if ($b->size() > $this->n) {
+        $n = $b->size();
+
+        if ($n > $this->n) {
             throw new InvalidArgumentException('Vector B cannot be'
                 . ' larger than Vector A.');
         }
@@ -620,19 +622,20 @@ class Vector implements Tensor
                 . " less than 1, $stride given.");
         }
 
+        $nHat = $this->n + $n - 1;
+
         $b = $b->asArray();
 
         $c = [];
 
-        for ($i = 0; $i < $this->n; $i += $stride) {
+        for ($i = 0; $i < $nHat; $i += $stride) {
+            $jmin = $i >= $n - 1 ? $i - ($n - 1) : 0;
+            $jmax = $i < $this->n ? $i : $this->n - 1;
+
             $sigma = 0.0;
 
-            foreach ($b as $j => $valueB) {
-                $index = $i - $j;
-
-                if (isset($this->a[$index])) {
-                    $sigma += $this->a[$index] * $valueB;
-                }
+            for ($j = $jmin; $j <= $jmax; ++$j) {
+                $sigma += $this->a[$j] * $b[$i - $j];
             }
 
             $c[] = $sigma;

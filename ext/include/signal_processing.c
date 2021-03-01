@@ -8,7 +8,8 @@
 
 void tensor_convolve_1d(zval * return_value, zval * a, zval * b, zval * stride)
 {
-    unsigned int i, j, jmin, jmax;
+    unsigned int i, j;
+    unsigned int jmin, jmax;
     double sigma;
     zval c;
 
@@ -22,7 +23,7 @@ void tensor_convolve_1d(zval * return_value, zval * a, zval * b, zval * stride)
 
     unsigned int na = zend_array_count(aa);
     unsigned int nb = zend_array_count(ab);
-    unsigned int nc = ceil(na / k);
+    unsigned int nc = na + nb - 1;
 
     double * va = emalloc(na * sizeof(double));
     double * vb = emalloc(nb * sizeof(double));
@@ -35,16 +36,18 @@ void tensor_convolve_1d(zval * return_value, zval * a, zval * b, zval * stride)
         vb[i] = zephir_get_doubleval(&bb[i].val);
     }
 
-    array_init_size(&c, nc);
+    unsigned int ncHat = ceil(nc / k);
 
-    for (i = 0; i < na; i += k) {
-        jmin = (i >= nb - 1) ? i - (nb - 1) : 0;
-        jmax = (i < na - 1) ? i : na - 1;
+    array_init_size(&c, ncHat);
+
+    for (i = 0; i < nc; i += k) {
+        jmin = i >= nb - 1 ? i - (nb - 1) : 0;
+        jmax = i <= na ? i : na - 1;
 
         sigma = 0.0;
 
-        for (j = jmin; j < jmax; ++j) {
-            sigma += va[i - j] * vb[j];
+        for (j = jmin; j <= jmax; ++j) {
+            sigma += va[j] * vb[i - j];
         }
 
         add_next_index_double(&c, sigma);
