@@ -1034,7 +1034,7 @@ class Matrix implements Tensor
                 $sigma = 0;
 
                 foreach ($b as $k => $rowB) {
-                    $x = $i + $p - (int) $k;
+                    $x = $i + $p - $k;
 
                     if ($x < 0 or $x >= $this->m) {
                         continue;
@@ -1043,7 +1043,7 @@ class Matrix implements Tensor
                     $rowA = $this->a[$x];
 
                     foreach ($rowB as $l => $valueB) {
-                        $y = $j + $q - (int) $l;
+                        $y = $j + $q - $l;
 
                         if ($y < 0 or $y >= $this->n) {
                             continue;

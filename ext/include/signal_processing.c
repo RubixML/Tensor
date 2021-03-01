@@ -19,11 +19,12 @@ void tensor_convolve_1d(zval * return_value, zval * a, zval * b, zval * stride)
     Bucket * ba = aa->arData;
     Bucket * bb = ab->arData;
 
-    unsigned int k = zephir_get_intval(stride);
+    unsigned int s = zephir_get_intval(stride);
 
     unsigned int na = zend_array_count(aa);
     unsigned int nb = zend_array_count(ab);
     unsigned int nc = na + nb - 1;
+    unsigned int ncHat = ceil(nc / s);
 
     double * va = emalloc(na * sizeof(double));
     double * vb = emalloc(nb * sizeof(double));
@@ -36,11 +37,9 @@ void tensor_convolve_1d(zval * return_value, zval * a, zval * b, zval * stride)
         vb[i] = zephir_get_doubleval(&bb[i].val);
     }
 
-    unsigned int ncHat = ceil(nc / k);
-
     array_init_size(&c, ncHat);
 
-    for (i = 0; i < nc; i += k) {
+    for (i = 0; i < nc; i += s) {
         jmin = i >= nb - 1 ? i - (nb - 1) : 0;
         jmax = i <= na ? i : na - 1;
 

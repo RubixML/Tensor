@@ -5,10 +5,11 @@
     "homepage": "https://github.com/RubixML/Tensor",
     "license": "MIT",
     "keywords": [
-        "arithmetic", "computation", "computing", "decomposition", "engineering", "extension",
-        "eigenvalue", "eigenvector", "linear algebra", "math", "matrix", "norms", "php",
-        "php extension", "random number generation", "rng", "reduction", "scientific computing",
-        "singular value decomposition", "statistics", "tensor", "vector", "trigonometry"
+        "arithmetic", "computation", "computing", "convolution", "decomposition", "engineering",
+        "extension", "eigendecomposition", "eigenvalue", "eigenvector", "linear algebra", "math",
+        "matmul", "matrix", "matrix multiplication", "norms", "php", "php extension",
+        "scientific computing", "signal processing", "singular value decomposition", "svd",
+        "statistics", "tensor", "vector", "trigonometry"
     ],
     "authors": [
         { 
