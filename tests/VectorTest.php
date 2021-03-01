@@ -468,7 +468,10 @@ class VectorTest extends TestCase
     {
         $z = $this->a->convolve($this->c, 1);
 
-        $expected = [-60.0, 2.5, 259.0, -144.0, 40.5, 370.1, 462.20000000000005, 9.999999999999886];
+        $expected = [
+            -60, 2.5, 259, -144, 40.5, 370.1, 462.20000000000005,
+            10, 1764.3000000000002, 1625.1, 2234.7000000000003, 1378.4, 535.5,
+        ];
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($expected, $z->asArray());

@@ -1,3 +1,6 @@
+- 2.2.1
+    - Fix and optimize vector convolve 1D operation
+
 - 2.2.0
     - Implemented Singular Value Decomposition (SVD)
     - Implemented matrix (Moore-Penrose) pseudoinverse

@@ -33,6 +33,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	include/arithmetic.c
 	include/comparison.c
 	include/linear_algebra.c
+	include/signal_processing.c
 	include/settings.c"
 	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -O3 -ffast-math)
 	PHP_ADD_BUILD_DIR([$ext_builddir/kernel/])

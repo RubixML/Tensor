@@ -9,7 +9,7 @@ if (PHP_TENSOR != "no") {
     ADD_EXTENSION_DEP("tensor", "json");
     AC_DEFINE("ZEPHIR_USE_PHP_JSON", 1, "Whether PHP json extension is present at compile time");
   }
-  ADD_SOURCES(configure_module_dirname + "/include", "indexing.c arithmetic.c comparison.c linear_algebra.c settings.c", "tensor");
+  ADD_SOURCES(configure_module_dirname + "/include", "indexing.c arithmetic.c comparison.c linear_algebra.c signal_processing.c settings.c", "tensor");
   ADD_SOURCES(configure_module_dirname + "/tensor", "arithmetic.zep.c arraylike.zep.c comparable.zep.c functional.zep.c statistical.zep.c trigonometric.zep.c tensor.zep.c vector.zep.c columnvector.zep.c matrix.zep.c settings.zep.c", "tensor");
 	ADD_SOURCES(configure_module_dirname + "/tensor/exceptions", "tensorexception.zep.c invalidargumentexception.zep.c dimensionalitymismatch.zep.c runtimeexception.zep.c", "tensor");
 	ADD_SOURCES(configure_module_dirname + "/tensor/decompositions", "cholesky.zep.c eigen.zep.c lu.zep.c svd.zep.c", "tensor");
