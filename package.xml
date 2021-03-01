@@ -12,8 +12,8 @@
 	</lead>
 	<date>2021-02-28</date>
 	<version>
-		<release>2.2.0</release>
-		<api>2.2.0</api>
+		<release>2.2.1</release>
+		<api>2.2.1</api>
 	</version>
 	<stability>
 		<release>stable</release>
@@ -21,11 +21,7 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Implemented Singular Value Decomposition (SVD)
-        - Implemented matrix (Moore-Penrose) pseudoinverse
-        - Tensor objects now throw namespaced exceptions
-        - Optimized Reduced Row Echelon Form (RREF)
-        - Optimize eigendecomposition for symmetric matrices
+        - Fix and optimize vector convolve 1D operation
     </notes>
 	<contents>
         <dir name="/">
@@ -41,6 +37,8 @@
                     <file name="linear_algebra.h" role="src" />
                     <file name="settings.c" role="src" />
                     <file name="settings.h" role="src" />
+                    <file name="signal_processing.c" role="src" />
+                    <file name="signal_processing.h" role="src" />
                 </dir>
                 <dir name="kernel">
                     <file name="array.c" role="src" />
