@@ -628,7 +628,11 @@ class Vector implements Tensor
             $sigma = 0.0;
 
             foreach ($b as $j => $valueB) {
-                $sigma += ($this->a[$i - (int) $j] ?? 0) * $valueB;
+                $index = $i - $j;
+
+                if (isset($this->a[$index])) {
+                    $sigma += $this->a[$index] * $valueB;
+                }
             }
 
             $c[] = $sigma;

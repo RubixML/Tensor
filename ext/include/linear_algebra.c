@@ -581,7 +581,7 @@ void tensor_eig_symmetric(zval * return_value, zval * a)
 }
 
 /**
- * Compute the singular value decomposition of a matrix A and return the singular values, and unitary matrices U and VT in a tuple.
+ * Compute the singular value decomposition of a matrix A and return the singular values and unitary matrices U and VT in a tuple.
  * 
  * @param return_value
  * @param a

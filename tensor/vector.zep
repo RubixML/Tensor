@@ -562,30 +562,7 @@ class Vector implements Tensor
                 . " less than 1, " . strval(stride). " given.");
         }
 
-        int i;
-        float sigma;
-        var j, valueA, valueB;
-        
-        array bHat = [];
-        array c = [];
-
-        let bHat = (array) b->asArray();
-
-        for i in range(0, this->n - 1, stride) {
-            let sigma = 0.0;
-
-            for j, valueB in bHat {
-                int k = i - (int) j;
-
-                if fetch valueA, this->a[k] {
-                    let sigma += valueA * valueB;
-                }
-            }
-
-            let c[] = sigma;
-        }
-
-        return static::quick(c);
+        return static::quick(tensor_convolve_1d(this->a, b->asArray(), stride));
     }
 
     /**

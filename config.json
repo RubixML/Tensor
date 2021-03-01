@@ -12,6 +12,7 @@
         "include/arithmetic.c",
         "include/comparison.c",
         "include/linear_algebra.c",
+        "include/signal_processing.c",
         "include/settings.c"
     ],
     "extra-libs": "-lopenblas -llapacke -lgfortran -lpthread",
