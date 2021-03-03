@@ -42,6 +42,11 @@ if test "$PHP_TENSOR" = "yes"; then
 	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/exceptions/])
 	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/reductions/])
 
+	AC_CHECK_FUNC(backtrace_symbols, have_backtrace_symbols=yes, have_backtrace_symbols=no)
+	if test $have_backtrace_symbols = no; then
+		LDFLAGS="${LDFLAGS:-} -lexecinfo"
+	fi
+
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
 	old_CPPFLAGS=$CPPFLAGS
