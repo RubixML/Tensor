@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 const CONFIG_M4_PATH = __DIR__ . '/ext/config.m4';
