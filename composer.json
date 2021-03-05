@@ -66,9 +66,8 @@
         ],
         "clean": "zephir fullclean",
         "compile": [
-            "zephir generate",
-            "@php build-ext",
-            "zephir install"
+            "zephir build --no-dev",
+            "@php build-ext"
         ],
         "fix": "php-cs-fixer fix --config=.php_cs.dist",
         "test": "phpunit"
