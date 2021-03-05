@@ -21,6 +21,7 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
+        - Optimize 2D convolution
         - Fix and optimize vector convolve 1D operation
     </notes>
 	<contents>

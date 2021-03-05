@@ -3,7 +3,6 @@
 #endif
 
 #include <php.h>
-#include <math.h>
 #include "kernel/operators.h"
 
 /**
