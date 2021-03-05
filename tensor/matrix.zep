@@ -1021,10 +1021,7 @@ class Matrix implements Tensor
      */
     public function convolve(const <Matrix> b, const int stride = 1) -> <Matrix>
     {
-        int m = (int) b->m();
-        int n = (int) b->n();
-
-        if unlikely m > this->m || n > this->n {
+        if unlikely b->m() > this->m || b->n() > this->n {
             throw new InvalidArgumentException("Matrix B cannot be"
                 . " larger than Matrix A.");
         }
@@ -1034,53 +1031,7 @@ class Matrix implements Tensor
                 . " less than 1, " . strval(stride) . " given.");
         }
 
-        int i, j, x, y;
-        float sigma;
-        var k, l, rowB, valueB;
-        
-        array rowA = [];
-        array bHat = [];
-        array c = [];
-        array rowC = [];
-
-        int p = (int) intdiv(m, 2);
-        int q = (int) intdiv(n, 2);
-
-        let bHat = (array) b->asArray();
-
-        for i in range(0, this->m - 1, stride) {
-            let rowC = [];
-
-            for j in range(0, this->n - 1, stride) {
-                let sigma = 0.0;
-
-                for k, rowB in bHat {
-                    let x = i + p - (int) k;
-
-                    if x < 0 || x >= this->m {
-                        continue;
-                    }
-
-                    let rowA = (array) this->a[x];
-
-                    for l, valueB in rowB {
-                        let y = j + q - (int) l;
-
-                        if y < 0 || y >= this->n {
-                            continue;
-                        }
-
-                        let sigma += rowA[y] * valueB;
-                    }
-                }
-
-                let rowC[] = sigma;
-            }
-
-            let c[] = rowC;
-        }
-
-        return self::quick(c);
+        return self::quick(tensor_convolve_2d(this->a, b->asArray(), stride));
     }
 
     /**

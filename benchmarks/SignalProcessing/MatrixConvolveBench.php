@@ -5,7 +5,7 @@ namespace Tensor\Benchmarks\Special;
 use Tensor\Matrix;
 
 /**
- * @Groups({"Special"})
+ * @Groups({"Signal Processing"})
  * @BeforeMethods({"setUp"})
  */
 class MatrixConvolveBench

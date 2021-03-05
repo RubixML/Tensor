@@ -5,7 +5,7 @@ namespace Tensor\Benchmarks\Special;
 use Tensor\Vector;
 
 /**
- * @Groups({"Special"})
+ * @Groups({"Signal Processing"})
  * @BeforeMethods({"setUp"})
  */
 class VectorConvolveBench
