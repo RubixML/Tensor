@@ -1,0 +1,39 @@
+#!/usr/bin/env php
+<?php
+
+const CONFIG_M4_PATH = './ext/config.m4';
+const DOCKER_MATCH = 'PHP_ADD_BUILD_DIR([$ext_builddir/tensor/])';
+const DOCKER_PATCH = DOCKER_MATCH . "\n" . <<<'EOT'
+	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/decompositions/])
+	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/exceptions/])
+	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/reductions/])
+
+	AC_CHECK_FUNC(backtrace_symbols, have_backtrace_symbols=yes, have_backtrace_symbols=no)
+	if test $have_backtrace_symbols = no; then
+		LDFLAGS="${LDFLAGS:-} -lexecinfo"
+	fi
+
+EOT
+;
+
+chdir(__DIR__);
+
+passthru('zephir generate', $rc);
+if ($rc !== 0) {
+    exit(1);
+}
+
+$configM4Contents = file_get_contents(CONFIG_M4_PATH);
+if (!$configM4Contents) {
+    fwrite(STDERR, "Failed to read the config.m4 file!\n");
+    exit(1);
+}
+if (strpos($configM4Contents, DOCKER_MATCH) === false) {
+    fwrite(STDERR, "Failed to find patch entrypoint in the config.m4 file!\n");
+    exit(1);
+}
+$configM4Contents = str_replace(DOCKER_MATCH, DOCKER_PATCH, $configM4Contents);
+if (!file_put_contents(CONFIG_M4_PATH, $configM4Contents)) {
+    fwrite(STDERR, "Failed to write the config.m4 file\n");
+    exit(1);
+}
