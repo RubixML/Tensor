@@ -3292,7 +3292,7 @@ PHP_METHOD(Tensor_Matrix, dot) {
 }
 
 /**
- * Convolve this matrix with another matrix.
+ * Return the 2D convolution of this matrix and a kernel matrix with given stride using the "same" method for zero padding.
  *
  * @param \Tensor\Matrix b
  * @param int stride

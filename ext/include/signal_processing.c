@@ -65,7 +65,7 @@ void tensor_convolve_1d(zval * return_value, zval * a, zval * b, zval * stride)
 }
 
 /**
- * 2D convolution between a matrix A and B (kernel) with a given stride.
+ * 2D convolution between a matrix A and B (kernel) with a given stride using the "same" method for zero padding.
  * 
  * @param return_value
  * @param a

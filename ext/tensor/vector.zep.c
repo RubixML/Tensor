@@ -1421,7 +1421,7 @@ PHP_METHOD(Tensor_Vector, dot) {
 }
 
 /**
- * Convolve this vector with another vector.
+ * Return the 1D convolution of this vector and a kernel vector with given stride.
  *
  * @param \Tensor\Vector b
  * @param int stride

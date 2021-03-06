@@ -7,6 +7,7 @@
     "version": "2.2.0",
     "verbose": true,
     "extra-cflags": "-O3 -ffast-math",
+    "extra-libs": "-lopenblas -llapacke -lgfortran -lpthread",
     "extra-sources": [
         "include/indexing.c",
         "include/arithmetic.c",
@@ -15,7 +16,6 @@
         "include/signal_processing.c",
         "include/settings.c"
     ],
-    "extra-libs": "-lopenblas -llapacke -lgfortran -lpthread",
     "initializers": {
         "module": [
             {
