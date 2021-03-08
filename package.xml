@@ -10,10 +10,10 @@
         <email>support@rubixml.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2021-02-28</date>
+	<date>2021-03-07</date>
 	<version>
 		<release>2.2.1</release>
-		<api>2.2.1</api>
+		<api>2.2</api>
 	</version>
 	<stability>
 		<release>stable</release>
@@ -21,7 +21,7 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Optimize 2D convolution
+        - Optimize 2D convolution operation
         - Fix and optimize vector convolve 1D operation
     </notes>
 	<contents>

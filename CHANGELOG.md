@@ -1,5 +1,5 @@
 - 2.2.1
-    - Optimize 2D convolution
+    - Optimize 2D convolution operation
     - Fix and optimize vector convolve 1D operation
 
 - 2.2.0
