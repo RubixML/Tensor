@@ -38,16 +38,16 @@ if test "$PHP_TENSOR" = "yes"; then
 	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -O3 -ffast-math)
 	PHP_ADD_BUILD_DIR([$ext_builddir/kernel/])
 	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/])
+
 	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/decompositions/])
 	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/exceptions/])
 	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/reductions/])
+	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
 	AC_CHECK_FUNC(backtrace_symbols, have_backtrace_symbols=yes, have_backtrace_symbols=no)
 	if test $have_backtrace_symbols = no; then
 		LDFLAGS="${LDFLAGS:-} -lexecinfo"
 	fi
-
-	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
 	old_CPPFLAGS=$CPPFLAGS
 	CPPFLAGS="$CPPFLAGS $INCLUDES"
