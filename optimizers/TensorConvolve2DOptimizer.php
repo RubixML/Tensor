@@ -9,7 +9,7 @@ use Zephir\HeadersManager;
 use Zephir\Exception\CompilerException;
 use Zephir\Optimizers\OptimizerAbstract;
 
-class TensorConvolve2DOptimizer extends OptimizerAbstract
+class TensorConvolve2dOptimizer extends OptimizerAbstract
 {
     /**
      * @param mixed[] $expression
