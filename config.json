@@ -7,7 +7,7 @@
     "version": "2.2.0",
     "verbose": true,
     "extra-cflags": "-O3 -ffast-math",
-    "extra-libs": "-lopenblas -llapacke -lgfortran -lpthread",
+    "extra-libs": "-lopenblas -llapacke -lgfortran",
     "extra-sources": [
         "include/indexing.c",
         "include/arithmetic.c",

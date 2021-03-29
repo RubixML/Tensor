@@ -77,6 +77,15 @@ PHP_METHOD(Tensor_Vector, build) {
 
 	ZVAL_UNDEF(&a);
 	ZVAL_UNDEF(&_0);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(0, 1)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ARRAY(a)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 1, &a_param);
@@ -113,6 +122,15 @@ PHP_METHOD(Tensor_Vector, quick) {
 
 	ZVAL_UNDEF(&a);
 	ZVAL_UNDEF(&_0);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(0, 1)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ARRAY(a)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 1, &a_param);
@@ -149,6 +167,14 @@ PHP_METHOD(Tensor_Vector, zeros) {
 
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(n)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &n_param);
@@ -180,6 +206,14 @@ PHP_METHOD(Tensor_Vector, ones) {
 
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(n)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &n_param);
@@ -223,6 +257,15 @@ PHP_METHOD(Tensor_Vector, fill) {
 	ZVAL_UNDEF(&_6$$4);
 	ZVAL_UNDEF(&_7$$4);
 	ZVAL_UNDEF(&_8$$4);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_ZVAL(value)
+		Z_PARAM_LONG(n)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 0, &value, &n_param);
@@ -297,6 +340,14 @@ PHP_METHOD(Tensor_Vector, rand) {
 	ZVAL_UNDEF(&_5$$4);
 	ZVAL_UNDEF(&_7$$4);
 	ZVAL_UNDEF(&a);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(n)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &n_param);
@@ -370,6 +421,14 @@ PHP_METHOD(Tensor_Vector, gaussian) {
 	ZVAL_UNDEF(&_12$$4);
 	ZVAL_UNDEF(&_13$$4);
 	ZVAL_UNDEF(&a);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(n)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &n_param);
@@ -459,6 +518,16 @@ PHP_METHOD(Tensor_Vector, poisson) {
 	ZVAL_UNDEF(&_7$$5);
 	ZVAL_UNDEF(&_9$$4);
 	ZVAL_UNDEF(&a);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 2)
+		Z_PARAM_LONG(n)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ZVAL(lambda)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &n_param, &lambda_param);
@@ -545,6 +614,14 @@ PHP_METHOD(Tensor_Vector, uniform) {
 	ZVAL_UNDEF(&_7$$4);
 	ZVAL_UNDEF(&_9$$4);
 	ZVAL_UNDEF(&a);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(n)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &n_param);
@@ -608,6 +685,17 @@ PHP_METHOD(Tensor_Vector, range) {
 	ZVAL_UNDEF(&end_sub);
 	ZVAL_UNDEF(&interval_sub);
 	ZVAL_UNDEF(&_0);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 3)
+		Z_PARAM_ZVAL(start)
+		Z_PARAM_ZVAL(end)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ZVAL(interval)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 1, &start, &end, &interval);
@@ -656,6 +744,16 @@ PHP_METHOD(Tensor_Vector, linspace) {
 	ZVAL_UNDEF(&_7$$5);
 	ZVAL_UNDEF(&_9$$5);
 	ZVAL_UNDEF(&a);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_ZVAL(min)
+		Z_PARAM_ZVAL(max)
+		Z_PARAM_LONG(n)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 3, 0, &min_param, &max_param, &n_param);
@@ -744,6 +842,15 @@ PHP_METHOD(Tensor_Vector, maximum) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_OBJECT_OF_CLASS(a, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 0, &a, &b);
@@ -815,6 +922,15 @@ PHP_METHOD(Tensor_Vector, minimum) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_OBJECT_OF_CLASS(a, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 0, &a, &b);
@@ -876,6 +992,16 @@ PHP_METHOD(Tensor_Vector, __construct) {
 	ZVAL_UNDEF(&_2$$4);
 	ZVAL_UNDEF(&_3);
 	ZVAL_UNDEF(&_1$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 2)
+		Z_PARAM_ARRAY(a)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_BOOL(validate)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &a_param, &validate_param);
@@ -925,6 +1051,7 @@ PHP_METHOD(Tensor_Vector, shape) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	zephir_create_array(return_value, 1, 0);
@@ -950,6 +1077,7 @@ PHP_METHOD(Tensor_Vector, shapeString) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_OBS_VAR(&_0);
@@ -969,6 +1097,7 @@ PHP_METHOD(Tensor_Vector, size) {
 	zval *this_ptr = getThis();
 
 
+
 	RETURN_MEMBER(getThis(), "n");
 
 }
@@ -981,6 +1110,7 @@ PHP_METHOD(Tensor_Vector, size) {
 PHP_METHOD(Tensor_Vector, m) {
 
 	zval *this_ptr = getThis();
+
 
 
 	RETURN_LONG(1);
@@ -997,6 +1127,7 @@ PHP_METHOD(Tensor_Vector, n) {
 	zval *this_ptr = getThis();
 
 
+
 	RETURN_MEMBER(getThis(), "n");
 
 }
@@ -1009,6 +1140,7 @@ PHP_METHOD(Tensor_Vector, n) {
 PHP_METHOD(Tensor_Vector, asArray) {
 
 	zval *this_ptr = getThis();
+
 
 
 	RETURN_MEMBER(getThis(), "a");
@@ -1031,6 +1163,7 @@ PHP_METHOD(Tensor_Vector, asRowMatrix) {
 
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -1065,6 +1198,7 @@ PHP_METHOD(Tensor_Vector, asColumnMatrix) {
 	ZVAL_UNDEF(&b);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$4);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -1138,6 +1272,15 @@ PHP_METHOD(Tensor_Vector, reshape) {
 	ZVAL_UNDEF(&b);
 	ZVAL_UNDEF(&rowB);
 	ZVAL_UNDEF(&_2$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_LONG(m)
+		Z_PARAM_LONG(n)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 0, &m_param, &n_param);
@@ -1221,6 +1364,7 @@ PHP_METHOD(Tensor_Vector, transpose) {
 
 	ZVAL_UNDEF(&_1);
 
+
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_1, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
@@ -1243,6 +1387,7 @@ PHP_METHOD(Tensor_Vector, argmin) {
 	ZVAL_UNDEF(&_0);
 
 
+
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
 	tensor_argmin(return_value, &_0);
 	return;
@@ -1260,6 +1405,7 @@ PHP_METHOD(Tensor_Vector, argmax) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
@@ -1285,6 +1431,14 @@ PHP_METHOD(Tensor_Vector, map) {
 	ZVAL_UNDEF(&callback_sub);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(callback)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &callback);
@@ -1323,6 +1477,16 @@ PHP_METHOD(Tensor_Vector, reduce) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 2)
+		Z_PARAM_ZVAL(callback)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ZVAL(initial)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &callback, &initial);
@@ -1386,6 +1550,14 @@ PHP_METHOD(Tensor_Vector, dot) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -1449,6 +1621,16 @@ PHP_METHOD(Tensor_Vector, convolve) {
 	ZVAL_UNDEF(&_6$$4);
 	ZVAL_UNDEF(&_7$$4);
 	ZVAL_UNDEF(&_3$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 2)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_LONG(stride)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 1, &b, &stride_param);
@@ -1515,6 +1697,14 @@ PHP_METHOD(Tensor_Vector, matmul) {
 
 	ZVAL_UNDEF(&b_sub);
 	ZVAL_UNDEF(&_0);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -1543,6 +1733,14 @@ PHP_METHOD(Tensor_Vector, inner) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&b_sub);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -1589,6 +1787,14 @@ PHP_METHOD(Tensor_Vector, outer) {
 	ZVAL_UNDEF(&c);
 	ZVAL_UNDEF(&rowC);
 	ZVAL_UNDEF(&_1);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -1753,6 +1959,14 @@ PHP_METHOD(Tensor_Vector, cross) {
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&c);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -1843,6 +2057,14 @@ PHP_METHOD(Tensor_Vector, project) {
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
 	ZVAL_UNDEF(&_4);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -1878,6 +2100,7 @@ PHP_METHOD(Tensor_Vector, l1Norm) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "abs", NULL, 0);
@@ -1902,6 +2125,7 @@ PHP_METHOD(Tensor_Vector, l2Norm) {
 
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -1936,6 +2160,15 @@ PHP_METHOD(Tensor_Vector, pNorm) {
 	ZVAL_UNDEF(&_5);
 	ZVAL_UNDEF(&_6);
 	ZVAL_UNDEF(&_7);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(0, 1)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ZVAL(p)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 1, &p_param);
@@ -1988,6 +2221,7 @@ PHP_METHOD(Tensor_Vector, maxNorm) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "abs", NULL, 0);
@@ -2018,6 +2252,14 @@ PHP_METHOD(Tensor_Vector, multiply) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2083,6 +2325,14 @@ PHP_METHOD(Tensor_Vector, divide) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2149,6 +2399,14 @@ PHP_METHOD(Tensor_Vector, add) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2215,6 +2473,14 @@ PHP_METHOD(Tensor_Vector, subtract) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2281,6 +2547,14 @@ PHP_METHOD(Tensor_Vector, pow) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2347,6 +2621,14 @@ PHP_METHOD(Tensor_Vector, mod) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2413,6 +2695,14 @@ PHP_METHOD(Tensor_Vector, equal) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2479,6 +2769,14 @@ PHP_METHOD(Tensor_Vector, notEqual) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2545,6 +2843,14 @@ PHP_METHOD(Tensor_Vector, greater) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2611,6 +2917,14 @@ PHP_METHOD(Tensor_Vector, greaterEqual) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2677,6 +2991,14 @@ PHP_METHOD(Tensor_Vector, less) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2743,6 +3065,14 @@ PHP_METHOD(Tensor_Vector, lessEqual) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -2803,6 +3133,7 @@ PHP_METHOD(Tensor_Vector, reciprocal) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 
+
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_1, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -2828,6 +3159,7 @@ PHP_METHOD(Tensor_Vector, abs) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&_0);
@@ -2848,6 +3180,7 @@ PHP_METHOD(Tensor_Vector, square) {
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
+
 
 
 	ZEPHIR_MM_GROW();
@@ -2871,6 +3204,7 @@ PHP_METHOD(Tensor_Vector, sqrt) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -2896,6 +3230,7 @@ PHP_METHOD(Tensor_Vector, exp) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&_0);
@@ -2919,6 +3254,7 @@ PHP_METHOD(Tensor_Vector, expm1) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -2955,6 +3291,15 @@ PHP_METHOD(Tensor_Vector, log) {
 	ZVAL_UNDEF(&_7$$5);
 	ZVAL_UNDEF(&_8$$5);
 	ZVAL_UNDEF(&b);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(0, 1)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ZVAL(base)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 1, &base_param);
@@ -3027,6 +3372,7 @@ PHP_METHOD(Tensor_Vector, log1p) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&_0);
@@ -3050,6 +3396,7 @@ PHP_METHOD(Tensor_Vector, sin) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -3075,6 +3422,7 @@ PHP_METHOD(Tensor_Vector, asin) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&_0);
@@ -3098,6 +3446,7 @@ PHP_METHOD(Tensor_Vector, cos) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -3123,6 +3472,7 @@ PHP_METHOD(Tensor_Vector, acos) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&_0);
@@ -3146,6 +3496,7 @@ PHP_METHOD(Tensor_Vector, tan) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -3171,6 +3522,7 @@ PHP_METHOD(Tensor_Vector, atan) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&_0);
@@ -3194,6 +3546,7 @@ PHP_METHOD(Tensor_Vector, rad2deg) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -3219,6 +3572,7 @@ PHP_METHOD(Tensor_Vector, deg2rad) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&_0);
@@ -3243,6 +3597,7 @@ PHP_METHOD(Tensor_Vector, sum) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
@@ -3265,6 +3620,7 @@ PHP_METHOD(Tensor_Vector, product) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -3289,6 +3645,7 @@ PHP_METHOD(Tensor_Vector, min) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
@@ -3311,6 +3668,7 @@ PHP_METHOD(Tensor_Vector, max) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -3335,6 +3693,7 @@ PHP_METHOD(Tensor_Vector, mean) {
 
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -3366,6 +3725,7 @@ PHP_METHOD(Tensor_Vector, median) {
 	ZVAL_UNDEF(&_3$$4);
 	ZVAL_UNDEF(&_4$$4);
 	ZVAL_UNDEF(&_5$$4);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -3420,6 +3780,14 @@ PHP_METHOD(Tensor_Vector, quantile) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(q)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &q_param);
@@ -3488,6 +3856,15 @@ PHP_METHOD(Tensor_Vector, variance) {
 	ZVAL_UNDEF(&_5);
 	ZVAL_UNDEF(&_6);
 	ZVAL_UNDEF(&_7);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(0, 1)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ZVAL(mean)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 1, &mean);
@@ -3564,6 +3941,15 @@ PHP_METHOD(Tensor_Vector, round) {
 	ZVAL_UNDEF(&_10$$6);
 	ZVAL_UNDEF(&_11$$6);
 	ZVAL_UNDEF(&b);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(0, 1)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_LONG(precision)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 1, &precision_param);
@@ -3650,6 +4036,7 @@ PHP_METHOD(Tensor_Vector, floor) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&_0);
@@ -3673,6 +4060,7 @@ PHP_METHOD(Tensor_Vector, ceil) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -3713,6 +4101,15 @@ PHP_METHOD(Tensor_Vector, clip) {
 	ZVAL_UNDEF(&_8$$9);
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&b);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_ZVAL(min)
+		Z_PARAM_ZVAL(max)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 0, &min_param, &max_param);
@@ -3811,6 +4208,14 @@ PHP_METHOD(Tensor_Vector, clipLower) {
 	ZVAL_UNDEF(&_3$$4);
 	ZVAL_UNDEF(&_4$$6);
 	ZVAL_UNDEF(&b);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(min)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &min_param);
@@ -3885,6 +4290,14 @@ PHP_METHOD(Tensor_Vector, clipUpper) {
 	ZVAL_UNDEF(&_3$$4);
 	ZVAL_UNDEF(&_4$$6);
 	ZVAL_UNDEF(&b);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(max)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &max_param);
@@ -3961,6 +4374,7 @@ PHP_METHOD(Tensor_Vector, sign) {
 	ZVAL_UNDEF(&_7$$9);
 	ZVAL_UNDEF(&_8$$10);
 	ZVAL_UNDEF(&b);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -4040,6 +4454,7 @@ PHP_METHOD(Tensor_Vector, negate) {
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&b);
 
+
 	ZEPHIR_MM_GROW();
 
 	ZEPHIR_INIT_VAR(&b);
@@ -4112,6 +4527,14 @@ PHP_METHOD(Tensor_Vector, multiplyMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -4213,6 +4636,14 @@ PHP_METHOD(Tensor_Vector, divideMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -4314,6 +4745,14 @@ PHP_METHOD(Tensor_Vector, addMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -4415,6 +4854,14 @@ PHP_METHOD(Tensor_Vector, subtractMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -4516,6 +4963,14 @@ PHP_METHOD(Tensor_Vector, powMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -4617,6 +5072,14 @@ PHP_METHOD(Tensor_Vector, modMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -4718,6 +5181,14 @@ PHP_METHOD(Tensor_Vector, equalMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -4819,6 +5290,14 @@ PHP_METHOD(Tensor_Vector, notEqualMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -4920,6 +5399,14 @@ PHP_METHOD(Tensor_Vector, greaterMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5021,6 +5508,14 @@ PHP_METHOD(Tensor_Vector, greaterEqualMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5122,6 +5617,14 @@ PHP_METHOD(Tensor_Vector, lessMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5223,6 +5726,14 @@ PHP_METHOD(Tensor_Vector, lessEqualMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5317,6 +5828,14 @@ PHP_METHOD(Tensor_Vector, multiplyVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5381,6 +5900,14 @@ PHP_METHOD(Tensor_Vector, divideVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5445,6 +5972,14 @@ PHP_METHOD(Tensor_Vector, addVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5509,6 +6044,14 @@ PHP_METHOD(Tensor_Vector, subtractVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5573,6 +6116,14 @@ PHP_METHOD(Tensor_Vector, powVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5637,6 +6188,14 @@ PHP_METHOD(Tensor_Vector, modVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5702,6 +6261,14 @@ PHP_METHOD(Tensor_Vector, equalVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5766,6 +6333,14 @@ PHP_METHOD(Tensor_Vector, notEqualVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5830,6 +6405,14 @@ PHP_METHOD(Tensor_Vector, greaterVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5894,6 +6477,14 @@ PHP_METHOD(Tensor_Vector, greaterEqualVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -5958,6 +6549,14 @@ PHP_METHOD(Tensor_Vector, lessVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6022,6 +6621,14 @@ PHP_METHOD(Tensor_Vector, lessEqualVector) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6081,6 +6688,14 @@ PHP_METHOD(Tensor_Vector, multiplyScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6137,6 +6752,14 @@ PHP_METHOD(Tensor_Vector, divideScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6193,6 +6816,14 @@ PHP_METHOD(Tensor_Vector, addScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6249,6 +6880,14 @@ PHP_METHOD(Tensor_Vector, subtractScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6305,6 +6944,14 @@ PHP_METHOD(Tensor_Vector, powScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6361,6 +7008,14 @@ PHP_METHOD(Tensor_Vector, modScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6418,6 +7073,14 @@ PHP_METHOD(Tensor_Vector, equalScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6475,6 +7138,14 @@ PHP_METHOD(Tensor_Vector, notEqualScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6532,6 +7203,14 @@ PHP_METHOD(Tensor_Vector, greaterScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6589,6 +7268,14 @@ PHP_METHOD(Tensor_Vector, greaterEqualScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6646,6 +7333,14 @@ PHP_METHOD(Tensor_Vector, lessScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6703,6 +7398,14 @@ PHP_METHOD(Tensor_Vector, lessEqualScalar) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(b)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
@@ -6747,6 +7450,7 @@ PHP_METHOD(Tensor_Vector, count) {
 	zval *this_ptr = getThis();
 
 
+
 	RETURN_MEMBER(getThis(), "n");
 
 }
@@ -6763,6 +7467,15 @@ PHP_METHOD(Tensor_Vector, offsetSet) {
 
 	ZVAL_UNDEF(&index_sub);
 	ZVAL_UNDEF(&values_sub);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_ZVAL(index)
+		Z_PARAM_ZVAL(values)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	zephir_fetch_params_without_memory_grow(2, 0, &index, &values);
 
@@ -6786,6 +7499,14 @@ PHP_METHOD(Tensor_Vector, offsetExists) {
 
 	ZVAL_UNDEF(&index_sub);
 	ZVAL_UNDEF(&_0);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(index)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	zephir_fetch_params_without_memory_grow(1, 0, &index);
 
@@ -6806,6 +7527,14 @@ PHP_METHOD(Tensor_Vector, offsetUnset) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&index_sub);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(index)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	zephir_fetch_params_without_memory_grow(1, 0, &index);
 
@@ -6837,6 +7566,14 @@ PHP_METHOD(Tensor_Vector, offsetGet) {
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
 	ZVAL_UNDEF(&_3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_ZVAL(index)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &index);
@@ -6875,6 +7612,7 @@ PHP_METHOD(Tensor_Vector, getIterator) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	object_init_ex(return_value, zephir_get_internal_ce(SL("arrayiterator")));
@@ -6899,6 +7637,7 @@ PHP_METHOD(Tensor_Vector, __toString) {
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&_2);
+
 
 	ZEPHIR_MM_GROW();
 

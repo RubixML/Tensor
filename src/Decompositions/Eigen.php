@@ -3,8 +3,7 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
-use Tensor\Exceptions\InvalidArgumentException;
-use JAMA\Matrix as JAMA;
+use Tensor\Exceptions\NotImplemented;
 
 /**
  * Eigen
@@ -37,26 +36,12 @@ class Eigen
      *
      * @param \Tensor\Matrix $a
      * @param bool $symmetric
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
+     * @throws \Tensor\Exceptions\NotImplemented
      * @return self
      */
     public static function decompose(Matrix $a, bool $symmetric = false) : self
     {
-        if (!$a->isSquare()) {
-            throw new InvalidArgumentException('Matrix must be'
-                . " square, {$a->shapeString()} given.");
-        }
-
-        $jama = new JAMA($a->asArray());
-
-        $eig = $jama->eig();
-
-        $eigenvalues = $eig->getRealEigenvalues();
-        $eigenvectors = $eig->getV()->getArray();
-
-        $eigenvectors = Matrix::quick($eigenvectors)->transpose();
-
-        return new self($eigenvalues, $eigenvectors);
+        throw new NotImplemented('Eig is not implemented in Tensor PHP.');
     }
 
     /**

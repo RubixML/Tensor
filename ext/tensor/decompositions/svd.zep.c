@@ -83,6 +83,14 @@ PHP_METHOD(Tensor_Decompositions_Svd, decompose) {
 	ZVAL_UNDEF(&_4);
 	ZVAL_UNDEF(&usvT);
 	ZVAL_UNDEF(&_1);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
@@ -131,6 +139,16 @@ PHP_METHOD(Tensor_Decompositions_Svd, __construct) {
 	ZVAL_UNDEF(&u_sub);
 	ZVAL_UNDEF(&vT_sub);
 	ZVAL_UNDEF(&singularValues);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJECT_OF_CLASS(u, tensor_matrix_ce)
+		Z_PARAM_ARRAY(singularValues)
+		Z_PARAM_OBJECT_OF_CLASS(vT, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 3, 0, &u, &singularValues_param, &vT);
@@ -155,6 +173,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, u) {
 	zval *this_ptr = getThis();
 
 
+
 	RETURN_MEMBER(getThis(), "u");
 
 }
@@ -167,6 +186,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, u) {
 PHP_METHOD(Tensor_Decompositions_Svd, singularValues) {
 
 	zval *this_ptr = getThis();
+
 
 
 	RETURN_MEMBER(getThis(), "singularValues");
@@ -187,6 +207,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, s) {
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_1);
+
 
 	ZEPHIR_MM_GROW();
 
@@ -211,6 +232,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, v) {
 
 	ZVAL_UNDEF(&_0);
 
+
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("vT"), PH_NOISY_CC | PH_READONLY);
@@ -228,6 +250,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, v) {
 PHP_METHOD(Tensor_Decompositions_Svd, vT) {
 
 	zval *this_ptr = getThis();
+
 
 
 	RETURN_MEMBER(getThis(), "vT");

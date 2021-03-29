@@ -1,3 +1,7 @@
+- 3.0.0-beta
+    - Drop extension support for PHP 7.3 and 7.3
+    - Remove dependency on JAMA library
+
 - 2.2.1
     - Optimize 2D convolution operation
     - Fix and optimize vector convolve 1D operation

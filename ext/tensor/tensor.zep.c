@@ -35,7 +35,6 @@ ZEPHIR_INIT_CLASS(Tensor_Tensor) {
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, map);
-
 /**
  * Reduce the tensor down to a scalar.
  *
@@ -44,14 +43,12 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, map);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, reduce);
-
 /**
  * Transpose the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, transpose);
-
 /**
  * Clip the tensor to be between the given minimum and maximum.
  *
@@ -60,7 +57,6 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, transpose);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, clip);
-
 /**
  * Clip the tensor to be lower bounded by a given minimum.
  *
@@ -68,7 +64,6 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, clip);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, clipLower);
-
 /**
  * Clip the tensor to be upper bounded by a given maximum.
  *
@@ -76,18 +71,15 @@ ZEPHIR_DOC_METHOD(Tensor_Tensor, clipLower);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, clipUpper);
-
 /**
  * Return the shape of the tensor as a string.
  *
  * @return string
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, shapeString);
-
 /**
  * Convert the tensor into a string representation.
  *
  * @return string
  */
 ZEPHIR_DOC_METHOD(Tensor_Tensor, __toString);
-

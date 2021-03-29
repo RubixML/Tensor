@@ -27,7 +27,6 @@ ZEPHIR_INIT_CLASS(Tensor_Comparable) {
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Comparable, equal);
-
 /**
  * A universal function to compute the not equal comparison of this tensor and another tensor element-wise.
  *
@@ -35,7 +34,6 @@ ZEPHIR_DOC_METHOD(Tensor_Comparable, equal);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Comparable, notEqual);
-
 /**
  * A universal function to compute the greater than comparison of a tensor and another tensor element-wise.
  *
@@ -43,7 +41,6 @@ ZEPHIR_DOC_METHOD(Tensor_Comparable, notEqual);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Comparable, greater);
-
 /**
  * A universal function to compute the greater than or equal to comparison of a tensor and another tensor element-wise.
  *
@@ -51,7 +48,6 @@ ZEPHIR_DOC_METHOD(Tensor_Comparable, greater);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Comparable, greaterEqual);
-
 /**
  * A universal function to compute the less than comparison of a tensor and another tensor element-wise.
  *
@@ -59,7 +55,6 @@ ZEPHIR_DOC_METHOD(Tensor_Comparable, greaterEqual);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Comparable, less);
-
 /**
  * A universal function to compute the less than or equal to comparison of a tensor and another tensor element-wise.
  *
@@ -67,4 +62,3 @@ ZEPHIR_DOC_METHOD(Tensor_Comparable, less);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Comparable, lessEqual);
-

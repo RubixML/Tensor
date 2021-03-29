@@ -28,35 +28,30 @@ ZEPHIR_INIT_CLASS(Tensor_Functional) {
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, abs);
-
 /**
  * Square the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, square);
-
 /**
  * Return the square root of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, sqrt);
-
 /**
  * Return the exponential of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, exp);
-
 /**
  * Return the exponential of the tensor minus 1.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, expm1);
-
 /**
  * Return the logarithm of the tensor in a specified base.
  *
@@ -64,42 +59,36 @@ ZEPHIR_DOC_METHOD(Tensor_Functional, expm1);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, log);
-
 /**
  * Return the log of 1 plus the tensor i.e. a transform.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, log1p);
-
 /**
  * Sum the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, sum);
-
 /**
  * Calculate the product of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, product);
-
 /**
  * Return the minimum of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, min);
-
 /**
  * Return the maximum of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, max);
-
 /**
  * Round the elements in the tensor to a given decimal place.
  *
@@ -107,32 +96,27 @@ ZEPHIR_DOC_METHOD(Tensor_Functional, max);
  * @return self
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, round);
-
 /**
  * Round the tensor down to the nearest integer.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, floor);
-
 /**
  * Round the tensor up to the nearest integer.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, ceil);
-
 /**
  * Return the element-wise sign indication.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, sign);
-
 /**
  * Negate the tensor i.e take the negative.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, negate);
-

@@ -30,53 +30,45 @@ ZEPHIR_INIT_CLASS(Tensor_Trigonometric) {
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Trigonometric, sin);
-
 /**
  * Compute the arc sine of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Trigonometric, asin);
-
 /**
  * Return the cosine of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Trigonometric, cos);
-
 /**
  * Compute the arc cosine of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Trigonometric, acos);
-
 /**
  * Return the tangent of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Trigonometric, tan);
-
 /**
  * Compute the arc tangent of the tensor.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Trigonometric, atan);
-
 /**
  * Convert angles from radians to degrees.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Trigonometric, rad2deg);
-
 /**
  * Convert angles from degrees to radians.
  *
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Trigonometric, deg2rad);
-

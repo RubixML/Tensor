@@ -57,6 +57,14 @@ PHP_METHOD(Tensor_Settings, setNumThreads) {
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&status);
 	ZVAL_UNDEF(&_4);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_LONG(threads)
+	ZEND_PARSE_PARAMETERS_END();
+
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &threads_param);
@@ -93,6 +101,7 @@ PHP_METHOD(Tensor_Settings, setNumThreads) {
 PHP_METHOD(Tensor_Settings, numThreads) {
 
 	zval *this_ptr = getThis();
+
 
 
 	tensor_get_num_threads(return_value);

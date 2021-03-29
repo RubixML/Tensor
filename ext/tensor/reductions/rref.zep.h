@@ -7,11 +7,7 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce);
 PHP_METHOD(Tensor_Reductions_Rref, __construct);
 PHP_METHOD(Tensor_Reductions_Rref, a);
 
-#if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_reductions_rref_reduce, 0, 1, Tensor\\Reductions\\Rref, 0)
-#else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_reductions_rref_reduce, 0, 1, IS_OBJECT, "Tensor\\Reductions\\Rref", 0)
-#endif
 	ZEND_ARG_OBJ_INFO(0, a, Tensor\\Matrix, 0)
 ZEND_END_ARG_INFO()
 
@@ -19,11 +15,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_reductions_rref___construct, 0, 0, 1)
 	ZEND_ARG_OBJ_INFO(0, a, Tensor\\Matrix, 0)
 ZEND_END_ARG_INFO()
 
-#if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_reductions_rref_a, 0, 0, Tensor\\Matrix, 0)
-#else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_reductions_rref_a, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
-#endif
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(tensor_reductions_rref_method_entry) {
