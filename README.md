@@ -2,7 +2,7 @@
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/rubix/tensor.svg?style=flat&colorB=8892BF)](https://www.php.net/) [![Latest Stable Version](https://img.shields.io/packagist/v/rubix/tensor.svg?style=flat&colorB=orange)](https://packagist.org/packages/rubix/tensor) [![Build](https://github.com/RubixML/Tensor/workflows/Build/badge.svg)](https://github.com/RubixML/Tensor/actions) [![Compile extension](https://github.com/RubixML/Tensor/actions/workflows/ci-ext.yml/badge.svg)](https://github.com/RubixML/Tensor/actions/workflows/ci-ext.yml) [![Downloads from Packagist](https://img.shields.io/packagist/dt/rubix/tensor.svg?style=flat&colorB=red)](https://packagist.org/packages/rubix/tensor) [![GitHub](https://img.shields.io/github/license/RubixML/Tensor)](https://github.com/RubixML/Tensor/blob/master/LICENSE.md)
 
-Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net). The multithreaded extension is especially suited for applications where efficient computing of large sets of numbers is required. In some cases, the extension is 230X faster than the same operation in PHPland. Tensor is used by libraries such as [Rubix ML](https://rubixml.com) to build and accelerate machine learning algorithms such as neural networks and linear regressions.
+Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net). The multithreaded extension is especially suited for computing large sets of numbers. In some cases, the extension is 230X faster than the same operation in PHPland. Tensor is used by libraries such as [Rubix ML](https://rubixml.com) to build and accelerate machine learning algorithms such as linear regression, dimensionality reduction, and neural networks.
 
 ## Installation
 Follow the instructions below to install either Tensor PHP or the Tensor extension.
@@ -45,7 +45,7 @@ $ git clone https://github.com/RubixML/Tensor
 Make sure you have all the necessary build tools installed such as a C compiler and make tools. For example, on an Ubuntu linux system you can enter the following on the command line to install the necessary dependencies.
 
 ```sh
-$ sudo apt-get install gcc gfortran make php-dev libopenblas-dev liblapacke-dev re2c build-essential
+$ sudo apt-get install make gcc gfortran php-dev libopenblas-dev liblapacke-dev re2c build-essential
 ```
 
 Then, change into the `ext` directory from the project root and run the following commands from the terminal. See [this guide](https://www.php.net/manual/en/install.pecl.phpize.php) for more information on compiling PHP extensions with PHPize.
