@@ -276,44 +276,6 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the elementwise maximum of two vectors.
-     *
-     * @param \Tensor\Vector a
-     * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return self
-     */
-    public static function maximum(const <Vector> a, const <Vector> b) -> <Vector>
-    {
-        if unlikely a->n() !== b->n() {
-            throw new DimensionalityMismatch("Vector A expects "
-                . (string) a->n() . " elements but Vector B has "
-                . (string) b->n() . ".");
-        }
-
-        return static::quick(array_map("max", a->asArray(), b->asArray()));
-    }
-
-    /**
-     * Return the elementwise minimum of two vectors.
-     *
-     * @param \Tensor\Vector a
-     * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return self
-     */
-    public static function minimum(const <Vector> a, const <Vector> b) -> <Vector>
-    {
-        if unlikely a->n() !== b->n() {
-            throw new DimensionalityMismatch("Vector A expects "
-                . (string) a->n() . " elements but Vector B has "
-                . (string) b->n() . ".");
-        }
-
-        return static::quick(array_map("min", a->asArray(), b->asArray()));
-    }
-
-    /**
      * @param (int|float)[] a
      * @param bool validate
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -614,40 +576,6 @@ class Vector implements Tensor
         }
 
         return Matrix::quick(c);
-    }
-
-    /**
-     * Calculate the cross product between two 3 dimensional vectors.
-     *
-     * @param \Tensor\Vector b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return self
-     */
-    public function cross(const <Vector> b) -> <Vector>
-    {
-        if unlikely this->n !== 3 || b->size() !== 3 {
-            throw new InvalidArgumentException("Cross product is"
-                . " only defined for vectors of 3 dimensions.");
-        }
-
-        array c = [];
-
-        let c[] = (this->a[1] * b[2]) - (this->a[2] * b[1]);
-        let c[] = (this->a[2] * b[0]) - (this->a[0] * b[2]);
-        let c[] = (this->a[0] * b[1]) - (this->a[1] * b[0]);
-
-        return static::quick(c);
-    }
-
-    /**
-     * Project this vector on another vector.
-     *
-     * @param \Tensor\Vector b
-     * @return self
-     */
-    public function project(const <Vector> b) -> <Vector>
-    {
-        return b->multiply(this->dot(b) / (pow(b->l2Norm(), 2)));
     }
 
     /**
@@ -2356,15 +2284,5 @@ class Vector implements Tensor
     public function getIterator()
     {
         return new ArrayIterator(this->a);
-    }
-
-    /**
-     * Convert the tensor into a string representation.
-     *
-     * @return string
-     */
-    public function __toString() -> string
-    {
-        return "[ " . implode(" ", this->a) . " ]" . PHP_EOL;
     }
 }

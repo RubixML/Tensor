@@ -188,32 +188,6 @@ class VectorTest extends TestCase
     /**
      * @test
      */
-    public function maximum() : void
-    {
-        $z = Vector::maximum($this->a, $this->b);
-
-        $expected = [0.25, 25, 35, -0.5, -1.0, 89, 106, 45];
-
-        $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function minimum() : void
-    {
-        $z = Vector::minimum($this->a, $this->b);
-
-        $expected = [-15, 0.1, 2.0, -36, -72, -3.0, 3.3, 2.];
-
-        $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
     public function shape() : void
     {
         $this->assertEquals([8], $this->a->shape());
@@ -447,23 +421,6 @@ class VectorTest extends TestCase
     /**
      * @test
      */
-    public function cross() : void
-    {
-        $a = new Vector([1.0, -0.5, 6.]);
-
-        $b = new Vector([2.0, 0.0, 3.]);
-
-        $z = $a->cross($b);
-
-        $expected = [-1.5, 9.0, 1.];
-
-        $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
     public function convolve() : void
     {
         $z = $this->a->convolve($this->c, 1);
@@ -471,22 +428,6 @@ class VectorTest extends TestCase
         $expected = [
             -60, 2.5, 259, -144, 40.5, 370.1, 462.20000000000005,
             10, 1764.3000000000002, 1625.1, 2234.7000000000003, 1378.4, 535.5,
-        ];
-
-        $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function project() : void
-    {
-        $z = $this->a->project($this->b);
-
-        $expected = [
-            2.8373983739837394, 1.1349593495934958, 22.699186991869915, -5.674796747967479,
-            -11.349593495934958, -34.048780487804876, 37.45365853658536, 22.699186991869915,
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
@@ -1433,15 +1374,5 @@ class VectorTest extends TestCase
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function testToString() : void
-    {
-        $outcome = '[ -15 25 35 -36 -72 89 106 45 ]' . PHP_EOL;
-
-        $this->assertEquals($outcome, (string) $this->a);
     }
 }

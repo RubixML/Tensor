@@ -273,46 +273,6 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the element-wise maximum of two vectors.
-     *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Vector $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return self
-     */
-    public static function maximum(Vector $a, Vector $b) : self
-    {
-        if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatch('Vector A expects'
-                . " {$a->n()} elements but Vector B has{$b->n()}.");
-        }
-
-        $c = array_map('max', $a->asArray(), $b->asArray());
-
-        return static::quick($c);
-    }
-
-    /**
-     * Return the element-wise minimum of two vectors.
-     *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Vector $b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return self
-     */
-    public static function minimum(Vector $a, Vector $b) : self
-    {
-        if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatch('Vector A expects'
-                . " {$a->n()} elements but Vector B has{$b->n()}.");
-        }
-
-        $c = array_map('min', $a->asArray(), $b->asArray());
-
-        return static::quick($c);
-    }
-
-    /**
      * @param (int|float)[] $a
      * @param bool $validate
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -578,29 +538,6 @@ class Vector implements Tensor
     }
 
     /**
-     * Calculate the cross product between two 3 dimensional vectors.
-     *
-     * @param \Tensor\Vector $b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return self
-     */
-    public function cross(Vector $b) : self
-    {
-        if ($this->n !== 3 or $b->size() !== 3) {
-            throw new InvalidArgumentException('Cross product is'
-                . ' only defined for vectors of 3 dimensions.');
-        }
-
-        $c = [];
-
-        $c[] = ($this->a[1] * $b[2]) - ($this->a[2] * $b[1]);
-        $c[] = ($this->a[2] * $b[0]) - ($this->a[0] * $b[2]);
-        $c[] = ($this->a[0] * $b[1]) - ($this->a[1] * $b[0]);
-
-        return static::quick($c);
-    }
-
-    /**
      * Return the 1D convolution of this vector and a kernel vector with given stride.
      *
      * @param \Tensor\Vector $b
@@ -642,17 +579,6 @@ class Vector implements Tensor
         }
 
         return static::quick($c);
-    }
-
-    /**
-     * Project this vector on another vector.
-     *
-     * @param \Tensor\Vector $b
-     * @return self
-     */
-    public function project(Vector $b) : self
-    {
-        return $b->multiplyScalar($this->dot($b) / $b->l2Norm() ** 2);
     }
 
     /**
@@ -2409,20 +2335,10 @@ class Vector implements Tensor
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \ArrayIterator<int, int|float>
+     * @return \ArrayIterator<int|float>
      */
-    public function getIterator()
+    public function getIterator() : ArrayIterator
     {
         return new ArrayIterator($this->a);
-    }
-
-    /**
-     * Convert the tensor into a string representation.
-     *
-     * @return string
-     */
-    public function __toString() : string
-    {
-        return '[ ' . implode(' ', $this->a) . ' ]' . PHP_EOL;
     }
 }

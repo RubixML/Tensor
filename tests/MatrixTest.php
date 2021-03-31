@@ -95,48 +95,6 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function stackRowVectors() : void
-    {
-        $z = Matrix::stack([
-            $this->d,
-            $this->d,
-            $this->d,
-        ]);
-
-        $expected = [
-            [2, 10, -1],
-            [2, 10, -1],
-            [2, 10, -1],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function stackColumnVectors() : void
-    {
-        $z = Matrix::stack([
-            $this->e,
-            $this->e,
-            $this->e,
-        ]);
-
-        $expected = [
-            [2.5, 2.5, 2.5],
-            [-1, -1, -1],
-            [4.8, 4.8, 4.8],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
     public function identity() : void
     {
         $z = Matrix::identity(4);
@@ -264,40 +222,6 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $z);
         $this->assertCount(9, $z);
-    }
-
-    /**
-     * @test
-     */
-    public function maximum() : void
-    {
-        $z = Matrix::maximum($this->a, $this->c);
-
-        $expected = [
-            [22, 6, 12],
-            [4, 11, 5],
-            [20, -1, 14],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function minumum() : void
-    {
-        $z = Matrix::minimum($this->a, $this->c);
-
-        $expected = [
-            [4, -17, -12],
-            [1, 3, -2],
-            [-10, -6, -9],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
     }
 
     /**
@@ -594,34 +518,6 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function positiveDefinite() : void
-    {
-        $a = Matrix::quick([
-            [1, 5, 2],
-            [5, 1, 3],
-            [2, 3, 1],
-        ]);
-
-        $this->assertFalse($a->positiveDefinite());
-    }
-
-    /**
-     * @test
-     */
-    public function positiveSemidefinite() : void
-    {
-        $a = Matrix::quick([
-            [1, 5, 2],
-            [5, 1, 3],
-            [2, 3, 1],
-        ]);
-
-        $this->assertFalse($a->positiveSemidefinite());
-    }
-
-    /**
-     * @test
-     */
     public function rank() : void
     {
         $this->assertEquals(3, $this->a->rank());
@@ -864,21 +760,6 @@ class MatrixTest extends TestCase
         $this->assertEquals($uHat, $svd->u()->asArray());
         $this->assertEquals($singularValues, $svd->singularValues());
         $this->assertEquals($vtHat, $svd->vT()->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function solve() : void
-    {
-        $z = $this->a->solve($this->d);
-
-        $expected = [
-            3.5542559833507, -2.071342351717, -9.2838709677419,
-        ];
-
-        $this->assertInstanceOf(ColumnVector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
     }
 
     /**
@@ -2317,42 +2198,6 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function insert() : void
-    {
-        $z = $this->a->insert(Matrix::quick([
-            [6, 9],
-            [6, 9],
-        ]), 1, 0);
-
-        $expected = [
-            [22, -17, 12],
-            [6, 9, -2],
-            [6, 9, -9],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function subMatrix() : void
-    {
-        $z = $this->a->subMatrix(1, 1, 3, 3);
-
-        $expected = [
-            [11, -2],
-            [-6, -9],
-        ];
-
-        $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
     public function augmentAbove() : void
     {
         $z = $this->a->augmentAbove($this->c);
@@ -2442,18 +2287,5 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $z);
         $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function testToString() : void
-    {
-        $outcome = PHP_EOL
-            . '[ 22 -17 12 ]' . PHP_EOL
-            . '[ 4 11 -2 ]' . PHP_EOL
-            . '[ 20 -6 -9 ]' . PHP_EOL;
-
-        $this->assertEquals($outcome, (string) $this->a);
     }
 }

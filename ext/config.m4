@@ -4,8 +4,8 @@ if test "$PHP_TENSOR" = "yes"; then
 
 	
 
-	if ! test "x-lopenblas -llapacke -lgfortran -lpthread" = "x"; then
-		PHP_EVAL_LIBLINE(-lopenblas -llapacke -lgfortran -lpthread, TENSOR_SHARED_LIBADD)
+	if ! test "x-lopenblas -llapacke -lgfortran" = "x"; then
+		PHP_EVAL_LIBLINE(-lopenblas -llapacke -lgfortran, TENSOR_SHARED_LIBADD)
 	fi
 
 	AC_DEFINE(HAVE_TENSOR, 1, [Whether you have Tensor])
@@ -41,6 +41,11 @@ if test "$PHP_TENSOR" = "yes"; then
 		PHP_ADD_BUILD_DIR([$ext_builddir/$dir])
 	done
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
+
+	AC_CHECK_FUNC(backtrace_symbols, have_backtrace_symbols=yes, have_backtrace_symbols=no)
+	if test $have_backtrace_symbols = no; then
+		LDFLAGS="${LDFLAGS:-} -lexecinfo"
+	fi
 
 	old_CPPFLAGS=$CPPFLAGS
 	CPPFLAGS="$CPPFLAGS $INCLUDES"

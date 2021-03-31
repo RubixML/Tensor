@@ -418,57 +418,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Build a matrix by stacking an array of vectors.
-     *
-     * @param \Tensor\Vector[] $vectors
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return self
-     */
-    public static function stack(array $vectors) : self
-    {
-        if (empty($vectors)) {
-            return self::quick();
-        }
-
-        $proto = reset($vectors);
-
-        $size = $proto->size();
-
-        $columnwise = $proto instanceof ColumnVector;
-
-        $a = [];
-
-        foreach ($vectors as $vector) {
-            if ($columnwise and !$vector instanceof ColumnVector) {
-                throw new InvalidArgumentException('Cannot stack a non'
-                    . ' column vector, ' . gettype($vector) . ' found.');
-            }
-
-            if ($vector->size() !== $size) {
-                throw new InvalidArgumentException('Vectors must be the same size.');
-            }
-
-            $a[] = $vector->asArray();
-        }
-
-        $a = self::quick($a);
-
-        return $columnwise ? $a->transpose() : $a;
-    }
-
-    /**
-     * Implode a row of the matrix and return the output.
-     *
-     * @param string $carry
-     * @param (int|float)[] $row
-     * @return string
-     */
-    protected static function implodeRow(string $carry, array $row) : string
-    {
-        return $carry . PHP_EOL . '[ ' . implode(' ', $row) . ' ]';
-    }
-
-    /**
      * @param array[] $a
      * @param bool $validate
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -899,52 +848,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Is the matrix positive definite i.e. do all of its principal
-     * minor matrices have a determinant greater than 0.
-     *
-     * @return bool
-     */
-    public function positiveDefinite() : bool
-    {
-        if (!$this->symmetric()) {
-            return false;
-        }
-
-        for ($i = 1; $i < $this->n; ++$i) {
-            $b = $this->subMatrix(0, 0, $i, $i);
-
-            if ($b->det() <= 0) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Is the matrix positive semi-definite i.e. do all of its principal
-     * minor matrices have a determinant greater or equal to 0.
-     *
-     * @return bool
-     */
-    public function positiveSemidefinite() : bool
-    {
-        if (!$this->symmetric()) {
-            return false;
-        }
-
-        for ($i = 1; $i < $this->n; ++$i) {
-            $b = $this->subMatrix(0, 0, $i, $i);
-
-            if ($b->det() < 0) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * Multiply this matrix with another matrix (matrix-matrix product).
      *
      * @param \Tensor\Matrix $b
@@ -1121,58 +1024,6 @@ class Matrix implements Tensor
     public function svd() : SVD
     {
         return SVD::decompose($this);
-    }
-
-    /**
-     * Solve a linear system of equations given the matrix and a solution vector b. Returns the column vector x that satisfies
-     * the solution.
-     *
-     * @param \Tensor\Vector $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\ColumnVector
-     */
-    public function solve(Vector $b) : ColumnVector
-    {
-        if ($b->size() !== $this->n) {
-            throw new DimensionalityMismatch('Solution vector must have'
-                . " {$this->n} elements, {$b->size()} given.");
-        }
-
-        $lu = $this->lu();
-
-        $l = $lu->l()->asArray();
-        $u = $lu->u()->asArray();
-        $pb = $lu->p()->dot($b)->asArray();
-
-        $k = $this->m - 1;
-
-        $y = [$pb[0] / ($l[0][0] ?: EPSILON)];
-
-        for ($i = 1; $i < $this->m; ++$i) {
-            $sigma = 0.0;
-
-            for ($j = 0; $j <= $i - 1; ++$j) {
-                $sigma += $l[$i][$j] * $y[$j];
-            }
-
-            $y[] = ($pb[$i] - $sigma)
-                / $l[$i][$i];
-        }
-
-        $x = [$k => $y[$k] / ($l[$k][$k] ?: EPSILON)];
-
-        for ($i = $this->m - 2; $i >= 0; --$i) {
-            $sigma = 0.0;
-
-            for ($j = $i + 1; $j < $this->m; ++$j) {
-                $sigma += $u[$i][$j] * $x[$j];
-            }
-
-            $x[$i] = ($y[$i] - $sigma)
-                / $u[$i][$i];
-        }
-
-        return ColumnVector::quick(array_reverse($x));
     }
 
     /**
@@ -2149,105 +2000,6 @@ class Matrix implements Tensor
 
             foreach ($rowA as $valueA) {
                 $rowB[] = -$valueA;
-            }
-
-            $b[] = $rowB;
-        }
-
-        return self::quick($b);
-    }
-
-    /**
-     * Insert a smaller matrix b into this matrix.
-     *
-     * @param \Tensor\Matrix $b
-     * @param int $rowOffset
-     * @param int $columnOffset
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return self
-     */
-    public function insert(Matrix $b, int $rowOffset, int $columnOffset) : self
-    {
-        if ($b->m() + $rowOffset > $this->m) {
-            throw new InvalidArgumentException('Matrix B does not fit'
-                . " into matrix A with row offset $rowOffset.");
-        }
-
-        if ($b->n() + $columnOffset > $this->n) {
-            throw new InvalidArgumentException('Matrix B does not fit'
-                . " into matrix A with column offset $columnOffset.");
-        }
-
-        $c = $this->a;
-
-        foreach ($b->asArray() as $i => $rowB) {
-            $ii = $rowOffset + $i;
-
-            foreach ($rowB as $j => $valueB) {
-                $jj = $columnOffset + $j;
-
-                $c[$ii][$jj] = $valueB;
-            }
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Return the sub matrix starting at row and column offset.
-     *
-     * @param int $startRow
-     * @param int $startColumn
-     * @param int $endRow
-     * @param int $endColumn
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return self
-     */
-    public function subMatrix(
-        int $startRow,
-        int $startColumn,
-        int $endRow,
-        int $endColumn
-    ) : self {
-        if ($startRow < 0) {
-            throw new InvalidArgumentException('Start row must'
-                . " be greater than 0, $startRow given.");
-        }
-
-        if ($startColumn < 0) {
-            throw new InvalidArgumentException('Start column must'
-                . " be greater than 0, $startColumn given.");
-        }
-
-        if ($endRow < $startRow) {
-            throw new InvalidArgumentException('End row must be'
-                . ' greater than start row.');
-        }
-
-        if ($endColumn < $startColumn) {
-            throw new InvalidArgumentException('End column must be'
-                . ' greater than start column.');
-        }
-
-        if ($endRow > $this->m) {
-            throw new InvalidArgumentException('End row is out of'
-                . ' bounds of matrix.');
-        }
-
-        if ($endColumn > $this->n) {
-            throw new InvalidArgumentException('End column is out of'
-                . ' bounds of matrix.');
-        }
-
-        $b = [];
-
-        for ($i = $startRow; $i < $endRow; ++$i) {
-            $rowA = $this->a[$i];
-
-            $rowB = [];
-
-            for ($j = $startColumn; $j < $endColumn; ++$j) {
-                $rowB[] = $rowA[$j];
             }
 
             $b[] = $rowB;
@@ -3808,20 +3560,10 @@ class Matrix implements Tensor
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \ArrayIterator<int, array>
+     * @return \ArrayIterator<array>
      */
-    public function getIterator()
+    public function getIterator() : ArrayIterator
     {
         return new ArrayIterator($this->a);
-    }
-
-    /**
-     * Convert the tensor into a string representation.
-     *
-     * @return string
-     */
-    public function __toString() : string
-    {
-        return array_reduce($this->a, [self::class, 'implodeRow'], '') . PHP_EOL;
     }
 }
