@@ -2335,7 +2335,7 @@ class Vector implements Tensor
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \ArrayIterator<int|float>
+     * @return \ArrayIterator<int,int|float>
      */
     public function getIterator() : ArrayIterator
     {

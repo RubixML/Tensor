@@ -3560,7 +3560,7 @@ class Matrix implements Tensor
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \ArrayIterator<array>
+     * @return \ArrayIterator<int,array>
      */
     public function getIterator() : ArrayIterator
     {
