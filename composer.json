@@ -15,8 +15,9 @@
     "authors": [
         { 
             "name": "Andrew DalPino",
+            "role": "Project Lead",
             "homepage": "https://github.com/andrewdalpino",
-            "role": "Lead Engineer"
+            "email": "support@andrewdalpino.com"
         },
         {
             "name": "Contributors",
@@ -79,8 +80,8 @@
         "process-timeout": 3000
     },
     "support": {
-        "email": "support@rubixml.com",
         "issues": "https://github.com/RubixML/Tensor/issues",
-        "source": "https://github.com/RubixML/Tensor"
+        "source": "https://github.com/RubixML/Tensor",
+        "email": "support@andrewdalpino.com",
     }
 }
