@@ -3,15 +3,6 @@
 
 const CONFIG_M4_PATH = './ext/config.m4';
 
-const BUILDDIR_MATCH = "PHP_ADD_BUILD_DIR([\$ext_builddir/tensor/])\n";
-const BUILDDIR_PATCH = <<<'EOT'
-
-	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/decompositions/])
-	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/exceptions/])
-	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/reductions/])
-
-EOT
-;
 const EXECINFO_MATCH = "PHP_SUBST(TENSOR_SHARED_LIBADD)\n";
 const EXECINFO_PATCH = <<<'EOT'
 
@@ -35,18 +26,6 @@ if (!$configM4Contents) {
     exit(1);
 }
 echo "done.\n";
-
-echo 'Applying build dir patch... ';
-
-if (strpos($configM4Contents, BUILDDIR_MATCH) === false) {
-    echo "not needed.\n";
-} elseif (strpos($configM4Contents, trim(BUILDDIR_PATCH)) !== false) {
-	echo "already applied.\n";
-} else {
-    $configM4Contents = str_replace(BUILDDIR_MATCH, BUILDDIR_MATCH . BUILDDIR_PATCH, $configM4Contents);
-
-    echo "done.\n";
-}
 
 echo 'Applying libexec patch...';
 

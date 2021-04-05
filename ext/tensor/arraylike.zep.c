@@ -30,11 +30,32 @@ ZEPHIR_INIT_CLASS(Tensor_ArrayLike) {
  */
 ZEPHIR_DOC_METHOD(Tensor_ArrayLike, shape);
 /**
+ * Return the shape of the tensor as a string.
+ *
+ * @return string
+ */
+ZEPHIR_DOC_METHOD(Tensor_ArrayLike, shapeString);
+/**
  * Return the number of elements in the array-like object.
  *
  * @return int
  */
 ZEPHIR_DOC_METHOD(Tensor_ArrayLike, size);
+/**
+ * Map a function over all of the elements in the tensor.
+ *
+ * @param callable callback
+ * @return mixed
+ */
+ZEPHIR_DOC_METHOD(Tensor_ArrayLike, map);
+/**
+ * Reduce the tensor down to a scalar.
+ *
+ * @param callable callback
+ * @param mixed initial
+ * @return mixed
+ */
+ZEPHIR_DOC_METHOD(Tensor_ArrayLike, reduce);
 /**
  * Return the elements of the array-like as a PHP array.
  *

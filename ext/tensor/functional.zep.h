@@ -53,6 +53,19 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_functional_negate, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_functional_clip, 0, 0, 2)
+	ZEND_ARG_TYPE_INFO(0, min, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO(0, max, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_functional_cliplower, 0, 0, 1)
+	ZEND_ARG_TYPE_INFO(0, min, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_functional_clipupper, 0, 0, 1)
+	ZEND_ARG_TYPE_INFO(0, max, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
+
 ZEPHIR_INIT_FUNCS(tensor_functional_method_entry) {
 	PHP_ABSTRACT_ME(Tensor_Functional, abs, arginfo_tensor_functional_abs)
 	PHP_ABSTRACT_ME(Tensor_Functional, square, arginfo_tensor_functional_square)
@@ -70,5 +83,8 @@ ZEPHIR_INIT_FUNCS(tensor_functional_method_entry) {
 	PHP_ABSTRACT_ME(Tensor_Functional, ceil, arginfo_tensor_functional_ceil)
 	PHP_ABSTRACT_ME(Tensor_Functional, sign, arginfo_tensor_functional_sign)
 	PHP_ABSTRACT_ME(Tensor_Functional, negate, arginfo_tensor_functional_negate)
+	PHP_ABSTRACT_ME(Tensor_Functional, clip, arginfo_tensor_functional_clip)
+	PHP_ABSTRACT_ME(Tensor_Functional, clipLower, arginfo_tensor_functional_cliplower)
+	PHP_ABSTRACT_ME(Tensor_Functional, clipUpper, arginfo_tensor_functional_clipupper)
 	PHP_FE_END
 };

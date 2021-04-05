@@ -120,3 +120,25 @@ ZEPHIR_DOC_METHOD(Tensor_Functional, sign);
  * @return mixed
  */
 ZEPHIR_DOC_METHOD(Tensor_Functional, negate);
+/**
+ * Clip the tensor to be between the given minimum and maximum.
+ *
+ * @param float min
+ * @param float max
+ * @return mixed
+ */
+ZEPHIR_DOC_METHOD(Tensor_Functional, clip);
+/**
+ * Clip the tensor to be lower bounded by a given minimum.
+ *
+ * @param float min
+ * @return mixed
+ */
+ZEPHIR_DOC_METHOD(Tensor_Functional, clipLower);
+/**
+ * Clip the tensor to be upper bounded by a given maximum.
+ *
+ * @param float max
+ * @return mixed
+ */
+ZEPHIR_DOC_METHOD(Tensor_Functional, clipUpper);
