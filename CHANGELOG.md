@@ -1,3 +1,6 @@
+- 2.2.2
+    - Remove dependency on pthreads
+
 - 2.2.1
     - Optimize 2D convolution operation
     - Fix and optimize vector convolve 1D operation
