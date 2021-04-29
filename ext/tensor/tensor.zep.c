@@ -12,8 +12,8 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Tensor_Tensor) {
-
+ZEPHIR_INIT_CLASS(Tensor_Tensor)
+{
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Tensor, tensor, tensor, NULL);
 
 	zephir_declare_class_constant_double(tensor_tensor_ce, SL("EPSILON"), 0.00000001);
@@ -25,6 +25,5 @@ ZEPHIR_INIT_CLASS(Tensor_Tensor) {
 	zend_class_implements(tensor_tensor_ce, 1, tensor_trigonometric_ce);
 	zend_class_implements(tensor_tensor_ce, 1, tensor_statistical_ce);
 	return SUCCESS;
-
 }
 

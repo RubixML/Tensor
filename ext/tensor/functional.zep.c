@@ -12,14 +12,13 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Tensor_Functional) {
-
+ZEPHIR_INIT_CLASS(Tensor_Functional)
+{
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Functional, tensor, functional, tensor_functional_method_entry);
 
 	zephir_declare_class_constant_double(tensor_functional_ce, SL("M_E"), 2.7182818284590452354);
 
 	return SUCCESS;
-
 }
 
 /**

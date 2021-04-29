@@ -30,12 +30,11 @@
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-ZEPHIR_INIT_CLASS(Tensor_Settings) {
-
+ZEPHIR_INIT_CLASS(Tensor_Settings)
+{
 	ZEPHIR_REGISTER_CLASS(Tensor, Settings, tensor, settings, tensor_settings_method_entry, 0);
 
 	return SUCCESS;
-
 }
 
 /**
@@ -44,8 +43,8 @@ ZEPHIR_INIT_CLASS(Tensor_Settings) {
  * @param int threads
  * @return void
  */
-PHP_METHOD(Tensor_Settings, setNumThreads) {
-
+PHP_METHOD(Tensor_Settings, setNumThreads)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval *threads_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, status, _4;
 	zend_long threads, ZEPHIR_LAST_CALL_STATUS;
@@ -62,13 +61,11 @@ PHP_METHOD(Tensor_Settings, setNumThreads) {
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_LONG(threads)
 	ZEND_PARSE_PARAMETERS_END();
-
 #endif
 
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &threads_param);
-
 	threads = zephir_get_intval(threads_param);
 
 
@@ -90,7 +87,6 @@ PHP_METHOD(Tensor_Settings, setNumThreads) {
 	ZVAL_LONG(&_4, threads);
 	tensor_set_num_threads(&status, &_4);
 	ZEPHIR_MM_RESTORE();
-
 }
 
 /**
@@ -98,14 +94,13 @@ PHP_METHOD(Tensor_Settings, setNumThreads) {
  *
  * @return int
  */
-PHP_METHOD(Tensor_Settings, numThreads) {
-
+PHP_METHOD(Tensor_Settings, numThreads)
+{
 	zval *this_ptr = getThis();
 
 
 
 	tensor_get_num_threads(return_value);
 	return;
-
 }
 

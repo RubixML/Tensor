@@ -12,12 +12,11 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Tensor_Arithmetic) {
-
+ZEPHIR_INIT_CLASS(Tensor_Arithmetic)
+{
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Arithmetic, tensor, arithmetic, tensor_arithmetic_method_entry);
 
 	return SUCCESS;
-
 }
 
 /**

@@ -12,12 +12,11 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Tensor_Statistical) {
-
+ZEPHIR_INIT_CLASS(Tensor_Statistical)
+{
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Statistical, tensor, statistical, tensor_statistical_method_entry);
 
 	return SUCCESS;
-
 }
 
 /**

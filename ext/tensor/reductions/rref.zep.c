@@ -28,8 +28,8 @@
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-ZEPHIR_INIT_CLASS(Tensor_Reductions_Rref) {
-
+ZEPHIR_INIT_CLASS(Tensor_Reductions_Rref)
+{
 	ZEPHIR_REGISTER_CLASS(Tensor\\Reductions, Rref, tensor, reductions_rref, tensor_reductions_rref_method_entry, 0);
 
 	/**
@@ -38,9 +38,7 @@ ZEPHIR_INIT_CLASS(Tensor_Reductions_Rref) {
 	 * @var \Tensor\Matrix
 	 */
 	zend_declare_property_null(tensor_reductions_rref_ce, SL("a"), ZEND_ACC_PROTECTED);
-
 	return SUCCESS;
-
 }
 
 /**
@@ -49,8 +47,8 @@ ZEPHIR_INIT_CLASS(Tensor_Reductions_Rref) {
  * @param \Tensor\Matrix a
  * @return self
  */
-PHP_METHOD(Tensor_Reductions_Rref, reduce) {
-
+PHP_METHOD(Tensor_Reductions_Rref, reduce)
+{
 	zend_bool _6, _18$$3, _13$$5, _24$$8;
 	zval b, rowB, t, _5, _8$$3, _22$$7;
 	double scale = 0, divisor = 0;
@@ -89,13 +87,11 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
 	ZEND_PARSE_PARAMETERS_END();
-
 #endif
 
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
-
 
 
 	ZEPHIR_INIT_VAR(&b);
@@ -221,15 +217,14 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce) {
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 32, &_30);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
  * @param \Tensor\Matrix a
  * @throws \InvalidArgumentException
  */
-PHP_METHOD(Tensor_Reductions_Rref, __construct) {
-
+PHP_METHOD(Tensor_Reductions_Rref, __construct)
+{
 	zval *a, a_sub;
 	zval *this_ptr = getThis();
 
@@ -239,16 +234,13 @@ PHP_METHOD(Tensor_Reductions_Rref, __construct) {
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
 	ZEND_PARSE_PARAMETERS_END();
-
 #endif
 
 
 	zephir_fetch_params_without_memory_grow(1, 0, &a);
 
 
-
 	zephir_update_property_zval(this_ptr, ZEND_STRL("a"), a);
-
 }
 
 /**
@@ -256,13 +248,12 @@ PHP_METHOD(Tensor_Reductions_Rref, __construct) {
  *
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_Reductions_Rref, a) {
-
+PHP_METHOD(Tensor_Reductions_Rref, a)
+{
 	zval *this_ptr = getThis();
 
 
 
 	RETURN_MEMBER(getThis(), "a");
-
 }
 

@@ -12,12 +12,11 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Tensor_Comparable) {
-
+ZEPHIR_INIT_CLASS(Tensor_Comparable)
+{
 	ZEPHIR_REGISTER_INTERFACE(Tensor, Comparable, tensor, comparable, tensor_comparable_method_entry);
 
 	return SUCCESS;
-
 }
 
 /**

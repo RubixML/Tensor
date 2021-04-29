@@ -1,7 +1,10 @@
 - 3.0.0-beta
-    - Drop extension support for PHP 7.3 and 7.3
+    - Drop extension support for PHP 7.2 and 7.3
     - Remove dependency on JAMA library
     - Remove deprecations
+
+- 2.2.2
+    - Remove dependency on pthreads
 
 - 2.2.1
     - Optimize 2D convolution operation

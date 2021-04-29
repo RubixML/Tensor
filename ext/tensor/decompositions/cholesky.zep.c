@@ -30,8 +30,8 @@
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-ZEPHIR_INIT_CLASS(Tensor_Decompositions_Cholesky) {
-
+ZEPHIR_INIT_CLASS(Tensor_Decompositions_Cholesky)
+{
 	ZEPHIR_REGISTER_CLASS(Tensor\\Decompositions, Cholesky, tensor, decompositions_cholesky, tensor_decompositions_cholesky_method_entry, 0);
 
 	/**
@@ -40,9 +40,7 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Cholesky) {
 	 * @var \Tensor\Matrix
 	 */
 	zend_declare_property_null(tensor_decompositions_cholesky_ce, SL("l"), ZEND_ACC_PROTECTED);
-
 	return SUCCESS;
-
 }
 
 /**
@@ -53,8 +51,8 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Cholesky) {
  * @throws \Tensor\Exceptions\RuntimeException
  * @return self
  */
-PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
-
+PHP_METHOD(Tensor_Decompositions_Cholesky, decompose)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_6 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
@@ -74,13 +72,11 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
 	ZEND_PARSE_PARAMETERS_END();
-
 #endif
 
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
-
 
 
 	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
@@ -112,14 +108,13 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose) {
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 24, &_5);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
  * @param \Tensor\Matrix l
  */
-PHP_METHOD(Tensor_Decompositions_Cholesky, __construct) {
-
+PHP_METHOD(Tensor_Decompositions_Cholesky, __construct)
+{
 	zval *l, l_sub;
 	zval *this_ptr = getThis();
 
@@ -129,16 +124,13 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, __construct) {
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_OBJECT_OF_CLASS(l, tensor_matrix_ce)
 	ZEND_PARSE_PARAMETERS_END();
-
 #endif
 
 
 	zephir_fetch_params_without_memory_grow(1, 0, &l);
 
 
-
 	zephir_update_property_zval(this_ptr, ZEND_STRL("l"), l);
-
 }
 
 /**
@@ -146,14 +138,13 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, __construct) {
  *
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_Decompositions_Cholesky, l) {
-
+PHP_METHOD(Tensor_Decompositions_Cholesky, l)
+{
 	zval *this_ptr = getThis();
 
 
 
 	RETURN_MEMBER(getThis(), "l");
-
 }
 
 /**
@@ -161,8 +152,8 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, l) {
  *
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_Decompositions_Cholesky, lT) {
-
+PHP_METHOD(Tensor_Decompositions_Cholesky, lT)
+{
 	zval _0;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
@@ -177,6 +168,5 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, lT) {
 	ZEPHIR_RETURN_CALL_METHOD(&_0, "transpose", NULL, 0);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
