@@ -11,7 +11,7 @@
 #include "kernel/globals.h"
 
 #define PHP_TENSOR_NAME        "tensor"
-#define PHP_TENSOR_VERSION     "2.2.1"
+#define PHP_TENSOR_VERSION     "2.2.2"
 #define PHP_TENSOR_EXTNAME     "tensor"
 #define PHP_TENSOR_AUTHOR      "Andrew DalPino"
 #define PHP_TENSOR_ZEPVERSION  "0.13.2-$Id$"

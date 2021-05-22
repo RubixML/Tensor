@@ -10,7 +10,7 @@
         <email>support@andrewdalpino.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2021-04-05</date>
+	<date>2021-05-21</date>
 	<version>
 		<release>3.0.0</release>
 		<api>3.0</api>
@@ -21,7 +21,7 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-
+        - Extension now compatible with PHP 7.4 and 8.0+
     </notes>
 	<contents>
         <dir name="/">
