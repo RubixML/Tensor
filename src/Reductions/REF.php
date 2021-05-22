@@ -44,15 +44,14 @@ class REF
     public static function reduce(Matrix $a)
     {
         try {
-            return self::gaussianElimination($a);
+            return static::gaussianElimination($a);
         } catch (RuntimeException $e) {
-            return self::rowReductionMethod($a);
+            return static::rowReductionMethod($a);
         }
     }
 
     /**
-     * Calculate the row echelon form (REF) of the matrix using Gaussian
-     * elimination.
+     * Calculate the row echelon form (REF) of the matrix using Gaussian elimination.
      *
      * @param \Tensor\Matrix $a
      * @throws \Tensor\Exceptions\RuntimeException

@@ -2,17 +2,17 @@
 <package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.4.7" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
 	<name>tensor</name>
 	<channel>pecl.php.net</channel>
-	<summary>Tensor is a library and extension that provides objects for scientific computing in PHP.</summary>
-    <description>Tensor is a library and extension that provides objects for scientific computing in PHP.</description>
+	<summary>A library and extension that provides objects for scientific computing in PHP.</summary>
+    <description>A library and extension that provides objects for scientific computing in PHP.</description>
 	<lead>
 		<name>Andrew DalPino</name>
 		<user>andrewdalpino</user>
-        <email>support@rubixml.com</email>
+        <email>support@andrewdalpino.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2021-03-07</date>
+	<date>2021-04-28</date>
 	<version>
-		<release>2.2.1</release>
+		<release>2.2.2</release>
 		<api>2.2</api>
 	</version>
 	<stability>
@@ -21,8 +21,7 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Optimize 2D convolution operation
-        - Fix and optimize vector convolve 1D operation
+        - Remove dependency on pthreads
     </notes>
 	<contents>
         <dir name="/">
