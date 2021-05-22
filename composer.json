@@ -25,12 +25,12 @@
         }
     ],
     "require": {
-        "php": ">=7.2"
+        "php": ">=7.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "2.18.*",
-        "phalcon/zephir": "^0.13.1",
-        "phpbench/phpbench": "0.16.*",
+        "phalcon/zephir": "^0.13.5",
+        "phpbench/phpbench": "^1.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "0.12.*",
         "phpstan/phpstan-phpunit": "0.12.*",

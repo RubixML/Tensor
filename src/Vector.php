@@ -30,14 +30,14 @@ class Vector implements Tensor
      *
      * @var (int|float)[]
      */
-    protected $a;
+    protected array $a;
 
     /**
      * The number of elements in the vector.
      *
      * @var int
      */
-    protected $n;
+    protected int $n;
 
     /**
      * Factory method to build a new vector from an array.

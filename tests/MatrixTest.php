@@ -27,27 +27,27 @@ class MatrixTest extends TestCase
     /**
      * @var \Tensor\Matrix
      */
-    protected $a;
+    protected \Tensor\Matrix $a;
 
     /**
      * @var \Tensor\Matrix
      */
-    protected $b;
+    protected \Tensor\Matrix $b;
 
     /**
      * @var \Tensor\Matrix
      */
-    protected $c;
+    protected \Tensor\Matrix $c;
 
     /**
      * @var \Tensor\Vector
      */
-    protected $d;
+    protected \Tensor\Vector $d;
 
     /**
      * @var \Tensor\ColumnVector
      */
-    protected $e;
+    protected \Tensor\ColumnVector $e;
 
     /**
      * @before

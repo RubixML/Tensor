@@ -1,7 +1,8 @@
 - 3.0.0-beta
+    - Add support for PHP 8.0 in the extension
     - Drop extension support for PHP 7.2 and 7.3
     - Remove dependency on JAMA library
-    - Remove deprecations
+    - Remove previously deprecated items
 
 - 2.2.2
     - Remove dependency on pthreads

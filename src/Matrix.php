@@ -38,21 +38,21 @@ class Matrix implements Tensor
      *
      * @var array[]
      */
-    protected $a;
+    protected array $a;
 
     /**
      * The number of rows in the matrix.
      *
      * @var int
      */
-    protected $m;
+    protected int $m;
 
     /**
      * The number of columns in the matrix.
      *
      * @var int
      */
-    protected $n;
+    protected int $n;
 
     /**
      * Factory method to build a new matrix from an array.

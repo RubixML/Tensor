@@ -22,22 +22,22 @@ class VectorTest extends TestCase
     /**
      * @var \Tensor\Vector
      */
-    protected $a;
+    protected \Tensor\Vector $a;
 
     /**
      * @var \Tensor\Vector
      */
-    protected $b;
+    protected \Tensor\Vector $b;
 
     /**
      * @var \Tensor\Vector
      */
-    protected $c;
+    protected \Tensor\Vector $c;
 
     /**
      * @var \Tensor\Matrix
      */
-    protected $d;
+    protected \Tensor\Matrix $d;
 
     /**
      * @before

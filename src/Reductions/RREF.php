@@ -20,7 +20,7 @@ class RREF
      *
      * @var \Tensor\Matrix
      */
-    protected $a;
+    protected \Tensor\Matrix $a;
 
     /**
      * Factory method to reduce a matrix.

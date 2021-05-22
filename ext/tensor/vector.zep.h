@@ -126,11 +126,19 @@ PHP_METHOD(Tensor_Vector, offsetGet);
 PHP_METHOD(Tensor_Vector, getIterator);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_build, 0, 0, 0)
+#if PHP_VERSION_ID >= 80000
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, a, IS_ARRAY, 0, "[]")
+#else
 	ZEND_ARG_ARRAY_INFO(0, a, 0)
+#endif
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_quick, 0, 0, 0)
+#if PHP_VERSION_ID >= 80000
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, a, IS_ARRAY, 0, "[]")
+#else
 	ZEND_ARG_ARRAY_INFO(0, a, 0)
+#endif
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_zeros, 0, 1, Tensor\\Vector, 0)

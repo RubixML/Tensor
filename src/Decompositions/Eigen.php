@@ -22,14 +22,14 @@ class Eigen
      *
      * @var (int|float)[]
      */
-    protected $eigenvalues;
+    protected array $eigenvalues;
 
     /**
      * The eigenvectors of the eigendecomposition.
      *
      * @var \Tensor\Matrix
      */
-    protected $eigenvectors;
+    protected \Tensor\Matrix $eigenvectors;
 
     /**
      * Factory method to decompose a matrix.
@@ -41,7 +41,7 @@ class Eigen
      */
     public static function decompose(Matrix $a, bool $symmetric = false) : self
     {
-        throw new NotImplemented('Eig is not implemented in Tensor PHP.');
+        throw new NotImplemented('Use the extension for Eigen decomposition.');
     }
 
     /**

@@ -22,17 +22,17 @@ class ColumnVectorTest extends TestCase
     /**
      * @var \Tensor\ColumnVector
      */
-    protected $a;
+    protected \Tensor\ColumnVector $a;
 
     /**
      * @var \Tensor\Vector
      */
-    protected $b;
+    protected \Tensor\Vector $b;
 
     /**
      * @var \Tensor\Matrix
      */
-    protected $c;
+    protected \Tensor\Matrix $c;
 
     /**
      * @before

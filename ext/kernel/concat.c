@@ -607,7 +607,7 @@ void zephir_concat_vv(zval *result, zval *op1, zval *op2, int self_var){
 void zephir_concat_function(zval *result, zval *op1, zval *op2)
 {
 	zval tmp;
-	SEPARATE_ZVAL_IF_NOT_REF(result);
+	SEPARATE_ZVAL_NOREF(result);
 
 	/*
 		res == op1 == op2: won't leak
