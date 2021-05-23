@@ -130,8 +130,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Build a diagonal matrix with the value of each element along the
-     * diagonal and 0s everywhere else.
+     * Build a diagonal matrix with the value of each element along the diagonal and 0s everywhere else.
      *
      * @param (int|float)[] $elements
      * @throws \Tensor\Exceptions\InvalidArgumentException
