@@ -18,7 +18,6 @@ use Closure;
 use function count;
 use function array_slice;
 use function array_fill;
-use function is_int;
 use function is_float;
 use function gettype;
 
@@ -36,7 +35,7 @@ class Matrix implements Tensor
     /**
      * A 2-dimensional sequential array that holds the values of the matrix.
      *
-     * @var array[]
+     * @var list<list<float>>
      */
     protected array $a;
 
@@ -96,7 +95,7 @@ class Matrix implements Tensor
             $rowA = [];
 
             for ($j = 0; $j < $n; ++$j) {
-                $rowA[] = $i === $j ? 1 : 0;
+                $rowA[] = $i === $j ? 1.0 : 0.0;
             }
 
             $a[] = $rowA;
@@ -114,7 +113,7 @@ class Matrix implements Tensor
      */
     public static function zeros(int $m, int $n) : self
     {
-        return self::fill(0, $m, $n);
+        return self::fill(0.0, $m, $n);
     }
 
     /**
@@ -126,7 +125,7 @@ class Matrix implements Tensor
      */
     public static function ones(int $m, int $n) : self
     {
-        return self::fill(1, $m, $n);
+        return self::fill(1.0, $m, $n);
     }
 
     /**
@@ -165,13 +164,13 @@ class Matrix implements Tensor
     /**
      * Fill a matrix with a given value at each element.
      *
-     * @param int|float $value
+     * @param float $value
      * @param int $m
      * @param int $n
      * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
-    public static function fill($value, int $m, int $n) : self
+    public static function fill(float $value, int $m, int $n) : self
     {
         if ($m < 1) {
             throw new InvalidArgumentException('M must be'
@@ -224,8 +223,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return a standard normally distributed random matrix i.e values
-     * between -1 and 1.
+     * Return a standard normally distributed random matrix i.e values between -1 and 1.
      *
      * @param int $m
      * @param int $n
@@ -305,7 +303,7 @@ class Matrix implements Tensor
             $rowA = [];
 
             while (count($rowA) < $n) {
-                $k = 0;
+                $k = 0.0;
                 $p = 1.0;
 
                 while ($p > $l) {
@@ -314,7 +312,7 @@ class Matrix implements Tensor
                     $p *= rand() / $max;
                 }
 
-                $rowA[] = $k - 1;
+                $rowA[] = $k - 1.0;
             }
 
             $a[] = $rowA;
@@ -367,15 +365,10 @@ class Matrix implements Tensor
      */
     public function __construct(array $a, bool $validate = true)
     {
-        if (empty($a)) {
-            throw new InvalidArgumentException('Matrix must contain'
-                . ' at least 1 element.');
-        }
-
         $m = count($a);
-        $n = count(current($a));
+        $n = count(current($a) ?: []);
 
-        if ($validate) {
+        if ($a and $validate) {
             $a = array_values($a);
 
             foreach ($a as $i => &$rowA) {
@@ -387,11 +380,9 @@ class Matrix implements Tensor
 
                 $rowA = array_values($rowA);
 
-                foreach ($rowA as $valueA) {
-                    if (!is_int($valueA) and !is_float($valueA)) {
-                        throw new InvalidArgumentException('Matrix element must'
-                            . ' be an integer or floating point number, '
-                            . gettype($valueA) . ' given.');
+                foreach ($rowA as &$valueA) {
+                    if (!is_float($valueA)) {
+                        $valueA = (float) $valueA;
                     }
                 }
             }
@@ -509,7 +500,7 @@ class Matrix implements Tensor
     /**
      * Return the elements of the matrix in a 2-d array.
      *
-     * @return array[]
+     * @return list<list<float>>
      */
     public function asArray() : array
     {
@@ -553,38 +544,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the index of the minimum element in every row of the matrix.
-     *
-     * @return \Tensor\ColumnVector
-     */
-    public function argmin() : ColumnVector
-    {
-        $b = [];
-
-        foreach ($this->a as $rowA) {
-            $b[] = (int) array_search(min($rowA), $rowA);
-        }
-
-        return ColumnVector::quick($b);
-    }
-
-    /**
-     * Return the index of the maximum element in every row of the matrix.
-     *
-     * @return \Tensor\ColumnVector
-     */
-    public function argmax() : ColumnVector
-    {
-        $b = [];
-
-        foreach ($this->a as $rowA) {
-            $b[] = (int) array_search(max($rowA), $rowA);
-        }
-
-        return ColumnVector::quick($b);
-    }
-
-    /**
      * Run a function over all of the elements in the matrix.
      *
      * @param callable $callback
@@ -607,10 +566,10 @@ class Matrix implements Tensor
      * Reduce the matrix down to a scalar.
      *
      * @param callable $callback
-     * @param int|float $initial
-     * @return int|float
+     * @param float $initial
+     * @return float
      */
-    public function reduce(callable $callback, $initial = 0)
+    public function reduce(callable $callback, float $initial = 0) : float
     {
         $carry = $initial;
 
@@ -684,13 +643,12 @@ class Matrix implements Tensor
      * Calculate the determinant of the matrix.
      *
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return int|float
+     * @return float
      */
-    public function det()
+    public function det() : float
     {
         if (!$this->isSquare()) {
-            throw new InvalidArgumentException('Matrix must be'
-                . " square, {$this->shapeString()} given.");
+            throw new InvalidArgumentException("Matrix must be square, {$this->shapeString()} given.");
         }
 
         $ref = $this->ref();
@@ -703,9 +661,9 @@ class Matrix implements Tensor
     /**
      * Return the trace of the matrix i.e the sum of all diagonal elements of a square matrix.
      *
-     * @return int|float
+     * @return float
      */
-    public function trace()
+    public function trace() : float
     {
         return $this->diagonalAsVector()->sum();
     }
@@ -950,9 +908,9 @@ class Matrix implements Tensor
     /**
      * Return the L1 norm of the matrix.
      *
-     * @return int|float|false
+     * @return float
      */
-    public function l1Norm()
+    public function l1Norm() : float
     {
         return $this->transpose()->abs()->sum()->max();
     }
@@ -960,9 +918,9 @@ class Matrix implements Tensor
     /**
      * Return the L2 norm of the matrix.
      *
-     * @return int|float
+     * @return float
      */
-    public function l2Norm()
+    public function l2Norm() : float
     {
         return sqrt($this->square()->sum()->sum());
     }
@@ -970,9 +928,9 @@ class Matrix implements Tensor
     /**
      * Return the infinity norm of the matrix.
      *
-     * @return int|float|false
+     * @return float
      */
-    public function infinityNorm()
+    public function infinityNorm() : float
     {
         return $this->abs()->sum()->max();
     }
@@ -980,9 +938,9 @@ class Matrix implements Tensor
     /**
      * Return the max norm of the matrix.
      *
-     * @return int|float|false
+     * @return float
      */
-    public function maxNorm()
+    public function maxNorm() : float
     {
         return $this->abs()->max()->max();
     }
@@ -1476,7 +1434,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the log of 1 plus the tensor i.e. a transform.
+     * Return the log of 1 plus the tensor.
      *
      * @return self
      */
@@ -1893,11 +1851,11 @@ class Matrix implements Tensor
 
             foreach ($rowA as $valueA) {
                 if ($valueA > 0) {
-                    $rowB[] = 1;
+                    $rowB[] = 1.0;
                 } elseif ($valueA < 0) {
-                    $rowB[] = -1;
+                    $rowB[] = -1.0;
                 } else {
-                    $rowB[] = 0;
+                    $rowB[] = 0.0;
                 }
             }
 
@@ -3150,10 +3108,10 @@ class Matrix implements Tensor
     /**
      * Multiply this matrix by a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function multiplyScalar($b) : self
+    public function multiplyScalar(float $b) : self
     {
         $c = [];
 
@@ -3173,10 +3131,10 @@ class Matrix implements Tensor
     /**
      * Divide this matrix by a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function divideScalar($b) : self
+    public function divideScalar(float $b) : self
     {
         $c = [];
 
@@ -3196,10 +3154,10 @@ class Matrix implements Tensor
     /**
      * Add this matrix by a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function addScalar($b) : self
+    public function addScalar(float $b) : self
     {
         $c = [];
 
@@ -3219,10 +3177,10 @@ class Matrix implements Tensor
     /**
      * Subtract a scalar from this matrix.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function subtractScalar($b) : self
+    public function subtractScalar(float $b) : self
     {
         $c = [];
 
@@ -3242,10 +3200,10 @@ class Matrix implements Tensor
     /**
      * Raise the matrix to a given scalar power.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function powScalar($b) : self
+    public function powScalar(float $b) : self
     {
         $c = [];
 
@@ -3265,10 +3223,10 @@ class Matrix implements Tensor
     /**
      * Calculate the modulus of this matrix with a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function modScalar($b) : self
+    public function modScalar(float $b) : self
     {
         $c = [];
 
@@ -3288,10 +3246,10 @@ class Matrix implements Tensor
     /**
      * Return the element-wise equality comparison of this matrix and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function equalScalar($b) : self
+    public function equalScalar(float $b) : self
     {
         $c = [];
 
@@ -3311,10 +3269,10 @@ class Matrix implements Tensor
     /**
      * Return the element-wise not equal comparison of this matrix and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function notEqualScalar($b) : self
+    public function notEqualScalar(float $b) : self
     {
         $c = [];
 
@@ -3334,10 +3292,10 @@ class Matrix implements Tensor
     /**
      * Return the element-wise greater than comparison of this matrix and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function greaterScalar($b) : self
+    public function greaterScalar(float $b) : self
     {
         $c = [];
 
@@ -3357,10 +3315,10 @@ class Matrix implements Tensor
     /**
      * Return the element-wise greater than or equal to comparison of this matrix and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function greaterEqualScalar($b) : self
+    public function greaterEqualScalar(float $b) : self
     {
         $c = [];
 
@@ -3380,10 +3338,10 @@ class Matrix implements Tensor
     /**
      * Return the element-wise less than comparison of this matrix and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function lessScalar($b) : self
+    public function lessScalar(float $b) : self
     {
         $c = [];
 
@@ -3403,10 +3361,10 @@ class Matrix implements Tensor
     /**
      * Return the element-wise less than or equal to comparison of this matrix and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return self
      */
-    public function lessEqualScalar($b) : self
+    public function lessEqualScalar(float $b) : self
     {
         $c = [];
 
@@ -3433,7 +3391,7 @@ class Matrix implements Tensor
 
     /**
      * @param mixed $index
-     * @param (int|float)[] $values
+     * @param mixed $values
      * @throws \Tensor\Exceptions\RuntimeException
      */
     public function offsetSet($index, $values) : void

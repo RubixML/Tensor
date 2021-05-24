@@ -1,6 +1,7 @@
 - 3.0.0-beta
     - Add support for PHP 8.0 in the extension
     - Drop extension support for PHP 7.2 and 7.3
+    - Tensors only compute floating point operations
     - Remove dependency on JAMA library
     - Remove previously deprecated items
     - Matrix returns vector on row access

@@ -323,18 +323,6 @@ class VectorTest extends TestCase
     /**
      * @test
      */
-    public function reduce() : void
-    {
-        $scalar = $this->a->reduce(function ($value, $carry) {
-            return $carry + ($value / 2.);
-        });
-
-        $this->assertEquals(110.3671875, $scalar);
-    }
-
-    /**
-     * @test
-     */
     public function reciprocal() : void
     {
         $z = $this->a->reciprocal();
@@ -346,26 +334,6 @@ class VectorTest extends TestCase
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function argmin() : void
-    {
-        $this->assertEquals(4, $this->a->argmin());
-        $this->assertEquals(5, $this->b->argmin());
-        $this->assertEquals(4, $this->c->argmin());
-    }
-
-    /**
-     * @test
-     */
-    public function argmax() : void
-    {
-        $this->assertEquals(6, $this->a->argmax());
-        $this->assertEquals(6, $this->b->argmax());
-        $this->assertEquals(3, $this->c->argmax());
     }
 
     /**

@@ -22,6 +22,10 @@
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
         - Extension now compatible with PHP 7.4 and 8.0+
+        - Drop extension support for PHP 7.2 and 7.3
+        - Tensors only compute floating point operations
+        - Matrix returns vector on row access
+        - Removed deprecated methods
     </notes>
 	<contents>
         <dir name="/">
@@ -31,8 +35,6 @@
                     <file name="arithmetic.h" role="src" />
                     <file name="comparison.c" role="src" />
                     <file name="comparison.h" role="src" />
-                    <file name="indexing.c" role="src" />
-                    <file name="indexing.h" role="src" />
                     <file name="linear_algebra.c" role="src" />
                     <file name="linear_algebra.h" role="src" />
                     <file name="settings.c" role="src" />

@@ -19,7 +19,7 @@ class Vector implements Tensor
     /**
      * A 1-d sequential array holding the elements of the vector.
      *
-     * @var (int|float)[]
+     * @var list<float>
      */
     protected a;
 
@@ -33,7 +33,7 @@ class Vector implements Tensor
     /**
      * Factory method to build a new vector from an array.
      *
-     * @param (int|float)[] a
+     * @param float[] a
      * @return self
      */
     public static function build(const array a = [])
@@ -44,7 +44,7 @@ class Vector implements Tensor
     /**
      * Build a vector foregoing any validation for quicker instantiation.
      *
-     * @param (int|float)[] a
+     * @param float[] a
      * @return self
      */
     public static function quick(const array a = [])
@@ -61,7 +61,7 @@ class Vector implements Tensor
      */
     public static function zeros(const int n) -> <Vector>
     {
-        return static::fill(0, n);
+        return static::fill(0.0, n);
     }
 
     /**
@@ -73,18 +73,18 @@ class Vector implements Tensor
      */
     public static function ones(const int n) -> <Vector>
     {
-        return static::fill(1, n);
+        return static::fill(1.0, n);
     }
 
     /**
      * Fill a vector with a given value.
      *
-     * @param int|float value
+     * @param float value
      * @param int n
      * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
-    public static function fill(const value, const int n) -> <Vector>
+    public static function fill(const float value, const int n) -> <Vector>
     {
         if unlikely !is_int(value) && !is_float(value) {
             throw new InvalidArgumentException("Value must be an"
@@ -177,8 +177,7 @@ class Vector implements Tensor
                 . " greater than 0, " . strval(n) . " given.");
         }
 
-        int k;
-        float p;
+        float p, k;
 
         array a = [];
 
@@ -187,7 +186,7 @@ class Vector implements Tensor
         int max = (int) getrandmax();
 
         while count(a) < n {
-            let k = 0;
+            let k = 0.0;
             let p = 1.0;
 
             while p > l {
@@ -196,7 +195,7 @@ class Vector implements Tensor
                 let p *= rand() / max;
             }
 
-            let a[] = k - 1;
+            let a[] = k - 1.0;
         }
 
         return static::quick(a);
@@ -230,12 +229,12 @@ class Vector implements Tensor
     /**
      * Return evenly spaced values within a given interval.
      *
-     * @param int|float start
-     * @param int|float end
-     * @param int|float interval
+     * @param float start
+     * @param float end
+     * @param float interval
      * @return self
      */
-    public static function range(const start, const end, const interval = 1) -> <Vector>
+    public static function range(const float start, const float end, const float interval = 1.0) -> <Vector>
     {
         return static::quick(range(start, end, interval));
     }
@@ -276,19 +275,21 @@ class Vector implements Tensor
     }
 
     /**
-     * @param (int|float)[] a
+     * @param float[] a
      * @param bool validate
-     * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     public function __construct(array a, const bool validate = true)
     {
-        if unlikely empty a {
-            throw new InvalidArgumentException("Vector must contain"
-                . " at least one element.");
-        }
-
+        var valueA;
+        
         if validate {
             let a = array_values(a);
+
+            for valueA in a {
+                if (!is_float(valueA)) {
+                    let valueA = (float) valueA;
+                }
+            }
         }
 
         let this->a = a;
@@ -348,7 +349,7 @@ class Vector implements Tensor
     /**
      * Return the vector as an array.
      *
-     * @return (int|float)[]
+     * @return list<float>
      */
     public function asArray() -> array
     {
@@ -436,26 +437,6 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the index of the minimum element in the vector.
-     *
-     * @return int
-     */
-    public function argmin() -> int
-    {
-        return tensor_argmin(this->a);
-    }
-
-    /**
-     * Return the index of the maximum element in the vector.
-     *
-     * @return int
-     */
-    public function argmax() -> int
-    {
-        return tensor_argmax(this->a);
-    }
-
-    /**
      * Map a function over the elements in the vector and return a new
      * vector.
      *
@@ -471,18 +452,12 @@ class Vector implements Tensor
      * Reduce the vector down to a scalar.
      *
      * @param callable callback
-     * @param int|float initial
+     * @param float initial
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return int|float
+     * @return float
      */
-    public function reduce(const var callback, const var initial = 0) -> int|float
+    public function reduce(const var callback, float initial = 0) -> float
     {
-        if unlikely !is_int(initial) && !is_float(initial) {
-            throw new InvalidArgumentException("Initial value must"
-                . " be an integer or floating point number, "
-                . gettype(initial) . " given.");
-        }
-
         return array_reduce(this->a, callback, initial);
     }
 
@@ -542,9 +517,9 @@ class Vector implements Tensor
      * Return the inner product of two vectors.
      *
      * @param \Tensor\Vector b
-     * @return int|float
+     * @return float
      */
-    public function inner(const <Vector> b) -> int|float
+    public function inner(const <Vector> b) -> float
     {
         return this->dot(b);
     }
@@ -581,9 +556,9 @@ class Vector implements Tensor
     /**
      * Calculate the L1 or Manhattan norm of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function l1Norm() -> int|float
+    public function l1Norm() -> float
     {
         return this->abs()->sum();
     }
@@ -591,9 +566,9 @@ class Vector implements Tensor
     /**
      * Calculate the L2 or Euclidean norm of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function l2Norm() -> int|float
+    public function l2Norm() -> float
     {
         return sqrt(this->square()->sum());
     }
@@ -603,9 +578,9 @@ class Vector implements Tensor
      *
      * @param float p
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return int|float
+     * @return float
      */
-    public function pNorm(const float p = 3.0) -> int|float
+    public function pNorm(const float p = 3.0) -> float
     {
         if unlikely p <= 0.0 {
             throw new InvalidArgumentException("P must be greater"
@@ -618,11 +593,11 @@ class Vector implements Tensor
     /**
      * Calculate the max norm of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function maxNorm() -> int|float
+    public function maxNorm() -> float
     {
-        return this->abs()->max();
+        return (float) this->abs()->max();
     }
 
     /**
@@ -1172,9 +1147,9 @@ class Vector implements Tensor
     /**
      * The sum of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function sum() -> int|float
+    public function sum() -> float
     {
         return array_sum(this->a);
     }
@@ -1182,9 +1157,9 @@ class Vector implements Tensor
     /**
      * Return the product of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function product() -> int|float
+    public function product() -> float
     {
         return array_product(this->a);
     }
@@ -1192,9 +1167,9 @@ class Vector implements Tensor
     /**
      * Return the minimum element in the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function min() -> int|float
+    public function min() -> float
     {
         return min(this->a);
     }
@@ -1202,19 +1177,19 @@ class Vector implements Tensor
     /**
      * Return the maximum element in the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function max() -> int|float
+    public function max() -> float
     {
-        return max(this->a);
+        return (float) max(this->a);
     }
 
     /**
      * Return the mean of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function mean() -> int|float
+    public function mean() -> float
     {
         return this->sum() / this->n;
     }
@@ -1222,9 +1197,9 @@ class Vector implements Tensor
     /**
      * Return the median of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function median() -> int|float
+    public function median() -> float
     {
         var median;
 
@@ -1248,9 +1223,9 @@ class Vector implements Tensor
      *
      * @param float q
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return int|float
+     * @return float
      */
-    public function quantile(const float q) -> int|float
+    public function quantile(const float q) -> float
     {
         if unlikely q < 0.0 || q > 1.0 {
             throw new InvalidArgumentException("Q must be"
@@ -1277,15 +1252,14 @@ class Vector implements Tensor
      *
      * @param mixed mean
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return int|float
+     * @return float
      */
-    public function variance(var mean = null) -> int|float
+    public function variance(var mean = null) -> float
     {
         if !is_null(mean) {
-            if unlikely !is_int(mean) && !is_float(mean) {
+            if unlikely !is_float(mean) {
                 throw new InvalidArgumentException("Mean scalar must be"
-                    . " an integer or floating point number "
-                    . gettype(mean) . " given.");
+                    . " a floating point number " . gettype(mean) . " given.");
             }
         } else {
             let mean = this->mean();
@@ -1449,11 +1423,11 @@ class Vector implements Tensor
 
         for valueA in this->a {
             if valueA > 0 {
-                let b[] = 1;
+                let b[] = 1.0;
             } elseif valueA < 0 {
-                let b[] = -1;
+                let b[] = -1.0;
             } else {
-                let b[] = 0;
+                let b[] = 0.0;
             }
         }
 
@@ -1494,6 +1468,7 @@ class Vector implements Tensor
         }
  
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1519,6 +1494,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1544,6 +1520,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1569,6 +1546,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1594,6 +1572,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1619,6 +1598,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1644,6 +1624,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1669,6 +1650,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1694,6 +1676,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1719,6 +1702,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1744,6 +1728,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1769,6 +1754,7 @@ class Vector implements Tensor
         }
 
         var rowB;
+
         array c = [];
  
         for rowB in b->asArray() {
@@ -1998,165 +1984,99 @@ class Vector implements Tensor
     /**
      * Multiply this vector by a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-     public function multiplyScalar(const var b) -> <Vector>
+     public function multiplyScalar(const float b) -> <Vector>
      {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_multiply_scalar(this->a, b));
     }
 
     /**
      * Divide this vector by a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function divideScalar(const var b) -> <Vector>
+    public function divideScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_divide_scalar(this->a, b));
     }
 
     /**
      * Add a scalar to this vector.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function addScalar(const var b) -> <Vector>
+    public function addScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_add_scalar(this->a, b));
     }
 
     /**
      * Subtract a scalar from this vector.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function subtractScalar(const var b) -> <Vector>
+    public function subtractScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_subtract_scalar(this->a, b));
     }
 
     /**
      * Raise the vector to a the power of a scalar value.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-     public function powScalar(const var b) -> <Vector>
+     public function powScalar(const float b) -> <Vector>
      {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_pow_scalar(this->a, b));
      }
 
     /**
      * Calculate the modulus of this vector with a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function modScalar(const var b) -> <Vector>
+    public function modScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_mod_scalar(this->a, b));
     }
 
     /**
-     * Return the element-wise equality comparison of this vector and a
-     * scalar.
+     * Return the element-wise equality comparison of this vector and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function equalScalar(const var b) -> <Vector>
+    public function equalScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_equal_scalar(this->a, b));
     }
 
     /**
-     * Return the element-wise not equal comparison of this vector and a
-     * scalar.
+     * Return the element-wise not equal comparison of this vector and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function notEqualScalar(const var b) -> <Vector>
+    public function notEqualScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_not_equal_scalar(this->a, b));
     }
 
     /**
-     * Return the element-wise greater than comparison of this vector
-     * and a scalar.
+     * Return the element-wise greater than comparison of this vector and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function greaterScalar(const var b) -> <Vector>
+    public function greaterScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_greater_scalar(this->a, b));
     }
 
@@ -2164,37 +2084,22 @@ class Vector implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function greaterEqualScalar(const var b) -> <Vector>
+    public function greaterEqualScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_greater_equal_scalar(this->a, b));
     }
 
     /**
-     * Return the element-wise less than comparison of this vector
-     * and a scalar.
+     * Return the element-wise less than comparison of this vector and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function lessScalar(const var b) -> <Vector>
+    public function lessScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_less_scalar(this->a, b));
     }
 
@@ -2202,18 +2107,11 @@ class Vector implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this vector and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function lessEqualScalar(const var b) -> <Vector>
+    public function lessEqualScalar(const float b) -> <Vector>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integer or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         return static::quick(tensor_less_equal_scalar(this->a, b));
     }
 

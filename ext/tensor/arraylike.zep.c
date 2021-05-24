@@ -51,8 +51,8 @@ ZEPHIR_DOC_METHOD(Tensor_ArrayLike, map);
  * Reduce the tensor down to a scalar.
  *
  * @param callable callback
- * @param mixed initial
- * @return mixed
+ * @param float initial
+ * @return float
  */
 ZEPHIR_DOC_METHOD(Tensor_ArrayLike, reduce);
 /**

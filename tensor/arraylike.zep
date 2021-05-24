@@ -39,10 +39,10 @@ interface ArrayLike extends ArrayAccess, IteratorAggregate, Countable
       * Reduce the tensor down to a scalar.
       *
       * @param callable callback
-      * @param mixed initial
-      * @return mixed
+      * @param float initial
+      * @return float
       */
-     public function reduce(const callback, const initial = 0);
+     public function reduce(const callback, float initial = 0.0) -> float;
 
     /**
      * Return the elements of the tensor as an array.

@@ -377,32 +377,6 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function argmin() : void
-    {
-        $z = $this->a->argmin();
-
-        $expected = [1, 2, 2];
-
-        $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function argmax() : void
-    {
-        $z = $this->a->argmax();
-
-        $expected = [0, 1, 0];
-
-        $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
     public function flatten() : void
     {
         $z = $this->a->flatten();
@@ -547,18 +521,6 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Matrix::class, $z);
         $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function reduce() : void
-    {
-        $z = $this->a->reduce(function ($value, $carry) {
-            return $carry + ($value / 2.0);
-        });
-
-        $this->assertEquals(17.5, $z);
     }
 
     /**

@@ -29,8 +29,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/matrix.zep.c
 	tensor/reductions/ref.zep.c
 	tensor/reductions/rref.zep.c
-	tensor/settings.zep.c include/indexing.c
-	include/arithmetic.c
+	tensor/settings.zep.c include/arithmetic.c
 	include/comparison.c
 	include/linear_algebra.c
 	include/signal_processing.c

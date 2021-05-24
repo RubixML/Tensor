@@ -11,7 +11,6 @@ use Closure;
 use function count;
 use function array_slice;
 use function array_fill;
-use function is_null;
 use function gettype;
 
 /**
@@ -28,7 +27,7 @@ class Vector implements Tensor
     /**
      * The 1-d sequential array that holds the values of the vector.
      *
-     * @var (int|float)[]
+     * @var list<float>
      */
     protected array $a;
 
@@ -69,7 +68,7 @@ class Vector implements Tensor
      */
     public static function zeros(int $n) : self
     {
-        return static::quick(array_fill(0, $n, 0));
+        return static::fill(0.0, $n);
     }
 
     /**
@@ -80,18 +79,18 @@ class Vector implements Tensor
      */
     public static function ones(int $n) : self
     {
-        return static::quick(array_fill(0, $n, 1));
+        return static::fill(1.0, $n);
     }
 
     /**
      * Fill a vector with a given value.
      *
-     * @param int|float $value
+     * @param float $value
      * @param int $n
      * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
-    public static function fill($value, int $n) : self
+    public static function fill(float $value, int $n) : self
     {
         if ($n < 1) {
             throw new InvalidArgumentException('Number of elements'
@@ -183,7 +182,7 @@ class Vector implements Tensor
         $a = [];
 
         while (count($a) < $n) {
-            $k = 0;
+            $k = 0.0;
             $p = 1.0;
 
             while ($p > $l) {
@@ -192,7 +191,7 @@ class Vector implements Tensor
                 $p *= rand() / $max;
             }
 
-            $a[] = $k - 1;
+            $a[] = $k - 1.0;
         }
 
         return static::quick($a);
@@ -226,12 +225,12 @@ class Vector implements Tensor
     /**
      * Return evenly spaced values within a given interval.
      *
-     * @param int|float $start
-     * @param int|float $end
-     * @param int|float $interval
+     * @param float $start
+     * @param float $end
+     * @param float $interval
      * @return self
      */
-    public static function range($start, $end, $interval = 1) : self
+    public static function range(float $start, float $end, float $interval = 1.0) : self
     {
         return static::quick(range($start, $end, $interval));
     }
@@ -273,18 +272,19 @@ class Vector implements Tensor
     }
 
     /**
-     * @param (int|float)[] $a
+     * @param mixed[] $a
      * @param bool $validate
-     * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     final public function __construct(array $a, bool $validate = true)
     {
-        if (empty($a)) {
-            throw new InvalidArgumentException('Vector must contain at least one element.');
-        }
-
-        if ($validate) {
+        if ($a and $validate) {
             $a = array_values($a);
+
+            foreach ($a as &$valueA) {
+                if (!is_float($valueA)) {
+                    $valueA = (float) $valueA;
+                }
+            }
         }
 
         $this->a = $a;
@@ -344,7 +344,7 @@ class Vector implements Tensor
     /**
      * Return the vector as an array.
      *
-     * @return (int|float)[]
+     * @return list<float>
      */
     public function asArray() : array
     {
@@ -422,26 +422,6 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the index of the minimum element in the vector.
-     *
-     * @return int
-     */
-    public function argmin() : int
-    {
-        return (int) array_search(min($this->a), $this->a);
-    }
-
-    /**
-     * Return the index of the maximum element in the vector.
-     *
-     * @return int
-     */
-    public function argmax() : int
-    {
-        return (int) array_search(max($this->a), $this->a);
-    }
-
-    /**
      * Map a function over the elements in the vector and return a new
      * vector.
      *
@@ -459,10 +439,10 @@ class Vector implements Tensor
      * Reduce the vector down to a scalar.
      *
      * @param callable $callback
-     * @param int|float $initial
-     * @return int|float
+     * @param float $initial
+     * @return float
      */
-    public function reduce(callable $callback, $initial = 0)
+    public function reduce(callable $callback, float $initial = 0.0) : float
     {
         return array_reduce($this->a, $callback, $initial);
     }
@@ -472,9 +452,9 @@ class Vector implements Tensor
      *
      * @param \Tensor\Vector $b
      * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return int|float
+     * @return float
      */
-    public function dot(Vector $b)
+    public function dot(Vector $b) : float
     {
         if ($this->n !== $b->size()) {
             throw new DimensionalityMismatch('Vector A expects'
@@ -505,9 +485,9 @@ class Vector implements Tensor
      * Return the inner product of two vectors.
      *
      * @param \Tensor\Vector $b
-     * @return int|float
+     * @return float
      */
-    public function inner(Vector $b)
+    public function inner(Vector $b) : float
     {
         return $this->dot($b);
     }
@@ -584,9 +564,9 @@ class Vector implements Tensor
     /**
      * Calculate the L1 or Manhattan norm of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function l1Norm()
+    public function l1Norm() : float
     {
         return $this->abs()->sum();
     }
@@ -594,9 +574,9 @@ class Vector implements Tensor
     /**
      * Calculate the L2 or Euclidean norm of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function l2Norm()
+    public function l2Norm() : float
     {
         return sqrt($this->square()->sum());
     }
@@ -606,9 +586,9 @@ class Vector implements Tensor
      *
      * @param float $p
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return int|float
+     * @return float
      */
-    public function pNorm(float $p = 3.0)
+    public function pNorm(float $p = 3.0) : float
     {
         if ($p <= 0.0) {
             throw new InvalidArgumentException("P must be greater than 0, $p given.");
@@ -620,11 +600,11 @@ class Vector implements Tensor
     /**
      * Calculate the max norm of the vector.
      *
-     * @return int|float|false
+     * @return float
      */
-    public function maxNorm()
+    public function maxNorm() : float
     {
-        return $this->abs()->max();
+        return (float) $this->abs()->max();
     }
 
     /**
@@ -1074,7 +1054,7 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the log of 1 plus the tensor i.e. a transform.
+     * Return the log of 1 plus the tensor.
      *
      * @return self
      */
@@ -1166,9 +1146,9 @@ class Vector implements Tensor
     /**
      * The sum of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function sum()
+    public function sum() : float
     {
         return array_sum($this->a);
     }
@@ -1176,9 +1156,9 @@ class Vector implements Tensor
     /**
      * Return the product of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function product()
+    public function product() : float
     {
         return array_product($this->a);
     }
@@ -1186,29 +1166,29 @@ class Vector implements Tensor
     /**
      * Return the minimum element in the vector.
      *
-     * @return int|float|false
+     * @return float
      */
-    public function min()
+    public function min() : float
     {
-        return min($this->a);
+        return (float) min($this->a);
     }
 
     /**
      * Return the maximum element in the vector.
      *
-     * @return int|float|false
+     * @return float
      */
-    public function max()
+    public function max() : float
     {
-        return max($this->a);
+        return (float) max($this->a);
     }
 
     /**
      * Return the mean of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function mean()
+    public function mean() : float
     {
         return $this->sum() / $this->n;
     }
@@ -1216,9 +1196,9 @@ class Vector implements Tensor
     /**
      * Return the median of the vector.
      *
-     * @return int|float
+     * @return float
      */
-    public function median()
+    public function median() : float
     {
         $mid = intdiv($this->n, 2);
 
@@ -1240,9 +1220,9 @@ class Vector implements Tensor
      *
      * @param float $q
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return int|float
+     * @return float
      */
-    public function quantile(float $q)
+    public function quantile(float $q) : float
     {
         if ($q < 0.0 or $q > 1.0) {
             throw new InvalidArgumentException('Q must be between'
@@ -1267,12 +1247,12 @@ class Vector implements Tensor
     /**
      * Return the variance of the vector.
      *
-     * @param int|float $mean
-     * @return int|float
+     * @param float|null $mean
+     * @return float
      */
-    public function variance($mean = null)
+    public function variance($mean = null) : float
     {
-        if (is_null($mean)) {
+        if ($mean === null) {
             $mean = $this->mean();
         }
 
@@ -1420,11 +1400,11 @@ class Vector implements Tensor
 
         foreach ($this->a as $valueA) {
             if ($valueA > 0) {
-                $b[] = 1;
+                $b[] = 1.0;
             } elseif ($valueA < 0) {
-                $b[] = -1;
+                $b[] = -1.0;
             } else {
-                $b[] = 0;
+                $b[] = 0.0;
             }
         }
 
@@ -2074,10 +2054,10 @@ class Vector implements Tensor
     /**
      * Multiply this vector by a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function multiplyScalar($b) : self
+    public function multiplyScalar(float $b) : self
     {
         $c = [];
 
@@ -2091,10 +2071,10 @@ class Vector implements Tensor
     /**
      * Divide this vector by a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function divideScalar($b) : self
+    public function divideScalar(float $b) : self
     {
         $c = [];
 
@@ -2108,10 +2088,10 @@ class Vector implements Tensor
     /**
      * Add a scalar to this vector.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function addScalar($b) : self
+    public function addScalar(float $b) : self
     {
         $c = [];
 
@@ -2125,10 +2105,10 @@ class Vector implements Tensor
     /**
      * Subtract a scalar from this vector.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function subtractScalar($b) : self
+    public function subtractScalar(float $b) : self
     {
         $c = [];
 
@@ -2142,10 +2122,10 @@ class Vector implements Tensor
     /**
      * Raise the vector to a the power of a scalar value.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function powScalar($b) : self
+    public function powScalar(float $b) : self
     {
         $c = [];
 
@@ -2159,10 +2139,10 @@ class Vector implements Tensor
     /**
      * Calculate the modulus of this vector with a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function modScalar($b) : self
+    public function modScalar(float $b) : self
     {
         $c = [];
 
@@ -2176,10 +2156,10 @@ class Vector implements Tensor
     /**
      * Return the element-wise equality comparison of this vector and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function equalScalar($b) : self
+    public function equalScalar(float $b) : self
     {
         $c = [];
 
@@ -2193,10 +2173,10 @@ class Vector implements Tensor
     /**
      * Return the element-wise not equal comparison of this vector and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function notEqualScalar($b) : self
+    public function notEqualScalar(float $b) : self
     {
         $c = [];
 
@@ -2210,10 +2190,10 @@ class Vector implements Tensor
     /**
      * Return the element-wise greater than comparison of this vector and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function greaterScalar($b) : self
+    public function greaterScalar(float $b) : self
     {
         $c = [];
 
@@ -2227,10 +2207,10 @@ class Vector implements Tensor
     /**
      * Return the element-wise greater than or equal to comparison of this vector and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function greaterEqualScalar($b) : self
+    public function greaterEqualScalar(float $b) : self
     {
         $c = [];
 
@@ -2244,10 +2224,10 @@ class Vector implements Tensor
     /**
      * Return the element-wise less than comparison of this vector and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function lessScalar($b) : self
+    public function lessScalar(float $b) : self
     {
         $c = [];
 
@@ -2261,10 +2241,10 @@ class Vector implements Tensor
     /**
      * Return the element-wise less than or equal to comparison of this vector and a scalar.
      *
-     * @param int|float $b
+     * @param float $b
      * @return static
      */
-    public function lessEqualScalar($b) : self
+    public function lessEqualScalar(float $b) : self
     {
         $c = [];
 
@@ -2320,7 +2300,7 @@ class Vector implements Tensor
      *
      * @param mixed $index
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return int|float
+     * @return float
      */
     public function offsetGet($index)
     {
@@ -2335,7 +2315,7 @@ class Vector implements Tensor
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \ArrayIterator<int,int|float>
+     * @return \ArrayIterator<int,float>
      */
     public function getIterator() : ArrayIterator
     {
