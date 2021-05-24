@@ -3,6 +3,7 @@
     - Drop extension support for PHP 7.2 and 7.3
     - Remove dependency on JAMA library
     - Remove previously deprecated items
+    - Matrix returns vector on row access
 
 - 2.2.2
     - Remove dependency on pthreads

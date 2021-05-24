@@ -287,16 +287,6 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function row() : void
-    {
-        $this->assertEquals([22, -17, 12], $this->a->row(0));
-        $this->assertEquals([11], $this->b->row(1));
-        $this->assertEquals([-10, -1, 14], $this->c->row(2));
-    }
-
-    /**
-     * @test
-     */
     public function rowAsVector() : void
     {
         $z = $this->a->rowAsVector(1);
@@ -306,16 +296,6 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertCount(3, $z);
         $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function column() : void
-    {
-        $this->assertEquals([-17, 11, -6], $this->a->column(1));
-        $this->assertEquals([13, 11, 9], $this->b->column(0));
-        $this->assertEquals([-12, 5, 14], $this->c->column(2));
     }
 
     /**

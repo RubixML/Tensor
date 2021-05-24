@@ -56,7 +56,7 @@ ZEPHIR_DOC_METHOD(Tensor_ArrayLike, map);
  */
 ZEPHIR_DOC_METHOD(Tensor_ArrayLike, reduce);
 /**
- * Return the elements of the array-like as a PHP array.
+ * Return the elements of the tensor as an array.
  *
  * @return array
  */

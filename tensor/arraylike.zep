@@ -45,7 +45,7 @@ interface ArrayLike extends ArrayAccess, IteratorAggregate, Countable
      public function reduce(const callback, const initial = 0);
 
     /**
-     * Return the elements of the array-like as a PHP array.
+     * Return the elements of the tensor as an array.
      *
      * @return array
      */

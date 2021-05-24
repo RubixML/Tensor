@@ -12,7 +12,7 @@ use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\RuntimeException;
 use Tensor\Exceptions\NotImplemented;
-use ArrayIterator;
+use Generator;
 use Closure;
 
 use function count;
@@ -359,64 +359,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise minimum of two matrices.
-     *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return self
-     */
-    public static function minimum(Matrix $a, Matrix $b) : self
-    {
-        if ($a->m() !== $b->m()) {
-            throw new DimensionalityMismatch('Matrix A expects'
-                . " {$a->m()} rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatch('Matrix A expects'
-                . " {$a->n()} columns but Matrix B has {$b->n()}.");
-        }
-
-        $c = [];
-
-        foreach ($a as $i => $rowA) {
-            $c[] = array_map('min', $rowA, $b[$i]);
-        }
-
-        return self::quick($c);
-    }
-
-    /**
-     * Return the element-wise maximum of two matrices.
-     *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return self
-     */
-    public static function maximum(Matrix $a, Matrix $b) : self
-    {
-        if ($a->m() !== $b->m()) {
-            throw new DimensionalityMismatch('Matrix A expects'
-                . " {$a->m()} rows but Matrix B has {$b->m()}.");
-        }
-
-        if ($a->n() !== $b->n()) {
-            throw new DimensionalityMismatch('Matrix A expects'
-                . " {$a->n()} columns but Matrix B has {$b->n()}.");
-        }
-
-        $c = [];
-
-        foreach ($a as $i => $rowA) {
-            $c[] = array_map('max', $rowA, $b[$i]);
-        }
-
-        return self::quick($c);
-    }
-
-    /**
      * @param array[] $a
      * @param bool $validate
      * @throws \Tensor\Exceptions\InvalidArgumentException
@@ -519,17 +461,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return a row from the matrix.
-     *
-     * @param int $index
-     * @return (int|float)[]
-     */
-    public function row(int $index) : array
-    {
-        return $this->offsetGet($index);
-    }
-
-    /**
      * Return a row as a vector from the matrix.
      *
      * @param int $index
@@ -537,18 +468,7 @@ class Matrix implements Tensor
      */
     public function rowAsVector(int $index) : Vector
     {
-        return Vector::quick($this->offsetGet($index));
-    }
-
-    /**
-     * Return a column from the matrix.
-     *
-     * @param int $index
-     * @return (int|float)[]
-     */
-    public function column(int $index) : array
-    {
-        return array_column($this->a, $index);
+        return $this->offsetGet($index);
     }
 
     /**
@@ -559,7 +479,7 @@ class Matrix implements Tensor
      */
     public function columnAsVector(int $index) : ColumnVector
     {
-        return ColumnVector::quick($this->column($index));
+        return ColumnVector::quick(array_column($this->a, $index));
     }
 
     /**
@@ -3544,25 +3464,26 @@ class Matrix implements Tensor
      *
      * @param mixed $index
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return (int|float)[]
+     * @return \Tensor\Vector
      */
-    public function offsetGet($index) : array
+    public function offsetGet($index) : Vector
     {
         if (isset($this->a[$index])) {
-            return $this->a[$index];
+            return Vector::quick($this->a[$index]);
         }
 
-        throw new InvalidArgumentException('Element not found at'
-            . " offset $index.");
+        throw new InvalidArgumentException("Element not found at offset $index.");
     }
 
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \ArrayIterator<int,array>
+     * @return \Generator<int,\Tensor\Vector>
      */
-    public function getIterator() : ArrayIterator
+    public function getIterator() : Generator
     {
-        return new ArrayIterator($this->a);
+        foreach ($this->a as $row) {
+            yield Vector::quick($row);
+        }
     }
 }

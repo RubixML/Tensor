@@ -4,7 +4,7 @@
     "extension-name": "tensor",
     "description": "A library and extension that provides objects for scientific computing in PHP.",
     "author": "Andrew DalPino",
-    "version": "2.2.2",
+    "version": "3.0.0-beta",
     "verbose": true,
     "extra-cflags": "-O3 -ffast-math",
     "extra-libs": "-lopenblas -llapacke -lgfortran",

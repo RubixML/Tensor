@@ -27,7 +27,7 @@ interface ArrayLike extends ArrayAccess, IteratorAggregate, Countable
     public function shapeString() : string;
 
     /**
-     * Return the number of elements in the array-like object.
+     * Return the number of elements in the tensor.
      *
      * @return int
      */
@@ -51,7 +51,7 @@ interface ArrayLike extends ArrayAccess, IteratorAggregate, Countable
     public function reduce(callable $callback, $initial = 0);
 
     /**
-     * Return the elements of the array-like as a PHP array.
+     * Return the elements of the tensor as an array.
      *
      * @return mixed[]
      */

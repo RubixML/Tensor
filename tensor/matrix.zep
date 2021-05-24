@@ -486,17 +486,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return a row from the matrix.
-     *
-     * @param int index
-     * @return (int|float)[]
-     */
-    public function row(const int index) -> array
-    {
-        return this->offsetGet(index);
-    }
-
-    /**
      * Return a row as a vector from the matrix.
      *
      * @param int index
@@ -504,18 +493,7 @@ class Matrix implements Tensor
      */
     public function rowAsVector(const int index) -> <Vector>
     {
-        return Vector::quick(this->row(index));
-    }
-
-    /**
-     * Return a column from the matrix.
-     *
-     * @param int index
-     * @return (int|float)[]
-     */
-    public function column(const int index) -> array
-    {
-        return array_column(this->a, index);
+        return this->offsetGet(index);
     }
 
     /**
@@ -526,7 +504,7 @@ class Matrix implements Tensor
      */
     public function columnAsVector(const int index) -> <ColumnVector>
     {
-        return ColumnVector::quick(this->column(index));
+        return ColumnVector::quick(array_column(this->a, index));
     }
 
     /**
@@ -3373,10 +3351,10 @@ class Matrix implements Tensor
      */
     public function offsetGet(const var index) -> array
     {
-        var value;
+        var row;
 
-        if likely fetch value, this->a[index] {
-            return value;
+        if likely fetch row, this->a[index] {
+            return Vector::quick(row);
         }
 
         throw new InvalidArgumentException("Element not found at"
@@ -3390,6 +3368,6 @@ class Matrix implements Tensor
      */
     public function getIterator()
     {
-        return new ArrayIterator(this->a);
+        return new ArrayIterator(this->asVectors());
     }
 }
