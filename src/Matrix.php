@@ -132,7 +132,7 @@ class Matrix implements Tensor
     /**
      * Build a diagonal matrix with the value of each element along the diagonal and 0s everywhere else.
      *
-     * @param (int|float)[] $elements
+     * @param float[] $elements
      * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
@@ -144,6 +144,8 @@ class Matrix implements Tensor
             throw new InvalidArgumentException('Number of elements'
                 . " must be greater than 0, $n given.");
         }
+
+        $elements = array_values($elements);
 
         $a = [];
 
