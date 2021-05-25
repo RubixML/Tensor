@@ -5,6 +5,7 @@
     - Remove dependency on JAMA library
     - Remove previously deprecated items
     - Matrix returns vector on row access
+    - Added Algebraic and Special function interfaces
 
 - 2.2.2
     - Remove dependency on pthreads

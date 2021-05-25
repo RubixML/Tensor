@@ -6,7 +6,6 @@ use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\RuntimeException;
 use ArrayIterator;
-use Closure;
 
 use function count;
 use function array_slice;
@@ -422,21 +421,22 @@ class Vector implements Tensor
     }
 
     /**
-     * Map a function over the elements in the vector and return a new
-     * vector.
+     * Map a function over the elements in the vector and return a new vector.
+     *
+     * @internal
      *
      * @param callable $callback
      * @return self
      */
     public function map(callable $callback) : self
     {
-        $validate = $callback instanceof Closure;
-
-        return new static(array_map($callback, $this->a), $validate);
+        return static::quick(array_map($callback, $this->a));
     }
 
     /**
      * Reduce the vector down to a scalar.
+     *
+     * @internal
      *
      * @param callable $callback
      * @param float $initial

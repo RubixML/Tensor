@@ -437,8 +437,9 @@ class Vector implements Tensor
     }
 
     /**
-     * Map a function over the elements in the vector and return a new
-     * vector.
+     * Map a function over the elements in the vector and return a new vector.
+     *
+     * @internal
      *
      * @param callable callback
      * @return self
@@ -451,12 +452,13 @@ class Vector implements Tensor
     /**
      * Reduce the vector down to a scalar.
      *
+     * @internal
+     *
      * @param callable callback
      * @param float initial
-     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return float
      */
-    public function reduce(const var callback, float initial = 0) -> float
+    public function reduce(const var callback, float initial = 0.0) -> float
     {
         return array_reduce(this->a, callback, initial);
     }

@@ -5,10 +5,11 @@ namespace Tensor\Tests;
 use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
+use Tensor\Special;
 use Tensor\ArrayLike;
+use Tensor\Algebraic;
 use Tensor\Arithmetic;
 use Tensor\Comparable;
-use Tensor\Functional;
 use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
@@ -84,12 +85,13 @@ class MatrixTest extends TestCase
     {
         $this->assertInstanceOf(Matrix::class, $this->a);
         $this->assertInstanceOf(Tensor::class, $this->a);
+        $this->assertInstanceOf(ArrayLike::class, $this->a);
         $this->assertInstanceOf(Arithmetic::class, $this->a);
         $this->assertInstanceOf(Comparable::class, $this->a);
-        $this->assertInstanceOf(Functional::class, $this->a);
+        $this->assertInstanceOf(Algebraic::class, $this->a);
         $this->assertInstanceOf(Trigonometric::class, $this->a);
         $this->assertInstanceOf(Statistical::class, $this->a);
-        $this->assertInstanceOf(ArrayLike::class, $this->a);
+        $this->assertInstanceOf(Special::class, $this->a);
     }
 
     /**
@@ -451,6 +453,15 @@ class MatrixTest extends TestCase
     {
         $this->assertEquals(-5301.999999999999, $this->a->det());
         $this->assertEquals(-544.0, $this->c->det());
+    }
+
+    /**
+     * @test
+     */
+    public function trace() : void
+    {
+        $this->assertEquals(24.0, $this->a->trace());
+        $this->assertEquals(21.0, $this->c->trace());
     }
 
     /**

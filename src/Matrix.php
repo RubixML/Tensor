@@ -13,7 +13,6 @@ use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\RuntimeException;
 use Tensor\Exceptions\NotImplemented;
 use Generator;
-use Closure;
 
 use function count;
 use function array_slice;
@@ -132,17 +131,11 @@ class Matrix implements Tensor
      * Build a diagonal matrix with the value of each element along the diagonal and 0s everywhere else.
      *
      * @param float[] $elements
-     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function diagonal(array $elements) : self
     {
         $n = count($elements);
-
-        if ($n < 1) {
-            throw new InvalidArgumentException('Number of elements'
-                . " must be greater than 0, $n given.");
-        }
 
         $elements = array_values($elements);
 
@@ -546,30 +539,32 @@ class Matrix implements Tensor
     /**
      * Run a function over all of the elements in the matrix.
      *
+     * @internal
+     *
      * @param callable $callback
      * @return self
      */
     public function map(callable $callback) : self
     {
-        $validate = $callback instanceof Closure;
-
         $b = [];
 
         foreach ($this->a as $rowA) {
             $b[] = array_map($callback, $rowA);
         }
 
-        return new self($b, $validate);
+        return self::quick($b);
     }
 
     /**
      * Reduce the matrix down to a scalar.
      *
+     * @internal
+     *
      * @param callable $callback
      * @param float $initial
      * @return float
      */
-    public function reduce(callable $callback, float $initial = 0) : float
+    public function reduce(callable $callback, float $initial = 0.0) : float
     {
         $carry = $initial;
 
@@ -845,7 +840,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Calculate the row echelon form (REF) of the matrix. Return the reduced matrix and the number of swaps needed to compute the REF.
+     * Calculate the row echelon form (REF) of the matrix.
      *
      * @return \Tensor\Reductions\REF
      */
@@ -855,7 +850,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the reduced row echelon (RREF) form of the matrix. Return the reduced matrix and the number of swaps needed to compute the RREF.
+     * Return the reduced row echelon (RREF) form of the matrix.
      *
      * @return \Tensor\Reductions\RREF
      */

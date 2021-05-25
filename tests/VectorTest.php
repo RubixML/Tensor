@@ -5,10 +5,11 @@ namespace Tensor\Tests;
 use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
+use Tensor\Special;
 use Tensor\ArrayLike;
+use Tensor\Algebraic;
 use Tensor\Arithmetic;
 use Tensor\Comparable;
-use Tensor\Functional;
 use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
@@ -64,12 +65,13 @@ class VectorTest extends TestCase
     {
         $this->assertInstanceOf(Vector::class, $this->a);
         $this->assertInstanceOf(Tensor::class, $this->a);
+        $this->assertInstanceOf(ArrayLike::class, $this->a);
         $this->assertInstanceOf(Arithmetic::class, $this->a);
         $this->assertInstanceOf(Comparable::class, $this->a);
-        $this->assertInstanceOf(Functional::class, $this->a);
+        $this->assertInstanceOf(Algebraic::class, $this->a);
         $this->assertInstanceOf(Trigonometric::class, $this->a);
         $this->assertInstanceOf(Statistical::class, $this->a);
-        $this->assertInstanceOf(ArrayLike::class, $this->a);
+        $this->assertInstanceOf(Special::class, $this->a);
     }
 
     /**

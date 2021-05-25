@@ -2,7 +2,7 @@
 
 namespace Tensor;
 
-interface Functional
+interface Algebraic
 {
     /**
      * Take the absolute value of the tensor.
@@ -24,6 +24,13 @@ interface Functional
      * @return mixed
      */
     public function sqrt();
+
+    /**
+     * Return the element-wise reciprocal of the tensor.
+     *
+     * @return mixed
+     */
+    public function reciprocal();
 
     /**
      * Return the exponential of the tensor.
@@ -53,34 +60,6 @@ interface Functional
      * @return mixed
      */
     public function log1p();
-
-    /**
-     * Sum the tensor.
-     *
-     * @return mixed
-     */
-    public function sum();
-
-    /**
-     * Calculate the product of the tensor.
-     *
-     * @return mixed
-     */
-    public function product();
-
-    /**
-     * Return the minimum of the tensor.
-     *
-     * @return mixed
-     */
-    public function min();
-
-    /**
-     * Return the maximum of the tensor.
-     *
-     * @return mixed
-     */
-    public function max();
 
     /**
      * Round the elements in the tensor to a given decimal place.
@@ -117,29 +96,4 @@ interface Functional
      * @return mixed
      */
     public function negate();
-
-    /**
-     * Clip the tensor to be between the given minimum and maximum.
-     *
-     * @param float $min
-     * @param float $max
-     * @return mixed
-     */
-    public function clip(float $min, float $max);
-
-    /**
-     * Clip the tensor to be lower bounded by a given minimum.
-     *
-     * @param float $min
-     * @return mixed
-     */
-    public function clipLower(float $min);
-
-    /**
-     * Clip the tensor to be upper bounded by a given maximum.
-     *
-     * @param float $max
-     * @return mixed
-     */
-    public function clipUpper(float $max);
 }

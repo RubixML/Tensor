@@ -128,17 +128,11 @@ class Matrix implements Tensor
      * and zeros everywhere else.
      *
      * @param float[] elements
-     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
     public static function diagonal(array elements) -> <Matrix>
     {
         int n = count(elements);
- 
-        if unlikely n < 1 {
-            throw new InvalidArgumentException("Number of elements must be"
-                . " greater than 0, " . strval(n) . " given.");
-        }
 
         let elements = array_values(elements);
 
@@ -561,6 +555,8 @@ class Matrix implements Tensor
     /**
      * Run a function over all of the elements in the matrix.
      *
+     * @internal
+     *
      * @param callable callback
      * @return self
      */
@@ -580,12 +576,13 @@ class Matrix implements Tensor
     /**
      * Reduce the matrix down to a scalar using a callback function.
      *
+     * @internal
+     *
      * @param callable callback
      * @param float initial
-     * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return float
      */
-    public function reduce(const var callback, float initial = 0) -> float
+    public function reduce(const var callback, float initial = 0.0) -> float
     {
         var rowA, valueA;
 
@@ -634,7 +631,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the (Moore-Penrose) pseudoinverse of the general matrix.
+     * Compute the Moore-Penrose pseudoinverse of a general matrix.
      *
      * @return self
      */
@@ -661,6 +658,16 @@ class Matrix implements Tensor
         var pi = ref->a()->diagonalAsVector()->product();
 
         return pi * pow(-1.0, ref->swaps());
+    }
+
+    /**
+     * Return the trace of the matrix i.e the sum of all diagonal elements of a square matrix.
+     *
+     * @return float
+     */
+    public function trace() -> float
+    {
+        return this->diagonalAsVector()->sum();
     }
 
     /**
@@ -789,8 +796,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Calculate the row echelon form (REF) of the matrix. Return the reduced
-     * matrix and the number of swaps needed to compute the REF.
+     * Calculate the row echelon form (REF) of the matrix.
      *
      * @return \Tensor\Reductions\Ref
      */
