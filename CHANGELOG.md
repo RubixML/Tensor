@@ -1,5 +1,8 @@
-- 2.2.2
+- 2.2.3
     - Remove dependency on pthreads
+
+-2.2.2
+    - Compensate for PSR-4 issues
 
 - 2.2.1
     - Optimize 2D convolution operation
