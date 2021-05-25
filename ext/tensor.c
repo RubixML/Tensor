@@ -24,10 +24,11 @@
 
 #include "cblas.h"
 
+zend_class_entry *tensor_algebraic_ce;
 zend_class_entry *tensor_arithmetic_ce;
 zend_class_entry *tensor_arraylike_ce;
 zend_class_entry *tensor_comparable_ce;
-zend_class_entry *tensor_functional_ce;
+zend_class_entry *tensor_special_ce;
 zend_class_entry *tensor_statistical_ce;
 zend_class_entry *tensor_trigonometric_ce;
 zend_class_entry *tensor_exceptions_tensorexception_ce;
@@ -56,10 +57,11 @@ static PHP_MINIT_FUNCTION(tensor)
 {
 	REGISTER_INI_ENTRIES();
 	zephir_module_init();
+	ZEPHIR_INIT(Tensor_Algebraic);
 	ZEPHIR_INIT(Tensor_Arithmetic);
 	ZEPHIR_INIT(Tensor_ArrayLike);
 	ZEPHIR_INIT(Tensor_Comparable);
-	ZEPHIR_INIT(Tensor_Functional);
+	ZEPHIR_INIT(Tensor_Special);
 	ZEPHIR_INIT(Tensor_Statistical);
 	ZEPHIR_INIT(Tensor_Trigonometric);
 	ZEPHIR_INIT(Tensor_Exceptions_TensorException);
@@ -85,7 +87,7 @@ static PHP_MINIT_FUNCTION(tensor)
 static PHP_MSHUTDOWN_FUNCTION(tensor)
 {
 	
-	zephir_deinitialize_memory(TSRMLS_C);
+	zephir_deinitialize_memory();
 	UNREGISTER_INI_ENTRIES();
 	return SUCCESS;
 }
@@ -94,7 +96,7 @@ static PHP_MSHUTDOWN_FUNCTION(tensor)
 /**
  * Initialize globals on each request or each thread started
  */
-static void php_zephir_init_globals(zend_tensor_globals *tensor_globals TSRMLS_DC)
+static void php_zephir_init_globals(zend_tensor_globals *tensor_globals)
 {
 	tensor_globals->initialized = 0;
 
@@ -114,7 +116,7 @@ static void php_zephir_init_globals(zend_tensor_globals *tensor_globals TSRMLS_D
 /**
  * Initialize globals only on each thread started
  */
-static void php_zephir_init_module_globals(zend_tensor_globals *tensor_globals TSRMLS_DC)
+static void php_zephir_init_module_globals(zend_tensor_globals *tensor_globals)
 {
 	
 }
@@ -134,7 +136,7 @@ static PHP_RINIT_FUNCTION(tensor)
 static PHP_RSHUTDOWN_FUNCTION(tensor)
 {
 	
-	zephir_deinitialize_memory(TSRMLS_C);
+	zephir_deinitialize_memory();
 	return SUCCESS;
 }
 

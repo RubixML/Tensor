@@ -1,6 +1,6 @@
 namespace Tensor;
 
-interface Functional
+interface Algebraic
 {    
     const M_E = 2.7182818284590452354;
 
@@ -53,34 +53,6 @@ interface Functional
      * @return mixed
      */
     public function log1p();
-
-    /**
-     * Sum the tensor.
-     *
-     * @return mixed
-     */
-    public function sum();
-
-    /**
-     * Calculate the product of the tensor.
-     *
-     * @return mixed
-     */
-    public function product();
-
-    /**
-     * Return the minimum of the tensor.
-     *
-     * @return mixed
-     */
-    public function min();
-
-    /**
-     * Return the maximum of the tensor.
-     *
-     * @return mixed
-     */
-    public function max();
 
     /**
      * Round the elements in the tensor to a given decimal place.

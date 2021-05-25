@@ -5,10 +5,11 @@ namespace Tensor\Tests;
 use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
+use Tensor\Special;
 use Tensor\ArrayLike;
+use Tensor\Algebraic;
 use Tensor\Arithmetic;
 use Tensor\Comparable;
-use Tensor\Functional;
 use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
@@ -22,22 +23,22 @@ class VectorTest extends TestCase
     /**
      * @var \Tensor\Vector
      */
-    protected $a;
+    protected \Tensor\Vector $a;
 
     /**
      * @var \Tensor\Vector
      */
-    protected $b;
+    protected \Tensor\Vector $b;
 
     /**
      * @var \Tensor\Vector
      */
-    protected $c;
+    protected \Tensor\Vector $c;
 
     /**
      * @var \Tensor\Matrix
      */
-    protected $d;
+    protected \Tensor\Matrix $d;
 
     /**
      * @before
@@ -64,12 +65,13 @@ class VectorTest extends TestCase
     {
         $this->assertInstanceOf(Vector::class, $this->a);
         $this->assertInstanceOf(Tensor::class, $this->a);
+        $this->assertInstanceOf(ArrayLike::class, $this->a);
         $this->assertInstanceOf(Arithmetic::class, $this->a);
         $this->assertInstanceOf(Comparable::class, $this->a);
-        $this->assertInstanceOf(Functional::class, $this->a);
+        $this->assertInstanceOf(Algebraic::class, $this->a);
         $this->assertInstanceOf(Trigonometric::class, $this->a);
         $this->assertInstanceOf(Statistical::class, $this->a);
-        $this->assertInstanceOf(ArrayLike::class, $this->a);
+        $this->assertInstanceOf(Special::class, $this->a);
     }
 
     /**
@@ -182,32 +184,6 @@ class VectorTest extends TestCase
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertCount(10, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function maximum() : void
-    {
-        $z = Vector::maximum($this->a, $this->b);
-
-        $expected = [0.25, 25, 35, -0.5, -1.0, 89, 106, 45];
-
-        $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function minimum() : void
-    {
-        $z = Vector::minimum($this->a, $this->b);
-
-        $expected = [-15, 0.1, 2.0, -36, -72, -3.0, 3.3, 2.];
-
-        $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($expected, $z->asArray());
     }
 
@@ -349,18 +325,6 @@ class VectorTest extends TestCase
     /**
      * @test
      */
-    public function reduce() : void
-    {
-        $scalar = $this->a->reduce(function ($value, $carry) {
-            return $carry + ($value / 2.);
-        });
-
-        $this->assertEquals(110.3671875, $scalar);
-    }
-
-    /**
-     * @test
-     */
     public function reciprocal() : void
     {
         $z = $this->a->reciprocal();
@@ -372,26 +336,6 @@ class VectorTest extends TestCase
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function argmin() : void
-    {
-        $this->assertEquals(4, $this->a->argmin());
-        $this->assertEquals(5, $this->b->argmin());
-        $this->assertEquals(4, $this->c->argmin());
-    }
-
-    /**
-     * @test
-     */
-    public function argmax() : void
-    {
-        $this->assertEquals(6, $this->a->argmax());
-        $this->assertEquals(6, $this->b->argmax());
-        $this->assertEquals(3, $this->c->argmax());
     }
 
     /**
@@ -447,23 +391,6 @@ class VectorTest extends TestCase
     /**
      * @test
      */
-    public function cross() : void
-    {
-        $a = new Vector([1.0, -0.5, 6.]);
-
-        $b = new Vector([2.0, 0.0, 3.]);
-
-        $z = $a->cross($b);
-
-        $expected = [-1.5, 9.0, 1.];
-
-        $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
     public function convolve() : void
     {
         $z = $this->a->convolve($this->c, 1);
@@ -471,22 +398,6 @@ class VectorTest extends TestCase
         $expected = [
             -60, 2.5, 259, -144, 40.5, 370.1, 462.20000000000005,
             10, 1764.3000000000002, 1625.1, 2234.7000000000003, 1378.4, 535.5,
-        ];
-
-        $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function project() : void
-    {
-        $z = $this->a->project($this->b);
-
-        $expected = [
-            2.8373983739837394, 1.1349593495934958, 22.699186991869915, -5.674796747967479,
-            -11.349593495934958, -34.048780487804876, 37.45365853658536, 22.699186991869915,
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
@@ -1433,15 +1344,5 @@ class VectorTest extends TestCase
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertEquals($expected, $z->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function testToString() : void
-    {
-        $outcome = '[ -15 25 35 -36 -72 89 106 45 ]' . PHP_EOL;
-
-        $this->assertEquals($outcome, (string) $this->a);
     }
 }

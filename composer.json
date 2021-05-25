@@ -25,12 +25,12 @@
         }
     ],
     "require": {
-        "php": ">=7.2"
+        "php": ">=7.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "2.18.*",
-        "phalcon/zephir": "^0.12.20",
-        "phpbench/phpbench": "0.16.*",
+        "phalcon/zephir": "^0.13.5",
+        "phpbench/phpbench": "^1.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "0.12.*",
         "phpstan/phpstan-phpunit": "0.12.*",
@@ -39,7 +39,6 @@
     "autoload": {
         "psr-4": {
             "Tensor\\": "src/",
-            "JAMA\\": "lib/JAMA",
             "Zephir\\Optimizers\\FunctionCall\\": "optimizers/"
         },
         "files": [
@@ -68,8 +67,10 @@
         ],
         "clean": "zephir fullclean",
         "compile": [
-            "zephir build --no-dev",
-            "@php build-ext"
+            "zephir generate",
+            "@php build-ext",
+            "zephir compile --no-dev",
+            "zephir install"
         ],
         "fix": "php-cs-fixer fix --config=.php_cs.dist",
         "test": "phpunit"

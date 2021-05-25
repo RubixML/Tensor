@@ -31,8 +31,8 @@
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-ZEPHIR_INIT_CLASS(Tensor_Reductions_Ref) {
-
+ZEPHIR_INIT_CLASS(Tensor_Reductions_Ref)
+{
 	ZEPHIR_REGISTER_CLASS(Tensor\\Reductions, Ref, tensor, reductions_ref, tensor_reductions_ref_method_entry, 0);
 
 	/**
@@ -41,16 +41,13 @@ ZEPHIR_INIT_CLASS(Tensor_Reductions_Ref) {
 	 * @var \Tensor\Matrix
 	 */
 	zend_declare_property_null(tensor_reductions_ref_ce, SL("a"), ZEND_ACC_PROTECTED);
-
 	/**
 	 * The number of swaps made to compute the row echelon form of the matrix.
 	 *
 	 * @var int
 	 */
 	zend_declare_property_null(tensor_reductions_ref_ce, SL("swaps"), ZEND_ACC_PROTECTED);
-
 	return SUCCESS;
-
 }
 
 /**
@@ -60,8 +57,8 @@ ZEPHIR_INIT_CLASS(Tensor_Reductions_Ref) {
  * @throws \Tensor\Exceptions\RuntimeException
  * @return self
  */
-PHP_METHOD(Tensor_Reductions_Ref, reduce) {
-
+PHP_METHOD(Tensor_Reductions_Ref, reduce)
+{
 	zval ref, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_2 = NULL;
@@ -77,10 +74,16 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 	ZVAL_UNDEF(&swaps);
 	ZVAL_UNDEF(&ref);
 	ZVAL_UNDEF(&_1);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
-
 
 
 	ZEPHIR_INIT_VAR(&result);
@@ -101,10 +104,9 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
 	ZEPHIR_OBS_VAR(&swaps);
 	zephir_array_fetch_long(&swaps, &ref, 1, PH_NOISY, "tensor/reductions/ref.zep", 52);
 	object_init_ex(return_value, tensor_reductions_ref_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 33, &b, &swaps);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 31, &b, &swaps);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -112,8 +114,8 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce) {
  * @param int swaps
  * @throws \Tensor\Exceptions\InvalidArgumentException
  */
-PHP_METHOD(Tensor_Reductions_Ref, __construct) {
-
+PHP_METHOD(Tensor_Reductions_Ref, __construct)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long swaps, ZEPHIR_LAST_CALL_STATUS;
 	zval *a, a_sub, *swaps_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, _4;
@@ -125,10 +127,17 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
+		Z_PARAM_LONG(swaps)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 2, 0, &a, &swaps_param);
-
 	swaps = zephir_get_intval(swaps_param);
 
 
@@ -151,7 +160,6 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
 	ZVAL_LONG(&_4, swaps);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("swaps"), &_4);
 	ZEPHIR_MM_RESTORE();
-
 }
 
 /**
@@ -159,13 +167,13 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct) {
  *
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_Reductions_Ref, a) {
-
+PHP_METHOD(Tensor_Reductions_Ref, a)
+{
 	zval *this_ptr = getThis();
 
 
-	RETURN_MEMBER(getThis(), "a");
 
+	RETURN_MEMBER(getThis(), "a");
 }
 
 /**
@@ -173,12 +181,12 @@ PHP_METHOD(Tensor_Reductions_Ref, a) {
  *
  * @return int
  */
-PHP_METHOD(Tensor_Reductions_Ref, swaps) {
-
+PHP_METHOD(Tensor_Reductions_Ref, swaps)
+{
 	zval *this_ptr = getThis();
 
 
-	RETURN_MEMBER(getThis(), "swaps");
 
+	RETURN_MEMBER(getThis(), "swaps");
 }
 

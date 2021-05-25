@@ -25,7 +25,7 @@ class Matrix implements Tensor
     /**
      * A 2-dimensional sequential array that holds the values of the matrix.
      *
-     * @var array[]
+     * @var list<list<float>>
      */
     protected a;
 
@@ -88,7 +88,7 @@ class Matrix implements Tensor
             let rowA = [];
 
             for j in range(0, n - 1) {
-                let rowA[] = i === j ? 1 : 0;
+                let rowA[] = i === j ? 1.0 : 0.0;
             }
  
             let a[] = rowA;
@@ -107,7 +107,7 @@ class Matrix implements Tensor
      */
     public static function zeros(const int m, const int n) -> <Matrix>
     {
-        return self::fill(0, m, n);
+        return self::fill(0.0, m, n);
     }
  
     /**
@@ -120,35 +120,21 @@ class Matrix implements Tensor
      */
     public static function ones(const int m, const int n) -> <Matrix>
     {
-        return self::fill(1, m, n);
+        return self::fill(1.0, m, n);
     }
  
     /**
      * Build a matrix with the value of each element along the diagonal
      * and zeros everywhere else.
      *
-     * @param (int|float)[] elements
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float[] elements
      * @return self
      */
-    public static function diagonal(const array elements) -> <Matrix>
+    public static function diagonal(array elements) -> <Matrix>
     {
         int n = count(elements);
- 
-        if unlikely n < 1 {
-            throw new InvalidArgumentException("Number of elements must be"
-                . " greater than 0, " . strval(n) . " given.");
-        }
 
-        var element;
- 
-        for element in elements {
-            if !is_int(element) && !is_float(element) {
-                throw new InvalidArgumentException("Diagonal element"
-                    . " must be an integer or floating point number, "
-                    . gettype(element) . " given.");
-            }
-        }
+        let elements = array_values(elements);
 
         int i, j;
 
@@ -159,7 +145,7 @@ class Matrix implements Tensor
             let rowA = [];
  
             for j in range(0, n - 1) {
-                let rowA[] = i === j ? elements[i] : 0;
+                let rowA[] = i === j ? elements[i] : 0.0;
             }
  
             let a[] = rowA;
@@ -171,20 +157,14 @@ class Matrix implements Tensor
     /**
      * Fill a matrix with a given value at each element.
      *
-     * @param int|float value
+     * @param float value
      * @param int m
      * @param int n
      * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return self
      */
-    public static function fill(const value, const int m, const int n) -> <Matrix>
+    public static function fill(const float value, const int m, const int n) -> <Matrix>
     {
-        if unlikely !is_int(value) && !is_float(value) {
-            throw new InvalidArgumentException("Value must be an"
-                . " integer or floating point number, "
-                . gettype(value) . " given.");
-        }
- 
         if unlikely m < 1 {
             throw new InvalidArgumentException("M must be"
                 . " greater than 0, " . strval(m) . " given.");
@@ -311,8 +291,7 @@ class Matrix implements Tensor
                 . " greater than 0, " . strval(n) . " given.");
         }
 
-        int k;
-        float l, p;
+        float l, p, k;
 
         array a = [];
         array rowA = [];
@@ -325,7 +304,7 @@ class Matrix implements Tensor
             let rowA = [];
 
             while count(rowA) < n {
-                let k = 0;
+                let k = 0.0;
                 let p = 1.0;
 
                 while p > l {
@@ -334,7 +313,7 @@ class Matrix implements Tensor
                     let p *= rand() / max;
                 }
 
-                let rowA[] = k - 1;
+                let rowA[] = k - 1.0;
             }
 
             let a[] = rowA;
@@ -382,133 +361,16 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the elementwise minimum of two matrices.
-     *
-     * @param \Tensor\Matrix a
-     * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return self
-     */
-    public static function minimum(const <Matrix> a, const <Matrix> b) -> <Matrix>
-    {
-        if unlikely a->m() !== b->m() {
-            throw new DimensionalityMismatch("Matrix A expects "
-                . (string) a->m() . " rows but Matrix B has "
-                . (string) b->m() . ".");
-        }
-
-        if unlikely a->n() !== b->n() {
-            throw new DimensionalityMismatch("Matrix A expects "
-                . (string) a->n() . " columns but Matrix B has "
-                . (string) b->n() . ".");
-        }
-
-        var i, rowA;
-
-        array c = [];
-
-        for i, rowA in a->asArray() {
-            let c[] = array_map("min", rowA, b[i]);
-        }
-
-        return self::quick(c);
-    }
-
-    /**
-     * Return the elementwise maximum of two matrices.
-     *
-     * @param \Tensor\Matrix a
-     * @param \Tensor\Matrix b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return self
-     */
-    public static function maximum(const <Matrix> a, const <Matrix> b) -> <Matrix>
-    {
-        if unlikely a->m() !== b->m() {
-            throw new DimensionalityMismatch("Matrix A expects "
-                . (string) a->m() . " rows but Matrix B has "
-                . (string) b->m() . ".");
-        }
-
-        if unlikely a->n() !== b->n() {
-            throw new DimensionalityMismatch("Matrix A expects "
-                . (string) a->n() . " columns but Matrix B has "
-                . (string) b->n() . ".");
-        }
-
-        var i, rowA;
-
-        array c = [];
-
-        for i, rowA in a->asArray() {
-            let c[] = array_map("max", rowA, b[i]);
-        }
-
-        return self::quick(c);
-    }
-
-    /**
-     * Build a matrix by stacking an array of vectors.
-     *
-     * @param \Tensor\Vector[] vectors
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return self
-     */
-    public static function stack(const array vectors) -> <Matrix>
-    {
-        if unlikely empty vectors {
-            return self::quick();
-        }
-
-        var vector;
-
-        var proto = reset(vectors);
-
-        var size = proto->size();
-
-        bool columnwise = proto instanceof ColumnVector;
-
-        array a = [];
-
-        for vector in vectors {
-            if unlikely !(vector instanceof Vector) {
-                throw new InvalidArgumentException("Cannot stack a non"
-                    . " vector, " . gettype(vector) . " found.");
-            }
-
-            if unlikely columnwise && !(vector instanceof ColumnVector) {
-                throw new InvalidArgumentException("Cannot stack a non"
-                    . " column vector, " . gettype(vector) . " found.");
-            }
-
-            if unlikely vector->size() !== size {
-                throw new InvalidArgumentException("Vectors must"
-                    . " all be the same size.");
-            }
-
-            let a[] = vector->asArray();
-        }
-
-        var b = self::quick(a);
-
-        return columnwise ? b->transpose() : b;
-    }
-
-    /**
      * @param array[] a
      * @param bool validate
      * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     public function __construct(array a, const bool validate = true)
     {
-        if unlikely empty a {
-            throw new InvalidArgumentException("Matrix must contain at least 1 element.");
-        }
-
         var i, rowA, valueA;
 
         int m = count(a);
-        int n = count(current(a));
+        int n = count(current(a) ?: []);
  
         if validate {
             let a = array_values(a);
@@ -522,10 +384,8 @@ class Matrix implements Tensor
                 }
 
                 for valueA in rowA {
-                    if unlikely !is_int(valueA) && !is_float(valueA) {
-                        throw new InvalidArgumentException("Matrix element must"
-                            . " be an integer or floating point number, "
-                            . gettype(valueA) . " given.");
+                    if unlikely !is_float(valueA) {
+                        let valueA = (float) valueA;
                     }
                 }
 
@@ -599,17 +459,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return a row from the matrix.
-     *
-     * @param int index
-     * @return (int|float)[]
-     */
-    public function row(const int index) -> array
-    {
-        return this->offsetGet(index);
-    }
-
-    /**
      * Return a row as a vector from the matrix.
      *
      * @param int index
@@ -617,18 +466,7 @@ class Matrix implements Tensor
      */
     public function rowAsVector(const int index) -> <Vector>
     {
-        return Vector::quick(this->row(index));
-    }
-
-    /**
-     * Return a column from the matrix.
-     *
-     * @param int index
-     * @return (int|float)[]
-     */
-    public function column(const int index) -> array
-    {
-        return array_column(this->a, index);
+        return this->offsetGet(index);
     }
 
     /**
@@ -639,7 +477,7 @@ class Matrix implements Tensor
      */
     public function columnAsVector(const int index) -> <ColumnVector>
     {
-        return ColumnVector::quick(this->column(index));
+        return ColumnVector::quick(array_column(this->a, index));
     }
 
     /**
@@ -669,7 +507,7 @@ class Matrix implements Tensor
     /**
      * Return the elements of the matrix in a 2-d array.
      *
-     * @return array[]
+     * @return list<list<float>>
      */
     public function asArray() -> array
     {
@@ -715,43 +553,9 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the index of the minimum element in every row of the matrix.
-     *
-     * @return \Tensor\ColumnVector
-     */
-    public function argmin() -> <ColumnVector>
-    {
-        var rowA;
-
-        array b = [];
-
-        for rowA in this->a {
-            let b[] = tensor_argmin(rowA);
-        }
-
-        return ColumnVector::quick(b);
-    }
-
-    /**
-     * Return the index of the maximum element in every row of the matrix.
-     *
-     * @return \Tensor\ColumnVector
-     */
-    public function argmax() -> <ColumnVector>
-    {
-        var rowA;
-
-        array b = [];
-
-        for rowA in this->a {
-            let b[] = tensor_argmax(rowA);
-        }
-
-        return ColumnVector::quick(b);
-    }
-
-    /**
      * Run a function over all of the elements in the matrix.
+     *
+     * @internal
      *
      * @param callable callback
      * @return self
@@ -772,19 +576,14 @@ class Matrix implements Tensor
     /**
      * Reduce the matrix down to a scalar using a callback function.
      *
+     * @internal
+     *
      * @param callable callback
-     * @param int|float initial
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return int|float
+     * @param float initial
+     * @return float
      */
-    public function reduce(const var callback, const var initial = 0) -> int|float
+    public function reduce(const var callback, float initial = 0.0) -> float
     {
-        if unlikely !is_int(initial) && !is_float(initial) {
-            throw new InvalidArgumentException("Initial value must"
-                . " be an integer or floating point number, "
-                . gettype(initial) . " given.");
-        }
- 
         var rowA, valueA;
 
         var carry = initial;
@@ -832,7 +631,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the (Moore-Penrose) pseudoinverse of the general matrix.
+     * Compute the Moore-Penrose pseudoinverse of a general matrix.
      *
      * @return self
      */
@@ -845,9 +644,9 @@ class Matrix implements Tensor
      * Calculate the determinant of the matrix.
      *
      * @throws \Tensor\Exceptions\RuntimeException
-     * @return int|float
+     * @return float
      */
-    public function det() -> int|float
+    public function det() -> float
     {
         if unlikely !this->isSquare() {
             throw new InvalidArgumentException("Matrix must be"
@@ -859,6 +658,16 @@ class Matrix implements Tensor
         var pi = ref->a()->diagonalAsVector()->product();
 
         return pi * pow(-1.0, ref->swaps());
+    }
+
+    /**
+     * Return the trace of the matrix i.e the sum of all diagonal elements of a square matrix.
+     *
+     * @return float
+     */
+    public function trace() -> float
+    {
+        return this->diagonalAsVector()->sum();
     }
 
     /**
@@ -928,54 +737,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Is the matrix positive definite i.e. do all of its principal minor matrices have a determinant greater than 0.
-     * 
-     * @return bool
-     */
-    public function positiveDefinite() -> bool
-    {
-        if !this->symmetric() {
-            return false;
-        }
-
-        int i;
-
-        for i in range(1, this->n) {
-            var b = this->subMatrix(0, 0, i, i);
-
-            if b->det() <= 0 {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Is the matrix positive semidefinite i.e. do all of its principal minor matrices have a determinant greater or equal to 0.
-     * 
-     * @return bool
-     */
-    public function positiveSemidefinite() -> bool
-    {
-        if !this->symmetric() {
-            return false;
-        }
-
-        int i;
-
-        for i in range(1, this->n) {
-            var b = this->subMatrix(0, 0, i, i);
-
-            if b->det() < 0 {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * Multiply this matrix with another matrix (matrix-matrix product).
      *
      * @param \Tensor\Matrix b
@@ -1035,8 +796,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Calculate the row echelon form (REF) of the matrix. Return the reduced
-     * matrix and the number of swaps needed to compute the REF.
+     * Calculate the row echelon form (REF) of the matrix.
      *
      * @return \Tensor\Reductions\Ref
      */
@@ -1099,62 +859,11 @@ class Matrix implements Tensor
     }
 
     /**
-     * Solve a linear system of equations given the matrix and a solution vector b.
-     * Returns the column vector x that satisfies the solution.
-     *
-     * @param \Tensor\Vector b
-     * @return \Tensor\ColumnVector
-     */
-    public function solve(const <Vector> b) -> <ColumnVector>
-    {
-        int i, j;
-        float sigma;
-        
-        array l = [];
-        array u = [];
-        array pb = [];
-
-        var lu = this->lu();
-
-        let l = (array) lu->l()->asArray();
-        let u = (array) lu->u()->asArray();
-        let pb = (array) lu->p()->dot(b)->asArray();
-
-        int k = (int) (this->m - 1);
-
-        array y = [0: pb[0] / (l[0][0] ?: self::EPSILON)];
-
-        for i in range(1, k) {
-            let sigma = 0.0;
-
-            for j in range(0, i - 1) {
-                let sigma += l[i][j] * y[j];
-            }
-
-            let y[] = (pb[i] - sigma) / l[i][i];
-        }
- 
-        array x = [k: y[k] / (l[k][k] ?: self::EPSILON)];
-
-        for i in reverse range(0, k - 1) {
-            let sigma = 0.0;
-
-            for j in range(i + 1, k) {
-                let sigma += u[i][j] * x[j];
-            }
-
-            let x[i] = (y[i] - sigma) / u[i][i];
-        }
-
-        return ColumnVector::quick(array_reverse(x));
-    }
-
-    /**
      * Return the L1 norm of the matrix.
      *
-     * @return int|float
+     * @return float
      */
-    public function l1Norm() -> int|float
+    public function l1Norm() -> float
     {
         return this->transpose()->abs()->sum()->max();
     }
@@ -1162,9 +871,9 @@ class Matrix implements Tensor
     /**
      * Return the L2 norm of the matrix.
      *    
-     * @return int|float
+     * @return float
      */
-    public function l2Norm() -> int|float
+    public function l2Norm() -> float
     {
         return sqrt(this->square()->sum()->sum());
     }
@@ -1172,9 +881,9 @@ class Matrix implements Tensor
     /**
      * Retrn the infinity norm of the matrix.
      *
-     * @return int|float
+     * @return float
      */
-    public function infinityNorm() -> int|float
+    public function infinityNorm() -> float
     {
         return this->abs()->sum()->max();
     }
@@ -1182,9 +891,9 @@ class Matrix implements Tensor
     /**
      * Return the max norm of the matrix.
      *
-     * @return int|float
+     * @return float
      */
-    public function maxNorm() -> int|float
+    public function maxNorm() -> float
     {
         return this->abs()->max()->max();
     }
@@ -2129,11 +1838,11 @@ class Matrix implements Tensor
 
             for valueA in rowA {
                 if valueA > 0 {
-                    let rowB[] = 1;
+                    let rowB[] = 1.0;
                 } elseif valueA < 0 {
-                    let rowB[] = -1;
+                    let rowB[] = -1.0;
                 } else {
-                    let rowB[] = 0;
+                    let rowB[] = 0.0;
                 }
             }
 
@@ -2160,118 +1869,6 @@ class Matrix implements Tensor
 
             for valueA in rowA {
                 let rowB[] = -valueA;
-            }
-
-            let b[] = rowB;
-        }
-
-        return self::quick(b);
-    }
-
-    /**
-     * Insert a smaller matrix b into this matrix.
-     * 
-     * @param \Tensor\Matrix b
-     * @param int rowOffset
-     * @param int columnOffset
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return self
-     */
-    public function insert(const <Matrix> b, const int rowOffset, const int columnOffset) -> <Matrix>
-    {
-        if (b->m() + rowOffset > this->m) {
-            throw new InvalidArgumentException("Matrix b does not fit"
-                . " into matrix a with row offset "
-                . strval(rowOffset) . ".");
-        }
-
-        if (b->n() + columnOffset > this->n) {
-            throw new InvalidArgumentException("Matrix b does not fit"
-                . " into matrix a with column offset "
-                . strval(columnOffset) . ".");
-        }
-
-        int ii, jj;
-        var i, j, rowB, valueB;
-
-        array c = [];
-
-        let c = (array) this->a;
-
-        for i, rowB in b->asArray() {
-            let ii = rowOffset + i;
-
-            for j, valueB in rowB {
-                let jj = columnOffset + j;
-
-                let c[ii][jj] = valueB;
-            }
-        }
-
-        return self::quick(c);
-    }
-
-    /**
-     * Return the sub matrix starting at row and column offset.
-     *
-     * @param int startRow
-     * @param int startColumn
-     * @param int endRow
-     * @param int endColumn
-     * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return self
-     */
-    public function subMatrix(
-        const int startRow,
-        const int startColumn,
-        const int endRow,
-        const int endColumn
-    ) -> <Matrix> {
-        if unlikely startRow < 0 {
-            throw new InvalidArgumentException("Start row must be"
-                . " greater than 0, " . strval(startRow) . " given.");
-        }
-
-        if unlikely startColumn < 0 {
-            throw new InvalidArgumentException("Start column must be"
-                . " greater than 0, " . strval(startColumn) . " given.");
-        }
-
-        if unlikely endRow < startRow {
-            throw new InvalidArgumentException("End row must be"
-                . " greater than start row.");
-        }
-
-        if unlikely endColumn < startColumn {
-            throw new InvalidArgumentException("End column must be"
-                . " greater than start column.");
-        }
-
-        if unlikely endRow > this->m {
-            throw new InvalidArgumentException("End row is out"
-                . " of bounds of matrix.");
-        }
-
-        if unlikely endColumn > this->n {
-            throw new InvalidArgumentException("End column is out"
-                . " of bounds of matrix.");
-        }
-
-        int i, j;
-        var rowA;
-        array b = [];
-        array rowB = [];
-
-        int k = endRow - startRow;
-        int l = endColumn - startColumn;
-
-        for i in range(startRow, k) {
-            let rowA = this->a[i];
-
-            let rowB = [];
-
-            for j in range(startColumn, l) {
-                let rowB[] = rowA[j];
             }
 
             let b[] = rowB;
@@ -2566,8 +2163,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise not equal comparison of this matrix and
-     * another matrix.
+     * Return the element-wise not equal comparison of this matrix and another matrix.
      *
      * @param \Tensor\Matrix b
      * @throws \Tensor\Exceptions\DimensionalityMismatch
@@ -3346,17 +2942,11 @@ class Matrix implements Tensor
     /**
      * Multiply this matrix by a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function multiplyScalar(const var b) -> <Matrix>
+    public function multiplyScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3371,17 +2961,11 @@ class Matrix implements Tensor
     /**
      * Divide this matrix by a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function divideScalar(const var b) -> <Matrix>
+    public function divideScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3396,17 +2980,11 @@ class Matrix implements Tensor
     /**
      * Add this matrix by a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function addScalar(const var b) -> <Matrix>
+    public function addScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3421,17 +2999,11 @@ class Matrix implements Tensor
     /**
      * Subtract a scalar from this matrix.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function subtractScalar(const var b) -> <Matrix>
+    public function subtractScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3446,18 +3018,11 @@ class Matrix implements Tensor
     /**
      * Raise the matrix to a given scalar power.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function powScalar(const var b) -> <Matrix>
+    public function powScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an"
-                . " integnr or floating point number, "
-                . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3472,17 +3037,11 @@ class Matrix implements Tensor
     /**
      * Calculate the modulus of this matrix with a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function modScalar(const var b) -> <Matrix>
+    public function modScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3495,20 +3054,13 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise equality comparison of this matrix and a
-     * scalar.
+     * Return the element-wise equality comparison of this matrix and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function equalScalar(const var b) -> <Matrix>
+    public function equalScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3521,20 +3073,13 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise not equal comparison of this matrix and a
-     * scalar.
+     * Return the element-wise not equal comparison of this matrix and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function notEqualScalar(const var b) -> <Matrix>
+    public function notEqualScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3547,20 +3092,13 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise greater than comparison of this matrix and a
-     * scalar.
+     * Return the element-wise greater than comparison of this matrix and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function greaterScalar(const var b) -> <Matrix>
+    public function greaterScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3576,17 +3114,11 @@ class Matrix implements Tensor
      * Return the element-wise greater than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function greaterEqualScalar(const var b) -> <Matrix>
+    public function greaterEqualScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3599,20 +3131,13 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the element-wise less than comparison of this matrix and a
-     * scalar.
+     * Return the element-wise less than comparison of this matrix and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function lessScalar(const var b) -> <Matrix>
+    public function lessScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3628,17 +3153,11 @@ class Matrix implements Tensor
      * Return the element-wise less than or equal to comparison of
      * this matrix and a scalar.
      *
-     * @param mixed b
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @param float b
      * @return self
      */
-    public function lessEqualScalar(const var b) -> <Matrix>
+    public function lessEqualScalar(const float b) -> <Matrix>
     {
-        if unlikely !is_int(b) && !is_float(b) {
-            throw new InvalidArgumentException("Scalar must be an integer or"
-                . " floating point number, " . gettype(b) . " given.");
-        }
-
         var rowA;
 
         array c = [];
@@ -3697,10 +3216,10 @@ class Matrix implements Tensor
      */
     public function offsetGet(const var index) -> array
     {
-        var value;
+        var row;
 
-        if likely fetch value, this->a[index] {
-            return value;
+        if likely fetch row, this->a[index] {
+            return Vector::quick(row);
         }
 
         throw new InvalidArgumentException("Element not found at"
@@ -3714,28 +3233,6 @@ class Matrix implements Tensor
      */
     public function getIterator()
     {
-        return new ArrayIterator(this->a);
-    }
-
-    /**
-     * Convert the tensor into a string representation.
-     *
-     * @return string
-     */
-    public function __toString() -> string
-    {
-        return array_reduce(this->a, ["Tensor\\Matrix", "implodeRow"], "") . PHP_EOL;
-    }
-
-    /**
-     * Implode a row of the matrix and return the output.
-     *
-     * @param string carry
-     * @param array row
-     * @return string
-     */
-    protected static function implodeRow(const string carry, const array row) -> string
-    {
-        return carry . PHP_EOL . "[ " . implode(" ", row) . " ]";
+        return new ArrayIterator(this->asVectors());
     }
 }

@@ -21,12 +21,10 @@ jobs:
     strategy:
       matrix:
         image:
-          - php:7.2-cli
-          - php:7.2-cli-alpine
-          - php:7.3-cli
-          - php:7.3-cli-alpine
           - php:7.4-cli
           - php:7.4-cli-alpine
+          - php:8.0-cli
+          - php:8.0-cli-alpine
     name: Image ${{ matrix.image }}
     runs-on: ubuntu-latest
     steps:

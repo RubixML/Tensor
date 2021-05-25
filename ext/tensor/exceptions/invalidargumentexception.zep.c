@@ -15,12 +15,11 @@
 #include "ext/spl/spl_exceptions.h"
 
 
-ZEPHIR_INIT_CLASS(Tensor_Exceptions_InvalidArgumentException) {
-
+ZEPHIR_INIT_CLASS(Tensor_Exceptions_InvalidArgumentException)
+{
 	ZEPHIR_REGISTER_CLASS_EX(Tensor\\Exceptions, InvalidArgumentException, tensor, exceptions_invalidargumentexception, spl_ce_InvalidArgumentException, NULL, 0);
 
 	zend_class_implements(tensor_exceptions_invalidargumentexception_ce, 1, tensor_exceptions_tensorexception_ce);
 	return SUCCESS;
-
 }
 

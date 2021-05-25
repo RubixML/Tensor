@@ -8,17 +8,9 @@ PHP_METHOD(Tensor_Decompositions_Eigen, __construct);
 PHP_METHOD(Tensor_Decompositions_Eigen, eigenvalues);
 PHP_METHOD(Tensor_Decompositions_Eigen, eigenvectors);
 
-#if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_decompositions_eigen_decompose, 0, 1, Tensor\\Decompositions\\Eigen, 0)
-#else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_decompositions_eigen_decompose, 0, 1, IS_OBJECT, "Tensor\\Decompositions\\Eigen", 0)
-#endif
 	ZEND_ARG_OBJ_INFO(0, a, Tensor\\Matrix, 0)
-#if PHP_VERSION_ID >= 70200
 	ZEND_ARG_TYPE_INFO(0, symmetric, _IS_BOOL, 0)
-#else
-	ZEND_ARG_INFO(0, symmetric)
-#endif
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_decompositions_eigen___construct, 0, 0, 2)
@@ -26,18 +18,10 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_decompositions_eigen___construct, 0, 0, 2)
 	ZEND_ARG_OBJ_INFO(0, eigenvectors, Tensor\\Matrix, 0)
 ZEND_END_ARG_INFO()
 
-#if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_decompositions_eigen_eigenvalues, 0, 0, IS_ARRAY, 0)
-#else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_decompositions_eigen_eigenvalues, 0, 0, IS_ARRAY, NULL, 0)
-#endif
 ZEND_END_ARG_INFO()
 
-#if PHP_VERSION_ID >= 70200
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_decompositions_eigen_eigenvectors, 0, 0, Tensor\\Matrix, 0)
-#else
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_decompositions_eigen_eigenvectors, 0, 0, IS_OBJECT, "Tensor\\Matrix", 0)
-#endif
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(tensor_decompositions_eigen_method_entry) {

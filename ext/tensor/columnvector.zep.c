@@ -30,12 +30,11 @@
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-ZEPHIR_INIT_CLASS(Tensor_ColumnVector) {
-
+ZEPHIR_INIT_CLASS(Tensor_ColumnVector)
+{
 	ZEPHIR_REGISTER_CLASS_EX(Tensor, ColumnVector, tensor, columnvector, tensor_vector_ce, tensor_columnvector_method_entry, 0);
 
 	return SUCCESS;
-
 }
 
 /**
@@ -44,8 +43,8 @@ ZEPHIR_INIT_CLASS(Tensor_ColumnVector) {
  * @param (int|float)[] a
  * @return self
  */
-PHP_METHOD(Tensor_ColumnVector, build) {
-
+PHP_METHOD(Tensor_ColumnVector, build)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *a_param = NULL, _0;
@@ -54,10 +53,17 @@ PHP_METHOD(Tensor_ColumnVector, build) {
 
 	ZVAL_UNDEF(&a);
 	ZVAL_UNDEF(&_0);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(0, 1)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ARRAY(a)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 1, &a_param);
-
 	if (!a_param) {
 		ZEPHIR_INIT_VAR(&a);
 		array_init(&a);
@@ -71,7 +77,6 @@ PHP_METHOD(Tensor_ColumnVector, build) {
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 1, &a, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -80,8 +85,8 @@ PHP_METHOD(Tensor_ColumnVector, build) {
  * @param (int|float)[] a
  * @return self
  */
-PHP_METHOD(Tensor_ColumnVector, quick) {
-
+PHP_METHOD(Tensor_ColumnVector, quick)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *a_param = NULL, _0;
@@ -90,10 +95,17 @@ PHP_METHOD(Tensor_ColumnVector, quick) {
 
 	ZVAL_UNDEF(&a);
 	ZVAL_UNDEF(&_0);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(0, 1)
+		Z_PARAM_OPTIONAL
+		Z_PARAM_ARRAY(a)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 1, &a_param);
-
 	if (!a_param) {
 		ZEPHIR_INIT_VAR(&a);
 		array_init(&a);
@@ -107,7 +119,6 @@ PHP_METHOD(Tensor_ColumnVector, quick) {
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 1, &a, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -115,13 +126,13 @@ PHP_METHOD(Tensor_ColumnVector, quick) {
  *
  * @return int
  */
-PHP_METHOD(Tensor_ColumnVector, m) {
-
+PHP_METHOD(Tensor_ColumnVector, m)
+{
 	zval *this_ptr = getThis();
 
 
-	RETURN_MEMBER(getThis(), "n");
 
+	RETURN_MEMBER(getThis(), "n");
 }
 
 /**
@@ -129,13 +140,13 @@ PHP_METHOD(Tensor_ColumnVector, m) {
  *
  * @return int
  */
-PHP_METHOD(Tensor_ColumnVector, n) {
-
+PHP_METHOD(Tensor_ColumnVector, n)
+{
 	zval *this_ptr = getThis();
 
 
-	RETURN_LONG(1);
 
+	RETURN_LONG(1);
 }
 
 /**
@@ -143,8 +154,8 @@ PHP_METHOD(Tensor_ColumnVector, n) {
  *
  * @return mixed
  */
-PHP_METHOD(Tensor_ColumnVector, transpose) {
-
+PHP_METHOD(Tensor_ColumnVector, transpose)
+{
 	zval _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
@@ -153,13 +164,13 @@ PHP_METHOD(Tensor_ColumnVector, transpose) {
 
 	ZVAL_UNDEF(&_1);
 
+
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_1, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_vector_ce, "quick", &_0, 0, &_1);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -168,8 +179,8 @@ PHP_METHOD(Tensor_ColumnVector, transpose) {
  * @param \Tensor\Matrix b
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, matmul) {
-
+PHP_METHOD(Tensor_ColumnVector, matmul)
+{
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *b, b_sub, _0;
@@ -177,10 +188,16 @@ PHP_METHOD(Tensor_ColumnVector, matmul) {
 
 	ZVAL_UNDEF(&b_sub);
 	ZVAL_UNDEF(&_0);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "ascolumnmatrix", NULL, 0);
@@ -188,7 +205,6 @@ PHP_METHOD(Tensor_ColumnVector, matmul) {
 	ZEPHIR_RETURN_CALL_METHOD(&_0, "matmul", NULL, 0, b);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -198,8 +214,8 @@ PHP_METHOD(Tensor_ColumnVector, matmul) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, multiplyMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, multiplyMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -235,10 +251,16 @@ PHP_METHOD(Tensor_ColumnVector, multiplyMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -249,10 +271,10 @@ PHP_METHOD(Tensor_ColumnVector, multiplyMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -372,7 +394,6 @@ PHP_METHOD(Tensor_ColumnVector, multiplyMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -382,8 +403,8 @@ PHP_METHOD(Tensor_ColumnVector, multiplyMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, divideMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, divideMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -419,10 +440,16 @@ PHP_METHOD(Tensor_ColumnVector, divideMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -433,10 +460,10 @@ PHP_METHOD(Tensor_ColumnVector, divideMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -556,7 +583,6 @@ PHP_METHOD(Tensor_ColumnVector, divideMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -566,8 +592,8 @@ PHP_METHOD(Tensor_ColumnVector, divideMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, addMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, addMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -603,10 +629,16 @@ PHP_METHOD(Tensor_ColumnVector, addMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -617,10 +649,10 @@ PHP_METHOD(Tensor_ColumnVector, addMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -740,7 +772,6 @@ PHP_METHOD(Tensor_ColumnVector, addMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -750,8 +781,8 @@ PHP_METHOD(Tensor_ColumnVector, addMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, subtractMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, subtractMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -787,10 +818,16 @@ PHP_METHOD(Tensor_ColumnVector, subtractMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -801,10 +838,10 @@ PHP_METHOD(Tensor_ColumnVector, subtractMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -924,7 +961,6 @@ PHP_METHOD(Tensor_ColumnVector, subtractMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -934,8 +970,8 @@ PHP_METHOD(Tensor_ColumnVector, subtractMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, powMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, powMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -971,10 +1007,16 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -985,10 +1027,10 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -1108,7 +1150,6 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -1118,8 +1159,8 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, modMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, modMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -1155,10 +1196,16 @@ PHP_METHOD(Tensor_ColumnVector, modMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -1169,10 +1216,10 @@ PHP_METHOD(Tensor_ColumnVector, modMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -1292,7 +1339,6 @@ PHP_METHOD(Tensor_ColumnVector, modMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -1302,8 +1348,8 @@ PHP_METHOD(Tensor_ColumnVector, modMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, equalMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, equalMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -1339,10 +1385,16 @@ PHP_METHOD(Tensor_ColumnVector, equalMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -1353,10 +1405,10 @@ PHP_METHOD(Tensor_ColumnVector, equalMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -1500,7 +1552,6 @@ PHP_METHOD(Tensor_ColumnVector, equalMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -1510,8 +1561,8 @@ PHP_METHOD(Tensor_ColumnVector, equalMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, notEqualMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, notEqualMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -1547,10 +1598,16 @@ PHP_METHOD(Tensor_ColumnVector, notEqualMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -1561,10 +1618,10 @@ PHP_METHOD(Tensor_ColumnVector, notEqualMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -1708,7 +1765,6 @@ PHP_METHOD(Tensor_ColumnVector, notEqualMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -1718,8 +1774,8 @@ PHP_METHOD(Tensor_ColumnVector, notEqualMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, greaterMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, greaterMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -1755,10 +1811,16 @@ PHP_METHOD(Tensor_ColumnVector, greaterMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -1769,10 +1831,10 @@ PHP_METHOD(Tensor_ColumnVector, greaterMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -1916,7 +1978,6 @@ PHP_METHOD(Tensor_ColumnVector, greaterMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -1926,8 +1987,8 @@ PHP_METHOD(Tensor_ColumnVector, greaterMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, greaterEqualMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, greaterEqualMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -1963,10 +2024,16 @@ PHP_METHOD(Tensor_ColumnVector, greaterEqualMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -1977,10 +2044,10 @@ PHP_METHOD(Tensor_ColumnVector, greaterEqualMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -2124,7 +2191,6 @@ PHP_METHOD(Tensor_ColumnVector, greaterEqualMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -2134,8 +2200,8 @@ PHP_METHOD(Tensor_ColumnVector, greaterEqualMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, lessMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, lessMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -2171,10 +2237,16 @@ PHP_METHOD(Tensor_ColumnVector, lessMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -2185,10 +2257,10 @@ PHP_METHOD(Tensor_ColumnVector, lessMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -2332,7 +2404,6 @@ PHP_METHOD(Tensor_ColumnVector, lessMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -2342,8 +2413,8 @@ PHP_METHOD(Tensor_ColumnVector, lessMatrix) {
  * @throws \Tensor\Exceptions\DimensionalityMismatch
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_ColumnVector, lessEqualMatrix) {
-
+PHP_METHOD(Tensor_ColumnVector, lessEqualMatrix)
+{
 	zval _4$$3, _6$$3, _7$$3;
 	zend_string *_12;
 	zend_ulong _11;
@@ -2379,10 +2450,16 @@ PHP_METHOD(Tensor_ColumnVector, lessEqualMatrix) {
 	ZVAL_UNDEF(&_4$$3);
 	ZVAL_UNDEF(&_6$$3);
 	ZVAL_UNDEF(&_7$$3);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &b);
-
 
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
@@ -2393,10 +2470,10 @@ PHP_METHOD(Tensor_ColumnVector, lessEqualMatrix) {
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		ZEPHIR_OBS_VAR(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
-		zephir_get_strval(&_4$$3, &_3$$3);
+		zephir_cast_to_string(&_4$$3, &_3$$3);
 		ZEPHIR_CALL_METHOD(&_5$$3, b, "m", NULL, 0);
 		zephir_check_call_status();
-		zephir_get_strval(&_6$$3, &_5$$3);
+		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
 		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " rows but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
@@ -2540,6 +2617,5 @@ PHP_METHOD(Tensor_ColumnVector, lessEqualMatrix) {
 	ZEPHIR_RETURN_CALL_CE_STATIC(tensor_matrix_ce, "quick", &_23, 0, &c);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 

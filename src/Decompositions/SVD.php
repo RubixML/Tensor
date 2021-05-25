@@ -19,21 +19,21 @@ class SVD
      *
      * @var \Tensor\Matrix
      */
-    protected $u;
+    protected \Tensor\Matrix $u;
 
     /**
      * The singular values of the matrix A.
      *
      * @var list<float>
      */
-    protected $singularValues;
+    protected array $singularValues;
 
     /**
      * The V transposed matrix.
      *
      * @var \Tensor\Matrix
      */
-    protected $vT;
+    protected \Tensor\Matrix $vT;
 
     /**
      * Factory method to decompose a matrix.

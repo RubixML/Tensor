@@ -14,11 +14,10 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Tensor_Exceptions_DimensionalityMismatch) {
-
+ZEPHIR_INIT_CLASS(Tensor_Exceptions_DimensionalityMismatch)
+{
 	ZEPHIR_REGISTER_CLASS_EX(Tensor\\Exceptions, DimensionalityMismatch, tensor, exceptions_dimensionalitymismatch, tensor_exceptions_invalidargumentexception_ce, NULL, 0);
 
 	return SUCCESS;
-
 }
 

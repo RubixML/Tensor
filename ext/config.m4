@@ -9,10 +9,11 @@ if test "$PHP_TENSOR" = "yes"; then
 	fi
 
 	AC_DEFINE(HAVE_TENSOR, 1, [Whether you have Tensor])
-	tensor_sources="tensor.c kernel/main.c kernel/memory.c kernel/exception.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c tensor/arithmetic.zep.c
+	tensor_sources="tensor.c kernel/main.c kernel/memory.c kernel/exception.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c tensor/algebraic.zep.c
+	tensor/arithmetic.zep.c
 	tensor/arraylike.zep.c
 	tensor/comparable.zep.c
-	tensor/functional.zep.c
+	tensor/special.zep.c
 	tensor/statistical.zep.c
 	tensor/trigonometric.zep.c
 	tensor/exceptions/tensorexception.zep.c
@@ -29,19 +30,16 @@ if test "$PHP_TENSOR" = "yes"; then
 	tensor/matrix.zep.c
 	tensor/reductions/ref.zep.c
 	tensor/reductions/rref.zep.c
-	tensor/settings.zep.c include/indexing.c
-	include/arithmetic.c
+	tensor/settings.zep.c include/arithmetic.c
 	include/comparison.c
 	include/linear_algebra.c
 	include/signal_processing.c
 	include/settings.c"
 	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -O3 -ffast-math)
 	PHP_ADD_BUILD_DIR([$ext_builddir/kernel/])
-	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/])
-
-	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/decompositions/])
-	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/exceptions/])
-	PHP_ADD_BUILD_DIR([$ext_builddir/tensor/reductions/])
+	for dir in "tensor tensor/decompositions tensor/exceptions tensor/reductions"; do
+		PHP_ADD_BUILD_DIR([$ext_builddir/$dir])
+	done
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
 	AC_CHECK_FUNC(backtrace_symbols, have_backtrace_symbols=yes, have_backtrace_symbols=no)

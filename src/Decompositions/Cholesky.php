@@ -22,7 +22,7 @@ class Cholesky
      *
      * @var \Tensor\Matrix
      */
-    protected $l;
+    protected \Tensor\Matrix $l;
 
     /**
      * Factory method to decompose a matrix.

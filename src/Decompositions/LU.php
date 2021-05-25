@@ -24,21 +24,21 @@ class LU
      *
      * @var \Tensor\Matrix
      */
-    protected $l;
+    protected \Tensor\Matrix $l;
 
     /**
      * The upper triangular matrix.
      *
      * @var \Tensor\Matrix
      */
-    protected $u;
+    protected \Tensor\Matrix $u;
 
     /**
      * The permutation matrix.
      *
      * @var \Tensor\Matrix
      */
-    protected $p;
+    protected \Tensor\Matrix $p;
 
     /**
      * Factory method to decompose a matrix.

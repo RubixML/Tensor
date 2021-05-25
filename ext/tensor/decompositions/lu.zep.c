@@ -32,8 +32,8 @@
  * @package     Rubix/Tensor
  * @author      Andrew DalPino
  */
-ZEPHIR_INIT_CLASS(Tensor_Decompositions_Lu) {
-
+ZEPHIR_INIT_CLASS(Tensor_Decompositions_Lu)
+{
 	ZEPHIR_REGISTER_CLASS(Tensor\\Decompositions, Lu, tensor, decompositions_lu, tensor_decompositions_lu_method_entry, 0);
 
 	/**
@@ -42,23 +42,19 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Lu) {
 	 * @var \Tensor\Matrix
 	 */
 	zend_declare_property_null(tensor_decompositions_lu_ce, SL("l"), ZEND_ACC_PROTECTED);
-
 	/**
 	 * The upper triangular matrix.
 	 *
 	 * @var \Tensor\Matrix
 	 */
 	zend_declare_property_null(tensor_decompositions_lu_ce, SL("u"), ZEND_ACC_PROTECTED);
-
 	/**
 	 * The permutation matrix.
 	 *
 	 * @var \Tensor\Matrix
 	 */
 	zend_declare_property_null(tensor_decompositions_lu_ce, SL("p"), ZEND_ACC_PROTECTED);
-
 	return SUCCESS;
-
 }
 
 /**
@@ -69,8 +65,8 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Lu) {
  * @throws \Tensor\Exceptions\RuntimeException
  * @return self
  */
-PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
-
+PHP_METHOD(Tensor_Decompositions_Lu, decompose)
+{
 	zval lup, _5;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zephir_fcall_cache_entry *_6 = NULL;
@@ -93,10 +89,16 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&lup);
 	ZVAL_UNDEF(&_5);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &a);
-
 
 
 	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
@@ -139,7 +141,6 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &l, &u, &p);
 	zephir_check_call_status();
 	RETURN_MM();
-
 }
 
 /**
@@ -147,23 +148,30 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose) {
  * @param \Tensor\Matrix u
  * @param \Tensor\Matrix p
  */
-PHP_METHOD(Tensor_Decompositions_Lu, __construct) {
-
+PHP_METHOD(Tensor_Decompositions_Lu, __construct)
+{
 	zval *l, l_sub, *u, u_sub, *p, p_sub;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&l_sub);
 	ZVAL_UNDEF(&u_sub);
 	ZVAL_UNDEF(&p_sub);
+#if PHP_VERSION_ID >= 80000
+	bool is_null_true = 1;
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+		Z_PARAM_OBJECT_OF_CLASS(l, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(u, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(p, tensor_matrix_ce)
+	ZEND_PARSE_PARAMETERS_END();
+#endif
+
 
 	zephir_fetch_params_without_memory_grow(3, 0, &l, &u, &p);
-
 
 
 	zephir_update_property_zval(this_ptr, ZEND_STRL("l"), l);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("u"), u);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("p"), p);
-
 }
 
 /**
@@ -171,13 +179,13 @@ PHP_METHOD(Tensor_Decompositions_Lu, __construct) {
  *
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_Decompositions_Lu, l) {
-
+PHP_METHOD(Tensor_Decompositions_Lu, l)
+{
 	zval *this_ptr = getThis();
 
 
-	RETURN_MEMBER(getThis(), "l");
 
+	RETURN_MEMBER(getThis(), "l");
 }
 
 /**
@@ -185,13 +193,13 @@ PHP_METHOD(Tensor_Decompositions_Lu, l) {
  *
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_Decompositions_Lu, u) {
-
+PHP_METHOD(Tensor_Decompositions_Lu, u)
+{
 	zval *this_ptr = getThis();
 
 
-	RETURN_MEMBER(getThis(), "u");
 
+	RETURN_MEMBER(getThis(), "u");
 }
 
 /**
@@ -199,12 +207,12 @@ PHP_METHOD(Tensor_Decompositions_Lu, u) {
  *
  * @return \Tensor\Matrix
  */
-PHP_METHOD(Tensor_Decompositions_Lu, p) {
-
+PHP_METHOD(Tensor_Decompositions_Lu, p)
+{
 	zval *this_ptr = getThis();
 
 
-	RETURN_MEMBER(getThis(), "p");
 
+	RETURN_MEMBER(getThis(), "p");
 }
 

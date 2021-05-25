@@ -4,10 +4,11 @@
 #ifndef ZEPHIR_CLASS_ENTRIES_H
 #define ZEPHIR_CLASS_ENTRIES_H
 
+#include "tensor/algebraic.zep.h"
 #include "tensor/arithmetic.zep.h"
 #include "tensor/arraylike.zep.h"
 #include "tensor/comparable.zep.h"
-#include "tensor/functional.zep.h"
+#include "tensor/special.zep.h"
 #include "tensor/statistical.zep.h"
 #include "tensor/trigonometric.zep.h"
 #include "tensor/exceptions/tensorexception.zep.h"

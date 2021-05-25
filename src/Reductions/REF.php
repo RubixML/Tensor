@@ -26,14 +26,14 @@ class REF
      *
      * @var \Tensor\Matrix
      */
-    protected $a;
+    protected \Tensor\Matrix $a;
 
     /**
      * The number of swaps made to compute the row echelon form of the matrix.
      *
      * @var int
      */
-    protected $swaps;
+    protected int $swaps;
 
     /**
      * Factory method to decompose a matrix.
