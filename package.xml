@@ -10,9 +10,9 @@
         <email>support@andrewdalpino.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2021-04-28</date>
+	<date>2021-05-25</date>
 	<version>
-		<release>2.2.2</release>
+		<release>2.2.3</release>
 		<api>2.2</api>
 	</version>
 	<stability>
