@@ -8,6 +8,7 @@ use Tensor\Exceptions\RuntimeException;
 use ArrayIterator;
 
 use function count;
+use function is_float;
 use function array_slice;
 use function array_fill;
 use function gettype;
