@@ -16,16 +16,12 @@
 		<api>3.0</api>
 	</version>
 	<stability>
-		<release>beta</release>
-		<api>beta</api>
+		<release>stable</release>
+		<api>stable</api>
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Extension now compatible with PHP 7.4 and 8.0+
-        - Drop extension support for PHP 7.2 and 7.3
-        - Tensors only compute floating point operations
-        - Matrix returns vector on row access
-        - Removed deprecated methods
+        - No changes
     </notes>
 	<contents>
         <dir name="/">
