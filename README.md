@@ -4,9 +4,6 @@
 
 Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net). The multithreaded extension is especially suited for computing large sets of numbers. In some cases, the extension is 230X faster than the same operation in PHPland. Tensor is used by libraries such as [Rubix ML](https://rubixml.com) to build and accelerate machine learning algorithms such as linear regression, dimensionality reduction, and neural networks.
 
-## Development Has Moved
-Development of Tensor has moved to [Scienide/Tensor](https://github.com/Scien-ide/Tensor). We recommend updating to the new version.
-
 ## Installation
 Follow the instructions below to install either Tensor PHP or the Tensor extension.
 
