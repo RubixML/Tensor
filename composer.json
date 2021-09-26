@@ -28,7 +28,7 @@
         "php": ">=7.4"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "2.18.*",
+        "friendsofphp/php-cs-fixer": "3.1.*",
         "phalcon/zephir": "^0.13.5",
         "phpbench/phpbench": "^1.0",
         "phpstan/extension-installer": "^1.0",
@@ -63,7 +63,7 @@
         "benchmark": "phpbench run --report=env --report=aggregate",
         "check": [
             "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
-            "php-cs-fixer fix --config=.php_cs.dist -v --dry-run --using-cache=no"
+            "php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --using-cache=no"
         ],
         "clean": "zephir fullclean",
         "compile": [
@@ -72,7 +72,7 @@
             "zephir compile --no-dev",
             "zephir install"
         ],
-        "fix": "php-cs-fixer fix --config=.php_cs.dist",
+        "fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php",
         "test": "phpunit"
     },
     "config": {
