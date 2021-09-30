@@ -2,6 +2,5 @@ parameters:
     level: 8
     paths:
         - 'src'
-        - 'optimizers'
         - 'tests'
         - 'benchmarks'

@@ -29,7 +29,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "3.1.*",
-        "phalcon/zephir": "^0.13.5",
+        "phalcon/zephir": "^0.14",
         "phpbench/phpbench": "^1.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "0.12.*",

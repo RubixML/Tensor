@@ -17,7 +17,7 @@ ZEPHIR_INIT_CLASS(Tensor_ArrayLike)
 	ZEPHIR_REGISTER_INTERFACE(Tensor, ArrayLike, tensor, arraylike, tensor_arraylike_method_entry);
 
 	zend_class_implements(tensor_arraylike_ce, 1, zend_ce_arrayaccess);
-	zend_class_implements(tensor_arraylike_ce, 1, zephir_get_internal_ce(SL("iteratoraggregate")));
+	zend_class_implements(tensor_arraylike_ce, 1, zend_ce_aggregate);
 	zend_class_implements(tensor_arraylike_ce, 1, zend_ce_countable);
 	return SUCCESS;
 }

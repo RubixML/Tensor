@@ -21,6 +21,7 @@
 #include "kernel/array.h"
 #include "math.h"
 #include "kernel/math.h"
+#include "ext/spl/spl_array.h"
 #include "include/linear_algebra.h"
 #include "include/signal_processing.h"
 #include "include/arithmetic.h"
@@ -2320,7 +2321,7 @@ PHP_METHOD(Tensor_Matrix, matmul)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -2389,7 +2390,7 @@ PHP_METHOD(Tensor_Matrix, dot)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -2463,7 +2464,7 @@ PHP_METHOD(Tensor_Matrix, convolve)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_LONG(stride)
 	ZEND_PARSE_PARAMETERS_END();
@@ -4624,7 +4625,7 @@ PHP_METHOD(Tensor_Matrix, variance)
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_ZVAL(mean)
+		Z_PARAM_ZVAL_OR_NULL(mean)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -4722,7 +4723,7 @@ PHP_METHOD(Tensor_Matrix, covariance)
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_OBJECT_OF_CLASS_OR_NULL(mean, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS_OR_NULL(mean, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -5827,7 +5828,7 @@ PHP_METHOD(Tensor_Matrix, augmentAbove)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -5903,7 +5904,7 @@ PHP_METHOD(Tensor_Matrix, augmentBelow)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -5980,7 +5981,7 @@ PHP_METHOD(Tensor_Matrix, augmentLeft)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -6059,7 +6060,7 @@ PHP_METHOD(Tensor_Matrix, augmentRight)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -6261,7 +6262,7 @@ PHP_METHOD(Tensor_Matrix, multiplyMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -6378,7 +6379,7 @@ PHP_METHOD(Tensor_Matrix, divideMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -6495,7 +6496,7 @@ PHP_METHOD(Tensor_Matrix, addMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -6612,7 +6613,7 @@ PHP_METHOD(Tensor_Matrix, subtractMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -6730,7 +6731,7 @@ PHP_METHOD(Tensor_Matrix, powMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -6848,7 +6849,7 @@ PHP_METHOD(Tensor_Matrix, modMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -6966,7 +6967,7 @@ PHP_METHOD(Tensor_Matrix, equalMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -7083,7 +7084,7 @@ PHP_METHOD(Tensor_Matrix, notEqualMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -7201,7 +7202,7 @@ PHP_METHOD(Tensor_Matrix, greaterMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -7319,7 +7320,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqualMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -7436,7 +7437,7 @@ PHP_METHOD(Tensor_Matrix, lessMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -7553,7 +7554,7 @@ PHP_METHOD(Tensor_Matrix, lessEqualMatrix)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -7667,7 +7668,7 @@ PHP_METHOD(Tensor_Matrix, multiplyVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -7770,7 +7771,7 @@ PHP_METHOD(Tensor_Matrix, divideVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -7873,7 +7874,7 @@ PHP_METHOD(Tensor_Matrix, addVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -7976,7 +7977,7 @@ PHP_METHOD(Tensor_Matrix, subtractVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -8079,7 +8080,7 @@ PHP_METHOD(Tensor_Matrix, powVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -8182,7 +8183,7 @@ PHP_METHOD(Tensor_Matrix, modVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -8286,7 +8287,7 @@ PHP_METHOD(Tensor_Matrix, equalVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -8389,7 +8390,7 @@ PHP_METHOD(Tensor_Matrix, notEqualVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -8492,7 +8493,7 @@ PHP_METHOD(Tensor_Matrix, greaterVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -8595,7 +8596,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqualVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -8698,7 +8699,7 @@ PHP_METHOD(Tensor_Matrix, lessVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -8802,7 +8803,7 @@ PHP_METHOD(Tensor_Matrix, lessEqualVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -8911,7 +8912,7 @@ PHP_METHOD(Tensor_Matrix, multiplyColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -9032,7 +9033,7 @@ PHP_METHOD(Tensor_Matrix, divideColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -9153,7 +9154,7 @@ PHP_METHOD(Tensor_Matrix, addColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -9274,7 +9275,7 @@ PHP_METHOD(Tensor_Matrix, subtractColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -9395,7 +9396,7 @@ PHP_METHOD(Tensor_Matrix, powColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -9516,7 +9517,7 @@ PHP_METHOD(Tensor_Matrix, modColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -9637,7 +9638,7 @@ PHP_METHOD(Tensor_Matrix, equalColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -9758,7 +9759,7 @@ PHP_METHOD(Tensor_Matrix, notEqualColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -9879,7 +9880,7 @@ PHP_METHOD(Tensor_Matrix, greaterColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -10000,7 +10001,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqualColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -10121,7 +10122,7 @@ PHP_METHOD(Tensor_Matrix, lessColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -10242,7 +10243,7 @@ PHP_METHOD(Tensor_Matrix, lessEqualColumnVector)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, _tensor_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -11393,7 +11394,7 @@ PHP_METHOD(Tensor_Matrix, getIterator)
 
 	ZEPHIR_MM_GROW();
 
-	object_init_ex(return_value, zephir_get_internal_ce(SL("arrayiterator")));
+	object_init_ex(return_value, spl_ce_ArrayIterator);
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "asvectors", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 23, &_0);

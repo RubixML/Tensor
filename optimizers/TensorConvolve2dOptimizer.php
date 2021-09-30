@@ -34,6 +34,10 @@ class TensorConvolve2dOptimizer extends OptimizerAbstract
         $call->processExpectedReturn($context);
 
         $symbolVariable = $call->getSymbolVariable();
+        
+        if (empty($symbolVariable)) {
+            throw new CompilerException('Missing symbol variable.');
+        }
 
         if ($symbolVariable->getType() !== 'variable') {
             throw new CompilerException(
