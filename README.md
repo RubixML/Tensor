@@ -2,8 +2,7 @@
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/rubix/tensor.svg?style=flat&colorB=8892BF)](https://www.php.net/) [![Latest Stable Version](https://img.shields.io/packagist/v/rubix/tensor.svg?style=flat&colorB=orange)](https://packagist.org/packages/rubix/tensor) [![PHP Build](https://github.com/RubixML/Tensor/workflows/Build/badge.svg)](https://github.com/RubixML/Tensor/actions) [![Extension Build](https://github.com/RubixML/Tensor/actions/workflows/ci-ext.yml/badge.svg)](https://github.com/RubixML/Tensor/actions/workflows/ci-ext.yml) [![Downloads from Packagist](https://img.shields.io/packagist/dt/rubix/tensor.svg?style=flat&colorB=red)](https://packagist.org/packages/rubix/tensor) [![GitHub](https://img.shields.io/github/license/RubixML/Tensor)](https://github.com/RubixML/Tensor/blob/master/LICENSE.md)
 
-Tensor is a library and extension that provides objects for scientific computing in [PHP](https://php.net). The multithreaded extension is especially suited for computing large sets of numbers. In some cases, the extension is 230X faster than the same operation in PHPland. Tensor is used by libraries such as [Rubix ML](https://rubixml.com) to build and accelerate machine learning algorithms such as linear regression, dimensionality reduction, and neural networks.
-
+A library and extension that provides objects for scientific computing in [PHP](https://php.net).
 ## Installation
 Follow the instructions below to install either Tensor PHP or the Tensor extension.
 
@@ -78,7 +77,7 @@ php -m | grep tensor
 ## Funding
 Rubix ML is funded by donations from the community. You can become a sponsor by making a contribution to one of our funding sources below.
 
-- [Github Sponsors](https://github.com/sponsors/andrewdalpino)
+- [Github Sponsors](https://github.com/sponsors/RubixML)
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
