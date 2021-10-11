@@ -34,7 +34,7 @@ class TensorModScalarOptimizer extends OptimizerAbstract
         $call->processExpectedReturn($context);
 
         $symbolVariable = $call->getSymbolVariable();
-        
+
         if (empty($symbolVariable)) {
             throw new CompilerException('Missing symbol variable.');
         }
