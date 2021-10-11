@@ -12,7 +12,7 @@ case "${ID:-}" in
     ;;
   debian)
     apt-get update
-    apt-get install -qy gfortran-8 liblapack-dev libopenblas-dev liblapacke-dev
+    apt-get install -qy gfortran liblapack-dev libopenblas-dev liblapacke-dev
     ;;
   *)
     echo 'Unsupported distribution' >&2
