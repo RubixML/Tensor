@@ -1,4 +1,5 @@
 - 3.0.1
+    - Add positive semi-definite typehinting
 
 - 3.0.0
     - No changes

@@ -41,14 +41,14 @@ class Matrix implements Tensor
     /**
      * The number of rows in the matrix.
      *
-     * @var int
+     * @var int<0,max>
      */
     protected int $m;
 
     /**
      * The number of columns in the matrix.
      *
-     * @var int
+     * @var int<0,max>
      */
     protected int $n;
 
@@ -389,7 +389,7 @@ class Matrix implements Tensor
     /**
      * Return a tuple with the dimensionality of the tensor.
      *
-     * @return int[]
+     * @return array{int<0,max>,int<0,max>}
      */
     public function shape() : array
     {
@@ -419,7 +419,7 @@ class Matrix implements Tensor
     /**
      * Return the number of elements in the tensor.
      *
-     * @return int
+     * @return int<0,max>
      */
     public function size() : int
     {
@@ -429,7 +429,7 @@ class Matrix implements Tensor
     /**
      * Return the number of rows in the matrix.
      *
-     * @return int
+     * @return int<0,max>
      */
     public function m() : int
     {
@@ -439,7 +439,7 @@ class Matrix implements Tensor
     /**
      * Return the number of columns in the matrix.
      *
-     * @return int
+     * @return int<0,max>
      */
     public function n() : int
     {

@@ -34,7 +34,7 @@ class Vector implements Tensor
     /**
      * The number of elements in the vector.
      *
-     * @var int
+     * @var int<0,max>
      */
     protected int $n;
 
@@ -294,7 +294,7 @@ class Vector implements Tensor
     /**
      * Return a tuple with the dimensionality of the tensor.
      *
-     * @return int[]
+     * @return array{int<0,max>}
      */
     public function shape() : array
     {
@@ -314,7 +314,7 @@ class Vector implements Tensor
     /**
      * Return the number of elements in the vector.
      *
-     * @return int
+     * @return int<0,max>
      */
     public function size() : int
     {
@@ -324,7 +324,7 @@ class Vector implements Tensor
     /**
      * Return the number of rows in the vector.
      *
-     * @return int
+     * @return int<0,max>
      */
     public function m() : int
     {
@@ -334,7 +334,7 @@ class Vector implements Tensor
     /**
      * Return the number of columns in the vector.
      *
-     * @return int
+     * @return int<0,max>
      */
     public function n() : int
     {
