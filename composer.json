@@ -32,8 +32,8 @@
         "phalcon/zephir": "^0.14",
         "phpbench/phpbench": "^1.0",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "0.12.*",
-        "phpstan/phpstan-phpunit": "0.12.*",
+        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
         "phpunit/phpunit": "^9.0"
     },
     "autoload": {
