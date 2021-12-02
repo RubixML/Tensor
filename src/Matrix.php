@@ -55,7 +55,7 @@ class Matrix implements Tensor
     /**
      * Factory method to build a new matrix from an array.
      *
-     * @param array[] $a
+     * @param array<array<int|float>> $a
      * @return self
      */
     public static function build(array $a = []) : self
@@ -66,7 +66,7 @@ class Matrix implements Tensor
     /**
      * Build a new matrix foregoing any validation for quicker instantiation.
      *
-     * @param array[] $a
+     * @param array<array<int|float>> $a
      * @return self
      */
     public static function quick(array $a = []) : self
@@ -352,7 +352,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * @param array[] $a
+     * @param array<array<int|float>> $a
      * @param bool $validate
      * @throws \Tensor\Exceptions\InvalidArgumentException
      */
