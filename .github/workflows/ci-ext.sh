@@ -8,7 +8,7 @@ set -o errexit
 case "${ID:-}" in
   alpine)
     apk update
-    apk add $PHPIZE_DEPS lapack-dev libexecinfo-dev openblas-dev liblapacke-dev
+    apk add $PHPIZE_DEPS lapack-dev libexecinfo-dev openblas-dev lapacke-dev
     ;;
   debian)
     apt-get update
