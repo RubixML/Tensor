@@ -1,3 +1,6 @@
+- 3.1.0
+    - PHP 8.1 extension compatibility
+
 - 3.0.1
     - Add positive semi-definite typehinting
 
