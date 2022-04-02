@@ -16,7 +16,7 @@ EOT
 
 chdir(__DIR__);
 
-echo 'Reading config.m4 file... ';
+echo 'Reading config.m4 file';
 
 $configM4Contents = file_get_contents(CONFIG_M4_PATH);
 
@@ -25,28 +25,23 @@ if (!$configM4Contents) {
 
     exit(1);
 }
-echo "done.\n";
 
-echo 'Applying libexec patch...';
+echo 'Applying libexec patch';
 
 if (strpos($configM4Contents, EXECINFO_MATCH) === false) {
-    fwrite(STDERR, "patch entrypoint not found!\n");
+    fwrite(STDERR, "Patch entrypoint not found!\n");
 
     exit(1);
 } elseif (strpos($configM4Contents, trim(EXECINFO_PATCH)) !== false) {
-    echo "already applied.\n";
+    echo "Already applied.\n";
 } else {
     $configM4Contents = str_replace(EXECINFO_MATCH, EXECINFO_MATCH . EXECINFO_PATCH, $configM4Contents);
-    
-    echo "done.\n";
 }
 
-echo 'Saving config.m4 file... ';
+echo 'Saving config.m4 file';
 
 if (!file_put_contents(CONFIG_M4_PATH, $configM4Contents)) {
     fwrite(STDERR, "Failed to write the config.m4 file\n");
 
     exit(1);
 }
-
-echo "done.\n";
