@@ -6,6 +6,7 @@ use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\RuntimeException;
 use ArrayIterator;
+use Traversable;
 
 use function count;
 use function is_float;
@@ -2303,6 +2304,7 @@ class Vector implements Tensor
      * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return float
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($index)
     {
         if (isset($this->a[$index])) {
@@ -2318,7 +2320,7 @@ class Vector implements Tensor
      *
      * @return \ArrayIterator<int,float>
      */
-    public function getIterator() : ArrayIterator
+    public function getIterator() : Traversable
     {
         return new ArrayIterator($this->a);
     }

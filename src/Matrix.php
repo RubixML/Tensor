@@ -12,7 +12,7 @@ use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\RuntimeException;
 use Tensor\Exceptions\NotImplemented;
-use Generator;
+use Traversable;
 
 use function count;
 use function is_float;
@@ -3435,7 +3435,7 @@ class Matrix implements Tensor
      *
      * @return \Generator<int,\Tensor\Vector>
      */
-    public function getIterator() : Generator
+    public function getIterator() : Traversable
     {
         foreach ($this->a as $row) {
             yield Vector::quick($row);
