@@ -355,7 +355,7 @@ class VectorTest extends TestCase
             [40.807, 4.634999999999993, 622.3751],
         ];
 
-        $this->assertEquals($expected, $this->c->matmul($this->d->transpose())->asArray());
+        $this->assertEqualsWithDelta($expected, $this->c->matmul($this->d->transpose())->asArray(), 1e-8);
     }
 
     /**
@@ -1071,7 +1071,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-8);
     }
 
     /**

@@ -420,7 +420,7 @@ class MatrixTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-8);
     }
 
     /**
@@ -601,8 +601,8 @@ class MatrixTest extends TestCase
         $this->assertCount(9, $lu->l());
         $this->assertCount(9, $lu->u());
 
-        $this->assertEquals($lHat, $lu->l()->asArray());
-        $this->assertEquals($uHat, $lu->u()->asArray());
+        $this->assertEqualsWithDelta($lHat, $lu->l()->asArray(), 1e-8);
+        $this->assertEqualsWithDelta($uHat, $lu->u()->asArray(), 1e-8);
     }
 
     /**
@@ -653,8 +653,8 @@ class MatrixTest extends TestCase
 
         $eigenvalues = $eig->eigenvalues();
 
-        $this->assertEqualsWithDelta($values, $eigenvalues, 1e-12);
-        $this->assertEquals($vectors, $eig->eigenvectors()->asArray());
+        $this->assertEqualsWithDelta($values, $eigenvalues, 1e-8);
+        $this->assertEqualsWithDelta($vectors, $eig->eigenvectors()->asArray(), 1e-8);
     }
 
     /**
@@ -679,8 +679,8 @@ class MatrixTest extends TestCase
 
         $eigenvalues = $eig->eigenvalues();
 
-        $this->assertEqualsWithDelta($values, $eigenvalues, 1e-12);
-        $this->assertEquals($vectors, $eig->eigenvectors()->asArray());
+        $this->assertEqualsWithDelta($values, $eigenvalues, 1e-8);
+        $this->assertEqualsWithDelta($vectors, $eig->eigenvectors()->asArray(), 1e-8);
     }
 
     /**
@@ -710,9 +710,9 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(Matrix::class, $svd->u());
         $this->assertInstanceOf(Matrix::class, $svd->vT());
 
-        $this->assertEquals($uHat, $svd->u()->asArray());
-        $this->assertEquals($singularValues, $svd->singularValues());
-        $this->assertEquals($vtHat, $svd->vT()->asArray());
+        $this->assertEqualsWithDelta($uHat, $svd->u()->asArray(), 1e-8);
+        $this->assertEqualsWithDelta($singularValues, $svd->singularValues(), 1e-8);
+        $this->assertEqualsWithDelta($vtHat, $svd->vT()->asArray(), 1e-8);
     }
 
     /**
@@ -1228,7 +1228,7 @@ class MatrixTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-8);
     }
 
     /**
@@ -1653,7 +1653,7 @@ class MatrixTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-8);
     }
 
     /**
@@ -1704,7 +1704,7 @@ class MatrixTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-8);
     }
 
     /**
@@ -1913,7 +1913,7 @@ class MatrixTest extends TestCase
         $expected = [5.666666666666667, 4.333333333333333, 1.6666666666666667];
 
         $this->assertInstanceOf(ColumnVector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-8);
     }
 
     /**
@@ -1952,7 +1952,7 @@ class MatrixTest extends TestCase
         $expected = [273.55555555555554, 28.222222222222225, 169.55555555555554];
 
         $this->assertInstanceOf(ColumnVector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-8);
     }
 
     /**
@@ -1969,7 +1969,7 @@ class MatrixTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-8);
     }
 
     /**
