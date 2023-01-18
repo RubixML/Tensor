@@ -1,0 +1,2 @@
+kernel/backtrace.lo: \
+ /home/andrew/Workspace/Rubix/Tensor/ext/kernel/backtrace.c
