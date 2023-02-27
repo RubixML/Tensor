@@ -21,7 +21,7 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Added PHP 8.1 extension compatibility
+        - Added PHP 8.2 extension compatibility
     </notes>
 	<contents>
         <dir name="/">
