@@ -2272,6 +2272,7 @@ class Vector implements Tensor
      * @param mixed[] $values
      * @throws \Tensor\Exceptions\RuntimeException
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($index, $values) : void
     {
         throw new RuntimeException('Vector cannot be mutated directly.');
@@ -2320,6 +2321,7 @@ class Vector implements Tensor
      *
      * @return \ArrayIterator<int,float>
      */
+    #[\ReturnTypeWillChange]
     public function getIterator() : Traversable
     {
         return new ArrayIterator($this->a);

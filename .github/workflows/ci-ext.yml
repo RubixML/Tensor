@@ -24,6 +24,7 @@ jobs:
           - php:7.4-cli
           - php:8.0-cli
           - php:8.1-cli
+          - php:8.2-cli
           
     name: Image ${{ matrix.image }}
     runs-on: ubuntu-latest

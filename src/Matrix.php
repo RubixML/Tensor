@@ -3435,6 +3435,7 @@ class Matrix implements Tensor
      *
      * @return \Generator<int,\Tensor\Vector>
      */
+    #[\ReturnTypeWillChange]
     public function getIterator() : Traversable
     {
         foreach ($this->a as $row) {
