@@ -1,3 +1,6 @@
+- 3.0.3
+    - Added PHP 8.2 extension compatibility
+
 - 3.0.2
     - Added PHP 8.1 extension compatibility
 
