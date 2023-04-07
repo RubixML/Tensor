@@ -571,15 +571,22 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_offsetexists, 0, 1
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_offsetunset, 0, 1, IS_VOID, 0)
-
 	ZEND_ARG_INFO(0, index)
 ZEND_END_ARG_INFO()
 
+#if PHP_VERSION_ID >= 80000
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_vector_offsetget, 0, 1, IS_MIXED, 0)
+#else
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_offsetget, 0, 0, 1)
+#endif
 	ZEND_ARG_INFO(0, index)
 ZEND_END_ARG_INFO()
 
+#if PHP_VERSION_ID >= 80000
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_vector_getiterator, 0, 0, Traversable, 0)
+#else
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_vector_getiterator, 0, 0, 0)
+#endif
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(tensor_vector_method_entry) {
