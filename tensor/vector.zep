@@ -2164,7 +2164,7 @@ class Vector implements Tensor
      * @throws \Tensor\Exceptions\InvalidArgumentException
      * @return int|float
      */
-    public function offsetGet(const var index) -> int|float
+    public function offsetGet(const var index) -> mixed
     {
         var value;
 
@@ -2181,7 +2181,7 @@ class Vector implements Tensor
      *
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator() -> <\Traversable>
     {
         return new ArrayIterator(this->a);
     }

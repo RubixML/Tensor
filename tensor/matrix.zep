@@ -3231,7 +3231,7 @@ class Matrix implements Tensor
      *
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator() -> <\Traversable>
     {
         return new ArrayIterator(this->asVectors());
     }
