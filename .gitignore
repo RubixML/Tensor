@@ -11,6 +11,7 @@
 *.dSYM
 *.deps
 *.tgz
+*.dep
 
 zephir.phar
 autom4te.cache/
