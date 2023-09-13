@@ -22,9 +22,13 @@ jobs:
       matrix:
         image:
           - php:7.4-cli
+          - php:7.4-cli-alpine
           - php:8.0-cli
+          - php:8.0-cli-alpine
           - php:8.1-cli
+          - php:8.1-cli-alpine
           - php:8.2-cli
+          - php:8.2-cli-alpine
           
     name: Image ${{ matrix.image }}
     runs-on: ubuntu-latest

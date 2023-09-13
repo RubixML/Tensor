@@ -8,7 +8,18 @@ set -o errexit
 case "${ID:-}" in
   alpine)
     apk update
-    apk add $PHPIZE_DEPS lapack-dev libexecinfo-dev openblas-dev
+    case "$VERSION_ID" in
+      3.11.* | 3.12.* | 3.13.* | 3.14.* | 3.15.* | 3.16.* | 3.17.*)
+        apk update && apk add $PHPIZE_DEPS lapack lapack-dev openblas-dev
+        if [ ! -e /usr/lib/liblapacke.so ]; then
+          # Fix for Alpine 3.15, 3.16 and 3.17
+          ln -s /usr/lib/liblapacke.so.3 /usr/lib/liblapacke.so
+        fi
+        ;;
+      *)
+        apk add $PHPIZE_DEPS liblapack lapack-dev openblas-dev
+        ;;
+    esac
     ;;
   debian)
     apt-get update
