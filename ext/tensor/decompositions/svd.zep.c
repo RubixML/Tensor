@@ -82,7 +82,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, decompose)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
+		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
@@ -135,9 +135,9 @@ PHP_METHOD(Tensor_Decompositions_Svd, __construct)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_OBJECT_OF_CLASS(u, zephir_get_internal_ce(SL("tensor\\matrix")))
+		Z_PARAM_OBJECT_OF_CLASS(u, tensor_matrix_ce)
 		Z_PARAM_ARRAY(singularValues)
-		Z_PARAM_OBJECT_OF_CLASS(vT, zephir_get_internal_ce(SL("tensor\\matrix")))
+		Z_PARAM_OBJECT_OF_CLASS(vT, tensor_matrix_ce)
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 

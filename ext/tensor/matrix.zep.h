@@ -731,7 +731,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_offsetget, 0, 1, I
 	ZEND_ARG_INFO(0, index)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_matrix_getiterator, 0, 0, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_getiterator, 0, 0, Traversable, 0)
 ZEND_END_ARG_INFO()
 
 ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
@@ -886,10 +886,6 @@ ZEPHIR_INIT_FUNCS(tensor_matrix_method_entry) {
 	PHP_ME(Tensor_Matrix, offsetExists, arginfo_tensor_matrix_offsetexists, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, offsetUnset, arginfo_tensor_matrix_offsetunset, ZEND_ACC_PUBLIC)
 	PHP_ME(Tensor_Matrix, offsetGet, arginfo_tensor_matrix_offsetget, ZEND_ACC_PUBLIC)
-#if PHP_VERSION_ID >= 80000
 	PHP_ME(Tensor_Matrix, getIterator, arginfo_tensor_matrix_getiterator, ZEND_ACC_PUBLIC)
-#else
-	PHP_ME(Tensor_Matrix, getIterator, NULL, ZEND_ACC_PUBLIC)
-#endif
 	PHP_FE_END
 };
