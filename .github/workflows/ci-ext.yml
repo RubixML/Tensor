@@ -32,12 +32,62 @@ jobs:
           
     name: Image ${{ matrix.image }}
     runs-on: ubuntu-latest
+    container: ${{ matrix.image }}
     steps:
-      - name: Pull docker image
-        run: docker pull ${{ matrix.image }}
-
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Compile
-        run: docker run --rm -v "$GITHUB_WORKSPACE:/app" ${{ matrix.image }} /app/.github/workflows/ci-ext.sh
+      - name: Install system dependencies (Alpine)
+        if: contains(matrix.image, 'alpine')
+        run: |
+          apk update
+          . /etc/os-release
+          case "$VERSION_ID" in
+            3.11.* | 3.12.* | 3.13.* | 3.14.* | 3.15.* | 3.16.* | 3.17.*)
+              apk update && apk add $PHPIZE_DEPS lapack lapack-dev openblas-dev
+              if [ ! -e /usr/lib/liblapacke.so ]; then
+                # Fix for Alpine 3.15, 3.16 and 3.17
+                ln -s /usr/lib/liblapacke.so.3 /usr/lib/liblapacke.so
+              fi
+              ;;
+            *)
+              apk add $PHPIZE_DEPS liblapack lapack-dev openblas-dev
+              ;;
+          esac
+
+      - name: Install system dependencies (Debian)
+        if: ${{ !contains(matrix.image, 'alpine') }}
+        run: |
+          apt-get update -q
+          apt-get install -qy gfortran liblapack-dev libopenblas-dev liblapacke-dev
+
+      - name: Create working directory
+        run: |
+          rm -rf /tmp/tensor-package
+          mkdir /tmp/tensor-package
+
+      - name: Create PECL package
+        run: |
+          cd /tmp/tensor-package
+          pecl package "$GITHUB_WORKSPACE/package.xml"
+
+      - name: Compile PECL package
+        run: |
+          cd /tmp/tensor-package
+          MAKE="make -j$(nproc)" pecl install tensor-*.tgz
+
+      - name: Enable PHP extension
+        run: docker-php-ext-enable tensor
+
+      - name: Check for PHP startup warnings
+        run: |
+          php -d display_errors=stderr -d display_startup_errors=1 -d error_reporting=-1 -r ';' 2>/tmp/php-startup-warnings
+          if [ -s /tmp/php-startup-warnings ]; then
+            echo 'The PHP extension was successfully installed, but PHP raised these warnings:' >&2
+            cat /tmp/php-startup-warnings >&2
+            exit 1
+          fi
+          echo "PHP didn't raise any warnings at startup."
+
+      - name: Inspect PHP extension
+        run: php --ri tensor
