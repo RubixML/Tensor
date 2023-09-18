@@ -635,12 +635,9 @@ class VectorTest extends TestCase
         ];
 
         yield [
-            Vector::quick([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0]),
-            Vector::quick([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0]),
-            Vector::quick([
-                1073741824.0, 1.0000000000000014E-25, 34359738368.0, 68719476736.0,
-                1.0, -2.909321189362571E+42, 9.172286825801562E+54, 35184372088832.0,
-            ]),
+            Vector::quick([3.0, 6.0, 9.0]),
+            Vector::quick([3.0, 2.0, 1.0]),
+            Vector::quick([27.0, 36.0, 9.0]),
         ];
 
         yield [
@@ -956,8 +953,8 @@ class VectorTest extends TestCase
     public function modProvider() : Generator
     {
         yield [
-            Vector::quick([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0]),
             Vector::quick([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0]),
+            Vector::quick([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0]),
             Vector::quick([0, 0, 2, 0, -1, -3, 3, 2]),
         ];
 
