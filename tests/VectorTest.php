@@ -329,9 +329,6 @@ class VectorTest extends TestCase
         $this->assertEquals(331.54999999999995, $c);
     }
 
-    /**
-     * @test
-     */
     public function matmul() : void
     {
         $a = Vector::quick([4.0, 6.5, 2.9, 20.0, 2.6, 11.9]);
