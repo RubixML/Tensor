@@ -733,28 +733,39 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @requires extension tensor
+     * @dataProvider eigProvider
+     *
+     * @param \Tensor\Matrix $a
+     * @param \Tensor\Tensor|float $b
+     * @param \Tensor\Tensor|float $expected
      */
-    public function eig() : void
+    public function eig(Matrix $matrix, $expected) : void
     {
-        $matrix = Matrix::quick([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ]);
-
         $eig = $matrix->eig(false);
 
-        $values = [-15.096331148319537, 25.108706520450326, 13.9876246278692];
-
-        $vectors = Matrix::quick([
-            [0.25848694820886425, -0.11314537870318066, -0.9593657388523845],
-            [-0.8622719261400653, -0.17721179605718698, -0.47442924101375483],
-            [-0.6684472200177011, -0.6126879076802705, -0.42165369894378907],
-        ]);
-
-        $expected = new Eigen($values, $vectors);
-
         $this->assertEqualsWithDelta($expected, $eig, 1e-8);
+    }
+
+    /**
+     * @return \Generator<mixed[]>
+     */
+    public function eigProvider() : Generator
+    {
+        yield [
+            Matrix::quick([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ]),
+            new Eigen([
+                    -15.096331148319537, 25.108706520450326, 13.9876246278692,
+                ], Matrix::quick([
+                    [0.25848694820886425, -0.11314537870318066, -0.9593657388523845],
+                    [-0.8622719261400653, -0.17721179605718698, -0.47442924101375483],
+                    [-0.6684472200177011, -0.6126879076802705, -0.42165369894378907],
+                ])
+            ),
+        ];
     }
 
     /**
