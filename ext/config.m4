@@ -42,9 +42,14 @@ if test "$PHP_TENSOR" = "yes"; then
 	done
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
-	AC_CHECK_FUNC(backtrace_symbols, have_backtrace_symbols=yes, have_backtrace_symbols=no)
-	if test $have_backtrace_symbols = no; then
-		LDFLAGS="${LDFLAGS:-} -lexecinfo"
+	AC_CANONICAL_BUILD
+	if test "$build_os" = linux-musl; then
+		CPPFLAGS="${CPPFLAGS:-} -DALPINE_LINUX"
+	else
+		AC_CHECK_FUNC(backtrace_symbols, have_backtrace_symbols=yes, have_backtrace_symbols=no)
+		if test $have_backtrace_symbols = no; then
+			LDFLAGS="${LDFLAGS:-} -lexecinfo"
+		fi
 	fi
 
 	old_CPPFLAGS=$CPPFLAGS

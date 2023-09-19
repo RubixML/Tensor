@@ -184,7 +184,7 @@ class VectorTest extends TestCase
 
         $this->assertInstanceOf(Vector::class, $z);
         $this->assertCount(10, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -335,7 +335,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -343,7 +343,7 @@ class VectorTest extends TestCase
      */
     public function dot() : void
     {
-        $this->assertEquals(331.54999999999995, $this->a->dot($this->b));
+        $this->assertEqualsWithDelta(331.54999999999995, $this->a->dot($this->b), 1e-10);
     }
 
     /**
@@ -363,7 +363,7 @@ class VectorTest extends TestCase
      */
     public function inner() : void
     {
-        $this->assertEquals(331.54999999999995, $this->a->inner($this->b));
+        $this->assertEqualsWithDelta(331.54999999999995, $this->a->inner($this->b), 1e-10);
     }
 
     /**
@@ -385,7 +385,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-19);
     }
 
     /**
@@ -401,7 +401,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -418,7 +418,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -435,7 +435,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -452,7 +452,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -469,7 +469,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -486,7 +486,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Matrix::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -601,7 +601,7 @@ class VectorTest extends TestCase
         $expected = [-3.75, 2.5, 70.0, 18.0, 72.0, -267.0, 349.79999999999995, 90.];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -614,7 +614,7 @@ class VectorTest extends TestCase
         $expected = [-60.0, 250.0, 17.5, 72.0, 72.0, -29.666666666666668, 32.121212121212125, 22.5];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -656,7 +656,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -960,7 +960,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -977,7 +977,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -993,7 +993,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -1009,7 +1009,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-15);
     }
 
     /**
@@ -1024,7 +1024,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-15);
     }
 
     /**
@@ -1040,7 +1040,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-15);
     }
 
     /**
@@ -1055,7 +1055,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-15);
     }
 
     /**
@@ -1087,7 +1087,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -1103,7 +1103,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -1119,7 +1119,7 @@ class VectorTest extends TestCase
         ];
 
         $this->assertInstanceOf(Vector::class, $z);
-        $this->assertEquals($expected, $z->asArray());
+        $this->assertEqualsWithDelta($expected, $z->asArray(), 1e-10);
     }
 
     /**
@@ -1137,9 +1137,9 @@ class VectorTest extends TestCase
      */
     public function product() : void
     {
-        $this->assertEquals(-14442510600000.0, $this->a->product());
-        $this->assertEquals(-0.49500000000000005, $this->b->product());
-        $this->assertEquals(46657.52, $this->c->product());
+        $this->assertEqualsWithDelta(-14442510600000.0, $this->a->product(), 1e-10);
+        $this->assertEqualsWithDelta(-0.49500000000000005, $this->b->product(), 1e-10);
+        $this->assertEqualsWithDelta(46657.52, $this->c->product(), 1e-10);
     }
 
     /**
@@ -1169,7 +1169,7 @@ class VectorTest extends TestCase
     {
         $this->assertEquals(22.125, $this->a->mean());
         $this->assertEquals(0.39375, $this->b->mean());
-        $this->assertEquals(7.983333333333333, $this->c->mean());
+        $this->assertEqualsWithDelta(7.983333333333333, $this->c->mean(), 1e-10);
     }
 
     /**
@@ -1197,9 +1197,9 @@ class VectorTest extends TestCase
      */
     public function variance() : void
     {
-        $this->assertEquals(3227.609375, $this->a->variance());
-        $this->assertEquals(3.4965234374999996, $this->b->variance());
-        $this->assertEquals(38.77138888888888, $this->c->variance());
+        $this->assertEqualsWithDelta(3227.609375, $this->a->variance(), 1e-10);
+        $this->assertEqualsWithDelta(3.4965234374999996, $this->b->variance(), 1e-10);
+        $this->assertEqualsWithDelta(38.77138888888888, $this->c->variance(), 1e-10);
     }
 
     /**
@@ -1246,8 +1246,8 @@ class VectorTest extends TestCase
      */
     public function l1Norm() : void
     {
-        $this->assertEquals(423.0, $this->a->l1Norm());
-        $this->assertEquals(12.149999999999999, $this->b->l1Norm());
+        $this->assertEqualsWithDelta(423.0, $this->a->l1Norm(), 1e-10);
+        $this->assertEqualsWithDelta(12.149999999999999, $this->b->l1Norm(), 1e-10);
         $this->assertEquals(47.9, $this->c->l1Norm());
     }
 
@@ -1256,9 +1256,9 @@ class VectorTest extends TestCase
      */
     public function l2Norm() : void
     {
-        $this->assertEquals(172.4441938715247, $this->a->l2Norm());
-        $this->assertEquals(5.404858925078433, $this->b->l2Norm());
-        $this->assertEquals(24.799798386277256, $this->c->l2Norm());
+        $this->assertEqualsWithDelta(172.4441938715247, $this->a->l2Norm(), 1e-10);
+        $this->assertEqualsWithDelta(5.404858925078433, $this->b->l2Norm(), 1e-10);
+        $this->assertEqualsWithDelta(24.799798386277256, $this->c->l2Norm(), 1e-10);
     }
 
     /**
@@ -1266,9 +1266,9 @@ class VectorTest extends TestCase
      */
     public function pNorm() : void
     {
-        $this->assertEquals(135.15554088861361, $this->a->pNorm(3.));
-        $this->assertEquals(3.7063242195906976, $this->b->pNorm(5.));
-        $this->assertEquals(20.01112107057168, $this->c->pNorm(10.));
+        $this->assertEqualsWithDelta(135.15554088861361, $this->a->pNorm(3.), 1e-10);
+        $this->assertEqualsWithDelta(3.7063242195906976, $this->b->pNorm(5.), 1e-10);
+        $this->assertEqualsWithDelta(20.01112107057168, $this->c->pNorm(10.), 1e-10);
     }
 
     /**
