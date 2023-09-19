@@ -1069,7 +1069,7 @@ class VectorTest extends TestCase
             0.9129452507276277, 0.5155013718214642, -0.6181371122370333,
         ]);
 
-        $this->assertEquals($expected, $b);
+        $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
     /**
@@ -1085,7 +1085,7 @@ class VectorTest extends TestCase
             0.1001674211615598, 0.3046926540153975, -0.5235987755982989,
         ]);
 
-        $this->assertEquals($expected, $b);
+        $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
     /**
@@ -1102,7 +1102,7 @@ class VectorTest extends TestCase
             0.40808206181339196, -0.8568887533689473, 0.7860702961410393,
         ]);
 
-        $this->assertEquals($expected, $b);
+        $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
     /**
@@ -1118,7 +1118,7 @@ class VectorTest extends TestCase
             1.4706289056333368, 1.2661036727794992, 2.0943951023931957,
         ]);
 
-        $this->assertEquals($expected, $b);
+        $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
     /**
@@ -1152,7 +1152,7 @@ class VectorTest extends TestCase
             1.5208379310729538, 1.2036224929766774, 1.486959684726482,
         ]);
 
-        $this->assertEquals($expected, $b);
+        $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
     /**

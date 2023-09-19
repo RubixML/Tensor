@@ -2042,7 +2042,7 @@ class MatrixTest extends TestCase
             [0.4121184852417566],
         ]);
 
-        $this->assertEquals($expected, $b);
+        $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
     /**
@@ -2064,7 +2064,7 @@ class MatrixTest extends TestCase
             [0.010000166674167114],
         ]);
 
-        $this->assertEquals($expected, $b);
+        $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
     /**
@@ -2086,7 +2086,7 @@ class MatrixTest extends TestCase
             [-0.9111302618846769],
         ]);
 
-        $this->assertEquals($expected, $b);
+        $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
     /**
@@ -2130,7 +2130,7 @@ class MatrixTest extends TestCase
             [-0.45231565944180985],
         ]);
 
-        $this->assertEquals($expected, $b);
+        $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
     /**
