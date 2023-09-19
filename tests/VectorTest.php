@@ -147,7 +147,7 @@ class VectorTest extends TestCase
      * @dataProvider shapeProvider
      *
      * @param \Tensor\Vector $vector
-     * @param array $expected
+     * @param array<int> $expected
      */
     public function shape(Vector $vector, array $expected) : void
     {
@@ -545,7 +545,7 @@ class VectorTest extends TestCase
 
         yield [
             Vector::quick([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0]),
-            10.0,    
+            10.0,
             Vector::quick([-5.0, 35.0, 45.0, -26.0, -62.0, 99.0, 116.0, 55.0]),
         ];
     }
@@ -913,7 +913,7 @@ class VectorTest extends TestCase
                 [0, 0, 0, 1, 0, 0],
                 [0, 0, 0, 1, 0, 1],
             ]),
-    
+
         ];
 
         yield [
@@ -982,7 +982,7 @@ class VectorTest extends TestCase
     public function square() : void
     {
         $a = Vector::quick([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0]);
-        
+
         $b = $a->square();
 
         $expected = Vector::quick([225, 625, 1225, 1296, 5184, 7921, 11236, 2025]);

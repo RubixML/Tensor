@@ -3,7 +3,6 @@
 namespace Tensor\Tests;
 
 use Tensor\Tensor;
-use Tensor\Vector;
 use Tensor\Matrix;
 use Tensor\Special;
 use Tensor\ArrayLike;

@@ -735,11 +735,10 @@ class MatrixTest extends TestCase
      * @requires extension tensor
      * @dataProvider eigProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param \Tensor\Matrix $matrix
+     * @param \Tensor\Decompositions\Eigen $expected
      */
-    public function eig(Matrix $matrix, $expected) : void
+    public function eig(Matrix $matrix, Eigen $expected) : void
     {
         $eig = $matrix->eig(false);
 
@@ -757,9 +756,11 @@ class MatrixTest extends TestCase
                 [4.0, 11.0, -2.0],
                 [20.0, -6.0, -9.0],
             ]),
-            new Eigen([
+            new Eigen(
+                [
                     -15.096331148319537, 25.108706520450326, 13.9876246278692,
-                ], Matrix::quick([
+                ],
+                Matrix::quick([
                     [0.25848694820886425, -0.11314537870318066, -0.9593657388523845],
                     [-0.8622719261400653, -0.17721179605718698, -0.47442924101375483],
                     [-0.6684472200177011, -0.6126879076802705, -0.42165369894378907],
@@ -994,7 +995,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider divideProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1075,7 +1076,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider addProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1156,7 +1157,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider subtractProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1237,7 +1238,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider powProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1304,7 +1305,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider modProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1385,7 +1386,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider equalProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1466,7 +1467,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider notEqualProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1547,7 +1548,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider greaterProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1628,7 +1629,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider greaterEqualProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1709,7 +1710,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider lessProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1790,7 +1791,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      * @dataProvider lessEqualProvider
-     * 
+     *
      * @param \Tensor\Matrix $a
      * @param \Tensor\Tensor|float $b
      * @param \Tensor\Tensor|float $expected
@@ -1953,7 +1954,6 @@ class MatrixTest extends TestCase
             [8103.08392757538],
         ]);
 
-
         $this->assertEqualsWithDelta($expected, $b, 1e-8);
     }
 
@@ -2099,7 +2099,7 @@ class MatrixTest extends TestCase
             [-0.5],
             [0.01],
         ]);
-        
+
         $b = $a->acos();
 
         $expected = Matrix::quick([
