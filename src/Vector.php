@@ -1768,7 +1768,7 @@ class Vector implements Tensor
             $rowC = [];
 
             foreach ($this->a as $j => $valueA) {
-                $rowC[] = $valueA < $rowB[$j] ? 1 : 0;
+                $rowC[] = $valueA <= $rowB[$j] ? 1 : 0;
             }
 
             $c[] = $rowC;
