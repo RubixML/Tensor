@@ -35,7 +35,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	include/linear_algebra.c
 	include/signal_processing.c
 	include/settings.c"
-	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -O3 -ffast-math)
+	PHP_NEW_EXTENSION(tensor, $tensor_sources, $ext_shared,, -O3)
 	PHP_ADD_BUILD_DIR([$ext_builddir/kernel/])
 	for dir in "tensor tensor/decompositions tensor/exceptions tensor/reductions"; do
 		PHP_ADD_BUILD_DIR([$ext_builddir/$dir])

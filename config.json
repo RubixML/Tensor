@@ -6,7 +6,7 @@
     "author": "The Rubix ML Community",
     "version": "3.0.3",
     "verbose": true,
-    "extra-cflags": "-O3 -ffast-math",
+    "extra-cflags": "-O3",
     "extra-libs": "-lopenblas -llapacke -lgfortran",
     "extra-sources": [
         "include/arithmetic.c",

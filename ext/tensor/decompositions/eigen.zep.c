@@ -87,7 +87,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose)
 #if PHP_VERSION_ID >= 80000
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
 		Z_PARAM_OPTIONAL
 		Z_PARAM_BOOL(symmetric)
 	ZEND_PARSE_PARAMETERS_END();
@@ -167,7 +167,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, __construct)
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_ARRAY(eigenvalues)
-		Z_PARAM_OBJECT_OF_CLASS(eigenvectors, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(eigenvectors, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 #endif
 
