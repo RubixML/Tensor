@@ -20,6 +20,13 @@ use PHPUnit\Framework\TestCase;
 class ColumnVectorTest extends TestCase
 {
     /**
+     * The maximum error tolerated due to varying numerical precision.
+     *
+     * @var float
+     */
+    protected const MAX_DELTA = 1e-8;
+
+    /**
      * @test
      */
     public function build() : void
@@ -108,7 +115,7 @@ class ColumnVectorTest extends TestCase
             [38.5, 175, -175],
         ]);
 
-        $this->assertEquals($expected, $c);
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
     /**
@@ -132,7 +139,7 @@ class ColumnVectorTest extends TestCase
             [31.818181818181817, 7, -7],
         ]);
 
-        $this->assertEquals($expected, $c);
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
     /**
@@ -156,7 +163,7 @@ class ColumnVectorTest extends TestCase
             [36.1, 40, 30],
         ]);
 
-        $this->assertEquals($expected, $c);
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
     /**
@@ -180,7 +187,7 @@ class ColumnVectorTest extends TestCase
             [33.9, 30, 40],
         ]);
 
-        $this->assertEquals($expected, $c);
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
     /**
