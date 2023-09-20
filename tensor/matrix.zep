@@ -3212,9 +3212,9 @@ class Matrix implements Tensor
      *
      * @param mixed index
      * @throws \Tensor\Exceptions\InvalidArgumentException
-     * @return array
+     * @return \Tensor\Vector
      */
-    public function offsetGet(const var index) -> array
+    public function offsetGet(const var index) -> <Vector>
     {
         var row;
 

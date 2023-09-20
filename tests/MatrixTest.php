@@ -475,8 +475,8 @@ class MatrixTest extends TestCase
 
         $expected = Matrix::quick([
             [0.03147992432205172, 0.05583000490505223],
-            [-0.009144418751313844, 0.0700371382524],
-            [0.012665545511877228, -0.00313572980169575],
+            [-0.009144418751313844, 0.07003713825239999],
+            [0.01266554551187723, -0.0031357298016957483],
         ]);
 
         $this->assertEquals($expected, $b);
@@ -2320,7 +2320,7 @@ class MatrixTest extends TestCase
 
         $b = $a->quantile(0.4);
 
-        $expected = ColumnVector::quick([6.200000000000003, 2.8000000000000007, -6.6]);
+        $expected = ColumnVector::quick([6.200000000000001, 2.8000000000000003, -6.6]);
 
         $this->assertEquals($expected, $b);
     }

@@ -3117,20 +3117,21 @@ PHP_METHOD(Tensor_Vector, deg2rad)
  */
 PHP_METHOD(Tensor_Vector, sum)
 {
-	zval _0;
+	zval _0, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
 
 
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_FUNCTION("array_sum", NULL, 17, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "array_sum", NULL, 17, &_0);
 	zephir_check_call_status();
-	RETURN_MM();
+	RETURN_MM_DOUBLE(zephir_get_doubleval(&_1));
 }
 
 /**
@@ -3140,20 +3141,21 @@ PHP_METHOD(Tensor_Vector, sum)
  */
 PHP_METHOD(Tensor_Vector, product)
 {
-	zval _0;
+	zval _0, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
 
 
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_FUNCTION("array_product", NULL, 18, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "array_product", NULL, 18, &_0);
 	zephir_check_call_status();
-	RETURN_MM();
+	RETURN_MM_DOUBLE(zephir_get_doubleval(&_1));
 }
 
 /**
@@ -3163,20 +3165,21 @@ PHP_METHOD(Tensor_Vector, product)
  */
 PHP_METHOD(Tensor_Vector, min)
 {
-	zval _0;
+	zval _0, _1;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
 
 
 	ZEPHIR_MM_GROW();
 
 	zephir_read_property(&_0, this_ptr, ZEND_STRL("a"), PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_FUNCTION("min", NULL, 19, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "min", NULL, 19, &_0);
 	zephir_check_call_status();
-	RETURN_MM();
+	RETURN_MM_DOUBLE(zephir_get_doubleval(&_1));
 }
 
 /**

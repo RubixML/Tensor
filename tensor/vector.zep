@@ -1153,7 +1153,7 @@ class Vector implements Tensor
      */
     public function sum() -> float
     {
-        return array_sum(this->a);
+        return (float) array_sum(this->a);
     }
 
     /**
@@ -1163,7 +1163,7 @@ class Vector implements Tensor
      */
     public function product() -> float
     {
-        return array_product(this->a);
+        return (float) array_product(this->a);
     }
 
     /**
@@ -1173,7 +1173,7 @@ class Vector implements Tensor
      */
     public function min() -> float
     {
-        return min(this->a);
+        return (float) min(this->a);
     }
 
     /**
