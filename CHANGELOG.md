@@ -1,3 +1,6 @@
+- 3.0.4
+    - Fixed bug in Vector less equal operation
+
 - 3.0.3
     - Added PHP 8.2 extension compatibility
 
