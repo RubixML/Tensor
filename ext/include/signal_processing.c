@@ -23,9 +23,6 @@ void tensor_convolve_1d(zval * return_value, zval * a, zval * b, zval * stride)
     zend_array * aa = Z_ARR_P(a);
     zend_array * ab = Z_ARR_P(b);
 
-    Bucket * ba = aa->arData;
-    Bucket * bb = ab->arData;
-
     unsigned int s = zephir_get_intval(stride);
 
     unsigned int na = zend_array_count(aa);
@@ -36,11 +33,11 @@ void tensor_convolve_1d(zval * return_value, zval * a, zval * b, zval * stride)
     double * vb = emalloc(nb * sizeof(double));
 
     for (i = 0; i < na; ++i) {
-        va[i] = zephir_get_doubleval(&ba[i].val);
+        va[i] = zephir_get_doubleval(zend_hash_index_find(aa, i));
     }
 
     for (i = 0; i < nb; ++i) {
-        vb[i] = zephir_get_doubleval(&bb[i].val);
+        vb[i] = zephir_get_doubleval(zend_hash_index_find(ab, i));
     }
 
     array_init_size(&c, nc / s);
@@ -77,38 +74,35 @@ void tensor_convolve_2d(zval * return_value, zval * a, zval * b, zval * stride)
     unsigned int i, j, k, l;
     int x, y;
     double sigma;
-    Bucket * row;
+    zval * row;
     zval rowC, c;
 
     zend_array * aa = Z_ARR_P(a);
     zend_array * ab = Z_ARR_P(b);
 
-    Bucket * ba = aa->arData;
-    Bucket * bb = ab->arData;
-
     unsigned int s = zephir_get_intval(stride);
 
     unsigned int ma = zend_array_count(aa);
-    unsigned int na = zend_array_count(Z_ARR(ba[0].val));
+    unsigned int na = zend_array_count(Z_ARR_P(zend_hash_index_find(aa, 0)));
     unsigned int mb = zend_array_count(ab);
-    unsigned int nb = zend_array_count(Z_ARR(bb[0].val));
+    unsigned int nb = zend_array_count(Z_ARR_P(zend_hash_index_find(ab, 0)));
 
     double * va = emalloc(ma * na * sizeof(double));
     double * vb = emalloc(mb * nb * sizeof(double));
 
     for (i = 0; i < ma; ++i) {
-        row = Z_ARR(ba[i].val)->arData;
+        row = zend_hash_index_find(aa, i);
 
         for (j = 0; j < na; ++j) {
-            va[i * na + j] = zephir_get_doubleval(&row[j].val);
+            va[i * na + j] = zephir_get_doubleval(zend_hash_index_find(Z_ARR_P(row), j));
         }
     }
 
     for (i = 0; i < mb; ++i) {
-        row = Z_ARR(bb[i].val)->arData;
+        row = zend_hash_index_find(ab, i);
 
         for (j = 0; j < nb; ++j) {
-            vb[i * nb + j] = zephir_get_doubleval(&row[j].val);
+            vb[i * nb + j] = zephir_get_doubleval(zend_hash_index_find(Z_ARR_P(row), j));
         }
     }
 

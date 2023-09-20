@@ -11329,7 +11329,7 @@ PHP_METHOD(Tensor_Matrix, offsetUnset)
  *
  * @param mixed index
  * @throws \Tensor\Exceptions\InvalidArgumentException
- * @return array
+ * @return \Tensor\Vector
  */
 PHP_METHOD(Tensor_Matrix, offsetGet)
 {
