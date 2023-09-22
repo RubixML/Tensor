@@ -74,11 +74,6 @@ php -m | grep tensor
 
 ![Tensor Performance Benchmarks](https://raw.githubusercontent.com/RubixML/Tensor/master/docs/images/tensor-performance-benchmarks.png)
 
-## Funding
-Rubix ML is funded by donations from the community. You can become a sponsor by making a contribution to one of our funding sources below.
-
-- [Github Sponsors](https://github.com/sponsors/RubixML)
-
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
