@@ -10,7 +10,7 @@ use Tensor\Matrix;
 class EigBench
 {
     /**
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
     protected $a;
 

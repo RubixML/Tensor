@@ -48,8 +48,8 @@ class ColumnVector extends Vector
     /**
      * Compute the vector-matrix product of this vector and matrix a.
      *
-     * @param \Tensor\Matrix $b
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @return Matrix
      */
     public function matmul(Matrix $b) : Matrix
     {
@@ -59,9 +59,9 @@ class ColumnVector extends Vector
     /**
      * Multiply this column vector with a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function multiplyMatrix(Matrix $b) : Matrix
     {
@@ -90,9 +90,9 @@ class ColumnVector extends Vector
     /**
      * Divide this column vector with a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function divideMatrix(Matrix $b) : Matrix
     {
@@ -121,9 +121,9 @@ class ColumnVector extends Vector
     /**
      * Add this column vector to a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function addMatrix(Matrix $b) : Matrix
     {
@@ -152,9 +152,9 @@ class ColumnVector extends Vector
     /**
      * Subtract a matrix from this column vector.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function subtractMatrix(Matrix $b) : Matrix
     {
@@ -183,9 +183,9 @@ class ColumnVector extends Vector
     /**
      * Raise this column vector to the power of a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function powMatrix(Matrix $b) : Matrix
     {
@@ -214,9 +214,9 @@ class ColumnVector extends Vector
     /**
      * Mod this column vector with a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function modMatrix(Matrix $b) : Matrix
     {
@@ -246,9 +246,9 @@ class ColumnVector extends Vector
      * Return the element-wise equality comparison of this column vector
      * and a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function equalMatrix(Matrix $b) : Matrix
     {
@@ -278,9 +278,9 @@ class ColumnVector extends Vector
      * Return the element-wise not equal comparison of this column vector
      * and a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function notEqualMatrix(Matrix $b) : Matrix
     {
@@ -310,9 +310,9 @@ class ColumnVector extends Vector
      * Return the element-wise greater than comparison of this column
      * vector and a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function greaterMatrix(Matrix $b) : Matrix
     {
@@ -342,9 +342,9 @@ class ColumnVector extends Vector
      * Return the element-wise greater than or equal to comparison of
      * this column vector and a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function greaterEqualMatrix(Matrix $b) : Matrix
     {
@@ -374,9 +374,9 @@ class ColumnVector extends Vector
      * Return the element-wise less than comparison of this column
      * vector and a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function lessMatrix(Matrix $b) : Matrix
     {
@@ -406,9 +406,9 @@ class ColumnVector extends Vector
      * Return the element-wise less than or equal to comparison of
      * this column vector and a matrix.
      *
-     * @param \Tensor\Matrix $b
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
-     * @return \Tensor\Matrix
+     * @param Matrix $b
+     * @throws DimensionalityMismatch
+     * @return Matrix
      */
     public function lessEqualMatrix(Matrix $b) : Matrix
     {

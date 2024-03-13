@@ -11,7 +11,7 @@ use Tensor\Matrix;
 class FlattenMatrixBench
 {
     /**
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
     protected $a;
 

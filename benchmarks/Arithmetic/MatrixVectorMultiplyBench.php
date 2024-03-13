@@ -12,12 +12,12 @@ use Tensor\Vector;
 class MatrixVectorMultiplyBench
 {
     /**
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
     protected $a;
 
     /**
-     * @var \Tensor\Vector
+     * @var Vector
      */
     protected $b;
 

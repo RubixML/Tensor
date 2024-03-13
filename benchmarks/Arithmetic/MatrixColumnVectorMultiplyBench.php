@@ -12,7 +12,7 @@ use Tensor\ColumnVector;
 class MatrixColumnVectorMultiplyBench
 {
     /**
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
     protected $a;
 

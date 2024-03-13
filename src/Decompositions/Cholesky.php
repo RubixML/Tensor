@@ -20,14 +20,14 @@ class Cholesky
     /**
      * The lower triangular matrix.
      *
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
-    protected \Tensor\Matrix $l;
+    protected Matrix $l;
 
     /**
      * Factory method to decompose a matrix.
      *
-     * @param \Tensor\Matrix $a
+     * @param Matrix $a
      * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
@@ -64,7 +64,7 @@ class Cholesky
     }
 
     /**
-     * @param \Tensor\Matrix $l
+     * @param Matrix $l
      */
     public function __construct(Matrix $l)
     {
@@ -74,7 +74,7 @@ class Cholesky
     /**
      * Return the lower triangular matrix.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function l() : Matrix
     {
@@ -84,7 +84,7 @@ class Cholesky
     /**
      * Return the transpose of the lower triangular matrix.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function lT() : Matrix
     {

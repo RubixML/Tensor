@@ -11,7 +11,7 @@ use Tensor\Vector;
 class CosVectorBench
 {
     /**
-     * @var \Tensor\Vector
+     * @var Vector
      */
     protected $a;
 

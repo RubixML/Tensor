@@ -153,7 +153,7 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider shapeProvider
      *
-     * @param \Tensor\Vector $vector
+     * @param Vector $vector
      * @param array<int> $expected
      */
     public function shape(Vector $vector, array $expected) : void
@@ -421,9 +421,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider multiplyProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function multiply(Vector $a, $b, $expected) : void
     {
@@ -468,9 +468,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider divideProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function divide(Vector $a, $b, $expected) : void
     {
@@ -515,9 +515,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider addProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function add(Vector $a, $b, $expected) : void
     {
@@ -562,9 +562,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider subtractProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function subtract(Vector $a, $b, $expected) : void
     {
@@ -609,9 +609,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider powProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function power(Vector $a, $b, $expected) : void
     {
@@ -658,9 +658,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider equalProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function equal(Vector $a, $b, $expected) : void
     {
@@ -705,9 +705,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider notEqualProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function notEqual(Vector $a, $b, $expected) : void
     {
@@ -752,9 +752,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider greaterProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function greater(Vector $a, $b, $expected) : void
     {
@@ -799,9 +799,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider greaterEqualProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function greaterEqual(Vector $a, $b, $expected) : void
     {
@@ -846,9 +846,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider lessProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function less(Vector $a, $b, $expected) : void
     {
@@ -893,9 +893,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider lessEqualProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function lessEqual(Vector $a, $b, $expected) : void
     {
@@ -941,9 +941,9 @@ class VectorTest extends TestCase
      * @test
      * @dataProvider modProvider
      *
-     * @param \Tensor\Vector $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function mod(Vector $a, $b, $expected) : void
     {

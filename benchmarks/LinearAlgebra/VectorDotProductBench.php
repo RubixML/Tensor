@@ -11,12 +11,12 @@ use Tensor\Vector;
 class VectorDotProductBench
 {
     /**
-     * @var \Tensor\Vector
+     * @var Vector
      */
     protected $a;
 
     /**
-     * @var \Tensor\Vector
+     * @var Vector
      */
     protected $b;
 

@@ -210,7 +210,7 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider isSquareProvider
      *
-     * @param \Tensor\Matrix $matrix
+     * @param Matrix $matrix
      * @param bool $expected
      */
     public function isSquare(Matrix $matrix, $expected) : void
@@ -517,7 +517,7 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider symmetricProvider
      *
-     * @param \Tensor\Matrix $matrix
+     * @param Matrix $matrix
      * @param bool $expected
      */
     public function symmetric(Matrix $matrix, $expected) : void
@@ -738,8 +738,8 @@ class MatrixTest extends TestCase
      * @requires extension tensor
      * @dataProvider eigProvider
      *
-     * @param \Tensor\Matrix $matrix
-     * @param \Tensor\Decompositions\Eigen $expected
+     * @param Matrix $matrix
+     * @param Eigen $expected
      */
     public function eig(Matrix $matrix, Eigen $expected) : void
     {
@@ -918,9 +918,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider multiplyProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function multiply(Matrix $a, $b, $expected) : void
     {
@@ -999,9 +999,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider divideProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function divide(Matrix $a, $b, $expected) : void
     {
@@ -1080,9 +1080,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider addProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function add(Matrix $a, $b, $expected) : void
     {
@@ -1161,9 +1161,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider subtractProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function subtract(Matrix $a, $b, $expected) : void
     {
@@ -1242,9 +1242,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider powProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function pow(Matrix $a, $b, $expected) : void
     {
@@ -1309,9 +1309,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider modProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function mod(Matrix $a, $b, $expected) : void
     {
@@ -1390,9 +1390,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider equalProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function equal(Matrix $a, $b, $expected) : void
     {
@@ -1471,9 +1471,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider notEqualProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function notEqual(Matrix $a, $b, $expected) : void
     {
@@ -1552,9 +1552,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider greaterProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function greater(Matrix $a, $b, $expected) : void
     {
@@ -1633,9 +1633,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider greaterEqualProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function greaterEqual(Matrix $a, $b, $expected) : void
     {
@@ -1714,9 +1714,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider lessProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function less(Matrix $a, $b, $expected) : void
     {
@@ -1795,9 +1795,9 @@ class MatrixTest extends TestCase
      * @test
      * @dataProvider lessEqualProvider
      *
-     * @param \Tensor\Matrix $a
-     * @param \Tensor\Tensor|float $b
-     * @param \Tensor\Tensor|float $expected
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
      */
     public function lessEqual(Matrix $a, $b, $expected) : void
     {

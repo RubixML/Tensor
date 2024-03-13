@@ -24,9 +24,9 @@ class REF
     /**
      * The reduced matrix in row echelon form.
      *
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
-    protected \Tensor\Matrix $a;
+    protected Matrix $a;
 
     /**
      * The number of swaps made to compute the row echelon form of the matrix.
@@ -38,7 +38,7 @@ class REF
     /**
      * Factory method to decompose a matrix.
      *
-     * @param \Tensor\Matrix $a
+     * @param Matrix $a
      * @return self
      */
     public static function reduce(Matrix $a)
@@ -53,8 +53,8 @@ class REF
     /**
      * Calculate the row echelon form (REF) of the matrix using Gaussian elimination.
      *
-     * @param \Tensor\Matrix $a
-     * @throws \Tensor\Exceptions\RuntimeException
+     * @param Matrix $a
+     * @throws RuntimeException
      * @return self
      */
     public static function gaussianElimination(Matrix $a) : self
@@ -110,7 +110,7 @@ class REF
      * Calculate the row echelon form (REF) of the matrix using the row
      * reduction method.
      *
-     * @param \Tensor\Matrix $a
+     * @param Matrix $a
      * @return self
      */
     public static function rowReductionMethod(Matrix $a) : self
@@ -173,9 +173,9 @@ class REF
     }
 
     /**
-     * @param \Tensor\Matrix $a
+     * @param Matrix $a
      * @param int $swaps
-     * @throws \Tensor\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(Matrix $a, int $swaps)
     {
@@ -191,7 +191,7 @@ class REF
     /**
      * Return the reduced matrix in row echelon form.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function a() : Matrix
     {

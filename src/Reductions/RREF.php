@@ -18,14 +18,14 @@ class RREF
     /**
      * The reduced matrix in reduced row echelon form.
      *
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
-    protected \Tensor\Matrix $a;
+    protected Matrix $a;
 
     /**
      * Factory method to reduce a matrix.
      *
-     * @param \Tensor\Matrix $a
+     * @param Matrix $a
      * @return self
      */
     public static function reduce(Matrix $a) : self
@@ -81,7 +81,7 @@ class RREF
     }
 
     /**
-     * @param \Tensor\Matrix $a
+     * @param Matrix $a
      * @throws \Tensor\Exceptions\InvalidArgumentException
      */
     public function __construct(Matrix $a)
@@ -92,7 +92,7 @@ class RREF
     /**
      * Return the reduced matrix in reduced row echelon form.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function a() : Matrix
     {

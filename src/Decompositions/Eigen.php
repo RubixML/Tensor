@@ -27,16 +27,16 @@ class Eigen
     /**
      * The eigenvectors of the eigendecomposition.
      *
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
-    protected \Tensor\Matrix $eigenvectors;
+    protected Matrix $eigenvectors;
 
     /**
      * Factory method to decompose a matrix.
      *
-     * @param \Tensor\Matrix $a
+     * @param Matrix $a
      * @param bool $symmetric
-     * @throws \Tensor\Exceptions\NotImplemented
+     * @throws NotImplemented
      * @return self
      */
     public static function decompose(Matrix $a, bool $symmetric = false) : self
@@ -46,7 +46,7 @@ class Eigen
 
     /**
      * @param (int|float)[] $eigenvalues
-     * @param \Tensor\Matrix $eigenvectors
+     * @param Matrix $eigenvectors
      */
     public function __construct(array $eigenvalues, Matrix $eigenvectors)
     {
@@ -67,7 +67,7 @@ class Eigen
     /**
      * Return the eigenvectors of the eigendecomposition.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function eigenvectors() : Matrix
     {

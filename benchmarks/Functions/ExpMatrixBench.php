@@ -11,7 +11,7 @@ use Tensor\Matrix;
 class ExpMatrixBench
 {
     /**
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
     protected $a;
 

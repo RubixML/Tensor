@@ -11,12 +11,12 @@ use Tensor\Vector;
 class VectorConvolveBench
 {
     /**
-     * @var \Tensor\Vector
+     * @var Vector
      */
     protected $a;
 
     /**
-     * @var \Tensor\Vector
+     * @var Vector
      */
     protected $kernel;
 

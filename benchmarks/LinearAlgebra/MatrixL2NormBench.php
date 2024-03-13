@@ -11,7 +11,7 @@ use Tensor\Matrix;
 class MatrixL2NormBench
 {
     /**
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
     protected $a;
 

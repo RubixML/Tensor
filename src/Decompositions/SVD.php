@@ -17,9 +17,9 @@ class SVD
     /**
      * The U matrix.
      *
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
-    protected \Tensor\Matrix $u;
+    protected Matrix $u;
 
     /**
      * The singular values of the matrix A.
@@ -31,14 +31,14 @@ class SVD
     /**
      * The V transposed matrix.
      *
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
-    protected \Tensor\Matrix $vT;
+    protected Matrix $vT;
 
     /**
      * Factory method to decompose a matrix.
      *
-     * @param \Tensor\Matrix $a
+     * @param Matrix $a
      * @return self
      */
     public static function decompose(Matrix $a) : self
@@ -47,9 +47,9 @@ class SVD
     }
 
     /**
-     * @param \Tensor\Matrix $u
+     * @param Matrix $u
      * @param list<int|float> $singularValues
-     * @param \Tensor\Matrix $vT
+     * @param Matrix $vT
      */
     public function __construct(Matrix $u, array $singularValues, Matrix $vT)
     {
@@ -61,7 +61,7 @@ class SVD
     /**
      * Return the U matrix.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function u() : Matrix
     {
@@ -81,7 +81,7 @@ class SVD
     /**
      * Return the singular value matrix.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function s() : Matrix
     {
@@ -91,7 +91,7 @@ class SVD
     /**
      * Return the V matrix.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function v() : Matrix
     {
@@ -101,7 +101,7 @@ class SVD
     /**
      * Return the V transposed matrix.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function vT() : Matrix
     {

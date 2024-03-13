@@ -22,28 +22,28 @@ class LU
     /**
      * The lower triangular matrix.
      *
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
-    protected \Tensor\Matrix $l;
+    protected Matrix $l;
 
     /**
      * The upper triangular matrix.
      *
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
-    protected \Tensor\Matrix $u;
+    protected Matrix $u;
 
     /**
      * The permutation matrix.
      *
-     * @var \Tensor\Matrix
+     * @var Matrix
      */
-    protected \Tensor\Matrix $p;
+    protected Matrix $p;
 
     /**
      * Factory method to decompose a matrix.
      *
-     * @param \Tensor\Matrix $a
+     * @param Matrix $a
      * @throws \Tensor\Exceptions\DimensionalityMismatch
      * @return self
      */
@@ -119,9 +119,9 @@ class LU
     }
 
     /**
-     * @param \Tensor\Matrix $l
-     * @param \Tensor\Matrix $u
-     * @param \Tensor\Matrix $p
+     * @param Matrix $l
+     * @param Matrix $u
+     * @param Matrix $p
      */
     public function __construct(Matrix $l, Matrix $u, Matrix $p)
     {
@@ -133,7 +133,7 @@ class LU
     /**
      * Return the lower triangular matrix.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function l() : Matrix
     {
@@ -143,7 +143,7 @@ class LU
     /**
      * Return the upper triangular matrix.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function u() : Matrix
     {
@@ -153,7 +153,7 @@ class LU
     /**
      * Return the permutation matrix.
      *
-     * @return \Tensor\Matrix
+     * @return Matrix
      */
     public function p() : Matrix
     {

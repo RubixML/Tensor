@@ -11,7 +11,7 @@ use Tensor\Vector;
 class SumVectorBench
 {
     /**
-     * @var \Tensor\Vector
+     * @var Vector
      */
     protected $a;
 
