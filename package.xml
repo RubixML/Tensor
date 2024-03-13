@@ -10,9 +10,9 @@
         <email>support@andrewdalpino.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2023-09-20</date>
+	<date>2024-03-13</date>
 	<version>
-		<release>3.0.4</release>
+		<release>3.0.5</release>
 		<api>3.0</api>
 	</version>
 	<stability>
@@ -21,7 +21,7 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Miscellaneous fixes
+        - Update Zephir to 0.17
     </notes>
 	<contents>
         <dir name="/">
