@@ -1,3 +1,6 @@
+- 3.0.5
+    - Upgraded Zephir dependency to 0.17
+
 - 3.0.4
     - Fixed bug in Vector less equal operation
 
