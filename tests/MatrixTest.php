@@ -219,7 +219,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function isSquareProvider() : Generator
     {
@@ -526,7 +526,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function symmetricProvider() : Generator
     {
@@ -749,7 +749,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function eigProvider() : Generator
     {
@@ -930,7 +930,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function multiplyProvider() : Generator
     {
@@ -1011,7 +1011,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function divideProvider() : Generator
     {
@@ -1092,7 +1092,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function addProvider() : Generator
     {
@@ -1173,7 +1173,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function subtractProvider() : Generator
     {
@@ -1254,7 +1254,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function powProvider() : Generator
     {
@@ -1321,7 +1321,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function modProvider() : Generator
     {
@@ -1402,7 +1402,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function equalProvider() : Generator
     {
@@ -1483,7 +1483,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function notEqualProvider() : Generator
     {
@@ -1564,7 +1564,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function greaterProvider() : Generator
     {
@@ -1645,7 +1645,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function greaterEqualProvider() : Generator
     {
@@ -1726,7 +1726,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function lessProvider() : Generator
     {
@@ -1807,7 +1807,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function lessEqualProvider() : Generator
     {

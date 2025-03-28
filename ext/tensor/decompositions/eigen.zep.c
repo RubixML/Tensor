@@ -64,11 +64,9 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose)
 {
 	zval eig, _6;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_8 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool symmetric;
-	zval *a, a_sub, *symmetric_param = NULL, _0, result, eigenvalues, eigenvectors, _7, _9, _1$$3, _2$$3, _3$$3, _4$$4, _5$$5;
-	zval *this_ptr = getThis();
+	zval *a, a_sub, *symmetric_param = NULL, _0, result, eigenvalues, eigenvectors, _7, _8, _1$$3, _2$$3, _3$$3, _4$$4, _5$$5;
 
 	ZVAL_UNDEF(&a_sub);
 	ZVAL_UNDEF(&_0);
@@ -76,7 +74,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose)
 	ZVAL_UNDEF(&eigenvalues);
 	ZVAL_UNDEF(&eigenvectors);
 	ZVAL_UNDEF(&_7);
-	ZVAL_UNDEF(&_9);
+	ZVAL_UNDEF(&_8);
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
@@ -84,25 +82,18 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose)
 	ZVAL_UNDEF(&_5$$5);
 	ZVAL_UNDEF(&eig);
 	ZVAL_UNDEF(&_6);
-#if PHP_VERSION_ID >= 80000
-	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
+		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_BOOL(symmetric)
 	ZEND_PARSE_PARAMETERS_END();
-#endif
-
-
-	ZEPHIR_MM_GROW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 	zephir_fetch_params(1, 1, 1, &a, &symmetric_param);
 	if (!symmetric_param) {
 		symmetric = 0;
 	} else {
-		symmetric = zephir_get_boolval(symmetric_param);
-	}
-
-
+		}
 	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_0))) {
@@ -137,15 +128,15 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose)
 	array_init(&eig);
 	zephir_get_arrval(&_6, &result);
 	ZEPHIR_CPY_WRT(&eig, &_6);
-	ZEPHIR_OBS_VAR(&eigenvalues);
+	zephir_memory_observe(&eigenvalues);
 	zephir_array_fetch_long(&eigenvalues, &eig, 0, PH_NOISY, "tensor/decompositions/eigen.zep", 67);
-	zephir_array_fetch_long(&_9, &eig, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/eigen.zep", 68);
-	ZEPHIR_CALL_CE_STATIC(&_7, tensor_matrix_ce, "quick", &_8, 0, &_9);
+	zephir_array_fetch_long(&_8, &eig, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/eigen.zep", 68);
+	ZEPHIR_CALL_CE_STATIC(&_7, tensor_matrix_ce, "quick", NULL, 0, &_8);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&eigenvectors, &_7, "transpose", NULL, 0);
 	zephir_check_call_status();
 	object_init_ex(return_value, tensor_decompositions_eigen_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 25, &eigenvalues, &eigenvectors);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &eigenvalues, &eigenvectors);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -163,20 +154,14 @@ PHP_METHOD(Tensor_Decompositions_Eigen, __construct)
 
 	ZVAL_UNDEF(&eigenvalues);
 	ZVAL_UNDEF(&eigenvectors_sub);
-#if PHP_VERSION_ID >= 80000
-	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_ARRAY(eigenvalues)
-		Z_PARAM_OBJECT_OF_CLASS(eigenvectors, zephir_get_internal_ce(SL("tensor\\matrix")))
+		Z_PARAM_OBJECT_OF_CLASS(eigenvectors, tensor_matrix_ce)
 	ZEND_PARSE_PARAMETERS_END();
-#endif
-
-
-	ZEPHIR_MM_GROW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 	zephir_fetch_params(1, 2, 0, &eigenvalues_param, &eigenvectors);
 	zephir_get_arrval(&eigenvalues, eigenvalues_param);
-
-
 	zephir_update_property_zval(this_ptr, ZEND_STRL("eigenvalues"), &eigenvalues);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("eigenvectors"), eigenvectors);
 	ZEPHIR_MM_RESTORE();
@@ -189,9 +174,6 @@ PHP_METHOD(Tensor_Decompositions_Eigen, __construct)
  */
 PHP_METHOD(Tensor_Decompositions_Eigen, eigenvalues)
 {
-	zval *this_ptr = getThis();
-
-
 
 	RETURN_MEMBER(getThis(), "eigenvalues");
 }
@@ -203,9 +185,6 @@ PHP_METHOD(Tensor_Decompositions_Eigen, eigenvalues)
  */
 PHP_METHOD(Tensor_Decompositions_Eigen, eigenvectors)
 {
-	zval *this_ptr = getThis();
-
-
 
 	RETURN_MEMBER(getThis(), "eigenvectors");
 }

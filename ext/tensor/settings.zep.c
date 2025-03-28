@@ -48,7 +48,6 @@ PHP_METHOD(Tensor_Settings, setNumThreads)
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zval *threads_param = NULL, _0$$3, _1$$3, _2$$3, _3$$3, status, _4;
 	zend_long threads, ZEPHIR_LAST_CALL_STATUS;
-	zval *this_ptr = getThis();
 
 	ZVAL_UNDEF(&_0$$3);
 	ZVAL_UNDEF(&_1$$3);
@@ -56,19 +55,12 @@ PHP_METHOD(Tensor_Settings, setNumThreads)
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&status);
 	ZVAL_UNDEF(&_4);
-#if PHP_VERSION_ID >= 80000
-	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_LONG(threads)
 	ZEND_PARSE_PARAMETERS_END();
-#endif
-
-
-	ZEPHIR_MM_GROW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 	zephir_fetch_params(1, 1, 0, &threads_param);
-	threads = zephir_get_intval(threads_param);
-
-
 	if (UNEXPECTED(threads < 1)) {
 		ZEPHIR_INIT_VAR(&_0$$3);
 		object_init_ex(&_0$$3, tensor_exceptions_invalidargumentexception_ce);
@@ -96,9 +88,6 @@ PHP_METHOD(Tensor_Settings, setNumThreads)
  */
 PHP_METHOD(Tensor_Settings, numThreads)
 {
-	zval *this_ptr = getThis();
-
-
 
 	tensor_get_num_threads(return_value);
 	return;

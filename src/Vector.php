@@ -2319,7 +2319,7 @@ class Vector implements Tensor
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \ArrayIterator<int,float>
+     * @return ArrayIterator<int,float>
      */
     #[\ReturnTypeWillChange]
     public function getIterator() : Traversable

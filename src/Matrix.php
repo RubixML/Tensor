@@ -503,7 +503,7 @@ class Matrix implements Tensor
     /**
      * Return each row as a vector in an array.
      *
-     * @return \Tensor\Vector[]
+     * @return Vector[]
      */
     public function asVectors() : array
     {
@@ -513,7 +513,7 @@ class Matrix implements Tensor
     /**
      * Return each column as a column vector in an array.
      *
-     * @return \Tensor\ColumnVector[]
+     * @return ColumnVector[]
      */
     public function asColumnVectors() : array
     {
@@ -3433,7 +3433,7 @@ class Matrix implements Tensor
     /**
      * Get an iterator for the rows in the matrix.
      *
-     * @return \Generator<int,\Tensor\Vector>
+     * @return \Generator<int,Vector>
      */
     #[\ReturnTypeWillChange]
     public function getIterator() : Traversable

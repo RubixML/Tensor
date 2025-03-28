@@ -162,7 +162,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function shapeProvider() : Generator
     {
@@ -433,7 +433,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function multiplyProvider() : Generator
     {
@@ -480,7 +480,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function divideProvider() : Generator
     {
@@ -527,7 +527,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function addProvider() : Generator
     {
@@ -574,7 +574,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function subtractProvider() : Generator
     {
@@ -621,7 +621,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function powProvider() : Generator
     {
@@ -670,7 +670,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function equalProvider() : Generator
     {
@@ -717,7 +717,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function notEqualProvider() : Generator
     {
@@ -764,7 +764,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function greaterProvider() : Generator
     {
@@ -811,7 +811,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function greaterEqualProvider() : Generator
     {
@@ -858,7 +858,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function lessProvider() : Generator
     {
@@ -905,7 +905,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function lessEqualProvider() : Generator
     {
@@ -953,7 +953,7 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @return \Generator<mixed[]>
+     * @return Generator<mixed[]>
      */
     public function modProvider() : Generator
     {

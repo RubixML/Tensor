@@ -69,38 +69,30 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose)
 {
 	zval lup, _5;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
-	zephir_fcall_cache_entry *_6 = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a, a_sub, _0, result, _4, l, _7, u, _8, p, _9, _1$$3, _2$$3, _3$$3;
-	zval *this_ptr = getThis();
+	zval *a, a_sub, _0, result, _4, l, _6, u, _7, p, _8, _1$$3, _2$$3, _3$$3;
 
 	ZVAL_UNDEF(&a_sub);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_4);
 	ZVAL_UNDEF(&l);
-	ZVAL_UNDEF(&_7);
+	ZVAL_UNDEF(&_6);
 	ZVAL_UNDEF(&u);
-	ZVAL_UNDEF(&_8);
+	ZVAL_UNDEF(&_7);
 	ZVAL_UNDEF(&p);
-	ZVAL_UNDEF(&_9);
+	ZVAL_UNDEF(&_8);
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&lup);
 	ZVAL_UNDEF(&_5);
-#if PHP_VERSION_ID >= 80000
-	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
+		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
 	ZEND_PARSE_PARAMETERS_END();
-#endif
-
-
-	ZEPHIR_MM_GROW();
+	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
+	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 	zephir_fetch_params(1, 1, 0, &a);
-
-
 	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_0))) {
@@ -128,17 +120,17 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose)
 	array_init(&lup);
 	zephir_get_arrval(&_5, &result);
 	ZEPHIR_CPY_WRT(&lup, &_5);
-	zephir_array_fetch_long(&_7, &lup, 0, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 65);
-	ZEPHIR_CALL_CE_STATIC(&l, tensor_matrix_ce, "quick", &_6, 0, &_7);
+	zephir_array_fetch_long(&_6, &lup, 0, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 65);
+	ZEPHIR_CALL_CE_STATIC(&l, tensor_matrix_ce, "quick", NULL, 0, &_6);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_8, &lup, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 66);
-	ZEPHIR_CALL_CE_STATIC(&u, tensor_matrix_ce, "quick", &_6, 0, &_8);
+	zephir_array_fetch_long(&_7, &lup, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 66);
+	ZEPHIR_CALL_CE_STATIC(&u, tensor_matrix_ce, "quick", NULL, 0, &_7);
 	zephir_check_call_status();
-	zephir_array_fetch_long(&_9, &lup, 2, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 67);
-	ZEPHIR_CALL_CE_STATIC(&p, tensor_matrix_ce, "quick", &_6, 0, &_9);
+	zephir_array_fetch_long(&_8, &lup, 2, PH_NOISY | PH_READONLY, "tensor/decompositions/lu.zep", 67);
+	ZEPHIR_CALL_CE_STATIC(&p, tensor_matrix_ce, "quick", NULL, 0, &_8);
 	zephir_check_call_status();
 	object_init_ex(return_value, tensor_decompositions_lu_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &l, &u, &p);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 27, &l, &u, &p);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -156,19 +148,12 @@ PHP_METHOD(Tensor_Decompositions_Lu, __construct)
 	ZVAL_UNDEF(&l_sub);
 	ZVAL_UNDEF(&u_sub);
 	ZVAL_UNDEF(&p_sub);
-#if PHP_VERSION_ID >= 80000
-	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_OBJECT_OF_CLASS(l, zephir_get_internal_ce(SL("tensor\\matrix")))
-		Z_PARAM_OBJECT_OF_CLASS(u, zephir_get_internal_ce(SL("tensor\\matrix")))
-		Z_PARAM_OBJECT_OF_CLASS(p, zephir_get_internal_ce(SL("tensor\\matrix")))
+		Z_PARAM_OBJECT_OF_CLASS(l, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(u, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(p, tensor_matrix_ce)
 	ZEND_PARSE_PARAMETERS_END();
-#endif
-
-
 	zephir_fetch_params_without_memory_grow(3, 0, &l, &u, &p);
-
-
 	zephir_update_property_zval(this_ptr, ZEND_STRL("l"), l);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("u"), u);
 	zephir_update_property_zval(this_ptr, ZEND_STRL("p"), p);
@@ -181,9 +166,6 @@ PHP_METHOD(Tensor_Decompositions_Lu, __construct)
  */
 PHP_METHOD(Tensor_Decompositions_Lu, l)
 {
-	zval *this_ptr = getThis();
-
-
 
 	RETURN_MEMBER(getThis(), "l");
 }
@@ -195,9 +177,6 @@ PHP_METHOD(Tensor_Decompositions_Lu, l)
  */
 PHP_METHOD(Tensor_Decompositions_Lu, u)
 {
-	zval *this_ptr = getThis();
-
-
 
 	RETURN_MEMBER(getThis(), "u");
 }
@@ -209,9 +188,6 @@ PHP_METHOD(Tensor_Decompositions_Lu, u)
  */
 PHP_METHOD(Tensor_Decompositions_Lu, p)
 {
-	zval *this_ptr = getThis();
-
-
 
 	RETURN_MEMBER(getThis(), "p");
 }
