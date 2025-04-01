@@ -10,9 +10,9 @@
         <email>support@andrewdalpino.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2025-03-27</date>
+	<date>2025-03-31</date>
 	<version>
-		<release>3.0.6</release>
+		<release>3.0.7</release>
 		<api>3.0</api>
 	</version>
 	<stability>
@@ -21,7 +21,7 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Update Zephir to 0.18
+        - Change min PHP version to 8.0.0
     </notes>
 	<contents>
         <dir name="/">
@@ -151,7 +151,7 @@
 	<dependencies>
 		<required>
             <php>
-                <min>7.4.0</min>
+                <min>8.0.0</min>
                 <max>8.3.99</max>
             </php>
 			<pearinstaller>
