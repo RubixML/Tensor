@@ -30,7 +30,7 @@ export FC=$(brew --prefix gcc)/bin/gfortran
 > **Note:** If both the library and extension are installed, the extension will take precedence.
 
 ## Requirements
-- [PHP](https://php.net) 7.4 or above
+- [PHP](https://php.net) 8.0 or above
 
 ### Optional To Compile Extension
 - A C compiler such as [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/), or [Visual C++](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
