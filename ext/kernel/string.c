@@ -21,8 +21,14 @@
 
 #include <ext/standard/php_smart_string.h>
 #include <ext/standard/php_string.h>
+// include php_rand.h for 8.3 and less as it was re/moved in 8.4
+#if PHP_VERSION_ID < 80400
 #include <ext/standard/php_rand.h>
 #include <ext/standard/php_lcg.h>
+#else
+#include <ext/random/php_random.h>
+#endif
+
 #include <ext/standard/php_http.h>
 #include <ext/standard/base64.h>
 #include <ext/standard/md5.h>
@@ -1223,8 +1229,9 @@ void zephir_crc32(zval *return_value, zval *str)
 	int use_copy = 0;
 	size_t nr;
 	char *p;
-	php_uint32 crc;
-	php_uint32 crcinit = 0;
+	// deprecated php_uint32 and php_int32 typedefs. https://github.com/php/php-src/commit/3e05c86c35e23d97a29f3f1ba0070df73fdf914f
+	uint32_t crc;
+	uint32_t crcinit = 0;
 
 	if (Z_TYPE_P(str) != IS_STRING) {
 		use_copy = zend_make_printable_zval(str, &copy);

@@ -16,7 +16,13 @@
 #include <php.h>
 #include <ext/standard/php_string.h>
 #include <ext/standard/php_math.h>
+// include php_rand.h for 8.3 and less as it was re/moved in 8.4
+#if PHP_VERSION_ID < 80400
 #include <ext/standard/php_rand.h>
+#include <ext/standard/php_lcg.h>
+#else
+#include <ext/random/php_random.h>
+#endif
 
 #include "php_ext.h"
 #include "kernel/main.h"
