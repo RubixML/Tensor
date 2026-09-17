@@ -1242,6 +1242,10 @@ class Vector implements Tensor
 
         int xHat = (int) x;
 
+        if xHat >= this->n {
+            return (float) a[this->n - 1];
+        }
+
         float remainder = x - xHat;
 
         float t = (float) a[xHat - 1];

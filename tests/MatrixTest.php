@@ -2384,6 +2384,26 @@ class MatrixTest extends TestCase
         $expected = ColumnVector::quick([6.200000000000001, 2.8000000000000003, -6.6]);
 
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+
+        $max = $a->quantile(1.0);
+
+        $maxExpected = ColumnVector::quick([22.0, 11.0, 20.0]);
+
+        $this->assertEqualsWithDelta($maxExpected, $max, self::MAX_DELTA);
+
+        $single = Matrix::quick([
+            [5.0],
+            [3.0],
+            [8.0],
+        ]);
+
+        $singleExpected = ColumnVector::quick([5.0, 3.0, 8.0]);
+
+        $this->assertEqualsWithDelta(
+            $singleExpected,
+            $single->quantile(0.5),
+            self::MAX_DELTA
+        );
     }
 
     /**

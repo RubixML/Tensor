@@ -1265,6 +1265,14 @@ class VectorTest extends TestCase
         $a = Vector::quick([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0]);
 
         $this->assertEqualsWithDelta(30.0, $a->quantile(0.5), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(-72.0, $a->quantile(0.0), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(106.0, $a->quantile(1.0), self::MAX_DELTA);
+
+        $single = Vector::quick([5.0]);
+
+        $this->assertEqualsWithDelta(5.0, $single->quantile(0.0), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(5.0, $single->quantile(0.5), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(5.0, $single->quantile(1.0), self::MAX_DELTA);
     }
 
     /**

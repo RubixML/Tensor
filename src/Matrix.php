@@ -1651,6 +1651,12 @@ class Matrix implements Tensor
         foreach ($this->a as $rowA) {
             sort($rowA);
 
+            if ($xHat >= $this->n) {
+                $b[] = (float) $rowA[$this->n - 1];
+
+                continue;
+            }
+
             $t = $rowA[$xHat - 1];
 
             $b[] = $t + $remainder * ($rowA[$xHat] - $t);

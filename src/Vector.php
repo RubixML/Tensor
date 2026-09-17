@@ -1239,6 +1239,10 @@ class Vector implements Tensor
 
         $xHat = (int) $x;
 
+        if ($xHat >= $this->n) {
+            return (float) $a[$this->n - 1];
+        }
+
         $remainder = $x - $xHat;
 
         $t = $a[$xHat - 1];

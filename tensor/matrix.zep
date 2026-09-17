@@ -1591,9 +1591,15 @@ class Matrix implements Tensor
 
         for rowA in this->a {
             sort(rowA);
-    
+
+            if xHat >= this->n {
+                let b[] = (float) rowA[this->n - 1];
+
+                continue;
+            }
+
             let t = (float) rowA[xHat - 1];
-    
+
             let b[] = t + remainder * (rowA[xHat] - t);
         }
 
