@@ -270,8 +270,6 @@ void tensor_less_equal_scalar(zval * return_value, zval * a, zval * b)
 
     zend_array * aa = Z_ARR_P(a);
 
-    Bucket * ba = aa->arData;
-
     double ab = zephir_get_doubleval(b);
 
     unsigned int n = zend_array_count(aa);
