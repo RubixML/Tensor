@@ -40,7 +40,7 @@ All are Composer scripts (see `composer.json`):
 | Fix style | `composer fix` |
 | Full build | `composer build` = validate → install → analyze → test → check |
 | Benchmarks | `composer benchmark` |
-| Compile extension | `composer compile` = zephir generate → `php build-ext` → zephir compile → zephir install |
+| Compile extension | `composer compile` = zephir generate → `php build-ext` → zephir compile |
 | Clean generated extension | `composer clean` (zephir fullclean) |
 
 **Recommended loop before submitting a change:**
