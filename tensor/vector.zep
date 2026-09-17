@@ -1650,7 +1650,7 @@ class Vector implements Tensor
     public function notEqualMatrix(const <Matrix> b) -> <Matrix>
     {
         if unlikely this->n !== b->n() {
-            throw new InvalidArgumentException("Vector A requires "
+            throw new DimensionalityMismatch("Vector A expects "
                 . (string) this->n . " columns but Matrix B has "
                 . (string) b->n() . ".");
         }

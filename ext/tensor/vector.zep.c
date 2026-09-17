@@ -4432,7 +4432,7 @@ PHP_METHOD(Tensor_Vector, notEqualMatrix)
 	zephir_check_call_status();
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
-		object_init_ex(&_2$$3, tensor_exceptions_invalidargumentexception_ce);
+		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
 		zephir_memory_observe(&_3$$3);
 		zephir_read_property(&_3$$3, this_ptr, ZEND_STRL("n"), PH_NOISY_CC);
 		zephir_cast_to_string(&_4$$3, &_3$$3);
@@ -4440,7 +4440,7 @@ PHP_METHOD(Tensor_Vector, notEqualMatrix)
 		zephir_check_call_status();
 		zephir_cast_to_string(&_6$$3, &_5$$3);
 		ZEPHIR_INIT_VAR(&_7$$3);
-		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A requires ", &_4$$3, " columns but Matrix B has ", &_6$$3, ".");
+		ZEPHIR_CONCAT_SVSVS(&_7$$3, "Vector A expects ", &_4$$3, " columns but Matrix B has ", &_6$$3, ".");
 		ZEPHIR_CALL_METHOD(NULL, &_2$$3, "__construct", NULL, 3, &_7$$3);
 		zephir_check_call_status();
 		zephir_throw_exception_debug(&_2$$3, "tensor/vector.zep", 1655);

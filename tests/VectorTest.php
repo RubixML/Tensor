@@ -13,6 +13,7 @@ use Tensor\Comparable;
 use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
+use Tensor\Exceptions\DimensionalityMismatch;
 use PHPUnit\Framework\TestCase;
 use Generator;
 
@@ -793,6 +794,23 @@ class VectorTest extends TestCase
             25.0,
             Vector::quick([1, 0, 1, 1, 1, 1, 1, 1]),
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function notEqualMatrixDimensionMismatch() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        $a = Vector::quick([1.0, 2.0, 3.0]);
+
+        $b = Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]);
+
+        $a->notEqualMatrix($b);
     }
 
     /**

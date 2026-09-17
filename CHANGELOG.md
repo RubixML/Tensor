@@ -6,6 +6,7 @@
     - Fix extension rank() operation
     - Fixed reduce() callback argument order inconsistency between Matrix and Vector
     - Fix covariance() summation axis
+    - Fixed Vector notEqualMatrix throwing InvalidArgumentException instead of DimensionalityMismatch
 
 - 3.0.7
     - Upgrade to Zephir version 0.19
