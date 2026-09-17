@@ -632,7 +632,14 @@ class Matrix implements Tensor
                 . " square, " . this->shapeString() .  " given.");
         }
 
-        return self::quick(tensor_inverse(this->a));
+        var result = tensor_inverse(this->a);
+
+        if is_null(result) {
+            throw new RuntimeException("Failed to compute the inverse"
+                . " of a singular matrix.");
+        }
+
+        return self::quick(result);
     }
 
     /**
@@ -640,9 +647,16 @@ class Matrix implements Tensor
      *
      * @return self
      */
-     public function pseudoinverse() -> <Matrix>
+      public function pseudoinverse() -> <Matrix>
     {
-        return self::quick(tensor_pseudoinverse(this->a));
+        var result = tensor_pseudoinverse(this->a);
+
+        if is_null(result) {
+            throw new RuntimeException("Failed to compute the pseudoinverse"
+                . " of the matrix.");
+        }
+
+        return self::quick(result);
     }
 
     /**

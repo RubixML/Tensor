@@ -125,12 +125,18 @@ void tensor_inverse(zval * return_value, zval * a)
     status = LAPACKE_dgetrf(LAPACK_ROW_MAJOR, n, n, va, n, pivots);
 
     if (status != 0) {
+        efree(va);
+        efree(pivots);
+
         RETURN_NULL();
     }
-    
+
     status = LAPACKE_dgetri(LAPACK_ROW_MAJOR, n, va, n, pivots);
 
     if (status != 0) {
+        efree(va);
+        efree(pivots);
+
         RETURN_NULL();
     }
 
@@ -187,6 +193,12 @@ void tensor_pseudoinverse(zval * return_value, zval * a)
     lapack_int status = LAPACKE_dgesdd(LAPACK_ROW_MAJOR, 'A', m, n, va, n, vs, vu, m, vvt, n);
 
     if (status != 0) {
+        efree(va);
+        efree(vu);
+        efree(vs);
+        efree(vvt);
+        efree(vb);
+
         RETURN_NULL();
     }
 
@@ -249,6 +261,9 @@ void tensor_ref(zval * return_value, zval * a)
     lapack_int status = LAPACKE_dgetrf(LAPACK_ROW_MAJOR, m, n, va, n, pivots);
 
     if (status != 0) {
+        efree(va);
+        efree(pivots);
+
         RETURN_NULL();
     }
     
@@ -314,6 +329,8 @@ void tensor_cholesky(zval * return_value, zval * a)
     lapack_int status = LAPACKE_dpotrf(LAPACK_ROW_MAJOR, 'L', n, va, n);
 
     if (status != 0) {
+        efree(va);
+
         RETURN_NULL();
     }
     
@@ -370,6 +387,9 @@ void tensor_lu(zval * return_value, zval * a)
     lapack_int status = LAPACKE_dgetrf(LAPACK_ROW_MAJOR, n, n, va, n, pivots);
 
     if (status != 0) {
+        efree(va);
+        efree(pivots);
+
         RETURN_NULL();
     }
     
@@ -486,6 +506,11 @@ void tensor_eig(zval * return_value, zval * a)
     lapack_int status = LAPACKE_dgeev(LAPACK_ROW_MAJOR, 'N', 'V', n, va, n, wr, wi, NULL, n, vr, n);
 
     if (status != 0) {
+        efree(va);
+        efree(wr);
+        efree(wi);
+        efree(vr);
+
         RETURN_NULL();
     }
 
@@ -550,6 +575,9 @@ void tensor_eig_symmetric(zval * return_value, zval * a)
     lapack_int status = LAPACKE_dsyev(LAPACK_ROW_MAJOR, 'V', 'U', n, va, n, wr);
 
     if (status != 0) {
+        efree(va);
+        efree(wr);
+
         RETURN_NULL();
     }
 
@@ -616,6 +644,11 @@ void tensor_svd(zval * return_value, zval * a)
     lapack_int status = LAPACKE_dgesdd(LAPACK_ROW_MAJOR, 'A', m, n, va, n, vs, vu, m, vvt, n);
 
     if (status != 0) {
+        efree(va);
+        efree(vu);
+        efree(vs);
+        efree(vvt);
+
         RETURN_NULL();
     }
 

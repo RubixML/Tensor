@@ -7,6 +7,7 @@
     - Fixed reduce() callback argument order inconsistency between Matrix and Vector
     - Fix covariance() summation axis
     - Fixed Vector notEqualMatrix throwing InvalidArgumentException instead of DimensionalityMismatch
+    - Fixed memory leak in the extension on the failure path of inverse, pseudoinverse
 
 - 3.0.7
     - Upgrade to Zephir version 0.19
