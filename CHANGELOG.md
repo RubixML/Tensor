@@ -1,3 +1,6 @@
+- 3.0.10
+    - Fixed bug in Matrix row variance (divided by row count instead of column count)
+
 - 3.0.5
     - Upgraded Zephir dependency to 0.17
 

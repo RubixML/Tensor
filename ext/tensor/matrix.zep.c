@@ -4366,7 +4366,7 @@ PHP_METHOD(Tensor_Matrix, variance)
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_13, &_12, "sum", NULL, 0);
 	zephir_check_call_status();
-	zephir_read_property(&_14, this_ptr, ZEND_STRL("m"), PH_NOISY_CC | PH_READONLY);
+	zephir_read_property(&_14, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_RETURN_CALL_METHOD(&_13, "dividescalar", NULL, 0, &_14);
 	zephir_check_call_status();
 	RETURN_MM();

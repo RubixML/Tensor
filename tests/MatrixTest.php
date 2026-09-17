@@ -2349,6 +2349,23 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
+    public function varianceRowNonSquare() : void
+    {
+        $a = Matrix::quick([
+            [1.0, 2.0, 3.0],
+            [10.0, 20.0, 30.0],
+        ]);
+
+        $b = $a->variance();
+
+        $expected = ColumnVector::quick([0.6666666666666666, 66.66666666666667]);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
     public function covariance() : void
     {
         $a = Matrix::quick([

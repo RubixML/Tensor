@@ -1628,7 +1628,7 @@ class Matrix implements Tensor
         return this->subtractColumnVector(mean)
             ->square()
             ->sum()
-            ->divideScalar(this->m);
+            ->divideScalar(this->n);
     }
 
     /**

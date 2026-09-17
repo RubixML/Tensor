@@ -67,6 +67,7 @@ composer fix
 - **PHPDoc:** classes use `@category` / `@package` / `@author` blocks; methods carry param and return annotations. Use `@var list<float>` for element arrays.
 - **Exceptions** are typed under `Tensor\Exceptions` (e.g. `InvalidArgumentException`, `DimensionalityMismatch`, `RuntimeException`). Use the existing ones rather than `Exception`.
 - **Math is float-only.** Values stored/computed as `float`; don't introduce integer-only branches. When adding a new operation, mirror it across the `Tensor` sub-interfaces (`Arithmetic`, `Comparable`, `Algebraic`, `Trigonometric`, `Statistical`, `Special`).
+- Optimizations should be accompanied by a before and after benchmark to measure and prove the performance gain.
 
 ## Keeping library and extension in sync
 
@@ -78,6 +79,11 @@ Every public method a new `src/` class adds typically has a counterpart in the Z
 4. Bump the version in both `config.json` and `package.xml` if this is a released change, and record it in `CHANGELOG.md`.
 
 Do **not** hand-edit the generated C in `ext/` (files like `*.dep`, `*.lo`, `*.o`, `Makefile*`, `config.h`). They are produced by `composer compile`. Hand-written logic belongs in `ext/include/*.c`.
+
+## Working verification paths
+
+- Library path, ext-free: php -n -d extension=dom -d extension=mbstring -d extension=tokenizer -d extension=xml -d extension=xmlwriter -d extension=xmlreader vendor/bin/phpunit ...
+- Extension path, local build: php -n -d extension=$PWD/ext/modules/tensor.so vendor/bin/phpunit ...
 
 ## Notes for agents
 

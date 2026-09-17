@@ -1595,7 +1595,7 @@ class Matrix implements Tensor
         return $this->subtractColumnVector($mean)
             ->square()
             ->sum()
-            ->divide($this->m);
+            ->divide($this->n);
     }
 
     /**

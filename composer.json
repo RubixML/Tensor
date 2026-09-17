@@ -67,9 +67,9 @@
         "compile": [
             "zephir generate",
             "@php build-ext",
-            "zephir compile --no-dev",
-            "zephir install"
+            "zephir compile --no-dev"
         ],
+        "install-ext": "zephir install",
         "fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php",
         "test": "phpunit"
     },
