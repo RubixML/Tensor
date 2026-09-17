@@ -578,7 +578,7 @@ class Matrix implements Tensor
      *
      * @internal
      *
-     * @param callable callback
+     * @param callable callback function (float carry, float value): float
      * @param float initial
      * @return float
      */
@@ -590,7 +590,7 @@ class Matrix implements Tensor
  
         for rowA in this->a {
             for valueA in rowA {
-                let carry = {callback}(valueA, carry);
+                let carry = {callback}(carry, valueA);
             }
         }
  

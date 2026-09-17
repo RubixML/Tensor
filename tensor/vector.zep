@@ -454,7 +454,7 @@ class Vector implements Tensor
      *
      * @internal
      *
-     * @param callable callback
+     * @param callable callback function (float carry, float value): float
      * @param float initial
      * @return float
      */

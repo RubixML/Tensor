@@ -35,13 +35,13 @@ interface ArrayLike extends ArrayAccess, IteratorAggregate, Countable
      */
      public function map(const callback);
 
-     /**
-      * Reduce the tensor down to a scalar.
-      *
-      * @param callable callback
-      * @param float initial
-      * @return float
-      */
+      /**
+       * Reduce the tensor down to a scalar.
+       *
+       * @param callable callback function (float carry, float value): float
+       * @param float initial
+       * @return float
+       */
      public function reduce(const callback, float initial = 0.0) -> float;
 
     /**

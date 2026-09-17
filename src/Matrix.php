@@ -560,7 +560,7 @@ class Matrix implements Tensor
      *
      * @internal
      *
-     * @param callable $callback
+     * @param callable $callback function (float $carry, float $value): float
      * @param float $initial
      * @return float
      */
@@ -570,7 +570,7 @@ class Matrix implements Tensor
 
         foreach ($this->a as $rowA) {
             foreach ($rowA as $valueA) {
-                $carry = $callback($valueA, $carry);
+                $carry = $callback($carry, $valueA);
             }
         }
 

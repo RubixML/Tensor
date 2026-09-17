@@ -2,7 +2,8 @@
     - Fixed bug in Matrix row variance
     - Fixed LU decomposition pivot selection, singular matrices now throw a RuntimeException
     - Fixed undefined array key in Vector and Matrix quantile at q=1.0 or with a single element
-    - Fix extension rank()
+    - Fix extension rank() operation
+    - Fixed reduce() callback argument order inconsistency between Matrix and Vector
 
 - 3.0.7
     - Upgrade to Zephir version 0.19

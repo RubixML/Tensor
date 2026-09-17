@@ -1578,7 +1578,7 @@ PHP_METHOD(Tensor_Matrix, map)
  *
  * @internal
  *
- * @param callable callback
+ * @param callable callback function (float carry, float value): float
  * @param float initial
  * @return float
  */
@@ -1630,7 +1630,7 @@ PHP_METHOD(Tensor_Matrix, reduce)
 				{
 					ZEPHIR_INIT_NVAR(&valueA);
 					ZVAL_COPY(&valueA, _3$$3);
-					ZEPHIR_CALL_ZVAL_FUNCTION(&_5$$4, callback, NULL, 0, &valueA, &carry);
+					ZEPHIR_CALL_ZVAL_FUNCTION(&_5$$4, callback, NULL, 0, &carry, &valueA);
 					zephir_check_call_status();
 					ZEPHIR_CPY_WRT(&carry, &_5$$4);
 				} ZEND_HASH_FOREACH_END();
@@ -1645,7 +1645,7 @@ PHP_METHOD(Tensor_Matrix, reduce)
 					}
 					ZEPHIR_CALL_METHOD(&valueA, &rowA, "current", NULL, 0);
 					zephir_check_call_status();
-						ZEPHIR_CALL_ZVAL_FUNCTION(&_6$$5, callback, NULL, 0, &valueA, &carry);
+						ZEPHIR_CALL_ZVAL_FUNCTION(&_6$$5, callback, NULL, 0, &carry, &valueA);
 						zephir_check_call_status();
 						ZEPHIR_CPY_WRT(&carry, &_6$$5);
 					ZEPHIR_CALL_METHOD(NULL, &rowA, "next", NULL, 0);
@@ -1671,7 +1671,7 @@ PHP_METHOD(Tensor_Matrix, reduce)
 					{
 						ZEPHIR_INIT_NVAR(&valueA);
 						ZVAL_COPY(&valueA, _7$$6);
-						ZEPHIR_CALL_ZVAL_FUNCTION(&_9$$7, callback, NULL, 0, &valueA, &carry);
+						ZEPHIR_CALL_ZVAL_FUNCTION(&_9$$7, callback, NULL, 0, &carry, &valueA);
 						zephir_check_call_status();
 						ZEPHIR_CPY_WRT(&carry, &_9$$7);
 					} ZEND_HASH_FOREACH_END();
@@ -1686,7 +1686,7 @@ PHP_METHOD(Tensor_Matrix, reduce)
 						}
 						ZEPHIR_CALL_METHOD(&valueA, &rowA, "current", NULL, 0);
 						zephir_check_call_status();
-							ZEPHIR_CALL_ZVAL_FUNCTION(&_10$$8, callback, NULL, 0, &valueA, &carry);
+							ZEPHIR_CALL_ZVAL_FUNCTION(&_10$$8, callback, NULL, 0, &carry, &valueA);
 							zephir_check_call_status();
 							ZEPHIR_CPY_WRT(&carry, &_10$$8);
 						ZEPHIR_CALL_METHOD(NULL, &rowA, "next", NULL, 0);

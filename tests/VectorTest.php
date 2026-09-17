@@ -309,6 +309,33 @@ class VectorTest extends TestCase
     /**
      * @test
      */
+    public function reduce() : void
+    {
+        $vector = Vector::quick([1.0, 2.0, 3.0]);
+
+        $sum = function ($carry, $value) {
+            return $carry + $value;
+        };
+
+        $this->assertEqualsWithDelta(6.0, $vector->reduce($sum), self::MAX_DELTA);
+
+        // Asymmetric callback: pins the (carry, value) argument order.
+        $subtract = function ($carry, $value) {
+            return $carry - $value;
+        };
+
+        $this->assertEqualsWithDelta(-6.0, $vector->reduce($subtract), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(-4.0, $vector->reduce($subtract, 2.0), self::MAX_DELTA);
+
+        // Must match Matrix::reduce() for the same data and callback.
+        $matrix = Matrix::quick([[1.0, 2.0, 3.0]]);
+
+        $this->assertEqualsWithDelta($vector->reduce($subtract), $matrix->reduce($subtract), self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
     public function reciprocal() : void
     {
         $vector = Vector::quick([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0]);

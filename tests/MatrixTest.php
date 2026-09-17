@@ -643,6 +643,36 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
+    public function reduce() : void
+    {
+        $a = Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]);
+
+        $sum = function ($carry, $value) {
+            return $carry + $value;
+        };
+
+        $this->assertEqualsWithDelta(10.0, $a->reduce($sum), self::MAX_DELTA);
+
+        // Asymmetric callback: pins the (carry, value) argument order.
+        $subtract = function ($carry, $value) {
+            return $carry - $value;
+        };
+
+        $this->assertEqualsWithDelta(-10.0, $a->reduce($subtract), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(-8.0, $a->reduce($subtract, 2.0), self::MAX_DELTA);
+
+        // Must match Vector::reduce() for the same data and callback.
+        $v = Vector::quick([1.0, 2.0, 3.0, 4.0]);
+
+        $this->assertEqualsWithDelta($v->reduce($subtract), $a->reduce($subtract), self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
     public function ref() : void
     {
         $matrix = Matrix::quick([

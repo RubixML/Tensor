@@ -1120,7 +1120,7 @@ PHP_METHOD(Tensor_Vector, map)
  *
  * @internal
  *
- * @param callable callback
+ * @param callable callback function (float carry, float value): float
  * @param float initial
  * @return float
  */
