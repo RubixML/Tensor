@@ -685,12 +685,20 @@ class Matrix implements Tensor
 
         int pivots = 0;
 
+        bool stop;
+
         for rowA in a {
+            let stop = false;
+
             for valueA in rowA {
+                if stop {
+                    continue;
+                }
+
                 if valueA != 0 {
                     let pivots++;
 
-                    continue;
+                    let stop = true;
                 }
             }
         }
