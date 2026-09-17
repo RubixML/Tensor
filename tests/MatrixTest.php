@@ -16,6 +16,7 @@ use Tensor\Trigonometric;
 use Tensor\Reductions\REF;
 use Tensor\Reductions\RREF;
 use Tensor\Decompositions\LU;
+use Tensor\Exceptions\RuntimeException;
 use Tensor\Decompositions\SVD;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
@@ -707,6 +708,63 @@ class MatrixTest extends TestCase
         $expected = new LU($l, $u, $p);
 
         $this->assertEqualsWithDelta($expected, $lu, self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
+    public function luMultiPivot() : void
+    {
+        $matrix = Matrix::quick([
+            [0.0,  1.0,  0.0,  0.0],
+            [-1.0,  0.0,  0.0,  0.0],
+            [0.0,  0.0,  0.0,  2.0],
+            [0.0,  0.0,  3.0,  1.0],
+        ]);
+
+        $lu = $matrix->lu();
+
+        $pa = $lu->p()->matmul($matrix);
+        $luProd = $lu->l()->matmul($lu->u());
+
+        $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
+    public function luNegativePivot() : void
+    {
+        $matrix = Matrix::quick([
+            [1.0,  2.0,  3.0,  4.0],
+            [-9.0,  1.0,  0.0,  0.0],
+            [0.5,  0.5,  1.0,  1.0],
+            [0.1,  0.2,  0.3,  0.4],
+        ]);
+
+        $lu = $matrix->lu();
+
+        $pa = $lu->p()->matmul($matrix);
+        $luProd = $lu->l()->matmul($lu->u());
+
+        $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
+    public function luSingular() : void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $matrix = Matrix::quick([
+            [1.0, 2.0,  0.0,  0.0],
+            [0.0, 1.0,  1.0,  0.0],
+            [2.0, 4.0,  0.0,  1.0],
+            [0.0, 1.0,  1.0,  0.0],
+        ]);
+
+        $matrix->lu();
     }
 
     /**

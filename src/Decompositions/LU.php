@@ -4,8 +4,7 @@ namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
 use Tensor\Exceptions\InvalidArgumentException;
-
-use const Tensor\EPSILON;
+use Tensor\Exceptions\RuntimeException;
 
 /**
  * LU
@@ -44,7 +43,8 @@ class LU
      * Factory method to decompose a matrix.
      *
      * @param Matrix $a
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
      * @return self
      */
     public static function decompose(Matrix $a) : self
@@ -56,65 +56,76 @@ class LU
 
         $n = $a->n();
 
-        $aHat = $a->asArray();
+        $w = $a->asArray();
 
-        $l = Matrix::identity($n)->asArray();
-        $u = Matrix::zeros($n, $n)->asArray();
-        $p = Matrix::identity($n)->asArray();
+        $p = [];
 
         for ($i = 0; $i < $n; ++$i) {
-            $max = $aHat[$i][$i];
+            $p[$i] = array_fill(0, $n, 0.0);
 
+            $p[$i][$i] = 1.0;
+        }
+
+        for ($i = 0; $i < $n; ++$i) {
             $row = $i;
 
-            for ($j = $i; $j < $n; ++$j) {
-                $valueA = $aHat[$j][$i];
-
-                if ($valueA > $max) {
-                    $max = $valueA;
+            for ($j = $i + 1; $j < $n; ++$j) {
+                if (abs($w[$j][$i]) > abs($w[$row][$i])) {
                     $row = $j;
                 }
             }
 
+            if ($w[$row][$i] == 0.) {
+                throw new RuntimeException('Cannot compute LU decomposition'
+                    . ' of a singular matrix.');
+            }
+
             if ($i !== $row) {
+                $temp = $w[$i];
+
+                $w[$i] = $w[$row];
+                $w[$row] = $temp;
+
                 $temp = $p[$i];
 
                 $p[$i] = $p[$row];
                 $p[$row] = $temp;
             }
+
+            for ($j = $i + 1; $j < $n; ++$j) {
+                $w[$j][$i] /= $w[$i][$i];
+
+                for ($k = $i + 1; $k < $n; ++$k) {
+                    $w[$j][$k] -= $w[$j][$i] * $w[$i][$k];
+                }
+            }
         }
 
-        $p = Matrix::quick($p);
-
-        $pa = $p->matmul($a)->asArray();
+        $l = [];
+        $u = [];
 
         for ($i = 0; $i < $n; ++$i) {
-            for ($j = 0; $j <= $i; ++$j) {
-                $sigma = 0.;
+            for ($j = 0; $j < $n; ++$j) {
+                if ($i > $j) {
+                    $l[$i][$j] = $w[$i][$j];
 
-                for ($k = 0; $k < $j; ++$k) {
-                    $sigma += $u[$k][$i] * $l[$j][$k];
+                    $u[$i][$j] = 0.0;
+                } elseif ($i === $j) {
+                    $l[$i][$j] = 1.0;
+
+                    $u[$i][$j] = $w[$i][$i];
+                } else {
+                    $l[$i][$j] = 0.0;
+
+                    $u[$i][$j] = $w[$i][$j];
                 }
-
-                $u[$j][$i] = $pa[$j][$i] - $sigma;
-            }
-
-            for ($j = $i; $j < $n; ++$j) {
-                $sigma = 0.;
-
-                for ($k = 0; $k < $i; ++$k) {
-                    $sigma += $u[$k][$i] * $l[$j][$k];
-                }
-
-                $l[$j][$i] = ($pa[$j][$i] - $sigma)
-                    / ($u[$i][$i] ?: EPSILON);
             }
         }
 
         return new self(
             Matrix::quick($l),
             Matrix::quick($u),
-            $p
+            Matrix::quick($p)
         );
     }
 

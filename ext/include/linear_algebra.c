@@ -355,6 +355,7 @@ void tensor_lu(zval * return_value, zval * a)
 
     unsigned int n = zend_array_count(aa);
 
+    unsigned int * perm;
     double * va = emalloc(n * n * sizeof(double));
     int * pivots = emalloc(n * sizeof(int));
 
@@ -406,11 +407,28 @@ void tensor_lu(zval * return_value, zval * a)
         add_next_index_zval(&u, &rowU);
     }
 
+    perm = emalloc(n * sizeof(unsigned int));
+
+    for (i = 0; i < n; ++i) {
+        perm[i] = i;
+    }
+
+    for (i = 0; i < n; ++i) {
+        unsigned int r = (unsigned int)(pivots[i] - 1);
+
+        if (r != i) {
+            unsigned int t = perm[i];
+
+            perm[i] = perm[r];
+            perm[r] = t;
+        }
+    }
+
     for (i = 0; i < n; ++i) {
         array_init_size(&rowP, n);
 
         for (j = 0; j < n; ++j) {
-            if (j == pivots[i] - 1) {
+            if (j == perm[i]) {
                 add_next_index_long(&rowP, 1);
             } else {
                 add_next_index_long(&rowP, 0);
@@ -428,8 +446,9 @@ void tensor_lu(zval * return_value, zval * a)
 
     RETVAL_ARR(Z_ARR(tuple));
 
+    efree(perm);
     efree(va);
-    efree(pivots); 
+    efree(pivots);
 }
 
 /**

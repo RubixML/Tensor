@@ -1,5 +1,6 @@
 - 3.0.10
-    - Fixed bug in Matrix row variance (divided by row count instead of column count)
+    - Fixed bug in Matrix row variance
+    - Fixed LU decomposition pivot selection, singular matrices now throw a RuntimeException
 
 - 3.0.5
     - Upgraded Zephir dependency to 0.17
