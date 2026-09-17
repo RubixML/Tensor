@@ -1940,7 +1940,7 @@ class Matrix implements Tensor
     }
 
     /**
-     * Attach matrix b to the left of this matrix.
+     * Attach matrix b to the right of this matrix.
      *
      * @param Matrix $b
      * @throws DimensionalityMismatch

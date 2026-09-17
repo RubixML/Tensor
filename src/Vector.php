@@ -1228,7 +1228,7 @@ class Vector implements Tensor
     {
         if ($q < 0.0 or $q > 1.0) {
             throw new InvalidArgumentException('Q must be between'
-                . " 0 and 100, $q given.");
+                . " 0 and 1, $q given.");
         }
 
         $a = $this->a;

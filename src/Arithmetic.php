@@ -29,7 +29,7 @@ interface Arithmetic
     public function add($b);
 
     /**
-     * A universal function to subtract this tensor from another tensor element-wise.
+     * A universal function to subtract a tensor from this tensor element-wise.
      *
      * @param mixed $b
      * @return mixed
