@@ -4,6 +4,8 @@
 
 A library and extension that provides objects for scientific computing in [PHP](https://php.net).
 
+> **Note:** If both the library and extension are installed, the extension will take precedence.
+
 ## Installation
 
 Follow the instructions below to install either Tensor PHP or the Tensor extension.
@@ -23,20 +25,6 @@ Install the Tensor extension via [PECL](https://pecl.php.net/package/Tensor):
 ```sh
 $ pecl install tensor
 ```
-
-Compiling on MacOS :
-
-To avoid some errors on Mac devices using homebrew, don't forget to add environment variables:
-
-```sh
-export LDFLAGS="-L$(brew --prefix openblas)/lib -L$(brew --prefix pcre2)/lib -L$(brew --prefix gcc)/lib/gcc/current"
-export CPPFLAGS="-I$(brew --prefix openblas)/include -I$(brew --prefix pcre2)/include -I$(brew --prefix gcc)/include"
-export PKG_CONFIG_PATH="$(brew --prefix openblas)/lib/pkgconfig:$(brew --prefix pcre2)/lib/pkgconfig:$(brew --prefix gcc)/lib/pkgconfig"
-export PATH="$(brew --prefix gcc)/bin:$PATH"
-export FC=$(brew --prefix gcc)/bin/gfortran
-```
-
-> **Note:** If both the library and extension are installed, the extension will take precedence.
 
 ## Requirements
 
@@ -89,6 +77,18 @@ To confirm that the extension is loaded in PHP, you can run the following comman
 
 ```sh
 php -m | grep tensor
+```
+
+### Tip for Compiling on MacOS
+
+To avoid some errors on Mac devices using homebrew, don't forget to add the following environment variables.
+
+```sh
+export LDFLAGS="-L$(brew --prefix openblas)/lib -L$(brew --prefix pcre2)/lib -L$(brew --prefix gcc)/lib/gcc/current"
+export CPPFLAGS="-I$(brew --prefix openblas)/include -I$(brew --prefix pcre2)/include -I$(brew --prefix gcc)/include"
+export PKG_CONFIG_PATH="$(brew --prefix openblas)/lib/pkgconfig:$(brew --prefix pcre2)/lib/pkgconfig:$(brew --prefix gcc)/lib/pkgconfig"
+export PATH="$(brew --prefix gcc)/bin:$PATH"
+export FC=$(brew --prefix gcc)/bin/gfortran
 ```
 
 ## Performance Comparison
