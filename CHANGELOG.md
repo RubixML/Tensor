@@ -2,6 +2,7 @@
     - Fixed bug in Matrix row variance
     - Fixed LU decomposition pivot selection, singular matrices now throw a RuntimeException
     - Fixed undefined array key in Vector and Matrix quantile at q=1.0 or with a single element
+    - Fix extension rank()
 
 - 3.0.5
     - Upgraded Zephir dependency to 0.17
