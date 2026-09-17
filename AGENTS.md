@@ -70,8 +70,7 @@ composer fix
 
 ## Keeping library and extension in sync
 
-Every public method a new `src/` class adds typically has a counterpart in the Zephir
-extension. When you add or change an operation at the API level:
+Every public method a new `src/` class adds typically has a counterpart in the Zephir extension. When you add or change an operation at the API level:
 
 1. Update the PHP class in `src/`.
 2. Add/adjust the matching `optimizers/Tensor<Op>Optimizer.php` if it is a callable that the extension should route into C.
