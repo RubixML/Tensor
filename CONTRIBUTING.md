@@ -57,6 +57,7 @@ $ composer check
 ```
 
 To run the automatic style fixer:
+
 ```sh
 $ composer fix
 ```
@@ -86,6 +87,7 @@ $ composer compile
 ```
 
 To remove all the files created during compilation:
+
 ```sh
 $ composer clean
 ```
