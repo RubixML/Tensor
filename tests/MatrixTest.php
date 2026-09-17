@@ -17,6 +17,9 @@ use Tensor\Reductions\REF;
 use Tensor\Reductions\RREF;
 use Tensor\Decompositions\LU;
 use Tensor\Exceptions\RuntimeException;
+use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\DimensionalityMismatch;
+use Tensor\Exceptions\NotImplemented;
 use Tensor\Decompositions\SVD;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
@@ -2931,5 +2934,277 @@ class MatrixTest extends TestCase
         ]);
 
         $this->assertEquals($expected, $b);
+    }
+
+    /**
+     * @test
+     */
+    public function fillNegativeMThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::fill(1.0, 0, 2);
+    }
+
+    /**
+     * @test
+     */
+    public function fillNegativeNThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::fill(1.0, 2, 0);
+    }
+
+    /**
+     * @test
+     */
+    public function identityNegativeNThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::identity(0);
+    }
+
+    /**
+     * @test
+     */
+    public function detNonSquareThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::quick([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ])->det();
+    }
+
+    /**
+     * @test
+     */
+    public function matmulDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ])->matmul(Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+            [5.0, 6.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function dotDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Matrix::quick([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ])->dot(Vector::quick([1.0, 2.0]));
+    }
+
+    /**
+     * @test
+     */
+    public function augmentAboveDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+        ])->augmentAbove(Matrix::quick([
+            [1.0, 2.0, 3.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function augmentBelowDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+        ])->augmentBelow(Matrix::quick([
+            [1.0, 2.0, 3.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function augmentLeftDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+        ])->augmentLeft(Matrix::quick([
+            [1.0],
+            [2.0],
+            [3.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function augmentRightDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+        ])->augmentRight(Matrix::quick([
+            [1.0],
+            [2.0],
+            [3.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function offsetSetThrows() : void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $a = Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]);
+
+        $a[0] = 10.0;
+    }
+
+    /**
+     * @test
+     */
+    public function offsetUnsetThrows() : void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $a = Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]);
+
+        unset($a[0][0]);
+    }
+
+    /**
+     * @test
+     */
+    public function offsetGetOutOfBoundsThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $a = Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]);
+
+        $this->assertInstanceOf(Vector::class, $a[10]);
+    }
+
+    /**
+     * @test
+     */
+    public function luNonSquareThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::quick([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ])->lu();
+    }
+
+    /**
+     * @test
+     */
+    public function choleskyNonSquareThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::quick([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ])->cholesky();
+    }
+
+    /**
+     * @test
+     */
+    public function eigPurePHPIsNotImplemented() : void
+    {
+        if (extension_loaded('tensor')) {
+            $this->markTestSkipped('Extension tensor is loaded.');
+        }
+
+        $this->expectException(NotImplemented::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ])->eig(false);
+    }
+
+    /**
+     * @test
+     */
+    public function eigSymmetricPurePHPIsNotImplemented() : void
+    {
+        if (extension_loaded('tensor')) {
+            $this->markTestSkipped('Extension tensor is loaded.');
+        }
+
+        $this->expectException(NotImplemented::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ])->eig(true);
+    }
+
+    /**
+     * @test
+     */
+    public function svdPurePHPIsNotImplemented() : void
+    {
+        if (extension_loaded('tensor')) {
+            $this->markTestSkipped('Extension tensor is loaded.');
+        }
+
+        $this->expectException(NotImplemented::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ])->svd();
+    }
+
+    /**
+     * @test
+     */
+    public function pseudoinversePurePHPIsNotImplemented() : void
+    {
+        if (extension_loaded('tensor')) {
+            $this->markTestSkipped('Extension tensor is loaded.');
+        }
+
+        $this->expectException(NotImplemented::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ])->pseudoinverse();
     }
 }

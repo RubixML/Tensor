@@ -3,6 +3,7 @@
 namespace Tensor\Tests;
 
 use Tensor\Tensor;
+use Tensor\Vector;
 use Tensor\Matrix;
 use Tensor\Special;
 use Tensor\ArrayLike;
@@ -12,6 +13,7 @@ use Tensor\Comparable;
 use Tensor\Statistical;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
+use Tensor\Exceptions\DimensionalityMismatch;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -332,5 +334,166 @@ class ColumnVectorTest extends TestCase
         ]);
 
         $this->assertEquals($expected, $c);
+    }
+
+    /**
+     * @test
+     */
+    public function transposeReturnsVector() : void
+    {
+        $a = ColumnVector::quick([1.0, 2.0, 3.0]);
+
+        $b = $a->transpose();
+
+        $this->assertInstanceOf(Vector::class, $b);
+        $this->assertEquals(Vector::quick([1.0, 2.0, 3.0]), $b);
+    }
+
+    /**
+     * @test
+     */
+    public function sizes() : void
+    {
+        $a = ColumnVector::quick([1.0, 2.0, 3.0]);
+
+        $this->assertEquals(3, $a->m());
+        $this->assertEquals(1, $a->n());
+        $this->assertEquals(3, $a->size());
+    }
+
+    /**
+     * @test
+     */
+    public function matmul() : void
+    {
+        $a = ColumnVector::quick([1.0, 2.0, 3.0]);
+
+        $b = Matrix::quick([
+            [1.0, 2.0, 3.0],
+        ]);
+
+        $c = $a->matmul($b);
+
+        $expected = Matrix::quick([
+            [1.0, 2.0, 3.0],
+            [2.0, 4.0, 6.0],
+            [3.0, 6.0, 9.0],
+        ]);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
+    public function matmulDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        ColumnVector::quick([1.0, 2.0, 3.0])->matmul(Matrix::quick([
+            [1.0, 2.0, 3.0, 4.0],
+            [5.0, 6.0, 7.0, 8.0],
+            [9.0, 10.0, 11.0, 12.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function powMatrix() : void
+    {
+        $a = ColumnVector::quick([2.0, 3.0, 4.0]);
+
+        $b = Matrix::quick([
+            [1.0, 2.0, 3.0],
+            [1.0, 1.0, 1.0],
+            [2.0, 0.0, 1.0],
+        ]);
+
+        $c = $a->powMatrix($b);
+
+        $expected = Matrix::quick([
+            [2.0, 4.0, 8.0],
+            [3.0, 3.0, 3.0],
+            [16.0, 1.0, 4.0],
+        ]);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
+    public function powMatrixDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        ColumnVector::quick([1.0, 2.0, 3.0])->powMatrix(Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function modMatrix() : void
+    {
+        $a = ColumnVector::quick([10.0, 12.0, 15.0]);
+
+        $b = Matrix::quick([
+            [3.0, 4.0, 5.0],
+            [2.0, 3.0, 4.0],
+            [5.0, 6.0, 7.0],
+        ]);
+
+        $c = $a->modMatrix($b);
+
+        $expected = Matrix::quick([
+            [1.0, 2.0, 0.0],
+            [0.0, 0.0, 0.0],
+            [0.0, 3.0, 1.0],
+        ]);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
+    public function modMatrixDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        ColumnVector::quick([1.0, 2.0, 3.0])->modMatrix(Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function multiplyMatrixDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        ColumnVector::quick([1.0, 2.0, 3.0])->multiplyMatrix(Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function divideMatrixDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        ColumnVector::quick([1.0, 2.0, 3.0])->divideMatrix(Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ]));
     }
 }
