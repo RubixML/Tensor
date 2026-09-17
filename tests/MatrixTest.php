@@ -60,6 +60,37 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
+    public function buildCastsIntegersToFloatsAndPreservesShape() : void
+    {
+        $matrix = Matrix::build([
+            [1, 2, 3],
+            [4, 5, 6],
+        ]);
+
+        $this->assertSame([2, 3], $matrix->shape());
+        $this->assertSame(6, $matrix->size());
+
+        $result = $matrix->asArray();
+
+        $this->assertCount(2, $result);
+
+        foreach ($result as $row) {
+            $this->assertCount(3, $row);
+
+            foreach ($row as $value) {
+                $this->assertTrue(is_float($value));
+            }
+        }
+
+        $this->assertEqualsWithDelta([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ], $result, self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
     public function identity() : void
     {
         $matrix = Matrix::identity(4);

@@ -97,7 +97,7 @@ PHP_METHOD(Tensor_Decompositions_Cholesky, decompose)
 	object_init_ex(return_value, tensor_decompositions_cholesky_ce);
 	ZEPHIR_CALL_CE_STATIC(&_5, tensor_matrix_ce, "quick", NULL, 0, &l);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 25, &_5);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 24, &_5);
 	zephir_check_call_status();
 	RETURN_MM();
 }

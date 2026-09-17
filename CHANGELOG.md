@@ -1,4 +1,5 @@
 - 3.0.10
+    - Fixed Matrix and Vector build() validation
     - Fixed bug in Matrix row variance
     - Fixed LU decomposition pivot selection, singular matrices now throw a RuntimeException
     - Fixed undefined array key in Vector and Matrix quantile at q=1.0 or with a single element
@@ -8,6 +9,7 @@
 
 - 3.0.7
     - Upgrade to Zephir version 0.19
+    - Drop support for PHP 7.4 in extension
 
 - 3.0.6
     - Upgrade to Zephir version 0.18

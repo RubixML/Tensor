@@ -136,7 +136,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose)
 	ZEPHIR_CALL_METHOD(&eigenvectors, &_7, "transpose", NULL, 0);
 	zephir_check_call_status();
 	object_init_ex(return_value, tensor_decompositions_eigen_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 26, &eigenvalues, &eigenvectors);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 25, &eigenvalues, &eigenvectors);
 	zephir_check_call_status();
 	RETURN_MM();
 }

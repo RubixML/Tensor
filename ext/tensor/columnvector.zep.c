@@ -1006,7 +1006,7 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix)
 				{
 					ZEPHIR_INIT_NVAR(&valueB);
 					ZVAL_COPY(&valueB, _14$$4);
-					ZEPHIR_CALL_FUNCTION(&_16$$5, "pow", &_17, 17, &valueA, &valueB);
+					ZEPHIR_CALL_FUNCTION(&_16$$5, "pow", &_17, 16, &valueA, &valueB);
 					zephir_check_call_status();
 					zephir_array_append(&rowC, &_16$$5, PH_SEPARATE, "tensor/columnvector.zep", 246);
 				} ZEND_HASH_FOREACH_END();
@@ -1021,7 +1021,7 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix)
 					}
 					ZEPHIR_CALL_METHOD(&valueB, &rowB, "current", NULL, 0);
 					zephir_check_call_status();
-						ZEPHIR_CALL_FUNCTION(&_18$$6, "pow", &_17, 17, &valueA, &valueB);
+						ZEPHIR_CALL_FUNCTION(&_18$$6, "pow", &_17, 16, &valueA, &valueB);
 						zephir_check_call_status();
 						zephir_array_append(&rowC, &_18$$6, PH_SEPARATE, "tensor/columnvector.zep", 246);
 					ZEPHIR_CALL_METHOD(NULL, &rowB, "next", NULL, 0);
@@ -1055,7 +1055,7 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix)
 					{
 						ZEPHIR_INIT_NVAR(&valueB);
 						ZVAL_COPY(&valueB, _20$$7);
-						ZEPHIR_CALL_FUNCTION(&_22$$8, "pow", &_17, 17, &valueA, &valueB);
+						ZEPHIR_CALL_FUNCTION(&_22$$8, "pow", &_17, 16, &valueA, &valueB);
 						zephir_check_call_status();
 						zephir_array_append(&rowC, &_22$$8, PH_SEPARATE, "tensor/columnvector.zep", 246);
 					} ZEND_HASH_FOREACH_END();
@@ -1070,7 +1070,7 @@ PHP_METHOD(Tensor_ColumnVector, powMatrix)
 						}
 						ZEPHIR_CALL_METHOD(&valueB, &rowB, "current", NULL, 0);
 						zephir_check_call_status();
-							ZEPHIR_CALL_FUNCTION(&_23$$9, "pow", &_17, 17, &valueA, &valueB);
+							ZEPHIR_CALL_FUNCTION(&_23$$9, "pow", &_17, 16, &valueA, &valueB);
 							zephir_check_call_status();
 							zephir_array_append(&rowC, &_23$$9, PH_SEPARATE, "tensor/columnvector.zep", 246);
 						ZEPHIR_CALL_METHOD(NULL, &rowB, "next", NULL, 0);

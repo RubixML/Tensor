@@ -104,7 +104,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, decompose)
 	ZEPHIR_CALL_CE_STATIC(&vT, tensor_matrix_ce, "quick", NULL, 0, &_3);
 	zephir_check_call_status();
 	object_init_ex(return_value, tensor_decompositions_svd_ce);
-	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 28, &u, &singularValues, &vT);
+	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 27, &u, &singularValues, &vT);
 	zephir_check_call_status();
 	RETURN_MM();
 }

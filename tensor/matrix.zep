@@ -373,6 +373,9 @@ class Matrix implements Tensor
         int n = count(current(a) ?: []);
  
         if validate {
+            array b = [];
+            array rowB = [];
+
             let a = array_values(a);
 
             for i, rowA in a {
@@ -383,14 +386,16 @@ class Matrix implements Tensor
                         . " at row offset " . i . ".");
                 }
 
+                let rowB = [];
+
                 for valueA in rowA {
-                    if unlikely !is_float(valueA) {
-                        let valueA = (float) valueA;
-                    }
+                    let rowB[] = is_float(valueA) ? valueA : (float) valueA;
                 }
 
-                let rowA[] = array_values(rowA);
+                let b[] = rowB;
             }
+
+            let a = b;
         }
  
         let this->a = a;

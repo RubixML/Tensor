@@ -281,15 +281,15 @@ class Vector implements Tensor
     public function __construct(array a, const bool validate = true)
     {
         var valueA;
-        
+
         if validate {
-            let a = array_values(a);
+            array b = [];
 
             for valueA in a {
-                if (!is_float(valueA)) {
-                    let valueA = (float) valueA;
-                }
+                let b[] = is_float(valueA) ? valueA : (float) valueA;
             }
+
+            let a = b;
         }
 
         let this->a = a;
