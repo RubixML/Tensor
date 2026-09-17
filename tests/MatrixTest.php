@@ -2505,6 +2505,20 @@ class MatrixTest extends TestCase
         ]);
 
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+
+        $c = Matrix::quick([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ]);
+
+        $d = $c->covariance();
+
+        $expectedC = Matrix::quick([
+            [2.0 / 3.0, 2.0 / 3.0],
+            [2.0 / 3.0, 2.0 / 3.0],
+        ]);
+
+        $this->assertEqualsWithDelta($expectedC, $d, self::MAX_DELTA);
     }
 
     /**

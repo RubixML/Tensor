@@ -1667,7 +1667,7 @@ class Matrix implements Tensor
         var b = this->subtractColumnVector(mean);
 
         return b->matmul(b->transpose())
-            ->divideScalar(this->m);
+            ->divideScalar(this->n);
     }
 
     /**

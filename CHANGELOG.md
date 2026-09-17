@@ -4,6 +4,7 @@
     - Fixed undefined array key in Vector and Matrix quantile at q=1.0 or with a single element
     - Fix extension rank() operation
     - Fixed reduce() callback argument order inconsistency between Matrix and Vector
+    - Fix covariance() summation axis
 
 - 3.0.7
     - Upgrade to Zephir version 0.19

@@ -4489,7 +4489,7 @@ PHP_METHOD(Tensor_Matrix, covariance)
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_8, &b, "matmul", NULL, 0, &_9);
 	zephir_check_call_status();
-	zephir_read_property(&_10, this_ptr, ZEND_STRL("m"), PH_NOISY_CC | PH_READONLY);
+	zephir_read_property(&_10, this_ptr, ZEND_STRL("n"), PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_RETURN_CALL_METHOD(&_8, "dividescalar", NULL, 0, &_10);
 	zephir_check_call_status();
 	RETURN_MM();

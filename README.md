@@ -3,22 +3,31 @@
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/rubix/tensor.svg?style=flat&colorB=8892BF)](https://www.php.net/) [![Latest Stable Version](https://img.shields.io/packagist/v/rubix/tensor.svg?style=flat&colorB=orange)](https://packagist.org/packages/rubix/tensor) [![Code Checks](https://github.com/RubixML/Tensor/actions/workflows/ci.yml/badge.svg)](https://github.com/RubixML/Tensor/actions/workflows/ci.yml) [![Extension Build](https://github.com/RubixML/Tensor/actions/workflows/ci-ext.yml/badge.svg)](https://github.com/RubixML/Tensor/actions/workflows/ci-ext.yml) [![Downloads from Packagist](https://img.shields.io/packagist/dt/rubix/tensor.svg?style=flat&colorB=red)](https://packagist.org/packages/rubix/tensor) [![GitHub](https://img.shields.io/github/license/RubixML/Tensor)](https://github.com/RubixML/Tensor/blob/master/LICENSE.md)
 
 A library and extension that provides objects for scientific computing in [PHP](https://php.net).
+
 ## Installation
+
 Follow the instructions below to install either Tensor PHP or the Tensor extension.
 
 ### Tensor PHP
+
 Install Tensor PHP into your project with [Composer](https://getcomposer.org/):
+
 ```sh
 $ composer require rubix/tensor
 ```
 
 ### Tensor Extension
+
 Install the Tensor extension via [PECL](https://pecl.php.net/package/Tensor):
+
 ```sh
 $ pecl install tensor
 ```
+
 Compiling on MacOS :
+
 To avoid some errors on Mac devices using homebrew, don't forget to add environment variables:
+
 ```sh
 export LDFLAGS="-L$(brew --prefix openblas)/lib -L$(brew --prefix pcre2)/lib -L$(brew --prefix gcc)/lib/gcc/current"
 export CPPFLAGS="-I$(brew --prefix openblas)/include -I$(brew --prefix pcre2)/include -I$(brew --prefix gcc)/include"
@@ -30,9 +39,11 @@ export FC=$(brew --prefix gcc)/bin/gfortran
 > **Note:** If both the library and extension are installed, the extension will take precedence.
 
 ## Requirements
+
 - [PHP](https://php.net) 8.0 or above
 
 ### Optional To Compile Extension
+
 - A C compiler such as [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/), or [Visual C++](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
 - A Fortran compiler such as [GFortran](https://gcc.gnu.org/wiki/GFortran)
 - The PHP development package (source code and tooling)
@@ -45,7 +56,9 @@ export FC=$(brew --prefix gcc)/bin/gfortran
 - Ubuntu build-essentials
 
 ## Manually Compiling the Extension
+
 Clone the repository locally using [Git](https://git-scm.com/):
+
 ```sh
 $ git clone https://github.com/RubixML/Tensor
 ```
@@ -67,6 +80,7 @@ $ sudo make install
 ```
 
 Finally, add the following line to your `php.ini` configuration to install the extension.
+
 ```
 extension=tensor.so
 ```
@@ -84,7 +98,9 @@ php -m | grep tensor
 ![Tensor Performance Benchmarks](https://raw.githubusercontent.com/RubixML/Tensor/master/docs/images/tensor-performance-benchmarks.png)
 
 ## Contributing
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
+
 The code is licensed [MIT](LICENSE) and the documentation is licensed [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
