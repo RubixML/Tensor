@@ -4,6 +4,12 @@
     - Fixed undefined array key in Vector and Matrix quantile at q=1.0 or with a single element
     - Fix extension rank()
 
+- 3.0.7
+    - Upgrade to Zephir version 0.19
+
+- 3.0.6
+    - Upgrade to Zephir version 0.18
+
 - 3.0.5
     - Upgraded Zephir dependency to 0.17
 
