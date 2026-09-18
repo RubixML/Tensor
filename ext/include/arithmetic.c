@@ -120,6 +120,8 @@ void tensor_mod(zval * return_value, zval * a, zval * b)
     unsigned int i;
     zval modulus;
 	zval c;
+    zval dividend;
+    zval divisor;
 
     zend_array * aa = Z_ARR_P(a);
     zend_array * ab = Z_ARR_P(b);
@@ -129,7 +131,10 @@ void tensor_mod(zval * return_value, zval * a, zval * b)
 	array_init_size(&c, n);
 
     for (i = 0; i < n; ++i) {
-        mod_function(&modulus, zend_hash_index_find(aa, i), zend_hash_index_find(ab, i));
+        ZVAL_LONG(&dividend, zephir_get_intval(zend_hash_index_find(aa, i)));
+        ZVAL_LONG(&divisor, zephir_get_intval(zend_hash_index_find(ab, i)));
+
+        mod_function(&modulus, &dividend, &divisor);
 
 	    add_next_index_zval(&c, &modulus);
     }
@@ -257,6 +262,8 @@ void tensor_mod_scalar(zval * return_value, zval * a, zval * b)
     unsigned int i;
     zval modulus;
 	zval c;
+    zval dividend;
+    zval divisor;
 
     zend_array * aa = Z_ARR_P(a);
 
@@ -264,8 +271,12 @@ void tensor_mod_scalar(zval * return_value, zval * a, zval * b)
 
 	array_init_size(&c, n);
 
+    ZVAL_LONG(&divisor, zephir_get_intval(b));
+
     for (i = 0; i < n; ++i) {
-        mod_function(&modulus, zend_hash_index_find(aa, i), b);
+        ZVAL_LONG(&dividend, zephir_get_intval(zend_hash_index_find(aa, i)));
+
+        mod_function(&modulus, &dividend, &divisor);
 
 	    add_next_index_zval(&c, &modulus);
     }

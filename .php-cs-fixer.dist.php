@@ -10,7 +10,9 @@ $finder = Finder::create()->in(__DIR__)
 
 $config = new Config();
 
-return $config->setRules([
+return $config
+    ->setUnsupportedPhpVersionAllowed(true)
+    ->setRules([
     '@PSR2' => true,
     'align_multiline_comment' => true,
     'array_syntax' => ['syntax' => 'short'],
@@ -29,7 +31,7 @@ return $config->setRules([
     'class_attributes_separation' => true,
     'combine_consecutive_issets' => true,
     'combine_consecutive_unsets' => true,
-    'compact_nullable_typehint' => true,
+    'compact_nullable_type_declaration' => true,
     'concat_space' => ['spacing' => 'one'],
     'fully_qualified_strict_types' => true,
     'increment_style' => ['style' => 'pre'],
@@ -44,8 +46,8 @@ return $config->setRules([
         'strategy' => 'no_multi_line',
     ],
     'native_function_casing' => true,
-    'native_function_type_declaration_casing' => true,
-    'new_with_braces' => true,
+    'native_type_declaration_casing' => true,
+    'new_with_parentheses' => true,
     'no_alternative_syntax' => true,
     'no_blank_lines_after_class_opening' => true,
     'no_blank_lines_after_phpdoc' => true,
@@ -63,7 +65,7 @@ return $config->setRules([
     'no_superfluous_elseif' => true,
     'no_trailing_comma_in_singleline' => true,
     'no_unneeded_control_parentheses' => true,
-    'no_unneeded_curly_braces' => true,
+    'no_unneeded_braces' => true,
     'no_unset_cast' => true,
     'no_unused_imports' => true,
     'no_useless_else' => true,
