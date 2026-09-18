@@ -853,7 +853,7 @@ class Eigen
                     $h[$m - 1][$m - 1] = $q / $h[$m][$m - 1];
                     $h[$m - 1][$m] = -($h[$m][$m] - $p) / $h[$m][$m - 1];
                 } else {
-                    [$cdivr, $cdivi] = self::cdiv($h[$m - 1][$m - 1] - $p, $q, $h[$m - 1][$m], $h[$m - 1][$m - 1]);
+                    [$cdivr, $cdivi] = self::cdiv(0.0, -$h[$m - 1][$m], $h[$m - 1][$m - 1] - $p, $q);
                     $h[$m - 1][$m - 1] = $cdivr;
                     $h[$m - 1][$m] = $cdivi;
                 }
