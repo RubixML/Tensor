@@ -612,13 +612,19 @@ class Matrix implements Tensor
     }
 
     /**
-     * Compute the inverse of the matrix.
+     * Compute the inverse of the square matrix.
      *
+     * @throws InvalidArgumentException
      * @throws RuntimeException
      * @return self
      */
     public function inverse() : self
     {
+        if (!$this->isSquare()) {
+            throw new InvalidArgumentException('Matrix must be'
+                . " square, {$this->shapeString()} given.");
+        }
+
         if (!$this->fullRank()) {
             throw new RuntimeException('Failed to compute the inverse of a singular matrix.');
         }

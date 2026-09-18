@@ -174,8 +174,9 @@ Transpose the matrix, i.e. rows become columns and columns become rows.
 
 ### `inverse() : Matrix`
 
-Compute the inverse of the matrix.
+Compute the inverse of the square matrix.
 
+- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if the matrix is not square
 - **Throws:** `Tensor\Exceptions\RuntimeException` if the matrix is singular (surfacing from the row echelon reduction)
 
 ### `pseudoinverse() : Matrix`

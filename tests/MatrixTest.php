@@ -523,6 +523,20 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
+    public function inverseNonSquareThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+            [5.0, 6.0],
+        ])->inverse();
+    }
+
+    /**
+     * @test
+     */
     public function inverseSingularThrows() : void
     {
         // Exactly singular (column 3 = column 0 - column 1 + column 2); the
