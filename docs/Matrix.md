@@ -183,8 +183,6 @@ Compute the inverse of the square matrix.
 
 Compute the (Moore-Penrose) pseudo inverse of the general matrix.
 
-- **Note:** Not implemented in the pure-PHP library — throws `Tensor\Exceptions\NotImplemented`. Available when the extension is loaded.
-
 ### `det() : float`
 
 Calculate the determinant of the matrix.

@@ -19,7 +19,6 @@ use Tensor\Decompositions\LU;
 use Tensor\Exceptions\RuntimeException;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\DimensionalityMismatch;
-use Tensor\Exceptions\NotImplemented;
 use Tensor\Decompositions\SVD;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
@@ -3284,34 +3283,66 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function svdPurePHPIsNotImplemented() : void
+    public function svdPurePHP() : void
     {
         if (extension_loaded('tensor')) {
             $this->markTestSkipped('Extension tensor is loaded.');
         }
 
-        $this->expectException(NotImplemented::class);
-
-        Matrix::quick([
+        $matrix = Matrix::quick([
             [1.0, 2.0],
             [3.0, 4.0],
-        ])->svd();
+        ]);
+
+        $svd = $matrix->svd();
+
+        $reconstructed = $svd->u()
+            ->matmul($svd->s())
+            ->matmul($svd->vT());
+
+        $this->assertEqualsWithDelta($matrix, $reconstructed, self::MAX_DELTA);
     }
 
     /**
      * @test
      */
-    public function pseudoinversePurePHPIsNotImplemented() : void
+    public function pseudoinversePurePHP() : void
     {
         if (extension_loaded('tensor')) {
             $this->markTestSkipped('Extension tensor is loaded.');
         }
 
-        $this->expectException(NotImplemented::class);
+        $a = Matrix::quick([
+            [22, -17, 12],
+            [4, 11, -2],
+        ]);
 
-        Matrix::quick([
-            [1.0, 2.0],
-            [3.0, 4.0],
-        ])->pseudoinverse();
+        $b = $a->pseudoinverse();
+
+        $expected = Matrix::quick([
+            [0.03147992432205172, 0.05583000490505223],
+            [-0.009144418751313844, 0.07003713825239999],
+            [0.01266554551187723, -0.0031357298016957483],
+        ]);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
+    public function pseudoinversePreservesTinySingularValues() : void
+    {
+        $a = Matrix::quick([
+            [1.0, 0.0],
+            [0.0, 1e-9],
+        ]);
+
+        $expected = Matrix::quick([
+            [1.0, 0.0],
+            [0.0, 1.0 / 1e-9],
+        ]);
+
+        $this->assertEqualsWithDelta($expected, $a->pseudoinverse(), self::MAX_DELTA);
     }
 }
