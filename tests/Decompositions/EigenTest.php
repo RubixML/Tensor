@@ -95,11 +95,13 @@ class EigenTest extends TestCase
             [0.0, -1.0, 3.0],
         ]);
 
-        $general = $eig = Eigen::decompose($a);
+        $generalEigenvalues = $general->eigenvalues();
+        $symmetricEigenvalues = $symmetric->eigenvalues();
 
-        $symmetric = Eigen::decompose($a, true);
+        sort($generalEigenvalues);
+        sort($symmetricEigenvalues);
 
-        $this->assertEqualsWithDelta($general->eigenvalues(), $symmetric->eigenvalues(), self::MAX_DELTA);
+        $this->assertEqualsWithDelta($generalEigenvalues, $symmetricEigenvalues, self::MAX_DELTA)
     }
 
     /**
