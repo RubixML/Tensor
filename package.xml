@@ -67,6 +67,8 @@
                     <file name="file.h" role="src" />
                     <file name="filter.c" role="src" />
                     <file name="filter.h" role="src" />
+                    <file name="generator.c" role="src" />
+                    <file name="generator.h" role="src" />
                     <file name="globals.h" role="src" />
                     <file name="iterator.c" role="src" />
                     <file name="iterator.h" role="src" />
@@ -128,6 +130,8 @@
                     <file name="columnvector.zep.h" role="src" />
                     <file name="comparable.zep.c" role="src" />
                     <file name="comparable.zep.h" role="src" />
+                    <file name="functional.zep.c" role="src" />
+                    <file name="functional.zep.h" role="src" />
                     <file name="matrix.zep.c" role="src" />
                     <file name="matrix.zep.h" role="src" />
                     <file name="settings.zep.c" role="src" />
