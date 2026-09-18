@@ -279,7 +279,7 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function size() : void
+    public function testSize() : void
     {
         $matrix = Matrix::quick([
             [22, -17, 12],

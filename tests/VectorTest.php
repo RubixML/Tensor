@@ -315,7 +315,7 @@ class VectorTest extends TestCase
     /**
      * @test
      */
-    public function size() : void
+    public function testSize() : void
     {
         $vector = Vector::quick([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0]);
 

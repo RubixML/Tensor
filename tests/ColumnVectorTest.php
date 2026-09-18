@@ -69,7 +69,7 @@ class ColumnVectorTest extends TestCase
     /**
      * @test
      */
-    public function size() : void
+    public function testSize() : void
     {
         $vector = ColumnVector::quick([-15, 25, 35]);
 
