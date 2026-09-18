@@ -12,7 +12,7 @@
 	</lead>
 	<date>2026-09-18</date>
 	<version>
-		<release>3.0.11</release>
+		<release>3.1.0</release>
 		<api>3.0</api>
 	</version>
 	<stability>
@@ -21,16 +21,9 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Fixed RREF/REF pivot float tolerance
-        - RREF now zeroes the tail if below EPSILON
-        - `rank()`, `fullRank()`, and `inverse()` are now consistent
-        - Matrix::inverse() now throws a RuntimeException on singular input
-        - Matrix::inverse() now throws an InvalidArgumentException on non-square input
-        - Fix Poisson distribution when lambda is zero
-        - Added square check to inverse()
-        - Cholesky decompose() now throws a RuntimeException on non-positive-definite input
-        - Added the SingularMatrix exception
-        - The extension now reduces singular matrices to REF and RREF instead of throwing
+        - Implemented the singular value decomposition (SVD) in the pure-PHP library
+        - Implemented the Moore-Penrose pseudoinverse in the pure-PHP library via SVD
+        - Implemented the eigendecomposition in the pure-PHP library
     </notes>
 	<contents>
         <dir name="/">

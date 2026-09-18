@@ -4,7 +4,7 @@
     "extension-name": "tensor",
     "description": "Scientific computing for the PHP language.",
     "author": "The Rubix ML Community",
-    "version": "3.0.11",
+    "version": "3.1.0",
     "verbose": true,
     "extra-cflags": "-O3",
     "extra-libs": "-lopenblas -llapacke -lgfortran",
