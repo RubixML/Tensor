@@ -83,25 +83,15 @@ static PHP_MINIT_FUNCTION(tensor)
 	return SUCCESS;
 }
 
+#ifndef ZEPHIR_RELEASE
 static PHP_MSHUTDOWN_FUNCTION(tensor)
 {
-#ifndef ZEPHIR_RELEASE
 	
 	zephir_deinitialize_memory();
-#endif
-	/**
-	 * Both of these have to run in every build, release included.
-	 *
-	 * module_destructor() unregisters a module's INI entries for it only when
-	 * the module has no MSHUTDOWN of its own, so declaring one takes over that
-	 * duty; skipping it leaves zend_ini_entry records pointing into an
-	 * unloaded extension. And the kernel installs process-wide hooks that
-	 * point into this extension and must not outlive it.
-	 */
 	UNREGISTER_INI_ENTRIES();
-	zephir_module_shutdown();
 	return SUCCESS;
 }
+#endif
 
 /**
  * Initialize globals on each request or each thread started
@@ -118,9 +108,6 @@ static void php_zephir_init_globals(zend_tensor_globals *tensor_globals)
 
 	/* Static cache */
 	memset(tensor_globals->scache, '\0', sizeof(zephir_fcall_cache_entry*) * ZEPHIR_MAX_CACHE_SLOTS);
-
-	/* Inline property cache (per-request reset defeats stale-ce/ABA reuse) */
-	memset(tensor_globals->pcache, '\0', sizeof(void*) * ZEPHIR_MAX_PROPERTY_CACHE_SLOTS * ZEPHIR_PROPERTY_CACHE_SLOT_SIZE);
 
 	
 	
@@ -205,7 +192,11 @@ zend_module_entry tensor_module_entry = {
 	PHP_TENSOR_EXTNAME,
 	php_tensor_functions,
 	PHP_MINIT(tensor),
+#ifndef ZEPHIR_RELEASE
 	PHP_MSHUTDOWN(tensor),
+#else
+	NULL,
+#endif
 	PHP_RINIT(tensor),
 	PHP_RSHUTDOWN(tensor),
 	PHP_MINFO(tensor),

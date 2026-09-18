@@ -62,27 +62,26 @@ ZEPHIR_INIT_CLASS(Tensor_Decompositions_Eigen)
  */
 PHP_METHOD(Tensor_Decompositions_Eigen, decompose)
 {
-	zval eig, _7;
+	zval eig, _6;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
 	zend_bool symmetric;
-	zval *a, a_sub, *symmetric_param = NULL, _0, result, _6, eigenvalues, eigenvectors, _8, _9, _1$$3, _2$$3, _3$$3, _4$$4, _5$$5;
+	zval *a, a_sub, *symmetric_param = NULL, _0, result, eigenvalues, eigenvectors, _7, _8, _1$$3, _2$$3, _3$$3, _4$$4, _5$$5;
 
 	ZVAL_UNDEF(&a_sub);
 	ZVAL_UNDEF(&_0);
 	ZVAL_UNDEF(&result);
-	ZVAL_UNDEF(&_6);
 	ZVAL_UNDEF(&eigenvalues);
 	ZVAL_UNDEF(&eigenvectors);
+	ZVAL_UNDEF(&_7);
 	ZVAL_UNDEF(&_8);
-	ZVAL_UNDEF(&_9);
 	ZVAL_UNDEF(&_1$$3);
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4$$4);
 	ZVAL_UNDEF(&_5$$5);
 	ZVAL_UNDEF(&eig);
-	ZVAL_UNDEF(&_7);
+	ZVAL_UNDEF(&_6);
 	ZEND_PARSE_PARAMETERS_START(1, 2)
 		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
 		Z_PARAM_OPTIONAL
@@ -127,15 +126,14 @@ PHP_METHOD(Tensor_Decompositions_Eigen, decompose)
 	}
 	ZEPHIR_INIT_VAR(&eig);
 	array_init(&eig);
-	ZEPHIR_CPY_WRT(&_6, &result);
-	zephir_get_arrval(&_7, &_6);
-	ZEPHIR_CPY_WRT(&eig, &_7);
+	zephir_get_arrval(&_6, &result);
+	ZEPHIR_CPY_WRT(&eig, &_6);
 	zephir_memory_observe(&eigenvalues);
 	zephir_array_fetch_long(&eigenvalues, &eig, 0, PH_NOISY, "tensor/decompositions/eigen.zep", 67);
-	zephir_array_fetch_long(&_9, &eig, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/eigen.zep", 68);
-	ZEPHIR_CALL_CE_STATIC(&_8, tensor_matrix_ce, "quick", NULL, 0, &_9);
+	zephir_array_fetch_long(&_8, &eig, 1, PH_NOISY | PH_READONLY, "tensor/decompositions/eigen.zep", 68);
+	ZEPHIR_CALL_CE_STATIC(&_7, tensor_matrix_ce, "quick", NULL, 0, &_8);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&eigenvectors, &_8, "transpose", NULL, 0);
+	ZEPHIR_CALL_METHOD(&eigenvectors, &_7, "transpose", NULL, 0);
 	zephir_check_call_status();
 	object_init_ex(return_value, tensor_decompositions_eigen_ce);
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 25, &eigenvalues, &eigenvectors);
@@ -156,15 +154,6 @@ PHP_METHOD(Tensor_Decompositions_Eigen, __construct)
 
 	ZVAL_UNDEF(&eigenvalues);
 	ZVAL_UNDEF(&eigenvectors_sub);
-	static zend_string *_zephir_prop_0 = NULL;
-	static zend_string *_zephir_prop_1 = NULL;
-	if (UNEXPECTED(!_zephir_prop_0)) {
-		_zephir_prop_0 = zend_string_init("eigenvalues", 11, 1);
-	}
-	if (UNEXPECTED(!_zephir_prop_1)) {
-		_zephir_prop_1 = zend_string_init("eigenvectors", 12, 1);
-	}
-
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		ZEPHIR_Z_PARAM_ARRAY(eigenvalues, eigenvalues_param)
 		Z_PARAM_OBJECT_OF_CLASS(eigenvectors, zephir_get_internal_ce(SL("tensor\\matrix")))
@@ -173,8 +162,8 @@ PHP_METHOD(Tensor_Decompositions_Eigen, __construct)
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 	zephir_fetch_params(1, 2, 0, &eigenvalues_param, &eigenvectors);
 	zephir_get_arrval(&eigenvalues, eigenvalues_param);
-	zephir_update_property_zval_cached(this_ptr, _zephir_prop_0, 6, &eigenvalues);
-	zephir_update_property_zval_cached(this_ptr, _zephir_prop_1, 7, eigenvectors);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("eigenvalues"), &eigenvalues);
+	zephir_update_property_zval(this_ptr, ZEND_STRL("eigenvectors"), eigenvectors);
 	ZEPHIR_MM_RESTORE();
 }
 
