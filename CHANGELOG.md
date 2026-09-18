@@ -3,7 +3,6 @@
 - 3.1.0
     - Implemented the singular value decomposition (SVD) in the pure-PHP library
     - Implemented the Moore-Penrose pseudoinverse in the pure-PHP library via SVD
-    - The pure-PHP `SVD::s()` now returns the padded `m` by `n` singular value matrix so that `u() * s() * vT()` reconstructs the original rectangular matrix
     - Implemented the eigendecomposition in the pure-PHP library
 
 - 3.0.11
