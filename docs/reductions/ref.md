@@ -18,13 +18,13 @@ Factory method to reduce a matrix.
 
 - **Parameters:** `$a` — the matrix to reduce
 - **Returns:** `REF`
-- **Note:** Falls back to the row reduction method when Gaussian elimination fails on a singular matrix.
+- **Note:** Falls back to the row reduction method when Gaussian elimination fails on a singular matrix. Both algorithms produce the same row echelon form convention - the pivot rows are **not** normalised to a leading one.
 
 ### `REF::gaussianElimination(Matrix $a) : self`
 
 Calculate the row echelon form (REF) of the matrix using Gaussian elimination.
 
-- **Throws:** `Tensor\Exceptions\RuntimeException` if the matrix is singular
+- **Throws:** `Tensor\Exceptions\SingularMatrix` if the matrix is singular
 
 ### `REF::rowReductionMethod(Matrix $a) : self`
 

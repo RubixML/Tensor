@@ -10,9 +10,9 @@
         <email>none@example.com</email>
 		<active>yes</active>
 	</lead>
-	<date>2026-09-17</date>
+	<date>2026-09-18</date>
 	<version>
-		<release>3.0.11</release>
+		<release>3.0.12</release>
 		<api>3.0</api>
 	</version>
 	<stability>
@@ -21,16 +21,16 @@
 	</stability>
 	<license uri="https://github.com/RubixML/Tensor/blob/master/LICENSE">MIT</license>
     <notes>
-        - Update to Zephir 0.23, adds support for PHP 8.5
-        - Fixed Matrix and Vector build() validation
-        - Fixed bug in Matrix row variance
-        - Fixed LU decomposition pivot selection, singular matrices now throw a RuntimeException
-        - Fixed undefined array key in Vector and Matrix quantile at q=1.0 or with a single element
-        - Fix extension rank() operation
-        - Fixed reduce() callback argument order inconsistency between Matrix and Vector
-        - Fix covariance() summation axis
-        - Fixed Vector notEqualMatrix throwing InvalidArgumentException instead of DimensionalityMismatch
-        - Fixed memory leak in the extension on the failure path of inverse, pseudoinverse
+        - Fixed RREF/REF pivot float tolerance
+        - RREF now zeroes the tail if below EPSILON
+        - `rank()`, `fullRank()`, and `inverse()` are now consistent
+        - Matrix::inverse() now throws a RuntimeException on singular input
+        - Matrix::inverse() now throws an InvalidArgumentException on non-square input
+        - Fix Poisson distribution when lambda is zero
+        - Added square check to inverse()
+        - Cholesky decompose() now throws a RuntimeException on non-positive-definite input
+        - Added the SingularMatrix exception
+        - The extension now reduces singular matrices to REF and RREF instead of throwing
     </notes>
 	<contents>
         <dir name="/">
@@ -107,6 +107,8 @@
                         <file name="invalidargumentexception.zep.h" role="src" />
                         <file name="runtimeexception.zep.c" role="src" />
                         <file name="runtimeexception.zep.h" role="src" />
+                        <file name="singularmatrix.zep.c" role="src" />
+                        <file name="singularmatrix.zep.h" role="src" />
                         <file name="tensorexception.zep.c" role="src" />
                         <file name="tensorexception.zep.h" role="src" />
                     </dir>

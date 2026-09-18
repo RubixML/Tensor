@@ -98,10 +98,6 @@ class RREFTest extends TestCase
      */
     public function reduceSingular2x2() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Pure-PHP REF fallback; extension tensor is loaded.');
-        }
-
         // A rank-1 matrix has a zero row and one free variable.
         $a = Matrix::quick([
             [1.0, 2.0],
@@ -127,10 +123,6 @@ class RREFTest extends TestCase
      */
     public function reduceZeroRow() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Pure-PHP REF fallback; extension tensor is loaded.');
-        }
-
         // A leading zero row is swapped down; the result has a zero row.
         $a = Matrix::quick([
             [0.0, 0.0],
@@ -152,10 +144,6 @@ class RREFTest extends TestCase
      */
     public function rankMatchesNumberNonZeroRows() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Pure-PHP REF fallback; extension tensor is loaded.');
-        }
-
         $a = Matrix::quick([
             [1.0, 2.0, 3.0],
             [2.0, 4.0, 6.0],

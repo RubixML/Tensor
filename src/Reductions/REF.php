@@ -4,7 +4,7 @@ namespace Tensor\Reductions;
 
 use Tensor\Matrix;
 use Tensor\Exceptions\InvalidArgumentException;
-use Tensor\Exceptions\RuntimeException;
+use Tensor\Exceptions\SingularMatrix;
 
 use const Tensor\EPSILON;
 
@@ -47,7 +47,7 @@ class REF
     {
         try {
             return static::gaussianElimination($a);
-        } catch (RuntimeException $e) {
+        } catch (SingularMatrix $e) {
             return static::rowReductionMethod($a);
         }
     }
@@ -56,7 +56,7 @@ class REF
      * Calculate the row echelon form (REF) of the matrix using Gaussian elimination.
      *
      * @param Matrix $a
-     * @throws RuntimeException
+     * @throws SingularMatrix
      * @return self
      */
     public static function gaussianElimination(Matrix $a) : self
@@ -79,7 +79,7 @@ class REF
             }
 
             if (abs($b[$index][$i]) < EPSILON) {
-                throw new RuntimeException('Cannot compute row echelon'
+                throw new SingularMatrix('Cannot compute row echelon'
                     . ' form of a singular matrix.');
             }
 
@@ -147,16 +147,10 @@ class REF
                 continue;
             }
 
-            $divisor = $t[$col];
-
-            if ($divisor != 1) {
-                for ($i = 0; $i < $n; ++$i) {
-                    $t[$i] /= $divisor;
-                }
-            }
+            $pivot = $t[$col];
 
             for ($i = $row + 1; $i < $m; ++$i) {
-                $scale = $b[$i][$col];
+                $scale = $b[$i][$col] / $pivot;
 
                 if (abs($scale) >= EPSILON) {
                     for ($j = 0; $j < $n; ++$j) {

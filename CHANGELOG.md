@@ -9,6 +9,8 @@
     - Fix Poisson distribution when lambda is zero
     - Added square check to inverse()
     - Cholesky decompose() now throws a RuntimeException on non-positive-definite input
+    - Added the SingularMatrix exception
+    - The extension now reduces singular matrices to REF and RREF instead of throwing
 
 - 3.0.10
     - Update to Zephir 0.23, adds support for PHP 8.5

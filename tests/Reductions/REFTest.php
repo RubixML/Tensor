@@ -5,7 +5,7 @@ namespace Tensor\Tests\Reductions;
 use Tensor\Matrix;
 use Tensor\Reductions\REF;
 use Tensor\Exceptions\InvalidArgumentException;
-use Tensor\Exceptions\RuntimeException;
+use Tensor\Exceptions\SingularMatrix;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -154,10 +154,6 @@ class REFTest extends TestCase
      */
     public function reduceZeroRow() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Pure-PHP REF behaviour; extension tensor is loaded.');
-        }
-
         // One zero row at the top, non-zero row at the bottom.
         $a = Matrix::quick([
             [0.0, 0.0],
@@ -166,12 +162,35 @@ class REFTest extends TestCase
 
         $ref = REF::reduce($a);
 
-        // The zero row remains zero (in RREF semantics, it ends up at the bottom).
-        // After reduction the pivots should appear in the first column of the
-        // non-zero row and the zero row should have all-zero entries.
+        // The zero row remains zero. After reduction the pivots should appear
+        // in the first column of the non-zero row and the zero row should have
+        // all-zero entries.
         $aOut = $ref->a()->asArray();
 
         $this->assertEquals([0.0, 0.0], $aOut[1]);
+    }
+
+    /**
+     * @test
+     */
+    public function reduceSingularKeepsPivotScale() : void
+    {
+        // A rank-1 matrix is singular: Gaussian elimination must fail and the
+        // row reduction fallback must produce the same (non-normalised) REF
+        // convention as Gaussian elimination - the pivot keeps its value.
+        $a = Matrix::quick([
+            [2.0, 4.0],
+            [1.0, 2.0],
+        ]);
+
+        $ref = REF::reduce($a);
+
+        $expectedA = Matrix::quick([
+            [2.0, 4.0],
+            [0.0, 0.0],
+        ]);
+
+        $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
     /**
@@ -217,12 +236,12 @@ class REFTest extends TestCase
     /**
      * @test
      */
-    public function reduceExactlySingular4x4GaussianThrowsAndIsRecoveredByFallback() : void
+    public function reduceExactlySingular4x4GaussianThrowsSingularMatrix() : void
     {
         if (extension_loaded('tensor')) {
-            // The extension delegates to LAPACK, which returns the row
-            // echelon form directly and does not throw on singular input.
-            $this->markTestSkipped('Extension REF does not throw on singular input.');
+            // The extension exposes only reduce(), which handles the singular
+            // case via a C fallback and does not expose gaussianElimination().
+            $this->markTestSkipped('Extension REF has no gaussianElimination method.');
         }
 
         // Exactly singular (column 3 = column 0 - column 1 + column 2); the
@@ -236,7 +255,7 @@ class REFTest extends TestCase
             [1.0, 0.0, 1.0, 2.0],
         ]);
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(SingularMatrix::class);
 
         REF::gaussianElimination($a);
     }

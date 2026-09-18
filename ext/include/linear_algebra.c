@@ -3,6 +3,7 @@
 #endif
 
 #include <php.h>
+#include <math.h>
 #include <cblas.h>
 #include <lapacke.h>
 #include "kernel/operators.h"
@@ -230,7 +231,106 @@ void tensor_pseudoinverse(zval * return_value, zval * a)
 }
 
 /**
- * Return the row echelon form of matrix A.
+ * Build the row echelon form of a singular matrix using row reduction,
+ * mirroring the pure-PHP rowReductionMethod in REF. Pivot rows are not
+ * normalised so the output matches the non-singular (LAPACK dgetrf) path.
+ * 
+ * @param return_value
+ * @param a
+ * @param m
+ * @param n
+ */
+static void tensor_ref_singular(zval * return_value, zval * a, unsigned int m, unsigned int n)
+{
+    unsigned int i, j;
+    zval * row;
+    zval rowB, b;
+    zval tuple;
+
+    double epsilon = 0.00000001;
+    double pivot, scale, tmp;
+    unsigned int r = 0;
+    unsigned int c = 0;
+    long swaps = 0;
+
+    zend_array * aa = Z_ARR_P(a);
+
+    double * w = emalloc(m * n * sizeof(double));
+
+    for (i = 0; i < m; ++i) {
+        row = zend_hash_index_find(aa, i);
+
+        for (j = 0; j < n; ++j) {
+            w[i * n + j] = zephir_get_doubleval(zend_hash_index_find(Z_ARR_P(row), j));
+        }
+    }
+
+    while (r < m && c < n) {
+        double * pivotRow = w + r * n;
+
+        if (fabs(pivotRow[c]) < epsilon) {
+            for (i = r + 1; i < m; ++i) {
+                if (fabs(w[i * n + c]) >= epsilon) {
+                    for (j = 0; j < n; ++j) {
+                        tmp = pivotRow[j];
+                        pivotRow[j] = w[i * n + j];
+                        w[i * n + j] = tmp;
+                    }
+
+                    ++swaps;
+
+                    break;
+                }
+            }
+        }
+
+        if (fabs(pivotRow[c]) < epsilon) {
+            ++c;
+
+            continue;
+        }
+
+        pivot = pivotRow[c];
+
+        for (i = r + 1; i < m; ++i) {
+            scale = w[i * n + c] / pivot;
+
+            if (fabs(scale) >= epsilon) {
+                for (j = 0; j < n; ++j) {
+                    w[i * n + j] -= scale * pivotRow[j];
+                }
+            }
+        }
+
+        ++r;
+        ++c;
+    }
+
+    array_init_size(&b, m);
+
+    for (i = 0; i < m; ++i) {
+        array_init_size(&rowB, n);
+
+        for (j = 0; j < n; ++j) {
+            add_next_index_double(&rowB, w[i * n + j]);
+        }
+
+        add_next_index_zval(&b, &rowB);
+    }
+
+    array_init_size(&tuple, 2);
+
+    add_next_index_zval(&tuple, &b);
+    add_next_index_long(&tuple, swaps);
+
+    RETVAL_ARR(Z_ARR(tuple));
+
+    efree(w);
+}
+
+/**
+ * Compute the row echelon form (REF) of matrix A and return a tuple with the
+ * reduced matrix and the number of row swaps performed.
  * 
  * @param return_value
  * @param a
@@ -259,6 +359,15 @@ void tensor_ref(zval * return_value, zval * a)
     }
 
     lapack_int status = LAPACKE_dgetrf(LAPACK_ROW_MAJOR, m, n, va, n, pivots);
+
+    if (status > 0) {
+        efree(va);
+        efree(pivots);
+
+        tensor_ref_singular(return_value, a, m, n);
+
+        return;
+    }
 
     if (status != 0) {
         efree(va);
