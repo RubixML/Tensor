@@ -1,6 +1,7 @@
 # Change Log
 
 - 3.0.11
+    - Update to Zephir 1.5.0
     - Fixed RREF/REF pivot float tolerance
     - RREF now zeroes the tail if below EPSILON
     - `rank()`, `fullRank()`, and `inverse()` are now consistent

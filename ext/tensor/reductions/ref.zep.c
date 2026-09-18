@@ -59,19 +59,20 @@ ZEPHIR_INIT_CLASS(Tensor_Reductions_Ref)
  */
 PHP_METHOD(Tensor_Reductions_Ref, reduce)
 {
-	zval ref, _1;
+	zval ref, _2;
 	zephir_method_globals *ZEPHIR_METHOD_GLOBALS_PTR = NULL;
 	zend_long ZEPHIR_LAST_CALL_STATUS;
-	zval *a, a_sub, result, _0, b, _2, swaps;
+	zval *a, a_sub, result, _0, _1, b, _3, swaps;
 
 	ZVAL_UNDEF(&a_sub);
 	ZVAL_UNDEF(&result);
 	ZVAL_UNDEF(&_0);
+	ZVAL_UNDEF(&_1);
 	ZVAL_UNDEF(&b);
-	ZVAL_UNDEF(&_2);
+	ZVAL_UNDEF(&_3);
 	ZVAL_UNDEF(&swaps);
 	ZVAL_UNDEF(&ref);
-	ZVAL_UNDEF(&_1);
+	ZVAL_UNDEF(&_2);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
 		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
@@ -88,10 +89,11 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce)
 	}
 	ZEPHIR_INIT_VAR(&ref);
 	array_init(&ref);
-	zephir_get_arrval(&_1, &result);
-	ZEPHIR_CPY_WRT(&ref, &_1);
-	zephir_array_fetch_long(&_2, &ref, 0, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 51);
-	ZEPHIR_CALL_CE_STATIC(&b, tensor_matrix_ce, "quick", NULL, 0, &_2);
+	ZEPHIR_CPY_WRT(&_1, &result);
+	zephir_get_arrval(&_2, &_1);
+	ZEPHIR_CPY_WRT(&ref, &_2);
+	zephir_array_fetch_long(&_3, &ref, 0, PH_NOISY | PH_READONLY, "tensor/reductions/ref.zep", 51);
+	ZEPHIR_CALL_CE_STATIC(&b, tensor_matrix_ce, "quick", NULL, 0, &_3);
 	zephir_check_call_status();
 	zephir_memory_observe(&swaps);
 	zephir_array_fetch_long(&swaps, &ref, 1, PH_NOISY, "tensor/reductions/ref.zep", 52);
@@ -119,6 +121,15 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct)
 	ZVAL_UNDEF(&_2$$3);
 	ZVAL_UNDEF(&_3$$3);
 	ZVAL_UNDEF(&_4);
+	static zend_string *_zephir_prop_0 = NULL;
+	static zend_string *_zephir_prop_1 = NULL;
+	if (UNEXPECTED(!_zephir_prop_0)) {
+		_zephir_prop_0 = zend_string_init("a", 1, 1);
+	}
+	if (UNEXPECTED(!_zephir_prop_1)) {
+		_zephir_prop_1 = zend_string_init("swaps", 5, 1);
+	}
+
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
 		Z_PARAM_LONG(swaps)
@@ -140,10 +151,10 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct)
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	zephir_update_property_zval(this_ptr, ZEND_STRL("a"), a);
+	zephir_update_property_zval_cached(this_ptr, _zephir_prop_0, 17, a);
 	ZVAL_UNDEF(&_4);
 	ZVAL_LONG(&_4, swaps);
-	zephir_update_property_zval(this_ptr, ZEND_STRL("swaps"), &_4);
+	zephir_update_property_zval_cached(this_ptr, _zephir_prop_1, 18, &_4);
 	ZEPHIR_MM_RESTORE();
 }
 

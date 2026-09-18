@@ -11,11 +11,13 @@
 #include "kernel/globals.h"
 
 #define PHP_TENSOR_NAME        "tensor"
-#define PHP_TENSOR_VERSION     "3.0.11"
+#define PHP_TENSOR_VERSION     "3.0.12"
 #define PHP_TENSOR_EXTNAME     "tensor"
 #define PHP_TENSOR_AUTHOR      "The Rubix ML Community"
-#define PHP_TENSOR_ZEPVERSION  "0.23.0-$Id$"
+#define PHP_TENSOR_ZEPVERSION  "1.5.0-$Id$"
 #define PHP_TENSOR_DESCRIPTION "Scientific computing for the PHP language."
+
+
 
 
 
@@ -27,6 +29,9 @@ ZEND_BEGIN_MODULE_GLOBALS(tensor)
 	HashTable *fcache;
 
 	zephir_fcall_cache_entry *scache[ZEPHIR_MAX_CACHE_SLOTS];
+
+	/* Inline property cache slots (issue #1902): [ce, offset, prop_info] per site */
+	void *pcache[ZEPHIR_MAX_PROPERTY_CACHE_SLOTS * ZEPHIR_PROPERTY_CACHE_SLOT_SIZE];
 
 	/* Cache enabled */
 	unsigned int cache_enabled;
