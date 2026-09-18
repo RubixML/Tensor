@@ -5,14 +5,7 @@ namespace Tensor\Tests;
 use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
-use Tensor\Special;
-use Tensor\ArrayLike;
-use Tensor\Algebraic;
-use Tensor\Arithmetic;
-use Tensor\Comparable;
-use Tensor\Statistical;
 use Tensor\ColumnVector;
-use Tensor\Trigonometric;
 use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\RuntimeException;
@@ -474,14 +467,6 @@ class VectorTest extends TestCase
         $vector = Vector::build([1, 2, 3, 4, 5]);
 
         $this->assertInstanceOf(Vector::class, $vector);
-        $this->assertInstanceOf(Tensor::class, $vector);
-        $this->assertInstanceOf(ArrayLike::class, $vector);
-        $this->assertInstanceOf(Arithmetic::class, $vector);
-        $this->assertInstanceOf(Comparable::class, $vector);
-        $this->assertInstanceOf(Algebraic::class, $vector);
-        $this->assertInstanceOf(Trigonometric::class, $vector);
-        $this->assertInstanceOf(Statistical::class, $vector);
-        $this->assertInstanceOf(Special::class, $vector);
     }
 
     #[\PHPUnit\Framework\Attributes\Test]

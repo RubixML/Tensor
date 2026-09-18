@@ -33,7 +33,7 @@ class ExceptionTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function dimensionalityMismatchExtendsInvalidArgumentException() : void
     {
-        $this->assertTrue(is_subclass_of(DimensionalityMismatch::class, InvalidArgumentException::class));
+        $this->assertTrue(in_array(InvalidArgumentException::class, class_parents(DimensionalityMismatch::class), true));
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
@@ -45,7 +45,7 @@ class ExceptionTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function notImplementedExtendsRuntimeException() : void
     {
-        $this->assertTrue(is_subclass_of(NotImplemented::class, RuntimeException::class));
+        $this->assertTrue(in_array(RuntimeException::class, class_parents(NotImplemented::class), true));
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
@@ -61,7 +61,7 @@ class ExceptionTest extends TestCase
 
         $this->assertSame('the message', $exception->getMessage());
 
-        $this->assertInstanceOf(InvalidArgumentException::class, $exception);
-        $this->assertInstanceOf(TensorException::class, $exception);
+        $this->assertTrue(in_array(InvalidArgumentException::class, class_parents($exception), true));
+        $this->assertTrue(in_array(TensorException::class, class_implements($exception), true));
     }
 }

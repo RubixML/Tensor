@@ -1572,7 +1572,7 @@ class Matrix implements Tensor
     /**
      * Compute the row variance of the matrix.
      *
-     * @param ColumnVector|null $mean
+     * @param mixed $mean
      * @throws InvalidArgumentException
      * @throws DimensionalityMismatch
      * @return ColumnVector

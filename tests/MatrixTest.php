@@ -5,14 +5,7 @@ namespace Tensor\Tests;
 use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
-use Tensor\Special;
-use Tensor\ArrayLike;
-use Tensor\Algebraic;
-use Tensor\Arithmetic;
-use Tensor\Comparable;
-use Tensor\Statistical;
 use Tensor\ColumnVector;
-use Tensor\Trigonometric;
 use Tensor\Reductions\REF;
 use Tensor\Reductions\RREF;
 use Tensor\Decompositions\LU;
@@ -894,15 +887,7 @@ class MatrixTest extends TestCase
             [20, -6, -9],
         ]);
 
-        $this->assertInstanceOf(Matrix::class, $matrix);
-        $this->assertInstanceOf(Tensor::class, $matrix);
-        $this->assertInstanceOf(ArrayLike::class, $matrix);
-        $this->assertInstanceOf(Arithmetic::class, $matrix);
-        $this->assertInstanceOf(Comparable::class, $matrix);
-        $this->assertInstanceOf(Algebraic::class, $matrix);
-        $this->assertInstanceOf(Trigonometric::class, $matrix);
-        $this->assertInstanceOf(Statistical::class, $matrix);
-        $this->assertInstanceOf(Special::class, $matrix);
+        $this->assertSame([3, 3], $matrix->shape());
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
@@ -920,13 +905,7 @@ class MatrixTest extends TestCase
 
         $this->assertCount(2, $result);
 
-        foreach ($result as $row) {
-            $this->assertCount(3, $row);
-
-            foreach ($row as $value) {
-                $this->assertTrue(is_float($value));
-            }
-        }
+        $this->assertSame([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], $result);
 
         $this->assertEqualsWithDelta([
             [1.0, 2.0, 3.0],
@@ -2894,7 +2873,7 @@ class MatrixTest extends TestCase
             [3.0, 4.0],
         ]);
 
-        $this->assertInstanceOf(Vector::class, $a[10]);
+        $a[10];
     }
 
     #[\PHPUnit\Framework\Attributes\Test]

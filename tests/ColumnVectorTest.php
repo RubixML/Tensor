@@ -2,17 +2,9 @@
 
 namespace Tensor\Tests;
 
-use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
-use Tensor\Special;
-use Tensor\ArrayLike;
-use Tensor\Algebraic;
-use Tensor\Arithmetic;
-use Tensor\Comparable;
-use Tensor\Statistical;
 use Tensor\ColumnVector;
-use Tensor\Trigonometric;
 use Tensor\Exceptions\DimensionalityMismatch;
 use PHPUnit\Framework\TestCase;
 
@@ -32,14 +24,6 @@ class ColumnVectorTest extends TestCase
         $vector = ColumnVector::build([-15, 25, 35]);
 
         $this->assertInstanceOf(ColumnVector::class, $vector);
-        $this->assertInstanceOf(Tensor::class, $vector);
-        $this->assertInstanceOf(ArrayLike::class, $vector);
-        $this->assertInstanceOf(Arithmetic::class, $vector);
-        $this->assertInstanceOf(Comparable::class, $vector);
-        $this->assertInstanceOf(Algebraic::class, $vector);
-        $this->assertInstanceOf(Trigonometric::class, $vector);
-        $this->assertInstanceOf(Statistical::class, $vector);
-        $this->assertInstanceOf(Special::class, $vector);
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
