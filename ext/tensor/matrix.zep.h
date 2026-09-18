@@ -201,7 +201,7 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_poisson, 0, 2, Tensor\\Matrix, 0)
 	ZEND_ARG_TYPE_INFO(0, m, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, n, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO(0, lambda, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, lambda, IS_DOUBLE, 0, "1.0")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_uniform, 0, 2, Tensor\\Matrix, 0)
@@ -211,7 +211,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_matrix___construct, 0, 0, 1)
 	ZEND_ARG_ARRAY_INFO(0, a, 0)
-	ZEND_ARG_TYPE_INFO(0, validate, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, validate, _IS_BOOL, 0, "true")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_shape, 0, 0, IS_ARRAY, 0)
@@ -261,7 +261,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_matrix_reduce, 0, 1, IS_DOUBLE, 0)
 	ZEND_ARG_INFO(0, callback)
-	ZEND_ARG_TYPE_INFO(0, initial, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, initial, IS_DOUBLE, 0, "0.0")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_transpose, 0, 0, Tensor\\Matrix, 0)
@@ -298,7 +298,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_convolve, 0, 1, Tensor\\Matrix, 0)
 	ZEND_ARG_OBJ_INFO(0, b, Tensor\\Matrix, 0)
-	ZEND_ARG_TYPE_INFO(0, stride, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, stride, IS_LONG, 0, "1")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_ref, 0, 0, Tensor\\Reductions\\Ref, 0)
@@ -314,7 +314,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_cholesky, 0, 0, Ten
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_eig, 0, 0, Tensor\\Decompositions\\Eigen, 0)
-	ZEND_ARG_TYPE_INFO(0, symmetric, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, symmetric, _IS_BOOL, 0, "false")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_svd, 0, 0, Tensor\\Decompositions\\Svd, 0)
@@ -399,7 +399,7 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_expm1, 0, 0, Tensor
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_log, 0, 0, Tensor\\Matrix, 0)
-	ZEND_ARG_TYPE_INFO(0, base, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, base, IS_DOUBLE, 0, "2.7182818284590452354")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_log1p, 0, 0, Tensor\\Matrix, 0)
@@ -456,11 +456,11 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_variance, 0, 0, Ten
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_covariance, 0, 0, Tensor\\Matrix, 0)
-	ZEND_ARG_OBJ_INFO(0, mean, Tensor\\ColumnVector, 1)
+	ZEND_ARG_OBJ_TYPE_MASK(0, mean, Tensor\\ColumnVector, MAY_BE_NULL, "null")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_round, 0, 0, Tensor\\Matrix, 0)
-	ZEND_ARG_TYPE_INFO(0, precision, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, precision, IS_LONG, 0, "0")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_matrix_floor, 0, 0, Tensor\\Matrix, 0)

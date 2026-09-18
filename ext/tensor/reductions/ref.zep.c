@@ -166,6 +166,6 @@ PHP_METHOD(Tensor_Reductions_Ref, a)
 PHP_METHOD(Tensor_Reductions_Ref, swaps)
 {
 
-	RETURN_MEMBER(getThis(), "swaps");
+	RETURN_MEMBER_TYPED(getThis(), "swaps", IS_LONG);
 }
 

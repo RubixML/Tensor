@@ -19,14 +19,14 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_algebraic_expm1, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_algebraic_log, 0, 0, 0)
-	ZEND_ARG_TYPE_INFO(0, base, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, base, IS_DOUBLE, 0, "2.7182818284590452354")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_algebraic_log1p, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_algebraic_round, 0, 0, 0)
-	ZEND_ARG_TYPE_INFO(0, precision, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, precision, IS_LONG, 0, "0")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_algebraic_floor, 0, 0, 0)

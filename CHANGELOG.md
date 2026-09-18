@@ -1,4 +1,5 @@
 - 3.0.10
+    - Update to Zephir 0.23, adds support for PHP 8.5
     - Fixed Matrix and Vector build() validation
     - Fixed bug in Matrix row variance
     - Fixed LU decomposition pivot selection, singular matrices now throw a RuntimeException

@@ -18,6 +18,7 @@
 
 #include <Zend/zend_closures.h>
 #include <Zend/zend_string.h>
+#include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
 #include "kernel/memory.h"
@@ -391,6 +392,60 @@ int zephir_isset_property_zval(zval *object, const zval *property)
 	return 0;
 }
 
+/*
+ * PHP isset() semantics for object properties: the property exists AND its
+ * value is not IS_NULL. Delegates to the object's has_property handler with
+ * ZEND_PROPERTY_ISSET (mode 0), which is the same path the engine takes for
+ * the ZEND_ISSET_ISEMPTY_PROP_OBJ opcode — this gives correct behaviour for
+ * std objects, __isset magic, typed-uninitialized properties, etc.
+ * See https://github.com/zephir-lang/zephir/issues/2385.
+ */
+int zephir_isset_property_value(zval *object, const char *property_name, unsigned int property_length)
+{
+	zend_string *member;
+	int result;
+
+	if (Z_TYPE_P(object) != IS_OBJECT) {
+		return 0;
+	}
+
+	if (!Z_OBJ_HT_P(object)->has_property) {
+		return 0;
+	}
+
+	member = zend_string_init(property_name, property_length, 0);
+	result = Z_OBJ_HT_P(object)->has_property(Z_OBJ_P(object), member, 0, NULL);
+	zend_string_release(member);
+
+	return result;
+}
+
+int zephir_isset_property_value_zval(zval *object, const zval *property)
+{
+	if (Z_TYPE_P(object) != IS_OBJECT || Z_TYPE_P(property) != IS_STRING) {
+		return 0;
+	}
+
+	if (!Z_OBJ_HT_P(object)->has_property) {
+		return 0;
+	}
+
+	return Z_OBJ_HT_P(object)->has_property(Z_OBJ_P(object), Z_STR_P(property), 0, NULL);
+}
+
+int zephir_isset_property_value_fast(zval *object, zend_string *property_name)
+{
+	if (Z_TYPE_P(object) != IS_OBJECT) {
+		return 0;
+	}
+
+	if (!Z_OBJ_HT_P(object)->has_property) {
+		return 0;
+	}
+
+	return Z_OBJ_HT_P(object)->has_property(Z_OBJ_P(object), property_name, 0, NULL);
+}
+
 /**
  * Lookup for the real owner of the property
  */
@@ -401,7 +456,7 @@ static inline zend_class_entry *zephir_lookup_class_ce(
 ) {
 	zend_class_entry *original_ce = ce;
 	zend_property_info *info;
-	zend_class_entry *scope;
+	const zend_class_entry *scope;
 	zval member;
 
 	ZVAL_STRINGL(&member, property_name, property_length);
@@ -445,7 +500,7 @@ int zephir_read_property_ex(
 	const char *property_name,
 	uint32_t property_length, int flags
 ) {
-	zend_class_entry *scope;
+	const zend_class_entry *scope;
 	int retval;
 
 	if (Z_TYPE_P(object) == IS_OBJECT) {
@@ -586,7 +641,7 @@ int zephir_update_property_zval_ex(
 	unsigned int property_length,
 	zval *value
 ) {
-	zend_class_entry *scope;
+	const zend_class_entry *scope;
 	int retval;
 
 	if (Z_TYPE_P(object) == IS_OBJECT) {
@@ -685,6 +740,17 @@ int zephir_update_property_array(zval *object, const char *property, uint32_t pr
 	}
 
 	zephir_read_property(&tmp, object, property, property_length, PH_NOISY | PH_READONLY);
+
+	/**
+	 * If the property holds an object implementing ArrayAccess, delegate the
+	 * offset assignment to its offsetSet() method instead of converting the
+	 * object into a plain array. See #2465.
+	 */
+	if (UNEXPECTED(Z_TYPE(tmp) == IS_OBJECT && zephir_instance_of_ev(&tmp, (const zend_class_entry *)zend_ce_arrayaccess))) {
+		zend_long ZEPHIR_LAST_CALL_STATUS;
+		ZEPHIR_CALL_METHOD_WITHOUT_OBSERVE(NULL, &tmp, "offsetset", NULL, 0, (zval *)index, value);
+		return ZEPHIR_LAST_CALL_STATUS != FAILURE ? SUCCESS : FAILURE;
+	}
 
 	/** Separation only when refcount > 1 */
 	if (Z_REFCOUNTED(tmp)) {
@@ -846,6 +912,52 @@ int zephir_update_property_array_multi(zval *object, const char *property, uint3
 	if (Z_TYPE_P(object) == IS_OBJECT) {
 		zephir_read_property(&tmp_arr, object, property, property_length, PH_NOISY | PH_READONLY);
 
+		/**
+		 * If the property holds an object implementing ArrayAccess, a chained
+		 * write (this->prop[a][b] = value) cannot persist. This mirrors native
+		 * PHP exactly: the first offset is fetched once via offsetGet(), the
+		 * indirect modification of the returned by-value element has no effect,
+		 * and an "Indirect modification of overloaded element" notice is raised.
+		 * The object is left intact rather than converted into an array. #2465
+		 */
+		if (UNEXPECTED(Z_TYPE(tmp_arr) == IS_OBJECT && zephir_instance_of_ev(&tmp_arr, (const zend_class_entry *)zend_ce_arrayaccess))) {
+			zend_long ZEPHIR_LAST_CALL_STATUS;
+			zval offset, fetched;
+			/* Class entries are persistent, so this stays valid even if the
+			 * offsetGet() call below were to drop the last instance reference. */
+			zend_class_entry *ce = Z_OBJCE(tmp_arr);
+			ZVAL_UNDEF(&fetched);
+			ZVAL_UNDEF(&offset);
+
+			va_start(ap, types_count);
+			switch (types[0]) {
+				case 's': {
+					char *str = va_arg(ap, char*);
+					int len   = va_arg(ap, int);
+					ZVAL_STRINGL(&offset, str, len);
+					break;
+				}
+				case 'l':
+					ZVAL_LONG(&offset, va_arg(ap, long));
+					break;
+				case 'z':
+					ZVAL_COPY(&offset, va_arg(ap, zval*));
+					break;
+				default: /* 'a' (append): the fetched offset is null */
+					ZVAL_NULL(&offset);
+					break;
+			}
+			va_end(ap);
+
+			ZEPHIR_CALL_METHOD_WITHOUT_OBSERVE(&fetched, &tmp_arr, "offsetget", NULL, 0, &offset);
+			zval_ptr_dtor(&fetched);
+			zval_ptr_dtor(&offset);
+
+			zend_error(E_NOTICE, "Indirect modification of overloaded element of %s has no effect", ZSTR_VAL(ce->name));
+
+			return SUCCESS;
+		}
+
 		/** Separation only when refcount > 1 */
 		if (Z_REFCOUNTED(tmp_arr)) {
 			if (Z_REFCOUNT(tmp_arr) > 1) {
@@ -904,7 +1016,7 @@ int zephir_unset_property(zval* object, const char* name)
 	}
 
 	zval member;
-	zend_class_entry *scope;
+	const zend_class_entry *scope;
 
 	ZVAL_STRING(&member, name);
 
@@ -915,6 +1027,27 @@ int zephir_unset_property(zval* object, const char* name)
 	zephir_set_scope(Z_OBJCE_P(object));
 	Z_OBJ_HT_P(object)->unset_property(Z_OBJ_P(object), Z_STR(member), 0);
 	/* Restore original scope */
+	zephir_set_scope(scope);
+
+	return SUCCESS;
+}
+
+/**
+ * Unsets an object property whose name is given as a zval string.
+ * Mirrors zephir_unset_property() but accepts a dynamic zval name,
+ * enabling unset(obj->{variable}) compiled via zephir_unset_property_zval().
+ */
+int zephir_unset_property_zval(zval *object, const zval *name)
+{
+	const zend_class_entry *scope;
+
+	if (Z_TYPE_P(object) != IS_OBJECT || Z_TYPE_P(name) != IS_STRING) {
+		return FAILURE;
+	}
+
+	scope = zephir_get_scope(0);
+	zephir_set_scope(Z_OBJCE_P(object));
+	Z_OBJ_HT_P(object)->unset_property(Z_OBJ_P(object), Z_STR_P(name), 0);
 	zephir_set_scope(scope);
 
 	return SUCCESS;
@@ -1213,13 +1346,20 @@ int zephir_create_closure_ex(zval *return_value, zval *this_ptr, zend_class_entr
 {
 	zend_function *function_ptr;
 	zend_closure *closure;
+	zend_class_entry *scope_ce;
 
 	if ((function_ptr = zend_hash_str_find_ptr(&ce->function_table, method_name, method_length)) == NULL) {
 		ZVAL_NULL(return_value);
 		return FAILURE;
 	}
 
-	zend_create_closure(return_value, function_ptr, ce, ce, this_ptr);
+	/**
+	 * When this_ptr is provided, use its class as the scope so the closure
+	 * can access protected/private members of the enclosing object.
+	 */
+	scope_ce = (this_ptr && Z_TYPE_P(this_ptr) == IS_OBJECT) ? Z_OBJCE_P(this_ptr) : ce;
+
+	zend_create_closure(return_value, function_ptr, scope_ce, scope_ce, this_ptr);
 	// Make sure we can use a closure multiple times
 	closure = (zend_closure*)Z_OBJ_P(return_value);
 	closure->func.internal_function.handler = closure->orig_internal_handler;

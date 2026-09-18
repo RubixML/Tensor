@@ -155,7 +155,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, __construct)
 	ZVAL_UNDEF(&eigenvalues);
 	ZVAL_UNDEF(&eigenvectors_sub);
 	ZEND_PARSE_PARAMETERS_START(2, 2)
-		Z_PARAM_ARRAY(eigenvalues)
+		ZEPHIR_Z_PARAM_ARRAY(eigenvalues, eigenvalues_param)
 		Z_PARAM_OBJECT_OF_CLASS(eigenvectors, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
@@ -175,7 +175,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, __construct)
 PHP_METHOD(Tensor_Decompositions_Eigen, eigenvalues)
 {
 
-	RETURN_MEMBER(getThis(), "eigenvalues");
+	RETURN_MEMBER_TYPED(getThis(), "eigenvalues", IS_ARRAY);
 }
 
 /**

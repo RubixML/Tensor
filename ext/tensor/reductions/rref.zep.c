@@ -192,7 +192,7 @@ PHP_METHOD(Tensor_Reductions_Rref, reduce)
 							zephir_array_fetch_long(&_27$$9, &rowB, j, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 72);
 							zephir_array_fetch_long(&_28$$9, &t, j, PH_NOISY | PH_READONLY, "tensor/reductions/rref.zep", 72);
 							ZEPHIR_INIT_NVAR(&_29$$9);
-							ZVAL_LONG(&_29$$9, (zephir_get_numberval(&_27$$9) - (scale * zephir_get_numberval(&_28$$9))));
+							ZVAL_LONG(&_29$$9, (zephir_get_numberval(&_27$$9) - (scale * (zend_long) zephir_get_numberval(&_28$$9))));
 							zephir_array_update_long(&rowB, j, &_29$$9, PH_COPY | PH_SEPARATE ZEPHIR_DEBUG_PARAMS_DUMMY);
 						}
 					}

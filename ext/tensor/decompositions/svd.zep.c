@@ -126,7 +126,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, __construct)
 	ZVAL_UNDEF(&singularValues);
 	ZEND_PARSE_PARAMETERS_START(3, 3)
 		Z_PARAM_OBJECT_OF_CLASS(u, zephir_get_internal_ce(SL("tensor\\matrix")))
-		Z_PARAM_ARRAY(singularValues)
+		ZEPHIR_Z_PARAM_ARRAY(singularValues, singularValues_param)
 		Z_PARAM_OBJECT_OF_CLASS(vT, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
@@ -158,7 +158,7 @@ PHP_METHOD(Tensor_Decompositions_Svd, u)
 PHP_METHOD(Tensor_Decompositions_Svd, singularValues)
 {
 
-	RETURN_MEMBER(getThis(), "singularValues");
+	RETURN_MEMBER_TYPED(getThis(), "singularValues", IS_ARRAY);
 }
 
 /**

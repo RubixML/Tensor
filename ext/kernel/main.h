@@ -12,6 +12,7 @@
 #ifndef ZEPHIR_KERNEL_MAIN_H
 #define ZEPHIR_KERNEL_MAIN_H
 
+#include <php.h>
 #include <Zend/zend_interfaces.h>
 #include <ext/spl/spl_exceptions.h>
 #include <ext/spl/spl_iterators.h>
@@ -170,6 +171,9 @@ extern zend_string* i_self;
 #define RETURN_MM_STRING(str)       { RETVAL_STRING(str); ZEPHIR_MM_RESTORE(); return; }
 #define RETURN_MM_EMPTY_STRING()    { RETVAL_EMPTY_STRING(); ZEPHIR_MM_RESTORE(); return; }
 
+/** Return zend_string restoring memory frame */
+#define RETURN_MM_STR(s)            { RETVAL_STR(s); ZEPHIR_MM_RESTORE(); return; }
+
 /* Return long */
 #define RETURN_MM_LONG(value)       { RETVAL_LONG(value); ZEPHIR_MM_RESTORE(); return; }
 
@@ -182,6 +186,68 @@ extern zend_string* i_self;
 #define RETURN_MM_MEMBER(object, member_name) \
   zephir_return_property(return_value, object, SL(member_name)); \
   RETURN_MM();
+
+/**
+ * Throws a TypeError that matches PHP's userland return-type message format:
+ *   "Class\Method(): Return value must be of type <expected>, <actual> returned"
+ *
+ * Used by RETURN_*_MEMBER_TYPED macros to enforce strict scalar return types
+ * on methods that return a runtime value (e.g. `return this->property`) where
+ * the static checker in src/Statements/ReturnStatement.php can't prove the
+ * type matches. Without this, internal C extensions bypass the engine's
+ * return-type verification (which only runs in ZEND_DEBUG builds).
+ *
+ * See https://github.com/zephir-lang/zephir/issues/1991
+ */
+static inline void zephir_throw_return_type_error(uint32_t expected_type, zval *retval)
+{
+	zend_execute_data *ex = EG(current_execute_data);
+	const char *expected = zend_get_type_by_const(expected_type);
+	const char *actual   = zend_zval_type_name(retval);
+
+	if (ex && ex->func && ex->func->common.function_name) {
+		zend_string *fname = ex->func->common.function_name;
+		zend_class_entry *scope = ex->func->common.scope;
+		if (scope) {
+			zend_type_error("%s::%s(): Return value must be of type %s, %s returned",
+				ZSTR_VAL(scope->name), ZSTR_VAL(fname), expected, actual);
+		} else {
+			zend_type_error("%s(): Return value must be of type %s, %s returned",
+				ZSTR_VAL(fname), expected, actual);
+		}
+	} else {
+		zend_type_error("Return value must be of type %s, %s returned",
+			expected, actual);
+	}
+}
+
+/**
+ * Same as RETURN_MEMBER but verifies that the property's runtime type matches
+ * the method's declared return type. Throws TypeError on mismatch.
+ * Used when the method body is `return this->prop` and the method declares
+ * a strict scalar return type like `-> string`.
+ */
+#define RETURN_MEMBER_TYPED(object, member_name, expected_type) \
+  do { \
+    zephir_return_property(return_value, object, SL(member_name)); \
+    if (UNEXPECTED(Z_TYPE_P(return_value) != (expected_type))) { \
+      zephir_throw_return_type_error((expected_type), return_value); \
+      return; \
+    } \
+    return; \
+  } while (0)
+
+/** Memory-grow-aware variant of RETURN_MEMBER_TYPED. */
+#define RETURN_MM_MEMBER_TYPED(object, member_name, expected_type) \
+  do { \
+    zephir_return_property(return_value, object, SL(member_name)); \
+    if (UNEXPECTED(Z_TYPE_P(return_value) != (expected_type))) { \
+      zephir_throw_return_type_error((expected_type), return_value); \
+      ZEPHIR_MM_RESTORE(); \
+      return; \
+    } \
+    RETURN_MM(); \
+  } while (0)
 
 #define RETURN_ON_FAILURE(what) \
 	do { \
@@ -243,7 +309,7 @@ int zephir_is_iterable_ex(zval *arr, int duplicate);
 /** Check if an array is iterable or not */
 #define zephir_is_iterable(var, duplicate, file, line) \
 	if (!zephir_is_iterable_ex(var, duplicate)) { \
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(zend_exception_get_default(), "The argument is not initialized or iterable()", file, line); \
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(zend_ce_exception, "The argument is not initialized or iterable()", file, line); \
 		ZEPHIR_MM_RESTORE(); \
 		return; \
 	}
@@ -264,6 +330,21 @@ int zephir_fetch_parameters(int num_args, int required_args, int optional_args, 
 #define zephir_fetch_params_without_memory_grow(required_params, optional_params, ...) \
 	if (zephir_fetch_parameters(ZEND_NUM_ARGS(), required_params, optional_params, __VA_ARGS__) == FAILURE) { \
 		RETURN_NULL(); \
+	}
+
+/* Fetch the fixed (leading) parameters of a variadic method. Unlike
+ * zephir_fetch_parameters() this does not reject calls that pass more
+ * arguments than declared; the extra arguments are collected separately
+ * via zephir_get_args_from(). */
+int zephir_fetch_parameters_variadic(int num_args, int required_args, int optional_args, ...);
+
+#define zephir_fetch_params_variadic(memory_grow, required_params, optional_params, ...) \
+	if (zephir_fetch_parameters_variadic(ZEND_NUM_ARGS(), required_params, optional_params, __VA_ARGS__) == FAILURE) { \
+		if (memory_grow) { \
+			RETURN_MM_NULL(); \
+		} else { \
+			RETURN_NULL(); \
+		} \
 	}
 
 #define ZEPHIR_CREATE_OBJECT(obj, class_type) \
@@ -292,6 +373,8 @@ int zephir_fetch_parameters(int num_args, int required_args, int optional_args, 
 #define ZEPHIR_GET_IMKEY(var, it) it->funcs->get_current_key(it, &var);
 
 /* Declare class constants */
+int zephir_declare_class_constant(zend_class_entry *ce, const char *name, size_t name_length, zval *value);
+int zephir_declare_class_constant_array(zend_class_entry *ce, const char *name, size_t name_length, zval *value);
 int zephir_declare_class_constant_null(zend_class_entry *ce, const char *name, size_t name_length);
 int zephir_declare_class_constant_long(zend_class_entry *ce, const char *name, size_t name_length, zend_long value);
 int zephir_declare_class_constant_bool(zend_class_entry *ce, const char *name, size_t name_length, zend_bool value);
@@ -315,6 +398,36 @@ int zephir_is_php_version(unsigned int id);
 void zephir_get_args(zval* return_value);
 void zephir_get_arg(zval* return_value, zend_long idx);
 
+/* Collect the arguments starting at the 0-based index `skip` into an array.
+ * Used to populate the array of a variadic parameter from the trailing
+ * arguments that follow the fixed (declared) parameters. */
+void zephir_get_args_from(zval* return_value, uint32_t skip);
+
 void zephir_module_init();
+
+/**
+ * Z_PARAM_ARRAY(dest) expands to a call to zend_parse_arg_array(_arg, &dest, ...).
+ * The inline function has taken `zval **dest` since at least PHP 7.0, so the
+ * variable passed to the macro must be a `zval *` for `&dest` to have the
+ * correct type. Zephir always emits a `<name>_param` companion of type `zval *`
+ * for array parameters; we forward that here.
+ *
+ * Historical note: previous versions of this header conditionally selected
+ * between `dest` (a `zval` value) and `dest_ptr` (a `zval *`) based on a
+ * config.m4 autoconf probe (`ZEPHIR_ARRAY_PARAM_DOUBLE_PTR`). The `dest`
+ * branch was always wrong — the underlying signature has been `zval **dest`
+ * since PHP 7.0 — but it only surfaced as a warning once GCC 14 promoted
+ * `-Wincompatible-pointer-types` to default-on. Downstream projects that
+ * ship a stale `config.m4` (e.g. cphalcon) didn't get the probe defined and
+ * fell into the broken branch, producing hundreds of warnings on PHP 8.5
+ * (see https://github.com/zephir-lang/zephir/issues/2462).
+ *
+ * The probe is no longer needed and has been removed from
+ * templates/engine/config.m4. The legacy `ZEPHIR_ARRAY_PARAM_DOUBLE_PTR`
+ * macro is now a no-op — if a stale generated `config.m4` still emits it,
+ * the definition is harmless.
+ */
+#define ZEPHIR_Z_PARAM_ARRAY(dest, dest_ptr)              Z_PARAM_ARRAY(dest_ptr)
+#define ZEPHIR_Z_PARAM_ARRAY_OR_NULL(dest, dest_ptr)      Z_PARAM_ARRAY_OR_NULL(dest_ptr)
 
 #endif /* ZEPHIR_KERNEL_MAIN_H */

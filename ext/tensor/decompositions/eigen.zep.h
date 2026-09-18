@@ -10,7 +10,7 @@ PHP_METHOD(Tensor_Decompositions_Eigen, eigenvectors);
 
 ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_tensor_decompositions_eigen_decompose, 0, 1, Tensor\\Decompositions\\Eigen, 0)
 	ZEND_ARG_OBJ_INFO(0, a, Tensor\\Matrix, 0)
-	ZEND_ARG_TYPE_INFO(0, symmetric, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, symmetric, _IS_BOOL, 0, "false")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_tensor_decompositions_eigen___construct, 0, 0, 2)

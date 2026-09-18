@@ -18,7 +18,7 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_arraylike_reduce, 0, 1, IS_DOUBLE, 0)
 	ZEND_ARG_INFO(0, callback)
-	ZEND_ARG_TYPE_INFO(0, initial, IS_DOUBLE, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, initial, IS_DOUBLE, 0, "0.0")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_tensor_arraylike_asarray, 0, 0, IS_ARRAY, 0)
