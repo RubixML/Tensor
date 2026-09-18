@@ -5,6 +5,7 @@
     - RREF now zeroes the tail if below EPSILON
     - `rank()`, `fullRank()`, and `inverse()` are now consistent
     - Matrix::inverse() now throws a RuntimeException on singular input
+    - Fix Poisson distribution when lambda is zero
 
 - 3.0.10
     - Update to Zephir 0.23, adds support for PHP 8.5

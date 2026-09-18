@@ -254,6 +254,28 @@ class VectorTest extends TestCase
     /**
      * @test
      */
+    public function poissonZeroLambdaIsZero() : void
+    {
+        $vector = Vector::poisson(4, 0.0);
+
+        $this->assertCount(4, $vector);
+        $this->assertSame(0.0, $vector->min(), 'Poisson with lambda=0 must sample 0.0.');
+        $this->assertSame(0.0, $vector->max(), 'Poisson with lambda=0 must sample 0.0.');
+    }
+
+    /**
+     * @test
+     */
+    public function poissonNegativeLambdaThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::poisson(1, -1.0);
+    }
+
+    /**
+     * @test
+     */
     public function range() : void
     {
         $vector = Vector::range(5.0, 12.0, 2.0);

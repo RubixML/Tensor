@@ -176,6 +176,15 @@ class Vector implements Tensor
                 . " must be greater than 0, $n given.");
         }
 
+        if ($lambda < 0.0) {
+            throw new InvalidArgumentException('Lambda must be'
+                . " greater than or equal to 0, $lambda given.");
+        }
+
+        if ($lambda === 0.0) {
+            return self::fill(0.0, $n);
+        }
+
         $max = getrandmax();
 
         $l = exp(-$lambda);

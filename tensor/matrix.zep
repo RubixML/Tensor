@@ -291,6 +291,15 @@ class Matrix implements Tensor
                 . " greater than 0, " . strval(n) . " given.");
         }
 
+        if unlikely lambda < 0.0 {
+            throw new InvalidArgumentException("Lambda must be"
+                . " greater than or equal to 0, " . strval(lambda) . " given.");
+        }
+
+        if unlikely lambda == 0.0 {
+            return self::fill(0.0, m, n);
+        }
+
         float l, p, k;
 
         array a = [];
