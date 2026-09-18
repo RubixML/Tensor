@@ -256,7 +256,7 @@ Compute the eigenvalues and eigenvectors of the matrix.
 
 - **Parameters:** `$symmetric` — whether the matrix is known to be symmetric (default `false`)
 - **Returns:** [`Tensor\Decompositions\Eigen`](decompositions/eigen.md)
-- **Note:** Not implemented in the pure-PHP library — throws `Tensor\Exceptions\NotImplemented`. Available when the extension is loaded.
+- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if the matrix is not square
 
 ### `svd() : SVD`
 

@@ -8,7 +8,7 @@ The eigendecomposition (or spectral decomposition) of a matrix.
 
 The eigendecomposition is a matrix factorization resulting in a matrix of eigenvectors and a corresponding array of eigenvalues.
 
-> **Note:** The pure-PHP library does not compute the eigendecomposition — `decompose()` throws `Tensor\Exceptions\NotImplemented`. It is available when the [extension is installed](../getting-started.md). An `Eigen` object can still be constructed manually via `__construct()`.
+> **Note:** For matrices with complex eigenvalues, only the real parts of the eigenvalues and eigenvectors are returned, mirroring the [extension](getting-started.md). The eigenvector at row `i` of `eigenvectors()` corresponds to the eigenvalue at index `i` of `eigenvalues()`. Each eigenvector is normalized to unit length.
 
 ## Factory
 
@@ -20,7 +20,7 @@ Factory method to decompose a matrix.
   - `$a` — the matrix to decompose
   - `$symmetric` — whether the matrix is known to be symmetric (default `false`), which selects a faster solver
 - **Returns:** `Eigen`
-- **Throws:** `Tensor\Exceptions\NotImplemented` in the pure-PHP library
+- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if the matrix is not square, `Tensor\Exceptions\RuntimeException` if the decomposition fails to converge
 
 ## Accessors
 
