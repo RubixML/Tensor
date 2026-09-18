@@ -8,6 +8,7 @@
     - Matrix::inverse() now throws an InvalidArgumentException on non-square input
     - Fix Poisson distribution when lambda is zero
     - Added square check to inverse()
+    - Cholesky decompose() now throws a RuntimeException on non-positive-definite input
 
 - 3.0.10
     - Update to Zephir 0.23, adds support for PHP 8.5

@@ -4,6 +4,9 @@ namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
 use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\RuntimeException;
+
+use const Tensor\EPSILON;
 
 /**
  * Cholesky
@@ -28,7 +31,8 @@ class Cholesky
      * Factory method to decompose a matrix.
      *
      * @param Matrix $a
-     * @throws \Tensor\Exceptions\DimensionalityMismatch
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
      * @return self
      */
     public static function decompose(Matrix $a) : self
@@ -52,9 +56,18 @@ class Cholesky
                     $sigma += $l[$i][$k] * $l[$j][$k];
                 }
 
-                $l[$i][$j] = $i === $j
-                    ? sqrt($a[$i][$i] - $sigma)
-                    : 1 / $l[$j][$j] * ($a[$i][$j] - $sigma);
+                if ($i === $j) {
+                    $delta = $a[$i][$i] - $sigma;
+
+                    if ($delta <= EPSILON) {
+                        throw new RuntimeException('Cannot compute Cholesky decomposition'
+                            . ' of a non-positive definite matrix.');
+                    }
+
+                    $l[$i][$j] = sqrt($delta);
+                } else {
+                    $l[$i][$j] = 1 / $l[$j][$j] * ($a[$i][$j] - $sigma);
+                }
             }
         }
 

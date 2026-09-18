@@ -5,6 +5,7 @@ namespace Tensor\Tests\Decompositions;
 use Tensor\Matrix;
 use Tensor\Decompositions\Cholesky;
 use Tensor\Exceptions\InvalidArgumentException;
+use Tensor\Exceptions\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -118,6 +119,45 @@ class CholeskyTest extends TestCase
         Cholesky::decompose(Matrix::quick([
             [1.0, 2.0, 3.0],
             [4.0, 5.0, 6.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function decomposeIndefiniteThrows() : void
+    {
+        $this->expectException(RuntimeException::class);
+
+        Cholesky::decompose(Matrix::quick([
+            [1.0, 2.0],
+            [2.0, 1.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function decomposeZeroPivotThrows() : void
+    {
+        $this->expectException(RuntimeException::class);
+
+        Cholesky::decompose(Matrix::quick([
+            [0.0, 1.0],
+            [1.0, 1.0],
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function decomposeSingularThrows() : void
+    {
+        $this->expectException(RuntimeException::class);
+
+        Cholesky::decompose(Matrix::quick([
+            [1.0, 2.0],
+            [2.0, 4.0],
         ]));
     }
 
