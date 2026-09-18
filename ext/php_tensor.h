@@ -11,7 +11,7 @@
 #include "kernel/globals.h"
 
 #define PHP_TENSOR_NAME        "tensor"
-#define PHP_TENSOR_VERSION     "3.0.11"
+#define PHP_TENSOR_VERSION     "3.1.0"
 #define PHP_TENSOR_EXTNAME     "tensor"
 #define PHP_TENSOR_AUTHOR      "The Rubix ML Community"
 #define PHP_TENSOR_ZEPVERSION  "1.5.0-$Id$"
