@@ -19,7 +19,6 @@ use Tensor\Decompositions\LU;
 use Tensor\Exceptions\RuntimeException;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\DimensionalityMismatch;
-use Tensor\Exceptions\NotImplemented;
 use Tensor\Decompositions\SVD;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
