@@ -11,7 +11,6 @@ use Tensor\Decompositions\Cholesky;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\RuntimeException;
-use Tensor\Exceptions\NotImplemented;
 use Traversable;
 
 use function count;
@@ -19,6 +18,7 @@ use function is_float;
 use function array_slice;
 use function array_fill;
 use function gettype;
+use function min;
 
 /**
  * Matrix
@@ -651,7 +651,27 @@ class Matrix implements Tensor
      */
     public function pseudoinverse() : self
     {
-        throw new NotImplemented('Pseudoinverse is not implemented in Tensor PHP.');
+        $svd = $this->svd();
+
+        $m = $this->m;
+
+        $n = $this->n;
+
+        $k = min($m, $n);
+
+        $sPlus = Matrix::zeros($n, $m)->asArray();
+
+        $singularValues = $svd->singularValues();
+
+        for ($i = 0; $i < $k; ++$i) {
+            if ($singularValues[$i] > 0.0) {
+                $sPlus[$i][$i] = 1.0 / $singularValues[$i];
+            }
+        }
+
+        return $svd->v()
+            ->matmul(Matrix::quick($sPlus))
+            ->matmul($svd->u()->transpose());
     }
 
     /**
