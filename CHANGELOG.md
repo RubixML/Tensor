@@ -3,6 +3,7 @@
 - 3.1.0
     - Implemented the singular value decomposition (SVD) in the pure-PHP library
     - Implemented the Moore-Penrose pseudoinverse in the pure-PHP library via SVD
+    - Implemented the eigendecomposition in the pure-PHP library
 
 - 3.0.11
     - Update to Zephir 1.5.0
