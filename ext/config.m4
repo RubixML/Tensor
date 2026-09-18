@@ -40,6 +40,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	for dir in "tensor tensor/decompositions tensor/exceptions tensor/reductions"; do
 		PHP_ADD_BUILD_DIR([$ext_builddir/$dir])
 	done
+	PHP_ADD_BUILD_DIR([$ext_builddir/include])
 	PHP_SUBST(TENSOR_SHARED_LIBADD)
 
 	AC_CANONICAL_BUILD

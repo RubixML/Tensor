@@ -2,6 +2,9 @@
 <?php
 
 const CONFIG_M4_PATH = './ext/config.m4';
+const CONFIG_JSON_PATH = './config.json';
+
+const BUILDDIR_ANCHOR = 'PHP_SUBST(TENSOR_SHARED_LIBADD)';
 
 const EXECINFO_MATCH = "PHP_SUBST(TENSOR_SHARED_LIBADD)\n";
 const EXECINFO_PATCH = <<<'EOT'
@@ -56,3 +59,87 @@ if (strpos($configM4Contents, EXECINFO_MATCH) === false) {
 
     echo "done.\n";
 }
+
+echo 'Reading config.json file... ';
+
+$configJson = file_get_contents(CONFIG_JSON_PATH);
+
+if (!$configJson) {
+    fwrite(STDERR, "Failed to read the config.json file!\n");
+
+    exit(1);
+}
+
+$config = json_decode($configJson, true);
+
+if (!is_array($config)) {
+    fwrite(STDERR, "Failed to parse the config.json file!\n");
+
+    exit(1);
+}
+
+echo "done.\n";
+
+echo 'Applying build directories patch... ';
+
+$extraSources = isset($config['extra-sources']) ? $config['extra-sources'] : [];
+
+$buildDirs = [];
+
+if (is_array($extraSources)) {
+    foreach ($extraSources as $source) {
+        $dir = dirname($source);
+
+        if ($dir !== '.' && $dir !== '' && !in_array($dir, $buildDirs, true)) {
+            $buildDirs[] = $dir;
+        }
+    }
+}
+
+if (!$buildDirs) {
+    echo "no extra source directories.\n";
+
+    exit(0);
+}
+
+if (strpos($configM4Contents, BUILDDIR_ANCHOR) === false) {
+    fwrite(STDERR, "patch entrypoint not found!\n");
+
+    exit(1);
+}
+
+$patched = false;
+
+foreach ($buildDirs as $dir) {
+    $entry = 'PHP_ADD_BUILD_DIR([$ext_builddir/' . $dir . '])';
+
+    if (strpos($configM4Contents, $entry) !== false) {
+        continue;
+    }
+
+    $configM4Contents = str_replace(
+        BUILDDIR_ANCHOR,
+        $entry . "\n\t" . BUILDDIR_ANCHOR,
+        $configM4Contents
+    );
+
+    $patched = true;
+}
+
+if (!$patched) {
+    echo "already applied.\n";
+
+    exit(0);
+}
+
+echo "done.\n";
+
+echo 'Saving config.m4 file... ';
+
+if (!file_put_contents(CONFIG_M4_PATH, $configM4Contents)) {
+    fwrite(STDERR, "Failed to write the config.m4 file\n");
+
+    exit(1);
+}
+
+echo "done.\n";
