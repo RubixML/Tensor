@@ -1,5 +1,11 @@
 # Change Log
 
+- 3.0.11
+    - Fixed RREF/REF pivot float tolerance
+    - RREF now zeroes the tail if below EPSILON
+    - `rank()`, `fullRank()`, and `inverse()` are now consistent
+    - Matrix::inverse() now throws a RuntimeException on singular input
+
 - 3.0.10
     - Update to Zephir 0.23, adds support for PHP 8.5
     - Fixed Matrix and Vector build() validation

@@ -500,6 +500,26 @@ class MatrixTest extends TestCase
 
     /**
      * @test
+     */
+    public function inverseSingularThrows() : void
+    {
+        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
+        // inverse must be rejected rather than return a magnitude ~1e15 matrix
+        // that does not satisfy A * A^-1 = I.
+        $a = Matrix::quick([
+            [2.0, 1.0, 0.0, 1.0],
+            [1.0, 2.0, 1.0, 0.0],
+            [0.0, 1.0, 2.0, 1.0],
+            [1.0, 0.0, 1.0, 2.0],
+        ]);
+
+        $this->expectException(RuntimeException::class);
+
+        $a->inverse();
+    }
+
+    /**
+     * @test
      * @requires extension tensor
      */
     public function pseudoinverse() : void
@@ -532,6 +552,23 @@ class MatrixTest extends TestCase
         ]);
 
         $this->assertEqualsWithDelta(-544.0, $a->det(), self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
+    public function detSingularIsZero() : void
+    {
+        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
+        // determinant must be ~0 rather than a spurious ~1e-15 value.
+        $a = Matrix::quick([
+            [2.0, 1.0, 0.0, 1.0],
+            [1.0, 2.0, 1.0, 0.0],
+            [0.0, 1.0, 2.0, 1.0],
+            [1.0, 0.0, 1.0, 2.0],
+        ]);
+
+        $this->assertEqualsWithDelta(0.0, $a->det(), self::MAX_DELTA);
     }
 
     /**
@@ -603,6 +640,18 @@ class MatrixTest extends TestCase
         ]);
 
         $this->assertEquals(2, $b->rank());
+
+        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
+        // rank must be 3, not 4, even though floating point leaves a ~1e-16
+        // residual on the diagonal.
+        $c = Matrix::quick([
+            [2.0, 1.0, 0.0, 1.0],
+            [1.0, 2.0, 1.0, 0.0],
+            [0.0, 1.0, 2.0, 1.0],
+            [1.0, 0.0, 1.0, 2.0],
+        ]);
+
+        $this->assertEquals(3, $c->rank());
     }
 
     /**
@@ -624,6 +673,16 @@ class MatrixTest extends TestCase
         ]);
 
         $this->assertTrue($b->fullRank());
+
+        // Exactly singular 4x4 (see rank() above); fullRank() must be false.
+        $c = Matrix::quick([
+            [2.0, 1.0, 0.0, 1.0],
+            [1.0, 2.0, 1.0, 0.0],
+            [0.0, 1.0, 2.0, 1.0],
+            [1.0, 0.0, 1.0, 2.0],
+        ]);
+
+        $this->assertFalse($c->fullRank());
     }
 
     /**

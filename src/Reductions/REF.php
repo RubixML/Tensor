@@ -6,6 +6,8 @@ use Tensor\Matrix;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\RuntimeException;
 
+use const Tensor\EPSILON;
+
 /**
  * REF
  *
@@ -76,7 +78,7 @@ class REF
                 }
             }
 
-            if ($b[$index][$i] == 0) {
+            if (abs($b[$index][$i]) < EPSILON) {
                 throw new RuntimeException('Cannot compute row echelon'
                     . ' form of a singular matrix.');
             }
@@ -124,9 +126,9 @@ class REF
         while ($row < $m and $col < $n) {
             $t = $b[$row];
 
-            if ($t[$col] == 0) {
+            if (abs($t[$col]) < EPSILON) {
                 for ($i = $row + 1; $i < $m; ++$i) {
-                    if ($b[$i][$col] != 0) {
+                    if (abs($b[$i][$col]) >= EPSILON) {
                         $temp = $b[$i];
 
                         $b[$i] = $t;
@@ -139,7 +141,7 @@ class REF
                 }
             }
 
-            if ($t[$col] == 0) {
+            if (abs($t[$col]) < EPSILON) {
                 ++$col;
 
                 continue;
@@ -156,7 +158,7 @@ class REF
             for ($i = $row + 1; $i < $m; ++$i) {
                 $scale = $b[$i][$col];
 
-                if ($scale != 0) {
+                if (abs($scale) >= EPSILON) {
                     for ($j = 0; $j < $n; ++$j) {
                         $b[$i][$j] -= $scale * $t[$j];
                     }

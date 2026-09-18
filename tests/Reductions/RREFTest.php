@@ -191,6 +191,47 @@ class RREFTest extends TestCase
     /**
      * @test
      */
+    public function reduceExactlySingular4x4Has3NonZeroRows() : void
+    {
+        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
+        // RREF must contain exactly three non-zero rows, the fourth being zero.
+        // Before the float-tolerance fix, floating-point residual of ~1e-16
+        // on the diagonal would cause RREF to report a fourth non-zero row.
+        $a = Matrix::quick([
+            [2.0, 1.0, 0.0, 1.0],
+            [1.0, 2.0, 1.0, 0.0],
+            [0.0, 1.0, 2.0, 1.0],
+            [1.0, 0.0, 1.0, 2.0],
+        ]);
+
+        $rref = RREF::reduce($a);
+
+        $aOut = $rref->a()->asArray();
+
+        $nonZero = 0;
+
+        foreach ($aOut as $row) {
+            $isNonZero = false;
+
+            foreach ($row as $v) {
+                if (abs($v) > 0.0) {
+                    $isNonZero = true;
+
+                    break;
+                }
+            }
+
+            if ($isNonZero) {
+                ++$nonZero;
+            }
+        }
+
+        $this->assertEquals(3, $nonZero);
+    }
+
+    /**
+     * @test
+     */
     public function accessorsReturnMatrices() : void
     {
         $a = Matrix::quick([

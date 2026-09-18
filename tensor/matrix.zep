@@ -623,6 +623,7 @@ class Matrix implements Tensor
     /**
      * Compute the inverse of the square matrix.
      *
+     * @throws \Tensor\Exceptions\RuntimeException
      * @return self
      */
     public function inverse() -> <Matrix>
@@ -630,6 +631,11 @@ class Matrix implements Tensor
         if unlikely !this->isSquare() {
             throw new InvalidArgumentException("Matrix must be"
                 . " square, " . this->shapeString() .  " given.");
+        }
+
+        if unlikely !this->fullRank() {
+            throw new RuntimeException("Failed to compute the inverse"
+                . " of a singular matrix.");
         }
 
         var result = tensor_inverse(this->a);
@@ -706,6 +712,8 @@ class Matrix implements Tensor
 
         bool stop;
 
+        float epsilon = (float) self::EPSILON;
+
         for rowA in a {
             let stop = false;
 
@@ -714,7 +722,7 @@ class Matrix implements Tensor
                     continue;
                 }
 
-                if valueA != 0 {
+                if abs(valueA) >= epsilon {
                     let pivots++;
 
                     let stop = true;

@@ -12,6 +12,7 @@ Guidance for AI coding agents contributing to **Tensor** — scientific computin
 | Path | Purpose |
 | --- | --- |
 | `src/` | Library classes. `Tensor` interface plus `Vector`, `Matrix`, `ColumnVector`; `Decompositions/` (Cholesky, Eigen, LU, SVD), `Reductions/` (REF, RREF), `Exceptions/`, and `constants.php` (always auto-loaded). |
+| `docs/` | Project documentation. |
 | `tests/` | PHPUnit test suite. One `*Test.php` per class. |
 | `benchmarks/` | phpbench suites, organized per functional area. |
 | `optimizers/` | Zephir function-call optimizers, one `Tensor*Optimizer.php` per operation. |
@@ -81,6 +82,8 @@ Every public method a new `src/` class adds typically has a counterpart in the Z
 Do **not** hand-edit the generated C in `ext/` (files like `*.dep`, `*.lo`, `*.o`, `Makefile*`, `config.h`). They are produced by `composer compile`. Hand-written logic belongs in `ext/include/*.c`.
 
 ## Working verification paths
+
+In some environments, you may need to override the configured extensions to test different paths.
 
 - Library path, ext-free: php -n -d extension=dom -d extension=mbstring -d extension=tokenizer -d extension=xml -d extension=xmlwriter -d extension=xmlreader vendor/bin/phpunit ...
 - Extension path, local build: php -n -d extension=$PWD/ext/modules/tensor.so vendor/bin/phpunit ...

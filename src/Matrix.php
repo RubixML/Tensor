@@ -605,10 +605,15 @@ class Matrix implements Tensor
     /**
      * Compute the inverse of the matrix.
      *
+     * @throws RuntimeException
      * @return self
      */
     public function inverse() : self
     {
+        if (!$this->fullRank()) {
+            throw new RuntimeException('Failed to compute the inverse of a singular matrix.');
+        }
+
         $a = self::identity($this->m)
             ->augmentLeft($this)
             ->rref()
@@ -676,7 +681,7 @@ class Matrix implements Tensor
 
         foreach ($a as $rowA) {
             foreach ($rowA as $valueA) {
-                if ($valueA != 0) {
+                if (abs($valueA) >= EPSILON) {
                     ++$pivots;
 
                     continue 2;

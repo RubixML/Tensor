@@ -1,6 +1,7 @@
 namespace Tensor\Reductions;
 
 use Tensor\Matrix;
+use Tensor\Tensor;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -32,6 +33,8 @@ class Rref
     {
         int i, j;
         float scale, divisor;
+        bool hasPivot;
+        float epsilon = (float) Tensor::EPSILON;
         
         array b = [];
         array rowB = [];
@@ -48,7 +51,29 @@ class Rref
         while row < m && col < n {
             let t = (array) b[row];
 
-            if abs(t[col]) == 0 {
+            if abs(t[col]) < epsilon {
+                let hasPivot = false;
+
+                for i in range(col, n - 1) {
+                    if abs(t[i]) >= epsilon {
+                        let hasPivot = true;
+
+                        break;
+                    }
+                }
+
+                if hasPivot == false {
+                    for i in range(col, n - 1) {
+                        let t[i] = 0.0;
+                    }
+
+                    let b[row] = t;
+
+                    let row++;
+
+                    continue;
+                }
+
                 let col++;
 
                 continue;
@@ -67,7 +92,7 @@ class Rref
 
                 let scale = (float) rowB[col];
 
-                if scale !== 0.0 {
+                if abs(scale) >= epsilon {
                     for j in range(0, n - 1) {
                         let rowB[j] = rowB[j] - scale * t[j];
                     }

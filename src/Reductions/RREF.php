@@ -4,6 +4,8 @@ namespace Tensor\Reductions;
 
 use Tensor\Matrix;
 
+use const Tensor\EPSILON;
+
 /**
  * RREF
  *
@@ -43,7 +45,29 @@ class RREF
         while ($row < $m and $col < $n) {
             $t = $b[$row];
 
-            if (abs($t[$col]) == 0) {
+            if (abs($t[$col]) < EPSILON) {
+                $hasPivot = false;
+
+                for ($i = $col; $i < $n; ++$i) {
+                    if (abs($t[$i]) >= EPSILON) {
+                        $hasPivot = true;
+
+                        break;
+                    }
+                }
+
+                if (!$hasPivot) {
+                    for ($i = $col; $i < $n; ++$i) {
+                        $t[$i] = 0.0;
+                    }
+
+                    $b[$row] = $t;
+
+                    ++$row;
+
+                    continue;
+                }
+
                 ++$col;
 
                 continue;
@@ -62,7 +86,7 @@ class RREF
 
                 $scale = $rowB[$col];
 
-                if ($scale != 0) {
+                if (abs($scale) >= EPSILON) {
                     for ($j = 0; $j < $n; ++$j) {
                         $rowB[$j] -= $scale * $t[$j];
                     }
