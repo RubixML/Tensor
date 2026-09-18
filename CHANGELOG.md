@@ -1,5 +1,4 @@
-- 3.0.11
-    - Update to Zephir 1.4.0
+# Change Log
 
 - 3.0.10
     - Update to Zephir 0.23, adds support for PHP 8.5
