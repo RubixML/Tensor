@@ -1,5 +1,8 @@
 # Change Log
 
+- 3.1.0
+    - Implemented the eigendecomposition in the pure-PHP library
+
 - 3.0.11
     - Update to Zephir 1.5.0
     - Fixed RREF/REF pivot float tolerance

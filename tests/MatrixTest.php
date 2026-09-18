@@ -3238,35 +3238,47 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function eigPurePHPIsNotImplemented() : void
+    public function eigReturnsEigen() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Extension tensor is loaded.');
-        }
-
-        $this->expectException(NotImplemented::class);
-
-        Matrix::quick([
+        $a = Matrix::quick([
             [1.0, 2.0],
             [3.0, 4.0],
-        ])->eig(false);
+        ]);
+
+        $eig = $a->eig(false);
+
+        $this->assertInstanceOf(Eigen::class, $eig);
+
+        $eigenvalues = $eig->eigenvalues();
+
+        $eigenvectors = $eig->eigenvectors()->asArray();
+
+        $aa = $a->asArray();
+
+        for ($j = 0; $j < 2; ++$j) {
+            for ($i = 0; $i < 2; ++$i) {
+                $sum = $aa[$i][0] * $eigenvectors[$j][0] + $aa[$i][1] * $eigenvectors[$j][1];
+
+                $this->assertEqualsWithDelta($eigenvalues[$j] * $eigenvectors[$j][$i], $sum, 1e-8);
+            }
+        }
     }
 
     /**
      * @test
      */
-    public function eigSymmetricPurePHPIsNotImplemented() : void
+    public function eigSymmetricReturnsEigen() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Extension tensor is loaded.');
-        }
+        $a = Matrix::quick([
+            [9.0, 3.0],
+            [3.0, 5.0],
+        ]);
 
-        $this->expectException(NotImplemented::class);
+        $eig = $a->eig(true);
 
-        Matrix::quick([
-            [1.0, 2.0],
-            [3.0, 4.0],
-        ])->eig(true);
+        $this->assertInstanceOf(Eigen::class, $eig);
+
+        $this->assertEqualsWithDelta([3.3944487241610, 10.605551275464], $eig->eigenvalues(), 1e-8);
     }
 
     /**
