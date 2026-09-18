@@ -153,6 +153,28 @@ class SVDTest extends TestCase
     /**
      * @test
      */
+    public function decomposePreservesTinySingularValues() : void
+    {
+        $a = Matrix::quick([
+            [1.0, 0.0, 0.0],
+            [0.0, 1e-9, 0.0],
+            [0.0, 0.0, 0.0],
+        ]);
+
+        $svd = SVD::decompose($a);
+
+        $this->assertCount(3, $svd->singularValues());
+
+        $this->assertEqualsWithDelta(1.0, $svd->singularValues()[0], self::MAX_DELTA);
+        $this->assertEqualsWithDelta(1e-9, $svd->singularValues()[1], self::MAX_DELTA);
+        $this->assertEqualsWithDelta(0.0, $svd->singularValues()[2], self::MAX_DELTA);
+
+        $this->assertEqualsWithDelta($a, $this->reconstruct($svd, 3, 3), self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
     public function constructAndAccess() : void
     {
         $u = Matrix::quick([

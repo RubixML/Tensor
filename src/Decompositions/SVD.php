@@ -13,7 +13,6 @@ use function array_fill;
 use function array_keys;
 use function array_slice;
 use function count;
-use function max;
 use function min;
 use function sqrt;
 
@@ -141,8 +140,6 @@ class SVD
         $sigma = [];
         $u = [];
 
-        $sigmaMax = 0.0;
-
         for ($j = 0; $j < $n; ++$j) {
             $norm = 0.0;
 
@@ -152,13 +149,7 @@ class SVD
 
             $sigma[$j] = sqrt($norm);
 
-            $sigmaMax = max($sigmaMax, $sigma[$j]);
-        }
-
-        $threshold = EPSILON * $sigmaMax;
-
-        for ($j = 0; $j < $n; ++$j) {
-            if ($sigma[$j] > $threshold) {
+            if ($sigma[$j] > 0.0) {
                 $column = [];
 
                 for ($i = 0; $i < $m; ++$i) {
@@ -167,8 +158,6 @@ class SVD
 
                 $u[$j] = $column;
             } else {
-                $sigma[$j] = 0.0;
-
                 $u[$j] = null;
             }
         }

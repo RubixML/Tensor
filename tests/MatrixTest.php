@@ -3333,4 +3333,22 @@ class MatrixTest extends TestCase
 
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
+
+    /**
+     * @test
+     */
+    public function pseudoinversePreservesTinySingularValues() : void
+    {
+        $a = Matrix::quick([
+            [1.0, 0.0],
+            [0.0, 1e-9],
+        ]);
+
+        $expected = Matrix::quick([
+            [1.0, 0.0],
+            [0.0, 1.0 / 1e-9],
+        ]);
+
+        $this->assertEqualsWithDelta($expected, $a->pseudoinverse(), self::MAX_DELTA);
+    }
 }
