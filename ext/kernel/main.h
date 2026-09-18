@@ -29,6 +29,18 @@ extern zend_string* i_self;
 #define PH_NOISY 256
 #define PH_SILENT 1024
 #define PH_READONLY 4096
+/**
+ * A read whose value the caller is about to write through, which is what a
+ * by-reference call argument does. Mutually exclusive with PH_READONLY.
+ *
+ * The container it is applied to must own its value, because the write context
+ * separates it. The emitter guarantees that: a local variable, or a property
+ * slot from zephir_fetch_property_write().
+ *
+ * @see https://github.com/zephir-lang/zephir/issues/2682
+ * @see https://github.com/zephir-lang/zephir/issues/2691
+ */
+#define PH_WRITE 8192
 
 #define PH_NOISY_CC PH_NOISY
 #define PH_SILENT_CC PH_SILENT
@@ -39,6 +51,27 @@ extern zend_string* i_self;
 
 #ifndef ZEND_ACC_FINAL_CLASS
  #define ZEND_ACC_FINAL_CLASS ZEND_ACC_FINAL
+#endif
+
+/* readonly properties (issue #2614) are PHP 8.1+; on 8.0 the flag does not
+ * exist, so it degrades to a no-op (the property compiles as a normal typed
+ * property, without write-once enforcement). Keeps generated C version-uniform. */
+#ifndef ZEND_ACC_READONLY
+ #define ZEND_ACC_READONLY 0
+#endif
+
+/* The float-to-int coercion PHP applies to a `%` operand. PHP 8.1 started
+ * deprecating a conversion that loses precision ("Deprecate implicit
+ * non-integer-compatible float to int conversions"), and carries that
+ * diagnostic in zend_dval_to_lval_safe(), which does not exist on 8.0. Routing
+ * through this shim keeps the kernel's `%` byte-identical to the engine's on
+ * every supported version: silent on 8.0, deprecating from 8.1.
+ *
+ * @see https://github.com/zephir-lang/zephir/issues/2666 */
+#if PHP_VERSION_ID >= 80100
+ #define ZEPHIR_DVAL_TO_LVAL(d) zend_dval_to_lval_safe(d)
+#else
+ #define ZEPHIR_DVAL_TO_LVAL(d) zend_dval_to_lval(d)
 #endif
 
 #define SL(str) ZEND_STRL(str)
@@ -80,6 +113,22 @@ extern zend_string* i_self;
 			return FAILURE; \
 		} \
 		lower_ns## _ ##lcname## _ce->ce_flags |= flags;  \
+	}
+
+/* Registers a real zend trait (ZEND_ACC_TRAIT) so PHP userland can `use` it */
+#define ZEPHIR_REGISTER_TRAIT(ns, class_name, lower_ns, name, methods)				\
+	{																				\
+		zend_class_entry ce;														\
+		memset(&ce, 0, sizeof(zend_class_entry));									\
+		INIT_NS_CLASS_ENTRY(ce, #ns, #class_name, methods);							\
+		lower_ns## _ ##name## _ce = zend_register_internal_class(&ce);				\
+		if (UNEXPECTED(!lower_ns## _ ##name## _ce)) {								\
+			const char *_n = (#ns);													\
+			const char *_c = (#class_name);											\
+			zend_error(E_ERROR, "%s\\%s: trait registration has failed.", _n, _c);	\
+			return FAILURE;															\
+		}																			\
+		lower_ns## _ ##name## _ce->ce_flags |= ZEND_ACC_TRAIT;						\
 	}
 
 #define ZEPHIR_REGISTER_INTERFACE(ns, classname, lower_ns, name, methods) \
@@ -146,6 +195,22 @@ extern zend_string* i_self;
 /** Return this pointer */
 #define RETURN_THIS() { \
 		RETVAL_ZVAL(getThis(), 1, 0); \
+	} \
+	ZEPHIR_MM_RESTORE(); \
+	return;
+
+/**
+ * Return an explicitly named object instead of getThis().
+ *
+ * A capturing closure binds its capture carrier as `$this`, so getThis() is
+ * not the enclosing object there; `this_ptr` is. These are the RETURN_THIS
+ * pair with the object spelled out.
+ */
+#define RETURN_THISW_ZVAL(object) \
+	RETURN_ZVAL(object, 1, 0);
+
+#define RETURN_THIS_ZVAL(object) { \
+		RETVAL_ZVAL(object, 1, 0); \
 	} \
 	ZEPHIR_MM_RESTORE(); \
 	return;
@@ -358,6 +423,50 @@ int zephir_fetch_parameters_variadic(int num_args, int required_args, int option
 #define ZEPHIR_MAKE_REF(obj) ZVAL_NEW_REF(obj, obj);
 #define ZEPHIR_UNREF(obj) ZVAL_UNREF(obj);
 
+/**
+ * Hands a PH_WRITE subscript to a by-reference parameter.
+ *
+ * The fetch already returned a reference when the container was a native array,
+ * and the plain owned offsetGet() result when it was an ArrayAccess object. The
+ * callee needs a reference either way, and only the second case has to be
+ * wrapped.
+ *
+ * There is deliberately no matching unref. The memory frame owns the argument,
+ * so releasing it releases the reference, whereas ZEPHIR_UNREF() would efree a
+ * zend_reference the container is still pointing at.
+ *
+ * @see https://github.com/zephir-lang/zephir/issues/2682
+ */
+#define ZEPHIR_MAKE_WRITE_REF(obj) do { \
+		if (!Z_ISREF_P(obj)) { \
+			ZVAL_NEW_REF(obj, obj); \
+		} \
+	} while (0)
+
+/**
+ * Unwraps a write-context slot once the callee is done with it.
+ *
+ * PHP leaves a property it sent by reference as a reference and relies on every
+ * read dereferencing. Zephir's property reads deliberately do not, because a
+ * `use (&x)` closure capture is stored in a property as a reference and has to
+ * come back as one, so the slot is unwrapped again here instead.
+ *
+ * The refcount test is PHP's own, from the overloaded-element branch of
+ * `zend_fetch_dimension_address()`: a reference the callee kept a hold of is
+ * left alone, and the storage stays shared with whatever kept it.
+ *
+ * Only ever applied to a slot, never to a value fetched out of a container:
+ * there the reference belongs to the container, and ZVAL_UNREF() would efree
+ * what it is still pointing at.
+ *
+ * @see https://github.com/zephir-lang/zephir/issues/2691
+ */
+#define ZEPHIR_UNREF_WRITE(obj) do { \
+		if (Z_ISREF_P(obj) && Z_REFCOUNT_P(obj) == 1) { \
+			ZVAL_UNREF(obj); \
+		} \
+	} while (0)
+
 #define ZEPHIR_GET_CONSTANT(return_value, const_name) do { \
 	zval *_constant_ptr = zend_get_constant_str(SL(const_name)); \
 	if (_constant_ptr == NULL) { \
@@ -382,6 +491,19 @@ int zephir_declare_class_constant_double(zend_class_entry *ce, const char *name,
 int zephir_declare_class_constant_stringl(zend_class_entry *ce, const char *name, size_t name_length, const char *value, size_t value_length);
 int zephir_declare_class_constant_string(zend_class_entry *ce, const char *name, size_t name_length, const char *value);
 
+/* Declare a class property whose default is an array (persisted immutable, e.g. on a trait ce) */
+int zephir_declare_property_array(zend_class_entry *ce, const char *name, size_t name_length, zval *value, int access_type);
+
+/* Declare a class property carrying a PHP type (issue #2608). `type_mask` is a
+ * MAY_BE_* bitmask (with MAY_BE_NULL folded in for `?type`); when `class_name`
+ * is non-NULL the property is a class type resolved lazily by the engine. */
+zend_property_info *zephir_declare_typed_property(zend_class_entry *ce, const char *name, size_t name_length, zval *value, int access_type, uint32_t type_mask, const char *class_name, size_t class_name_length);
+
+/* Declare a union-typed class property (issue #2613), e.g. `int | float` or
+ * `<A> | <B> | null`. `type_mask` carries the scalar/null MAY_BE_* bits; the
+ * `num_classes` class names (0, 1 or many) form the object part of the union. */
+zend_property_info *zephir_declare_typed_property_union(zend_class_entry *ce, const char *name, size_t name_length, zval *value, int access_type, uint32_t type_mask, const char **class_names, uint32_t num_classes);
+
 int zephir_is_php_version(unsigned int id);
 
 /** Method declaration for API generation */
@@ -404,6 +526,7 @@ void zephir_get_arg(zval* return_value, zend_long idx);
 void zephir_get_args_from(zval* return_value, uint32_t skip);
 
 void zephir_module_init();
+void zephir_module_shutdown(void);
 
 /**
  * Z_PARAM_ARRAY(dest) expands to a call to zend_parse_arg_array(_arg, &dest, ...).
