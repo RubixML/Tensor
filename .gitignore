@@ -43,6 +43,7 @@ ext/run-tests.php
 /vendor
 composer.lock
 .phpunit.result.cache
+.phpunit.cache/
 .php-cs-fixer.cache
 .zephir
 Thumbs.db

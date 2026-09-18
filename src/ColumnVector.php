@@ -233,7 +233,7 @@ class ColumnVector extends Vector
             $rowC = [];
 
             foreach ($rowB as $valueB) {
-                $rowC[] = $valueA % $valueB;
+                $rowC[] = (int) $valueA % (int) $valueB;
             }
 
             $c[] = $rowC;

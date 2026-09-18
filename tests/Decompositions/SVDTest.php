@@ -7,9 +7,7 @@ use Tensor\Decompositions\SVD;
 use Tensor\Exceptions\NotImplemented;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Tensor\Decompositions\SVD
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(SVD::class)]
 class SVDTest extends TestCase
 {
     /**
@@ -19,9 +17,7 @@ class SVDTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decomposeThrowsNotImplemented() : void
     {
         if (extension_loaded('tensor')) {
@@ -39,9 +35,7 @@ class SVDTest extends TestCase
         SVD::decompose($a);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function constructAndAccess() : void
     {
         $u = Matrix::quick([

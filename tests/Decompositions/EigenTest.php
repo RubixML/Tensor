@@ -7,9 +7,7 @@ use Tensor\Decompositions\Eigen;
 use Tensor\Exceptions\NotImplemented;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Tensor\Decompositions\Eigen
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(Eigen::class)]
 class EigenTest extends TestCase
 {
     /**
@@ -19,9 +17,7 @@ class EigenTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decomposeThrowsNotImplemented() : void
     {
         if (extension_loaded('tensor')) {
@@ -39,9 +35,7 @@ class EigenTest extends TestCase
         Eigen::decompose($a);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decomposeWithSymmetricFlagThrowsNotImplemented() : void
     {
         if (extension_loaded('tensor')) {
@@ -59,9 +53,7 @@ class EigenTest extends TestCase
         Eigen::decompose($a, true);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function constructAndAccess() : void
     {
         $eigenvalues = [1.0, 2.0, 3.0];

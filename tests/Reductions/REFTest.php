@@ -7,9 +7,7 @@ use Tensor\Reductions\REF;
 use Tensor\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Tensor\Reductions\REF
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(REF::class)]
 class REFTest extends TestCase
 {
     /**
@@ -19,9 +17,7 @@ class REFTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduce2x2() : void
     {
         $a = Matrix::quick([
@@ -42,9 +38,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduce3x3() : void
     {
         $a = Matrix::quick([
@@ -64,9 +58,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduce2x3Rectangular() : void
     {
         $a = Matrix::quick([
@@ -86,9 +78,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduceRequiresPivoting() : void
     {
         // First column is [0, 5] - a row swap is required to pivot.
@@ -111,9 +101,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduce1x1() : void
     {
         $a = Matrix::quick([[7.0]]);
@@ -126,9 +114,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduceDiagonal() : void
     {
         $a = Matrix::quick([
@@ -148,9 +134,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduceZeroRow() : void
     {
         if (extension_loaded('tensor')) {
@@ -173,9 +157,7 @@ class REFTest extends TestCase
         $this->assertEquals([0.0, 0.0], $aOut[1]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function constructorWithNegativeSwapsThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -183,9 +165,7 @@ class REFTest extends TestCase
         new REF(Matrix::quick([[1.0]]), -1);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function constructorWithZeroSwaps() : void
     {
         $a = Matrix::quick([[1.0]]);
@@ -196,9 +176,7 @@ class REFTest extends TestCase
         $this->assertEquals(0, $ref->swaps());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function constructorWithPositiveSwaps() : void
     {
         $a = Matrix::quick([

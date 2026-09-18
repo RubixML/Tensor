@@ -16,9 +16,7 @@ use Tensor\Trigonometric;
 use Tensor\Exceptions\DimensionalityMismatch;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Tensor\ColumnVector
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(ColumnVector::class)]
 class ColumnVectorTest extends TestCase
 {
     /**
@@ -28,9 +26,7 @@ class ColumnVectorTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function build() : void
     {
         $vector = ColumnVector::build([-15, 25, 35]);
@@ -46,9 +42,7 @@ class ColumnVectorTest extends TestCase
         $this->assertInstanceOf(Special::class, $vector);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function shape() : void
     {
         $vector = ColumnVector::quick([-15, 25, 35]);
@@ -56,9 +50,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals([3], $vector->shape());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function shapeString() : void
     {
         $vector = ColumnVector::quick([-15, 25, 35]);
@@ -66,9 +58,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals('3', $vector->shapeString());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function testSize() : void
     {
         $vector = ColumnVector::quick([-15, 25, 35]);
@@ -76,9 +66,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals(3, $vector->size());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function m() : void
     {
         $vector = ColumnVector::quick([-15, 25, 35]);
@@ -86,9 +74,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals(3, $vector->m());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function n() : void
     {
         $vector = ColumnVector::quick([-15, 25, 35]);
@@ -96,9 +82,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals(1, $vector->n());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function multiply() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -120,9 +104,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function divide() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -144,9 +126,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function add() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -168,9 +148,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function subtract() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -192,9 +170,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function equal() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -216,9 +192,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function notEqual() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -240,9 +214,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function greater() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -264,9 +236,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function greaterEqual() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -288,9 +258,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function less() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -312,9 +280,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function lessEqual() : void
     {
         $a = ColumnVector::quick([-15, 25, 35]);
@@ -336,9 +302,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function transposeReturnsVector() : void
     {
         $a = ColumnVector::quick([1.0, 2.0, 3.0]);
@@ -349,9 +313,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals(Vector::quick([1.0, 2.0, 3.0]), $b);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function sizes() : void
     {
         $a = ColumnVector::quick([1.0, 2.0, 3.0]);
@@ -361,9 +323,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEquals(3, $a->size());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function matmul() : void
     {
         $a = ColumnVector::quick([1.0, 2.0, 3.0]);
@@ -383,9 +343,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function matmulDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -397,9 +355,7 @@ class ColumnVectorTest extends TestCase
         ]));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function powMatrix() : void
     {
         $a = ColumnVector::quick([2.0, 3.0, 4.0]);
@@ -421,9 +377,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function powMatrixDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -434,9 +388,7 @@ class ColumnVectorTest extends TestCase
         ]));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function modMatrix() : void
     {
         $a = ColumnVector::quick([10.0, 12.0, 15.0]);
@@ -458,9 +410,7 @@ class ColumnVectorTest extends TestCase
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function modMatrixDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -471,9 +421,7 @@ class ColumnVectorTest extends TestCase
         ]));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function multiplyMatrixDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -484,9 +432,7 @@ class ColumnVectorTest extends TestCase
         ]));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function divideMatrixDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);

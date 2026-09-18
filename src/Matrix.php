@@ -2167,7 +2167,7 @@ class Matrix implements Tensor
             $rowC = [];
 
             foreach ($rowA as $j => $valueA) {
-                $rowC[] = $valueA % $rowB[$j];
+                $rowC[] = (int) $valueA % (int) $rowB[$j];
             }
 
             $c[] = $rowC;
@@ -2539,7 +2539,7 @@ class Matrix implements Tensor
             $rowC = [];
 
             foreach ($b as $j => $valueB) {
-                $rowC[] = $rowA[$j] % $valueB;
+                $rowC[] = (int) $rowA[$j] % (int) $valueB;
             }
 
             $c[] = $rowC;
@@ -2911,7 +2911,7 @@ class Matrix implements Tensor
             $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowC[] = $valueA % $valueB;
+                $rowC[] = (int) $valueA % (int) $valueB;
             }
 
             $c[] = $rowC;
@@ -3235,7 +3235,7 @@ class Matrix implements Tensor
             $rowC = [];
 
             foreach ($rowA as $valueA) {
-                $rowC[] = $valueA % $b;
+                $rowC[] = (int) $valueA % (int) $b;
             }
 
             $c[] = $rowC;

@@ -8,9 +8,7 @@ use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Tensor\Decompositions\LU
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(LU::class)]
 class LUTest extends TestCase
 {
     /**
@@ -20,9 +18,7 @@ class LUTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decompose3x3() : void
     {
         $a = Matrix::quick([
@@ -62,9 +58,7 @@ class LUTest extends TestCase
         $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decomposeRequiresPivoting() : void
     {
         $a = Matrix::quick([
@@ -83,9 +77,7 @@ class LUTest extends TestCase
         $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decompose1x1() : void
     {
         $a = Matrix::quick([[9.0]]);
@@ -101,9 +93,7 @@ class LUTest extends TestCase
         $this->assertEqualsWithDelta($expected, $lu, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decomposeDiagonal() : void
     {
         $a = Matrix::quick([
@@ -133,9 +123,7 @@ class LUTest extends TestCase
         $this->assertEqualsWithDelta($expected, $lu, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decomposeNonSquareThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -146,9 +134,7 @@ class LUTest extends TestCase
         ]));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decomposeSingularThrows() : void
     {
         $this->expectException(RuntimeException::class);
@@ -159,9 +145,7 @@ class LUTest extends TestCase
         ]));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function accessorsReturnMatrices() : void
     {
         $l = Matrix::quick([

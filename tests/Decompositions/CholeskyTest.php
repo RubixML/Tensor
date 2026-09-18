@@ -7,9 +7,7 @@ use Tensor\Decompositions\Cholesky;
 use Tensor\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Tensor\Decompositions\Cholesky
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(Cholesky::class)]
 class CholeskyTest extends TestCase
 {
     /**
@@ -19,9 +17,7 @@ class CholeskyTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decompose2x2() : void
     {
         $a = Matrix::quick([
@@ -44,9 +40,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($a, $ch->l()->matmul($ch->lT()), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decompose3x3() : void
     {
         $a = Matrix::quick([
@@ -68,9 +62,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($expected, $ch, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decompose1x1() : void
     {
         $a = Matrix::quick([[9.0]]);
@@ -84,9 +76,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($expected, $ch, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decomposeDiagonal() : void
     {
         $a = Matrix::quick([
@@ -108,9 +98,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($expected, $ch, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function decomposeNonSquareThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -121,9 +109,7 @@ class CholeskyTest extends TestCase
         ]));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function lTIsTranspose() : void
     {
         $l = Matrix::quick([
@@ -136,9 +122,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($l->transpose(), $ch->lT(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function accessorsReturnMatrices() : void
     {
         $l = Matrix::quick([

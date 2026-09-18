@@ -6,9 +6,7 @@ use Tensor\Matrix;
 use Tensor\Reductions\RREF;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Tensor\Reductions\RREF
- */
+#[\PHPUnit\Framework\Attributes\CoversClass(RREF::class)]
 class RREFTest extends TestCase
 {
     /**
@@ -18,9 +16,7 @@ class RREFTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduceDiagonalIsIdentity() : void
     {
         // A non-singular diagonal matrix reduces to the identity.
@@ -41,9 +37,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduce2x2() : void
     {
         $a = Matrix::quick([
@@ -61,9 +55,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduceDiagonal2x2() : void
     {
         $a = Matrix::quick([
@@ -81,9 +73,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduce1x1() : void
     {
         $a = Matrix::quick([[7.0]]);
@@ -93,9 +83,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta(Matrix::quick([[1.0]]), $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduceSingular2x2() : void
     {
         if (extension_loaded('tensor')) {
@@ -122,9 +110,7 @@ class RREFTest extends TestCase
         $this->assertEquals([0.0, 0.0], $aOut[1]);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function reduceZeroRow() : void
     {
         if (extension_loaded('tensor')) {
@@ -147,9 +133,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function rankMatchesNumberNonZeroRows() : void
     {
         if (extension_loaded('tensor')) {
@@ -188,9 +172,7 @@ class RREFTest extends TestCase
         $this->assertEquals(1, $rank);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function accessorsReturnMatrices() : void
     {
         $a = Matrix::quick([
