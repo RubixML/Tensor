@@ -3272,34 +3272,54 @@ class MatrixTest extends TestCase
     /**
      * @test
      */
-    public function svdPurePHPIsNotImplemented() : void
+    public function svdPurePHP() : void
     {
         if (extension_loaded('tensor')) {
             $this->markTestSkipped('Extension tensor is loaded.');
         }
 
-        $this->expectException(NotImplemented::class);
-
-        Matrix::quick([
+        $matrix = Matrix::quick([
             [1.0, 2.0],
             [3.0, 4.0],
-        ])->svd();
+        ]);
+
+        $svd = $matrix->svd();
+
+        $s = Matrix::zeros(2, 2)->asArray();
+
+        foreach ($svd->singularValues() as $i => $value) {
+            $s[$i][$i] = $value;
+        }
+
+        $reconstructed = $svd->u()
+            ->matmul(Matrix::quick($s))
+            ->matmul($svd->vT());
+
+        $this->assertEqualsWithDelta($matrix, $reconstructed, self::MAX_DELTA);
     }
 
     /**
      * @test
      */
-    public function pseudoinversePurePHPIsNotImplemented() : void
+    public function pseudoinversePurePHP() : void
     {
         if (extension_loaded('tensor')) {
             $this->markTestSkipped('Extension tensor is loaded.');
         }
 
-        $this->expectException(NotImplemented::class);
+        $a = Matrix::quick([
+            [22, -17, 12],
+            [4, 11, -2],
+        ]);
 
-        Matrix::quick([
-            [1.0, 2.0],
-            [3.0, 4.0],
-        ])->pseudoinverse();
+        $b = $a->pseudoinverse();
+
+        $expected = Matrix::quick([
+            [0.03147992432205172, 0.05583000490505223],
+            [-0.009144418751313844, 0.07003713825239999],
+            [0.01266554551187723, -0.0031357298016957483],
+        ]);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 }

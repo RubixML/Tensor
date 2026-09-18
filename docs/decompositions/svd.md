@@ -8,8 +8,6 @@ The singular value decomposition of a matrix.
 
 The singular value decomposition factors a matrix `A` into `U * S * Vᵀ`, where `U` and `V` are orthogonal matrices and `S` is a diagonal matrix of the singular values.
 
-> **Note:** The pure-PHP library does not compute the singular value decomposition — `decompose()` throws `Tensor\Exceptions\NotImplemented`. It is available when the [extension is installed](../getting-started.md). An `SVD` object can still be constructed manually via `__construct()`.
-
 ## Factory
 
 ### `SVD::decompose(Matrix $a) : self`
@@ -18,7 +16,7 @@ Factory method to decompose a matrix.
 
 - **Parameters:** `$a` — the matrix to decompose
 - **Returns:** `SVD`
-- **Throws:** `Tensor\Exceptions\NotImplemented` in the pure-PHP library
+- **Throws:** `Tensor\Exceptions\RuntimeException` if the decomposition fails to converge
 
 ## Accessors
 
