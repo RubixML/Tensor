@@ -289,13 +289,25 @@ class SVD
     }
 
     /**
-     * Return the singular value matrix.
+     * Return the singular value matrix — an m by n matrix with the singular
+     * values on the diagonal, zero-padded so that multiplying it by the U and
+     * vT matrices reconstructs the original matrix.
      *
      * @return Matrix
      */
     public function s() : Matrix
     {
-        return Matrix::diagonal($this->singularValues);
+        $m = $this->u->m();
+
+        $n = $this->vT->n();
+
+        $s = Matrix::zeros($m, $n)->asArray();
+
+        foreach ($this->singularValues as $i => $value) {
+            $s[$i][$i] = $value;
+        }
+
+        return Matrix::quick($s);
     }
 
     /**

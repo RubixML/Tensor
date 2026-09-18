@@ -175,6 +175,40 @@ class SVDTest extends TestCase
     /**
      * @test
      */
+    public function sReturnsPaddedSingularValueMatrix() : void
+    {
+        if (extension_loaded('tensor')) {
+            $this->markTestSkipped('Extension tensor is loaded.');
+        }
+
+        $tall = Matrix::quick([
+            [1.0, 2.0],
+            [3.0, 4.0],
+            [5.0, 6.0],
+            [7.0, 8.0],
+        ]);
+
+        $svdTall = SVD::decompose($tall);
+
+        $this->assertSame([4, 2], $svdTall->s()->shape());
+
+        $this->assertEqualsWithDelta($tall, $svdTall->u()->matmul($svdTall->s())->matmul($svdTall->vT()), self::MAX_DELTA);
+
+        $wide = Matrix::quick([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ]);
+
+        $svdWide = SVD::decompose($wide);
+
+        $this->assertSame([2, 3], $svdWide->s()->shape());
+
+        $this->assertEqualsWithDelta($wide, $svdWide->u()->matmul($svdWide->s())->matmul($svdWide->vT()), self::MAX_DELTA);
+    }
+
+    /**
+     * @test
+     */
     public function constructAndAccess() : void
     {
         $u = Matrix::quick([
@@ -198,7 +232,9 @@ class SVDTest extends TestCase
         // v is the transpose of vT.
         $this->assertEqualsWithDelta($vT->transpose(), $svd->v(), self::MAX_DELTA);
 
-        // The singular value matrix is the diagonal of the singular values.
+        // The singular value matrix is an m by n matrix with the singular values on the diagonal.
+        $this->assertSame([2, 2], $svd->s()->shape());
+
         $expectedS = Matrix::quick([
             [5.0, 0.0],
             [0.0, 3.0],

@@ -3296,14 +3296,8 @@ class MatrixTest extends TestCase
 
         $svd = $matrix->svd();
 
-        $s = Matrix::zeros(2, 2)->asArray();
-
-        foreach ($svd->singularValues() as $i => $value) {
-            $s[$i][$i] = $value;
-        }
-
         $reconstructed = $svd->u()
-            ->matmul(Matrix::quick($s))
+            ->matmul($svd->s())
             ->matmul($svd->vT());
 
         $this->assertEqualsWithDelta($matrix, $reconstructed, self::MAX_DELTA);

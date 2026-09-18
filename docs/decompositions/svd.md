@@ -6,7 +6,7 @@ The singular value decomposition of a matrix.
 
 ## Overview
 
-The singular value decomposition factors a matrix `A` into `U * S * Vᵀ`, where `U` and `V` are orthogonal matrices and `S` is a diagonal matrix of the singular values.
+The singular value decomposition factors a matrix `A` into `U * S * Vᵀ`, where `U` and `V` are orthogonal matrices and `S` is an `m` by `n` matrix with the singular values on the diagonal. The product `u() * s() * vT()` reconstructs the original matrix even for rectangular inputs, because `S` is zero-padded to the shape of `A`.
 
 ## Factory
 
@@ -38,7 +38,7 @@ Return the singular values of matrix A.
 
 ### `s() : Matrix`
 
-Return the singular value matrix — a diagonal matrix of the singular values.
+Return the singular value matrix — an `m` by `n` matrix with the singular values on the diagonal, zero-padded such that `u() * s() * vT()` reconstructs the original matrix.
 
 - **Returns:** `Matrix`
 
