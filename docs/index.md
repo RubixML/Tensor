@@ -2,7 +2,7 @@
 
 Tensor is a library and extension for scientific computing in PHP. It provides an object-oriented API consisting of a `Tensor` interface (composed of several sub-interfaces) implemented by three concrete classes, plus decomposition and reduction result objects.
 
-> **Note:** If both the library and the extension are installed, the extension takes precedence. The Eigen decomposition throws `Tensor\Exceptions\NotImplemented` in the pure-PHP library.
+> **Note:** If both the library and the extension are installed, the extension takes precedence.
 
 ## Namespace Map
 
