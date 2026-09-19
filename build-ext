@@ -2,6 +2,7 @@
 <?php
 
 const CONFIG_M4_PATH = './ext/config.m4';
+const CONFIG_W32_PATH = './ext/config.w32';
 const CONFIG_JSON_PATH = './config.json';
 
 const BUILDDIR_ANCHOR = 'PHP_SUBST(TENSOR_SHARED_LIBADD)';
@@ -23,6 +24,31 @@ EOT
 ;
 
 chdir(__DIR__);
+
+$configW32Contents = file_get_contents(CONFIG_W32_PATH);
+
+if ($configW32Contents === false) {
+    fwrite(STDERR, "Failed to read the config.w32 file!\n");
+    exit(1);
+}
+
+if (strpos($configW32Contents, 'CHECK_LIB("libopenblas.lib"') === false) {
+    $openblasPatch = <<<'EOT'
+if (PHP_TENSOR != "no") {
+  if (!CHECK_LIB("libopenblas.lib", "tensor", PHP_TENSOR) ||
+      !CHECK_HEADER_ADD_INCLUDE("cblas.h", "CFLAGS_TENSOR")) {
+    ERROR("tensor requires OpenBLAS libraries and headers");
+  }
+EOT;
+    $lineEnding = strpos($configW32Contents, "\r\n") !== false ? "\r\n" : "\n";
+    $openblasPatch = str_replace("\n", $lineEnding, $openblasPatch);
+    $configW32Contents = str_replace('if (PHP_TENSOR != "no") {', $openblasPatch, $configW32Contents, $count);
+
+    if ($count !== 1 || file_put_contents(CONFIG_W32_PATH, $configW32Contents) === false) {
+        fwrite(STDERR, "Failed to patch OpenBLAS support into config.w32!\n");
+        exit(1);
+    }
+}
 
 echo 'Reading config.m4 file... ';
 

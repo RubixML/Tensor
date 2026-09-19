@@ -1,6 +1,10 @@
 ARG_ENABLE("tensor", "enable tensor", "no");
 
 if (PHP_TENSOR != "no") {
+  if (!CHECK_LIB("libopenblas.lib", "tensor", PHP_TENSOR) ||
+      !CHECK_HEADER_ADD_INCLUDE("cblas.h", "CFLAGS_TENSOR")) {
+    ERROR("tensor requires OpenBLAS libraries and headers");
+  }
   EXTENSION("tensor", "tensor.c", null, "-I"+configure_module_dirname);
   ADD_SOURCES(configure_module_dirname + "/kernel", "main.c memory.c exception.c debug.c backtrace.c object.c array.c string.c fcall.c require.c file.c operators.c math.c concat.c variables.c filter.c iterator.c exit.c time.c generator.c", "tensor");
   /* PCRE is always included on WIN32 */
