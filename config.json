@@ -49,5 +49,8 @@
     "extra": {
         "export-classes": false,
         "indent": "spaces"
+    },
+    "kernel-classes": {
+        "buffer": true
     }
 }
