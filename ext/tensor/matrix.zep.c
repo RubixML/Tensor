@@ -1278,7 +1278,7 @@ PHP_METHOD(Tensor_Matrix, rowAsVector)
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 	zephir_fetch_params(1, 1, 0, &index_param);
 	ZVAL_LONG(&_0, index);
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "offsetget", NULL, 0, &_0);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "offsetGet", NULL, 0, &_0);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -1355,12 +1355,12 @@ PHP_METHOD(Tensor_Matrix, diagonalAsVector)
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "issquare", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "isSquare", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_0))) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		object_init_ex(&_1$$3, tensor_exceptions_invalidargumentexception_ce);
-		ZEPHIR_CALL_METHOD(&_2$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_2$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_3$$3);
 		ZEPHIR_CONCAT_SSVS(&_3$$3, "Matrix must be", " square, ", &_2$$3, " given.");
@@ -1520,7 +1520,7 @@ PHP_METHOD(Tensor_Matrix, asColumnVectors)
 			}
 			i = _2;
 			ZVAL_LONG(&_5$$3, i);
-			ZEPHIR_CALL_METHOD(&_4$$3, this_ptr, "columnasvector", &_6, 0, &_5$$3);
+			ZEPHIR_CALL_METHOD(&_4$$3, this_ptr, "columnAsVector", &_6, 0, &_5$$3);
 			zephir_check_call_status();
 			zephir_array_append(&vectors, &_4$$3, PH_SEPARATE, "tensor/matrix.zep", 553);
 		}
@@ -1913,12 +1913,12 @@ PHP_METHOD(Tensor_Matrix, inverse)
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "issquare", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "isSquare", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_0))) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		object_init_ex(&_1$$3, tensor_exceptions_invalidargumentexception_ce);
-		ZEPHIR_CALL_METHOD(&_2$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_2$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_3$$3);
 		ZEPHIR_CONCAT_SSVS(&_3$$3, "Matrix must be", " square, ", &_2$$3, " given.");
@@ -1928,7 +1928,7 @@ PHP_METHOD(Tensor_Matrix, inverse)
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_CALL_METHOD(&_4, this_ptr, "fullrank", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_4, this_ptr, "fullRank", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_4))) {
 		ZEPHIR_INIT_VAR(&_5$$4);
@@ -2030,12 +2030,12 @@ PHP_METHOD(Tensor_Matrix, det)
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "issquare", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "isSquare", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_0))) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		object_init_ex(&_1$$3, tensor_exceptions_invalidargumentexception_ce);
-		ZEPHIR_CALL_METHOD(&_2$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_2$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_3$$3);
 		ZEPHIR_CONCAT_SSVS(&_3$$3, "Matrix must be", " square, ", &_2$$3, " given.");
@@ -2049,7 +2049,7 @@ PHP_METHOD(Tensor_Matrix, det)
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_4, &ref, "a", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&_5, &_4, "diagonalasvector", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_5, &_4, "diagonalAsVector", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&pi, &_5, "product", NULL, 0);
 	zephir_check_call_status();
@@ -2078,7 +2078,7 @@ PHP_METHOD(Tensor_Matrix, trace)
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "diagonalasvector", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "diagonalAsVector", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_RETURN_CALL_METHOD(&_0, "sum", NULL, 0);
 	zephir_check_call_status();
@@ -2121,7 +2121,7 @@ PHP_METHOD(Tensor_Matrix, rank)
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_1, &_0, "a", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&_2, &_1, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_2, &_1, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_get_arrval(&_3, &_2);
 	ZEPHIR_CPY_WRT(&a, &_3);
@@ -2255,7 +2255,7 @@ PHP_METHOD(Tensor_Matrix, symmetric)
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "issquare", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "isSquare", NULL, 0);
 	zephir_check_call_status();
 	if (!(zephir_is_true(&_0))) {
 		RETURN_MM_BOOL(0);
@@ -2347,7 +2347,7 @@ PHP_METHOD(Tensor_Matrix, matmul)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -2374,7 +2374,7 @@ PHP_METHOD(Tensor_Matrix, matmul)
 	}
 	ZEPHIR_INIT_VAR(&_8);
 	zephir_read_property_cached(&_9, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(&_10, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_10, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	tensor_matmul(&_8, &_9, &_10);
 	ZEPHIR_RETURN_CALL_SELF("quick", NULL, 0, &_8);
@@ -2415,7 +2415,7 @@ PHP_METHOD(Tensor_Matrix, dot)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -2440,12 +2440,12 @@ PHP_METHOD(Tensor_Matrix, dot)
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_CALL_METHOD(&_9, b, "ascolumnmatrix", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_9, b, "asColumnMatrix", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_8, this_ptr, "matmul", NULL, 0, &_9);
 	zephir_check_call_status();
 	ZVAL_LONG(&_10, 0);
-	ZEPHIR_RETURN_CALL_METHOD(&_8, "columnasvector", NULL, 0, &_10);
+	ZEPHIR_RETURN_CALL_METHOD(&_8, "columnAsVector", NULL, 0, &_10);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -2496,7 +2496,7 @@ PHP_METHOD(Tensor_Matrix, convolve)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 2)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 		Z_PARAM_OPTIONAL
 		Z_PARAM_LONG(stride)
 	ZEND_PARSE_PARAMETERS_END();
@@ -2544,7 +2544,7 @@ PHP_METHOD(Tensor_Matrix, convolve)
 	}
 	ZEPHIR_INIT_VAR(&_11);
 	zephir_read_property_cached(&_12, this_ptr, _zephir_prop_2, 14, PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(&_13, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_13, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	ZVAL_LONG(&_14, stride);
 	tensor_convolve_2d(&_11, &_12, &_13, &_14);
@@ -2828,15 +2828,15 @@ PHP_METHOD(Tensor_Matrix, multiply)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplymatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplyMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplycolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplyColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplyvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplyVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -2844,7 +2844,7 @@ PHP_METHOD(Tensor_Matrix, multiply)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplyscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplyScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -2899,15 +2899,15 @@ PHP_METHOD(Tensor_Matrix, divide)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "dividematrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "divideMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "dividecolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "divideColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "dividevector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "divideVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -2915,7 +2915,7 @@ PHP_METHOD(Tensor_Matrix, divide)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "dividescalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "divideScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -2971,15 +2971,15 @@ PHP_METHOD(Tensor_Matrix, add)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addmatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addcolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -2987,7 +2987,7 @@ PHP_METHOD(Tensor_Matrix, add)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "addScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3043,15 +3043,15 @@ PHP_METHOD(Tensor_Matrix, subtract)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "subtractmatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "subtractMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "subtractcolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "subtractColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "subtractvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "subtractVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -3059,7 +3059,7 @@ PHP_METHOD(Tensor_Matrix, subtract)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "subtractscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "subtractScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3115,15 +3115,15 @@ PHP_METHOD(Tensor_Matrix, pow)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "powmatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "powMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "powcolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "powColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "powvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "powVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -3131,7 +3131,7 @@ PHP_METHOD(Tensor_Matrix, pow)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "powscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "powScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3187,15 +3187,15 @@ PHP_METHOD(Tensor_Matrix, mod)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "modmatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "modMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "modcolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "modColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "modvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "modVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -3203,7 +3203,7 @@ PHP_METHOD(Tensor_Matrix, mod)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "modscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "modScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3259,15 +3259,15 @@ PHP_METHOD(Tensor_Matrix, equal)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "equalmatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "equalMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "equalcolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "equalColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "equalvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "equalVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -3275,7 +3275,7 @@ PHP_METHOD(Tensor_Matrix, equal)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "equalscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "equalScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3331,15 +3331,15 @@ PHP_METHOD(Tensor_Matrix, notEqual)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "notequalmatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "notEqualMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "notequalcolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "notEqualColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "notequalvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "notEqualVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -3347,7 +3347,7 @@ PHP_METHOD(Tensor_Matrix, notEqual)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "notequalscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "notEqualScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3403,15 +3403,15 @@ PHP_METHOD(Tensor_Matrix, greater)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greatermatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greatercolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greatervector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -3419,7 +3419,7 @@ PHP_METHOD(Tensor_Matrix, greater)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3475,15 +3475,15 @@ PHP_METHOD(Tensor_Matrix, greaterEqual)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterequalmatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterEqualMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterequalcolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterEqualColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterequalvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterEqualVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -3491,7 +3491,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqual)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterequalscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "greaterEqualScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3547,15 +3547,15 @@ PHP_METHOD(Tensor_Matrix, less)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessmatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lesscolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -3563,7 +3563,7 @@ PHP_METHOD(Tensor_Matrix, less)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3619,15 +3619,15 @@ PHP_METHOD(Tensor_Matrix, lessEqual)
 		if (_1$$3 == zephir_instance_of_ev(b, tensor_vector_ce)) { goto zephir_switch_1_clause_2; }
 		goto zephir_switch_1_end;
 		zephir_switch_1_clause_0: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessequalmatrix", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessEqualMatrix", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_1: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessequalcolumnvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessEqualColumnVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_clause_2: ;
-			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessequalvector", NULL, 0, b);
+			ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessEqualVector", NULL, 0, b);
 			zephir_check_call_status();
 			RETURN_MM();
 		zephir_switch_1_end: ;
@@ -3635,7 +3635,7 @@ PHP_METHOD(Tensor_Matrix, lessEqual)
 		goto zephir_switch_0_end;
 	zephir_switch_0_clause_1: ;
 	zephir_switch_0_clause_2: ;
-		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessequalscalar", NULL, 0, b);
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "lessEqualScalar", NULL, 0, b);
 		zephir_check_call_status();
 		RETURN_MM();
 	zephir_switch_0_end: ;
@@ -3681,7 +3681,7 @@ PHP_METHOD(Tensor_Matrix, reciprocal)
 	zephir_read_property_cached(&_2, this_ptr, _zephir_prop_1, 16, PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_CALL_SELF(&_0, "ones", NULL, 0, &_1, &_2);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(&_0, "dividematrix", NULL, 0, this_ptr);
+	ZEPHIR_RETURN_CALL_METHOD(&_0, "divideMatrix", NULL, 0, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -3722,7 +3722,7 @@ PHP_METHOD(Tensor_Matrix, square)
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplymatrix", NULL, 0, this_ptr);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "multiplyMatrix", NULL, 0, this_ptr);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -4353,7 +4353,7 @@ PHP_METHOD(Tensor_Matrix, mean)
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "sum", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_1, this_ptr, _zephir_prop_0, 16, PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_METHOD(&_0, "dividescalar", NULL, 0, &_1);
+	ZEPHIR_RETURN_CALL_METHOD(&_0, "divideScalar", NULL, 0, &_1);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -4746,14 +4746,14 @@ PHP_METHOD(Tensor_Matrix, variance)
 		ZEPHIR_CALL_METHOD(mean, this_ptr, "mean", NULL, 0);
 		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_METHOD(&_11, this_ptr, "subtractcolumnvector", NULL, 0, mean);
+	ZEPHIR_CALL_METHOD(&_11, this_ptr, "subtractColumnVector", NULL, 0, mean);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_12, &_11, "square", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_13, &_12, "sum", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_14, this_ptr, _zephir_prop_1, 16, PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_METHOD(&_13, "dividescalar", NULL, 0, &_14);
+	ZEPHIR_RETURN_CALL_METHOD(&_13, "divideScalar", NULL, 0, &_14);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -4799,7 +4799,7 @@ PHP_METHOD(Tensor_Matrix, covariance)
 	bool is_null_true = 1;
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_OBJECT_OF_CLASS_OR_NULL(mean, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS_OR_NULL(mean, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -4835,14 +4835,14 @@ PHP_METHOD(Tensor_Matrix, covariance)
 		ZEPHIR_CALL_METHOD(mean, this_ptr, "mean", NULL, 0);
 		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_METHOD(&b, this_ptr, "subtractcolumnvector", NULL, 0, mean);
+	ZEPHIR_CALL_METHOD(&b, this_ptr, "subtractColumnVector", NULL, 0, mean);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_9, &b, "transpose", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_8, &b, "matmul", NULL, 0, &_9);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_10, this_ptr, _zephir_prop_1, 16, PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_RETURN_CALL_METHOD(&_8, "dividescalar", NULL, 0, &_10);
+	ZEPHIR_RETURN_CALL_METHOD(&_8, "divideScalar", NULL, 0, &_10);
 	zephir_check_call_status();
 	RETURN_MM();
 }
@@ -6150,7 +6150,7 @@ PHP_METHOD(Tensor_Matrix, augmentAbove)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -6181,7 +6181,7 @@ PHP_METHOD(Tensor_Matrix, augmentAbove)
 		return;
 	}
 	ZEPHIR_INIT_VAR(&_10);
-	ZEPHIR_CALL_METHOD(&_11, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_11, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_12, this_ptr, _zephir_prop_2, 14, PH_NOISY_CC | PH_READONLY);
 	zephir_fast_array_merge(&_10, &_11, &_12);
@@ -6233,7 +6233,7 @@ PHP_METHOD(Tensor_Matrix, augmentBelow)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -6265,7 +6265,7 @@ PHP_METHOD(Tensor_Matrix, augmentBelow)
 	}
 	ZEPHIR_INIT_VAR(&_10);
 	zephir_read_property_cached(&_11, this_ptr, _zephir_prop_2, 14, PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(&_12, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_12, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_fast_array_merge(&_10, &_11, &_12);
 	ZEPHIR_RETURN_CALL_SELF("quick", NULL, 0, &_10);
@@ -6313,7 +6313,7 @@ PHP_METHOD(Tensor_Matrix, augmentLeft)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -6343,7 +6343,7 @@ PHP_METHOD(Tensor_Matrix, augmentLeft)
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	ZEPHIR_CALL_METHOD(&_10, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_10, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_11, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	ZEPHIR_INIT_VAR(&_12);
@@ -6395,7 +6395,7 @@ PHP_METHOD(Tensor_Matrix, augmentRight)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -6426,7 +6426,7 @@ PHP_METHOD(Tensor_Matrix, augmentRight)
 		return;
 	}
 	zephir_read_property_cached(&_10, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
-	ZEPHIR_CALL_METHOD(&_11, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_11, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(&_12);
 	ZVAL_STRING(&_12, "array_merge");
@@ -6609,7 +6609,7 @@ PHP_METHOD(Tensor_Matrix, multiplyMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -6621,9 +6621,9 @@ PHP_METHOD(Tensor_Matrix, multiplyMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -6635,7 +6635,7 @@ PHP_METHOD(Tensor_Matrix, multiplyMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -6741,7 +6741,7 @@ PHP_METHOD(Tensor_Matrix, divideMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -6753,9 +6753,9 @@ PHP_METHOD(Tensor_Matrix, divideMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -6767,7 +6767,7 @@ PHP_METHOD(Tensor_Matrix, divideMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -6873,7 +6873,7 @@ PHP_METHOD(Tensor_Matrix, addMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -6885,9 +6885,9 @@ PHP_METHOD(Tensor_Matrix, addMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -6899,7 +6899,7 @@ PHP_METHOD(Tensor_Matrix, addMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -7005,7 +7005,7 @@ PHP_METHOD(Tensor_Matrix, subtractMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -7017,9 +7017,9 @@ PHP_METHOD(Tensor_Matrix, subtractMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -7031,7 +7031,7 @@ PHP_METHOD(Tensor_Matrix, subtractMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -7138,7 +7138,7 @@ PHP_METHOD(Tensor_Matrix, powMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -7150,9 +7150,9 @@ PHP_METHOD(Tensor_Matrix, powMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -7164,7 +7164,7 @@ PHP_METHOD(Tensor_Matrix, powMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -7271,7 +7271,7 @@ PHP_METHOD(Tensor_Matrix, modMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -7283,9 +7283,9 @@ PHP_METHOD(Tensor_Matrix, modMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -7297,7 +7297,7 @@ PHP_METHOD(Tensor_Matrix, modMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -7404,7 +7404,7 @@ PHP_METHOD(Tensor_Matrix, equalMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -7416,9 +7416,9 @@ PHP_METHOD(Tensor_Matrix, equalMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -7430,7 +7430,7 @@ PHP_METHOD(Tensor_Matrix, equalMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -7536,7 +7536,7 @@ PHP_METHOD(Tensor_Matrix, notEqualMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -7548,9 +7548,9 @@ PHP_METHOD(Tensor_Matrix, notEqualMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -7562,7 +7562,7 @@ PHP_METHOD(Tensor_Matrix, notEqualMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -7669,7 +7669,7 @@ PHP_METHOD(Tensor_Matrix, greaterMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -7681,9 +7681,9 @@ PHP_METHOD(Tensor_Matrix, greaterMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -7695,7 +7695,7 @@ PHP_METHOD(Tensor_Matrix, greaterMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -7802,7 +7802,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqualMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -7814,9 +7814,9 @@ PHP_METHOD(Tensor_Matrix, greaterEqualMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -7828,7 +7828,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqualMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -7934,7 +7934,7 @@ PHP_METHOD(Tensor_Matrix, lessMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -7946,9 +7946,9 @@ PHP_METHOD(Tensor_Matrix, lessMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -7960,7 +7960,7 @@ PHP_METHOD(Tensor_Matrix, lessMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -8066,7 +8066,7 @@ PHP_METHOD(Tensor_Matrix, lessEqualMatrix)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -8078,9 +8078,9 @@ PHP_METHOD(Tensor_Matrix, lessEqualMatrix)
 	if (UNEXPECTED(!ZEPHIR_IS_IDENTICAL(&_0, &_1))) {
 		ZEPHIR_INIT_VAR(&_2$$3);
 		object_init_ex(&_2$$3, tensor_exceptions_dimensionalitymismatch_ce);
-		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_3$$3, this_ptr, "shapeString", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_4$$3, b, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_5$$3);
 		ZEPHIR_CONCAT_VSVS(&_5$$3, &_3$$3, " matrix expected but ", &_4$$3, " given.");
@@ -8092,7 +8092,7 @@ PHP_METHOD(Tensor_Matrix, lessEqualMatrix)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_6, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_6, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_6) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_8);
@@ -8199,7 +8199,7 @@ PHP_METHOD(Tensor_Matrix, multiplyVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -8226,7 +8226,7 @@ PHP_METHOD(Tensor_Matrix, multiplyVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -8319,7 +8319,7 @@ PHP_METHOD(Tensor_Matrix, divideVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -8346,7 +8346,7 @@ PHP_METHOD(Tensor_Matrix, divideVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -8439,7 +8439,7 @@ PHP_METHOD(Tensor_Matrix, addVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -8466,7 +8466,7 @@ PHP_METHOD(Tensor_Matrix, addVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -8559,7 +8559,7 @@ PHP_METHOD(Tensor_Matrix, subtractVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -8586,7 +8586,7 @@ PHP_METHOD(Tensor_Matrix, subtractVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -8679,7 +8679,7 @@ PHP_METHOD(Tensor_Matrix, powVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -8706,7 +8706,7 @@ PHP_METHOD(Tensor_Matrix, powVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -8799,7 +8799,7 @@ PHP_METHOD(Tensor_Matrix, modVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -8826,7 +8826,7 @@ PHP_METHOD(Tensor_Matrix, modVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -8920,7 +8920,7 @@ PHP_METHOD(Tensor_Matrix, equalVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -8947,7 +8947,7 @@ PHP_METHOD(Tensor_Matrix, equalVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -9040,7 +9040,7 @@ PHP_METHOD(Tensor_Matrix, notEqualVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -9067,7 +9067,7 @@ PHP_METHOD(Tensor_Matrix, notEqualVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -9160,7 +9160,7 @@ PHP_METHOD(Tensor_Matrix, greaterVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -9187,7 +9187,7 @@ PHP_METHOD(Tensor_Matrix, greaterVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -9280,7 +9280,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqualVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -9307,7 +9307,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqualVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -9400,7 +9400,7 @@ PHP_METHOD(Tensor_Matrix, lessVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -9427,7 +9427,7 @@ PHP_METHOD(Tensor_Matrix, lessVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -9521,7 +9521,7 @@ PHP_METHOD(Tensor_Matrix, lessEqualVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_vector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\vector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -9548,7 +9548,7 @@ PHP_METHOD(Tensor_Matrix, lessEqualVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&bHat, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&bHat, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	zephir_read_property_cached(&_8, this_ptr, _zephir_prop_1, 14, PH_NOISY_CC | PH_READONLY);
 	if (Z_TYPE_P(&_8) == IS_STRING) {
@@ -9647,7 +9647,7 @@ PHP_METHOD(Tensor_Matrix, multiplyColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -9674,7 +9674,7 @@ PHP_METHOD(Tensor_Matrix, multiplyColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -9787,7 +9787,7 @@ PHP_METHOD(Tensor_Matrix, divideColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -9814,7 +9814,7 @@ PHP_METHOD(Tensor_Matrix, divideColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -9927,7 +9927,7 @@ PHP_METHOD(Tensor_Matrix, addColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -9954,7 +9954,7 @@ PHP_METHOD(Tensor_Matrix, addColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -10067,7 +10067,7 @@ PHP_METHOD(Tensor_Matrix, subtractColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -10094,7 +10094,7 @@ PHP_METHOD(Tensor_Matrix, subtractColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -10207,7 +10207,7 @@ PHP_METHOD(Tensor_Matrix, powColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -10234,7 +10234,7 @@ PHP_METHOD(Tensor_Matrix, powColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -10347,7 +10347,7 @@ PHP_METHOD(Tensor_Matrix, modColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -10374,7 +10374,7 @@ PHP_METHOD(Tensor_Matrix, modColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -10487,7 +10487,7 @@ PHP_METHOD(Tensor_Matrix, equalColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -10514,7 +10514,7 @@ PHP_METHOD(Tensor_Matrix, equalColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -10627,7 +10627,7 @@ PHP_METHOD(Tensor_Matrix, notEqualColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -10654,7 +10654,7 @@ PHP_METHOD(Tensor_Matrix, notEqualColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -10767,7 +10767,7 @@ PHP_METHOD(Tensor_Matrix, greaterColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -10794,7 +10794,7 @@ PHP_METHOD(Tensor_Matrix, greaterColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -10907,7 +10907,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqualColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -10934,7 +10934,7 @@ PHP_METHOD(Tensor_Matrix, greaterEqualColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -11047,7 +11047,7 @@ PHP_METHOD(Tensor_Matrix, lessColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -11074,7 +11074,7 @@ PHP_METHOD(Tensor_Matrix, lessColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -11187,7 +11187,7 @@ PHP_METHOD(Tensor_Matrix, lessEqualColumnVector)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(b, tensor_columnvector_ce)
+		Z_PARAM_OBJECT_OF_CLASS(b, zephir_get_internal_ce(SL("tensor\\columnvector")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
@@ -11214,7 +11214,7 @@ PHP_METHOD(Tensor_Matrix, lessEqualColumnVector)
 	}
 	ZEPHIR_INIT_VAR(&c);
 	array_init(&c);
-	ZEPHIR_CALL_METHOD(&_8, b, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_8, b, "asArray", NULL, 0);
 	zephir_check_call_status();
 	if (Z_TYPE_P(&_8) == IS_STRING) {
 		ZEPHIR_INIT_VAR(&_10);
@@ -12482,7 +12482,7 @@ PHP_METHOD(Tensor_Matrix, getIterator)
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 
 	object_init_ex(return_value, spl_ce_ArrayIterator);
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "asvectors", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "asVectors", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, return_value, "__construct", NULL, 23, &_0);
 	zephir_check_call_status();

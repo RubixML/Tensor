@@ -89,17 +89,17 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose)
 	ZVAL_UNDEF(&lup);
 	ZVAL_UNDEF(&_6);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 	zephir_fetch_params(1, 1, 0, &a);
-	ZEPHIR_CALL_METHOD(&_0, a, "issquare", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_0, a, "isSquare", NULL, 0);
 	zephir_check_call_status();
 	if (UNEXPECTED(!zephir_is_true(&_0))) {
 		ZEPHIR_INIT_VAR(&_1$$3);
 		object_init_ex(&_1$$3, tensor_exceptions_invalidargumentexception_ce);
-		ZEPHIR_CALL_METHOD(&_2$$3, a, "shapestring", NULL, 0);
+		ZEPHIR_CALL_METHOD(&_2$$3, a, "shapeString", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(&_3$$3);
 		ZEPHIR_CONCAT_SSVS(&_3$$3, "Matrix must be", " square, ", &_2$$3, " given.");
@@ -110,7 +110,7 @@ PHP_METHOD(Tensor_Decompositions_Lu, decompose)
 		return;
 	}
 	ZEPHIR_INIT_VAR(&result);
-	ZEPHIR_CALL_METHOD(&_4, a, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_4, a, "asArray", NULL, 0);
 	zephir_check_call_status();
 	tensor_lu(&result, &_4);
 	if (Z_TYPE_P(&result) == IS_NULL) {
@@ -164,9 +164,9 @@ PHP_METHOD(Tensor_Decompositions_Lu, __construct)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(3, 3)
-		Z_PARAM_OBJECT_OF_CLASS(l, tensor_matrix_ce)
-		Z_PARAM_OBJECT_OF_CLASS(u, tensor_matrix_ce)
-		Z_PARAM_OBJECT_OF_CLASS(p, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(l, zephir_get_internal_ce(SL("tensor\\matrix")))
+		Z_PARAM_OBJECT_OF_CLASS(u, zephir_get_internal_ce(SL("tensor\\matrix")))
+		Z_PARAM_OBJECT_OF_CLASS(p, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	zephir_fetch_params_without_memory_grow(3, 0, &l, &u, &p);
 	zephir_update_property_zval_cached(this_ptr, _zephir_prop_0, 8, l);

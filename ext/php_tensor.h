@@ -19,6 +19,9 @@
 
 
 
+#define ZEPHIR_BUFFER_ENABLED 1
+#define ZEPHIR_BUFFER_NAMESPACE "Tensor"
+
 
 
 ZEND_BEGIN_MODULE_GLOBALS(tensor)

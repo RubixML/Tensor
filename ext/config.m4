@@ -9,7 +9,7 @@ if test "$PHP_TENSOR" = "yes"; then
 	fi
 
 	AC_DEFINE(HAVE_TENSOR, 1, [Whether you have Tensor])
-	tensor_sources="tensor.c kernel/main.c kernel/memory.c kernel/exception.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c kernel/generator.c tensor/algebraic.zep.c
+	tensor_sources="tensor.c kernel/main.c kernel/memory.c kernel/exception.c kernel/debug.c kernel/backtrace.c kernel/object.c kernel/array.c kernel/string.c kernel/fcall.c kernel/require.c kernel/file.c kernel/operators.c kernel/math.c kernel/concat.c kernel/variables.c kernel/filter.c kernel/iterator.c kernel/time.c kernel/exit.c kernel/generator.c kernel/buffer.c tensor/algebraic.zep.c
 	tensor/arithmetic.zep.c
 	tensor/arraylike.zep.c
 	tensor/comparable.zep.c
@@ -74,21 +74,19 @@ if test "$PHP_TENSOR" = "yes"; then
 		[[#include "php_config.h"]]
 	)
 
-	AC_CHECK_DECL(
-		[HAVE_JSON],
+	dnl php-src stopped declaring HAVE_JSON in php_config.h in 8.4, so probing
+	dnl for it left ZEPHIR_USE_PHP_JSON undefined on 8.4 and 8.5 even though
+	dnl ext/json has been built in unconditionally since 8.0 -- which quietly
+	dnl demoted zephir_json_encode() to calling the userland json_encode()
+	dnl function. Probe for the header, which is what the code actually needs.
+	AC_CHECK_HEADERS(
+		[ext/json/php_json.h],
 		[
-			AC_CHECK_HEADERS(
-				[ext/json/php_json.h],
-				[
-					PHP_ADD_EXTENSION_DEP([tensor], [json])
-					AC_DEFINE([ZEPHIR_USE_PHP_JSON], [1], [Whether PHP json extension is present at compile time])
-				],
-				,
-				[[#include "main/php.h"]]
-			)
+			PHP_ADD_EXTENSION_DEP([tensor], [json])
+			AC_DEFINE([ZEPHIR_USE_PHP_JSON], [1], [Whether PHP json extension is present at compile time])
 		],
 		,
-		[[#include "php_config.h"]]
+		[[#include "main/php.h"]]
 	)
 
 	CPPFLAGS=$old_CPPFLAGS

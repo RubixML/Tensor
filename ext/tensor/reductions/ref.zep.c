@@ -74,13 +74,13 @@ PHP_METHOD(Tensor_Reductions_Ref, reduce)
 	ZVAL_UNDEF(&ref);
 	ZVAL_UNDEF(&_2);
 	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
 	zephir_memory_grow_stack(ZEPHIR_METHOD_GLOBALS_PTR, __func__);
 	zephir_fetch_params(1, 1, 0, &a);
 	ZEPHIR_INIT_VAR(&result);
-	ZEPHIR_CALL_METHOD(&_0, a, "asarray", NULL, 0);
+	ZEPHIR_CALL_METHOD(&_0, a, "asArray", NULL, 0);
 	zephir_check_call_status();
 	tensor_ref(&result, &_0);
 	if (Z_TYPE_P(&result) == IS_NULL) {
@@ -131,7 +131,7 @@ PHP_METHOD(Tensor_Reductions_Ref, __construct)
 	}
 
 	ZEND_PARSE_PARAMETERS_START(2, 2)
-		Z_PARAM_OBJECT_OF_CLASS(a, tensor_matrix_ce)
+		Z_PARAM_OBJECT_OF_CLASS(a, zephir_get_internal_ce(SL("tensor\\matrix")))
 		Z_PARAM_LONG(swaps)
 	ZEND_PARSE_PARAMETERS_END();
 	ZEPHIR_METHOD_GLOBALS_PTR = pecalloc(1, sizeof(zephir_method_globals), 0);
