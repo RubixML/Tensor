@@ -50,28 +50,16 @@ class Eigen
 
         $n = $a->n();
 
-        $matrix = [];
-
-        foreach ($a->asArray() as $row) {
-            $floats = [];
-
-            foreach ($row as $value) {
-                $floats[] = (float) $value;
-            }
-
-            $matrix[] = $floats;
-        }
-
         if ($n === 1) {
-            return new self($matrix[0], Matrix::quick([[1.0]]));
+            return new self($a->rowAsVector(0)->asArray(), Matrix::quick([[1.0]]));
         }
 
         if ($symmetric) {
-            $tri = self::tred2($matrix);
+            $tri = self::tred2($a->asArray());
 
             $result = self::tql2($tri['d'], $tri['e'], $tri['v']);
         } else {
-            $hess = self::orthes($matrix);
+            $hess = self::orthes($a->asArray());
 
             $result = self::hqr2($hess['h'], $hess['v']);
         }
@@ -105,7 +93,7 @@ class Eigen
      * @param list<list<float>> $a
      * @return array{d: list<float>, e: list<float>, v: list<list<float>>}
      */
-    private static function tred2(array $a) : array
+    protected static function tred2(array $a) : array
     {
         $n = count($a);
 
@@ -250,7 +238,7 @@ class Eigen
      * @param list<list<float>> $v
      * @return array{d: list<float>, v: list<list<float>>}
      */
-    private static function tql2(array $d, array $e, array $v) : array
+    protected static function tql2(array $d, array $e, array $v) : array
     {
         $n = count($d);
 
@@ -380,7 +368,7 @@ class Eigen
      * @param list<list<float>> $h
      * @return array{h: list<list<float>>, v: list<list<float>>}
      */
-    private static function orthes(array $h) : array
+    protected static function orthes(array $h) : array
     {
         $n = count($h);
 
@@ -492,7 +480,7 @@ class Eigen
      * @throws RuntimeException
      * @return array{d: list<float>, e: list<float>, v: list<list<float>>}
      */
-    private static function hqr2(array $h, array $v) : array
+    protected static function hqr2(array $h, array $v) : array
     {
         $nn = count($h);
 
@@ -949,7 +937,7 @@ class Eigen
      * @param float $yi
      * @return array{0: float, 1: float}
      */
-    private static function cdiv(float $xr, float $xi, float $yr, float $yi) : array
+    protected static function cdiv(float $xr, float $xi, float $yr, float $yi) : array
     {
         if (abs($yr) > abs($yi)) {
             $r = $yi / $yr;
