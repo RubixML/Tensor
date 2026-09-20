@@ -261,7 +261,6 @@ Compute the eigenvalues and eigenvectors of the matrix.
 Return the singular value decomposition (SVD) of the matrix.
 
 - **Returns:** [`Tensor\Decompositions\SVD`](decompositions/svd.md)
-- **Note:** Not implemented in the pure-PHP library — throws `Tensor\Exceptions\NotImplemented`. Available when the extension is loaded.
 
 ### `augmentAbove(Matrix $b) : Matrix`
 

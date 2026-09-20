@@ -8,7 +8,7 @@ The eigendecomposition (or spectral decomposition) of a matrix.
 
 The eigendecomposition is a matrix factorization resulting in a matrix of eigenvectors and a corresponding array of eigenvalues.
 
-> **Note:** For matrices with complex eigenvalues, only the real parts of the eigenvalues and eigenvectors are returned, mirroring the [extension](../getting-started.md). The eigenvector at row `i` of `eigenvectors()` corresponds to the eigenvalue at index `i` of `eigenvalues()`. Each eigenvector is normalized to unit length.
+> **Note:** For matrices with complex eigenvalues, only the real parts of the eigenvalues and eigenvectors are returned. The eigenvector at row `i` of `eigenvectors()` corresponds to the eigenvalue at index `i` of `eigenvalues()`. Each eigenvector is normalized to unit length.
 
 ## Factory
 
