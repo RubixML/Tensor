@@ -16,7 +16,7 @@ $ composer require rubix/tensor
 
 ## Requirements
 
-- [PHP](https://php.net) 8.0 or above
+- [PHP](https://php.net) 7.4 or above
 
 ## Contributing
 
