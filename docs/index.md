@@ -1,8 +1,6 @@
 # Tensor API Reference
 
-Tensor is a library and extension for scientific computing in PHP. It provides an object-oriented API consisting of a `Tensor` interface (composed of several sub-interfaces) implemented by three concrete classes, plus decomposition and reduction result objects.
-
-> **Note:** If both the library and the extension are installed, the extension takes precedence.
+Tensor is a library for scientific computing in PHP. It provides an object-oriented API consisting of a `Tensor` interface (composed of several sub-interfaces) implemented by three concrete classes, plus decomposition and reduction result objects.
 
 ## Namespace Map
 
@@ -73,7 +71,6 @@ Tensor \
 - **Math is float-only.** Element arrays are returned as `list<float>`; integers are cast to floats on construction.
 - **Immutable.** Tensors cannot be mutated in place — `offsetSet()` and `offsetUnset()` throw `RuntimeException`. Every operation returns a new tensor.
 - **Universal functions.** `Arithmetic` and `Comparable` methods dispatch on the operand type (scalar, `Vector`, `Matrix`) and are implemented by the concrete typed operators (e.g. `addScalar`, `addVector`, `addMatrix`, `addColumnVector`).
-- **Extension-backed.** When the extension is loaded, identical calls route into native C (OpenBLAS/LAPACKE) rather than the pure PHP implementations.
 
 ## Getting Started
 

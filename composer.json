@@ -1,14 +1,14 @@
 {
     "name": "rubix/tensor",
     "type": "library",
-    "description": "A library and extension that provides objects for scientific computing in PHP.",
+    "description": "A library that provides objects for scientific computing in PHP.",
     "homepage": "https://github.com/RubixML/Tensor",
     "license": "MIT",
     "keywords": [
         "1d convolution", "2d convolution", "arithmetic", "blas", "computation", "computing",
-        "convolution", "decomposition", "dot product", "engineering", "extension", "eigendecomposition",
+        "convolution", "decomposition", "dot product", "engineering", "eigendecomposition",
         "eigenvalue", "eigenvector", "lapack", "linear algebra", "math", "matmul", "matrix",
-        "matrix multiplication", "multithreaded", "vector norm", "php", "php extension", "pseudoinverse",
+        "matrix multiplication", "multithreaded", "vector norm", "php", "pseudoinverse",
         "scientific computing", "signal processing", "singular value decomposition", "svd", "statistics",
         "tensor", "vector", "trigonometry"
     ],
@@ -27,7 +27,6 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
-        "phalcon/zephir": "^1.0",
         "phpbench/phpbench": "^1.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^1.0",
@@ -36,8 +35,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Tensor\\": "src/",
-            "Zephir\\Optimizers\\FunctionCall\\": "optimizers/"
+            "Tensor\\": "src/"
         },
         "files": [
             "src/constants.php"
@@ -63,13 +61,6 @@
             "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
             "php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --using-cache=no"
         ],
-        "clean": "zephir fullclean",
-        "compile": [
-            "zephir generate",
-            "@php build-ext",
-            "zephir compile --no-dev"
-        ],
-        "install-ext": "zephir install",
         "fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php",
         "test": "phpunit"
     },

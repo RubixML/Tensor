@@ -1,5 +1,0 @@
-
-extern zend_class_entry *tensor_exceptions_runtimeexception_ce;
-
-ZEPHIR_INIT_CLASS(Tensor_Exceptions_RuntimeException);
-

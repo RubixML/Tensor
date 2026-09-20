@@ -19,7 +19,6 @@ use Tensor\Decompositions\LU;
 use Tensor\Exceptions\RuntimeException;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\DimensionalityMismatch;
-use Tensor\Decompositions\SVD;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
 use PHPUnit\Framework\TestCase;
@@ -555,28 +554,6 @@ class MatrixTest extends TestCase
 
     /**
      * @test
-     * @requires extension tensor
-     */
-    public function pseudoinverse() : void
-    {
-        $a = Matrix::quick([
-            [22, -17, 12],
-            [4, 11, -2],
-        ]);
-
-        $b = $a->pseudoinverse();
-
-        $expected = Matrix::quick([
-            [0.03147992432205172, 0.05583000490505223],
-            [-0.009144418751313844, 0.07003713825239999],
-            [0.01266554551187723, -0.0031357298016957483],
-        ]);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
      */
     public function det() : void
     {
@@ -961,107 +938,6 @@ class MatrixTest extends TestCase
         $expected = new Cholesky($l);
 
         $this->assertEqualsWithDelta($expected, $cholesky, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     * @requires extension tensor
-     * @dataProvider eigProvider
-     *
-     * @param Matrix $matrix
-     * @param Eigen $expected
-     */
-    public function eig(Matrix $matrix, Eigen $expected) : void
-    {
-        $eig = $matrix->eig(false);
-
-        $this->assertEqualsWithDelta($expected, $eig, self::MAX_DELTA);
-    }
-
-    /**
-     * @return Generator<mixed[]>
-     */
-    public function eigProvider() : Generator
-    {
-        yield [
-            Matrix::quick([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ]),
-            new Eigen(
-                [
-                    -15.096331148319537, 25.108706520450326, 13.9876246278692,
-                ],
-                Matrix::quick([
-                    [0.25848694820886425, -0.11314537870318066, -0.9593657388523845],
-                    [-0.8622719261400653, -0.17721179605718698, -0.47442924101375483],
-                    [-0.6684472200177011, -0.6126879076802705, -0.42165369894378907],
-                ])
-            ),
-        ];
-    }
-
-    /**
-     * @test
-     * @requires extension tensor
-     */
-    public function eigSymmetric() : void
-    {
-        $matrix = Matrix::quick([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ]);
-
-        $eig = $matrix->matmul($matrix)->eig(true);
-
-        $values = [-366.30071669298195, 335.92000012383926, 1084.3807165691428];
-
-        $vectors = Matrix::quick([
-            [0.5423765325213931, 0.8162941265260668, -0.19872492538460218],
-            [-0.04667292577741032, 0.26544998308386847, 0.9629942598375911],
-            [-0.8388380862654284, 0.5130304137961217, -0.1820726765627782],
-        ]);
-
-        $expected = new Eigen($values, $vectors);
-
-        $this->assertEqualsWithDelta($expected, $eig, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     * @requires extension tensor
-     */
-    public function svd() : void
-    {
-        $matrix = Matrix::quick([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ]);
-
-        $svd = $matrix->svd();
-
-        $u = Matrix::quick([
-            [-0.8436018806559158, 0.4252547343454771, -0.3278631999333884],
-            [0.08179499775610413, -0.5016868397437385, -0.8611735557772425],
-            [-0.5307027843302525, -0.7533052009276842, 0.38844025146657923],
-        ]);
-
-        $singularValues = [
-            34.66917512262571, 17.12630582468919, 8.929610580306822,
-        ];
-
-        $vT = Matrix::quick([
-            [-0.8320393250771425, 0.531457514846513, -0.15894486917903863],
-            [-0.4506078135544562, -0.48043370238236727, 0.7524201326246152],
-            [-0.3235168618307952, -0.6976649392999047, -0.6392186422366096],
-        ]);
-
-        $expected = new SVD($u, $singularValues, $vT);
-
-        $this->assertEqualsWithDelta($expected, $svd, self::MAX_DELTA);
     }
 
     /**

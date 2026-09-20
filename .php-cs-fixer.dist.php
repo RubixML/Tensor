@@ -4,8 +4,6 @@ use PhpCsFixer\Finder;
 use PhpCsFixer\Config;
 
 $finder = Finder::create()->in(__DIR__)
-    ->exclude('lib')
-    ->exclude('ext')
     ->exclude('docs');
 
 $config = new Config();
