@@ -4,7 +4,7 @@
 
 A library that provides objects for scientific computing in [PHP](https://php.net).
 
-The Tensor Extension has moved to [https://github.com/RubixML/Tensor-Ext](https://github.com/RubixML/Tensor).
+The Tensor Extension has moved to [https://github.com/RubixML/Tensor-Ext](https://github.com/RubixML/Tensor-Ext).
 
 ## Installation
 
