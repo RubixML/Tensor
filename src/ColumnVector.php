@@ -42,7 +42,7 @@ class ColumnVector extends Vector
      */
     public function transpose()
     {
-        return Vector::quick($this->a);
+        return Vector::fromArray($this->a, false);
     }
 
     /**
@@ -84,7 +84,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -115,7 +115,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -146,7 +146,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -177,7 +177,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -208,7 +208,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -239,7 +239,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -271,7 +271,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -303,7 +303,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -335,7 +335,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -367,7 +367,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -399,7 +399,7 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -431,6 +431,6 @@ class ColumnVector extends Vector
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 }

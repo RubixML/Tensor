@@ -1,5 +1,17 @@
 # Change Log
 
+- 4.0.0
+    - Made the pure-PHP library byte-compatible with the tensor_ext extension for
+      `serialize()` / `unserialize()`: `Vector`, `Matrix`, and `ColumnVector` now
+      implement `__serialize()` and `__unserialize()` so that payloads written by
+      either implementation can be read by the other.
+    - Renamed the `build()` / `quick()` factories to `Vector::fromArray(array
+      $a = [], bool $validate = true)` and `Matrix::fromArray(array $a = [], bool
+      $validate = true)` to match the Tensor-Ext API.
+    - Added `Vector::asTensorBuffer()` and `Matrix::asTensorBuffer()` plus a new
+      `Tensor\TensorBuffer` class exposing `toArray()`, `asBuffer()`, `count()`,
+      and a bounds-checked `get(int $index)`.
+
 - 3.1.0
     - Implemented the singular value decomposition (SVD) in the pure-PHP library
     - Implemented the Moore-Penrose pseudoinverse in the pure-PHP library via SVD

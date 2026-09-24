@@ -101,7 +101,7 @@ class RREF
             ++$col;
         }
 
-        return new self(Matrix::quick($b));
+        return new self(Matrix::fromArray($b, false));
     }
 
     /**
