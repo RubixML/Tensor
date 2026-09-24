@@ -40,25 +40,16 @@ class Vector implements Tensor
     protected int $n;
 
     /**
-     * Factory method to build a new vector from an array.
+     * Build a new vector from a PHP array of elements, validating and
+     * normalising each value to a float by default.
      *
      * @param (int|float)[] $a
-     * @return mixed
+     * @param bool $validate
+     * @return static
      */
-    public static function build(array $a = [])
+    public static function fromArray(array $a = [], bool $validate = true)
     {
-        return new static($a, true);
-    }
-
-    /**
-     * Build a vector foregoing any validation for quicker instantiation.
-     *
-     * @param (int|float)[] $a
-     * @return mixed
-     */
-    public static function quick(array $a = [])
-    {
-        return new static($a, false);
+        return new static($a, $validate);
     }
 
     /**
@@ -98,7 +89,7 @@ class Vector implements Tensor
                 . " must be greater than 0, $n given.");
         }
 
-        return static::quick(array_fill(0, $n, $value));
+        return static::fromArray(array_fill(0, $n, $value), false);
     }
 
     /**
@@ -123,7 +114,7 @@ class Vector implements Tensor
             $a[] = rand() / $max;
         }
 
-        return static::quick($a);
+        return static::fromArray($a, false);
     }
 
     /**
@@ -158,7 +149,7 @@ class Vector implements Tensor
             $a = array_slice($a, 0, $n);
         }
 
-        return static::quick($a);
+        return static::fromArray($a, false);
     }
 
     /**
@@ -204,7 +195,7 @@ class Vector implements Tensor
             $a[] = $k - 1.0;
         }
 
-        return static::quick($a);
+        return static::fromArray($a, false);
     }
 
     /**
@@ -229,7 +220,7 @@ class Vector implements Tensor
             $a[] = rand(-$max, $max) / $max;
         }
 
-        return static::quick($a);
+        return static::fromArray($a, false);
     }
 
     /**
@@ -242,7 +233,7 @@ class Vector implements Tensor
      */
     public static function range(float $start, float $end, float $interval = 1.0) : self
     {
-        return static::quick(range($start, $end, $interval));
+        return static::fromArray(range($start, $end, $interval), false);
     }
 
     /**
@@ -278,7 +269,7 @@ class Vector implements Tensor
 
         $a[] = $max;
 
-        return self::quick($a);
+        return self::fromArray($a, false);
     }
 
     /**
@@ -362,13 +353,23 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the vector elements as a TensorBuffer.
+     *
+     * @return TensorBuffer
+     */
+    public function asTensorBuffer() : TensorBuffer
+    {
+        return new TensorBuffer($this->a);
+    }
+
+    /**
      * Return this vector as a row matrix.
      *
      * @return Matrix
      */
     public function asRowMatrix() : Matrix
     {
-        return Matrix::quick([$this->a]);
+        return Matrix::fromArray([$this->a], false);
     }
 
     /**
@@ -384,7 +385,7 @@ class Vector implements Tensor
             $b[] = [$valueA];
         }
 
-        return Matrix::quick($b);
+        return Matrix::fromArray($b, false);
     }
 
     /**
@@ -418,7 +419,7 @@ class Vector implements Tensor
             $b[] = $rowB;
         }
 
-        return Matrix::quick($b);
+        return Matrix::fromArray($b, false);
     }
 
     /**
@@ -428,7 +429,7 @@ class Vector implements Tensor
      */
     public function transpose()
     {
-        return ColumnVector::quick($this->a);
+        return ColumnVector::fromArray($this->a, false);
     }
 
     /**
@@ -441,7 +442,7 @@ class Vector implements Tensor
      */
     public function map(callable $callback) : self
     {
-        return static::quick(array_map($callback, $this->a));
+        return static::fromArray(array_map($callback, $this->a), false);
     }
 
     /**
@@ -525,7 +526,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -569,7 +570,7 @@ class Vector implements Tensor
             $c[] = $sigma;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -1061,7 +1062,7 @@ class Vector implements Tensor
             $b[] = log($valueA, $base);
         }
 
-        return static::quick($b);
+        return static::fromArray($b, false);
     }
 
     /**
@@ -1298,7 +1299,7 @@ class Vector implements Tensor
             $b[] = round($valueA, $precision);
         }
 
-        return static::quick($b);
+        return static::fromArray($b, false);
     }
 
     /**
@@ -1355,7 +1356,7 @@ class Vector implements Tensor
             $b[] = $valueA;
         }
 
-        return static::quick($b);
+        return static::fromArray($b, false);
     }
 
     /**
@@ -1378,7 +1379,7 @@ class Vector implements Tensor
             $b[] = $valueA;
         }
 
-        return static::quick($b);
+        return static::fromArray($b, false);
     }
 
     /**
@@ -1401,7 +1402,7 @@ class Vector implements Tensor
             $b[] = $valueA;
         }
 
-        return static::quick($b);
+        return static::fromArray($b, false);
     }
 
     /**
@@ -1423,7 +1424,7 @@ class Vector implements Tensor
             }
         }
 
-        return static::quick($b);
+        return static::fromArray($b, false);
     }
 
     /**
@@ -1439,7 +1440,7 @@ class Vector implements Tensor
             $b[] = -$valueA;
         }
 
-        return static::quick($b);
+        return static::fromArray($b, false);
     }
 
     /**
@@ -1468,7 +1469,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1497,7 +1498,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1526,7 +1527,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1555,7 +1556,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1584,7 +1585,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1613,7 +1614,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1642,7 +1643,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1671,7 +1672,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1700,7 +1701,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1729,7 +1730,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1758,7 +1759,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1787,7 +1788,7 @@ class Vector implements Tensor
             $c[] = $rowC;
         }
 
-        return Matrix::quick($c);
+        return Matrix::fromArray($c, false);
     }
 
     /**
@@ -1810,7 +1811,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] * $valueB;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -1833,7 +1834,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] / $valueB;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -1856,7 +1857,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] + $valueB;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -1879,7 +1880,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] - $valueB;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -1902,7 +1903,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] ** $valueB;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -1925,7 +1926,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] % $valueB;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -1948,7 +1949,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] == $valueB ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -1971,7 +1972,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] != $valueB ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -1994,7 +1995,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] > $valueB ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2017,7 +2018,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] >= $valueB ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2040,7 +2041,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] < $valueB ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2063,7 +2064,7 @@ class Vector implements Tensor
             $c[] = $this->a[$i] <= $valueB ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2080,7 +2081,7 @@ class Vector implements Tensor
             $c[] = $valueA * $b;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2097,7 +2098,7 @@ class Vector implements Tensor
             $c[] = $valueA / $b;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2114,7 +2115,7 @@ class Vector implements Tensor
             $c[] = $valueA + $b;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2131,7 +2132,7 @@ class Vector implements Tensor
             $c[] = $valueA - $b;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2148,7 +2149,7 @@ class Vector implements Tensor
             $c[] = $valueA ** $b;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2165,7 +2166,7 @@ class Vector implements Tensor
             $c[] = $valueA % $b;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2182,7 +2183,7 @@ class Vector implements Tensor
             $c[] = $valueA == $b ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2199,7 +2200,7 @@ class Vector implements Tensor
             $c[] = $valueA != $b ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2216,7 +2217,7 @@ class Vector implements Tensor
             $c[] = $valueA > $b ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2233,7 +2234,7 @@ class Vector implements Tensor
             $c[] = $valueA >= $b ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2250,7 +2251,7 @@ class Vector implements Tensor
             $c[] = $valueA < $b ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2267,7 +2268,7 @@ class Vector implements Tensor
             $c[] = $valueA <= $b ? 1 : 0;
         }
 
-        return static::quick($c);
+        return static::fromArray($c, false);
     }
 
     /**
@@ -2282,7 +2283,7 @@ class Vector implements Tensor
 
     /**
      * @param mixed $index
-     * @param mixed[] $values
+     * @param mixed $values
      * @throws RuntimeException
      */
     #[\ReturnTypeWillChange]
@@ -2338,5 +2339,33 @@ class Vector implements Tensor
     public function getIterator() : Traversable
     {
         return new ArrayIterator($this->a);
+    }
+
+    /**
+     * Return the elements of the vector as a plain PHP array so that only the
+     * values, and not the object structure, appear in the serialized form.
+     *
+     * @return list<float>
+     */
+    public function __serialize() : array
+    {
+        return [
+            'data' => $this->asArray(),
+            'n' => $this->n,
+        ];
+    }
+
+    /**
+     * Restore the vector from the plain array of elements produced by
+     * __serialize() by rebuilding its internal state.
+     *
+     * @param array{data: list<float>, n: int} $data
+     */
+    public function __unserialize(array $data) : void
+    {
+        $rebuilt = static::fromArray($data['data']);
+
+        $this->a = $rebuilt->asArray();
+        $this->n = $data['n'];
     }
 }

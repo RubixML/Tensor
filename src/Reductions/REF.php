@@ -105,7 +105,7 @@ class REF
             }
         }
 
-        return new self(Matrix::quick($b), $swaps);
+        return new self(Matrix::fromArray($b, false), $swaps);
     }
 
     /**
@@ -165,7 +165,7 @@ class REF
             ++$col;
         }
 
-        return new self(Matrix::quick($b), $swaps);
+        return new self(Matrix::fromArray($b, false), $swaps);
     }
 
     /**

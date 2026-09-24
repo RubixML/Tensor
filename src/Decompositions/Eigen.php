@@ -51,7 +51,7 @@ class Eigen
         $n = $a->n();
 
         if ($n === 1) {
-            return new self($a->rowAsVector(0)->asArray(), Matrix::quick([[1.0]]));
+            return new self($a->rowAsVector(0)->asArray(), Matrix::fromArray([[1.0]], false));
         }
 
         if ($symmetric) {
@@ -83,7 +83,7 @@ class Eigen
             }
         }
 
-        return new self($d, Matrix::quick($rows));
+        return new self($d, Matrix::fromArray($rows, false));
     }
 
     /**

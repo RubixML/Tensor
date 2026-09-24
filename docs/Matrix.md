@@ -27,13 +27,17 @@ Instantiate a matrix directly.
 - **Throws:** `Tensor\Exceptions\InvalidArgumentException` if rows have unequal column counts
 - **Note:** Prefer the factory methods below.
 
-### `Matrix::build(array $a = []) : Matrix`
+### `Matrix::fromArray(array $a = [], bool $validate = true) : Matrix`
 
-Factory method to build a new matrix from an array, running validation.
+Build a matrix from a PHP array of rows, normalising each value to a `float`
+and (by default) validating rectangularity and casting non-floats. Pass
+`$validate = false` to skip validation for quicker construction, e.g. when
+the source is already known to be a well-formed `list<list<float>>`.
 
-### `Matrix::quick(array $a = []) : Matrix`
-
-Build a new matrix foregoing any validation for quicker instantiation.
+- **Parameters:**
+  - `$a` — `array<array<int|float>>`
+  - `$validate` — whether to validate rows and cast non-floats to `float` (default `true`)
+- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$validate = true` and rows have unequal column counts
 
 ### `Matrix::identity(int $n) : Matrix`
 
@@ -134,6 +138,23 @@ Return the diagonal elements of a square matrix as a vector.
 Return the elements of the matrix in a 2-d array.
 
 - **Returns:** `list<list<float>>`
+
+### `asTensorBuffer() : TensorBuffer`
+
+Return the underlying elements (flattened in row-major order) wrapped as a
+`Tensor` `TensorBuffer`, mirroring the Tensor-Ext surface area.
+
+- **Returns:** `Tensor\TensorBuffer`
+
+### `__serialize() : array`
+
+Return the elements of the matrix as a plain PHP array of rows so that only
+the values, and not the object structure, appear in the serialized form.
+Output is byte-compatible with the `Tensor-Ext` polyfill.
+
+### `__unserialize(array $data) : void`
+
+Restore the matrix from a plain array of rows produced by `__serialize()`.
 
 ### `asVectors() : array`
 

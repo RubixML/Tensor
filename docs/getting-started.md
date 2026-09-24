@@ -28,13 +28,13 @@ use Tensor\Matrix;
 use Tensor\Vector;
 
 // Build a 2 x 3 matrix.
-$a = Matrix::build([
+$a = Matrix::fromArray([
     [1.0, 2.0, 3.0],
     [4.0, 5.0, 6.0],
 ]);
 
 // Build a 3 x 2 matrix.
-$b = Matrix::build([
+$b = Matrix::fromArray([
     [7.0, 8.0],
     [9.0, 10.0],
     [11.0, 12.0],

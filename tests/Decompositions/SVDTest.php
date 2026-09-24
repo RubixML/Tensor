@@ -23,11 +23,11 @@ class SVDTest extends TestCase
      */
     public function decomposeSquare3x3() : void
     {
-        $a = Matrix::quick([
+        $a = Matrix::fromArray([
             [22.0, -17.0, 12.0],
             [4.0, 11.0, -2.0],
             [20.0, -6.0, -9.0],
-        ]);
+        ], false);
 
         $svd = SVD::decompose($a);
 
@@ -50,10 +50,10 @@ class SVDTest extends TestCase
      */
     public function decomposeSquare2x2() : void
     {
-        $a = Matrix::quick([
+        $a = Matrix::fromArray([
             [1.0, 2.0],
             [3.0, 4.0],
-        ]);
+        ], false);
 
         $svd = SVD::decompose($a);
 
@@ -70,12 +70,12 @@ class SVDTest extends TestCase
      */
     public function decomposeTall() : void
     {
-        $a = Matrix::quick([
+        $a = Matrix::fromArray([
             [1.0, 2.0],
             [3.0, 4.0],
             [5.0, 6.0],
             [7.0, 8.0],
-        ]);
+        ], false);
 
         $svd = SVD::decompose($a);
 
@@ -95,10 +95,10 @@ class SVDTest extends TestCase
      */
     public function decomposeWide() : void
     {
-        $a = Matrix::quick([
+        $a = Matrix::fromArray([
             [1.0, 2.0, 3.0],
             [4.0, 5.0, 6.0],
-        ]);
+        ], false);
 
         $svd = SVD::decompose($a);
 
@@ -118,7 +118,7 @@ class SVDTest extends TestCase
      */
     public function decompose1x1() : void
     {
-        $a = Matrix::quick([[9.0]]);
+        $a = Matrix::fromArray([[9.0]], false);
 
         $svd = SVD::decompose($a);
 
@@ -132,10 +132,10 @@ class SVDTest extends TestCase
      */
     public function decomposeRankDeficient() : void
     {
-        $a = Matrix::quick([
+        $a = Matrix::fromArray([
             [1.0, 1.0],
             [2.0, 2.0],
-        ]);
+        ], false);
 
         $svd = SVD::decompose($a);
 
@@ -155,11 +155,11 @@ class SVDTest extends TestCase
      */
     public function decomposePreservesTinySingularValues() : void
     {
-        $a = Matrix::quick([
+        $a = Matrix::fromArray([
             [1.0, 0.0, 0.0],
             [0.0, 1e-9, 0.0],
             [0.0, 0.0, 0.0],
-        ]);
+        ], false);
 
         $svd = SVD::decompose($a);
 
@@ -181,12 +181,12 @@ class SVDTest extends TestCase
             $this->markTestSkipped('Extension tensor is loaded.');
         }
 
-        $tall = Matrix::quick([
+        $tall = Matrix::fromArray([
             [1.0, 2.0],
             [3.0, 4.0],
             [5.0, 6.0],
             [7.0, 8.0],
-        ]);
+        ], false);
 
         $svdTall = SVD::decompose($tall);
 
@@ -194,10 +194,10 @@ class SVDTest extends TestCase
 
         $this->assertEqualsWithDelta($tall, $svdTall->u()->matmul($svdTall->s())->matmul($svdTall->vT()), self::MAX_DELTA);
 
-        $wide = Matrix::quick([
+        $wide = Matrix::fromArray([
             [1.0, 2.0, 3.0],
             [4.0, 5.0, 6.0],
-        ]);
+        ], false);
 
         $svdWide = SVD::decompose($wide);
 
@@ -211,17 +211,17 @@ class SVDTest extends TestCase
      */
     public function constructAndAccess() : void
     {
-        $u = Matrix::quick([
+        $u = Matrix::fromArray([
             [1.0, 0.0],
             [0.0, 1.0],
-        ]);
+        ], false);
 
         $singularValues = [5.0, 3.0];
 
-        $vT = Matrix::quick([
+        $vT = Matrix::fromArray([
             [1.0, 0.0],
             [0.0, 1.0],
-        ]);
+        ], false);
 
         $svd = new SVD($u, $singularValues, $vT);
 
@@ -235,10 +235,10 @@ class SVDTest extends TestCase
         // The singular value matrix is an m by n matrix with the singular values on the diagonal.
         $this->assertSame([2, 2], $svd->s()->shape());
 
-        $expectedS = Matrix::quick([
+        $expectedS = Matrix::fromArray([
             [5.0, 0.0],
             [0.0, 3.0],
-        ]);
+        ], false);
 
         $this->assertEqualsWithDelta($expectedS, $svd->s(), self::MAX_DELTA);
     }
@@ -259,6 +259,6 @@ class SVDTest extends TestCase
             $s[$i][$i] = $value;
         }
 
-        return $svd->u()->matmul(Matrix::quick($s))->matmul($svd->vT());
+        return $svd->u()->matmul(Matrix::fromArray($s, false))->matmul($svd->vT());
     }
 }

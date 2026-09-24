@@ -250,9 +250,9 @@ class SVD
         }
 
         return new self(
-            Matrix::quick($uMatrix),
+            Matrix::fromArray($uMatrix, false),
             array_slice($singularValues, 0, $k),
-            Matrix::quick($vT)
+            Matrix::fromArray($vT, false)
         );
     }
 
@@ -307,7 +307,7 @@ class SVD
             $s[$i][$i] = $value;
         }
 
-        return Matrix::quick($s);
+        return Matrix::fromArray($s, false);
     }
 
     /**

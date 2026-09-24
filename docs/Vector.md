@@ -23,18 +23,16 @@ Instantiate a vector directly.
   - `$validate` — whether to validate and cast elements to floats (default `true`)
 - **Note:** Prefer the factory methods below.
 
-### `Vector::build(array $a = [])`
+### `Vector::fromArray(array $a = [], bool $validate = true)`
 
-Factory method to build a new vector from an array, running validation.
+Build a vector from a PHP array of elements, normalising each value to a
+`float` and (by default) validating the input. Pass `$validate = false` to
+skip validation for quicker construction, e.g. when the source is already
+trusted and known to be a `list<float>`.
 
-- **Parameters:** `$a` — `(int|float)[]`
-- **Returns:** `mixed` (a `Vector`/`static`)
-
-### `Vector::quick(array $a = [])`
-
-Build a vector foregoing any validation for quicker instantiation.
-
-- **Parameters:** `$a` — `(int|float)[]`
+- **Parameters:**
+  - `$a` — `(int|float)[]`
+  - `$validate` — whether to cast non-floats to `float` (default `true`)
 - **Returns:** `mixed` (a `Vector`/`static`)
 
 ### `Vector::zeros(int $n) : Vector`
@@ -139,6 +137,23 @@ Return the number of columns in the vector. Equals `size()`.
 Return the vector as an array.
 
 - **Returns:** `list<float>`
+
+### `asTensorBuffer() : TensorBuffer`
+
+Return the underlying elements wrapped as a `Tensor` `TensorBuffer`, mirroring
+the Tensor-Ext surface area.
+
+- **Returns:** `Tensor\TensorBuffer`
+
+### `__serialize() : array`
+
+Return the elements of the vector as a plain PHP array so that only the values,
+and not the object structure, appear in the serialized form. Output is
+byte-compatible with the `Tensor-Ext` polyfill.
+
+### `__unserialize(array $data) : void`
+
+Restore the vector from a plain array of elements produced by `__serialize()`.
 
 ### `asRowMatrix() : Matrix`
 

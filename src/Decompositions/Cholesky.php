@@ -71,7 +71,7 @@ class Cholesky
             }
         }
 
-        $l = Matrix::quick($l);
+        $l = Matrix::fromArray($l, false);
 
         return new self($l);
     }

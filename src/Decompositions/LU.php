@@ -123,9 +123,9 @@ class LU
         }
 
         return new self(
-            Matrix::quick($l),
-            Matrix::quick($u),
-            Matrix::quick($p)
+            Matrix::fromArray($l, false),
+            Matrix::fromArray($u, false),
+            Matrix::fromArray($p, false)
         );
     }
 
