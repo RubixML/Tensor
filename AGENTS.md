@@ -13,7 +13,7 @@ Guidance for AI coding agents contributing to **Tensor** — scientific computin
 
 ## Environment
 
-- PHP **7.4+** (CI matrix is 7.4 → 8.5). `composer.json` still declares `>=7.4`.
+- PHP **8.3+** (CI matrix is 8.3 → 8.5).
 - Dev tooling is installed as Composer dev dependencies (PHPStan, php-cs-fixer, phpunit, phpbench).
 
 ## Commands

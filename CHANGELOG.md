@@ -1,6 +1,9 @@
 # Change Log
 
 - 4.0.0
+    - Added `fromArray()` factory method to build from PHP array
+    - Removed `build()` and `quick()` factory methods
+    - Tensors now take a TensorBuffer in the constructor
     - Modulus results no longer rounded to nearest integer 
 
 - 3.1.0
