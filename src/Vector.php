@@ -285,7 +285,7 @@ class Vector implements Tensor
     /**
      * @param mixed[] $a
      */
-    final public function __construct(array $a)
+    final protected function __construct(array $a)
     {
         $this->a = $a;
         $this->n = count($a);

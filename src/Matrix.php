@@ -376,7 +376,7 @@ class Matrix implements Tensor
     /**
      * @param array<array<float>> $a
      */
-    public function __construct(array $a)
+    protected function __construct(array $a)
     {
         $m = count($a);
         $n = count(current($a) ?: []);
