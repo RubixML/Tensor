@@ -140,52 +140,6 @@ class Vector implements Tensor
     }
 
     /**
-     * Generate a vector with n elements from a Poisson distribution.
-     *
-     * @param int $n
-     * @param float $lambda
-     * @throws InvalidArgumentException
-     * @return self
-     */
-    public static function poisson(int $n, float $lambda = 1.0) : self
-    {
-        if ($n < 1) {
-            throw new InvalidArgumentException('Number of elements'
-                . " must be greater than 0, $n given.");
-        }
-
-        if ($lambda < 0.0) {
-            throw new InvalidArgumentException('Lambda must be'
-                . " greater than or equal to 0, $lambda given.");
-        }
-
-        if ($lambda === 0.0) {
-            return self::fill(0.0, $n);
-        }
-
-        $max = getrandmax();
-
-        $l = exp(-$lambda);
-
-        $a = [];
-
-        while (count($a) < $n) {
-            $k = 0.0;
-            $p = 1.0;
-
-            while ($p > $l) {
-                ++$k;
-
-                $p *= rand() / $max;
-            }
-
-            $a[] = $k - 1.0;
-        }
-
-        return static::fromArray($a, false);
-    }
-
-    /**
      * Return a uniform random vector with mean 0 and unit variance.
      *
      * @param int $n

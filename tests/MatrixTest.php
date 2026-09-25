@@ -1001,32 +1001,6 @@ class MatrixTest extends TestCase
     }
 
     #[Test]
-    public function poisson() : void
-    {
-        $matrix = Matrix::poisson(6, 4, 2.);
-
-        $this->assertCount(24, $matrix);
-    }
-
-    #[Test]
-    public function poissonZeroLambdaIsZero() : void
-    {
-        $matrix = Matrix::poisson(3, 3, 0.0);
-
-        $expected = Matrix::fill(0.0, 3, 3);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    #[Test]
-    public function poissonNegativeLambdaThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Matrix::poisson(1, 1, -1.0);
-    }
-
-    #[Test]
     public function uniform() : void
     {
         $matrix = Matrix::uniform(3, 3);

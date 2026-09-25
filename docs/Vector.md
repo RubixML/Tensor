@@ -75,14 +75,6 @@ Return a standard normally distributed (Gaussian) random vector with mean 0 and 
 - **Returns:** `Vector`
 - **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$n < 1`
 
-### `Vector::poisson(int $n, float $lambda = 1.0) : Vector`
-
-Generate a vector with `n` elements from a Poisson distribution.
-
-- **Parameters:** `$n` — the number of elements, `$lambda` — rate parameter (default `1.0`)
-- **Returns:** `Vector`
-- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$n < 1`
-
 ### `Vector::uniform(int $n) : Vector`
 
 Return a uniform random vector with mean 0 and unit variance.

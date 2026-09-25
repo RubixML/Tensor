@@ -244,64 +244,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Generate a m x n matrix with elements from a Poisson distribution.
-     *
-     * @param int $m
-     * @param int $n
-     * @param float $lambda
-     * @throws InvalidArgumentException
-     * @return self
-     */
-    public static function poisson(int $m, int $n, float $lambda = 1.0) : self
-    {
-        if ($m < 1) {
-            throw new InvalidArgumentException('M must be'
-                . " greater than 0, $m given.");
-        }
-
-        if ($n < 1) {
-            throw new InvalidArgumentException('N must be'
-                . " greater than 0, $n given.");
-        }
-
-        if ($lambda < 0.0) {
-            throw new InvalidArgumentException('Lambda must be'
-                . " greater than or equal to 0, $lambda given.");
-        }
-
-        if ($lambda === 0.0) {
-            return self::fill(0.0, $m, $n);
-        }
-
-        $max = getrandmax();
-
-        $l = exp(-$lambda);
-
-        $a = [];
-
-        while (count($a) < $m) {
-            $rowA = [];
-
-            while (count($rowA) < $n) {
-                $k = 0.0;
-                $p = 1.0;
-
-                while ($p > $l) {
-                    ++$k;
-
-                    $p *= rand() / $max;
-                }
-
-                $rowA[] = $k - 1.0;
-            }
-
-            $a[] = $rowA;
-        }
-
-        return self::fromArray($a, false);
-    }
-
-    /**
      * Return a uniform random matrix with mean 0 and unit variance.
      *
      * @param int $m

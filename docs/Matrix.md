@@ -77,12 +77,6 @@ Return a standard normally distributed random matrix, i.e. values between -1 and
 
 - **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$m < 1` or `$n < 1`
 
-### `Matrix::poisson(int $m, int $n, float $lambda = 1.0) : Matrix`
-
-Generate an m x n matrix with elements from a Poisson distribution.
-
-- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$m < 1` or `$n < 1`
-
 ### `Matrix::uniform(int $m, int $n) : Matrix`
 
 Return a uniform random matrix with mean 0 and unit variance.

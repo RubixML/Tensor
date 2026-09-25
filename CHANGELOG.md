@@ -3,6 +3,7 @@
 - 4.0.0
     - Added `fromArray()` factory method to build from PHP array
     - Removed `build()` and `quick()` factory methods
+    - Removed `poisson()` factory method from Matrix and Vector
     - Tensor constructors are no longer public
     - Modulus results no longer rounded to nearest integer
     - Standardized serial representation with extension
