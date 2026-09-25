@@ -2,7 +2,7 @@
 
 namespace Tensor;
 
-interface Algebraic
+interface Unary
 {
     /**
      * Take the absolute value of the tensor.

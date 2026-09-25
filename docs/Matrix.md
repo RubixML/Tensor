@@ -3,7 +3,7 @@
 A two dimensional (rank 2) tensor with integer and/or floating point elements.
 
 - **Namespace:** `Tensor\Matrix`
-- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Algebraic`, `Trigonometric`, `Statistical`, `Special`
+- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Unary`, `Trigonometric`, `Statistical`, `Reductions`
 - **Also implements:** `ArrayAccess`, `IteratorAggregate`, `Countable`
 
 ## Overview
@@ -399,9 +399,9 @@ The column vector is broadcast along the rows of the matrix. `*` is one of the o
 - `lessScalar(float $b) : self` — element-wise less-than comparison
 - `lessEqualScalar(float $b) : self` — element-wise less-than-or-equal comparison
 
-## Algebraic
+## Unary
 
-See [Algebraic](interfaces/algebraic.md). Each method returns a new `Matrix`.
+See [Unary](interfaces/Unary.md). Each method returns a new `Matrix`.
 
 - `abs() : self` — absolute value of each element
 - `square() : self` — square of the matrix element-wise
@@ -432,7 +432,7 @@ See [Trigonometric](interfaces/trigonometric.md). Each method returns a new `Mat
 
 ## Statistical & Reductions
 
-See [Statistical](interfaces/statistical.md) and [Special](interfaces/special.md). For a `Matrix`, row-wise reductions return a `ColumnVector`.
+See [Statistical](interfaces/statistical.md) and [Reductions](interfaces/special.md). For a `Matrix`, row-wise reductions return a `ColumnVector`.
 
 - `sum() : ColumnVector` — sum the rows of the matrix
 - `product() : ColumnVector` — calculate the row product of the matrix

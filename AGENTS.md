@@ -54,7 +54,7 @@ composer fix
 - **Documentation & changelog:** update docs if behavior changes, and add a `CHANGELOG.md` entry for user-facing changes.
 - **PHPDoc:** classes use `@category` / `@package` / `@author` blocks; methods carry param and return annotations. Use `@var list<float>` for element arrays.
 - **Exceptions** are typed under `Tensor\Exceptions` (e.g. `InvalidArgumentException`, `DimensionalityMismatch`, `RuntimeException`). Use the existing ones rather than `Exception`.
-- **Math is float-only.** Values stored/computed as `float`; don't introduce integer-only branches. When adding a new operation, mirror it across the `Tensor` sub-interfaces (`Arithmetic`, `Comparable`, `Algebraic`, `Trigonometric`, `Statistical`, `Special`).
+- **Math is float-only.** Values stored/computed as `float`; don't introduce integer-only branches. When adding a new operation, mirror it across the `Tensor` sub-interfaces (`Arithmetic`, `Comparable`, `Unary`, `Trigonometric`, `Statistical`, `Reductions`).
 - Optimizations should be accompanied by a before and after benchmark to measure and prove the performance gain.
 
 ## Working verification paths

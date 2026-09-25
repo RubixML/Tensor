@@ -14,10 +14,10 @@ Tensor \
 ├── ArrayLike (interface)
 ├── Arithmetic (interface)
 ├── Comparable (interface)
-├── Algebraic (interface)
+├── Unary (interface)
 ├── Trigonometric (interface)
 ├── Statistical (interface)
-├── Special (interface)
+├── Reductions (interface)
 │
 ├── Decompositions
 │   ├── Cholesky
@@ -45,10 +45,10 @@ Tensor \
 | [ArrayLike](interfaces/arraylike.md) | Array-like access, iteration, counting, and mapping. |
 | [Arithmetic](interfaces/arithmetic.md) | Universal element-wise arithmetic functions. |
 | [Comparable](interfaces/comparable.md) | Universal element-wise comparison functions. |
-| [Algebraic](interfaces/algebraic.md) | Element-wise algebraic functions. |
+| [Unary](interfaces/Unary.md) | Element-wise Unary functions. |
 | [Trigonometric](interfaces/trigonometric.md) | Element-wise trigonometric functions. |
 | [Statistical](interfaces/statistical.md) | Statistical measures. |
-| [Special](interfaces/special.md) | Reductions and clipping operations. |
+| [Reductions](interfaces/special.md) | Reductions and clipping operations. |
 
 ## Decompositions
 

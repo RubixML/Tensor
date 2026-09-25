@@ -2,7 +2,7 @@
 
 namespace Tensor;
 
-interface Special
+interface Reductions
 {
     /**
      * Sum the tensor.

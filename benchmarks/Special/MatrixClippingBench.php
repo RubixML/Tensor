@@ -1,11 +1,11 @@
 <?php
 
-namespace Tensor\Benchmarks\Special;
+namespace Tensor\Benchmarks\Reductions;
 
 use Tensor\Matrix;
 
 /**
- * @Groups({"Special"})
+ * @Groups({"Reductions"})
  * @BeforeMethods({"setUp"})
  */
 class MatrixClippingBench

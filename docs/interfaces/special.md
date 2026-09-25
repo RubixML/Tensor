@@ -1,15 +1,15 @@
-# Special
+# Reductions
 
 Reductions and clipping operations.
 
-- **Namespace:** `Tensor\Special`
+- **Namespace:** `Tensor\Reductions`
 
 ## Overview
 
-`Special` defines aggregate reductions and interval-clipping operations.
+`Reductions` defines aggregate reductions and interval-clipping operations.
 
 ```php
-interface Special
+interface Reductions
 ```
 
 - For `Vector`, reductions return a `float` scalar.

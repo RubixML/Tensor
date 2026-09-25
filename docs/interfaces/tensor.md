@@ -10,7 +10,7 @@ Interface implemented by all tensor objects.
 
 ```php
 interface Tensor extends ArrayLike, Arithmetic, Comparable,
-    Algebraic, Trigonometric, Statistical, Special
+    Unary, Trigonometric, Statistical, Reductions
 ```
 
 ## Inherited Method Groups
@@ -20,10 +20,10 @@ interface Tensor extends ArrayLike, Arithmetic, Comparable,
 | [ArrayLike](arraylike.md) | `shape`, `shapeString`, `size`, `map`, `reduce`, `asArray` |
 | [Arithmetic](arithmetic.md) | `multiply`, `divide`, `add`, `subtract`, `pow`, `mod` |
 | [Comparable](comparable.md) | `equal`, `notEqual`, `greater`, `greaterEqual`, `less`, `lessEqual` |
-| [Algebraic](algebraic.md) | `abs`, `square`, `sqrt`, `reciprocal`, `exp`, `expm1`, `log`, `log1p`, `round`, `floor`, `ceil`, `sign`, `negate` |
+| [Unary](Unary.md) | `abs`, `square`, `sqrt`, `reciprocal`, `exp`, `expm1`, `log`, `log1p`, `round`, `floor`, `ceil`, `sign`, `negate` |
 | [Trigonometric](trigonometric.md) | `sin`, `asin`, `cos`, `acos`, `tan`, `atan`, `rad2deg`, `deg2rad` |
 | [Statistical](statistical.md) | `mean`, `variance`, `median`, `quantile` |
-| [Special](special.md) | `sum`, `product`, `min`, `max`, `clip`, `clipLower`, `clipUpper` |
+| [Reductions](special.md) | `sum`, `product`, `min`, `max`, `clip`, `clipLower`, `clipUpper` |
 
 Additionally, because `ArrayLike` extends `ArrayAccess`, `IteratorAggregate`, and `Countable`, every tensor is array-accessible, iterable, and countable.
 

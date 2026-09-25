@@ -6,6 +6,7 @@
     - Tensor constructors are no longer public
     - Modulus results no longer rounded to nearest integer
     - Standardized serial representation with extension
+    - Rename Special interface to Reductions and Algebraic to Unary
 
 - 3.1.0
     - Implemented the singular value decomposition (SVD) in the pure-PHP library
@@ -69,7 +70,7 @@
     - Remove dependency on JAMA library
     - Remove previously deprecated items
     - Matrix returns vector on row access
-    - Added Algebraic and Special function interfaces
+    - Added Unary and Reductions function interfaces
 
 - 2.2.3
     - Remove dependency on pthreads

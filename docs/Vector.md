@@ -3,7 +3,7 @@
 A one dimensional (rank 1) tensor with integer and/or floating point elements.
 
 - **Namespace:** `Tensor\Vector`
-- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Algebraic`, `Trigonometric`, `Statistical`, `Special`
+- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Unary`, `Trigonometric`, `Statistical`, `Reductions`
 - **Also implements:** `ArrayAccess`, `IteratorAggregate`, `Countable`
 
 ## Overview
@@ -304,9 +304,9 @@ The vector is applied to each row of the matrix, broadcasting along columns. `*`
 - `lessScalar(float $b) : self` — element-wise less-than comparison
 - `lessEqualScalar(float $b) : self` — element-wise less-than-or-equal comparison
 
-## Algebraic
+## Unary
 
-See [Algebraic](interfaces/algebraic.md). Each method returns a new `Vector`.
+See [Unary](interfaces/Unary.md). Each method returns a new `Vector`.
 
 - `abs() : self` — absolute value of the vector
 - `square() : self` — square the vector
@@ -337,7 +337,7 @@ See [Trigonometric](interfaces/trigonometric.md). Each method returns a new `Vec
 
 ## Statistical & Reductions
 
-See [Statistical](interfaces/statistical.md) and [Special](interfaces/special.md). For a `Vector` these return scalar `float`s.
+See [Statistical](interfaces/statistical.md) and [Reductions](interfaces/special.md). For a `Vector` these return scalar `float`s.
 
 - `sum() : float` — the sum of the vector
 - `product() : float` — the product of the vector

@@ -2,7 +2,7 @@
 
 namespace Tensor;
 
-interface Tensor extends ArrayLike, Arithmetic, Comparable, Algebraic, Trigonometric, Statistical, Special
+interface Tensor extends ArrayLike, Arithmetic, Comparable, Unary, Trigonometric, Statistical, Reductions
 {
     //
 }

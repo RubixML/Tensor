@@ -32,8 +32,8 @@ class LUTest extends TestCase
         $lu = LU::decompose($a);
 
         $l = Matrix::fromArray([
-            [1.0, 0, 0],
-            [0.18181818181818182, 1.0, 0],
+            [1.0, 0.0, 0.0],
+            [0.18181818181818182, 1.0, 0.0],
             [0.9090909090909091, 0.6709677419354838, 1.0],
         ], false);
 
@@ -44,8 +44,8 @@ class LUTest extends TestCase
         ], false);
 
         $p = Matrix::fromArray([
-            [1.0, 0, 0],
-            [0.0, 1.0, 0],
+            [1.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
             [0.0, 0.0, 1.0],
         ], false);
 

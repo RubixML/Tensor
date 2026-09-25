@@ -1,15 +1,15 @@
-# Algebraic
+# Unary
 
-Element-wise algebraic functions.
+Element-wise Unary functions.
 
-- **Namespace:** `Tensor\Algebraic`
+- **Namespace:** `Tensor\Unary`
 
 ## Overview
 
-`Algebraic` defines element-wise algebraic operations. Each method returns a new tensor of the same shape as `$this`.
+`Unary` defines element-wise Unary operations. Each method returns a new tensor of the same shape as `$this`.
 
 ```php
-interface Algebraic
+interface Unary
 ```
 
 ## Methods

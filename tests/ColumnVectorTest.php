@@ -5,14 +5,14 @@ namespace Tensor\Tests;
 use Tensor\Tensor;
 use Tensor\Vector;
 use Tensor\Matrix;
-use Tensor\Special;
 use Tensor\ArrayLike;
-use Tensor\Algebraic;
 use Tensor\Arithmetic;
 use Tensor\Comparable;
+use Tensor\Reductions;
 use Tensor\Statistical;
-use Tensor\ColumnVector;
 use Tensor\Trigonometric;
+use Tensor\Unary;
+use Tensor\ColumnVector;
 use Tensor\Exceptions\DimensionalityMismatch;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -31,23 +31,23 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function fromArray() : void
     {
-        $vector = ColumnVector::fromArray([-15, 25, 35]);
+        $vector = ColumnVector::fromArray([-15.0, 25.0, 35.0]);
 
         $this->assertInstanceOf(ColumnVector::class, $vector);
         $this->assertInstanceOf(Tensor::class, $vector);
         $this->assertInstanceOf(ArrayLike::class, $vector);
         $this->assertInstanceOf(Arithmetic::class, $vector);
         $this->assertInstanceOf(Comparable::class, $vector);
-        $this->assertInstanceOf(Algebraic::class, $vector);
+        $this->assertInstanceOf(Unary::class, $vector);
         $this->assertInstanceOf(Trigonometric::class, $vector);
         $this->assertInstanceOf(Statistical::class, $vector);
-        $this->assertInstanceOf(Special::class, $vector);
+        $this->assertInstanceOf(Reductions::class, $vector);
     }
 
     #[Test]
     public function shape() : void
     {
-        $vector = ColumnVector::fromArray([-15, 25, 35], false);
+        $vector = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $this->assertEquals([3], $vector->shape());
     }
@@ -55,7 +55,7 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function shapeString() : void
     {
-        $vector = ColumnVector::fromArray([-15, 25, 35], false);
+        $vector = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $this->assertEquals('3', $vector->shapeString());
     }
@@ -63,7 +63,7 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function testSize() : void
     {
-        $vector = ColumnVector::fromArray([-15, 25, 35], false);
+        $vector = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $this->assertEquals(3, $vector->size());
     }
@@ -71,7 +71,7 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function m() : void
     {
-        $vector = ColumnVector::fromArray([-15, 25, 35], false);
+        $vector = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $this->assertEquals(3, $vector->m());
     }
@@ -79,7 +79,7 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function n() : void
     {
-        $vector = ColumnVector::fromArray([-15, 25, 35], false);
+        $vector = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $this->assertEquals(1, $vector->n());
     }
@@ -87,20 +87,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function multiply() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->multiply($b);
 
         $expected = Matrix::fromArray([
-            [-93.45, 15, -0.44999999999999996],
-            [0.25, 50.24999999999999, 25],
-            [38.5, 175, -175],
+            [-93.45, 15.0, -0.44999999999999996],
+            [0.25, 50.24999999999999, 25.0],
+            [38.5, 175.0, -175.0],
         ], false);
 
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
@@ -109,20 +109,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function divide() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->divide($b);
 
         $expected = Matrix::fromArray([
-            [-2.407704654895666, 15, -500.],
-            [2500.0, 12.437810945273633, 25],
-            [31.818181818181817, 7, -7],
+            [-2.407704654895666, 15.0, -500.],
+            [2500.0, 12.437810945273633, 25.0],
+            [31.818181818181817, 7.0, -7.0],
         ], false);
 
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
@@ -131,20 +131,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function add() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->add($b);
 
         $expected = Matrix::fromArray([
-            [-8.77, -16, -14.97],
-            [25.01, 27.009999999999998, 26],
-            [36.1, 40, 30],
+            [-8.77, -16.0, -14.97],
+            [25.01, 27.009999999999998, 26.0],
+            [36.1, 40.0, 30.0],
         ], false);
 
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
@@ -153,20 +153,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function subtract() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->subtract($b);
 
         $expected = Matrix::fromArray([
-            [-21.23, -14, -15.03],
-            [24.99, 22.990000000000002, 24],
-            [33.9, 30, 40],
+            [-21.23, -14.0, -15.03],
+            [24.99, 22.990000000000002, 24.0],
+            [33.9, 30.0, 40.0],
         ], false);
 
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
@@ -175,20 +175,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function equal() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->equal($b);
 
         $expected = Matrix::fromArray([
-            [0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0],
+            [0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0],
         ], false);
 
         $this->assertEquals($expected, $c);
@@ -197,20 +197,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function notEqual() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->notEqual($b);
 
         $expected = Matrix::fromArray([
-            [1, 1, 1],
-            [1, 1, 1],
-            [1, 1, 1],
+            [1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0],
         ], false);
 
         $this->assertEquals($expected, $c);
@@ -219,20 +219,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function greater() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->greater($b);
 
         $expected = Matrix::fromArray([
-            [0, 0, 0],
-            [1, 1, 1],
-            [1, 1, 1],
+            [0.0, 0.0, 0.0],
+            [1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0],
         ], false);
 
         $this->assertEquals($expected, $c);
@@ -241,20 +241,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function greaterEqual() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->greaterEqual($b);
 
         $expected = Matrix::fromArray([
-            [0, 0, 0],
-            [1, 1, 1],
-            [1, 1, 1],
+            [0.0, 0.0, 0.0],
+            [1.0, 1.0, 1.0],
+            [1.0, 1.0, 1.0],
         ], false);
 
         $this->assertEquals($expected, $c);
@@ -263,20 +263,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function less() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->less($b);
 
         $expected = Matrix::fromArray([
-            [1, 1, 1],
-            [0, 0, 0],
-            [0, 0, 0],
+            [1.0, 1.0, 1.0],
+            [0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0],
         ], false);
 
         $this->assertEquals($expected, $c);
@@ -285,20 +285,20 @@ class ColumnVectorTest extends TestCase
     #[Test]
     public function lessEqual() : void
     {
-        $a = ColumnVector::fromArray([-15, 25, 35], false);
+        $a = ColumnVector::fromArray([-15.0, 25.0, 35.0], false);
 
         $b = Matrix::fromArray([
-            [6.23, -1, 0.03],
-            [0.01, 2.01, 1],
-            [1.1, 5, -5],
+            [6.23, -1.0, 0.03],
+            [0.01, 2.01, 1.0],
+            [1.1, 5.0, -5.0],
         ], false);
 
         $c = $a->lessEqual($b);
 
         $expected = Matrix::fromArray([
-            [1, 1, 1],
-            [0, 0, 0],
-            [0, 0, 0],
+            [1.0, 1.0, 1.0],
+            [0.0, 0.0, 0.0],
+            [0.0, 0.0, 0.0],
         ], false);
 
         $this->assertEquals($expected, $c);
