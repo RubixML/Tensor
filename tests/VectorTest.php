@@ -1749,42 +1749,6 @@ class VectorTest extends TestCase
     }
 
     #[Test]
-    public function asTensorBuffer() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0], false);
-
-        $buffer = $vector->asTensorBuffer();
-
-        $this->assertInstanceOf(\Tensor\TensorBuffer::class, $buffer);
-        $this->assertEquals([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0], $buffer->toArray());
-        $this->assertSame(6, $buffer->count());
-        $this->assertEquals(25.0, $buffer->get(1));
-        $this->assertSame($buffer, $buffer->asBuffer());
-    }
-
-    #[Test]
-    public function tensorBufferGetThrowsOnOutOfBounds() : void
-    {
-        $vector = Vector::fromArray([1.0, 2.0, 3.0], false);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Element not found at offset 3.');
-
-        $vector->asTensorBuffer()->get(3);
-    }
-
-    #[Test]
-    public function asTensorBufferGetThrowOnNegativeIndex() : void
-    {
-        $vector = Vector::fromArray([1.0, 2.0, 3.0], false);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Element not found at offset -1.');
-
-        $vector->asTensorBuffer()->get(-1);
-    }
-
-    #[Test]
     public function serializeRoundTrip() : void
     {
         $vector = Vector::fromArray([1.0, 2.0, 3.0, 4.0, 5.0], true);
@@ -1830,7 +1794,7 @@ class VectorTest extends TestCase
     public function unserializeFromRawArrayPayload() : void
     {
         // Simulate an ext-produced payload and verify __unserialize consumes it.
-        $vector = new Vector([], false);
+        $vector = Vector::fromArray([], false);
 
         // Manually call __unserialize with a payload matching the shape of the
         // 4.0 __serialize() output (a "data" array plus the element count "n").

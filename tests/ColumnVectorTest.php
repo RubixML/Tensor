@@ -463,17 +463,4 @@ class ColumnVectorTest extends TestCase
             serialize($vector)
         );
     }
-
-    #[Test]
-    public function asTensorBuffer() : void
-    {
-        $vector = ColumnVector::fromArray([1.0, 2.0, 3.0], false);
-
-        $buffer = $vector->asTensorBuffer();
-
-        $this->assertInstanceOf(\Tensor\TensorBuffer::class, $buffer);
-        $this->assertEquals([1.0, 2.0, 3.0], $buffer->toArray());
-        $this->assertSame(3, $buffer->count());
-        $this->assertEquals(3.0, $buffer->get(2));
-    }
 }

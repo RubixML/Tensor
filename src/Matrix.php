@@ -53,19 +53,6 @@ class Matrix implements Tensor
     protected int $n;
 
     /**
-     * Build a new matrix from an array of arrays, validating that each row
-     * has equal length and normalising each value to a float by default.
-     *
-     * @param array<array<int|float>> $a
-     * @param bool $validate
-     * @return self
-     */
-    public static function fromArray(array $a = [], bool $validate = true) : self
-    {
-        return new self($a, $validate);
-    }
-
-    /**
      * Return an identity matrix with the given dimensions.
      *
      * @param int $n
@@ -352,13 +339,15 @@ class Matrix implements Tensor
     }
 
     /**
+     * Build a new matrix from an array of arrays, validating that each row
+     * has equal length and normalising each value to a float by default.
+     *
      * @param array<array<int|float>> $a
      * @param bool $validate
-     * @throws InvalidArgumentException
+     * @return self
      */
-    public function __construct(array $a, bool $validate = true)
+    public static function fromArray(array $a, bool $validate = true) : self
     {
-        $m = count($a);
         $n = count(current($a) ?: []);
 
         if ($a and $validate) {
@@ -380,6 +369,17 @@ class Matrix implements Tensor
                 }
             }
         }
+
+        return new self($a);
+    }
+
+    /**
+     * @param array<array<float>> $a
+     */
+    public function __construct(array $a)
+    {
+        $m = count($a);
+        $n = count(current($a) ?: []);
 
         $this->a = $a;
         $this->m = $m;
@@ -3484,27 +3484,6 @@ class Matrix implements Tensor
         foreach ($this->a as $row) {
             yield Vector::fromArray($row, false);
         }
-    }
-
-    /**
-     * Return the matrix elements as a TensorBuffer holding a single
-     * contiguous row-major sequence of values.
-     *
-     * @internal
-     *
-     * @return TensorBuffer
-     */
-    public function asTensorBuffer() : TensorBuffer
-    {
-        $flat = [];
-
-        foreach ($this->a as $rowA) {
-            foreach ($rowA as $valueA) {
-                $flat[] = $valueA;
-            }
-        }
-
-        return new TensorBuffer($flat);
     }
 
     /**

@@ -3000,20 +3000,6 @@ class MatrixTest extends TestCase
     }
 
     #[Test]
-    public function asTensorBuffer() : void
-    {
-        $matrix = Matrix::fromArray([[1.0, 2.0], [3.0, 4.0]], false);
-
-        $buffer = $matrix->asTensorBuffer();
-
-        $this->assertInstanceOf(\Tensor\TensorBuffer::class, $buffer);
-        $this->assertEquals([1.0, 2.0, 3.0, 4.0], $buffer->toArray());
-        $this->assertSame(4, $buffer->count());
-        $this->assertEquals(4.0, $buffer->get(3));
-        $this->assertSame($buffer, $buffer->asBuffer());
-    }
-
-    #[Test]
     public function serializeRoundTrip() : void
     {
         $matrix = Matrix::fromArray([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]);

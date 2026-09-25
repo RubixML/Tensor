@@ -40,19 +40,6 @@ class Vector implements Tensor
     protected int $n;
 
     /**
-     * Build a new vector from a PHP array of elements, validating and
-     * normalising each value to a float by default.
-     *
-     * @param (int|float)[] $a
-     * @param bool $validate
-     * @return static
-     */
-    public static function fromArray(array $a = [], bool $validate = true)
-    {
-        return new static($a, $validate);
-    }
-
-    /**
      * Build a vector of zeros with n elements.
      *
      * @param int $n
@@ -273,10 +260,14 @@ class Vector implements Tensor
     }
 
     /**
-     * @param mixed[] $a
+     * Build a new vector from a PHP array of elements, validating and
+     * normalising each value to a float by default.
+     *
+     * @param (int|float)[] $a
      * @param bool $validate
+     * @return static
      */
-    final public function __construct(array $a, bool $validate = true)
+    public static function fromArray(array $a = [], bool $validate = true)
     {
         if ($a and $validate) {
             $a = array_values($a);
@@ -288,6 +279,14 @@ class Vector implements Tensor
             }
         }
 
+        return new static($a);
+    }
+
+    /**
+     * @param mixed[] $a
+     */
+    final public function __construct(array $a)
+    {
         $this->a = $a;
         $this->n = count($a);
     }
@@ -350,16 +349,6 @@ class Vector implements Tensor
     public function asArray() : array
     {
         return $this->a;
-    }
-
-    /**
-     * Return the vector elements as a TensorBuffer.
-     *
-     * @return TensorBuffer
-     */
-    public function asTensorBuffer() : TensorBuffer
-    {
-        return new TensorBuffer($this->a);
     }
 
     /**

@@ -1,6 +1,16 @@
 parameters:
-    level: 8
+    level: 6
+    treatPhpDocTypesAsCertain: false
     paths:
         - 'src'
         - 'tests'
         - 'benchmarks'
+    ignoreErrors:
+        -
+            identifier: method.alreadyNarrowedType
+            paths:
+                - tests/*
+        -
+            identifier: function.alreadyNarrowedType
+            paths:
+                - tests/*

@@ -138,13 +138,6 @@ Return the vector as an array.
 
 - **Returns:** `list<float>`
 
-### `asTensorBuffer() : TensorBuffer`
-
-Return the underlying elements wrapped as a `Tensor` `TensorBuffer`, mirroring
-the Tensor-Ext surface area.
-
-- **Returns:** `Tensor\TensorBuffer`
-
 ### `__serialize() : array`
 
 Return the elements of the vector as a plain PHP array so that only the values,

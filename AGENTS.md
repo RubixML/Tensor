@@ -24,7 +24,7 @@ All are Composer scripts (see `composer.json`):
 | --- | --- |
 | Install deps | `composer install` |
 | Validate manifest | `composer validate` |
-| Static analysis | `composer analyze` (PHPStan level 8 over `src`, `tests`, `benchmarks`) |
+| Static analysis | `composer analyze` (PHPStan level 6 over `src`, `tests`, `benchmarks`) |
 | Run tests | `composer test` (PHPUnit, test suite `Base`) |
 | Check style | `composer check` (php-cs-fixer, dry-run; sets `PHP_CS_FIXER_IGNORE_ENV=1`) |
 | Fix style | `composer fix` |

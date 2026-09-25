@@ -139,13 +139,6 @@ Return the elements of the matrix in a 2-d array.
 
 - **Returns:** `list<list<float>>`
 
-### `asTensorBuffer() : TensorBuffer`
-
-Return the underlying elements (flattened in row-major order) wrapped as a
-`Tensor` `TensorBuffer`, mirroring the Tensor-Ext surface area.
-
-- **Returns:** `Tensor\TensorBuffer`
-
 ### `__serialize() : array`
 
 Return the elements of the matrix as a plain PHP array of rows so that only
