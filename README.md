@@ -6,6 +6,10 @@ A library that provides objects for scientific computing in [PHP](https://php.ne
 
 The Tensor Extension has moved to [https://github.com/RubixML/Tensor-Ext](https://github.com/RubixML/Tensor-Ext).
 
+## Requirements
+
+- [PHP](https://php.net) 8.3 or above
+
 ## Installation
 
 Install Tensor into your project with [Composer](https://getcomposer.org/):
@@ -14,9 +18,9 @@ Install Tensor into your project with [Composer](https://getcomposer.org/):
 $ composer require rubix/tensor
 ```
 
-## Requirements
+## Documentation
 
-- [PHP](https://php.net) 7.4 or above
+Documentation can be found in the `docs` folder.
 
 ## Contributing
 
