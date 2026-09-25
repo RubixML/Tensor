@@ -1155,7 +1155,7 @@ class VectorTest extends TestCase
         yield [
             Vector::fromArray([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0], false),
             Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false),
-            Vector::fromArray([0, 0, 2, 0, -1, -3, 3, 2], false),
+            Vector::fromArray([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0], false),
         ];
 
         yield [

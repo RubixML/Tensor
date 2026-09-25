@@ -1423,7 +1423,7 @@ class MatrixTest extends TestCase
     {
         $c = $a->mod($b);
 
-        $this->assertEquals($expected, $c);
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
     /**
@@ -1471,9 +1471,9 @@ class MatrixTest extends TestCase
             ], false),
             ColumnVector::fromArray([2.5, -1, 4.8], false),
             Matrix::fromArray([
-                [0,  -1,  0],
-                [0, 0, 0],
-                [0,  -2,  -1]
+                [2.0, -2.0, 2.0],
+                [0.0, 0.0, 0.0],
+                [0.8, -1.2, -4.2],
             ], false),
         ];
 

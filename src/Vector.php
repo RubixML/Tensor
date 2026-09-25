@@ -1608,7 +1608,7 @@ class Vector implements Tensor
             $rowC = [];
 
             foreach ($this->a as $j => $valueA) {
-                $rowC[] = $valueA % $rowB[$j];
+                $rowC[] = fmod($valueA, $rowB[$j]);
             }
 
             $c[] = $rowC;
@@ -1923,7 +1923,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($b->asArray() as $i => $valueB) {
-            $c[] = $this->a[$i] % $valueB;
+            $c[] = fmod($this->a[$i], $valueB);
         }
 
         return static::fromArray($c, false);
@@ -2163,7 +2163,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $valueA) {
-            $c[] = $valueA % $b;
+            $c[] = fmod($valueA, $b);
         }
 
         return static::fromArray($c, false);
