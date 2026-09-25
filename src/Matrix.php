@@ -3496,7 +3496,7 @@ class Matrix implements Tensor
     public function __serialize() : array
     {
         return [
-            'data' => $this->asArray(),
+            'a' => $this->a,
             'm' => $this->m,
             'n' => $this->n,
         ];
@@ -3510,9 +3510,7 @@ class Matrix implements Tensor
      */
     public function __unserialize(array $data) : void
     {
-        $rebuilt = static::fromArray($data['data']);
-
-        $this->a = $rebuilt->asArray();
+        $this->a = $data['a'];
         $this->m = $data['m'];
         $this->n = $data['n'];
     }

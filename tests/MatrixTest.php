@@ -3020,7 +3020,7 @@ class MatrixTest extends TestCase
         // are emitted under a named "data" key (with "m"/"n") rather than a
         // nested "a" property.
         $this->assertSame(
-            'O:13:"Tensor\\Matrix":3:{s:4:"data";a:2:{i:0;a:3:{i:0;d:1;i:1;d:2;i:2;d:3;}i:1;a:3:{i:0;d:4;i:1;d:5;i:2;d:6;}}s:1:"m";i:2;s:1:"n";i:3;}',
+            'O:13:"Tensor\\Matrix":3:{s:1:"a";a:2:{i:0;a:3:{i:0;d:1;i:1;d:2;i:2;d:3;}i:1;a:3:{i:0;d:4;i:1;d:5;i:2;d:6;}}s:1:"m";i:2;s:1:"n";i:3;}',
             serialize($matrix)
         );
     }
@@ -3029,7 +3029,7 @@ class MatrixTest extends TestCase
     public function unserializeFromExtPayload() : void
     {
         // A payload produced identically by the Tensor-Ext polyfill.
-        $payload = 'O:13:"Tensor\\Matrix":3:{s:4:"data";a:2:{i:0;a:3:{i:0;d:1;i:1;d:2;i:2;d:3;}i:1;a:3:{i:0;d:4;i:1;d:5;i:2;d:6;}}s:1:"m";i:2;s:1:"n";i:3;}';
+        $payload = 'O:13:"Tensor\\Matrix":3:{s:1:"a";a:2:{i:0;a:3:{i:0;d:1;i:1;d:2;i:2;d:3;}i:1;a:3:{i:0;d:4;i:1;d:5;i:2;d:6;}}s:1:"m";i:2;s:1:"n";i:3;}';
 
         $matrix = unserialize($payload);
 

@@ -1785,7 +1785,7 @@ class VectorTest extends TestCase
         // serialisation: the __serialize() payload is emitted as a named "data"
         // array (and "n") under the object header (no nested "a" property).
         $this->assertSame(
-            'O:13:"Tensor\\Vector":2:{s:4:"data";a:3:{i:0;d:1;i:1;d:2;i:2;d:3;}s:1:"n";i:3;}',
+            'O:13:"Tensor\\Vector":2:{s:1:"a";a:3:{i:0;d:1;i:1;d:2;i:2;d:3;}s:1:"n";i:3;}',
             $serialised
         );
     }
@@ -1798,7 +1798,7 @@ class VectorTest extends TestCase
 
         // Manually call __unserialize with a payload matching the shape of the
         // 4.0 __serialize() output (a "data" array plus the element count "n").
-        $vector->__unserialize(['data' => [1.0, 2.0, 3.0], 'n' => 3]);
+        $vector->__unserialize(['a' => [1.0, 2.0, 3.0], 'n' => 3]);
 
         $this->assertEquals([1.0, 2.0, 3.0], $vector->asArray());
         $this->assertEquals([3], $vector->shape());

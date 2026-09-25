@@ -2339,7 +2339,7 @@ class Vector implements Tensor
     public function __serialize() : array
     {
         return [
-            'data' => $this->asArray(),
+            'a' => $this->a,
             'n' => $this->n,
         ];
     }
@@ -2352,9 +2352,7 @@ class Vector implements Tensor
      */
     public function __unserialize(array $data) : void
     {
-        $rebuilt = static::fromArray($data['data']);
-
-        $this->a = $rebuilt->asArray();
+        $this->a = $data['a'];
         $this->n = $data['n'];
     }
 }

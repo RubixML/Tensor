@@ -5,6 +5,7 @@
     - Removed `build()` and `quick()` factory methods
     - Tensor constructors are no longer public
     - Modulus results no longer rounded to nearest integer
+    - Standardized serial representation with extension
 
 - 3.1.0
     - Implemented the singular value decomposition (SVD) in the pure-PHP library
