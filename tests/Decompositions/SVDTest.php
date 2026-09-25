@@ -5,10 +5,10 @@ namespace Tensor\Tests\Decompositions;
 use Tensor\Matrix;
 use Tensor\Decompositions\SVD;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Tensor\Decompositions\SVD
- */
+#[CoversClass(SVD::class)]
 class SVDTest extends TestCase
 {
     /**
@@ -18,9 +18,7 @@ class SVDTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeSquare3x3() : void
     {
         $a = Matrix::fromArray([
@@ -45,9 +43,7 @@ class SVDTest extends TestCase
         $this->assertEqualsWithDelta(Matrix::identity(3), $svd->vT()->matmul($svd->vT()->transpose()), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeSquare2x2() : void
     {
         $a = Matrix::fromArray([
@@ -65,9 +61,7 @@ class SVDTest extends TestCase
         $this->assertEqualsWithDelta(Matrix::identity(2), $svd->vT()->matmul($svd->vT()->transpose()), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeTall() : void
     {
         $a = Matrix::fromArray([
@@ -90,9 +84,7 @@ class SVDTest extends TestCase
         $this->assertEqualsWithDelta(Matrix::identity(2), $svd->vT()->matmul($svd->vT()->transpose()), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeWide() : void
     {
         $a = Matrix::fromArray([
@@ -113,9 +105,7 @@ class SVDTest extends TestCase
         $this->assertEqualsWithDelta(Matrix::identity(3), $svd->vT()->matmul($svd->vT()->transpose()), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decompose1x1() : void
     {
         $a = Matrix::fromArray([[9.0]], false);
@@ -127,9 +117,7 @@ class SVDTest extends TestCase
         $this->assertEqualsWithDelta($a, $this->reconstruct($svd, 1, 1), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeRankDeficient() : void
     {
         $a = Matrix::fromArray([
@@ -150,9 +138,7 @@ class SVDTest extends TestCase
         $this->assertEqualsWithDelta(Matrix::identity(2), $svd->vT()->matmul($svd->vT()->transpose()), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposePreservesTinySingularValues() : void
     {
         $a = Matrix::fromArray([
@@ -172,9 +158,7 @@ class SVDTest extends TestCase
         $this->assertEqualsWithDelta($a, $this->reconstruct($svd, 3, 3), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function sReturnsPaddedSingularValueMatrix() : void
     {
         if (extension_loaded('tensor')) {
@@ -206,9 +190,7 @@ class SVDTest extends TestCase
         $this->assertEqualsWithDelta($wide, $svdWide->u()->matmul($svdWide->s())->matmul($svdWide->vT()), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function constructAndAccess() : void
     {
         $u = Matrix::fromArray([

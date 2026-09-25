@@ -17,11 +17,12 @@ use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\RuntimeException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Generator;
 
-/**
- * @covers \Tensor\Vector
- */
+#[CoversClass(Vector::class)]
 class VectorTest extends TestCase
 {
     /**
@@ -32,290 +33,9 @@ class VectorTest extends TestCase
     protected const MAX_DELTA = 1e-8;
 
     /**
-     * @test
-     */
-    public function fromArray() : void
-    {
-        $vector = Vector::fromArray([1, 2, 3, 4, 5]);
-
-        $this->assertInstanceOf(Vector::class, $vector);
-        $this->assertInstanceOf(Tensor::class, $vector);
-        $this->assertInstanceOf(ArrayLike::class, $vector);
-        $this->assertInstanceOf(Arithmetic::class, $vector);
-        $this->assertInstanceOf(Comparable::class, $vector);
-        $this->assertInstanceOf(Algebraic::class, $vector);
-        $this->assertInstanceOf(Trigonometric::class, $vector);
-        $this->assertInstanceOf(Statistical::class, $vector);
-        $this->assertInstanceOf(Special::class, $vector);
-    }
-
-    /**
-     * @test
-     */
-    public function fromArrayCastsIntegersToFloats() : void
-    {
-        $vector = Vector::fromArray([1, 2, 3, 4, 5]);
-
-        $this->assertSame(5, $vector->size());
-
-        $result = $vector->asArray();
-
-        $this->assertCount(5, $result);
-
-        foreach ($result as $value) {
-            $this->assertTrue(is_float($value));
-        }
-
-        $this->assertEqualsWithDelta([1.0, 2.0, 3.0, 4.0, 5.0], $result, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function zeros() : void
-    {
-        $zeros = Vector::zeros(4);
-
-        $expected = Vector::fromArray([0, 0, 0, 0], false);
-
-        $this->assertEquals($expected, $zeros);
-    }
-
-    /**
-     * @test
-     */
-    public function ones() : void
-    {
-        $ones = Vector::ones(4);
-
-        $expected = Vector::fromArray([1, 1, 1, 1], false);
-
-        $this->assertEquals($expected, $ones);
-    }
-
-    /**
-     * @test
-     */
-    public function fill() : void
-    {
-        $vector = Vector::fill(16, 4);
-
-        $expected = Vector::fromArray([16, 16, 16, 16], false);
-
-        $this->assertEquals($expected, $vector);
-    }
-
-    /**
-     * @test
-     */
-    public function rand() : void
-    {
-        $vector = Vector::rand(4);
-
-        $this->assertCount(4, $vector);
-    }
-
-    /**
-     * @test
-     */
-    public function gaussian() : void
-    {
-        $vector = Vector::gaussian(4);
-
-        $this->assertCount(4, $vector);
-    }
-
-    /**
-     * @test
-     */
-    public function poisson() : void
-    {
-        $vector = Vector::poisson(4, 2.0);
-
-        $this->assertCount(4, $vector);
-    }
-
-    /**
-     * @test
-     */
-    public function uniform() : void
-    {
-        $vector = Vector::uniform(4);
-
-        $this->assertCount(4, $vector);
-    }
-
-    /**
-     * @test
-     */
-    public function randHasCorrectBounds() : void
-    {
-        $vector = Vector::rand(10000);
-
-        $this->assertCount(10000, $vector);
-
-        // A standard uniform on [0,1) must never produce a value outside [0, 1).
-        $this->assertGreaterThanOrEqual(0.0, $vector->min());
-        $this->assertTrue($vector->max() < 1.0);
-    }
-
-    /**
-     * @test
-     */
-    public function randMeanIsCloseToHalf() : void
-    {
-        $vector = Vector::rand(10000);
-
-        // A standard uniform on [0,1) has mean 1/2 and std sqrt(1/12).
-        $this->assertEqualsWithDelta(0.5, $vector->mean(), 0.05);
-    }
-
-    /**
-     * @test
-     */
-    public function uniformHasCorrectBounds() : void
-    {
-        $vector = Vector::uniform(10000);
-
-        $this->assertCount(10000, $vector);
-
-        // A standard uniform on [-1,1] must never produce a value outside that range.
-        $this->assertGreaterThanOrEqual(-1.0, $vector->min());
-        $this->assertLessThanOrEqual(1.0, $vector->max());
-    }
-
-    /**
-     * @test
-     */
-    public function uniformMeanIsCloseToZero() : void
-    {
-        $vector = Vector::uniform(10000);
-
-        // A standard uniform on [-1,1] has mean 0 and std sqrt(1/3).
-        $this->assertEqualsWithDelta(0.0, $vector->mean(), 0.05);
-    }
-
-    /**
-     * @test
-     */
-    public function uniformVarianceIsUnitScale() : void
-    {
-        $vector = Vector::uniform(10000);
-
-        // Variance of a standard uniform on [-1,1] is 1/3.
-        $this->assertEqualsWithDelta(1.0 / 3.0, $vector->variance(), 0.1);
-    }
-
-    /**
-     * @test
-     */
-    public function gaussianHasZeroMeanAndUnitVariance() : void
-    {
-        $vector = Vector::gaussian(10000);
-
-        $this->assertCount(10000, $vector);
-
-        $this->assertEqualsWithDelta(0.0, $vector->mean(), 0.05);
-
-        // Variance of a standard normal is 1.
-        $this->assertEqualsWithDelta(1.0, $vector->variance(), 0.1);
-    }
-
-    /**
-     * @test
-     */
-    public function poissonIsNonNegative() : void
-    {
-        $vector = Vector::poisson(1000, 3.0);
-
-        $this->assertCount(1000, $vector);
-        $this->assertGreaterThanOrEqual(0.0, $vector->min(), 'Poisson samples must be non-negative.');
-
-        // Spot-check that Poisson samples are integer values.
-        foreach (array_slice($vector->asArray(), 0, 50) as $value) {
-            $this->assertEquals(0.0, fmod($value, 1.0), 'Poisson samples must be integers.');
-        }
-    }
-
-    /**
-     * @test
-     */
-    public function poissonMeanMatchesLambda() : void
-    {
-        $lambda = 4.0;
-
-        $vector = Vector::poisson(10000, $lambda);
-
-        // Poisson has mean = lambda = variance.
-        $this->assertEqualsWithDelta($lambda, $vector->mean(), 0.2);
-        $this->assertEqualsWithDelta($lambda, $vector->variance(), 0.3);
-    }
-
-    /**
-     * @test
-     */
-    public function poissonZeroLambdaIsZero() : void
-    {
-        $vector = Vector::poisson(4, 0.0);
-
-        $this->assertCount(4, $vector);
-        $this->assertSame(0.0, $vector->min(), 'Poisson with lambda=0 must sample 0.0.');
-        $this->assertSame(0.0, $vector->max(), 'Poisson with lambda=0 must sample 0.0.');
-    }
-
-    /**
-     * @test
-     */
-    public function poissonNegativeLambdaThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::poisson(1, -1.0);
-    }
-
-    /**
-     * @test
-     */
-    public function range() : void
-    {
-        $vector = Vector::range(5.0, 12.0, 2.0);
-
-        $expected = Vector::fromArray([5.0, 7.0, 9.0, 11.0], false);
-
-        $this->assertEquals($expected, $vector);
-    }
-
-    /**
-     * @test
-     */
-    public function linspace() : void
-    {
-        $vector = Vector::linspace(-5.0, 5.0, 10);
-
-        $expected = Vector::fromArray([
-            -5.0, -3.888888888888889, -2.7777777777777777, -1.6666666666666665, -0.5555555555555554,
-            0.5555555555555558, 1.666666666666667, 2.777777777777778, 3.8888888888888893, 5.0,
-        ], false);
-
-        $this->assertEquals($expected, $vector);
-    }
-
-    /**
-     * @test
-     * @dataProvider shapeProvider
-     *
-     * @param Vector $vector
-     * @param array<int> $expected
-     */
-    public function shape(Vector $vector, array $expected) : void
-    {
-        $this->assertEquals($expected, $vector->shape());
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function shapeProvider() : Generator
+    public static function shapeProvider() : Generator
     {
         yield [Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false), [8]];
 
@@ -325,295 +45,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     */
-    public function shapeString() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEquals('8', $vector->shapeString());
-    }
-
-    /**
-     * @test
-     */
-    public function size() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEquals(8, $vector->size());
-    }
-
-    /**
-     * @test
-     */
-    public function m() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEquals(1, $vector->m());
-    }
-
-    /**
-     * @test
-     */
-    public function n() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEquals(8, $vector->n());
-    }
-
-    /**
-     * @test
-     */
-    public function asArray() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $expected = [-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0];
-
-        $this->assertEquals($expected, $vector->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function asRowMatrix() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $matrix = $vector->asRowMatrix();
-
-        $expected = Matrix::fromArray([
-            [-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0],
-        ], false);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function asColumnMatrix() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $matrix = $vector->asColumnMatrix();
-
-        $expected = Matrix::fromArray([[-15.0], [25.0], [35.0], [-36.0], [-72.0], [89.0], [106.0], [45.0]], false);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function reshape() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $matrix = $vector->reshape(4, 2);
-
-        $expected = Matrix::fromArray([
-            [-15.0, 25.0],
-            [35.0, -36.0],
-            [-72.0, 89.0],
-            [106.0, 45.0],
-        ], false);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function transpose() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $vector = $vector->transpose();
-
-        $expected = ColumnVector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEquals($expected, $vector);
-    }
-
-    /**
-     * @test
-     */
-    public function map() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $sign = function ($value) {
-            return $value >= 0.0 ? 1 : 0;
-        };
-
-        $vector = $vector->map($sign);
-
-        $expected = Vector::fromArray([0, 1, 1, 0, 0, 1, 1, 1], false);
-
-        $this->assertEquals($expected, $vector);
-    }
-
-    /**
-     * @test
-     */
-    public function reduce() : void
-    {
-        $vector = Vector::fromArray([1.0, 2.0, 3.0], false);
-
-        $sum = function ($carry, $value) {
-            return $carry + $value;
-        };
-
-        $this->assertEqualsWithDelta(6.0, $vector->reduce($sum), self::MAX_DELTA);
-
-        // Asymmetric callback: pins the (carry, value) argument order.
-        $subtract = function ($carry, $value) {
-            return $carry - $value;
-        };
-
-        $this->assertEqualsWithDelta(-6.0, $vector->reduce($subtract), self::MAX_DELTA);
-        $this->assertEqualsWithDelta(-4.0, $vector->reduce($subtract, 2.0), self::MAX_DELTA);
-
-        // Must match Matrix::reduce() for the same data and callback.
-        $matrix = Matrix::fromArray([[1.0, 2.0, 3.0]], false);
-
-        $this->assertEqualsWithDelta($vector->reduce($subtract), $matrix->reduce($subtract), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function reciprocal() : void
-    {
-        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $vector = $vector->reciprocal();
-
-        $expected = Vector::fromArray([
-            -0.06666666666666667, 0.04, 0.02857142857142857, -0.027777777777777776,
-            -0.013888888888888888, 0.011235955056179775, 0.009433962264150943, 0.022222222222222223,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $vector, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function dot() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = Vector::fromArray([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0], false);
-
-        $c = $a->dot($b);
-
-        $this->assertEqualsWithDelta(331.54999999999995, $c, self::MAX_DELTA);
-    }
-
-    public function matmul() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = Matrix::fromArray([
-            [1.1, 0.01, 6.23],
-            [5.0, 2.01, -1.0],
-            [-5.0, 1.0, 0.03],
-            [30.0, 0.02, -0.01],
-            [-0.005, 0.05, -0.5],
-            [-0.001, -1.0, 2.0],
-        ], false);
-
-        $c = $a->matmul($b);
-
-        $expected = Matrix::fromArray([
-            [622.3751, 4.634999999999993, 40.807],
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function inner() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = Vector::fromArray([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0], false);
-
-        $c = $a->inner($b);
-
-        $this->assertEqualsWithDelta(331.54999999999995, $c, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function outer() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = Vector::fromArray([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0], false);
-
-        $c = $a->outer($b);
-
-        $expected = Matrix::fromArray([
-            [-3.75, -1.5, -30.0, 7.5, 15.0, 45.0, -49.5, -30.],
-            [6.25, 2.5, 50.0, -12.5, -25.0, -75.0, 82.5, 50.],
-            [8.75, 3.5, 70.0, -17.5, -35.0, -105.0, 115.5, 70.],
-            [-9.0, -3.6, -72.0, 18.0, 36.0, 108.0, -118.8, -72.],
-            [-18.0, -7.2, -144.0, 36.0, 72.0, 216.0, -237.6, -144.],
-            [22.25, 8.9, 178.0, -44.5, -89.0, -267.0, 293.7, 178.],
-            [26.5, 10.600000000000001, 212.0, -53.0, -106.0, -318.0, 349.79999999999995, 212.],
-            [11.25, 4.5, 90.0, -22.5, -45.0, -135.0, 148.5, 90.],
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function convolve() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $c = $a->convolve($b, 1);
-
-        $expected = Vector::fromArray([
-            -60.0, 2.5, 259.0, -144.0, 40.5, 370.1, 462.20000000000005,
-            10.000000000000114, 1764.3000000000002, 1625.1, 2234.7, 1378.4, 535.5,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     * @dataProvider multiplyProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function multiply(Vector $a, $b, $expected) : void
-    {
-        $c = $a->multiply($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function multiplyProvider() : Generator
+    public static function multiplyProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -643,24 +77,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider divideProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function divide(Vector $a, $b, $expected) : void
-    {
-        $c = $a->divide($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function divideProvider() : Generator
+    public static function divideProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -690,24 +109,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider addProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function add(Vector $a, $b, $expected) : void
-    {
-        $c = $a->add($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function addProvider() : Generator
+    public static function addProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -737,24 +141,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider subtractProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function subtract(Vector $a, $b, $expected) : void
-    {
-        $c = $a->subtract($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function subtractProvider() : Generator
+    public static function subtractProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -784,24 +173,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider powProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function power(Vector $a, $b, $expected) : void
-    {
-        $c = $a->pow($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function powProvider() : Generator
+    public static function powProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -833,24 +207,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider equalProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function equal(Vector $a, $b, $expected) : void
-    {
-        $c = $a->equal($b);
-
-        $this->assertEquals($expected, $c);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function equalProvider() : Generator
+    public static function equalProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -880,24 +239,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider notEqualProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function notEqual(Vector $a, $b, $expected) : void
-    {
-        $c = $a->notEqual($b);
-
-        $this->assertEquals($expected, $c);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function notEqualProvider() : Generator
+    public static function notEqualProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -927,41 +271,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     */
-    public function notEqualMatrixDimensionMismatch() : void
-    {
-        $this->expectException(DimensionalityMismatch::class);
-
-        $a = Vector::fromArray([1.0, 2.0, 3.0], false);
-
-        $b = Matrix::fromArray([
-            [1.0, 2.0],
-            [3.0, 4.0],
-        ], false);
-
-        $a->notEqualMatrix($b);
-    }
-
-    /**
-     * @test
-     * @dataProvider greaterProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function greater(Vector $a, $b, $expected) : void
-    {
-        $c = $a->greater($b);
-
-        $this->assertEquals($expected, $c);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function greaterProvider() : Generator
+    public static function greaterProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -991,24 +303,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider greaterEqualProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function greaterEqual(Vector $a, $b, $expected) : void
-    {
-        $c = $a->greaterEqual($b);
-
-        $this->assertEquals($expected, $c);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function greaterEqualProvider() : Generator
+    public static function greaterEqualProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -1038,24 +335,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider lessProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function less(Vector $a, $b, $expected) : void
-    {
-        $c = $a->less($b);
-
-        $this->assertEquals($expected, $c);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function lessProvider() : Generator
+    public static function lessProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -1085,24 +367,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider lessEqualProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function lessEqual(Vector $a, $b, $expected) : void
-    {
-        $c = $a->lessEqual($b);
-
-        $this->assertEquals($expected, $c);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function lessEqualProvider() : Generator
+    public static function lessEqualProvider() : Generator
     {
         yield [
             Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false),
@@ -1133,24 +400,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider modProvider
-     *
-     * @param Vector $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function mod(Vector $a, $b, $expected) : void
-    {
-        $c = $a->mod($b);
-
-        $this->assertEquals($expected, $c);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function modProvider() : Generator
+    public static function modProvider() : Generator
     {
         yield [
             Vector::fromArray([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0], false),
@@ -1166,688 +418,9 @@ class VectorTest extends TestCase
     }
 
     /**
-     * @test
-     */
-    public function abs() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = $a->abs();
-
-        $expected = Vector::fromArray([15, 25, 35, 36, 72, 89, 106, 45], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function square() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = $a->square();
-
-        $expected = Vector::fromArray([225, 625, 1225, 1296, 5184, 7921, 11236, 2025], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function pow() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = $a->pow(3);
-
-        $expected = Vector::fromArray([-3375, 15625, 42875, -46656, -373248, 704969, 1191016, 91125], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function sqrt() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->sqrt();
-
-        $expected = Vector::fromArray([
-            2.0, 2.5495097567963922, 1.70293863659264, 4.47213595499958,
-            1.61245154965971, 3.449637662132068,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function exp() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->exp();
-
-        $expected = Vector::fromArray([
-            54.598150033144236, 665.1416330443618, 18.17414536944306,
-            485165195.4097903, 13.463738035001692, 147266.6252405527,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function log() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->log();
-
-        $expected = Vector::fromArray([
-            1.3862943611198906, 1.8718021769015913, 1.0647107369924282,
-            2.995732273553991, 0.9555114450274363, 2.4765384001174837,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function sin() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->sin();
-
-        $expected = Vector::fromArray([
-            -0.7568024953079282, 0.21511998808781552, 0.23924932921398243,
-            0.9129452507276277, 0.5155013718214642, -0.6181371122370333,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function asin() : void
-    {
-        $a = Vector::fromArray([0.1, 0.3, -0.5], false);
-
-        $b = $a->asin();
-
-        $expected = Vector::fromArray([
-            0.1001674211615598, 0.3046926540153975, -0.5235987755982989,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function cos() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->cos();
-
-        $expected = Vector::fromArray([
-            -0.6536436208636119, 0.9765876257280235, -0.9709581651495905,
-            0.40808206181339196, -0.8568887533689473, 0.7860702961410393,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function acos() : void
-    {
-        $a = Vector::fromArray([0.1, 0.3, -0.5], false);
-
-        $b = $a->acos();
-
-        $expected = Vector::fromArray([
-            1.4706289056333368, 1.2661036727794992, 2.0943951023931957,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function tan() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->tan();
-
-        $expected = Vector::fromArray([
-            1.1578212823495777, 0.22027720034589682, -0.24640539397196634,
-            2.237160944224742, -0.6015966130897586, -0.7863636563696398,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function atan() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->atan();
-
-        $expected = Vector::fromArray([
-            1.3258176636680326, 1.4181469983996315, 1.2387368592520112,
-            1.5208379310729538, 1.2036224929766774, 1.486959684726482,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function rad2deg() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->rad2deg();
-
-        $expected = Vector::fromArray([
-            229.1831180523293, 372.42256683503507, 166.15776058793872,
-            1145.9155902616465, 148.96902673401405, 681.8197762056797,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function deg2rad() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->deg2rad();
-
-        $expected = Vector::fromArray([
-            0.06981317007977318, 0.11344640137963141, 0.05061454830783556,
-            0.3490658503988659, 0.04537856055185257, 0.2076941809873252,
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function sum() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEqualsWithDelta(177.0, $a->sum(), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function product() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEqualsWithDelta(-14442510600000.0, $a->product(), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function min() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEquals(-72, $a->min());
-    }
-
-    /**
-     * @test
-     */
-    public function max() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEquals(106, $a->max());
-    }
-
-    /**
-     * @test
-     */
-    public function mean() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEqualsWithDelta(22.125, $a->mean(), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function median() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEquals(30.0, $a->median());
-    }
-
-    /**
-     * @test
-     */
-    public function quantile() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEqualsWithDelta(30.0, $a->quantile(0.5), self::MAX_DELTA);
-        $this->assertEqualsWithDelta(-72.0, $a->quantile(0.0), self::MAX_DELTA);
-        $this->assertEqualsWithDelta(106.0, $a->quantile(1.0), self::MAX_DELTA);
-
-        $single = Vector::fromArray([5.0], false);
-
-        $this->assertEqualsWithDelta(5.0, $single->quantile(0.0), self::MAX_DELTA);
-        $this->assertEqualsWithDelta(5.0, $single->quantile(0.5), self::MAX_DELTA);
-        $this->assertEqualsWithDelta(5.0, $single->quantile(1.0), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function variance() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEqualsWithDelta(3227.609375, $a->variance(), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function round() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->round(2);
-
-        $expected = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function floor() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->floor();
-
-        $expected = Vector::fromArray([4.0, 6.0, 2.0, 20.0, 2.0, 11.0], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function ceil() : void
-    {
-        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
-
-        $b = $a->ceil();
-
-        $expected = Vector::fromArray([4.0, 7.0, 3.0, 20.0, 3.0, 12.0], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function l1Norm() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEqualsWithDelta(423.0, $a->l1Norm(), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function l2Norm() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEqualsWithDelta(172.4441938715247, $a->l2Norm(), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function pNorm() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEqualsWithDelta(135.15554088861361, $a->pNorm(3.0), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function maxNorm() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $this->assertEqualsWithDelta(106.0, $a->maxNorm(), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function clip() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = $a->clip(0.0, 100);
-
-        $expected = Vector::fromArray([0.0, 25, 35, 0.0, 0.0, 89, 100.0, 45], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function clipLower() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = $a->clipLower(60.0);
-
-        $expected = Vector::fromArray([60.0, 60.0, 60.0, 60.0, 60.0, 89, 106.0, 60.0], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function clipUpper() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = $a->clipUpper(50.0);
-
-        $expected = Vector::fromArray([-15.0, 25, 35, -36.0, -72.0, 50.0, 50.0, 45], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function sign() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = $a->sign();
-
-        $expected = Vector::fromArray([-1, 1, 1, -1, -1, 1, 1, 1], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function negate() : void
-    {
-        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
-
-        $b = $a->negate();
-
-        $expected = Vector::fromArray([15, -25, -35, 36, 72, -89, -106, -45], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function fillNegativeNThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::fill(1.0, 0);
-    }
-
-    /**
-     * @test
-     */
-    public function zerosNegativeNThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::zeros(0);
-    }
-
-    /**
-     * @test
-     */
-    public function onesNegativeNThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::ones(0);
-    }
-
-    /**
-     * @test
-     */
-    public function randNegativeNThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::rand(0);
-    }
-
-    /**
-     * @test
-     */
-    public function gaussianNegativeNThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::gaussian(0);
-    }
-
-    /**
-     * @test
-     */
-    public function poissonNegativeNThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::poisson(0);
-    }
-
-    /**
-     * @test
-     */
-    public function uniformNegativeNThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::uniform(0);
-    }
-
-    /**
-     * @test
-     */
-    public function linspaceMinimumGreaterThanMaximumThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::linspace(5.0, 1.0, 5);
-    }
-
-    /**
-     * @test
-     */
-    public function linspaceTooFewElementsThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::linspace(0.0, 1.0, 1);
-    }
-
-    /**
-     * @test
-     */
-    public function reshapeSizeMismatchThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0, 4.0], false)->reshape(2, 3);
-    }
-
-    /**
-     * @test
-     */
-    public function quantileOutOfRangeThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->quantile(-0.1);
-    }
-
-    /**
-     * @test
-     */
-    public function quantileAboveOneThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->quantile(1.1);
-    }
-
-    /**
-     * @test
-     */
-    public function pNormNonPositiveThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->pNorm(0.0);
-    }
-
-    /**
-     * @test
-     */
-    public function dotDimensionMismatchThrows() : void
-    {
-        $this->expectException(DimensionalityMismatch::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->dot(Vector::fromArray([1.0, 2.0], false));
-    }
-
-    /**
-     * @test
-     */
-    public function multiplyDimensionMismatchThrows() : void
-    {
-        $this->expectException(DimensionalityMismatch::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->multiply(Vector::fromArray([1.0, 2.0], false));
-    }
-
-    /**
-     * @test
-     */
-    public function divideDimensionMismatchThrows() : void
-    {
-        $this->expectException(DimensionalityMismatch::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->divide(Vector::fromArray([1.0, 2.0], false));
-    }
-
-    /**
-     * @test
-     */
-    public function addDimensionMismatchThrows() : void
-    {
-        $this->expectException(DimensionalityMismatch::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->add(Vector::fromArray([1.0, 2.0], false));
-    }
-
-    /**
-     * @test
-     */
-    public function subtractDimensionMismatchThrows() : void
-    {
-        $this->expectException(DimensionalityMismatch::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->subtract(Vector::fromArray([1.0, 2.0], false));
-    }
-
-    /**
-     * @test
-     */
-    public function powDimensionMismatchThrows() : void
-    {
-        $this->expectException(DimensionalityMismatch::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->pow(Vector::fromArray([1.0, 2.0], false));
-    }
-
-    /**
-     * @test
-     */
-    public function modDimensionMismatchThrows() : void
-    {
-        $this->expectException(DimensionalityMismatch::class);
-
-        Vector::fromArray([1.0, 2.0, 3.0], false)->mod(Vector::fromArray([1.0, 2.0], false));
-    }
-
-    /**
-     * @test
-     * @dataProvider wrongOperandTypeProvider
-     * @param callable $operation
-     */
-    public function arithmeticWithWrongOperandTypeThrows(callable $operation) : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $operation();
-    }
-
-    /**
      * @return Generator<callable[]|mixed[]>
      */
-    public function wrongOperandTypeProvider() : Generator
+    public static function wrongOperandTypeProvider() : Generator
     {
         yield 'multiply' => [function () {
             Vector::fromArray([1.0, 2.0, 3.0], false)->multiply('not a valid operand');
@@ -1898,9 +471,1238 @@ class VectorTest extends TestCase
         }];
     }
 
+    #[Test]
+    public function fromArray() : void
+    {
+        $vector = Vector::fromArray([1, 2, 3, 4, 5]);
+
+        $this->assertInstanceOf(Vector::class, $vector);
+        $this->assertInstanceOf(Tensor::class, $vector);
+        $this->assertInstanceOf(ArrayLike::class, $vector);
+        $this->assertInstanceOf(Arithmetic::class, $vector);
+        $this->assertInstanceOf(Comparable::class, $vector);
+        $this->assertInstanceOf(Algebraic::class, $vector);
+        $this->assertInstanceOf(Trigonometric::class, $vector);
+        $this->assertInstanceOf(Statistical::class, $vector);
+        $this->assertInstanceOf(Special::class, $vector);
+    }
+
+    #[Test]
+    public function fromArrayCastsIntegersToFloats() : void
+    {
+        $vector = Vector::fromArray([1, 2, 3, 4, 5]);
+
+        $this->assertSame(5, $vector->size());
+
+        $result = $vector->asArray();
+
+        $this->assertCount(5, $result);
+
+        foreach ($result as $value) {
+            $this->assertTrue(is_float($value));
+        }
+
+        $this->assertEqualsWithDelta([1.0, 2.0, 3.0, 4.0, 5.0], $result, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function zeros() : void
+    {
+        $zeros = Vector::zeros(4);
+
+        $expected = Vector::fromArray([0, 0, 0, 0], false);
+
+        $this->assertEquals($expected, $zeros);
+    }
+
+    #[Test]
+    public function ones() : void
+    {
+        $ones = Vector::ones(4);
+
+        $expected = Vector::fromArray([1, 1, 1, 1], false);
+
+        $this->assertEquals($expected, $ones);
+    }
+
+    #[Test]
+    public function fill() : void
+    {
+        $vector = Vector::fill(16, 4);
+
+        $expected = Vector::fromArray([16, 16, 16, 16], false);
+
+        $this->assertEquals($expected, $vector);
+    }
+
+    #[Test]
+    public function rand() : void
+    {
+        $vector = Vector::rand(4);
+
+        $this->assertCount(4, $vector);
+    }
+
+    #[Test]
+    public function gaussian() : void
+    {
+        $vector = Vector::gaussian(4);
+
+        $this->assertCount(4, $vector);
+    }
+
+    #[Test]
+    public function poisson() : void
+    {
+        $vector = Vector::poisson(4, 2.0);
+
+        $this->assertCount(4, $vector);
+    }
+
+    #[Test]
+    public function uniform() : void
+    {
+        $vector = Vector::uniform(4);
+
+        $this->assertCount(4, $vector);
+    }
+
+    #[Test]
+    public function randHasCorrectBounds() : void
+    {
+        $vector = Vector::rand(10000);
+
+        $this->assertCount(10000, $vector);
+
+        // A standard uniform on [0,1) must never produce a value outside [0, 1).
+        $this->assertGreaterThanOrEqual(0.0, $vector->min());
+        $this->assertTrue($vector->max() < 1.0);
+    }
+
+    #[Test]
+    public function randMeanIsCloseToHalf() : void
+    {
+        $vector = Vector::rand(10000);
+
+        // A standard uniform on [0,1) has mean 1/2 and std sqrt(1/12).
+        $this->assertEqualsWithDelta(0.5, $vector->mean(), 0.05);
+    }
+
+    #[Test]
+    public function uniformHasCorrectBounds() : void
+    {
+        $vector = Vector::uniform(10000);
+
+        $this->assertCount(10000, $vector);
+
+        // A standard uniform on [-1,1] must never produce a value outside that range.
+        $this->assertGreaterThanOrEqual(-1.0, $vector->min());
+        $this->assertLessThanOrEqual(1.0, $vector->max());
+    }
+
+    #[Test]
+    public function uniformMeanIsCloseToZero() : void
+    {
+        $vector = Vector::uniform(10000);
+
+        // A standard uniform on [-1,1] has mean 0 and std sqrt(1/3).
+        $this->assertEqualsWithDelta(0.0, $vector->mean(), 0.05);
+    }
+
+    #[Test]
+    public function uniformVarianceIsUnitScale() : void
+    {
+        $vector = Vector::uniform(10000);
+
+        // Variance of a standard uniform on [-1,1] is 1/3.
+        $this->assertEqualsWithDelta(1.0 / 3.0, $vector->variance(), 0.1);
+    }
+
+    #[Test]
+    public function gaussianHasZeroMeanAndUnitVariance() : void
+    {
+        $vector = Vector::gaussian(10000);
+
+        $this->assertCount(10000, $vector);
+
+        $this->assertEqualsWithDelta(0.0, $vector->mean(), 0.05);
+
+        // Variance of a standard normal is 1.
+        $this->assertEqualsWithDelta(1.0, $vector->variance(), 0.1);
+    }
+
+    #[Test]
+    public function poissonIsNonNegative() : void
+    {
+        $vector = Vector::poisson(1000, 3.0);
+
+        $this->assertCount(1000, $vector);
+        $this->assertGreaterThanOrEqual(0.0, $vector->min(), 'Poisson samples must be non-negative.');
+
+        // Spot-check that Poisson samples are integer values.
+        foreach (array_slice($vector->asArray(), 0, 50) as $value) {
+            $this->assertEquals(0.0, fmod($value, 1.0), 'Poisson samples must be integers.');
+        }
+    }
+
+    #[Test]
+    public function poissonMeanMatchesLambda() : void
+    {
+        $lambda = 4.0;
+
+        $vector = Vector::poisson(10000, $lambda);
+
+        // Poisson has mean = lambda = variance.
+        $this->assertEqualsWithDelta($lambda, $vector->mean(), 0.2);
+        $this->assertEqualsWithDelta($lambda, $vector->variance(), 0.3);
+    }
+
+    #[Test]
+    public function poissonZeroLambdaIsZero() : void
+    {
+        $vector = Vector::poisson(4, 0.0);
+
+        $this->assertCount(4, $vector);
+        $this->assertSame(0.0, $vector->min(), 'Poisson with lambda=0 must sample 0.0.');
+        $this->assertSame(0.0, $vector->max(), 'Poisson with lambda=0 must sample 0.0.');
+    }
+
+    #[Test]
+    public function poissonNegativeLambdaThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::poisson(1, -1.0);
+    }
+
+    #[Test]
+    public function range() : void
+    {
+        $vector = Vector::range(5.0, 12.0, 2.0);
+
+        $expected = Vector::fromArray([5.0, 7.0, 9.0, 11.0], false);
+
+        $this->assertEquals($expected, $vector);
+    }
+
+    #[Test]
+    public function linspace() : void
+    {
+        $vector = Vector::linspace(-5.0, 5.0, 10);
+
+        $expected = Vector::fromArray([
+            -5.0, -3.888888888888889, -2.7777777777777777, -1.6666666666666665, -0.5555555555555554,
+            0.5555555555555558, 1.666666666666667, 2.777777777777778, 3.8888888888888893, 5.0,
+        ], false);
+
+        $this->assertEquals($expected, $vector);
+    }
+
     /**
-     * @test
+     * @param Vector $vector
+     * @param array<int> $expected
      */
+    #[Test]
+    #[DataProvider('shapeProvider')]
+    public function shape(Vector $vector, array $expected) : void
+    {
+        $this->assertEquals($expected, $vector->shape());
+    }
+
+    #[Test]
+    public function shapeString() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEquals('8', $vector->shapeString());
+    }
+
+    #[Test]
+    public function testSize() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEquals(8, $vector->size());
+    }
+
+    #[Test]
+    public function m() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEquals(1, $vector->m());
+    }
+
+    #[Test]
+    public function n() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEquals(8, $vector->n());
+    }
+
+    #[Test]
+    public function asArray() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $expected = [-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0];
+
+        $this->assertEquals($expected, $vector->asArray());
+    }
+
+    #[Test]
+    public function asRowMatrix() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $matrix = $vector->asRowMatrix();
+
+        $expected = Matrix::fromArray([
+            [-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0],
+        ], false);
+
+        $this->assertEquals($expected, $matrix);
+    }
+
+    #[Test]
+    public function asColumnMatrix() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $matrix = $vector->asColumnMatrix();
+
+        $expected = Matrix::fromArray([[-15.0], [25.0], [35.0], [-36.0], [-72.0], [89.0], [106.0], [45.0]], false);
+
+        $this->assertEquals($expected, $matrix);
+    }
+
+    #[Test]
+    public function reshape() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $matrix = $vector->reshape(4, 2);
+
+        $expected = Matrix::fromArray([
+            [-15.0, 25.0],
+            [35.0, -36.0],
+            [-72.0, 89.0],
+            [106.0, 45.0],
+        ], false);
+
+        $this->assertEquals($expected, $matrix);
+    }
+
+    #[Test]
+    public function transpose() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $vector = $vector->transpose();
+
+        $expected = ColumnVector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEquals($expected, $vector);
+    }
+
+    #[Test]
+    public function map() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $sign = function ($value) {
+            return $value >= 0.0 ? 1 : 0;
+        };
+
+        $vector = $vector->map($sign);
+
+        $expected = Vector::fromArray([0, 1, 1, 0, 0, 1, 1, 1], false);
+
+        $this->assertEquals($expected, $vector);
+    }
+
+    #[Test]
+    public function reduce() : void
+    {
+        $vector = Vector::fromArray([1.0, 2.0, 3.0], false);
+
+        $sum = function ($carry, $value) {
+            return $carry + $value;
+        };
+
+        $this->assertEqualsWithDelta(6.0, $vector->reduce($sum), self::MAX_DELTA);
+
+        // Asymmetric callback: pins the (carry, value) argument order.
+        $subtract = function ($carry, $value) {
+            return $carry - $value;
+        };
+
+        $this->assertEqualsWithDelta(-6.0, $vector->reduce($subtract), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(-4.0, $vector->reduce($subtract, 2.0), self::MAX_DELTA);
+
+        // Must match Matrix::reduce() for the same data and callback.
+        $matrix = Matrix::fromArray([[1.0, 2.0, 3.0]], false);
+
+        $this->assertEqualsWithDelta($vector->reduce($subtract), $matrix->reduce($subtract), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function reciprocal() : void
+    {
+        $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $vector = $vector->reciprocal();
+
+        $expected = Vector::fromArray([
+            -0.06666666666666667, 0.04, 0.02857142857142857, -0.027777777777777776,
+            -0.013888888888888888, 0.011235955056179775, 0.009433962264150943, 0.022222222222222223,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $vector, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function dot() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = Vector::fromArray([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0], false);
+
+        $c = $a->dot($b);
+
+        $this->assertEqualsWithDelta(331.54999999999995, $c, self::MAX_DELTA);
+    }
+
+    public function matmul() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = Matrix::fromArray([
+            [1.1, 0.01, 6.23],
+            [5.0, 2.01, -1.0],
+            [-5.0, 1.0, 0.03],
+            [30.0, 0.02, -0.01],
+            [-0.005, 0.05, -0.5],
+            [-0.001, -1.0, 2.0],
+        ], false);
+
+        $c = $a->matmul($b);
+
+        $expected = Matrix::fromArray([
+            [622.3751, 4.634999999999993, 40.807],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function inner() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = Vector::fromArray([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0], false);
+
+        $c = $a->inner($b);
+
+        $this->assertEqualsWithDelta(331.54999999999995, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function outer() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = Vector::fromArray([0.25, 0.1, 2.0, -0.5, -1.0, -3.0, 3.3, 2.0], false);
+
+        $c = $a->outer($b);
+
+        $expected = Matrix::fromArray([
+            [-3.75, -1.5, -30.0, 7.5, 15.0, 45.0, -49.5, -30.],
+            [6.25, 2.5, 50.0, -12.5, -25.0, -75.0, 82.5, 50.],
+            [8.75, 3.5, 70.0, -17.5, -35.0, -105.0, 115.5, 70.],
+            [-9.0, -3.6, -72.0, 18.0, 36.0, 108.0, -118.8, -72.],
+            [-18.0, -7.2, -144.0, 36.0, 72.0, 216.0, -237.6, -144.],
+            [22.25, 8.9, 178.0, -44.5, -89.0, -267.0, 293.7, 178.],
+            [26.5, 10.600000000000001, 212.0, -53.0, -106.0, -318.0, 349.79999999999995, 212.],
+            [11.25, 4.5, 90.0, -22.5, -45.0, -135.0, 148.5, 90.],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function convolve() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $c = $a->convolve($b, 1);
+
+        $expected = Vector::fromArray([
+            -60.0, 2.5, 259.0, -144.0, 40.5, 370.1, 462.20000000000005,
+            10.000000000000114, 1764.3000000000002, 1625.1, 2234.7, 1378.4, 535.5,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('multiplyProvider')]
+    public function multiply(Vector $a, $b, $expected) : void
+    {
+        $c = $a->multiply($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('divideProvider')]
+    public function divide(Vector $a, $b, $expected) : void
+    {
+        $c = $a->divide($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('addProvider')]
+    public function add(Vector $a, $b, $expected) : void
+    {
+        $c = $a->add($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('subtractProvider')]
+    public function subtract(Vector $a, $b, $expected) : void
+    {
+        $c = $a->subtract($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('powProvider')]
+    public function power(Vector $a, $b, $expected) : void
+    {
+        $c = $a->pow($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('equalProvider')]
+    public function equal(Vector $a, $b, $expected) : void
+    {
+        $c = $a->equal($b);
+
+        $this->assertEquals($expected, $c);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('notEqualProvider')]
+    public function notEqual(Vector $a, $b, $expected) : void
+    {
+        $c = $a->notEqual($b);
+
+        $this->assertEquals($expected, $c);
+    }
+
+    #[Test]
+    public function notEqualMatrixDimensionMismatch() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        $a = Vector::fromArray([1.0, 2.0, 3.0], false);
+
+        $b = Matrix::fromArray([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ], false);
+
+        $a->notEqualMatrix($b);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('greaterProvider')]
+    public function greater(Vector $a, $b, $expected) : void
+    {
+        $c = $a->greater($b);
+
+        $this->assertEquals($expected, $c);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('greaterEqualProvider')]
+    public function greaterEqual(Vector $a, $b, $expected) : void
+    {
+        $c = $a->greaterEqual($b);
+
+        $this->assertEquals($expected, $c);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('lessProvider')]
+    public function less(Vector $a, $b, $expected) : void
+    {
+        $c = $a->less($b);
+
+        $this->assertEquals($expected, $c);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('lessEqualProvider')]
+    public function lessEqual(Vector $a, $b, $expected) : void
+    {
+        $c = $a->lessEqual($b);
+
+        $this->assertEquals($expected, $c);
+    }
+
+    /**
+     * @param Vector $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('modProvider')]
+    public function mod(Vector $a, $b, $expected) : void
+    {
+        $c = $a->mod($b);
+
+        $this->assertEquals($expected, $c);
+    }
+
+    #[Test]
+    public function abs() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = $a->abs();
+
+        $expected = Vector::fromArray([15, 25, 35, 36, 72, 89, 106, 45], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function square() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = $a->square();
+
+        $expected = Vector::fromArray([225, 625, 1225, 1296, 5184, 7921, 11236, 2025], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function pow() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = $a->pow(3);
+
+        $expected = Vector::fromArray([-3375, 15625, 42875, -46656, -373248, 704969, 1191016, 91125], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function sqrt() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->sqrt();
+
+        $expected = Vector::fromArray([
+            2.0, 2.5495097567963922, 1.70293863659264, 4.47213595499958,
+            1.61245154965971, 3.449637662132068,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function exp() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->exp();
+
+        $expected = Vector::fromArray([
+            54.598150033144236, 665.1416330443618, 18.17414536944306,
+            485165195.4097903, 13.463738035001692, 147266.6252405527,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function log() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->log();
+
+        $expected = Vector::fromArray([
+            1.3862943611198906, 1.8718021769015913, 1.0647107369924282,
+            2.995732273553991, 0.9555114450274363, 2.4765384001174837,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function sin() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->sin();
+
+        $expected = Vector::fromArray([
+            -0.7568024953079282, 0.21511998808781552, 0.23924932921398243,
+            0.9129452507276277, 0.5155013718214642, -0.6181371122370333,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function asin() : void
+    {
+        $a = Vector::fromArray([0.1, 0.3, -0.5], false);
+
+        $b = $a->asin();
+
+        $expected = Vector::fromArray([
+            0.1001674211615598, 0.3046926540153975, -0.5235987755982989,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function cos() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->cos();
+
+        $expected = Vector::fromArray([
+            -0.6536436208636119, 0.9765876257280235, -0.9709581651495905,
+            0.40808206181339196, -0.8568887533689473, 0.7860702961410393,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function acos() : void
+    {
+        $a = Vector::fromArray([0.1, 0.3, -0.5], false);
+
+        $b = $a->acos();
+
+        $expected = Vector::fromArray([
+            1.4706289056333368, 1.2661036727794992, 2.0943951023931957,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function tan() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->tan();
+
+        $expected = Vector::fromArray([
+            1.1578212823495777, 0.22027720034589682, -0.24640539397196634,
+            2.237160944224742, -0.6015966130897586, -0.7863636563696398,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function atan() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->atan();
+
+        $expected = Vector::fromArray([
+            1.3258176636680326, 1.4181469983996315, 1.2387368592520112,
+            1.5208379310729538, 1.2036224929766774, 1.486959684726482,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function rad2deg() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->rad2deg();
+
+        $expected = Vector::fromArray([
+            229.1831180523293, 372.42256683503507, 166.15776058793872,
+            1145.9155902616465, 148.96902673401405, 681.8197762056797,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function deg2rad() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->deg2rad();
+
+        $expected = Vector::fromArray([
+            0.06981317007977318, 0.11344640137963141, 0.05061454830783556,
+            0.3490658503988659, 0.04537856055185257, 0.2076941809873252,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function sum() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEqualsWithDelta(177.0, $a->sum(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function product() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEqualsWithDelta(-14442510600000.0, $a->product(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function min() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEquals(-72, $a->min());
+    }
+
+    #[Test]
+    public function max() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEquals(106, $a->max());
+    }
+
+    #[Test]
+    public function mean() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEqualsWithDelta(22.125, $a->mean(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function median() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEquals(30.0, $a->median());
+    }
+
+    #[Test]
+    public function quantile() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEqualsWithDelta(30.0, $a->quantile(0.5), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(-72.0, $a->quantile(0.0), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(106.0, $a->quantile(1.0), self::MAX_DELTA);
+
+        $single = Vector::fromArray([5.0], false);
+
+        $this->assertEqualsWithDelta(5.0, $single->quantile(0.0), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(5.0, $single->quantile(0.5), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(5.0, $single->quantile(1.0), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function variance() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEqualsWithDelta(3227.609375, $a->variance(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function round() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->round(2);
+
+        $expected = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function floor() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->floor();
+
+        $expected = Vector::fromArray([4.0, 6.0, 2.0, 20.0, 2.0, 11.0], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function ceil() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->ceil();
+
+        $expected = Vector::fromArray([4.0, 7.0, 3.0, 20.0, 3.0, 12.0], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function l1Norm() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEqualsWithDelta(423.0, $a->l1Norm(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function l2Norm() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEqualsWithDelta(172.4441938715247, $a->l2Norm(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function pNorm() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEqualsWithDelta(135.15554088861361, $a->pNorm(3.0), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function maxNorm() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $this->assertEqualsWithDelta(106.0, $a->maxNorm(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function clip() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = $a->clip(0.0, 100);
+
+        $expected = Vector::fromArray([0.0, 25, 35, 0.0, 0.0, 89, 100.0, 45], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function clipLower() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = $a->clipLower(60.0);
+
+        $expected = Vector::fromArray([60.0, 60.0, 60.0, 60.0, 60.0, 89, 106.0, 60.0], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function clipUpper() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = $a->clipUpper(50.0);
+
+        $expected = Vector::fromArray([-15.0, 25, 35, -36.0, -72.0, 50.0, 50.0, 45], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function sign() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = $a->sign();
+
+        $expected = Vector::fromArray([-1, 1, 1, -1, -1, 1, 1, 1], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function negate() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = $a->negate();
+
+        $expected = Vector::fromArray([15, -25, -35, 36, 72, -89, -106, -45], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function fillNegativeNThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::fill(1.0, 0);
+    }
+
+    #[Test]
+    public function zerosNegativeNThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::zeros(0);
+    }
+
+    #[Test]
+    public function onesNegativeNThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::ones(0);
+    }
+
+    #[Test]
+    public function randNegativeNThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::rand(0);
+    }
+
+    #[Test]
+    public function gaussianNegativeNThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::gaussian(0);
+    }
+
+    #[Test]
+    public function poissonNegativeNThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::poisson(0);
+    }
+
+    #[Test]
+    public function uniformNegativeNThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::uniform(0);
+    }
+
+    #[Test]
+    public function linspaceMinimumGreaterThanMaximumThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::linspace(5.0, 1.0, 5);
+    }
+
+    #[Test]
+    public function linspaceTooFewElementsThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::linspace(0.0, 1.0, 1);
+    }
+
+    #[Test]
+    public function reshapeSizeMismatchThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0, 4.0], false)->reshape(2, 3);
+    }
+
+    #[Test]
+    public function quantileOutOfRangeThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->quantile(-0.1);
+    }
+
+    #[Test]
+    public function quantileAboveOneThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->quantile(1.1);
+    }
+
+    #[Test]
+    public function pNormNonPositiveThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->pNorm(0.0);
+    }
+
+    #[Test]
+    public function dotDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->dot(Vector::fromArray([1.0, 2.0], false));
+    }
+
+    #[Test]
+    public function multiplyDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->multiply(Vector::fromArray([1.0, 2.0], false));
+    }
+
+    #[Test]
+    public function divideDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->divide(Vector::fromArray([1.0, 2.0], false));
+    }
+
+    #[Test]
+    public function addDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->add(Vector::fromArray([1.0, 2.0], false));
+    }
+
+    #[Test]
+    public function subtractDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->subtract(Vector::fromArray([1.0, 2.0], false));
+    }
+
+    #[Test]
+    public function powDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->pow(Vector::fromArray([1.0, 2.0], false));
+    }
+
+    #[Test]
+    public function modDimensionMismatchThrows() : void
+    {
+        $this->expectException(DimensionalityMismatch::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)->mod(Vector::fromArray([1.0, 2.0], false));
+    }
+
+    /**
+     * @param callable $operation
+     */
+    #[Test]
+    #[DataProvider('wrongOperandTypeProvider')]
+    public function arithmeticWithWrongOperandTypeThrows(callable $operation) : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $operation();
+    }
+
+    #[Test]
     public function convolveStrideLessThanOneThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -1908,9 +1710,7 @@ class VectorTest extends TestCase
         Vector::fromArray([1.0, 2.0, 3.0], false)->convolve(Vector::fromArray([1.0, 1.0], false), 0);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function convolveKernelLargerThanVectorThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -1918,9 +1718,7 @@ class VectorTest extends TestCase
         Vector::fromArray([1.0, 2.0], false)->convolve(Vector::fromArray([1.0, 2.0, 3.0], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offsetSetThrows() : void
     {
         $this->expectException(RuntimeException::class);
@@ -1930,9 +1728,7 @@ class VectorTest extends TestCase
         $a[0] = 4.0;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offsetUnsetThrows() : void
     {
         $this->expectException(RuntimeException::class);
@@ -1942,9 +1738,7 @@ class VectorTest extends TestCase
         unset($a[0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offsetGetOutOfBoundsThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -1954,9 +1748,7 @@ class VectorTest extends TestCase
         $this->assertEquals(0.0, $a[10]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function asTensorBuffer() : void
     {
         $vector = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0], false);
@@ -1970,9 +1762,7 @@ class VectorTest extends TestCase
         $this->assertSame($buffer, $buffer->asBuffer());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function tensorBufferGetThrowsOnOutOfBounds() : void
     {
         $vector = Vector::fromArray([1.0, 2.0, 3.0], false);
@@ -1983,9 +1773,7 @@ class VectorTest extends TestCase
         $vector->asTensorBuffer()->get(3);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function asTensorBufferGetThrowOnNegativeIndex() : void
     {
         $vector = Vector::fromArray([1.0, 2.0, 3.0], false);
@@ -1996,9 +1784,7 @@ class VectorTest extends TestCase
         $vector->asTensorBuffer()->get(-1);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function serializeRoundTrip() : void
     {
         $vector = Vector::fromArray([1.0, 2.0, 3.0, 4.0, 5.0], true);
@@ -2011,9 +1797,7 @@ class VectorTest extends TestCase
         $this->assertEquals($vector->shape(), $unserialised->shape());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function serializeRoundTripWithEmptyVector() : void
     {
         $vector = Vector::fromArray([], false);
@@ -2026,9 +1810,7 @@ class VectorTest extends TestCase
         $this->assertEquals([0], $unserialised->shape());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function serialisedShapeIsCompatibleWithTensorExt() : void
     {
         $vector = Vector::fromArray([1.0, 2.0, 3.0], true);
@@ -2044,9 +1826,7 @@ class VectorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function unserializeFromRawArrayPayload() : void
     {
         // Simulate an ext-produced payload and verify __unserialize consumes it.

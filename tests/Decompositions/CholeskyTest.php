@@ -7,10 +7,10 @@ use Tensor\Decompositions\Cholesky;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\RuntimeException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Tensor\Decompositions\Cholesky
- */
+#[CoversClass(Cholesky::class)]
 class CholeskyTest extends TestCase
 {
     /**
@@ -20,9 +20,7 @@ class CholeskyTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decompose2x2() : void
     {
         $a = Matrix::fromArray([
@@ -45,9 +43,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($a, $ch->l()->matmul($ch->lT()), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decompose3x3() : void
     {
         $a = Matrix::fromArray([
@@ -69,9 +65,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($expected, $ch, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decompose1x1() : void
     {
         $a = Matrix::fromArray([[9.0]], false);
@@ -85,9 +79,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($expected, $ch, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeDiagonal() : void
     {
         $a = Matrix::fromArray([
@@ -109,9 +101,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($expected, $ch, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeNonSquareThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -122,9 +112,7 @@ class CholeskyTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeIndefiniteThrows() : void
     {
         $this->expectException(RuntimeException::class);
@@ -135,9 +123,7 @@ class CholeskyTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeZeroPivotThrows() : void
     {
         $this->expectException(RuntimeException::class);
@@ -148,9 +134,7 @@ class CholeskyTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeSingularThrows() : void
     {
         $this->expectException(RuntimeException::class);
@@ -161,9 +145,7 @@ class CholeskyTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function lTIsTranspose() : void
     {
         $l = Matrix::fromArray([
@@ -176,9 +158,7 @@ class CholeskyTest extends TestCase
         $this->assertEqualsWithDelta($l->transpose(), $ch->lT(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function accessorsReturnMatrices() : void
     {
         $l = Matrix::fromArray([

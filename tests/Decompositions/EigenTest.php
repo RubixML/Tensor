@@ -6,10 +6,10 @@ use Tensor\Matrix;
 use Tensor\Decompositions\Eigen;
 use Tensor\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Tensor\Decompositions\Eigen
- */
+#[CoversClass(Eigen::class)]
 class EigenTest extends TestCase
 {
     /**
@@ -19,9 +19,7 @@ class EigenTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeGeneral3x3() : void
     {
         $a = Matrix::fromArray([
@@ -47,9 +45,7 @@ class EigenTest extends TestCase
         $this->assertEqualsWithDelta($expectedEigenvalues, $eigenvalues, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeSymmetric3x3() : void
     {
         $a = Matrix::fromArray([
@@ -67,9 +63,7 @@ class EigenTest extends TestCase
         $this->assertEqualsWithDelta($expectedEigenvalues, $eig->eigenvalues(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeSymmetric2x2() : void
     {
         $a = Matrix::fromArray([
@@ -84,9 +78,7 @@ class EigenTest extends TestCase
         $this->assertEqualsWithDelta([3.3944487241610, 10.605551275464], $eig->eigenvalues(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeGeneralAndSymmetricAgree() : void
     {
         $a = Matrix::fromArray([
@@ -107,9 +99,7 @@ class EigenTest extends TestCase
         $this->assertEqualsWithDelta($generalEigenvalues, $symmetricEigenvalues, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decompose1x1() : void
     {
         $a = Matrix::fromArray([[9.0]], false);
@@ -123,9 +113,7 @@ class EigenTest extends TestCase
         $this->assertEqualsWithDelta(Matrix::fromArray([[1.0]], false), $eig->eigenvectors(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeDiagonal() : void
     {
         $a = Matrix::fromArray([
@@ -141,9 +129,7 @@ class EigenTest extends TestCase
         $this->assertEqualsWithDelta([2.0, 3.0, 5.0], $eig->eigenvalues(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeNonSquareThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -154,9 +140,7 @@ class EigenTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function constructAndAccess() : void
     {
         $eigenvalues = [1.0, 2.0, 3.0];
@@ -175,9 +159,8 @@ class EigenTest extends TestCase
 
     /**
      * A complex matrix with a pair of purely imaginary eigenvalues.
-     *
-     * @test
      */
+    #[Test]
     public function decomposeComplexPair() : void
     {
         $a = Matrix::fromArray([
@@ -221,9 +204,8 @@ class EigenTest extends TestCase
 
     /**
      * A matrix with a conjugate pair and a distinct real eigenvalue.
-     *
-     * @test
      */
+    #[Test]
     public function decomposeComplexPairWithReal() : void
     {
         $a = Matrix::fromArray([

@@ -2345,7 +2345,7 @@ class Vector implements Tensor
      * Return the elements of the vector as a plain PHP array so that only the
      * values, and not the object structure, appear in the serialized form.
      *
-     * @return list<float>
+     * @return array<mixed>
      */
     public function __serialize() : array
     {
@@ -2359,7 +2359,7 @@ class Vector implements Tensor
      * Restore the vector from the plain array of elements produced by
      * __serialize() by rebuilding its internal state.
      *
-     * @param array{data: list<float>, n: int} $data
+     * @param array<mixed> $data
      */
     public function __unserialize(array $data) : void
     {

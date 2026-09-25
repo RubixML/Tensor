@@ -22,11 +22,12 @@ use Tensor\Exceptions\DimensionalityMismatch;
 use Tensor\Decompositions\Eigen;
 use Tensor\Decompositions\Cholesky;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Generator;
 
-/**
- * @covers \Tensor\Matrix
- */
+#[CoversClass(Matrix::class)]
 class MatrixTest extends TestCase
 {
     /**
@@ -37,246 +38,9 @@ class MatrixTest extends TestCase
     protected const MAX_DELTA = 1e-8;
 
     /**
-     * @test
-     */
-    public function fromArray() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ]);
-
-        $this->assertInstanceOf(Matrix::class, $matrix);
-        $this->assertInstanceOf(Tensor::class, $matrix);
-        $this->assertInstanceOf(ArrayLike::class, $matrix);
-        $this->assertInstanceOf(Arithmetic::class, $matrix);
-        $this->assertInstanceOf(Comparable::class, $matrix);
-        $this->assertInstanceOf(Algebraic::class, $matrix);
-        $this->assertInstanceOf(Trigonometric::class, $matrix);
-        $this->assertInstanceOf(Statistical::class, $matrix);
-        $this->assertInstanceOf(Special::class, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function fromArrayCastsIntegersToFloatsAndPreservesShape() : void
-    {
-        $matrix = Matrix::fromArray([
-            [1, 2, 3],
-            [4, 5, 6],
-        ]);
-
-        $this->assertSame([2, 3], $matrix->shape());
-        $this->assertSame(6, $matrix->size());
-
-        $result = $matrix->asArray();
-
-        $this->assertCount(2, $result);
-
-        foreach ($result as $row) {
-            $this->assertCount(3, $row);
-
-            foreach ($row as $value) {
-                $this->assertTrue(is_float($value));
-            }
-        }
-
-        $this->assertEqualsWithDelta([
-            [1.0, 2.0, 3.0],
-            [4.0, 5.0, 6.0],
-        ], $result, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function identity() : void
-    {
-        $matrix = Matrix::identity(4);
-
-        $expected = Matrix::fromArray([
-            [1, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 0, 1],
-        ], false);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function zeros() : void
-    {
-        $matrix = Matrix::zeros(2, 4);
-
-        $expected = Matrix::fromArray([
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-        ], false);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function ones() : void
-    {
-        $matrix = Matrix::ones(4, 2);
-
-        $expected = Matrix::fromArray([
-            [1, 1],
-            [1, 1],
-            [1, 1],
-            [1, 1],
-        ], false);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function diagonal() : void
-    {
-        $matrix = Matrix::diagonal([0, 1, 4, 5]);
-
-        $expected = Matrix::fromArray([
-            [0, 0, 0, 0],
-            [0, 1, 0, 0],
-            [0, 0, 4, 0],
-            [0, 0, 0, 5],
-        ], false);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function fill() : void
-    {
-        $matrix = Matrix::fill(5, 4, 4);
-
-        $expected = Matrix::fromArray([
-            [5, 5, 5, 5],
-            [5, 5, 5, 5],
-            [5, 5, 5, 5],
-            [5, 5, 5, 5],
-        ], false);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function rand() : void
-    {
-        $matrix = Matrix::rand(4, 4);
-
-        $this->assertCount(16, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function gaussian() : void
-    {
-        $matrix = Matrix::gaussian(3, 3);
-
-        $this->assertCount(9, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function poisson() : void
-    {
-        $matrix = Matrix::poisson(6, 4, 2.);
-
-        $this->assertCount(24, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function poissonZeroLambdaIsZero() : void
-    {
-        $matrix = Matrix::poisson(3, 3, 0.0);
-
-        $expected = Matrix::fill(0.0, 3, 3);
-
-        $this->assertEquals($expected, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function poissonNegativeLambdaThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Matrix::poisson(1, 1, -1.0);
-    }
-
-    /**
-     * @test
-     */
-    public function uniform() : void
-    {
-        $matrix = Matrix::uniform(3, 3);
-
-        $this->assertCount(9, $matrix);
-    }
-
-    /**
-     * @test
-     */
-    public function shape() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $this->assertEquals([3, 3], $matrix->shape());
-    }
-
-    /**
-     * @test
-     */
-    public function shapeString() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22, -17, 12, 16],
-            [4, 11, -2, 18],
-        ], false);
-
-        $this->assertEquals('2 x 4', $matrix->shapeString());
-    }
-
-    /**
-     * @test
-     * @dataProvider isSquareProvider
-     *
-     * @param Matrix $matrix
-     * @param bool $expected
-     */
-    public function isSquare(Matrix $matrix, $expected) : void
-    {
-        $this->assertEquals($expected, $matrix->isSquare());
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function isSquareProvider() : Generator
+    public static function isSquareProvider() : Generator
     {
         yield [
             Matrix::fromArray([
@@ -297,322 +61,9 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
-     */
-    public function size() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $this->assertEquals(9, $matrix->size());
-    }
-
-    /**
-     * @test
-     */
-    public function m() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $this->assertEquals(3, $matrix->m());
-    }
-
-    /**
-     * @test
-     */
-    public function n() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $this->assertEquals(3, $matrix->n());
-    }
-
-    /**
-     * @test
-     */
-    public function rowAsVector() : void
-    {
-        $a = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $b = $a->rowAsVector(1);
-
-        $expected = Vector::fromArray([4, 11, -2], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function columnAsVector() : void
-    {
-        $a = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $b = $a->columnAsVector(1);
-
-        $expected = ColumnVector::fromArray([-17, 11, -6], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function diagonalAsVector() : void
-    {
-        $a = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $b = $a->diagonalAsVector();
-
-        $expected = Vector::fromArray([22, 11, -9], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function asArray() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $expected = [
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ];
-
-        $this->assertEquals($expected, $matrix->asArray());
-    }
-
-    /**
-     * @test
-     */
-    public function asVectors() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $vectors = $matrix->asVectors();
-
-        $expected = [
-            Vector::fromArray([22, -17, 12], false),
-            Vector::fromArray([4, 11, -2], false),
-            Vector::fromArray([20, -6, -9], false),
-        ];
-
-        $this->assertEquals($expected, $vectors);
-    }
-
-    /**
-     * @test
-     */
-    public function asColumnVectors() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $vectors = $matrix->asColumnVectors();
-
-        $expected = [
-            ColumnVector::fromArray([22, 4, 20], false),
-            ColumnVector::fromArray([-17, 11, -6], false),
-            ColumnVector::fromArray([12, -2, -9], false),
-        ];
-
-        $this->assertEquals($expected, $vectors);
-    }
-
-    /**
-     * @test
-     */
-    public function flatten() : void
-    {
-        $a = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $b = $a->flatten();
-
-        $expected = Vector::fromArray([22, -17, 12, 4, 11, -2, 20, -6, -9], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function transpose() : void
-    {
-        $a = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $b = $a->transpose();
-
-        $expected = Matrix::fromArray([
-            [22, 4, 20],
-            [-17, 11, -6],
-            [12, -2, -9],
-        ], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function inverse() : void
-    {
-        $a = Matrix::fromArray([
-            [22, -17, 12],
-            [4, 11, -2],
-            [20, -6, -9],
-        ], false);
-
-        $b = $a->inverse();
-
-        $expected = Matrix::fromArray([
-            [0.02093549603923048, 0.042436816295737464, 0.018483591097698978],
-            [0.0007544322897019996, 0.08261033572236892, -0.017351942663145988],
-            [0.04602036967182196, 0.03923047906450396, -0.05846850245190495],
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function inverseNonSquareThrows() : void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        Matrix::fromArray([
-            [1.0, 2.0],
-            [3.0, 4.0],
-            [5.0, 6.0],
-        ], false)->inverse();
-    }
-
-    /**
-     * @test
-     */
-    public function inverseSingularThrows() : void
-    {
-        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
-        // inverse must be rejected rather than return a magnitude ~1e15 matrix
-        // that does not satisfy A * A^-1 = I.
-        $a = Matrix::fromArray([
-            [2.0, 1.0, 0.0, 1.0],
-            [1.0, 2.0, 1.0, 0.0],
-            [0.0, 1.0, 2.0, 1.0],
-            [1.0, 0.0, 1.0, 2.0],
-        ], false);
-
-        $this->expectException(RuntimeException::class);
-
-        $a->inverse();
-    }
-
-    /**
-     * @test
-     */
-    public function det() : void
-    {
-        $a = Matrix::fromArray([
-            [4, 6, -12],
-            [1, 3, 5],
-            [-10, -1, 14],
-        ], false);
-
-        $this->assertEqualsWithDelta(-544.0, $a->det(), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function detSingularIsZero() : void
-    {
-        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
-        // determinant must be ~0 rather than a spurious ~1e-15 value.
-        $a = Matrix::fromArray([
-            [2.0, 1.0, 0.0, 1.0],
-            [1.0, 2.0, 1.0, 0.0],
-            [0.0, 1.0, 2.0, 1.0],
-            [1.0, 0.0, 1.0, 2.0],
-        ], false);
-
-        $this->assertEqualsWithDelta(0.0, $a->det(), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function trace() : void
-    {
-        $a = Matrix::fromArray([
-            [4, 6, -12],
-            [1, 3, 5],
-            [-10, -1, 14],
-        ], false);
-
-        $this->assertEquals(21.0, $a->trace());
-    }
-
-    /**
-     * @test
-     * @dataProvider symmetricProvider
-     *
-     * @param Matrix $matrix
-     * @param bool $expected
-     */
-    public function symmetric(Matrix $matrix, $expected) : void
-    {
-        $this->assertEquals($expected, $matrix->symmetric());
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function symmetricProvider() : Generator
+    public static function symmetricProvider() : Generator
     {
         yield [
             Matrix::fromArray([
@@ -634,411 +85,9 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
-     */
-    public function rank() : void
-    {
-        $a = Matrix::fromArray([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ], false);
-
-        $this->assertEquals(3, $a->rank());
-
-        $b = Matrix::fromArray([
-            [1.0, 2.0, 3.0],
-            [4.0, 5.0, 6.0],
-        ], false);
-
-        $this->assertEquals(2, $b->rank());
-
-        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
-        // rank must be 3, not 4, even though floating point leaves a ~1e-16
-        // residual on the diagonal.
-        $c = Matrix::fromArray([
-            [2.0, 1.0, 0.0, 1.0],
-            [1.0, 2.0, 1.0, 0.0],
-            [0.0, 1.0, 2.0, 1.0],
-            [1.0, 0.0, 1.0, 2.0],
-        ], false);
-
-        $this->assertEquals(3, $c->rank());
-    }
-
-    /**
-     * @test
-     */
-    public function fullRank() : void
-    {
-        $a = Matrix::fromArray([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ], false);
-
-        $this->assertTrue($a->fullRank());
-
-        $b = Matrix::fromArray([
-            [1.0, 2.0, 3.0],
-            [4.0, 5.0, 6.0],
-        ], false);
-
-        $this->assertTrue($b->fullRank());
-
-        // Exactly singular 4x4 (see rank() above); fullRank() must be false.
-        $c = Matrix::fromArray([
-            [2.0, 1.0, 0.0, 1.0],
-            [1.0, 2.0, 1.0, 0.0],
-            [0.0, 1.0, 2.0, 1.0],
-            [1.0, 0.0, 1.0, 2.0],
-        ], false);
-
-        $this->assertFalse($c->fullRank());
-    }
-
-    /**
-     * @test
-     */
-    public function reciprocal() : void
-    {
-        $a = Matrix::fromArray([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ], false);
-
-        $b = $a->reciprocal();
-
-        $expected = Matrix::fromArray([
-            [0.045454545454545456, -0.058823529411764705, 0.08333333333333333],
-            [0.25, 0.09090909090909091, -0.5],
-            [0.05, -0.16666666666666666, -0.1111111111111111],
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function map() : void
-    {
-        $a = Matrix::fromArray([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ], false);
-
-        $sign = function ($value) {
-            return $value >= 0.0 ? 1 : -1;
-        };
-
-        $b = $a->map($sign);
-
-        $expected = Matrix::fromArray([
-            [1, -1, 1],
-            [1, 1, -1],
-            [1, -1, -1],
-        ], false);
-
-        $this->assertEquals($expected, $b);
-    }
-
-    /**
-     * @test
-     */
-    public function reduce() : void
-    {
-        $a = Matrix::fromArray([
-            [1.0, 2.0],
-            [3.0, 4.0],
-        ], false);
-
-        $sum = function ($carry, $value) {
-            return $carry + $value;
-        };
-
-        $this->assertEqualsWithDelta(10.0, $a->reduce($sum), self::MAX_DELTA);
-
-        // Asymmetric callback: pins the (carry, value) argument order.
-        $subtract = function ($carry, $value) {
-            return $carry - $value;
-        };
-
-        $this->assertEqualsWithDelta(-10.0, $a->reduce($subtract), self::MAX_DELTA);
-        $this->assertEqualsWithDelta(-8.0, $a->reduce($subtract, 2.0), self::MAX_DELTA);
-
-        // Must match Vector::reduce() for the same data and callback.
-        $v = Vector::fromArray([1.0, 2.0, 3.0, 4.0], false);
-
-        $this->assertEqualsWithDelta($v->reduce($subtract), $a->reduce($subtract), self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function ref() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ], false);
-
-        $ref = $matrix->ref();
-
-        $a = Matrix::fromArray([
-            [22, -17, 12],
-            [0, 14.09090909090909, -4.181818181818182],
-            [0, 0, -17.10322580645161],
-        ], false);
-
-        $expected = new REF($a, 0);
-
-        $this->assertEqualsWithDelta($expected, $ref, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function rref() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ], false);
-
-        $rref = $matrix->rref();
-
-        $a = Matrix::fromArray([
-            [1, 0, 0],
-            [0, 1, 0],
-            [0, 0, 1],
-        ], false);
-
-        $expected = new RREF($a);
-
-        $this->assertEqualsWithDelta($expected, $rref, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function lu() : void
-    {
-        $matrix = Matrix::fromArray([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ], false);
-
-        $lu = $matrix->lu();
-
-        $l = Matrix::fromArray([
-            [1.0, 0, 0],
-            [0.18181818181818182, 1.0, 0],
-            [0.9090909090909091, 0.6709677419354838, 1.0],
-        ], false);
-
-        $u = Matrix::fromArray([
-            [22, -17, 12],
-            [0, 14.09090909090909, -4.181818181818182],
-            [0, 0, -17.10322580645161],
-        ], false);
-
-        $p = Matrix::fromArray([
-            [1, 0, 0],
-            [0, 1, 0],
-            [0, 0, 1],
-        ], false);
-
-        $expected = new LU($l, $u, $p);
-
-        $this->assertEqualsWithDelta($expected, $lu, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function luMultiPivot() : void
-    {
-        $matrix = Matrix::fromArray([
-            [0.0,  1.0,  0.0,  0.0],
-            [-1.0,  0.0,  0.0,  0.0],
-            [0.0,  0.0,  0.0,  2.0],
-            [0.0,  0.0,  3.0,  1.0],
-        ], false);
-
-        $lu = $matrix->lu();
-
-        $pa = $lu->p()->matmul($matrix);
-        $luProd = $lu->l()->matmul($lu->u());
-
-        $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function luNegativePivot() : void
-    {
-        $matrix = Matrix::fromArray([
-            [1.0,  2.0,  3.0,  4.0],
-            [-9.0,  1.0,  0.0,  0.0],
-            [0.5,  0.5,  1.0,  1.0],
-            [0.1,  0.2,  0.3,  0.4],
-        ], false);
-
-        $lu = $matrix->lu();
-
-        $pa = $lu->p()->matmul($matrix);
-        $luProd = $lu->l()->matmul($lu->u());
-
-        $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function luSingular() : void
-    {
-        $this->expectException(RuntimeException::class);
-
-        $matrix = Matrix::fromArray([
-            [1.0, 2.0,  0.0,  0.0],
-            [0.0, 1.0,  1.0,  0.0],
-            [2.0, 4.0,  0.0,  1.0],
-            [0.0, 1.0,  1.0,  0.0],
-        ], false);
-
-        $matrix->lu();
-    }
-
-    /**
-     * @test
-     */
-    public function cholesky() : void
-    {
-        $matrix = Matrix::fromArray([
-            [2, -1, 0],
-            [-1, 2, -1],
-            [0, -1, 2],
-        ], false);
-
-        $cholesky = $matrix->cholesky();
-
-        $l = Matrix::fromArray([
-            [1.4142135623730951, 0, 0],
-            [-0.7071067811865475, 1.224744871391589, 0],
-            [0, -0.8164965809277261, 1.1547005383792515],
-        ], false);
-
-        $expected = new Cholesky($l);
-
-        $this->assertEqualsWithDelta($expected, $cholesky, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function matmul() : void
-    {
-        $a = Matrix::fromArray([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ], false);
-
-        $b = Matrix::fromArray([
-            [13],
-            [11],
-            [9],
-        ], false);
-
-        $c = $a->matmul($b);
-
-        $expected = Matrix::fromArray([
-            [207], [155], [113],
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function dotVector() : void
-    {
-        $a = Matrix::fromArray([
-            [22.0, -17.0, 12.0],
-            [4.0, 11.0, -2.0],
-            [20.0, -6.0, -9.0],
-        ], false);
-
-        $b = Vector::fromArray([2, 10, -1], false);
-
-        $c = $a->dot($b);
-
-        $expected = ColumnVector::fromArray([-138, 120, -11], false);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     */
-    public function convolve() : void
-    {
-        $a = Matrix::fromArray([
-            [3, 27, 66, 29, 42, 5],
-            [5, 9, 15, 42, 45, 16],
-            [1, 5, 10, 22, 66, 5],
-            [0, 1, 4, 9, 10, 22, 2],
-            [0, 0, 3, 19, 21, 25],
-            [0, 0, 0, 5, 2, 33, 35],
-        ], false);
-
-        $b = Matrix::fromArray([
-            [0, 0, 1],
-            [0, 1, 0],
-            [1, 0, 0],
-        ], false);
-
-        $c = $a->convolve($b, 1);
-
-        $expected = Matrix::fromArray([
-            [3, 32, 75, 44, 84, 50],
-            [32, 76, 49, 94, 72, 82],
-            [10, 20, 53, 71, 91, 15],
-            [5, 11, 26, 78, 34, 43],
-            [1, 4, 12, 29, 48, 27],
-            [0, 3, 19, 26, 27, 33],
-        ], false);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
-     * @test
-     * @dataProvider multiplyProvider
-     *
-     * @param Matrix $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function multiply(Matrix $a, $b, $expected) : void
-    {
-        $c = $a->multiply($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function multiplyProvider() : Generator
+    public static function multiplyProvider() : Generator
     {
         yield [
             Matrix::fromArray([
@@ -1102,24 +151,9 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider divideProvider
-     *
-     * @param Matrix $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function divide(Matrix $a, $b, $expected) : void
-    {
-        $c = $a->divide($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function divideProvider() : Generator
+    public static function divideProvider() : Generator
     {
         yield [
             Matrix::fromArray([
@@ -1183,24 +217,9 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider addProvider
-     *
-     * @param Matrix $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function add(Matrix $a, $b, $expected) : void
-    {
-        $c = $a->add($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function addProvider() : Generator
+    public static function addProvider() : Generator
     {
         yield [
             Matrix::fromArray([
@@ -1264,24 +283,9 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider subtractProvider
-     *
-     * @param Matrix $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function subtract(Matrix $a, $b, $expected) : void
-    {
-        $c = $a->subtract($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function subtractProvider() : Generator
+    public static function subtractProvider() : Generator
     {
         yield [
             Matrix::fromArray([
@@ -1345,24 +349,9 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider powProvider
-     *
-     * @param Matrix $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function pow(Matrix $a, $b, $expected) : void
-    {
-        $c = $a->pow($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function powProvider() : Generator
+    public static function powProvider() : Generator
     {
         yield [
             Matrix::fromArray([
@@ -1412,24 +401,9 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider modProvider
-     *
-     * @param Matrix $a
-     * @param Tensor|float $b
-     * @param Tensor|float $expected
-     */
-    public function mod(Matrix $a, $b, $expected) : void
-    {
-        $c = $a->mod($b);
-
-        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
-    }
-
-    /**
      * @return Generator<mixed[]>
      */
-    public function modProvider() : Generator
+    public static function modProvider() : Generator
     {
         yield [
             Matrix::fromArray([
@@ -1493,13 +467,1333 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider equalProvider
-     *
+     * @return Generator<mixed[]>
+     */
+    public static function equalProvider() : Generator
+    {
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Matrix::fromArray([
+                [4, 6, -12],
+                [1, 3, 5],
+                [-10, -1, 14],
+            ], false),
+            Matrix::fromArray([
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Vector::fromArray([2, 10, -1], false),
+            Matrix::fromArray([
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            ColumnVector::fromArray([2.5, -1, 4.8], false),
+            Matrix::fromArray([
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            4.0,
+            Matrix::fromArray([
+                [0, 0, 0],
+                [1, 0, 0],
+                [0, 0, 0],
+            ], false),
+        ];
+    }
+
+    /**
+     * @return Generator<mixed[]>
+     */
+    public static function notEqualProvider() : Generator
+    {
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Matrix::fromArray([
+                [4, 6, -12],
+                [1, 3, 5],
+                [-10, -1, 14],
+            ], false),
+            Matrix::fromArray([
+                [1, 1, 1],
+                [1, 1, 1],
+                [1, 1, 1],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Vector::fromArray([2, 10, -1], false),
+            Matrix::fromArray([
+                [1, 1, 1],
+                [1, 1, 1],
+                [1, 1, 1],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            ColumnVector::fromArray([2.5, -1, 4.8], false),
+            Matrix::fromArray([
+                [1, 1, 1],
+                [1, 1, 1],
+                [1, 1, 1],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            4.0,
+            Matrix::fromArray([
+                [1, 1, 1],
+                [0, 1, 1],
+                [1, 1, 1],
+            ], false),
+        ];
+    }
+
+    /**
+     * @return Generator<mixed[]>
+     */
+    public static function greaterProvider() : Generator
+    {
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Matrix::fromArray([
+                [4, 6, -12],
+                [1, 3, 5],
+                [-10, -1, 14],
+            ], false),
+            Matrix::fromArray([
+                [1, 0, 1],
+                [1, 1, 0],
+                [1, 0, 0],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Vector::fromArray([2, 10, -1], false),
+            Matrix::fromArray([
+                [1, 0, 1],
+                [1, 1, 0],
+                [1, 0, 0],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            ColumnVector::fromArray([2.5, -1, 4.8], false),
+            Matrix::fromArray([
+                [1, 0, 1],
+                [1, 1, 0],
+                [1, 0, 0],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            4.0,
+            Matrix::fromArray([
+                [1, 0, 1],
+                [0, 1, 0],
+                [1, 0, 0],
+            ], false),
+        ];
+    }
+
+    /**
+     * @return Generator<mixed[]>
+     */
+    public static function greaterEqualProvider() : Generator
+    {
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Matrix::fromArray([
+                [4, 6, -12],
+                [1, 3, 5],
+                [-10, -1, 14],
+            ], false),
+            Matrix::fromArray([
+                [1, 0, 1],
+                [1, 1, 0],
+                [1, 0, 0],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Vector::fromArray([2, 10, -1], false),
+            Matrix::fromArray([
+                [1, 0, 1],
+                [1, 1, 0],
+                [1, 0, 0],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            ColumnVector::fromArray([2.5, -1, 4.8], false),
+            Matrix::fromArray([
+                [1, 0, 1],
+                [1, 1, 0],
+                [1, 0, 0],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            4.0,
+            Matrix::fromArray([
+                [1, 0, 1],
+                [1, 1, 0],
+                [1, 0, 0],
+            ], false),
+        ];
+    }
+
+    /**
+     * @return Generator<mixed[]>
+     */
+    public static function lessProvider() : Generator
+    {
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Matrix::fromArray([
+                [4, 6, -12],
+                [1, 3, 5],
+                [-10, -1, 14],
+            ], false),
+            Matrix::fromArray([
+                [0, 1, 0],
+                [0, 0, 1],
+                [0, 1, 1],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Vector::fromArray([2, 10, -1], false),
+            Matrix::fromArray([
+                [0, 1, 0],
+                [0, 0, 1],
+                [0, 1, 1],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            ColumnVector::fromArray([2.5, -1, 4.8], false),
+            Matrix::fromArray([
+                [0, 1, 0],
+                [0, 0, 1],
+                [0, 1, 1],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            10.0,
+            Matrix::fromArray([
+                [0, 1, 0],
+                [1, 0, 1],
+                [0, 1, 1],
+            ], false),
+        ];
+    }
+
+    /**
+     * @return Generator<mixed[]>
+     */
+    public static function lessEqualProvider() : Generator
+    {
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Matrix::fromArray([
+                [4, 6, -12],
+                [1, 3, 5],
+                [-10, -1, 14],
+            ], false),
+            Matrix::fromArray([
+                [0, 1, 0],
+                [0, 0, 1],
+                [0, 1, 1],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            Vector::fromArray([2, 10, -1], false),
+            Matrix::fromArray([
+                [0, 1, 0],
+                [0, 0, 1],
+                [0, 1, 1],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            ColumnVector::fromArray([2.5, -1, 4.8], false),
+            Matrix::fromArray([
+                [0, 1, 0],
+                [0, 0, 1],
+                [0, 1, 1],
+            ], false),
+        ];
+
+        yield [
+            Matrix::fromArray([
+                [22.0, -17.0, 12.0],
+                [4.0, 11.0, -2.0],
+                [20.0, -6.0, -9.0],
+            ], false),
+            10.0,
+            Matrix::fromArray([
+                [0, 1, 0],
+                [1, 0, 1],
+                [0, 1, 1],
+            ], false),
+        ];
+    }
+
+    #[Test]
+    public function fromArray() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ]);
+
+        $this->assertInstanceOf(Matrix::class, $matrix);
+        $this->assertInstanceOf(Tensor::class, $matrix);
+        $this->assertInstanceOf(ArrayLike::class, $matrix);
+        $this->assertInstanceOf(Arithmetic::class, $matrix);
+        $this->assertInstanceOf(Comparable::class, $matrix);
+        $this->assertInstanceOf(Algebraic::class, $matrix);
+        $this->assertInstanceOf(Trigonometric::class, $matrix);
+        $this->assertInstanceOf(Statistical::class, $matrix);
+        $this->assertInstanceOf(Special::class, $matrix);
+    }
+
+    #[Test]
+    public function fromArrayCastsIntegersToFloatsAndPreservesShape() : void
+    {
+        $matrix = Matrix::fromArray([
+            [1, 2, 3],
+            [4, 5, 6],
+        ]);
+
+        $this->assertSame([2, 3], $matrix->shape());
+        $this->assertSame(6, $matrix->size());
+
+        $result = $matrix->asArray();
+
+        $this->assertCount(2, $result);
+
+        foreach ($result as $row) {
+            $this->assertCount(3, $row);
+
+            foreach ($row as $value) {
+                $this->assertTrue(is_float($value));
+            }
+        }
+
+        $this->assertEqualsWithDelta([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ], $result, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function identity() : void
+    {
+        $matrix = Matrix::identity(4);
+
+        $expected = Matrix::fromArray([
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1],
+        ], false);
+
+        $this->assertEquals($expected, $matrix);
+    }
+
+    #[Test]
+    public function zeros() : void
+    {
+        $matrix = Matrix::zeros(2, 4);
+
+        $expected = Matrix::fromArray([
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+        ], false);
+
+        $this->assertEquals($expected, $matrix);
+    }
+
+    #[Test]
+    public function ones() : void
+    {
+        $matrix = Matrix::ones(4, 2);
+
+        $expected = Matrix::fromArray([
+            [1, 1],
+            [1, 1],
+            [1, 1],
+            [1, 1],
+        ], false);
+
+        $this->assertEquals($expected, $matrix);
+    }
+
+    #[Test]
+    public function diagonal() : void
+    {
+        $matrix = Matrix::diagonal([0, 1, 4, 5]);
+
+        $expected = Matrix::fromArray([
+            [0, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 4, 0],
+            [0, 0, 0, 5],
+        ], false);
+
+        $this->assertEquals($expected, $matrix);
+    }
+
+    #[Test]
+    public function fill() : void
+    {
+        $matrix = Matrix::fill(5, 4, 4);
+
+        $expected = Matrix::fromArray([
+            [5, 5, 5, 5],
+            [5, 5, 5, 5],
+            [5, 5, 5, 5],
+            [5, 5, 5, 5],
+        ], false);
+
+        $this->assertEquals($expected, $matrix);
+    }
+
+    #[Test]
+    public function rand() : void
+    {
+        $matrix = Matrix::rand(4, 4);
+
+        $this->assertCount(16, $matrix);
+    }
+
+    #[Test]
+    public function gaussian() : void
+    {
+        $matrix = Matrix::gaussian(3, 3);
+
+        $this->assertCount(9, $matrix);
+    }
+
+    #[Test]
+    public function poisson() : void
+    {
+        $matrix = Matrix::poisson(6, 4, 2.);
+
+        $this->assertCount(24, $matrix);
+    }
+
+    #[Test]
+    public function poissonZeroLambdaIsZero() : void
+    {
+        $matrix = Matrix::poisson(3, 3, 0.0);
+
+        $expected = Matrix::fill(0.0, 3, 3);
+
+        $this->assertEquals($expected, $matrix);
+    }
+
+    #[Test]
+    public function poissonNegativeLambdaThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::poisson(1, 1, -1.0);
+    }
+
+    #[Test]
+    public function uniform() : void
+    {
+        $matrix = Matrix::uniform(3, 3);
+
+        $this->assertCount(9, $matrix);
+    }
+
+    #[Test]
+    public function shape() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $this->assertEquals([3, 3], $matrix->shape());
+    }
+
+    #[Test]
+    public function shapeString() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22, -17, 12, 16],
+            [4, 11, -2, 18],
+        ], false);
+
+        $this->assertEquals('2 x 4', $matrix->shapeString());
+    }
+
+    /**
+     * @param Matrix $matrix
+     * @param bool $expected
+     */
+    #[Test]
+    #[DataProvider('isSquareProvider')]
+    public function isSquare(Matrix $matrix, $expected) : void
+    {
+        $this->assertEquals($expected, $matrix->isSquare());
+    }
+
+    #[Test]
+    public function testSize() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $this->assertEquals(9, $matrix->size());
+    }
+
+    #[Test]
+    public function m() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $this->assertEquals(3, $matrix->m());
+    }
+
+    #[Test]
+    public function n() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $this->assertEquals(3, $matrix->n());
+    }
+
+    #[Test]
+    public function rowAsVector() : void
+    {
+        $a = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $b = $a->rowAsVector(1);
+
+        $expected = Vector::fromArray([4, 11, -2], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function columnAsVector() : void
+    {
+        $a = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $b = $a->columnAsVector(1);
+
+        $expected = ColumnVector::fromArray([-17, 11, -6], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function diagonalAsVector() : void
+    {
+        $a = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $b = $a->diagonalAsVector();
+
+        $expected = Vector::fromArray([22, 11, -9], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function asArray() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $expected = [
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ];
+
+        $this->assertEquals($expected, $matrix->asArray());
+    }
+
+    #[Test]
+    public function asVectors() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $vectors = $matrix->asVectors();
+
+        $expected = [
+            Vector::fromArray([22, -17, 12], false),
+            Vector::fromArray([4, 11, -2], false),
+            Vector::fromArray([20, -6, -9], false),
+        ];
+
+        $this->assertEquals($expected, $vectors);
+    }
+
+    #[Test]
+    public function asColumnVectors() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $vectors = $matrix->asColumnVectors();
+
+        $expected = [
+            ColumnVector::fromArray([22, 4, 20], false),
+            ColumnVector::fromArray([-17, 11, -6], false),
+            ColumnVector::fromArray([12, -2, -9], false),
+        ];
+
+        $this->assertEquals($expected, $vectors);
+    }
+
+    #[Test]
+    public function flatten() : void
+    {
+        $a = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $b = $a->flatten();
+
+        $expected = Vector::fromArray([22, -17, 12, 4, 11, -2, 20, -6, -9], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function transpose() : void
+    {
+        $a = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $b = $a->transpose();
+
+        $expected = Matrix::fromArray([
+            [22, 4, 20],
+            [-17, 11, -6],
+            [12, -2, -9],
+        ], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function inverse() : void
+    {
+        $a = Matrix::fromArray([
+            [22, -17, 12],
+            [4, 11, -2],
+            [20, -6, -9],
+        ], false);
+
+        $b = $a->inverse();
+
+        $expected = Matrix::fromArray([
+            [0.02093549603923048, 0.042436816295737464, 0.018483591097698978],
+            [0.0007544322897019996, 0.08261033572236892, -0.017351942663145988],
+            [0.04602036967182196, 0.03923047906450396, -0.05846850245190495],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function inverseNonSquareThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::fromArray([
+            [1.0, 2.0],
+            [3.0, 4.0],
+            [5.0, 6.0],
+        ], false)->inverse();
+    }
+
+    #[Test]
+    public function inverseSingularThrows() : void
+    {
+        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
+        // inverse must be rejected rather than return a magnitude ~1e15 matrix
+        // that does not satisfy A * A^-1 = I.
+        $a = Matrix::fromArray([
+            [2.0, 1.0, 0.0, 1.0],
+            [1.0, 2.0, 1.0, 0.0],
+            [0.0, 1.0, 2.0, 1.0],
+            [1.0, 0.0, 1.0, 2.0],
+        ], false);
+
+        $this->expectException(RuntimeException::class);
+
+        $a->inverse();
+    }
+
+    #[Test]
+    public function det() : void
+    {
+        $a = Matrix::fromArray([
+            [4, 6, -12],
+            [1, 3, 5],
+            [-10, -1, 14],
+        ], false);
+
+        $this->assertEqualsWithDelta(-544.0, $a->det(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function detSingularIsZero() : void
+    {
+        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
+        // determinant must be ~0 rather than a spurious ~1e-15 value.
+        $a = Matrix::fromArray([
+            [2.0, 1.0, 0.0, 1.0],
+            [1.0, 2.0, 1.0, 0.0],
+            [0.0, 1.0, 2.0, 1.0],
+            [1.0, 0.0, 1.0, 2.0],
+        ], false);
+
+        $this->assertEqualsWithDelta(0.0, $a->det(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function trace() : void
+    {
+        $a = Matrix::fromArray([
+            [4, 6, -12],
+            [1, 3, 5],
+            [-10, -1, 14],
+        ], false);
+
+        $this->assertEquals(21.0, $a->trace());
+    }
+
+    /**
+     * @param Matrix $matrix
+     * @param bool $expected
+     */
+    #[Test]
+    #[DataProvider('symmetricProvider')]
+    public function symmetric(Matrix $matrix, $expected) : void
+    {
+        $this->assertEquals($expected, $matrix->symmetric());
+    }
+
+    #[Test]
+    public function rank() : void
+    {
+        $a = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $this->assertEquals(3, $a->rank());
+
+        $b = Matrix::fromArray([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ], false);
+
+        $this->assertEquals(2, $b->rank());
+
+        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
+        // rank must be 3, not 4, even though floating point leaves a ~1e-16
+        // residual on the diagonal.
+        $c = Matrix::fromArray([
+            [2.0, 1.0, 0.0, 1.0],
+            [1.0, 2.0, 1.0, 0.0],
+            [0.0, 1.0, 2.0, 1.0],
+            [1.0, 0.0, 1.0, 2.0],
+        ], false);
+
+        $this->assertEquals(3, $c->rank());
+    }
+
+    #[Test]
+    public function fullRank() : void
+    {
+        $a = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $this->assertTrue($a->fullRank());
+
+        $b = Matrix::fromArray([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+        ], false);
+
+        $this->assertTrue($b->fullRank());
+
+        // Exactly singular 4x4 (see rank() above); fullRank() must be false.
+        $c = Matrix::fromArray([
+            [2.0, 1.0, 0.0, 1.0],
+            [1.0, 2.0, 1.0, 0.0],
+            [0.0, 1.0, 2.0, 1.0],
+            [1.0, 0.0, 1.0, 2.0],
+        ], false);
+
+        $this->assertFalse($c->fullRank());
+    }
+
+    #[Test]
+    public function reciprocal() : void
+    {
+        $a = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $b = $a->reciprocal();
+
+        $expected = Matrix::fromArray([
+            [0.045454545454545456, -0.058823529411764705, 0.08333333333333333],
+            [0.25, 0.09090909090909091, -0.5],
+            [0.05, -0.16666666666666666, -0.1111111111111111],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function map() : void
+    {
+        $a = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $sign = function ($value) {
+            return $value >= 0.0 ? 1 : -1;
+        };
+
+        $b = $a->map($sign);
+
+        $expected = Matrix::fromArray([
+            [1, -1, 1],
+            [1, 1, -1],
+            [1, -1, -1],
+        ], false);
+
+        $this->assertEquals($expected, $b);
+    }
+
+    #[Test]
+    public function reduce() : void
+    {
+        $a = Matrix::fromArray([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ], false);
+
+        $sum = function ($carry, $value) {
+            return $carry + $value;
+        };
+
+        $this->assertEqualsWithDelta(10.0, $a->reduce($sum), self::MAX_DELTA);
+
+        // Asymmetric callback: pins the (carry, value) argument order.
+        $subtract = function ($carry, $value) {
+            return $carry - $value;
+        };
+
+        $this->assertEqualsWithDelta(-10.0, $a->reduce($subtract), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(-8.0, $a->reduce($subtract, 2.0), self::MAX_DELTA);
+
+        // Must match Vector::reduce() for the same data and callback.
+        $v = Vector::fromArray([1.0, 2.0, 3.0, 4.0], false);
+
+        $this->assertEqualsWithDelta($v->reduce($subtract), $a->reduce($subtract), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function ref() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $ref = $matrix->ref();
+
+        $a = Matrix::fromArray([
+            [22, -17, 12],
+            [0, 14.09090909090909, -4.181818181818182],
+            [0, 0, -17.10322580645161],
+        ], false);
+
+        $expected = new REF($a, 0);
+
+        $this->assertEqualsWithDelta($expected, $ref, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function rref() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $rref = $matrix->rref();
+
+        $a = Matrix::fromArray([
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+        ], false);
+
+        $expected = new RREF($a);
+
+        $this->assertEqualsWithDelta($expected, $rref, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function lu() : void
+    {
+        $matrix = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $lu = $matrix->lu();
+
+        $l = Matrix::fromArray([
+            [1.0, 0, 0],
+            [0.18181818181818182, 1.0, 0],
+            [0.9090909090909091, 0.6709677419354838, 1.0],
+        ], false);
+
+        $u = Matrix::fromArray([
+            [22, -17, 12],
+            [0, 14.09090909090909, -4.181818181818182],
+            [0, 0, -17.10322580645161],
+        ], false);
+
+        $p = Matrix::fromArray([
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+        ], false);
+
+        $expected = new LU($l, $u, $p);
+
+        $this->assertEqualsWithDelta($expected, $lu, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function luMultiPivot() : void
+    {
+        $matrix = Matrix::fromArray([
+            [0.0,  1.0,  0.0,  0.0],
+            [-1.0,  0.0,  0.0,  0.0],
+            [0.0,  0.0,  0.0,  2.0],
+            [0.0,  0.0,  3.0,  1.0],
+        ], false);
+
+        $lu = $matrix->lu();
+
+        $pa = $lu->p()->matmul($matrix);
+        $luProd = $lu->l()->matmul($lu->u());
+
+        $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function luNegativePivot() : void
+    {
+        $matrix = Matrix::fromArray([
+            [1.0,  2.0,  3.0,  4.0],
+            [-9.0,  1.0,  0.0,  0.0],
+            [0.5,  0.5,  1.0,  1.0],
+            [0.1,  0.2,  0.3,  0.4],
+        ], false);
+
+        $lu = $matrix->lu();
+
+        $pa = $lu->p()->matmul($matrix);
+        $luProd = $lu->l()->matmul($lu->u());
+
+        $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function luSingular() : void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $matrix = Matrix::fromArray([
+            [1.0, 2.0,  0.0,  0.0],
+            [0.0, 1.0,  1.0,  0.0],
+            [2.0, 4.0,  0.0,  1.0],
+            [0.0, 1.0,  1.0,  0.0],
+        ], false);
+
+        $matrix->lu();
+    }
+
+    #[Test]
+    public function cholesky() : void
+    {
+        $matrix = Matrix::fromArray([
+            [2, -1, 0],
+            [-1, 2, -1],
+            [0, -1, 2],
+        ], false);
+
+        $cholesky = $matrix->cholesky();
+
+        $l = Matrix::fromArray([
+            [1.4142135623730951, 0, 0],
+            [-0.7071067811865475, 1.224744871391589, 0],
+            [0, -0.8164965809277261, 1.1547005383792515],
+        ], false);
+
+        $expected = new Cholesky($l);
+
+        $this->assertEqualsWithDelta($expected, $cholesky, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function matmul() : void
+    {
+        $a = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $b = Matrix::fromArray([
+            [13],
+            [11],
+            [9],
+        ], false);
+
+        $c = $a->matmul($b);
+
+        $expected = Matrix::fromArray([
+            [207], [155], [113],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function dotVector() : void
+    {
+        $a = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $b = Vector::fromArray([2, 10, -1], false);
+
+        $c = $a->dot($b);
+
+        $expected = ColumnVector::fromArray([-138, 120, -11], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function convolve() : void
+    {
+        $a = Matrix::fromArray([
+            [3, 27, 66, 29, 42, 5],
+            [5, 9, 15, 42, 45, 16],
+            [1, 5, 10, 22, 66, 5],
+            [0, 1, 4, 9, 10, 22, 2],
+            [0, 0, 3, 19, 21, 25],
+            [0, 0, 0, 5, 2, 33, 35],
+        ], false);
+
+        $b = Matrix::fromArray([
+            [0, 0, 1],
+            [0, 1, 0],
+            [1, 0, 0],
+        ], false);
+
+        $c = $a->convolve($b, 1);
+
+        $expected = Matrix::fromArray([
+            [3, 32, 75, 44, 84, 50],
+            [32, 76, 49, 94, 72, 82],
+            [10, 20, 53, 71, 91, 15],
+            [5, 11, 26, 78, 34, 43],
+            [1, 4, 12, 29, 48, 27],
+            [0, 3, 19, 26, 27, 33],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
      * @param Matrix $a
      * @param Tensor|float $b
      * @param Tensor|float $expected
      */
+    #[Test]
+    #[DataProvider('multiplyProvider')]
+    public function multiply(Matrix $a, $b, $expected) : void
+    {
+        $c = $a->multiply($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('divideProvider')]
+    public function divide(Matrix $a, $b, $expected) : void
+    {
+        $c = $a->divide($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('addProvider')]
+    public function add(Matrix $a, $b, $expected) : void
+    {
+        $c = $a->add($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('subtractProvider')]
+    public function subtract(Matrix $a, $b, $expected) : void
+    {
+        $c = $a->subtract($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('powProvider')]
+    public function pow(Matrix $a, $b, $expected) : void
+    {
+        $c = $a->pow($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('modProvider')]
+    public function mod(Matrix $a, $b, $expected) : void
+    {
+        $c = $a->mod($b);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    /**
+     * @param Matrix $a
+     * @param Tensor|float $b
+     * @param Tensor|float $expected
+     */
+    #[Test]
+    #[DataProvider('equalProvider')]
     public function equal(Matrix $a, $b, $expected) : void
     {
         $c = $a->equal($b);
@@ -1508,79 +1802,12 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed[]>
-     */
-    public function equalProvider() : Generator
-    {
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Matrix::fromArray([
-                [4, 6, -12],
-                [1, 3, 5],
-                [-10, -1, 14],
-            ], false),
-            Matrix::fromArray([
-                [0, 0, 0],
-                [0, 0, 0],
-                [0, 0, 0],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Vector::fromArray([2, 10, -1], false),
-            Matrix::fromArray([
-                [0, 0, 0],
-                [0, 0, 0],
-                [0, 0, 0],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            ColumnVector::fromArray([2.5, -1, 4.8], false),
-            Matrix::fromArray([
-                [0, 0, 0],
-                [0, 0, 0],
-                [0, 0, 0],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            4.0,
-            Matrix::fromArray([
-                [0, 0, 0],
-                [1, 0, 0],
-                [0, 0, 0],
-            ], false),
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider notEqualProvider
-     *
      * @param Matrix $a
      * @param Tensor|float $b
      * @param Tensor|float $expected
      */
+    #[Test]
+    #[DataProvider('notEqualProvider')]
     public function notEqual(Matrix $a, $b, $expected) : void
     {
         $c = $a->notEqual($b);
@@ -1589,79 +1816,12 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed[]>
-     */
-    public function notEqualProvider() : Generator
-    {
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Matrix::fromArray([
-                [4, 6, -12],
-                [1, 3, 5],
-                [-10, -1, 14],
-            ], false),
-            Matrix::fromArray([
-                [1, 1, 1],
-                [1, 1, 1],
-                [1, 1, 1],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Vector::fromArray([2, 10, -1], false),
-            Matrix::fromArray([
-                [1, 1, 1],
-                [1, 1, 1],
-                [1, 1, 1],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            ColumnVector::fromArray([2.5, -1, 4.8], false),
-            Matrix::fromArray([
-                [1, 1, 1],
-                [1, 1, 1],
-                [1, 1, 1],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            4.0,
-            Matrix::fromArray([
-                [1, 1, 1],
-                [0, 1, 1],
-                [1, 1, 1],
-            ], false),
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider greaterProvider
-     *
      * @param Matrix $a
      * @param Tensor|float $b
      * @param Tensor|float $expected
      */
+    #[Test]
+    #[DataProvider('greaterProvider')]
     public function greater(Matrix $a, $b, $expected) : void
     {
         $c = $a->greater($b);
@@ -1670,79 +1830,12 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed[]>
-     */
-    public function greaterProvider() : Generator
-    {
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Matrix::fromArray([
-                [4, 6, -12],
-                [1, 3, 5],
-                [-10, -1, 14],
-            ], false),
-            Matrix::fromArray([
-                [1, 0, 1],
-                [1, 1, 0],
-                [1, 0, 0],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Vector::fromArray([2, 10, -1], false),
-            Matrix::fromArray([
-                [1, 0, 1],
-                [1, 1, 0],
-                [1, 0, 0],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            ColumnVector::fromArray([2.5, -1, 4.8], false),
-            Matrix::fromArray([
-                [1, 0, 1],
-                [1, 1, 0],
-                [1, 0, 0],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            4.0,
-            Matrix::fromArray([
-                [1, 0, 1],
-                [0, 1, 0],
-                [1, 0, 0],
-            ], false),
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider greaterEqualProvider
-     *
      * @param Matrix $a
      * @param Tensor|float $b
      * @param Tensor|float $expected
      */
+    #[Test]
+    #[DataProvider('greaterEqualProvider')]
     public function greaterEqual(Matrix $a, $b, $expected) : void
     {
         $c = $a->greaterEqual($b);
@@ -1751,79 +1844,12 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed[]>
-     */
-    public function greaterEqualProvider() : Generator
-    {
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Matrix::fromArray([
-                [4, 6, -12],
-                [1, 3, 5],
-                [-10, -1, 14],
-            ], false),
-            Matrix::fromArray([
-                [1, 0, 1],
-                [1, 1, 0],
-                [1, 0, 0],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Vector::fromArray([2, 10, -1], false),
-            Matrix::fromArray([
-                [1, 0, 1],
-                [1, 1, 0],
-                [1, 0, 0],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            ColumnVector::fromArray([2.5, -1, 4.8], false),
-            Matrix::fromArray([
-                [1, 0, 1],
-                [1, 1, 0],
-                [1, 0, 0],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            4.0,
-            Matrix::fromArray([
-                [1, 0, 1],
-                [1, 1, 0],
-                [1, 0, 0],
-            ], false),
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider lessProvider
-     *
      * @param Matrix $a
      * @param Tensor|float $b
      * @param Tensor|float $expected
      */
+    #[Test]
+    #[DataProvider('lessProvider')]
     public function less(Matrix $a, $b, $expected) : void
     {
         $c = $a->less($b);
@@ -1832,79 +1858,12 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed[]>
-     */
-    public function lessProvider() : Generator
-    {
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Matrix::fromArray([
-                [4, 6, -12],
-                [1, 3, 5],
-                [-10, -1, 14],
-            ], false),
-            Matrix::fromArray([
-                [0, 1, 0],
-                [0, 0, 1],
-                [0, 1, 1],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Vector::fromArray([2, 10, -1], false),
-            Matrix::fromArray([
-                [0, 1, 0],
-                [0, 0, 1],
-                [0, 1, 1],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            ColumnVector::fromArray([2.5, -1, 4.8], false),
-            Matrix::fromArray([
-                [0, 1, 0],
-                [0, 0, 1],
-                [0, 1, 1],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            10.0,
-            Matrix::fromArray([
-                [0, 1, 0],
-                [1, 0, 1],
-                [0, 1, 1],
-            ], false),
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider lessEqualProvider
-     *
      * @param Matrix $a
      * @param Tensor|float $b
      * @param Tensor|float $expected
      */
+    #[Test]
+    #[DataProvider('lessEqualProvider')]
     public function lessEqual(Matrix $a, $b, $expected) : void
     {
         $c = $a->lessEqual($b);
@@ -1912,75 +1871,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @return Generator<mixed[]>
-     */
-    public function lessEqualProvider() : Generator
-    {
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Matrix::fromArray([
-                [4, 6, -12],
-                [1, 3, 5],
-                [-10, -1, 14],
-            ], false),
-            Matrix::fromArray([
-                [0, 1, 0],
-                [0, 0, 1],
-                [0, 1, 1],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            Vector::fromArray([2, 10, -1], false),
-            Matrix::fromArray([
-                [0, 1, 0],
-                [0, 0, 1],
-                [0, 1, 1],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            ColumnVector::fromArray([2.5, -1, 4.8], false),
-            Matrix::fromArray([
-                [0, 1, 0],
-                [0, 0, 1],
-                [0, 1, 1],
-            ], false),
-        ];
-
-        yield [
-            Matrix::fromArray([
-                [22.0, -17.0, 12.0],
-                [4.0, 11.0, -2.0],
-                [20.0, -6.0, -9.0],
-            ], false),
-            10.0,
-            Matrix::fromArray([
-                [0, 1, 0],
-                [1, 0, 1],
-                [0, 1, 1],
-            ], false),
-        ];
-    }
-
-    /**
-     * @test
-     */
+    #[Test]
     public function abs() : void
     {
         $a = Matrix::fromArray([
@@ -2000,9 +1891,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function square() : void
     {
         $a = Matrix::fromArray([
@@ -2022,9 +1911,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function sqrt() : void
     {
         $a = Matrix::fromArray([
@@ -2044,9 +1931,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function exp() : void
     {
         $a = Matrix::fromArray([
@@ -2066,9 +1951,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function expm1() : void
     {
         $a = Matrix::fromArray([
@@ -2088,9 +1971,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function log() : void
     {
         $a = Matrix::fromArray([
@@ -2110,9 +1991,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function log1p() : void
     {
         $a = Matrix::fromArray([
@@ -2132,9 +2011,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function sin() : void
     {
         $a = Matrix::fromArray([
@@ -2154,9 +2031,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function asin() : void
     {
         $a = Matrix::fromArray([
@@ -2176,9 +2051,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function cos() : void
     {
         $a = Matrix::fromArray([
@@ -2198,9 +2071,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function acos() : void
     {
         $a = Matrix::fromArray([
@@ -2220,9 +2091,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function tan() : void
     {
         $a = Matrix::fromArray([
@@ -2242,9 +2111,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function atan() : void
     {
         $a = Matrix::fromArray([
@@ -2264,9 +2131,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rad2deg() : void
     {
         $a = Matrix::fromArray([
@@ -2286,9 +2151,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function deg2rad() : void
     {
         $a = Matrix::fromArray([
@@ -2308,9 +2171,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function sum() : void
     {
         $a = Matrix::fromArray([
@@ -2326,9 +2187,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function product() : void
     {
         $a = Matrix::fromArray([
@@ -2344,9 +2203,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function min() : void
     {
         $a = Matrix::fromArray([
@@ -2362,9 +2219,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function max() : void
     {
         $a = Matrix::fromArray([
@@ -2380,9 +2235,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function mean() : void
     {
         $a = Matrix::fromArray([
@@ -2398,9 +2251,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function median() : void
     {
         $a = Matrix::fromArray([
@@ -2416,9 +2267,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function quantile() : void
     {
         $a = Matrix::fromArray([
@@ -2454,9 +2303,7 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function variance() : void
     {
         $a = Matrix::fromArray([
@@ -2472,9 +2319,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function varianceRowNonSquare() : void
     {
         $a = Matrix::fromArray([
@@ -2489,9 +2334,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function covariance() : void
     {
         $a = Matrix::fromArray([
@@ -2525,9 +2368,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expectedC, $d, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function round() : void
     {
         $a = Matrix::fromArray([
@@ -2547,9 +2388,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function floor() : void
     {
         $a = Matrix::fromArray([
@@ -2569,9 +2408,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ceil() : void
     {
         $a = Matrix::fromArray([
@@ -2591,9 +2428,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function l1Norm() : void
     {
         $a = Matrix::fromArray([
@@ -2611,9 +2446,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta(46.0, $a->l1Norm(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function l2Norm() : void
     {
         $a = Matrix::fromArray([
@@ -2625,9 +2458,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta(39.68626966596886, $a->l2Norm(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function infinityNorm() : void
     {
         $a = Matrix::fromArray([
@@ -2639,9 +2470,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta(51.0, $a->infinityNorm(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function maxNorm() : void
     {
         $a = Matrix::fromArray([
@@ -2653,9 +2482,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta(22.0, $a->maxNorm(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function clip() : void
     {
         $a = Matrix::fromArray([
@@ -2675,9 +2502,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function clipLower() : void
     {
         $a = Matrix::fromArray([
@@ -2697,9 +2522,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function clipUpper() : void
     {
         $a = Matrix::fromArray([
@@ -2719,9 +2542,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function sign() : void
     {
         $a = Matrix::fromArray([
@@ -2741,9 +2562,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function negate() : void
     {
         $a = Matrix::fromArray([
@@ -2763,9 +2582,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function augmentAbove() : void
     {
         $a = Matrix::fromArray([
@@ -2794,9 +2611,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function augmentBelow() : void
     {
         $a = Matrix::fromArray([
@@ -2825,9 +2640,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function augmentLeft() : void
     {
         $a = Matrix::fromArray([
@@ -2853,9 +2666,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function augmentRight() : void
     {
         $a = Matrix::fromArray([
@@ -2881,9 +2692,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $c);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function repeat() : void
     {
         $a = Matrix::fromArray([
@@ -2906,9 +2715,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($expected, $b);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function fillNegativeMThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -2916,9 +2723,7 @@ class MatrixTest extends TestCase
         Matrix::fill(1.0, 0, 2);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function fillNegativeNThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -2926,9 +2731,7 @@ class MatrixTest extends TestCase
         Matrix::fill(1.0, 2, 0);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function identityNegativeNThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -2936,9 +2739,7 @@ class MatrixTest extends TestCase
         Matrix::identity(0);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function detNonSquareThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -2949,9 +2750,7 @@ class MatrixTest extends TestCase
         ], false)->det();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function matmulDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -2966,9 +2765,7 @@ class MatrixTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function dotDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -2979,9 +2776,7 @@ class MatrixTest extends TestCase
         ], false)->dot(Vector::fromArray([1.0, 2.0], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function augmentAboveDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -2993,9 +2788,7 @@ class MatrixTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function augmentBelowDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -3007,9 +2800,7 @@ class MatrixTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function augmentLeftDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -3023,9 +2814,7 @@ class MatrixTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function augmentRightDimensionMismatchThrows() : void
     {
         $this->expectException(DimensionalityMismatch::class);
@@ -3039,9 +2828,7 @@ class MatrixTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offsetSetThrows() : void
     {
         $this->expectException(RuntimeException::class);
@@ -3054,9 +2841,7 @@ class MatrixTest extends TestCase
         $a[0] = 10.0;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offsetUnsetThrows() : void
     {
         $this->expectException(RuntimeException::class);
@@ -3069,9 +2854,7 @@ class MatrixTest extends TestCase
         unset($a[0][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offsetGetOutOfBoundsThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -3084,9 +2867,7 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(Vector::class, $a[10]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function luNonSquareThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -3097,9 +2878,7 @@ class MatrixTest extends TestCase
         ], false)->lu();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function choleskyNonSquareThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -3110,9 +2889,7 @@ class MatrixTest extends TestCase
         ], false)->cholesky();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function eigReturnsEigen() : void
     {
         $a = Matrix::fromArray([
@@ -3139,9 +2916,7 @@ class MatrixTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function eigSymmetricReturnsEigen() : void
     {
         $a = Matrix::fromArray([
@@ -3156,9 +2931,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta([3.3944487241610, 10.605551275464], $eig->eigenvalues(), 1e-8);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function svdPurePHP() : void
     {
         if (extension_loaded('tensor')) {
@@ -3179,9 +2952,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($matrix, $reconstructed, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pseudoinversePurePHP() : void
     {
         if (extension_loaded('tensor')) {
@@ -3204,9 +2975,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pseudoinversePreservesTinySingularValues() : void
     {
         $a = Matrix::fromArray([
@@ -3222,9 +2991,7 @@ class MatrixTest extends TestCase
         $this->assertEqualsWithDelta($expected, $a->pseudoinverse(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function fromArrayThrowsOnMismatchedRows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -3232,9 +2999,7 @@ class MatrixTest extends TestCase
         Matrix::fromArray([[1.0, 2.0], [3.0]]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function asTensorBuffer() : void
     {
         $matrix = Matrix::fromArray([[1.0, 2.0], [3.0, 4.0]], false);
@@ -3248,9 +3013,7 @@ class MatrixTest extends TestCase
         $this->assertSame($buffer, $buffer->asBuffer());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function serializeRoundTrip() : void
     {
         $matrix = Matrix::fromArray([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]);
@@ -3262,9 +3025,7 @@ class MatrixTest extends TestCase
         $this->assertEquals($matrix->shape(), $unserialised->shape());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function serialisedShapeIsCompatibleWithTensorExt() : void
     {
         $matrix = Matrix::fromArray([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]);
@@ -3278,9 +3039,7 @@ class MatrixTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function unserializeFromExtPayload() : void
     {
         // A payload produced identically by the Tensor-Ext polyfill.

@@ -3512,7 +3512,7 @@ class Matrix implements Tensor
      * that only the values, and not the object structure, appear in the
      * serialized form.
      *
-     * @return list<list<float>>
+     * @return array<mixed>
      */
     public function __serialize() : array
     {
@@ -3527,7 +3527,7 @@ class Matrix implements Tensor
      * Restore the matrix from the plain array of rows produced by
      * __serialize() by rebuilding its internal state and shape.
      *
-     * @param array{data: list<list<float>>, m: int, n: int} $data
+     * @param array<mixed> $data
      */
     public function __unserialize(array $data) : void
     {

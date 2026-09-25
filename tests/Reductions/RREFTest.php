@@ -5,10 +5,10 @@ namespace Tensor\Tests\Reductions;
 use Tensor\Matrix;
 use Tensor\Reductions\RREF;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Tensor\Reductions\RREF
- */
+#[CoversClass(RREF::class)]
 class RREFTest extends TestCase
 {
     /**
@@ -18,9 +18,7 @@ class RREFTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceDiagonalIsIdentity() : void
     {
         // A non-singular diagonal matrix reduces to the identity.
@@ -41,9 +39,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduce2x2() : void
     {
         $a = Matrix::fromArray([
@@ -61,9 +57,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceDiagonal2x2() : void
     {
         $a = Matrix::fromArray([
@@ -81,9 +75,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduce1x1() : void
     {
         $a = Matrix::fromArray([[7.0]], false);
@@ -93,9 +85,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta(Matrix::fromArray([[1.0]], false), $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceSingular2x2() : void
     {
         // A rank-1 matrix has a zero row and one free variable.
@@ -118,9 +108,7 @@ class RREFTest extends TestCase
         $this->assertEquals([0.0, 0.0], $aOut[1]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceZeroRow() : void
     {
         // A leading zero row is swapped down; the result has a zero row.
@@ -139,9 +127,7 @@ class RREFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $rref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function rankMatchesNumberNonZeroRows() : void
     {
         $a = Matrix::fromArray([
@@ -176,9 +162,7 @@ class RREFTest extends TestCase
         $this->assertEquals(1, $rank);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceExactlySingular4x4Has3NonZeroRows() : void
     {
         // Exactly singular (column 3 = column 0 - column 1 + column 2); the
@@ -217,9 +201,7 @@ class RREFTest extends TestCase
         $this->assertEquals(3, $nonZero);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function accessorsReturnMatrices() : void
     {
         $a = Matrix::fromArray([

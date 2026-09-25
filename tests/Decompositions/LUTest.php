@@ -7,10 +7,10 @@ use Tensor\Decompositions\LU;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\RuntimeException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Tensor\Decompositions\LU
- */
+#[CoversClass(LU::class)]
 class LUTest extends TestCase
 {
     /**
@@ -20,9 +20,7 @@ class LUTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decompose3x3() : void
     {
         $a = Matrix::fromArray([
@@ -62,9 +60,7 @@ class LUTest extends TestCase
         $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeRequiresPivoting() : void
     {
         $a = Matrix::fromArray([
@@ -83,9 +79,7 @@ class LUTest extends TestCase
         $this->assertEqualsWithDelta($pa, $luProd, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decompose1x1() : void
     {
         $a = Matrix::fromArray([[9.0]], false);
@@ -101,9 +95,7 @@ class LUTest extends TestCase
         $this->assertEqualsWithDelta($expected, $lu, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeDiagonal() : void
     {
         $a = Matrix::fromArray([
@@ -133,9 +125,7 @@ class LUTest extends TestCase
         $this->assertEqualsWithDelta($expected, $lu, self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeNonSquareThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -146,9 +136,7 @@ class LUTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function decomposeSingularThrows() : void
     {
         $this->expectException(RuntimeException::class);
@@ -159,9 +147,7 @@ class LUTest extends TestCase
         ], false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function accessorsReturnMatrices() : void
     {
         $l = Matrix::fromArray([

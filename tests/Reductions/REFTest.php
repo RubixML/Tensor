@@ -7,10 +7,10 @@ use Tensor\Reductions\REF;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\SingularMatrix;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * @covers \Tensor\Reductions\REF
- */
+#[CoversClass(REF::class)]
 class REFTest extends TestCase
 {
     /**
@@ -20,9 +20,7 @@ class REFTest extends TestCase
      */
     protected const MAX_DELTA = 1e-8;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduce2x2() : void
     {
         $a = Matrix::fromArray([
@@ -43,9 +41,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduce3x3() : void
     {
         $a = Matrix::fromArray([
@@ -65,9 +61,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduce2x3Rectangular() : void
     {
         $a = Matrix::fromArray([
@@ -87,9 +81,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceRequiresPivoting() : void
     {
         // First column is [0, 5] - a row swap is required to pivot.
@@ -112,9 +104,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduce1x1() : void
     {
         $a = Matrix::fromArray([[7.0]], false);
@@ -127,9 +117,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceDiagonal() : void
     {
         $a = Matrix::fromArray([
@@ -149,9 +137,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceZeroRow() : void
     {
         // One zero row at the top, non-zero row at the bottom.
@@ -170,9 +156,7 @@ class REFTest extends TestCase
         $this->assertEquals([0.0, 0.0], $aOut[1]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceSingularKeepsPivotScale() : void
     {
         // A rank-1 matrix is singular: Gaussian elimination must fail and the
@@ -193,9 +177,7 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($expectedA, $ref->a(), self::MAX_DELTA);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function constructorWithNegativeSwapsThrows() : void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -203,9 +185,7 @@ class REFTest extends TestCase
         new REF(Matrix::fromArray([[1.0]], false), -1);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function constructorWithZeroSwaps() : void
     {
         $a = Matrix::fromArray([[1.0]], false);
@@ -216,9 +196,7 @@ class REFTest extends TestCase
         $this->assertEquals(0, $ref->swaps());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function constructorWithPositiveSwaps() : void
     {
         $a = Matrix::fromArray([
@@ -233,9 +211,7 @@ class REFTest extends TestCase
         $this->assertEquals(2, $ref->swaps());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function reduceExactlySingular4x4GaussianThrowsSingularMatrix() : void
     {
         if (extension_loaded('tensor')) {

@@ -31,7 +31,7 @@
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^12.0"
     },
     "autoload": {
         "psr-4": {
@@ -55,7 +55,7 @@
             "@test",
             "@check"
         ],
-        "analyze": "phpstan analyse -c phpstan.neon",
+        "analyze": "phpstan analyse -c phpstan.neon --memory-limit=1G",
         "benchmark": "phpbench run --report=env --report=aggregate",
         "check": [
             "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
