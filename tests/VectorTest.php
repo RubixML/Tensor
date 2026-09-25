@@ -1781,9 +1781,6 @@ class VectorTest extends TestCase
 
         $serialised = serialize($vector);
 
-        // The payload must be byte-compatible with the Tensor-Ext native
-        // serialisation: the __serialize() payload is emitted as a named "data"
-        // array (and "n") under the object header (no nested "a" property).
         $this->assertSame(
             'O:13:"Tensor\\Vector":2:{s:1:"a";a:3:{i:0;d:1;i:1;d:2;i:2;d:3;}s:1:"n";i:3;}',
             $serialised
@@ -1793,11 +1790,8 @@ class VectorTest extends TestCase
     #[Test]
     public function unserializeFromRawArrayPayload() : void
     {
-        // Simulate an ext-produced payload and verify __unserialize consumes it.
         $vector = Vector::fromArray([], false);
 
-        // Manually call __unserialize with a payload matching the shape of the
-        // 4.0 __serialize() output (a "data" array plus the element count "n").
         $vector->__unserialize(['a' => [1.0, 2.0, 3.0], 'n' => 3]);
 
         $this->assertEquals([1.0, 2.0, 3.0], $vector->asArray());

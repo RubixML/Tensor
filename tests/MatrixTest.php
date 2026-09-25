@@ -3016,9 +3016,6 @@ class MatrixTest extends TestCase
     {
         $matrix = Matrix::fromArray([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]);
 
-        // Byte-compatible with the Tensor-Ext native serialisation: the rows
-        // are emitted under a named "data" key (with "m"/"n") rather than a
-        // nested "a" property.
         $this->assertSame(
             'O:13:"Tensor\\Matrix":3:{s:1:"a";a:2:{i:0;a:3:{i:0;d:1;i:1;d:2;i:2;d:3;}i:1;a:3:{i:0;d:4;i:1;d:5;i:2;d:6;}}s:1:"m";i:2;s:1:"n";i:3;}',
             serialize($matrix)
@@ -3028,7 +3025,6 @@ class MatrixTest extends TestCase
     #[Test]
     public function unserializeFromExtPayload() : void
     {
-        // A payload produced identically by the Tensor-Ext polyfill.
         $payload = 'O:13:"Tensor\\Matrix":3:{s:1:"a";a:2:{i:0;a:3:{i:0;d:1;i:1;d:2;i:2;d:3;}i:1;a:3:{i:0;d:4;i:1;d:5;i:2;d:6;}}s:1:"m";i:2;s:1:"n";i:3;}';
 
         $matrix = unserialize($payload);
