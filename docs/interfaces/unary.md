@@ -63,6 +63,21 @@ Round the tensor down to the nearest integer.
 
 Round the tensor up to the nearest integer.
 
+### `clip(float $min, float $max) : mixed`
+
+Clip the tensor to be between the given minimum and maximum.
+
+- **Parameters:** `$min`, `$max` — the clip interval bounds.
+- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$min` is greater than `$max`.
+
+### `clipLower(float $min) : mixed`
+
+Clip the tensor to be lower bounded by a given minimum.
+
+### `clipUpper(float $max) : mixed`
+
+Clip the tensor to be upper bounded by a given maximum.
+
 ### `sign() : mixed`
 
 Return the element-wise sign indication (`1.0`, `-1.0`, or `0.0`).

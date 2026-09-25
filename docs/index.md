@@ -45,10 +45,10 @@ Tensor \
 | [ArrayLike](interfaces/arraylike.md) | Array-like access, iteration, counting, and mapping. |
 | [Arithmetic](interfaces/arithmetic.md) | Universal element-wise arithmetic functions. |
 | [Comparable](interfaces/comparable.md) | Universal element-wise comparison functions. |
-| [Unary](interfaces/Unary.md) | Element-wise Unary functions. |
+| [Unary](interfaces/unary.md) | Element-wise Unary functions. |
 | [Trigonometric](interfaces/trigonometric.md) | Element-wise trigonometric functions. |
 | [Statistical](interfaces/statistical.md) | Statistical measures. |
-| [Reductions](interfaces/special.md) | Reductions and clipping operations. |
+| [Reductions](interfaces/reductions.md) | Reduction operations. |
 
 ## Decompositions
 

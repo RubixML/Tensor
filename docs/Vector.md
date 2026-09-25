@@ -306,7 +306,7 @@ The vector is applied to each row of the matrix, broadcasting along columns. `*`
 
 ## Unary
 
-See [Unary](interfaces/Unary.md). Each method returns a new `Vector`.
+See [Unary](interfaces/unary.md). Each method returns a new `Vector`.
 
 - `abs() : self` — absolute value of the vector
 - `square() : self` — square the vector
@@ -337,7 +337,7 @@ See [Trigonometric](interfaces/trigonometric.md). Each method returns a new `Vec
 
 ## Statistical & Reductions
 
-See [Statistical](interfaces/statistical.md) and [Reductions](interfaces/special.md). For a `Vector` these return scalar `float`s.
+See [Statistical](interfaces/statistical.md) and [Reductions](interfaces/reductions.md). For a `Vector` these return scalar `float`s.
 
 - `sum() : float` — the sum of the vector
 - `product() : float` — the product of the vector

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tensor\Benchmarks\Reductions;
+namespace Tensor\Benchmarks\Unary;
 
 use Tensor\Matrix;
 
 /**
- * @Groups({"Reductions"})
+ * @Groups({"Unary"})
  * @BeforeMethods({"setUp"})
  */
 class MatrixClippingBench
