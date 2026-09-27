@@ -265,7 +265,7 @@ class ColumnVector extends Vector
             $rowC = [];
 
             foreach ($rowB as $valueB) {
-                $rowC[] = $valueA == $valueB ? 1 : 0;
+                $rowC[] = $valueA == $valueB ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -297,7 +297,7 @@ class ColumnVector extends Vector
             $rowC = [];
 
             foreach ($rowB as $valueB) {
-                $rowC[] = $valueA != $valueB ? 1 : 0;
+                $rowC[] = $valueA != $valueB ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -329,7 +329,7 @@ class ColumnVector extends Vector
             $rowC = [];
 
             foreach ($rowB as $valueB) {
-                $rowC[] = $valueA > $valueB ? 1 : 0;
+                $rowC[] = $valueA > $valueB ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -361,7 +361,7 @@ class ColumnVector extends Vector
             $rowC = [];
 
             foreach ($rowB as $valueB) {
-                $rowC[] = $valueA >= $valueB ? 1 : 0;
+                $rowC[] = $valueA >= $valueB ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -393,7 +393,7 @@ class ColumnVector extends Vector
             $rowC = [];
 
             foreach ($rowB as $valueB) {
-                $rowC[] = $valueA < $valueB ? 1 : 0;
+                $rowC[] = $valueA < $valueB ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -425,7 +425,7 @@ class ColumnVector extends Vector
             $rowC = [];
 
             foreach ($rowB as $valueB) {
-                $rowC[] = $valueA <= $valueB ? 1 : 0;
+                $rowC[] = $valueA <= $valueB ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;

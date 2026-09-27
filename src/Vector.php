@@ -1610,7 +1610,7 @@ class Vector implements Tensor
             $rowC = [];
 
             foreach ($this->a as $j => $valueA) {
-                $rowC[] = $valueA == $rowB[$j] ? 1 : 0;
+                $rowC[] = $valueA == $rowB[$j] ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -1639,7 +1639,7 @@ class Vector implements Tensor
             $rowC = [];
 
             foreach ($this->a as $j => $valueA) {
-                $rowC[] = $valueA != $rowB[$j] ? 1 : 0;
+                $rowC[] = $valueA != $rowB[$j] ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -1668,7 +1668,7 @@ class Vector implements Tensor
             $rowC = [];
 
             foreach ($this->a as $j => $valueA) {
-                $rowC[] = $valueA > $rowB[$j] ? 1 : 0;
+                $rowC[] = $valueA > $rowB[$j] ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -1697,7 +1697,7 @@ class Vector implements Tensor
             $rowC = [];
 
             foreach ($this->a as $j => $valueA) {
-                $rowC[] = $valueA >= $rowB[$j] ? 1 : 0;
+                $rowC[] = $valueA >= $rowB[$j] ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -1726,7 +1726,7 @@ class Vector implements Tensor
             $rowC = [];
 
             foreach ($this->a as $j => $valueA) {
-                $rowC[] = $valueA < $rowB[$j] ? 1 : 0;
+                $rowC[] = $valueA < $rowB[$j] ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -1755,7 +1755,7 @@ class Vector implements Tensor
             $rowC = [];
 
             foreach ($this->a as $j => $valueA) {
-                $rowC[] = $valueA <= $rowB[$j] ? 1 : 0;
+                $rowC[] = $valueA <= $rowB[$j] ? 1.0 : 0.0;
             }
 
             $c[] = $rowC;
@@ -1919,7 +1919,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($b->asArray() as $i => $valueB) {
-            $c[] = $this->a[$i] == $valueB ? 1 : 0;
+            $c[] = $this->a[$i] == $valueB ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -1942,7 +1942,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($b->asArray() as $i => $valueB) {
-            $c[] = $this->a[$i] != $valueB ? 1 : 0;
+            $c[] = $this->a[$i] != $valueB ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -1965,7 +1965,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($b->asArray() as $i => $valueB) {
-            $c[] = $this->a[$i] > $valueB ? 1 : 0;
+            $c[] = $this->a[$i] > $valueB ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -1988,7 +1988,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($b->asArray() as $i => $valueB) {
-            $c[] = $this->a[$i] >= $valueB ? 1 : 0;
+            $c[] = $this->a[$i] >= $valueB ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -2011,7 +2011,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($b->asArray() as $i => $valueB) {
-            $c[] = $this->a[$i] < $valueB ? 1 : 0;
+            $c[] = $this->a[$i] < $valueB ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -2034,7 +2034,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($b as $i => $valueB) {
-            $c[] = $this->a[$i] <= $valueB ? 1 : 0;
+            $c[] = $this->a[$i] <= $valueB ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -2153,7 +2153,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $valueA) {
-            $c[] = $valueA == $b ? 1 : 0;
+            $c[] = $valueA == $b ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -2170,7 +2170,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $valueA) {
-            $c[] = $valueA != $b ? 1 : 0;
+            $c[] = $valueA != $b ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -2187,7 +2187,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $valueA) {
-            $c[] = $valueA > $b ? 1 : 0;
+            $c[] = $valueA > $b ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -2204,7 +2204,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $valueA) {
-            $c[] = $valueA >= $b ? 1 : 0;
+            $c[] = $valueA >= $b ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -2221,7 +2221,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $valueA) {
-            $c[] = $valueA < $b ? 1 : 0;
+            $c[] = $valueA < $b ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
@@ -2238,7 +2238,7 @@ class Vector implements Tensor
         $c = [];
 
         foreach ($this->a as $valueA) {
-            $c[] = $valueA <= $b ? 1 : 0;
+            $c[] = $valueA <= $b ? 1.0 : 0.0;
         }
 
         return static::fromArray($c, false);
