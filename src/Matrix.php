@@ -19,6 +19,7 @@ use function array_slice;
 use function array_fill;
 use function gettype;
 use function min;
+use function trigger_error;
 
 /**
  * Matrix
@@ -53,6 +54,118 @@ class Matrix implements Tensor
     protected int $n;
 
     /**
+     * Build a new matrix from an array of arrays, always validating the input.
+     *
+     * @deprecated Use fromArray() instead.
+     * @param array<array<float>> $a
+     * @return self
+     */
+    public static function build(array $a) : self
+    {
+        trigger_error('Tensor\Matrix::build() is deprecated; use fromArray() instead.', E_USER_DEPRECATED);
+
+        return self::fromArray($a, true);
+    }
+
+    /**
+     * Build a new matrix from an array of arrays without validating the input.
+     *
+     * @deprecated Use fromArray() with $validate set to false instead.
+     *
+     * @param array<array<float>> $a
+     * @return self
+     */
+    public static function quick(array $a) : self
+    {
+        trigger_error('Tensor\Matrix::quick() is deprecated; use fromArray() instead.', E_USER_DEPRECATED);
+
+        return self::fromArray($a, false);
+    }
+
+    /**
+     * Build a new matrix from an array of arrays, validating that each row
+     * has equal length and normalizing each value to a float by default.
+     *
+     * @param array<array<float>> $a
+     * @param bool $validate
+     * @return self
+     */
+    public static function fromArray(array $a, bool $validate = true) : self
+    {
+        $n = count(current($a) ?: []);
+
+        if ($a and $validate) {
+            $a = array_values($a);
+
+            foreach ($a as $i => &$rowA) {
+                if (count($rowA) !== $n) {
+                    throw new InvalidArgumentException('The number of columns'
+                        . " must be equal for all rows, $n required but "
+                        . count($rowA) . " given at row offset $i.");
+                }
+
+                $rowA = array_values($rowA);
+
+                foreach ($rowA as &$valueA) {
+                    if (!is_float($valueA)) {
+                        $valueA = (float) $valueA;
+                    }
+                }
+            }
+        }
+
+        return new self($a);
+    }
+
+    /**
+     * Return a zero matrix with the given dimensions.
+     *
+     * @param int $m
+     * @param int $n
+     * @return self
+     */
+    public static function zeros(int $m, int $n) : self
+    {
+        return self::fill(0.0, $m, $n);
+    }
+
+    /**
+     * Return a one matrix with the given dimensions.
+     *
+     * @param int $m
+     * @param int $n
+     * @return self
+     */
+    public static function ones(int $m, int $n) : self
+    {
+        return self::fill(1.0, $m, $n);
+    }
+
+    /**
+     * Fill a matrix with a given value at each element.
+     *
+     * @param float $value
+     * @param int $m
+     * @param int $n
+     * @throws InvalidArgumentException
+     * @return self
+     */
+    public static function fill(float $value, int $m, int $n) : self
+    {
+        if ($m < 1) {
+            throw new InvalidArgumentException('M must be'
+                . " greater than 0, $m given.");
+        }
+
+        if ($n < 1) {
+            throw new InvalidArgumentException('N must be'
+                . " greater than 0, $n given.");
+        }
+
+        return self::fromArray(array_fill(0, $m, array_fill(0, $n, $value)), false);
+    }
+
+    /**
      * Return an identity matrix with the given dimensions.
      *
      * @param int $n
@@ -82,30 +195,6 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return a zero matrix with the given dimensions.
-     *
-     * @param int $m
-     * @param int $n
-     * @return self
-     */
-    public static function zeros(int $m, int $n) : self
-    {
-        return self::fill(0.0, $m, $n);
-    }
-
-    /**
-     * Return a one matrix with the given dimensions.
-     *
-     * @param int $m
-     * @param int $n
-     * @return self
-     */
-    public static function ones(int $m, int $n) : self
-    {
-        return self::fill(1.0, $m, $n);
-    }
-
-    /**
      * Build a diagonal matrix with the value of each element along the diagonal and 0s everywhere else.
      *
      * @param float[] $elements
@@ -130,30 +219,6 @@ class Matrix implements Tensor
         }
 
         return self::fromArray($a, false);
-    }
-
-    /**
-     * Fill a matrix with a given value at each element.
-     *
-     * @param float $value
-     * @param int $m
-     * @param int $n
-     * @throws InvalidArgumentException
-     * @return self
-     */
-    public static function fill(float $value, int $m, int $n) : self
-    {
-        if ($m < 1) {
-            throw new InvalidArgumentException('M must be'
-                . " greater than 0, $m given.");
-        }
-
-        if ($n < 1) {
-            throw new InvalidArgumentException('N must be'
-                . " greater than 0, $n given.");
-        }
-
-        return self::fromArray(array_fill(0, $m, array_fill(0, $n, $value)), false);
     }
 
     /**
@@ -278,41 +343,6 @@ class Matrix implements Tensor
         }
 
         return self::fromArray($a, false);
-    }
-
-    /**
-     * Build a new matrix from an array of arrays, validating that each row
-     * has equal length and normalising each value to a float by default.
-     *
-     * @param array<array<int|float>> $a
-     * @param bool $validate
-     * @return self
-     */
-    public static function fromArray(array $a, bool $validate = true) : self
-    {
-        $n = count(current($a) ?: []);
-
-        if ($a and $validate) {
-            $a = array_values($a);
-
-            foreach ($a as $i => &$rowA) {
-                if (count($rowA) !== $n) {
-                    throw new InvalidArgumentException('The number of columns'
-                        . " must be equal for all rows, $n required but "
-                        . count($rowA) . " given at row offset $i.");
-                }
-
-                $rowA = array_values($rowA);
-
-                foreach ($rowA as &$valueA) {
-                    if (!is_float($valueA)) {
-                        $valueA = (float) $valueA;
-                    }
-                }
-            }
-        }
-
-        return new self($a);
     }
 
     /**

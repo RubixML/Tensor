@@ -536,6 +536,22 @@ class VectorTest extends TestCase
     }
 
     #[Test]
+    public function build() : void
+    {
+        $this->expectUserDeprecationMessageMatches('/Tensor\\\\Vector::build\(\) is deprecated/');
+
+        Vector::build([1.0, 2.0, 3.0]);
+    }
+
+    #[Test]
+    public function quick() : void
+    {
+        $this->expectUserDeprecationMessageMatches('/Tensor\\\\Vector::quick\(\) is deprecated/');
+
+        Vector::quick([1.0, 2.0, 3.0]);
+    }
+
+    #[Test]
     public function rand() : void
     {
         $vector = Vector::rand(4);

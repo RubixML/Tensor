@@ -13,6 +13,7 @@ use function is_float;
 use function array_slice;
 use function array_fill;
 use function gettype;
+use function trigger_error;
 
 /**
  * Vector
@@ -38,6 +39,58 @@ class Vector implements Tensor
      * @var int<0,max>
      */
     protected int $n;
+
+    /**
+     * Build a new vector from a PHP array of elements, always validating the input.
+     *
+     * @deprecated Use fromArray() instead.
+     * @param array<float> $a
+     * @return self
+     */
+    public static function build(array $a) : self
+    {
+        trigger_error('Tensor\Vector::build() is deprecated; use fromArray() instead.', E_USER_DEPRECATED);
+
+        return self::fromArray($a, true);
+    }
+
+    /**
+     * Build a new vector from a PHP array of elements without validating the input.
+     *
+     * @deprecated Use fromArray() with $validate set to false instead.
+     *
+     * @param array<float> $a
+     * @return self
+     */
+    public static function quick(array $a) : self
+    {
+        trigger_error('Tensor\Vector::quick() is deprecated; use fromArray() instead.', E_USER_DEPRECATED);
+
+        return self::fromArray($a, false);
+    }
+
+    /**
+     * Build a new vector from a PHP array of elements, validating and
+     * normalising each value to a float by default.
+     *
+     * @param array<float> $a
+     * @param bool $validate
+     * @return static
+     */
+    public static function fromArray(array $a = [], bool $validate = true)
+    {
+        if ($a and $validate) {
+            $a = array_values($a);
+
+            foreach ($a as &$valueA) {
+                if (!is_float($valueA)) {
+                    $valueA = (float) $valueA;
+                }
+            }
+        }
+
+        return new static($a);
+    }
 
     /**
      * Build a vector of zeros with n elements.
@@ -211,29 +264,6 @@ class Vector implements Tensor
         $a[] = $max;
 
         return self::fromArray($a, false);
-    }
-
-    /**
-     * Build a new vector from a PHP array of elements, validating and
-     * normalising each value to a float by default.
-     *
-     * @param (int|float)[] $a
-     * @param bool $validate
-     * @return static
-     */
-    public static function fromArray(array $a = [], bool $validate = true)
-    {
-        if ($a and $validate) {
-            $a = array_values($a);
-
-            foreach ($a as &$valueA) {
-                if (!is_float($valueA)) {
-                    $valueA = (float) $valueA;
-                }
-            }
-        }
-
-        return new static($a);
     }
 
     /**

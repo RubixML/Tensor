@@ -985,6 +985,22 @@ class MatrixTest extends TestCase
     }
 
     #[Test]
+    public function build() : void
+    {
+        $this->expectUserDeprecationMessageMatches('/Tensor\\\\Matrix::build\(\) is deprecated/');
+
+        Matrix::build([[1.0, 2.0], [3.0, 4.0]]);
+    }
+
+    #[Test]
+    public function quick() : void
+    {
+        $this->expectUserDeprecationMessageMatches('/Tensor\\\\Matrix::quick\(\) is deprecated/');
+
+        Matrix::quick([[1.0, 2.0], [3.0, 4.0]]);
+    }
+
+    #[Test]
     public function rand() : void
     {
         $matrix = Matrix::rand(4, 4);
