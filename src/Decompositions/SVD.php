@@ -3,6 +3,7 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
+use Tensor\Vector;
 use Tensor\Exceptions\RuntimeException;
 
 use const Tensor\EPSILON;
@@ -35,9 +36,9 @@ class SVD
     /**
      * The singular values of the matrix A.
      *
-     * @var list<float>
+     * @var Vector
      */
-    protected array $singularValues;
+    protected Vector $singularValues;
 
     /**
      * The V transposed matrix.
@@ -251,17 +252,17 @@ class SVD
 
         return new self(
             Matrix::fromArray($uMatrix, false),
-            array_slice($singularValues, 0, $k),
+            Vector::fromArray(array_slice($singularValues, 0, $k), false),
             Matrix::fromArray($vT, false)
         );
     }
 
     /**
      * @param Matrix $u
-     * @param list<int|float> $singularValues
+     * @param Vector $singularValues
      * @param Matrix $vT
      */
-    public function __construct(Matrix $u, array $singularValues, Matrix $vT)
+    public function __construct(Matrix $u, Vector $singularValues, Matrix $vT)
     {
         $this->u = $u;
         $this->singularValues = $singularValues;
@@ -281,9 +282,9 @@ class SVD
     /**
      * Return the singular values of matrix A.
      *
-     * @return list<float>
+     * @return Vector
      */
-    public function singularValues() : array
+    public function singularValues() : Vector
     {
         return $this->singularValues;
     }

@@ -3,6 +3,7 @@
 namespace Tensor\Decompositions;
 
 use Tensor\Matrix;
+use Tensor\Vector;
 use Tensor\Exceptions\InvalidArgumentException;
 use Tensor\Exceptions\RuntimeException;
 
@@ -10,7 +11,7 @@ use Tensor\Exceptions\RuntimeException;
  * Eigen
  *
  * The Eigendecompositon or (Spectral decomposition) is a matrix factorization resulting in a matrix of eigenvectors and a
- * corresponding array of eigenvalues.
+ * corresponding vector of eigenvalues.
  *
  * @category    Scientific Computing
  * @package     Rubix/Tensor
@@ -21,9 +22,9 @@ class Eigen
     /**
      * The computed eigenvalues.
      *
-     * @var (int|float)[]
+     * @var Vector
      */
-    protected array $eigenvalues;
+    protected Vector $eigenvalues;
 
     /**
      * The eigenvectors of the eigendecomposition.
@@ -51,7 +52,7 @@ class Eigen
         $n = $a->n();
 
         if ($n === 1) {
-            return new self($a->rowAsVector(0)->asArray(), Matrix::fromArray([[1.0]], false));
+            return new self(Vector::fromArray($a->rowAsVector(0)->asArray(), false), Matrix::fromArray([[1.0]], false));
         }
 
         if ($symmetric) {
@@ -83,7 +84,7 @@ class Eigen
             }
         }
 
-        return new self($d, Matrix::fromArray($rows, false));
+        return new self(Vector::fromArray($d, false), Matrix::fromArray($rows, false));
     }
 
     /**
@@ -959,10 +960,10 @@ class Eigen
     }
 
     /**
-     * @param (int|float)[] $eigenvalues
+     * @param Vector $eigenvalues
      * @param Matrix $eigenvectors
      */
-    public function __construct(array $eigenvalues, Matrix $eigenvectors)
+    public function __construct(Vector $eigenvalues, Matrix $eigenvectors)
     {
         $this->eigenvalues = $eigenvalues;
         $this->eigenvectors = $eigenvectors;
@@ -971,9 +972,9 @@ class Eigen
     /**
      * Return the eigenvalues of the eigendecomposition.
      *
-     * @return (int|float)[]
+     * @return Vector
      */
-    public function eigenvalues() : array
+    public function eigenvalues() : Vector
     {
         return $this->eigenvalues;
     }

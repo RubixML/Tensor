@@ -20,21 +20,21 @@ Factory method to decompose a matrix.
 
 ## Accessors
 
-### `__construct(Matrix $u, array $singularValues, Matrix $vT)`
+### `__construct(Matrix $u, Vector $singularValues, Matrix $vT)`
 
 Instantiate from the orthogonal matrices and singular values.
 
-- **Parameters:** `$singularValues` — `list<int|float>`
+- **Parameters:** `$singularValues` — `Vector`
 
 ### `u() : Matrix`
 
 Return the U matrix.
 
-### `singularValues() : array`
+### `singularValues() : Vector`
 
 Return the singular values of matrix A.
 
-- **Returns:** `list<float>`
+- **Returns:** `Vector`
 
 ### `s() : Matrix`
 

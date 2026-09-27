@@ -2918,7 +2918,7 @@ class MatrixTest extends TestCase
 
         $this->assertInstanceOf(Eigen::class, $eig);
 
-        $this->assertEqualsWithDelta([3.3944487241610, 10.605551275464], $eig->eigenvalues(), 1e-8);
+        $this->assertEqualsWithDelta([3.3944487241610, 10.605551275464], $eig->eigenvalues()->asArray(), 1e-8);
     }
 
     #[Test]

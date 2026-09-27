@@ -630,7 +630,7 @@ class Matrix implements Tensor
 
         $sPlus = Matrix::zeros($n, $m)->asArray();
 
-        $singularValues = $svd->singularValues();
+        $singularValues = $svd->singularValues()->asArray();
 
         for ($i = 0; $i < $k; ++$i) {
             if ($singularValues[$i] > 0.0) {

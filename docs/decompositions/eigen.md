@@ -6,7 +6,7 @@ The eigendecomposition (or spectral decomposition) of a matrix.
 
 ## Overview
 
-The eigendecomposition is a matrix factorization resulting in a matrix of eigenvectors and a corresponding array of eigenvalues.
+The eigendecomposition is a matrix factorization resulting in a matrix of eigenvectors and a corresponding vector of eigenvalues.
 
 > **Note:** For matrices with complex eigenvalues, only the real parts of the eigenvalues and eigenvectors are returned. The eigenvector at row `i` of `eigenvectors()` corresponds to the eigenvalue at index `i` of `eigenvalues()`. Each eigenvector is normalized to unit length.
 
@@ -24,17 +24,17 @@ Factory method to decompose a matrix.
 
 ## Accessors
 
-### `__construct(array $eigenvalues, Matrix $eigenvectors)`
+### `__construct(Vector $eigenvalues, Matrix $eigenvectors)`
 
 Instantiate from eigenvalues and eigenvectors.
 
-- **Parameters:** `$eigenvalues` — `(int|float)[]`, `$eigenvectors` — `Matrix`
+- **Parameters:** `$eigenvalues` — `Vector`, `$eigenvectors` — `Matrix`
 
-### `eigenvalues() : array`
+### `eigenvalues() : Vector`
 
 Return the eigenvalues of the eigendecomposition.
 
-- **Returns:** `(int|float)[]`
+- **Returns:** `Vector`
 
 ### `eigenvectors() : Matrix`
 

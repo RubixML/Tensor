@@ -3,6 +3,7 @@
 namespace Tensor\Tests\Decompositions;
 
 use Tensor\Matrix;
+use Tensor\Vector;
 use Tensor\Decompositions\Eigen;
 use Tensor\Exceptions\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +39,7 @@ class EigenTest extends TestCase
             25.10870652045,
         ];
 
-        $eigenvalues = $eig->eigenvalues();
+        $eigenvalues = $eig->eigenvalues()->asArray();
 
         sort($eigenvalues);
 
@@ -60,7 +61,7 @@ class EigenTest extends TestCase
 
         $expectedEigenvalues = [1.0, 3.0, 4.0];
 
-        $this->assertEqualsWithDelta($expectedEigenvalues, $eig->eigenvalues(), self::MAX_DELTA);
+        $this->assertEqualsWithDelta($expectedEigenvalues, $eig->eigenvalues()->asArray(), self::MAX_DELTA);
     }
 
     #[Test]
@@ -75,7 +76,7 @@ class EigenTest extends TestCase
 
         $this->assertEigenpairIdentity($a, $eig);
 
-        $this->assertEqualsWithDelta([3.3944487241610, 10.605551275464], $eig->eigenvalues(), self::MAX_DELTA);
+        $this->assertEqualsWithDelta([3.3944487241610, 10.605551275464], $eig->eigenvalues()->asArray(), self::MAX_DELTA);
     }
 
     #[Test]
@@ -90,8 +91,8 @@ class EigenTest extends TestCase
         $general = Eigen::decompose($a);
         $symmetric = Eigen::decompose($a, true);
 
-        $generalEigenvalues = $general->eigenvalues();
-        $symmetricEigenvalues = $symmetric->eigenvalues();
+        $generalEigenvalues = $general->eigenvalues()->asArray();
+        $symmetricEigenvalues = $symmetric->eigenvalues()->asArray();
 
         sort($generalEigenvalues);
         sort($symmetricEigenvalues);
@@ -108,7 +109,7 @@ class EigenTest extends TestCase
 
         $this->assertEigenpairIdentity($a, $eig);
 
-        $this->assertEquals([9.0], $eig->eigenvalues());
+        $this->assertEquals([9.0], $eig->eigenvalues()->asArray());
 
         $this->assertEqualsWithDelta(Matrix::fromArray([[1.0]], false), $eig->eigenvectors(), self::MAX_DELTA);
     }
@@ -126,7 +127,7 @@ class EigenTest extends TestCase
 
         $this->assertEigenpairIdentity($a, $eig);
 
-        $this->assertEqualsWithDelta([2.0, 3.0, 5.0], $eig->eigenvalues(), self::MAX_DELTA);
+        $this->assertEqualsWithDelta([2.0, 3.0, 5.0], $eig->eigenvalues()->asArray(), self::MAX_DELTA);
     }
 
     #[Test]
@@ -143,7 +144,7 @@ class EigenTest extends TestCase
     #[Test]
     public function constructAndAccess() : void
     {
-        $eigenvalues = [1.0, 2.0, 3.0];
+        $eigenvalues = Vector::fromArray([1.0, 2.0, 3.0], false);
 
         $eigenvectors = Matrix::fromArray([
             [1.0, 0.0, 0.0],
@@ -170,7 +171,7 @@ class EigenTest extends TestCase
 
         $eig = Eigen::decompose($a);
 
-        $eigenvalues = $eig->eigenvalues();
+        $eigenvalues = $eig->eigenvalues()->asArray();
 
         $this->assertCount(2, $eigenvalues);
 
@@ -216,7 +217,7 @@ class EigenTest extends TestCase
 
         $eig = Eigen::decompose($a);
 
-        $originalEigenvalues = $eig->eigenvalues();
+        $originalEigenvalues = $eig->eigenvalues()->asArray();
 
         $eigenvalues = $originalEigenvalues;
 
@@ -266,7 +267,7 @@ class EigenTest extends TestCase
      */
     protected function assertEigenpairIdentity(Matrix $a, Eigen $eig) : void
     {
-        $eigenvalues = $eig->eigenvalues();
+        $eigenvalues = $eig->eigenvalues()->asArray();
 
         $eigenvectors = $eig->eigenvectors()->asArray();
 
