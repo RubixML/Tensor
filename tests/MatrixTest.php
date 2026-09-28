@@ -1665,11 +1665,11 @@ class MatrixTest extends TestCase
     public function convolve() : void
     {
         $a = Matrix::fromArray([
-            [3.0, 27.0, 66.0, 29.0, 42.0, 5.0],
-            [5.0, 9.0, 15.0, 42.0, 45.0, 16.0],
-            [1.0, 5.0, 10.0, 22.0, 66.0, 5.0],
+            [3.0, 27.0, 66.0, 29.0, 42.0, 5.0, 0.0],
+            [5.0, 9.0, 15.0, 42.0, 45.0, 16.0, 0.0],
+            [1.0, 5.0, 10.0, 22.0, 66.0, 5.0, 0.0],
             [0.0, 1.0, 4.0, 9.0, 10.0, 22.0, 2.0],
-            [0.0, 0.0, 3.0, 19.0, 21.0, 25.0],
+            [0.0, 0.0, 3.0, 19.0, 21.0, 25.0, 0.0],
             [0.0, 0.0, 0.0, 5.0, 2.0, 33.0, 35.0],
         ], false);
 
@@ -1682,15 +1682,84 @@ class MatrixTest extends TestCase
         $c = $a->convolve($b, 1);
 
         $expected = Matrix::fromArray([
-            [3.0, 32.0, 75.0, 44.0, 84.0, 50.0],
-            [32.0, 76.0, 49.0, 94.0, 72.0, 82.0],
-            [10.0, 20.0, 53.0, 71.0, 91.0, 15.0],
-            [5.0, 11.0, 26.0, 78.0, 34.0, 43.0],
-            [1.0, 4.0, 12.0, 29.0, 48.0, 27.0],
-            [0.0, 3.0, 19.0, 26.0, 27.0, 33.0],
+            [3.0, 32.0, 75.0, 44.0, 84.0, 50.0, 16.0],
+            [32.0, 76.0, 49.0, 94.0, 72.0, 82.0, 5.0],
+            [10.0, 20.0, 53.0, 71.0, 91.0, 15.0, 22.0],
+            [5.0, 11.0, 26.0, 78.0, 34.0, 43.0, 27.0],
+            [1.0, 4.0, 12.0, 29.0, 48.0, 29.0, 33.0],
+            [0.0, 3.0, 19.0, 26.0, 27.0, 33.0, 35.0],
         ], false);
 
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function convolveStride() : void
+    {
+        $a = Matrix::fromArray([
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+            [7.0, 8.0, 9.0],
+        ], false);
+
+        $b = Matrix::fromArray([
+            [1.0, 0.0],
+            [0.0, 1.0],
+        ], false);
+
+        $c = $a->convolve($b, 2);
+
+        $expected = Matrix::fromArray([
+            [6.0, 3.0],
+            [7.0, 9.0],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function convolveWithEvenKernel() : void
+    {
+        $a = Matrix::fromArray([
+            [1.0, 2.0, 3.0, 4.0],
+        ], false);
+
+        $b = Matrix::fromArray([
+            [1.0, 2.0, 3.0],
+        ], false);
+
+        $c = $a->convolve($b, 1);
+
+        $expected = Matrix::fromArray([
+            [4.0, 10.0, 16.0, 17.0],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function convolveStrideLessThanOneThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::fromArray([[1.0, 2.0, 3.0]], false)
+            ->convolve(Matrix::fromArray([[1.0, 1.0]], false), 0);
+    }
+
+    #[Test]
+    public function convolveKernelLargerThanMatrixThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Matrix::fromArray([
+            [1.0, 2.0],
+            [3.0, 4.0],
+        ], false)
+            ->convolve(Matrix::fromArray([
+                [1.0, 2.0, 3.0],
+                [4.0, 5.0, 6.0],
+                [7.0, 8.0, 9.0],
+            ], false));
     }
 
     /**

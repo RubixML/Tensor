@@ -817,7 +817,7 @@ class Matrix implements Tensor
             $rowC = [];
 
             for ($j = 0; $j < $this->n; $j += $stride) {
-                $sigma = 0;
+                $sigma = 0.0;
 
                 foreach ($b as $k => $rowB) {
                     $x = $i + $p - $k;

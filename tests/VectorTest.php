@@ -912,6 +912,20 @@ class VectorTest extends TestCase
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
 
+    #[Test]
+    public function convolveStride() : void
+    {
+        $a = Vector::fromArray([1.0, 2.0, 3.0, 4.0], false);
+
+        $b = Vector::fromArray([1.0, 2.0], false);
+
+        $c = $a->convolve($b, 2);
+
+        $expected = Vector::fromArray([1.0, 7.0, 8.0], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
     /**
      * @param Vector $a
      * @param Tensor|float $b
