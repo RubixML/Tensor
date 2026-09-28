@@ -34,6 +34,14 @@ class Eigen
     protected Matrix $eigenvectors;
 
     /**
+     * The imaginary parts of the eigendecomposition's eigenvalues,
+     * aligned element-wise with the real parts.
+     *
+     * @var Vector
+     */
+    protected Vector $eigenvaluesImaginary;
+
+    /**
      * Factory method to decompose a matrix.
      *
      * @param Matrix $a
@@ -52,7 +60,11 @@ class Eigen
         $n = $a->n();
 
         if ($n === 1) {
-            return new self(Vector::fromArray($a->rowAsVector(0)->asArray(), false), Matrix::fromArray([[1.0]], false));
+            return new self(
+                Vector::fromArray($a->rowAsVector(0)->asArray(), false),
+                Matrix::fromArray([[1.0]], false),
+                Vector::zeros(1)
+            );
         }
 
         if ($symmetric) {
@@ -67,6 +79,12 @@ class Eigen
 
         $d = $result['d'];
         $v = $result['v'];
+
+        if ($symmetric) {
+            $e = array_fill(0, $n, 0.0);
+        } else {
+            $e = $result['e'];
+        }
 
         $rows = array_fill(0, $n, array_fill(0, $n, 0.0));
 
@@ -84,7 +102,11 @@ class Eigen
             }
         }
 
-        return new self(Vector::fromArray($d, false), Matrix::fromArray($rows, false));
+        return new self(
+            Vector::fromArray($d, false),
+            Matrix::fromArray($rows, false),
+            Vector::fromArray($e, false)
+        );
     }
 
     /**
@@ -962,11 +984,13 @@ class Eigen
     /**
      * @param Vector $eigenvalues
      * @param Matrix $eigenvectors
+     * @param Vector $eigenvaluesImaginary
      */
-    public function __construct(Vector $eigenvalues, Matrix $eigenvectors)
+    public function __construct(Vector $eigenvalues, Matrix $eigenvectors, Vector $eigenvaluesImaginary)
     {
         $this->eigenvalues = $eigenvalues;
         $this->eigenvectors = $eigenvectors;
+        $this->eigenvaluesImaginary = $eigenvaluesImaginary;
     }
 
     /**
@@ -977,6 +1001,17 @@ class Eigen
     public function eigenvalues() : Vector
     {
         return $this->eigenvalues;
+    }
+
+    /**
+     * Return the imaginary parts of the eigenvalues of the
+     * eigendecomposition.
+     *
+     * @return Vector
+     */
+    public function eigenvaluesImaginary() : Vector
+    {
+        return $this->eigenvaluesImaginary;
     }
 
     /**

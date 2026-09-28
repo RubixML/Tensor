@@ -146,15 +146,18 @@ class EigenTest extends TestCase
     {
         $eigenvalues = Vector::fromArray([1.0, 2.0, 3.0], false);
 
+        $eigenvaluesImaginary = Vector::fromArray([0.0, -7.0, 0.0], false);
+
         $eigenvectors = Matrix::fromArray([
             [1.0, 0.0, 0.0],
             [0.0, 1.0, 0.0],
             [0.0, 0.0, 1.0],
         ], false);
 
-        $eig = new Eigen($eigenvalues, $eigenvectors);
+        $eig = new Eigen($eigenvalues, $eigenvectors, $eigenvaluesImaginary);
 
         $this->assertEquals($eigenvalues, $eig->eigenvalues());
+        $this->assertEquals($eigenvaluesImaginary, $eig->eigenvaluesImaginary());
         $this->assertEqualsWithDelta($eigenvectors, $eig->eigenvectors(), self::MAX_DELTA);
     }
 
@@ -257,6 +260,58 @@ class EigenTest extends TestCase
         ];
 
         $this->assertLessThanOrEqual(self::MAX_DELTA, min($residuals));
+    }
+
+    /**
+     * The imaginary parts of the eigenvalue pair are exposed and opposite.
+     */
+    #[Test]
+    public function decomposeComplexPairImaginary() : void
+    {
+        $a = Matrix::fromArray([
+            [0.0, -1.0],
+            [1.0, 0.0],
+        ], false);
+
+        $eig = Eigen::decompose($a);
+
+        $real = $eig->eigenvalues()->asArray();
+        $imaginary = $eig->eigenvaluesImaginary()->asArray();
+
+        $this->assertCount(2, $imaginary);
+
+        $this->assertEqualsWithDelta([0.0, 0.0], $real, self::MAX_DELTA);
+        $this->assertEqualsWithDelta(1.0, abs($imaginary[0]), self::MAX_DELTA);
+        $this->assertEqualsWithDelta(1.0, abs($imaginary[1]), self::MAX_DELTA);
+
+        $this->assertLessThan(0.0, $imaginary[0] * $imaginary[1]);
+    }
+
+    /**
+     * All real eigenvalues yield zero imaginary parts.
+     */
+    #[Test]
+    public function decomposeRealEigenvaluesImaginary() : void
+    {
+        $a = Matrix::fromArray([
+            [22.0, -17.0, 12.0],
+            [4.0, 11.0, -2.0],
+            [20.0, -6.0, -9.0],
+        ], false);
+
+        $eig = Eigen::decompose($a);
+
+        $this->assertCount(3, $eig->eigenvaluesImaginary()->asArray());
+
+        $this->assertEqualsWithDelta([0.0, 0.0, 0.0], $eig->eigenvaluesImaginary()->asArray(), self::MAX_DELTA);
+
+        $symmetric = Eigen::decompose($a, true);
+
+        $this->assertEqualsWithDelta([0.0, 0.0, 0.0], $symmetric->eigenvaluesImaginary()->asArray(), self::MAX_DELTA);
+
+        $one = Eigen::decompose(Matrix::fromArray([[7.0]], false));
+
+        $this->assertEqualsWithDelta([0.0], $one->eigenvaluesImaginary()->asArray(), self::MAX_DELTA);
     }
 
     /**

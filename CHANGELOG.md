@@ -9,6 +9,7 @@
     - Standardized serial representation with extension
     - Rename Special interface to Reductions and Algebraic to Unary
     - `SVD::singularValues()` and `Eigen::eigenvalues()` now return a `Vector`
+    - Eigendecomposition now returns both real and imaginary parts
 
 - 3.1.0
     - Implemented the singular value decomposition (SVD) in the pure-PHP library
