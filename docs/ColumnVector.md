@@ -4,7 +4,7 @@ A one dimensional (rank 1) tensor expanded along the vertical axis, paired with 
 
 - **Namespace:** `Tensor\ColumnVector`
 - **Extends:** [`Tensor\Vector`](Vector.md)
-- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Unary`, `Trigonometric`, `Statistical`, `Reductions`
+- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Unary`, `Trigonometric`, `Reductions`, `Special`
 
 ## Overview
 

@@ -47,6 +47,13 @@ interface Trigonometric
     public function atan();
 
     /**
+     * Return the hyperbolic tangent of the tensor.
+     *
+     * @return mixed
+     */
+    public function tanh();
+
+    /**
      * Convert angles from radians to degrees.
      *
      * @return mixed

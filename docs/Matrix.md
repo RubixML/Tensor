@@ -3,7 +3,7 @@
 A two dimensional (rank 2) tensor with integer and/or floating point elements.
 
 - **Namespace:** `Tensor\Matrix`
-- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Unary`, `Trigonometric`, `Statistical`, `Reductions`
+- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Unary`, `Trigonometric`, `Reductions`, `Special`
 - **Also implements:** `ArrayAccess`, `IteratorAggregate`, `Countable`
 
 ## Overview
@@ -410,6 +410,7 @@ See [Unary](interfaces/unary.md). Each method returns a new `Matrix`.
 - `ceil() : self` — round up to the nearest integer
 - `sign() : self` — element-wise sign indication (`1.0`, `-1.0`, `0.0`)
 - `negate() : self` — take the negative of each value element-wise
+- `sigmoid() : self` — element-wise sigmoid of the matrix
 
 ## Trigonometric
 
@@ -424,9 +425,9 @@ See [Trigonometric](interfaces/trigonometric.md). Each method returns a new `Mat
 - `rad2deg()` — convert angles from radians to degrees
 - `deg2rad()` — convert angles from degrees to radians
 
-## Statistical & Reductions
+## Reductions
 
-See [Statistical](interfaces/statistical.md) and [Reductions](interfaces/reductions.md). For a `Matrix`, row-wise reductions return a `ColumnVector`.
+See [Reductions](interfaces/reductions.md). For a `Matrix`, row-wise reductions return a `ColumnVector`.
 
 - `sum() : ColumnVector` — sum the rows of the matrix
 - `product() : ColumnVector` — calculate the row product of the matrix
@@ -437,6 +438,12 @@ See [Statistical](interfaces/statistical.md) and [Reductions](interfaces/reducti
 - `quantile(float $q) : ColumnVector` — q'th quantile of each row (throws `InvalidArgumentException` if `$q` is outside `[0, 1]`)
 - `variance($mean = null) : ColumnVector` — row variance of the matrix; `$mean` optionally provides a pre-computed mean `ColumnVector` (throws `DimensionalityMismatch` if `$mean->m() !== $this->m`)
 - `covariance(?ColumnVector $mean = null) : self` — compute the covariance matrix (throws `DimensionalityMismatch` if `$mean->m() !== $this->m`)
+
+## Special
+
+See [Special](interfaces/special.md).
+
+- `softmax() : self` — the softmax of the matrix; each row is normalized independently so the elements of every row sum to `1.0` and the shape is preserved
 
 ## Clipping
 

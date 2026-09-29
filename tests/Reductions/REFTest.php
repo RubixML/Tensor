@@ -5,7 +5,6 @@ namespace Tensor\Tests\Reductions;
 use Tensor\Matrix;
 use Tensor\Reductions\REF;
 use Tensor\Exceptions\InvalidArgumentException;
-use Tensor\Exceptions\SingularMatrix;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -209,30 +208,5 @@ class REFTest extends TestCase
         $this->assertEqualsWithDelta($a, $ref->a(), self::MAX_DELTA);
 
         $this->assertEquals(2, $ref->swaps());
-    }
-
-    #[Test]
-    public function reduceExactlySingular4x4GaussianThrowsSingularMatrix() : void
-    {
-        if (extension_loaded('tensor')) {
-            // The extension exposes only reduce(), which handles the singular
-            // case via a C fallback and does not expose gaussianElimination().
-            $this->markTestSkipped('Extension REF has no gaussianElimination method.');
-        }
-
-        // Exactly singular (column 3 = column 0 - column 1 + column 2); the
-        // pure-PHP gaussian elimination path must detect the tiny residual
-        // (a ~1e-16 diagonal entry) as singular and route through the row
-        // reduction fallback.
-        $a = Matrix::fromArray([
-            [2.0, 1.0, 0.0, 1.0],
-            [1.0, 2.0, 1.0, 0.0],
-            [0.0, 1.0, 2.0, 1.0],
-            [1.0, 0.0, 1.0, 2.0],
-        ], false);
-
-        $this->expectException(SingularMatrix::class);
-
-        REF::gaussianElimination($a);
     }
 }

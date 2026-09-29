@@ -16,8 +16,8 @@ Tensor \
 ├── Comparable (interface)
 ├── Unary (interface)
 ├── Trigonometric (interface)
-├── Statistical (interface)
 ├── Reductions (interface)
+├── Special (interface)
 │
 ├── Decompositions
 │   ├── Cholesky
@@ -47,8 +47,8 @@ Tensor \
 | [Comparable](interfaces/comparable.md) | Universal element-wise comparison functions. |
 | [Unary](interfaces/unary.md) | Element-wise Unary functions. |
 | [Trigonometric](interfaces/trigonometric.md) | Element-wise trigonometric functions. |
-| [Statistical](interfaces/statistical.md) | Statistical measures. |
-| [Reductions](interfaces/reductions.md) | Reduction operations. |
+| [Reductions](interfaces/reductions.md) | Reduction and statistical operations. |
+| [Special](interfaces/special.md) | Special tensor functions. |
 
 ## Decompositions
 

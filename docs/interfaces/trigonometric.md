@@ -38,6 +38,10 @@ Return the tangent of the tensor.
 
 Compute the arc tangent of the tensor.
 
+### `tanh() : mixed`
+
+Return the hyperbolic tangent of the tensor.
+
 ### `rad2deg() : mixed`
 
 Convert angles from radians to degrees.

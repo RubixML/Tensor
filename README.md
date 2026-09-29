@@ -4,7 +4,7 @@
 
 A library that provides objects for scientific computing in [PHP](https://php.net).
 
-The Tensor PHP extension has moved to [https://github.com/RubixML/Tensor-Ext](https://github.com/RubixML/Tensor-Ext). It shares the same API as the PHP library but is 100X faster. We recommend it over this PHP library for most use cases.
+The Tensor PHP extension has moved to [https://github.com/RubixML/Tensor-Ext](https://github.com/RubixML/Tensor-Ext). It shares the same API as the PHP library but is much faster. We recommend it over this library for most use cases.
 
 ## Requirements
 

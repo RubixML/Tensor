@@ -3,7 +3,7 @@
 A one dimensional (rank 1) tensor with integer and/or floating point elements.
 
 - **Namespace:** `Tensor\Vector`
-- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Unary`, `Trigonometric`, `Statistical`, `Reductions`
+- **Implements:** `Tensor` — i.e. `ArrayLike`, `Arithmetic`, `Comparable`, `Unary`, `Trigonometric`, `Reductions`, `Special`
 - **Also implements:** `ArrayAccess`, `IteratorAggregate`, `Countable`
 
 ## Overview
@@ -313,6 +313,7 @@ See [Unary](interfaces/unary.md). Each method returns a new `Vector`.
 - `ceil() : self` — round up to the nearest integer
 - `sign() : self` — element-wise sign indication (`1.0`, `-1.0`, `0.0`)
 - `negate() : self` — negate each value
+- `sigmoid() : self` — element-wise sigmoid of the vector
 
 ## Trigonometric
 
@@ -324,12 +325,13 @@ See [Trigonometric](interfaces/trigonometric.md). Each method returns a new `Vec
 - `acos()` — arc cosine of the vector
 - `tan()` — tangent of the vector
 - `atan()` — arc tangent of the vector
+- `tanh()` — hyperbolic tangent of the vector
 - `rad2deg()` — convert angles from radians to degrees
 - `deg2rad()` — convert angles from degrees to radians
 
-## Statistical & Reductions
+## Reductions
 
-See [Statistical](interfaces/statistical.md) and [Reductions](interfaces/reductions.md). For a `Vector` these return scalar `float`s.
+See [Reductions](interfaces/reductions.md). For a `Vector` these return scalar `float`s.
 
 - `sum() : float` — the sum of the vector
 - `product() : float` — the product of the vector
@@ -339,6 +341,12 @@ See [Statistical](interfaces/statistical.md) and [Reductions](interfaces/reducti
 - `median() : float` — the median of the vector
 - `quantile(float $q) : float` — the q'th quantile (throws `InvalidArgumentException` if `$q` is outside `[0, 1]`)
 - `variance($mean = null) : float` — the variance; `$mean` optionally provides a pre-computed mean
+
+## Special
+
+See [Special](interfaces/special.md).
+
+- `softmax() : self` — the softmax of the vector; the whole vector is treated as a single row so the elements sum to `1.0`
 
 ## Clipping
 

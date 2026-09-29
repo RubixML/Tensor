@@ -121,4 +121,11 @@ interface Unary
      * @return mixed
      */
     public function negate();
+
+    /**
+     * Return the element-wise sigmoid of the tensor.
+     *
+     * @return mixed
+     */
+    public function sigmoid();
 }

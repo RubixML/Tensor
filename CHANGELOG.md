@@ -8,6 +8,10 @@
     - Modulus results no longer rounded to nearest integer
     - Standardized serial representation with extension
     - Rename Special interface to Reductions and Algebraic to Unary
+    - Added `sigmoid()` to the Unary interface
+    - Added `tanh()` to the Trigonometric interface
+    - Added a Special interface holding `softmax()`
+    - Merged the Statistical interface into Reductions and removed Statistical
     - `SVD::singularValues()` and `Eigen::eigenvalues()` now return a `Vector`
     - Eigendecomposition now returns both real and imaginary parts
 

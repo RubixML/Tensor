@@ -9,7 +9,7 @@ use Tensor\ArrayLike;
 use Tensor\Arithmetic;
 use Tensor\Comparable;
 use Tensor\Reductions;
-use Tensor\Statistical;
+use Tensor\Special;
 use Tensor\Trigonometric;
 use Tensor\Unary;
 use Tensor\ColumnVector;
@@ -40,7 +40,7 @@ class ColumnVectorTest extends TestCase
         $this->assertInstanceOf(Comparable::class, $vector);
         $this->assertInstanceOf(Unary::class, $vector);
         $this->assertInstanceOf(Trigonometric::class, $vector);
-        $this->assertInstanceOf(Statistical::class, $vector);
+        $this->assertInstanceOf(Special::class, $vector);
         $this->assertInstanceOf(Reductions::class, $vector);
     }
 
@@ -443,6 +443,61 @@ class ColumnVectorTest extends TestCase
             [1.0, 2.0],
             [3.0, 4.0],
         ], false));
+    }
+
+    #[Test]
+    public function sigmoidPreservesColumnVector() : void
+    {
+        $a = ColumnVector::fromArray([-1.0, 0.0, 1.0], false);
+
+        $b = $a->sigmoid();
+
+        $this->assertInstanceOf(ColumnVector::class, $b);
+
+        $expected = ColumnVector::fromArray([
+            0.2689414213699951,
+            0.5,
+            0.7310585786300049,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function tanhPreservesColumnVector() : void
+    {
+        $a = ColumnVector::fromArray([-1.0, 0.0, 1.0], false);
+
+        $b = $a->tanh();
+
+        $this->assertInstanceOf(ColumnVector::class, $b);
+
+        $expected = ColumnVector::fromArray([
+            -0.7615941559557649,
+            0.0,
+            0.7615941559557649,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softmaxNormalizesWholeVectorAndPreservesColumnVector() : void
+    {
+        $a = ColumnVector::fromArray([1.0, 2.0, 3.0], false);
+
+        $b = $a->softmax();
+
+        $this->assertInstanceOf(ColumnVector::class, $b);
+        $this->assertEqualsWithDelta(1.0, $b->sum(), self::MAX_DELTA);
+
+        $expected = ColumnVector::fromArray([
+            0.09003057317038046,
+            0.24472847105479764,
+            0.6652409557748218,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
     }
 
     #[Test]

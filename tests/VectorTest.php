@@ -10,7 +10,7 @@ use Tensor\ArrayLike;
 use Tensor\Unary;
 use Tensor\Arithmetic;
 use Tensor\Comparable;
-use Tensor\Statistical;
+use Tensor\Special;
 use Tensor\ColumnVector;
 use Tensor\Trigonometric;
 use Tensor\Exceptions\DimensionalityMismatch;
@@ -483,7 +483,7 @@ class VectorTest extends TestCase
         $this->assertInstanceOf(Comparable::class, $vector);
         $this->assertInstanceOf(Unary::class, $vector);
         $this->assertInstanceOf(Trigonometric::class, $vector);
-        $this->assertInstanceOf(Statistical::class, $vector);
+        $this->assertInstanceOf(Special::class, $vector);
         $this->assertInstanceOf(Reductions::class, $vector);
     }
 
@@ -1378,6 +1378,104 @@ class VectorTest extends TestCase
         $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
 
         $this->assertEqualsWithDelta(3227.609375, $a->variance(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function sigmoid() : void
+    {
+        $a = Vector::fromArray([-1.0, 0.0, 1.0], false);
+
+        $b = $a->sigmoid();
+
+        $expected = Vector::fromArray([
+            0.2689414213699951,
+            0.5,
+            0.7310585786300049,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function sigmoidSaturatesForLargeMagnitudes() : void
+    {
+        $positive = Vector::fromArray([1000.0, 500.0], false)->sigmoid();
+
+        $this->assertEqualsWithDelta([1.0, 1.0], $positive->asArray(), self::MAX_DELTA);
+
+        $negative = Vector::fromArray([-1000.0, -500.0], false)->sigmoid();
+
+        $this->assertEqualsWithDelta([0.0, 0.0], $negative->asArray(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function tanh() : void
+    {
+        $a = Vector::fromArray([-1.0, 0.0, 1.0, 2.0], false);
+
+        $b = $a->tanh();
+
+        $expected = Vector::fromArray([
+            -0.7615941559557649,
+            0.0,
+            0.7615941559557649,
+            0.9640275800758169,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softmax() : void
+    {
+        $a = Vector::fromArray([1.0, 2.0, 3.0], false);
+
+        $b = $a->softmax();
+
+        $expected = Vector::fromArray([
+            0.09003057317038046,
+            0.24472847105479764,
+            0.6652409557748218,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+        $this->assertEqualsWithDelta(1.0, $b->sum(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softmaxIsShiftInvariant() : void
+    {
+        $a = Vector::fromArray([1.0, 2.0, 3.0], false);
+
+        $shifted = Vector::fromArray([1001.0, 1002.0, 1003.0], false);
+
+        $this->assertEqualsWithDelta(
+            $a->softmax()->asArray(),
+            $shifted->softmax()->asArray(),
+            self::MAX_DELTA
+        );
+    }
+
+    #[Test]
+    public function softmaxOfLargeValuesDoesNotOverflow() : void
+    {
+        $a = Vector::fromArray([1000.0, 1001.0, 1002.0], false);
+
+        $b = $a->softmax();
+
+        $this->assertEqualsWithDelta(1.0, $b->sum(), self::MAX_DELTA);
+
+        foreach ($b->asArray() as $value) {
+            $this->assertTrue(is_finite($value));
+        }
+    }
+
+    #[Test]
+    public function softmaxOfSingleElementIsOne() : void
+    {
+        $a = Vector::fromArray([5.0], false);
+
+        $this->assertEqualsWithDelta([1.0], $a->softmax()->asArray(), self::MAX_DELTA);
     }
 
     #[Test]

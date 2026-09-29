@@ -11,7 +11,7 @@ use Tensor\Comparable;
 use Tensor\Reductions;
 use Tensor\Reductions\REF;
 use Tensor\Reductions\RREF;
-use Tensor\Statistical;
+use Tensor\Special;
 use Tensor\Trigonometric;
 use Tensor\Unary;
 use Tensor\ColumnVector;
@@ -878,7 +878,7 @@ class MatrixTest extends TestCase
         $this->assertInstanceOf(Comparable::class, $matrix);
         $this->assertInstanceOf(Unary::class, $matrix);
         $this->assertInstanceOf(Trigonometric::class, $matrix);
-        $this->assertInstanceOf(Statistical::class, $matrix);
+        $this->assertInstanceOf(Special::class, $matrix);
         $this->assertInstanceOf(Reductions::class, $matrix);
     }
 
@@ -2394,6 +2394,125 @@ class MatrixTest extends TestCase
     }
 
     #[Test]
+    public function sigmoid() : void
+    {
+        $a = Matrix::fromArray([
+            [-1.0, 0.0, 1.0],
+            [2.0, -2.0, 0.5],
+        ], false);
+
+        $b = $a->sigmoid();
+
+        $expected = Matrix::fromArray([
+            [0.2689414213699951, 0.5, 0.7310585786300049],
+            [0.8807970779778823, 0.11920292202211755, 0.6224593312018546],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function tanh() : void
+    {
+        $a = Matrix::fromArray([
+            [-1.0, 0.0, 1.0],
+            [2.0, -2.0, 0.5],
+        ], false);
+
+        $b = $a->tanh();
+
+        $expected = Matrix::fromArray([
+            [-0.7615941559557649, 0.0, 0.7615941559557649],
+            [0.9640275800758169, -0.9640275800758169, 0.46211715726000974],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softmax() : void
+    {
+        $a = Matrix::fromArray([
+            [1.0, 2.0, 3.0],
+            [1.0, 6.0, 3.0],
+        ], false);
+
+        $b = $a->softmax();
+
+        $expected = Matrix::fromArray([
+            [0.09003057317038046, 0.24472847105479764, 0.6652409557748218],
+            [0.006377460922442298, 0.9464991225528937, 0.047123416524664154],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softmaxNormalizesOverRows() : void
+    {
+        $a = Matrix::fromArray([
+            [1.0, 2.0, 3.0],
+            [1.0, 6.0, 3.0],
+        ], false);
+
+        $b = $a->softmax();
+
+        $this->assertEquals($a->shape(), $b->shape());
+
+        foreach ($b->asArray() as $row) {
+            $this->assertEqualsWithDelta(1.0, array_sum($row), self::MAX_DELTA);
+        }
+
+        // Normalizing over rows rather than columns means the column sums are
+        // free to differ from 1.
+        $columnSums = $b->transpose()->asArray();
+
+        $this->assertNotEqualsWithDelta(1.0, array_sum($columnSums[0]), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softmaxIsMonotonicAndShiftInvariant() : void
+    {
+        $a = Matrix::fromArray([
+            [1.0, 2.0, 3.0],
+            [3.0, 2.0, 1.0],
+        ], false);
+
+        $b = $a->softmax();
+
+        // The largest element of each row receives the largest probability.
+        $this->assertGreaterThan($b[0][1], $b[0][2]);
+        $this->assertGreaterThan($b[1][1], $b[1][0]);
+
+        // Adding a constant to a row must not change its distribution.
+        $shifted = Matrix::fromArray([
+            [1001.0, 1002.0, 1003.0],
+            [1003.0, 1002.0, 1001.0],
+        ], false);
+
+        $this->assertEqualsWithDelta($b->asArray(), $shifted->softmax()->asArray(), self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softmaxOfLargeValuesDoesNotOverflow() : void
+    {
+        $a = Matrix::fromArray([
+            [1000.0, 1001.0, 1002.0],
+            [-1000.0, -1001.0, -1002.0],
+        ], false);
+
+        $b = $a->softmax();
+
+        foreach ($b->asArray() as $row) {
+            $this->assertEqualsWithDelta(1.0, array_sum($row), self::MAX_DELTA);
+
+            foreach ($row as $value) {
+                $this->assertTrue(is_finite($value));
+            }
+        }
+    }
+
+    #[Test]
     public function covariance() : void
     {
         $a = Matrix::fromArray([
@@ -2991,12 +3110,8 @@ class MatrixTest extends TestCase
     }
 
     #[Test]
-    public function svdPurePHP() : void
+    public function svd() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Extension tensor is loaded.');
-        }
-
         $matrix = Matrix::fromArray([
             [1.0, 2.0],
             [3.0, 4.0],
@@ -3012,12 +3127,8 @@ class MatrixTest extends TestCase
     }
 
     #[Test]
-    public function pseudoinversePurePHP() : void
+    public function pseudoinverse() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Extension tensor is loaded.');
-        }
-
         $a = Matrix::fromArray([
             [22.0, -17.0, 12.0],
             [4.0, 11.0, -2.0],

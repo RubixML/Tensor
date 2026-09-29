@@ -1508,6 +1508,16 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the hyperbolic tangent of the matrix.
+     *
+     * @return self
+     */
+    public function tanh() : self
+    {
+        return $this->map('tanh');
+    }
+
+    /**
      * Convert angles from radians to degrees.
      *
      * @return self
@@ -1895,6 +1905,33 @@ class Matrix implements Tensor
         }
 
         return self::fromArray($b, false);
+    }
+
+    /**
+     * Return the element-wise sigmoid of the matrix.
+     *
+     * @return self
+     */
+    public function sigmoid() : self
+    {
+        return $this->negate()
+            ->exp()
+            ->addScalar(1.0)
+            ->reciprocal();
+    }
+
+    /**
+     * Return the softmax of the matrix i.e each row is normalized such that
+     * the elements of that row sum to 1.
+     *
+     * @return self
+     */
+    public function softmax() : self
+    {
+        $a = $this->subtractColumnVector($this->max())
+            ->exp();
+
+        return $a->divideColumnVector($a->sum());
     }
 
     /**

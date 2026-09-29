@@ -162,10 +162,6 @@ class SVDTest extends TestCase
     #[Test]
     public function sReturnsPaddedSingularValueMatrix() : void
     {
-        if (extension_loaded('tensor')) {
-            $this->markTestSkipped('Extension tensor is loaded.');
-        }
-
         $tall = Matrix::fromArray([
             [1.0, 2.0],
             [3.0, 4.0],

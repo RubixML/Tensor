@@ -1109,6 +1109,16 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the hyperbolic tangent of this vector.
+     *
+     * @return self
+     */
+    public function tanh() : self
+    {
+        return $this->map('tanh');
+    }
+
+    /**
      * Convert angles from radians to degrees.
      *
      * @return self
@@ -1414,6 +1424,33 @@ class Vector implements Tensor
         }
 
         return static::fromArray($b, false);
+    }
+
+    /**
+     * Return the element-wise sigmoid of the vector.
+     *
+     * @return self
+     */
+    public function sigmoid() : self
+    {
+        return $this->negate()
+            ->exp()
+            ->addScalar(1.0)
+            ->reciprocal();
+    }
+
+    /**
+     * Return the softmax of the vector i.e the vector is normalized such that
+     * its elements sum to 1.
+     *
+     * @return self
+     */
+    public function softmax() : self
+    {
+        $a = $this->subtractScalar($this->max())
+            ->exp();
+
+        return $a->divideScalar($a->sum());
     }
 
     /**
