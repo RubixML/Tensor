@@ -785,42 +785,57 @@ class Matrix implements Tensor
     }
 
     /**
-     * Return the 2D convolution of this matrix and a kernel matrix with given stride using the "same" method for zero padding.
+     * Return the 2D convolution of this matrix and a kernel matrix with given stride and
+     * padding. Padding is applied to both sides of this matrix in both dimensions and is
+     * zero filled.
+     *
+     * A padding of 0 gives the "valid" convolution, a padding of intdiv(mB, 2) and
+     * intdiv(nB, 2) gives the "same" convolution, and a padding of mB - 1 and nB - 1
+     * gives the full convolution.
      *
      * @param Matrix $b
      * @param int $stride
+     * @param int $padding
      * @throws InvalidArgumentException
      * @return self
      */
-    public function convolve(Matrix $b, int $stride = 1) : self
+    public function convolve(Matrix $b, int $stride = 1, int $padding = 0) : self
     {
         [$m, $n] = $b->shape();
-
-        if ($m > $this->m or $n > $this->n) {
-            throw new InvalidArgumentException('Matrix B cannot be'
-                . ' larger than Matrix A.');
-        }
 
         if ($stride < 1) {
             throw new InvalidArgumentException('Stride cannot be'
                 . " less than 1, $stride given.");
         }
 
+        if ($padding < 0) {
+            throw new InvalidArgumentException('Padding cannot be'
+                . " negative, $padding given.");
+        }
+
+        if ($this->m + 2 * $padding - $m < 0 or $this->n + 2 * $padding - $n < 0) {
+            throw new InvalidArgumentException('Matrix B cannot be larger than'
+                . ' Matrix A by more than the given padding allows.');
+        }
+
         $b = $b->asArray();
 
-        $p = intdiv($m, 2);
-        $q = intdiv($n, 2);
+        $p = $m - 1 - $padding;
+        $q = $n - 1 - $padding;
+
+        $mHat = intdiv($this->m + 2 * $padding - $m, $stride) + 1;
+        $nHat = intdiv($this->n + 2 * $padding - $n, $stride) + 1;
 
         $c = [];
 
-        for ($i = 0; $i < $this->m; $i += $stride) {
+        for ($i = 0; $i < $mHat; ++$i) {
             $rowC = [];
 
-            for ($j = 0; $j < $this->n; $j += $stride) {
+            for ($j = 0; $j < $nHat; ++$j) {
                 $sigma = 0.0;
 
                 foreach ($b as $k => $rowB) {
-                    $x = $i + $p - $k;
+                    $x = $i * $stride + $p - $k;
 
                     if ($x < 0 or $x >= $this->m) {
                         continue;
@@ -829,7 +844,7 @@ class Matrix implements Tensor
                     $rowA = $this->a[$x];
 
                     foreach ($rowB as $l => $valueB) {
-                        $y = $j + $q - $l;
+                        $y = $j * $stride + $q - $l;
 
                         if ($y < 0 or $y >= $this->n) {
                             continue;

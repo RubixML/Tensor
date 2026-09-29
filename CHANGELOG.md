@@ -14,6 +14,7 @@
     - Merged the Statistical interface into Reductions and removed Statistical
     - `SVD::singularValues()` and `Eigen::eigenvalues()` now return a `Vector`
     - Eigendecomposition now returns both real and imaginary parts
+    - Added padding argument to convolve()
 
 - 3.1.0
     - Implemented the singular value decomposition (SVD) in the pure-PHP library

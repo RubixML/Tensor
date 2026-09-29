@@ -226,11 +226,24 @@ Compute the dot product of this matrix and a vector.
 - **Returns:** `ColumnVector` (product of `$this` and `$b` reshaped as a column matrix)
 - **Throws:** `Tensor\Exceptions\DimensionalityMismatch` if `$this->n !== $b->size()`
 
-### `convolve(Matrix $b, int $stride = 1) : Matrix`
+### `convolve(Matrix $b, int $stride = 1, int $padding = 0) : Matrix`
 
-Return the 2D convolution of this matrix and a kernel matrix with the given stride, using the "same" method for zero padding.
+Return the 2D convolution of this matrix and a kernel matrix with the given stride and padding. The kernel is applied in reverse (a true convolution, not a cross-correlation). `$padding` zeros are added to **both** sides of this matrix in **both** dimensions before the kernel is applied.
 
-- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$b` is larger than this matrix or `$stride < 1`
+- **Parameters:** `$b` — the kernel matrix, `$stride` — the stride (default `1`), `$padding` — the number of zeros added to each side of each dimension (default `0`)
+- **Returns:** `Matrix` of shape `[intdiv(m + 2 * padding - mB, stride) + 1, intdiv(n + 2 * padding - nB, stride) + 1]`
+- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$stride < 1`, `$padding < 0`, or if the kernel does not fit even with the given padding
+
+The padding selects the flavour of convolution:
+
+| `$padding` | Flavour | Shape (stride 1) |
+| --- | --- | --- |
+| `0` | valid (PyTorch's default) | `[m - mB + 1, n - nB + 1]` |
+| `intdiv($kernelSize, 2)` | same | `[m, n]` |
+| `$kernelSize - 1` | full | `[m + mB - 1, n + nB - 1]` |
+
+- **Note:** In 4.0.0 the default padding changed from `same` to `0`. Pass `intdiv($b->m(), 2)` as the padding to recover the previous `same` result.
+- **Note:** Because a single padding is applied to both dimensions, a non-square kernel pads the shorter axis by the same amount. Choosing a `$padding` greater than the kernel extent minus one on an axis adds border rows or columns of zeros to the result.
 
 ### `ref() : REF`
 

@@ -160,13 +160,23 @@ Transpose the vector, i.e. rotate it into a `ColumnVector`.
 
 - **Returns:** `ColumnVector`
 
-### `convolve(Vector $b, int $stride = 1) : Vector`
+### `convolve(Vector $b, int $stride = 1, int $padding = 0) : Vector`
 
-Return the 1D convolution of this vector and a kernel vector with the given stride.
+Return the 1D convolution of this vector and a kernel vector with the given stride and padding. The kernel is applied in reverse (a true convolution, not a cross-correlation). `$padding` zeros are added to **both** sides of this vector before the kernel is applied.
 
-- **Parameters:** `$b` — the kernel vector, `$stride` — the stride (default `1`)
-- **Returns:** `Vector` of length `n + nB - 1` (sampled by stride)
-- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$b` is larger than this vector or `$stride < 1`
+- **Parameters:** `$b` — the kernel vector, `$stride` — the stride (default `1`), `$padding` — the number of zeros added to each side (default `0`)
+- **Returns:** `Vector` of length `intdiv(n + 2 * padding - nB, stride) + 1`
+- **Throws:** `Tensor\Exceptions\InvalidArgumentException` if `$stride < 1`, `$padding < 0`, or if the kernel does not fit even with the given padding
+
+The padding selects the flavour of convolution:
+
+| `$padding` | Flavour | Length (stride 1) |
+| --- | --- | --- |
+| `0` | valid (PyTorch's default) | `n - nB + 1` |
+| `intdiv($b->size(), 2)` | same | `n` |
+| `$b->size() - 1` | full | `n + nB - 1` |
+
+- **Note:** In 4.0.0 the default padding changed from none to `0`. Pass `$b->size() - 1` as the padding to recover the previous full-length result.
 
 ### `count() : int`
 

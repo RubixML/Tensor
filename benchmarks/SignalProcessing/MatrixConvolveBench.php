@@ -36,4 +36,24 @@ class MatrixConvolveBench
     {
         $this->a->convolve($this->kernel);
     }
+
+    /**
+     * @Subject
+     * @Iterations(5)
+     * @OutputTimeUnit("seconds", precision=3)
+     */
+    public function convolveSamePadding() : void
+    {
+        $this->a->convolve($this->kernel, 1, 5);
+    }
+
+    /**
+     * @Subject
+     * @Iterations(5)
+     * @OutputTimeUnit("seconds", precision=3)
+     */
+    public function convolveFullPadding() : void
+    {
+        $this->a->convolve($this->kernel, 1, 9);
+    }
 }

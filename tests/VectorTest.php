@@ -902,12 +902,42 @@ class VectorTest extends TestCase
 
         $b = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
 
-        $c = $a->convolve($b, 1);
+        $c = $a->convolve($b);
+
+        $expected = Vector::fromArray([
+            370.1, 462.20000000000005, 10.0,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function convolvePadding() : void
+    {
+        $a = Vector::fromArray([-15.0, 25.0, 35.0, -36.0, -72.0, 89.0, 106.0, 45.0], false);
+
+        $b = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $c = $a->convolve($b, 1, 5);
 
         $expected = Vector::fromArray([
             -60.0, 2.5, 259.0, -144.0, 40.5, 370.1, 462.20000000000005,
             10.000000000000114, 1764.3000000000002, 1625.1, 2234.7, 1378.4, 535.5,
         ], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function convolveSamePadding() : void
+    {
+        $a = Vector::fromArray([1.0, 2.0, 3.0, 4.0, 5.0], false);
+
+        $b = Vector::fromArray([1.0, 1.0, 1.0], false);
+
+        $c = $a->convolve($b, 1, 1);
+
+        $expected = Vector::fromArray([3.0, 6.0, 9.0, 12.0, 9.0], false);
 
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
@@ -919,9 +949,23 @@ class VectorTest extends TestCase
 
         $b = Vector::fromArray([1.0, 2.0], false);
 
-        $c = $a->convolve($b, 2);
+        $c = $a->convolve($b, 2, 1);
 
         $expected = Vector::fromArray([1.0, 7.0, 8.0], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function convolveStrideValid() : void
+    {
+        $a = Vector::fromArray([1.0, 2.0, 3.0, 4.0], false);
+
+        $b = Vector::fromArray([1.0, 2.0], false);
+
+        $c = $a->convolve($b, 2);
+
+        $expected = Vector::fromArray([4.0, 10.0], false);
 
         $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
     }
@@ -1784,6 +1828,29 @@ class VectorTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         Vector::fromArray([1.0, 2.0], false)->convolve(Vector::fromArray([1.0, 2.0, 3.0], false));
+    }
+
+    #[Test]
+    public function convolveKernelLargerThanVectorWithPadding() : void
+    {
+        $a = Vector::fromArray([1.0, 2.0], false);
+
+        $b = Vector::fromArray([1.0, 2.0, 3.0], false);
+
+        $c = $a->convolve($b, 1, 1);
+
+        $expected = Vector::fromArray([4.0, 7.0], false);
+
+        $this->assertEqualsWithDelta($expected, $c, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function convolvePaddingLessThanZeroThrows() : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Vector::fromArray([1.0, 2.0, 3.0], false)
+            ->convolve(Vector::fromArray([1.0, 1.0], false), 1, -1);
     }
 
     #[Test]

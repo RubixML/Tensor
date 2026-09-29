@@ -503,41 +503,54 @@ class Vector implements Tensor
     }
 
     /**
-     * Return the 1D convolution of this vector and a kernel vector with given stride.
+     * Return the 1D convolution of this vector and a kernel vector with given stride and
+     * padding. Padding is applied to both sides of this vector and is zero filled.
+     *
+     * A padding of 0 gives the "valid" convolution of length n - nB + 1, a padding
+     * of intdiv(nB, 2) gives the "same" convolution, and a padding of nB - 1 gives
+     * the full convolution of length n + nB - 1.
      *
      * @param Vector $b
      * @param int $stride
+     * @param int $padding
      * @throws InvalidArgumentException
      * @return self
      */
-    public function convolve(Vector $b, int $stride = 1) : self
+    public function convolve(Vector $b, int $stride = 1, int $padding = 0) : self
     {
         $n = $b->size();
-
-        if ($n > $this->n) {
-            throw new InvalidArgumentException('Vector B cannot be'
-                . ' larger than Vector A.');
-        }
 
         if ($stride < 1) {
             throw new InvalidArgumentException('Stride cannot be'
                 . " less than 1, $stride given.");
         }
 
-        $nHat = $this->n + $n - 1;
+        if ($padding < 0) {
+            throw new InvalidArgumentException('Padding cannot be'
+                . " negative, $padding given.");
+        }
+
+        if ($this->n + 2 * $padding - $n < 0) {
+            throw new InvalidArgumentException('Vector B cannot be larger than'
+                . ' Vector A by more than the given padding allows.');
+        }
+
+        $nHat = intdiv($this->n + 2 * $padding - $n, $stride) + 1;
 
         $b = $b->asArray();
 
         $c = [];
 
-        for ($i = 0; $i < $nHat; $i += $stride) {
-            $jmin = $i >= $n - 1 ? $i - ($n - 1) : 0;
-            $jmax = $i < $this->n ? $i : $this->n - 1;
+        for ($i = 0; $i < $nHat; ++$i) {
+            $k = $i * $stride + $n - 1 - $padding;
+
+            $jmin = $k - $n + 1 > 0 ? $k - $n + 1 : 0;
+            $jmax = $k < $this->n ? $k : $this->n - 1;
 
             $sigma = 0.0;
 
             for ($j = $jmin; $j <= $jmax; ++$j) {
-                $sigma += $this->a[$j] * $b[$i - $j];
+                $sigma += $this->a[$j] * $b[$k - $j];
             }
 
             $c[] = $sigma;
