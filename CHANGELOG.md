@@ -4,7 +4,6 @@
     - Added `softplus()` and `erf()` special functions
     - Added reciprocal sqrt `rsqrt()` operation to unary interface
     - Added `sinh()` and `cosh()` trigonometric functions
-    - `sigmoid()` now uses a dedicated `Tensor\sigmoid()` math function
 
 - 4.0.0
     - Added `fromArray()` factory method to build from PHP array
