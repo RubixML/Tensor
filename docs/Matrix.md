@@ -423,7 +423,6 @@ See [Unary](interfaces/unary.md). Each method returns a new `Matrix`.
 - `ceil() : self` — round up to the nearest integer
 - `sign() : self` — element-wise sign indication (`1.0`, `-1.0`, `0.0`)
 - `negate() : self` — take the negative of each value element-wise
-- `sigmoid() : self` — element-wise sigmoid of the matrix
 
 ## Trigonometric
 
@@ -459,9 +458,10 @@ See [Reductions](interfaces/reductions.md). For a `Matrix`, row-wise reductions 
 
 See [Special](interfaces/special.md).
 
+- `sigmoid() : self` — the element-wise sigmoid of the matrix, i.e. `1 / (1 + exp(-x))`; always in `(0, 1)`
+- `softplus() : self` — the element-wise softplus of the matrix: `log(1 + e^{x})`; a smooth approximation of `max(0, x)` with derivative equal to the sigmoid
 - `softmax() : self` — the softmax of the matrix; each row is normalized independently so the elements of every row sum to `1.0` and the shape is preserved
 - `erf() : self` — the element-wise error function of the matrix; `erf(-x) = -erf(x)` and `erf(±5.0) ≈ ±1.0`
-- `softplus() : self` — the element-wise softplus of the matrix: `log(1 + e^{x})`; a smooth approximation of `max(0, x)` with derivative equal to the sigmoid
 
 ## Clipping
 

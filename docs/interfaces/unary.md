@@ -85,9 +85,3 @@ Return the element-wise sign indication (`1.0`, `-1.0`, or `0.0`).
 ### `negate() : mixed`
 
 Negate the tensor, i.e. take the negative.
-
-### `sigmoid() : mixed`
-
-Return the element-wise sigmoid of the tensor, i.e. `1 / (1 + exp(-x))`.
-
-The result is always in the open interval `(0, 1)` and saturates to `1.0` and `0.0` for large positive and negative inputs respectively.

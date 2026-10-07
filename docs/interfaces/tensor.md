@@ -20,10 +20,10 @@ interface Tensor extends ArrayLike, Arithmetic, Comparable,
 | [ArrayLike](arraylike.md) | `shape`, `shapeString`, `size`, `map`, `reduce`, `asArray` |
 | [Arithmetic](arithmetic.md) | `multiply`, `divide`, `add`, `subtract`, `pow`, `mod` |
 | [Comparable](comparable.md) | `equal`, `notEqual`, `greater`, `greaterEqual`, `less`, `lessEqual` |
-| [Unary](unary.md) | `abs`, `square`, `sqrt`, `reciprocal`, `exp`, `expm1`, `log`, `log1p`, `round`, `floor`, `ceil`, `clip`, `clipLower`, `clipUpper`, `sign`, `negate`, `sigmoid` |
+| [Unary](unary.md) | `abs`, `square`, `sqrt`, `reciprocal`, `exp`, `expm1`, `log`, `log1p`, `round`, `floor`, `ceil`, `clip`, `clipLower`, `clipUpper`, `sign`, `negate` |
 | [Trigonometric](trigonometric.md) | `sin`, `asin`, `cos`, `acos`, `tan`, `atan`, `tanh`, `cosh`, `sinh`, `rad2deg`, `deg2rad` |
 | [Reductions](reductions.md) | `sum`, `product`, `min`, `max`, `mean`, `variance`, `median`, `quantile` |
-| [Special](special.md) | `softmax`, `erf` |
+| [Special](special.md) | `sigmoid`, `softplus`, `softmax`, `erf` |
 
 Additionally, because `ArrayLike` extends `ArrayAccess`, `IteratorAggregate`, and `Countable`, every tensor is array-accessible, iterable, and countable.
 

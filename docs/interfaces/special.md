@@ -6,13 +6,25 @@ Special tensor functions.
 
 ## Overview
 
-`Special` defines higher-level functions that combine a transform with a normalization across more than one element.
+`Special` defines higher-order transcendental functions — element-wise transforms (`sigmoid`, `softplus`) and row-wise normalizations (`softmax`).
 
 ```php
 interface Special
 ```
 
 ## Methods
+
+### `sigmoid() : mixed`
+
+Return the element-wise sigmoid of the tensor, i.e. `1 / (1 + exp(-x))`.
+
+The result is always in the open interval `(0, 1)` and saturates to `1.0` and `0.0` for large positive and negative inputs respectively.
+
+### `softplus() : mixed`
+
+Return the element-wise softplus of the tensor: `log(1 + exp(x))`.
+
+A smooth approximation of `max(0, x)` whose derivative is the sigmoid. Computed as `x < 0: log(1 + exp(x))` and `x >= 0: x + log(1 + exp(-x))` so the exponentially large argument never overflows.
 
 ### `softmax() : mixed`
 
