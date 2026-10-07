@@ -1,12 +1,12 @@
 # Trigonometric
 
-Element-wise trigonometric functions.
+Element-wise trigonometric and hyperbolic functions.
 
 - **Namespace:** `Tensor\Trigonometric`
 
 ## Overview
 
-`Trigonometric` defines element-wise trigonometric operations. Each method returns a new tensor of the same shape as `$this`. Angles are expressed in radians unless converting to/from degrees.
+`Trigonometric` defines element-wise trigonometric and hyperbolic operations. Each method returns a new tensor of the same shape as `$this`. Angles are expressed in radians unless converting to/from degrees.
 
 ```php
 interface Trigonometric
@@ -40,7 +40,15 @@ Compute the arc tangent of the tensor.
 
 ### `tanh() : mixed`
 
-Return the hyperbolic tangent of the tensor.
+Return the hyperbolic tangent of the tensor: `tanh(x) = sinh(x) / cosh(x)`.
+
+### `cosh() : mixed`
+
+Return the hyperbolic cosine of the tensor: `cosh(x) = (e^x + e^(-x)) / 2`.
+
+### `sinh() : mixed`
+
+Return the hyperbolic sine of the tensor: `sinh(x) = (e^x - e^(-x)) / 2`.
 
 ### `rad2deg() : mixed`
 

@@ -1015,6 +1015,16 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the reciprocal square root of the vector.
+     *
+     * @return self
+     */
+    public function rsqrt() : self
+    {
+        return $this->map('\Tensor\rsqrt');
+    }
+
+    /**
      * Exponentiate each element in the vector.
      *
      * @return self
@@ -1129,6 +1139,26 @@ class Vector implements Tensor
     public function tanh() : self
     {
         return $this->map('tanh');
+    }
+
+    /**
+     * Return the hyperbolic cosine of this vector.
+     *
+     * @return self
+     */
+    public function cosh() : self
+    {
+        return $this->map('cosh');
+    }
+
+    /**
+     * Return the hyperbolic sine of this vector.
+     *
+     * @return self
+     */
+    public function sinh() : self
+    {
+        return $this->map('sinh');
     }
 
     /**
@@ -1446,10 +1476,7 @@ class Vector implements Tensor
      */
     public function sigmoid() : self
     {
-        return $this->negate()
-            ->exp()
-            ->addScalar(1.0)
-            ->reciprocal();
+        return $this->map('\Tensor\sigmoid');
     }
 
     /**
@@ -1464,6 +1491,38 @@ class Vector implements Tensor
             ->exp();
 
         return $a->divideScalar($a->sum());
+    }
+
+    /**
+     * Return the element-wise error function of the vector.
+     *
+     * @return self
+     */
+    public function erf() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $valueA) {
+            $b[] = erf($valueA);
+        }
+
+        return static::fromArray($b, false);
+    }
+
+    /**
+     * Return the element-wise softplus of the vector.
+     *
+     * @return self
+     */
+    public function softplus() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $valueA) {
+            $b[] = softplus($valueA);
+        }
+
+        return static::fromArray($b, false);
     }
 
     /**

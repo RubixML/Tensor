@@ -314,6 +314,7 @@ See [Unary](interfaces/unary.md). Each method returns a new `Vector`.
 - `square() : self` — square the vector
 - `sqrt() : self` — square root of the vector
 - `reciprocal() : self` — element-wise reciprocal of the vector
+- `rsqrt() : self` — element-wise reciprocal square root of the vector, i.e. `1 / sqrt(x)`
 - `exp() : self` — exponentiate each element
 - `expm1() : self` — exponential of each element minus 1
 - `log(float $base = M_E) : self` — log to the given base of each element
@@ -323,7 +324,6 @@ See [Unary](interfaces/unary.md). Each method returns a new `Vector`.
 - `ceil() : self` — round up to the nearest integer
 - `sign() : self` — element-wise sign indication (`1.0`, `-1.0`, `0.0`)
 - `negate() : self` — negate each value
-- `sigmoid() : self` — element-wise sigmoid of the vector
 
 ## Trigonometric
 
@@ -336,6 +336,8 @@ See [Trigonometric](interfaces/trigonometric.md). Each method returns a new `Vec
 - `tan()` — tangent of the vector
 - `atan()` — arc tangent of the vector
 - `tanh()` — hyperbolic tangent of the vector
+- `cosh()` — hyperbolic cosine of the vector
+- `sinh()` — hyperbolic sine of the vector
 - `rad2deg()` — convert angles from radians to degrees
 - `deg2rad()` — convert angles from degrees to radians
 
@@ -356,7 +358,10 @@ See [Reductions](interfaces/reductions.md). For a `Vector` these return scalar `
 
 See [Special](interfaces/special.md).
 
+- `sigmoid() : self` — the element-wise sigmoid of the vector, i.e. `1 / (1 + exp(-x))`; always in `(0, 1)`
+- `softplus() : self` — the element-wise softplus of the vector: `log(1 + e^{x})`; a smooth approximation of `max(0, x)` with derivative equal to the sigmoid
 - `softmax() : self` — the softmax of the vector; the whole vector is treated as a single row so the elements sum to `1.0`
+- `erf() : self` — the element-wise error function of the vector; `erf(-x) = -erf(x)` and `erf(±5.0) ≈ ±1.0`
 
 ## Clipping
 

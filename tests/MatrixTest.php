@@ -2131,6 +2131,26 @@ class MatrixTest extends TestCase
     }
 
     #[Test]
+    public function rsqrt() : void
+    {
+        $a = Matrix::fromArray([
+            [13.0],
+            [11.0],
+            [9.0],
+        ], false);
+
+        $b = $a->rsqrt();
+
+        $expected = Matrix::fromArray([
+            [0.27735009811261],
+            [0.30151134457776],
+            [0.33333333333333],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
     public function exp() : void
     {
         $a = Matrix::fromArray([
@@ -2564,6 +2584,78 @@ class MatrixTest extends TestCase
         $expected = Matrix::fromArray([
             [-0.7615941559557649, 0.0, 0.7615941559557649],
             [0.9640275800758169, -0.9640275800758169, 0.46211715726000974],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function cosh() : void
+    {
+        $a = Matrix::fromArray([
+            [-1.0, 0.0, 1.0],
+            [2.0, -2.0, 0.5],
+        ], false);
+
+        $b = $a->cosh();
+
+        $expected = Matrix::fromArray([
+            [1.5430806348152437, 1.0, 1.5430806348152437],
+            [3.7621956910836314, 3.7621956910836314, 1.1276259652063807],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function sinh() : void
+    {
+        $a = Matrix::fromArray([
+            [-1.0, 0.0, 1.0],
+            [2.0, -2.0, 0.5],
+        ], false);
+
+        $b = $a->sinh();
+
+        $expected = Matrix::fromArray([
+            [-1.1752011936438014, 0.0, 1.1752011936438014],
+            [3.6268604078470186, -3.6268604078470186, 0.5210953054937474],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function erf() : void
+    {
+        $a = Matrix::fromArray([
+            [-1.0, 0.0, 1.0],
+            [2.0, -2.0, 0.5],
+        ], false);
+
+        $b = $a->erf();
+
+        $expected = Matrix::fromArray([
+            [-0.8427007929497148, 0.0, 0.8427007929497148],
+            [0.9953222650189527, -0.9953222650189527, 0.5204998778130465],
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softplus() : void
+    {
+        $a = Matrix::fromArray([
+            [-1.0, 0.0, 1.0],
+            [2.0, -2.0, 0.5],
+        ], false);
+
+        $b = $a->softplus();
+
+        $expected = Matrix::fromArray([
+            [0.31326168751822286, 0.6931471805599453, 1.3132616875182228],
+            [2.1269280110429727, 0.1269280110429727, 0.9740769841801067],
         ], false);
 
         $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);

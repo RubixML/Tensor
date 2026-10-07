@@ -54,6 +54,20 @@ interface Trigonometric
     public function tanh();
 
     /**
+     * Return the hyperbolic cosine of the tensor.
+     *
+     * @return mixed
+     */
+    public function cosh();
+
+    /**
+     * Return the hyperbolic sine of the tensor.
+     *
+     * @return mixed
+     */
+    public function sinh();
+
+    /**
      * Convert angles from radians to degrees.
      *
      * @return mixed

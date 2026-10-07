@@ -38,7 +38,8 @@
             "Tensor\\": "src/"
         },
         "files": [
-            "src/constants.php"
+            "src/constants.php",
+            "src/math.php"
         ]
     },
     "autoload-dev": {

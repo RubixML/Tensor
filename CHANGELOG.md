@@ -1,5 +1,10 @@
 # Change Log
 
+- 4.1.0
+    - Added `softplus()` and `erf()` special functions
+    - Added reciprocal sqrt `rsqrt()` operation to unary interface
+    - Added `sinh()` and `cosh()` trigonometric functions
+
 - 4.0.0
     - Added `fromArray()` factory method to build from PHP array
     - `build()` and `quick()` factory methods are now deprecated
