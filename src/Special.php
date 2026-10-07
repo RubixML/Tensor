@@ -5,6 +5,20 @@ namespace Tensor;
 interface Special
 {
     /**
+     * Return the element-wise sigmoid of the tensor.
+     *
+     * @return mixed
+     */
+    public function sigmoid();
+
+    /**
+     * Return the element-wise softplus of the tensor.
+     *
+     * @return mixed
+     */
+    public function softplus();
+
+    /**
      * Return the softmax of the tensor.
      *
      * For a matrix each row is normalized independently, for a vector the
