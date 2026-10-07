@@ -464,6 +464,24 @@ class ColumnVectorTest extends TestCase
     }
 
     #[Test]
+    public function rsqrtPreservesColumnVector() : void
+    {
+        $a = ColumnVector::fromArray([2.0, 4.0, 8.0], false);
+
+        $b = $a->rsqrt();
+
+        $this->assertInstanceOf(ColumnVector::class, $b);
+
+        $expected = ColumnVector::fromArray([
+            0.70710678118655,
+            0.5,
+            0.35355339059327,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
     public function tanhPreservesColumnVector() : void
     {
         $a = ColumnVector::fromArray([-1.0, 0.0, 1.0], false);

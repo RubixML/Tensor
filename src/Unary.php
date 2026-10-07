@@ -33,6 +33,13 @@ interface Unary
     public function reciprocal();
 
     /**
+     * Return the reciprocal square root of the tensor.
+     *
+     * @return mixed
+     */
+    public function rsqrt();
+
+    /**
      * Return the exponential of the tensor.
      *
      * @return mixed
@@ -121,11 +128,4 @@ interface Unary
      * @return mixed
      */
     public function negate();
-
-    /**
-     * Return the element-wise sigmoid of the tensor.
-     *
-     * @return mixed
-     */
-    public function sigmoid();
 }

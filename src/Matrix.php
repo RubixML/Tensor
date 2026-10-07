@@ -1410,6 +1410,16 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the reciprocal square root of the matrix.
+     *
+     * @return self
+     */
+    public function rsqrt() : self
+    {
+        return $this->map('\Tensor\rsqrt');
+    }
+
+    /**
      * Return the exponential of the matrix.
      *
      * @return self
@@ -1530,6 +1540,26 @@ class Matrix implements Tensor
     public function tanh() : self
     {
         return $this->map('tanh');
+    }
+
+    /**
+     * Return the hyperbolic cosine of the matrix.
+     *
+     * @return self
+     */
+    public function cosh() : self
+    {
+        return $this->map('cosh');
+    }
+
+    /**
+     * Return the hyperbolic sine of the matrix.
+     *
+     * @return self
+     */
+    public function sinh() : self
+    {
+        return $this->map('sinh');
     }
 
     /**
@@ -1929,10 +1959,7 @@ class Matrix implements Tensor
      */
     public function sigmoid() : self
     {
-        return $this->negate()
-            ->exp()
-            ->addScalar(1.0)
-            ->reciprocal();
+        return $this->map('\Tensor\sigmoid');
     }
 
     /**
@@ -1943,10 +1970,53 @@ class Matrix implements Tensor
      */
     public function softmax() : self
     {
-        $a = $this->subtractColumnVector($this->max())
-            ->exp();
+        $a = $this->subtractColumnVector($this->max())->exp();
 
         return $a->divideColumnVector($a->sum());
+    }
+
+    /**
+     * Return the element-wise error function of the matrix.
+     *
+     * @return self
+     */
+    public function erf() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $rowA) {
+            $rowB = [];
+
+            foreach ($rowA as $valueA) {
+                $rowB[] = erf($valueA);
+            }
+
+            $b[] = $rowB;
+        }
+
+        return self::fromArray($b, false);
+    }
+
+    /**
+     * Return the element-wise softplus of the matrix.
+     *
+     * @return self
+     */
+    public function softplus() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $rowA) {
+            $rowB = [];
+
+            foreach ($rowA as $valueA) {
+                $rowB[] = softplus($valueA);
+            }
+
+            $b[] = $rowB;
+        }
+
+        return self::fromArray($b, false);
     }
 
     /**
