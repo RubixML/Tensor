@@ -1132,6 +1132,26 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the hyperbolic cosine of this vector.
+     *
+     * @return self
+     */
+    public function cosh() : self
+    {
+        return $this->map('cosh');
+    }
+
+    /**
+     * Return the hyperbolic sine of this vector.
+     *
+     * @return self
+     */
+    public function sinh() : self
+    {
+        return $this->map('sinh');
+    }
+
+    /**
      * Convert angles from radians to degrees.
      *
      * @return self
@@ -1464,6 +1484,38 @@ class Vector implements Tensor
             ->exp();
 
         return $a->divideScalar($a->sum());
+    }
+
+    /**
+     * Return the element-wise error function of the vector.
+     *
+     * @return self
+     */
+    public function erf() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $valueA) {
+            $b[] = erf($valueA);
+        }
+
+        return static::fromArray($b, false);
+    }
+
+    /**
+     * Return the element-wise softplus of the vector.
+     *
+     * @return self
+     */
+    public function softplus() : self
+    {
+        $b = [];
+
+        foreach ($this->a as $valueA) {
+            $b[] = softplus($valueA);
+        }
+
+        return static::fromArray($b, false);
     }
 
     /**

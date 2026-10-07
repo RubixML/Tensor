@@ -336,6 +336,8 @@ See [Trigonometric](interfaces/trigonometric.md). Each method returns a new `Vec
 - `tan()` — tangent of the vector
 - `atan()` — arc tangent of the vector
 - `tanh()` — hyperbolic tangent of the vector
+- `cosh()` — hyperbolic cosine of the vector
+- `sinh()` — hyperbolic sine of the vector
 - `rad2deg()` — convert angles from radians to degrees
 - `deg2rad()` — convert angles from degrees to radians
 
@@ -357,6 +359,8 @@ See [Reductions](interfaces/reductions.md). For a `Vector` these return scalar `
 See [Special](interfaces/special.md).
 
 - `softmax() : self` — the softmax of the vector; the whole vector is treated as a single row so the elements sum to `1.0`
+- `erf() : self` — the element-wise error function of the vector; `erf(-x) = -erf(x)` and `erf(±5.0) ≈ ±1.0`
+- `softplus() : self` — the element-wise softplus of the vector: `log(1 + e^{x})`; a smooth approximation of `max(0, x)` with derivative equal to the sigmoid
 
 ## Clipping
 

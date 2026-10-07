@@ -13,4 +13,11 @@ interface Special
      * @return mixed
      */
     public function softmax();
+
+    /**
+     * Return the element-wise error function of the tensor.
+     *
+     * @return mixed
+     */
+    public function erf();
 }

@@ -435,6 +435,9 @@ See [Trigonometric](interfaces/trigonometric.md). Each method returns a new `Mat
 - `acos()` — arc cosine of the matrix
 - `tan()` — tangent of the matrix
 - `atan()` — arc tangent of the matrix
+- `tanh()` — hyperbolic tangent of the matrix
+- `cosh()` — hyperbolic cosine of the matrix
+- `sinh()` — hyperbolic sine of the matrix
 - `rad2deg()` — convert angles from radians to degrees
 - `deg2rad()` — convert angles from degrees to radians
 
@@ -457,6 +460,8 @@ See [Reductions](interfaces/reductions.md). For a `Matrix`, row-wise reductions 
 See [Special](interfaces/special.md).
 
 - `softmax() : self` — the softmax of the matrix; each row is normalized independently so the elements of every row sum to `1.0` and the shape is preserved
+- `erf() : self` — the element-wise error function of the matrix; `erf(-x) = -erf(x)` and `erf(±5.0) ≈ ±1.0`
+- `softplus() : self` — the element-wise softplus of the matrix: `log(1 + e^{x})`; a smooth approximation of `max(0, x)` with derivative equal to the sigmoid
 
 ## Clipping
 

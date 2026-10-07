@@ -1470,6 +1470,106 @@ class VectorTest extends TestCase
     }
 
     #[Test]
+    public function cosh() : void
+    {
+        $a = Vector::fromArray([-1.0, -0.5, 0.0, 0.5, 1.0, 2.0], false);
+
+        $b = $a->cosh();
+
+        $expected = Vector::fromArray([
+            1.5430806348152437,
+            1.1276259652063807,
+            1.0,
+            1.1276259652063807,
+            1.5430806348152437,
+            3.7621956910836314,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function sinh() : void
+    {
+        $a = Vector::fromArray([-1.0, -0.5, 0.0, 0.5, 1.0, 2.0], false);
+
+        $b = $a->sinh();
+
+        $expected = Vector::fromArray([
+            -1.1752011936438014,
+            -0.5210953054937474,
+            0.0,
+            0.5210953054937474,
+            1.1752011936438014,
+            3.6268604078470186,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function erf() : void
+    {
+        $a = Vector::fromArray([-2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0], false);
+
+        $b = $a->erf();
+
+        $expected = Vector::fromArray([
+            -0.9953222650189527,
+            -0.8427007929497148,
+            -0.5204998778130465,
+            0.0,
+            0.5204998778130465,
+            0.8427007929497148,
+            0.9953222650189527,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function erfSaturatesForLargeMagnitudes() : void
+    {
+        $this->assertEqualsWithDelta(1.0, Vector::fromArray([5.0], false)->erf()->asArray()[0], self::MAX_DELTA);
+        $this->assertEqualsWithDelta(-1.0, Vector::fromArray([-5.0], false)->erf()->asArray()[0], self::MAX_DELTA);
+        $this->assertEqualsWithDelta(1.0, Vector::fromArray([100.0], false)->erf()->asArray()[0], self::MAX_DELTA);
+        $this->assertEqualsWithDelta(-1.0, Vector::fromArray([-100.0], false)->erf()->asArray()[0], self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softplus() : void
+    {
+        $a = Vector::fromArray([-2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0], false);
+
+        $b = $a->softplus();
+
+        $expected = Vector::fromArray([
+            0.1269280110429727,
+            0.313261687518223,
+            0.47407698418010675,
+            0.6931471805599453,
+            0.9740769841801067,
+            1.3132616875182228,
+            2.1269280110429727,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
+    public function softplusIsCloseToIdentityForLargePositiveValues() : void
+    {
+        $a = Vector::fromArray([10.0, 20.0, 50.0], false);
+
+        $b = $a->softplus();
+
+        // softplus(x) = log(1 + exp(x)) is very close to x for x >> 0
+        $this->assertEqualsWithDelta(10.0, $b->asArray()[0], 1e-3);
+        $this->assertEqualsWithDelta(20.0, $b->asArray()[1], 1e-7);
+        $this->assertEqualsWithDelta(50.0, $b->asArray()[2], 1e-9);
+    }
+
+    #[Test]
     public function softmax() : void
     {
         $a = Vector::fromArray([1.0, 2.0, 3.0], false);
