@@ -1015,6 +1015,16 @@ class Vector implements Tensor
     }
 
     /**
+     * Return the reciprocal square root of the vector.
+     *
+     * @return self
+     */
+    public function rsqrt() : self
+    {
+        return $this->map('\Tensor\rsqrt');
+    }
+
+    /**
      * Exponentiate each element in the vector.
      *
      * @return self
@@ -1466,10 +1476,7 @@ class Vector implements Tensor
      */
     public function sigmoid() : self
     {
-        return $this->negate()
-            ->exp()
-            ->addScalar(1.0)
-            ->reciprocal();
+        return $this->map('\Tensor\sigmoid');
     }
 
     /**

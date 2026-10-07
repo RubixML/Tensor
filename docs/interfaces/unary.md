@@ -30,6 +30,10 @@ Return the square root of the tensor.
 
 Return the element-wise reciprocal of the tensor.
 
+### `rsqrt() : mixed`
+
+Return the reciprocal square root of the tensor, i.e. `1 / sqrt(x)`.
+
 ### `exp() : mixed`
 
 Return the exponential of the tensor.

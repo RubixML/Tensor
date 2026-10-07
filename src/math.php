@@ -3,6 +3,47 @@
 namespace Tensor;
 
 /**
+ * Return the softplus of $x, defined as log(1 + exp(x)).
+ *
+ * The computation is split based on the sign of $x so that the
+ * exponentially large argument never overflows:
+ *     x <  0: log(1 + exp(x))
+ *     x >= 0: x + log(1 + exp(-x))
+ *
+ * @param float $x
+ * @return float
+ */
+function softplus(float $x) : float
+{
+    return $x < 0.0 ? log1p(exp($x)) : $x + log1p(exp(-$x));
+}
+
+/**
+ * Return the reciprocal square root of $x, defined as 1 / sqrt(x).
+ *
+ * @param float $x
+ * @return float
+ */
+function rsqrt(float $x) : float
+{
+    return 1.0 / sqrt($x);
+}
+
+/**
+ * Return the sigmoid of $x, defined as 1 / (1 + exp(-x)).
+ *
+ * The result is always in the open interval (0, 1) and saturates to
+ * 1.0 and 0.0 for large positive and negative arguments respectively.
+ *
+ * @param float $x
+ * @return float
+ */
+function sigmoid(float $x) : float
+{
+    return 1.0 / (1.0 + exp(-$x));
+}
+
+/**
  * Return the error function of $x.
  *
  * The error function is defined as
@@ -47,24 +88,4 @@ function erf(float $x) : float
     }
 
     return $scale * $sum;
-}
-
-/**
- * Return the softplus of $x, defined as log(1 + exp(x)).
- *
- * The computation is split based on the sign of $x so that the
- * exponentially large argument never overflows:
- *     x <  0: log(1 + exp(x))
- *     x >= 0: x + log(1 + exp(-x))
- *
- * @param float $x
- * @return float
- */
-function softplus(float $x) : float
-{
-    if ($x < 0.0) {
-        return log1p(exp($x));
-    }
-
-    return $x + log1p(exp(-$x));
 }

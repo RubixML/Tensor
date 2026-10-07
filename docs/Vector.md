@@ -314,6 +314,7 @@ See [Unary](interfaces/unary.md). Each method returns a new `Vector`.
 - `square() : self` — square the vector
 - `sqrt() : self` — square root of the vector
 - `reciprocal() : self` — element-wise reciprocal of the vector
+- `rsqrt() : self` — element-wise reciprocal square root of the vector, i.e. `1 / sqrt(x)`
 - `exp() : self` — exponentiate each element
 - `expm1() : self` — exponential of each element minus 1
 - `log(float $base = M_E) : self` — log to the given base of each element

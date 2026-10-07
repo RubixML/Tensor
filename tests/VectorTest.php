@@ -1205,6 +1205,21 @@ class VectorTest extends TestCase
     }
 
     #[Test]
+    public function rsqrt() : void
+    {
+        $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);
+
+        $b = $a->rsqrt();
+
+        $expected = Vector::fromArray([
+            0.5, 0.39223227027637, 0.5872202195147,
+            0.22360679774998, 0.62017367294604, 0.28988551782622,
+        ], false);
+
+        $this->assertEqualsWithDelta($expected, $b, self::MAX_DELTA);
+    }
+
+    #[Test]
     public function exp() : void
     {
         $a = Vector::fromArray([4.0, 6.5, 2.9, 20.0, 2.6, 11.9], false);

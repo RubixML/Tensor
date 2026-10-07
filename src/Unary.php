@@ -33,6 +33,13 @@ interface Unary
     public function reciprocal();
 
     /**
+     * Return the reciprocal square root of the tensor.
+     *
+     * @return mixed
+     */
+    public function rsqrt();
+
+    /**
      * Return the exponential of the tensor.
      *
      * @return mixed

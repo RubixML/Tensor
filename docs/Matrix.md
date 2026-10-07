@@ -414,6 +414,7 @@ See [Unary](interfaces/unary.md). Each method returns a new `Matrix`.
 - `square() : self` — square of the matrix element-wise
 - `sqrt() : self` — square root of the matrix
 - `reciprocal() : self` — element-wise reciprocal of the matrix
+- `rsqrt() : self` — element-wise reciprocal square root of the matrix, i.e. `1 / sqrt(x)`
 - `exp() : self` — exponential of the matrix
 - `expm1() : self` — exponential of each element minus 1
 - `log(float $base = M_E) : self` — logarithm of the matrix in the specified base

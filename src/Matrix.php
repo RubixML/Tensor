@@ -1410,6 +1410,16 @@ class Matrix implements Tensor
     }
 
     /**
+     * Return the reciprocal square root of the matrix.
+     *
+     * @return self
+     */
+    public function rsqrt() : self
+    {
+        return $this->map('\Tensor\rsqrt');
+    }
+
+    /**
      * Return the exponential of the matrix.
      *
      * @return self
@@ -1949,10 +1959,7 @@ class Matrix implements Tensor
      */
     public function sigmoid() : self
     {
-        return $this->negate()
-            ->exp()
-            ->addScalar(1.0)
-            ->reciprocal();
+        return $this->map('\Tensor\sigmoid');
     }
 
     /**
@@ -1963,8 +1970,7 @@ class Matrix implements Tensor
      */
     public function softmax() : self
     {
-        $a = $this->subtractColumnVector($this->max())
-            ->exp();
+        $a = $this->subtractColumnVector($this->max())->exp();
 
         return $a->divideColumnVector($a->sum());
     }
